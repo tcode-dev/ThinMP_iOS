@@ -1,10 +1,3 @@
-//
-//  ViewController.swift
-//  ThinMP
-//
-//  Created by tk on 2019/08/22.
-//
-
 import UIKit
 import MediaPlayer
 
@@ -14,8 +7,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
 //        albums()
-//        artists()
-        songs()
+//        songs()
     }
 
     func albums() {
@@ -32,21 +24,7 @@ class ViewController: UIViewController {
             }
         }
     }
-    
-    func artists() {
-        MPMediaLibrary.requestAuthorization { status in
-            if status == .authorized {
-                let query = MPMediaQuery.artists()
-                if let collections = query.collections {
-                    for collection in collections {
-                        if let representativeTitle = collection.representativeItem!.artist {
-                            print("アーティスト名: \(representativeTitle)  曲数: \(collection.items.count)")
-                        }
-                    }
-                }
-            }
-        }
-    }
+
     
     func songs() {
         MPMediaLibrary.requestAuthorization { status in
