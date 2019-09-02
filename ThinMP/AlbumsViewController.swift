@@ -49,4 +49,5 @@ class AlbumsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
         
         return albums
-    }}
+    }
+}

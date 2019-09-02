@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		529A3FC2231D08F70085364D /* ArtistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529A3FC1231D08F70085364D /* ArtistViewController.swift */; };
 		529A3FC4231D33710085364D /* AlbumsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529A3FC3231D33710085364D /* AlbumsViewController.swift */; };
+		529A3FC6231D4A650085364D /* SongsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529A3FC5231D4A650085364D /* SongsViewController.swift */; };
 		52C34D62230ED7BE00EA76DA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C34D61230ED7BE00EA76DA /* AppDelegate.swift */; };
 		52C34D64230ED7BE00EA76DA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C34D63230ED7BE00EA76DA /* ViewController.swift */; };
 		52C34D67230ED7BE00EA76DA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52C34D65230ED7BE00EA76DA /* Main.storyboard */; };
@@ -19,6 +20,7 @@
 /* Begin PBXFileReference section */
 		529A3FC1231D08F70085364D /* ArtistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistViewController.swift; sourceTree = "<group>"; };
 		529A3FC3231D33710085364D /* AlbumsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsViewController.swift; sourceTree = "<group>"; };
+		529A3FC5231D4A650085364D /* SongsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongsViewController.swift; sourceTree = "<group>"; };
 		52C34D5E230ED7BE00EA76DA /* ThinMP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ThinMP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52C34D61230ED7BE00EA76DA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		52C34D63230ED7BE00EA76DA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -61,6 +63,7 @@
 				52C34D61230ED7BE00EA76DA /* AppDelegate.swift */,
 				52C34D63230ED7BE00EA76DA /* ViewController.swift */,
 				52C34D65230ED7BE00EA76DA /* Main.storyboard */,
+				529A3FC5231D4A650085364D /* SongsViewController.swift */,
 				52C34D68230ED7C000EA76DA /* Assets.xcassets */,
 				52C34D6A230ED7C000EA76DA /* LaunchScreen.storyboard */,
 				52C34D6D230ED7C000EA76DA /* Info.plist */,
@@ -142,6 +145,7 @@
 			files = (
 				529A3FC4231D33710085364D /* AlbumsViewController.swift in Sources */,
 				52C34D64230ED7BE00EA76DA /* ViewController.swift in Sources */,
+				529A3FC6231D4A650085364D /* SongsViewController.swift in Sources */,
 				52C34D62230ED7BE00EA76DA /* AppDelegate.swift in Sources */,
 				529A3FC2231D08F70085364D /* ArtistViewController.swift in Sources */,
 			);
