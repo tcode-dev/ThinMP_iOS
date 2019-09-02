@@ -14,7 +14,8 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
 //        albums()
-        artists()
+//        artists()
+        songs()
     }
 
     func albums() {
@@ -40,6 +41,21 @@ class ViewController: UIViewController {
                     for collection in collections {
                         if let representativeTitle = collection.representativeItem!.artist {
                             print("アーティスト名: \(representativeTitle)  曲数: \(collection.items.count)")
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    func songs() {
+        MPMediaLibrary.requestAuthorization { status in
+            if status == .authorized {
+                let query = MPMediaQuery.songs()
+                if let collections = query.collections {
+                    for collection in collections {
+                        if let representativeTitle = collection.representativeItem!.title {
+                            print("曲名: \(representativeTitle)")
                         }
                     }
                 }
