@@ -1,32 +1,33 @@
 import UIKit
 import MediaPlayer
 
-class ArtistViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
+class AlbumsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
+
     @IBOutlet var tableView: UITableView!
-    var artists:[String] = []
+    var albums:[String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setArtistsAsync()
+        setAlbumsAsync()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return artists.count;
+        return albums.count;
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "ArtistCell", for: indexPath)
+        let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "AlbumCell", for: indexPath)
         
-        cell.textLabel!.text = artists[indexPath.row]
+        cell.textLabel!.text = albums[indexPath.row]
         
         return cell
     }
     
-    func setArtistsAsync() {
+    func setAlbumsAsync() {
         MPMediaLibrary.requestAuthorization { status in
             if status == .authorized {
-                self.artists = self.getArtists()
+                self.albums = self.getAlbums()
                 DispatchQueue.global(qos: .userInitiated).async {
                     DispatchQueue.main.async {
                         self.tableView.reloadData()
@@ -36,18 +37,16 @@ class ArtistViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
-    func getArtists() -> [String] {
-        var artists:[String] = []
-        let query = MPMediaQuery.artists()
-        
+    func getAlbums() -> [String] {
+        var albums:[String] = []
+        let query = MPMediaQuery.albums()
         if let collections = query.collections {
             for collection in collections {
-                if let representativeTitle = collection.representativeItem!.artist {
-                    artists.append(representativeTitle)
+                if let representativeTitle = collection.representativeItem!.albumTitle {
+                    albums.append(representativeTitle)
                 }
             }
         }
         
-        return artists
-    }
-}
+        return albums
+    }}
