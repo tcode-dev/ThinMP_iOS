@@ -27,7 +27,11 @@ class ArtistViewController: UIViewController, UITableViewDelegate, UITableViewDa
         MPMediaLibrary.requestAuthorization { status in
             if status == .authorized {
                 self.artists = self.getArtists()
-                self.tableView.reloadData()
+                DispatchQueue.global(qos: .userInitiated).async {
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
+                }
             }
         }
     }
@@ -40,7 +44,6 @@ class ArtistViewController: UIViewController, UITableViewDelegate, UITableViewDa
             for collection in collections {
                 if let representativeTitle = collection.representativeItem!.artist {
                     artists.append(representativeTitle)
-                    print("アーティスト名: \(representativeTitle)  曲数: \(collection.items.count)")
                 }
             }
         }
