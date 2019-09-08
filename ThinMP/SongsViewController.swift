@@ -1,11 +1,10 @@
 import UIKit
 import MediaPlayer
 
-class SongsViewController: UIViewController , UITableViewDelegate, UITableViewDataSource, MPMediaPickerControllerDelegate {
+class SongsViewController: UIViewController , UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet var tableView: UITableView!
-    
-    var player: MPMusicPlayerController!
+
     var songCollections:[MPMediaItemCollection] = []
     
     override func viewDidLoad() {
@@ -41,12 +40,7 @@ class SongsViewController: UIViewController , UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        player = MPMusicPlayerController.applicationMusicPlayer
-        player.repeatMode = .none
-        
-        let descriptor = MPMusicPlayerMediaItemQueueDescriptor.init(itemCollection: songCollections[indexPath.row])
-        
-        player.setQueue(with: descriptor)
-        player.play()
+        let musicService = MusicService()
+        musicService.start(itemCollection: songCollections[indexPath.row])
     }
 }
