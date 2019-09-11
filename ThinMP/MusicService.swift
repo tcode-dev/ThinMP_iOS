@@ -1,22 +1,31 @@
 import MediaPlayer
 
 class MusicService {
-    var player: MPMusicPlayerController!
+    private static let instance: MusicService = {
+        return MusicService()
+    }()
+
+    private var player: MPMusicPlayerController!
     
-    func start(itemCollection: MPMediaItemCollection) {
+    private init() {
         player = MPMusicPlayerController.applicationMusicPlayer
         player.repeatMode = .none
-        
+        addObserver()
+        player.beginGeneratingPlaybackNotifications()
+    }
+
+    class func sharedInstance() -> MusicService {
+        return self.instance
+    }
+
+    func start(itemCollection: MPMediaItemCollection) {
         let descriptor = MPMusicPlayerMediaItemQueueDescriptor.init(itemCollection: itemCollection)
         
         player.setQueue(with: descriptor)
         player.play()
-        
-        addObserver()
-        player.beginGeneratingPlaybackNotifications()
     }
     
-    func addObserver() {
+    private func addObserver() {
         NotificationCenter.default.addObserver(
             forName: NSNotification.Name.MPMusicPlayerControllerPlaybackStateDidChange,
             object: player,
@@ -26,7 +35,7 @@ class MusicService {
         }
     }
     
-    func callback() {
+    private func callback() {
         switch self.player!.playbackState {
         case MPMusicPlaybackState.stopped:
             NSLog("stopped")

@@ -40,7 +40,7 @@ class SongsViewController: UIViewController , UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let musicService = MusicService()
+        let musicService = MusicService.sharedInstance()
         musicService.start(itemCollection: songCollections[indexPath.row])
     }
 }
