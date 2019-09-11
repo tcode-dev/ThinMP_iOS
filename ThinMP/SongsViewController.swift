@@ -4,7 +4,7 @@ import MediaPlayer
 class SongsViewController: UIViewController , UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet var tableView: UITableView!
-
+    
     var songCollections:[MPMediaItemCollection] = []
     
     override func viewDidLoad() {

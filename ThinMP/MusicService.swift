@@ -2,6 +2,7 @@ import MediaPlayer
 
 class MusicService {
     var player: MPMusicPlayerController!
+    
     func start(itemCollection: MPMediaItemCollection) {
         player = MPMusicPlayerController.applicationMusicPlayer
         player.repeatMode = .none
@@ -11,19 +12,24 @@ class MusicService {
         player.setQueue(with: descriptor)
         player.play()
         
-        // 再生中のItemが変わった時に通知を受け取る
-        let notificationCenter = NotificationCenter.default
-        notificationCenter.addObserver(self, selector: #selector(noti), name: NSNotification.Name.MPMusicPlayerControllerPlaybackStateDidChange, object: player)
-        // 通知の有効化
+        addObserver()
         player.beginGeneratingPlaybackNotifications()
     }
     
-    @objc func noti() {
-        
-        switch player!.playbackState {
+    func addObserver() {
+        NotificationCenter.default.addObserver(
+            forName: NSNotification.Name.MPMusicPlayerControllerPlaybackStateDidChange,
+            object: player,
+            queue: OperationQueue.main
+        ) { notification in
+            self.callback()
+        }
+    }
+    
+    func callback() {
+        switch self.player!.playbackState {
         case MPMusicPlaybackState.stopped:
             NSLog("stopped")
-            player.endGeneratingPlaybackNotifications()
             break
         case MPMusicPlaybackState.playing:
             NSLog("playing")
@@ -42,6 +48,7 @@ class MusicService {
             break
         default:
             NSLog("default")
+            break
         }
     }
 }
