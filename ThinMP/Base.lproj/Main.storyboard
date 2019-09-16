@@ -100,7 +100,7 @@
         <!--Albums View Controller-->
         <scene sceneID="SJI-zk-WGk">
             <objects>
-                <viewController id="CFN-LU-Vis" customClass="AlbumsViewController" customModule="ThinMP" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Albums" id="CFN-LU-Vis" customClass="AlbumsViewController" customModule="ThinMP" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="LSp-Yp-2Oh">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -142,6 +142,41 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ODJ-kM-cE7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="853.60000000000002" y="7.6461769115442282"/>
+        </scene>
+        <!--Album Detail View Controller-->
+        <scene sceneID="QfM-zM-ZLP">
+            <objects>
+                <viewController storyboardIdentifier="AlbumDetail" id="QRL-fa-7lZ" customClass="AlbumDetailViewController" customModule="ThinMP" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="eQq-Ot-RMk">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Album Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pm2-Jb-nVU">
+                                <rect key="frame" x="16" y="56" width="343" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Artist Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="72s-JM-Fei">
+                                <rect key="frame" x="16" y="85" width="343" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="2op-VZ-miC"/>
+                    </view>
+                    <connections>
+                        <outlet property="primaryText" destination="pm2-Jb-nVU" id="rvV-uq-4Bh"/>
+                        <outlet property="secondlyText" destination="72s-JM-Fei" id="Hnu-eA-0Yf"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gW0-gg-rdf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1621.5999999999999" y="7.6461769115442282"/>
         </scene>
         <!--Songs View Controller-->
         <scene sceneID="pHh-rb-r5F">

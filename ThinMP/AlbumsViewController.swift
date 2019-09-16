@@ -4,7 +4,7 @@ import MediaPlayer
 class AlbumsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
 
     @IBOutlet var tableView: UITableView!
-    var albums:[String] = []
+    var albumCollections:[MPMediaItemCollection] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -13,13 +13,13 @@ class AlbumsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return albums.count;
+        return albumCollections.count;
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "AlbumCell", for: indexPath)
         
-        cell.textLabel!.text = albums[indexPath.row]
+        cell.textLabel!.text = albumCollections[indexPath.row].representativeItem!.albumTitle
         
         return cell
     }
@@ -27,7 +27,7 @@ class AlbumsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func setAlbumsAsync() {
         MPMediaLibrary.requestAuthorization { status in
             if status == .authorized {
-                self.albums = self.getAlbums()
+                self.albumCollections = MPMediaQuery.albums().collections!
                 DispatchQueue.global(qos: .userInitiated).async {
                     DispatchQueue.main.async {
                         self.tableView.reloadData()
@@ -37,17 +37,13 @@ class AlbumsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
-    func getAlbums() -> [String] {
-        var albums:[String] = []
-        let query = MPMediaQuery.albums()
-        if let collections = query.collections {
-            for collection in collections {
-                if let representativeTitle = collection.representativeItem!.albumTitle {
-                    albums.append(representativeTitle)
-                }
-            }
-        }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let storyboard: UIStoryboard = self.storyboard!
         
-        return albums
+        let nextView = storyboard.instantiateViewController(withIdentifier: "AlbumDetail") as! AlbumDetailViewController
+        
+        nextView.arg = String(albumCollections[indexPath.row].persistentID)
+
+        self.present(nextView, animated: true, completion: nil)
     }
 }
