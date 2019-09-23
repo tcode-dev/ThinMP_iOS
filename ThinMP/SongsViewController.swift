@@ -29,8 +29,9 @@ class SongsViewController: UIViewController , UITableViewDelegate, UITableViewDa
             // アーティスト名
             cell.secondaryText.text = item.artist
             
+            // アートワーク
+            cell.artworkView.image = nil
             if let artwork = item.artwork {
-                // アートワーク
                 cell.artworkView.contentMode = UIView.ContentMode.scaleAspectFill
                 cell.artworkView.clipsToBounds = true
                 cell.artworkView.image = artwork.image(at: cell.artworkView.bounds.size)
