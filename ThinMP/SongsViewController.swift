@@ -10,6 +10,7 @@ class SongsViewController: UIViewController , UITableViewDelegate, UITableViewDa
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tableView.register(UINib(nibName: "TableViewTrackCell", bundle: nil),forCellReuseIdentifier:"customTableViewTrackCell")
         setSongsAsync()
     }
     
@@ -18,10 +19,24 @@ class SongsViewController: UIViewController , UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "SongCell", for: indexPath)
         
-        cell.textLabel!.text = songCollections[indexPath.row].representativeItem!.title
+        let cell = tableView.dequeueReusableCell(withIdentifier: "customTableViewTrackCell", for: indexPath) as! TableViewTrackCell
         
+        if let item = songCollections[indexPath.row].representativeItem {
+            // 曲名
+            cell.primaryText.text = item.title
+            
+            // アーティスト名
+            cell.secondaryText.text = item.artist
+            
+            if let artwork = item.artwork {
+                // アートワーク
+                cell.artworkView.contentMode = UIView.ContentMode.scaleAspectFill
+                cell.artworkView.clipsToBounds = true
+                cell.artworkView.image = artwork.image(at: cell.artworkView.bounds.size)
+            }
+        }
+
         return cell
     }
     
