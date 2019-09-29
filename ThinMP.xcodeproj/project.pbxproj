@@ -19,6 +19,8 @@
 		52C34D69230ED7C000EA76DA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52C34D68230ED7C000EA76DA /* Assets.xcassets */; };
 		52C34D6C230ED7C000EA76DA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52C34D6A230ED7C000EA76DA /* LaunchScreen.storyboard */; };
 		52C97A4E232517B4002C414B /* MusicService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C97A4D232517B4002C414B /* MusicService.swift */; };
+		52DBD73B23408E4F0092DAB9 /* CollectionViewAlubumCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DBD73923408E4F0092DAB9 /* CollectionViewAlubumCell.swift */; };
+		52DBD73C23408E4F0092DAB9 /* CollectionViewAlubumCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52DBD73A23408E4F0092DAB9 /* CollectionViewAlubumCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +38,8 @@
 		52C34D6B230ED7C000EA76DA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		52C34D6D230ED7C000EA76DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		52C97A4D232517B4002C414B /* MusicService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicService.swift; sourceTree = "<group>"; };
+		52DBD73923408E4F0092DAB9 /* CollectionViewAlubumCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CollectionViewAlubumCell.swift; path = ThinMP/View/CollectionViewAlubumCell.swift; sourceTree = "<group>"; };
+		52DBD73A23408E4F0092DAB9 /* CollectionViewAlubumCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CollectionViewAlubumCell.xib; path = ThinMP/View/CollectionViewAlubumCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +56,8 @@
 		52C34D55230ED7BE00EA76DA = {
 			isa = PBXGroup;
 			children = (
+				52DBD73923408E4F0092DAB9 /* CollectionViewAlubumCell.swift */,
+				52DBD73A23408E4F0092DAB9 /* CollectionViewAlubumCell.xib */,
 				524D58D42338A0AF00F7E5E4 /* TableViewTrackCell.swift */,
 				524D58D52338A0AF00F7E5E4 /* TableViewTrackCell.xib */,
 				52C34D60230ED7BE00EA76DA /* ThinMP */,
@@ -158,6 +164,7 @@
 				52C34D6C230ED7C000EA76DA /* LaunchScreen.storyboard in Resources */,
 				52C34D69230ED7C000EA76DA /* Assets.xcassets in Resources */,
 				52C34D67230ED7BE00EA76DA /* Main.storyboard in Resources */,
+				52DBD73C23408E4F0092DAB9 /* CollectionViewAlubumCell.xib in Resources */,
 				524D58D72338A0AF00F7E5E4 /* TableViewTrackCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -176,6 +183,7 @@
 				529A3FC6231D4A650085364D /* SongsViewController.swift in Sources */,
 				522A09A6232F47AA00506C7F /* AlbumDetailViewController.swift in Sources */,
 				52C34D62230ED7BE00EA76DA /* AppDelegate.swift in Sources */,
+				52DBD73B23408E4F0092DAB9 /* CollectionViewAlubumCell.swift in Sources */,
 				529A3FC2231D08F70085364D /* ArtistViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
