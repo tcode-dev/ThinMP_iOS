@@ -1,10 +1,18 @@
 import UIKit
 import MediaPlayer
 
-class AlbumsViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+class AlbumsViewController: UIViewController, UICollectionViewDataSource,
+UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+    var albumCollections:[MPMediaItemCollection] = []
+    
     @IBOutlet var albumCollectionView: UICollectionView!
     
-    var albumCollections:[MPMediaItemCollection] = []
+    @IBAction func back(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,13 +72,13 @@ class AlbumsViewController: UIViewController, UICollectionViewDataSource, UIColl
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-
+        
         let horizontalSpace : CGFloat = 20
         let width : CGFloat = self.view.bounds.width / 2 - horizontalSpace
         let vertical : CGFloat = 50
         let height : CGFloat = width + vertical
-        NSLog("");
+        
         return CGSize(width: width, height: height)
     }
-
+    
 }
