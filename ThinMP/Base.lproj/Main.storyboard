@@ -59,9 +59,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Artists" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="thI-RX-4og">
-                                <rect key="frame" x="16" y="36" width="50" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Artists" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="thI-RX-4og">
+                                <rect key="frame" x="10" y="30" width="355" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -85,8 +84,22 @@
                                     <outlet property="delegate" destination="sUl-6N-8Fs" id="yGK-S4-ibk"/>
                                 </connections>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uHq-nP-Ybw">
+                                <rect key="frame" x="10" y="30" width="34" height="30"/>
+                                <state key="normal" title="Back"/>
+                                <connections>
+                                    <action selector="back:" destination="sUl-6N-8Fs" eventType="touchUpInside" id="9NA-yI-2vS"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="wF1-ju-Ja4" firstAttribute="trailing" secondItem="thI-RX-4og" secondAttribute="trailing" constant="10" id="2bg-gA-bw8"/>
+                            <constraint firstItem="thI-RX-4og" firstAttribute="top" secondItem="wF1-ju-Ja4" secondAttribute="top" constant="10" id="2gG-wi-4S6"/>
+                            <constraint firstItem="thI-RX-4og" firstAttribute="leading" secondItem="wF1-ju-Ja4" secondAttribute="leading" constant="10" id="UiN-05-0BF"/>
+                            <constraint firstItem="uHq-nP-Ybw" firstAttribute="top" secondItem="wF1-ju-Ja4" secondAttribute="top" constant="10" id="cPZ-2U-LCe"/>
+                            <constraint firstItem="uHq-nP-Ybw" firstAttribute="leading" secondItem="wF1-ju-Ja4" secondAttribute="leading" constant="10" id="rgS-FN-PCX"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="wF1-ju-Ja4"/>
                     </view>
                     <connections>

@@ -3,9 +3,12 @@ import MediaPlayer
 
 class ArtistViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    var artists:[String] = []
     @IBOutlet var tableView: UITableView!
     
-    var artists:[String] = []
+    @IBAction func back(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
