@@ -2,10 +2,12 @@ import UIKit
 import MediaPlayer
 
 class SongsViewController: UIViewController , UITableViewDelegate, UITableViewDataSource {
-    
+    var songCollections:[MPMediaItemCollection] = []
     @IBOutlet var tableView: UITableView!
     
-    var songCollections:[MPMediaItemCollection] = []
+    @IBAction func back(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,7 +39,7 @@ class SongsViewController: UIViewController , UITableViewDelegate, UITableViewDa
                 cell.artworkView.image = artwork.image(at: cell.artworkView.bounds.size)
             }
         }
-
+        
         return cell
     }
     
