@@ -9,10 +9,6 @@ class AlbumsViewController: UIViewController, UICollectionViewDataSource, UIColl
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let layout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
-        albumCollectionView.collectionViewLayout = layout
-        
         albumCollectionView.register(UINib(nibName: "CollectionViewAlubumCell", bundle: nil), forCellWithReuseIdentifier: "customCollectionViewAlubumCell")
         
         setAlbumsAsync()
@@ -68,9 +64,13 @@ class AlbumsViewController: UIViewController, UICollectionViewDataSource, UIColl
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+
         let horizontalSpace : CGFloat = 20
-        let cellSize : CGFloat = self.view.bounds.width / 2 - horizontalSpace
-        return CGSize(width: cellSize, height: cellSize)
+        let width : CGFloat = self.view.bounds.width / 2 - horizontalSpace
+        let vertical : CGFloat = 50
+        let height : CGFloat = width + vertical
+        NSLog("");
+        return CGSize(width: width, height: height)
     }
-    
+
 }

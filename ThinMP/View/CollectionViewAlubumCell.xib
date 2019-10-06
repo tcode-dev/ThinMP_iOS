@@ -13,40 +13,49 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="customCollectionViewAlubumCell" id="gTV-IL-0wX" customClass="CollectionViewAlubumCell" customModule="ThinMP" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="200" height="300"/>
+            <rect key="frame" x="0.0" y="0.0" width="200" height="360"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="200" height="300"/>
+                <rect key="frame" x="0.0" y="0.0" width="200" height="360"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HFI-qO-cnL">
-                        <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="HFI-qO-cnL">
+                        <rect key="frame" x="10" y="10" width="180" height="298"/>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1EM-sU-LzJ">
-                        <rect key="frame" x="0.0" y="217" width="42" height="21"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="14d-kS-KU5">
+                        <rect key="frame" x="10" y="339" width="180" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="14d-kS-KU5">
-                        <rect key="frame" x="0.0" y="248" width="42" height="21"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1EM-sU-LzJ">
+                        <rect key="frame" x="10" y="318" width="180" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
             </view>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="HFI-qO-cnL" secondAttribute="bottom" constant="52" id="FA0-85-tuz"/>
+                <constraint firstItem="1EM-sU-LzJ" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="10" id="HhM-WE-VnN"/>
+                <constraint firstItem="HFI-qO-cnL" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="10" id="NVc-0c-D8T"/>
+                <constraint firstAttribute="trailing" secondItem="1EM-sU-LzJ" secondAttribute="trailing" constant="10" id="ad3-1j-wot"/>
+                <constraint firstAttribute="trailing" secondItem="14d-kS-KU5" secondAttribute="trailing" constant="10" id="bcc-xz-p1u"/>
+                <constraint firstItem="14d-kS-KU5" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="10" id="ezG-2c-LAw"/>
+                <constraint firstAttribute="bottom" secondItem="14d-kS-KU5" secondAttribute="bottom" id="noV-Cp-FQE"/>
+                <constraint firstAttribute="trailing" secondItem="HFI-qO-cnL" secondAttribute="trailing" constant="10" id="osL-zB-Tb3"/>
+                <constraint firstItem="HFI-qO-cnL" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="10" id="r2V-UU-n8F"/>
+                <constraint firstAttribute="bottom" secondItem="1EM-sU-LzJ" secondAttribute="bottom" constant="21" id="yOd-U0-vxl"/>
+            </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
-            <size key="customSize" width="202" height="289"/>
+            <size key="customSize" width="202" height="349"/>
             <connections>
                 <outlet property="artworkView" destination="HFI-qO-cnL" id="cSF-xA-Mpc"/>
                 <outlet property="primaryText" destination="1EM-sU-LzJ" id="f3U-2k-Vet"/>
                 <outlet property="secondaryText" destination="14d-kS-KU5" id="Cd5-VK-bE2"/>
             </connections>
-            <point key="canvasLocation" x="251.19999999999999" y="224.4377811094453"/>
+            <point key="canvasLocation" x="251.19999999999999" y="250.9745127436282"/>
         </collectionViewCell>
     </objects>
 </document>
