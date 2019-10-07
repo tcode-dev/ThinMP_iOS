@@ -13,7 +13,28 @@ class ArtistViewController: UIViewController, UITableViewDelegate, UITableViewDa
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setArtistsAsync()
+        setUpPermissionCheck()
+    }
+    
+    func setUpPermissionCheck() {
+        if MPMediaLibrary.authorizationStatus() == .authorized {
+            setUp()
+        } else {
+            MPMediaLibrary.requestAuthorization { status in
+                if status == .authorized {
+                    self.setUp()
+                }
+            }
+        }
+    }
+    
+    func setUp() {
+        self.artists = self.getArtists()
+        DispatchQueue.global(qos: .userInitiated).async {
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -26,19 +47,6 @@ class ArtistViewController: UIViewController, UITableViewDelegate, UITableViewDa
         cell.textLabel!.text = artists[indexPath.row]
         
         return cell
-    }
-    
-    func setArtistsAsync() {
-        MPMediaLibrary.requestAuthorization { status in
-            if status == .authorized {
-                self.artists = self.getArtists()
-                DispatchQueue.global(qos: .userInitiated).async {
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
-                    }
-                }
-            }
-        }
     }
     
     func getArtists() -> [String] {

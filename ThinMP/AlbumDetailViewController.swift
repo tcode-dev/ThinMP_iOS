@@ -2,7 +2,6 @@ import UIKit
 import MediaPlayer
 
 class AlbumDetailViewController: UIViewController {
-    
     var arg: String!
     
     @IBOutlet var primaryText: UILabel!
@@ -12,10 +11,22 @@ class AlbumDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setAsync()
+        setUpPermissionCheck()
     }
     
-    func setAsync() {
+    func setUpPermissionCheck() {
+        if MPMediaLibrary.authorizationStatus() == .authorized {
+            setUp()
+        } else {
+            MPMediaLibrary.requestAuthorization { status in
+                if status == .authorized {
+                    self.setUp()
+                }
+            }
+        }
+    }
+    
+    func setUp() {
         let property = MPMediaPropertyPredicate(value: self.arg, forProperty: MPMediaItemPropertyAlbumPersistentID)
         let query = MPMediaQuery.albums()
         query.addFilterPredicate(property)

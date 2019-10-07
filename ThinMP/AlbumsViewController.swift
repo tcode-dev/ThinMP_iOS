@@ -16,7 +16,28 @@ UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
         
         albumCollectionView.register(UINib(nibName: "CollectionViewAlubumCell", bundle: nil), forCellWithReuseIdentifier: "customCollectionViewAlubumCell")
         
-        setAlbumsAsync()
+        setUpPermissionCheck()
+    }
+    
+    func setUpPermissionCheck() {
+        if MPMediaLibrary.authorizationStatus() == .authorized {
+            setUp()
+        } else {
+            MPMediaLibrary.requestAuthorization { status in
+                if status == .authorized {
+                    self.setUp()
+                }
+            }
+        }
+    }
+    
+    func setUp() {
+        self.albumCollections = MPMediaQuery.albums().collections!
+        DispatchQueue.global(qos: .userInitiated).async {
+            DispatchQueue.main.async {
+                self.albumCollectionView.reloadData()
+            }
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -44,19 +65,6 @@ UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
         }
         
         return cell
-    }
-    
-    func setAlbumsAsync() {
-        MPMediaLibrary.requestAuthorization { status in
-            if status == .authorized {
-                self.albumCollections = MPMediaQuery.albums().collections!
-                DispatchQueue.global(qos: .userInitiated).async {
-                    DispatchQueue.main.async {
-                        self.albumCollectionView.reloadData()
-                    }
-                }
-            }
-        }
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

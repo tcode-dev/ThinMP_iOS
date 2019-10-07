@@ -13,7 +13,30 @@ class SongsViewController: UIViewController , UITableViewDelegate, UITableViewDa
         super.viewDidLoad()
         
         tableView.register(UINib(nibName: "TableViewTrackCell", bundle: nil),forCellReuseIdentifier:"customTableViewTrackCell")
-        setSongsAsync()
+        
+        setUpPermissionCheck()
+    }
+    
+    func setUpPermissionCheck() {
+        if MPMediaLibrary.authorizationStatus() == .authorized {
+            setUp()
+        } else {
+            MPMediaLibrary.requestAuthorization { status in
+                if status == .authorized {
+                    self.setUp()
+                }
+            }
+        }
+    }
+    
+    func setUp() {
+        self.songCollections = MPMediaQuery.songs().collections!
+        
+        DispatchQueue.global(qos: .userInitiated).async {
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -41,20 +64,6 @@ class SongsViewController: UIViewController , UITableViewDelegate, UITableViewDa
         }
         
         return cell
-    }
-    
-    func setSongsAsync() {
-        MPMediaLibrary.requestAuthorization { status in
-            if status == .authorized {
-                self.songCollections = MPMediaQuery.songs().collections!
-                
-                DispatchQueue.global(qos: .userInitiated).async {
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
-                    }
-                }
-            }
-        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
