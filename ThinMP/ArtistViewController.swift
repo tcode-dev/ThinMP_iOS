@@ -13,10 +13,10 @@ class ArtistViewController: UIViewController, UITableViewDelegate, UITableViewDa
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setUpPermissionCheck()
+        setUpWithPermissionCheck()
     }
     
-    func setUpPermissionCheck() {
+    func setUpWithPermissionCheck() {
         if MPMediaLibrary.authorizationStatus() == .authorized {
             setUp()
         } else {

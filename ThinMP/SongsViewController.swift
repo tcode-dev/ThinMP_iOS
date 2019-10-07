@@ -14,10 +14,10 @@ class SongsViewController: UIViewController , UITableViewDelegate, UITableViewDa
         
         tableView.register(UINib(nibName: "TableViewTrackCell", bundle: nil),forCellReuseIdentifier:"customTableViewTrackCell")
         
-        setUpPermissionCheck()
+        setUpWithPermissionCheck()
     }
     
-    func setUpPermissionCheck() {
+    func setUpWithPermissionCheck() {
         if MPMediaLibrary.authorizationStatus() == .authorized {
             setUp()
         } else {

@@ -16,10 +16,10 @@ UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
         
         albumCollectionView.register(UINib(nibName: "CollectionViewAlubumCell", bundle: nil), forCellWithReuseIdentifier: "customCollectionViewAlubumCell")
         
-        setUpPermissionCheck()
+        setUpWithPermissionCheck()
     }
     
-    func setUpPermissionCheck() {
+    func setUpWithPermissionCheck() {
         if MPMediaLibrary.authorizationStatus() == .authorized {
             setUp()
         } else {
