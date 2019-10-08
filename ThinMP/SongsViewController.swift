@@ -1,7 +1,7 @@
 import UIKit
 import MediaPlayer
 
-class SongsViewController: UIViewController , UITableViewDelegate, UITableViewDataSource {
+class SongsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var songCollections:[MPMediaItemCollection] = []
     @IBOutlet var tableView: UITableView!
     
