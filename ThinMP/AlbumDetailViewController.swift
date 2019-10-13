@@ -32,7 +32,7 @@ class AlbumDetailViewController: UIViewController, UITableViewDelegate, UITableV
     
     func setUp() {
         let property = MPMediaPropertyPredicate(value: self.arg, forProperty: MPMediaItemPropertyAlbumPersistentID)
-        let query = MPMediaQuery.albums()
+        let query = MPMediaQuery.songs()
         query.addFilterPredicate(property)
         let albums = query.items!.filter({$0.albumTitle != nil})
         songCollections = query.collections!
