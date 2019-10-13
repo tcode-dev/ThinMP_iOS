@@ -32,7 +32,11 @@ UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     }
     
     func setUp() {
-        self.albumCollections = MPMediaQuery.albums().collections!
+        let property = MPMediaPropertyPredicate(value: false, forProperty: MPMediaItemPropertyIsCloudItem)
+        let query = MPMediaQuery.albums()
+        query.addFilterPredicate(property)
+
+        albumCollections = query.collections!
         DispatchQueue.global(qos: .userInitiated).async {
             DispatchQueue.main.async {
                 self.albumCollectionView.reloadData()
