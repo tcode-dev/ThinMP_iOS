@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		522A09A6232F47AA00506C7F /* AlbumDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522A09A5232F47AA00506C7F /* AlbumDetailViewController.swift */; };
+		52323F09235C79460076F29E /* ArtistDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52323F08235C79460076F29E /* ArtistDetailViewController.swift */; };
 		524D58D62338A0AF00F7E5E4 /* TableViewTrackCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524D58D42338A0AF00F7E5E4 /* TableViewTrackCell.swift */; };
 		524D58D72338A0AF00F7E5E4 /* TableViewTrackCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 524D58D52338A0AF00F7E5E4 /* TableViewTrackCell.xib */; };
 		529A3FC2231D08F70085364D /* ArtistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529A3FC1231D08F70085364D /* ArtistViewController.swift */; };
@@ -25,6 +26,7 @@
 
 /* Begin PBXFileReference section */
 		522A09A5232F47AA00506C7F /* AlbumDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDetailViewController.swift; sourceTree = "<group>"; };
+		52323F08235C79460076F29E /* ArtistDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ArtistDetailViewController.swift; path = View/ArtistDetailViewController.swift; sourceTree = "<group>"; };
 		524D58D42338A0AF00F7E5E4 /* TableViewTrackCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewTrackCell.swift; sourceTree = "<group>"; };
 		524D58D52338A0AF00F7E5E4 /* TableViewTrackCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TableViewTrackCell.xib; sourceTree = "<group>"; };
 		529A3FC1231D08F70085364D /* ArtistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistViewController.swift; sourceTree = "<group>"; };
@@ -53,6 +55,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		52323F07235C78E20076F29E /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				52323F08235C79460076F29E /* ArtistDetailViewController.swift */,
+			);
+			name = ViewController;
+			sourceTree = "<group>";
+		};
 		52C34D55230ED7BE00EA76DA = {
 			isa = PBXGroup;
 			children = (
@@ -76,6 +86,7 @@
 		52C34D60230ED7BE00EA76DA /* ThinMP */ = {
 			isa = PBXGroup;
 			children = (
+				52323F07235C78E20076F29E /* ViewController */,
 				52C97A4C2325178C002C414B /* Service */,
 				52C34D61230ED7BE00EA76DA /* AppDelegate.swift */,
 				52C34D63230ED7BE00EA76DA /* ViewController.swift */,
@@ -178,6 +189,7 @@
 			files = (
 				529A3FC4231D33710085364D /* AlbumsViewController.swift in Sources */,
 				52C97A4E232517B4002C414B /* MusicService.swift in Sources */,
+				52323F09235C79460076F29E /* ArtistDetailViewController.swift in Sources */,
 				52C34D64230ED7BE00EA76DA /* ViewController.swift in Sources */,
 				524D58D62338A0AF00F7E5E4 /* TableViewTrackCell.swift in Sources */,
 				529A3FC6231D4A650085364D /* SongsViewController.swift in Sources */,

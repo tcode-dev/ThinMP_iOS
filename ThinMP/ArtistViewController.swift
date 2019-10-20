@@ -2,8 +2,8 @@ import UIKit
 import MediaPlayer
 
 class ArtistViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    var artistCollections:[MPMediaItemCollection] = []
     
-    var artists:[String] = []
     @IBOutlet var tableView: UITableView!
     
     @IBAction func back(_ sender: Any) {
@@ -29,7 +29,12 @@ class ArtistViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func setUp() {
-        self.artists = self.getArtists()
+        let property = MPMediaPropertyPredicate(value: false, forProperty: MPMediaItemPropertyIsCloudItem)
+        let query = MPMediaQuery.artists()
+        query.addFilterPredicate(property)
+        
+        artistCollections = query.collections!
+        
         DispatchQueue.global(qos: .userInitiated).async {
             DispatchQueue.main.async {
                 self.tableView.reloadData()
@@ -38,29 +43,27 @@ class ArtistViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return artists.count;
+        return artistCollections.count;
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "ArtistCell", for: indexPath)
         
-        cell.textLabel!.text = artists[indexPath.row]
+        if let item = artistCollections[indexPath.row].representativeItem {
+            if let artist = item.artist {
+                cell.textLabel!.text = artist
+            }
+        }
         
         return cell
     }
     
-    func getArtists() -> [String] {
-        var artists:[String] = []
-        let query = MPMediaQuery.artists()
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let storyboard: UIStoryboard = self.storyboard!
+        let nextView = storyboard.instantiateViewController(withIdentifier: "ArtistDetail") as! ArtistDetailViewController
         
-        if let collections = query.collections {
-            for collection in collections {
-                if let representativeTitle = collection.representativeItem!.artist {
-                    artists.append(representativeTitle)
-                }
-            }
-        }
-        
-        return artists
+        nextView.arg = String(artistCollections[indexPath.row].persistentID)
+
+        self.present(nextView, animated: true, completion: nil)
     }
 }
