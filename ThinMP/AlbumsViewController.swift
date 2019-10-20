@@ -75,7 +75,7 @@ UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
         let storyboard: UIStoryboard = self.storyboard!
         let nextView = storyboard.instantiateViewController(withIdentifier: "AlbumDetail") as! AlbumDetailViewController
         
-        nextView.arg = String(albumCollections[indexPath.row].persistentID)
+        nextView.identifier = albumCollections[indexPath.row].persistentID
         
         self.present(nextView, animated: true, completion: nil)
     }

@@ -2,7 +2,7 @@ import UIKit
 import MediaPlayer
 
 class AlbumDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    var arg: String!
+    var identifier: MPMediaEntityPersistentID!
     var songCollections:[MPMediaItemCollection] = []
     
     @IBOutlet var tableView: UITableView!
@@ -31,7 +31,7 @@ class AlbumDetailViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func setUp() {
-        let property = MPMediaPropertyPredicate(value: self.arg, forProperty: MPMediaItemPropertyAlbumPersistentID)
+        let property = MPMediaPropertyPredicate(value: self.identifier, forProperty: MPMediaItemPropertyAlbumPersistentID)
         let query = MPMediaQuery.songs()
         query.addFilterPredicate(property)
         let albums = query.items!.filter({$0.albumTitle != nil})
