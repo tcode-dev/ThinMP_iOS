@@ -12,6 +12,8 @@
 		524D58D62338A0AF00F7E5E4 /* TableViewTrackCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524D58D42338A0AF00F7E5E4 /* TableViewTrackCell.swift */; };
 		524D58D72338A0AF00F7E5E4 /* TableViewTrackCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 524D58D52338A0AF00F7E5E4 /* TableViewTrackCell.xib */; };
 		526A3B372366AC6F0070BE0A /* Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526A3B362366AC6F0070BE0A /* Album.swift */; };
+		529566E023686AEF0086BCD3 /* CollectionViewTrackCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529566DE23686AEF0086BCD3 /* CollectionViewTrackCell.swift */; };
+		529566E123686AEF0086BCD3 /* CollectionViewTrackCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 529566DF23686AEF0086BCD3 /* CollectionViewTrackCell.xib */; };
 		529A3FC2231D08F70085364D /* ArtistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529A3FC1231D08F70085364D /* ArtistViewController.swift */; };
 		529A3FC4231D33710085364D /* AlbumsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529A3FC3231D33710085364D /* AlbumsViewController.swift */; };
 		529A3FC6231D4A650085364D /* SongsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529A3FC5231D4A650085364D /* SongsViewController.swift */; };
@@ -31,6 +33,8 @@
 		524D58D42338A0AF00F7E5E4 /* TableViewTrackCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewTrackCell.swift; sourceTree = "<group>"; };
 		524D58D52338A0AF00F7E5E4 /* TableViewTrackCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TableViewTrackCell.xib; sourceTree = "<group>"; };
 		526A3B362366AC6F0070BE0A /* Album.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Album.swift; path = View/Album.swift; sourceTree = "<group>"; };
+		529566DE23686AEF0086BCD3 /* CollectionViewTrackCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CollectionViewTrackCell.swift; path = View/CollectionViewTrackCell.swift; sourceTree = "<group>"; };
+		529566DF23686AEF0086BCD3 /* CollectionViewTrackCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CollectionViewTrackCell.xib; path = View/CollectionViewTrackCell.xib; sourceTree = "<group>"; };
 		529A3FC1231D08F70085364D /* ArtistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistViewController.swift; sourceTree = "<group>"; };
 		529A3FC3231D33710085364D /* AlbumsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsViewController.swift; sourceTree = "<group>"; };
 		529A3FC5231D4A650085364D /* SongsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongsViewController.swift; sourceTree = "<group>"; };
@@ -73,6 +77,15 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
+		529566D92368695A0086BCD3 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				529566DE23686AEF0086BCD3 /* CollectionViewTrackCell.swift */,
+				529566DF23686AEF0086BCD3 /* CollectionViewTrackCell.xib */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
 		52C34D55230ED7BE00EA76DA = {
 			isa = PBXGroup;
 			children = (
@@ -96,6 +109,7 @@
 		52C34D60230ED7BE00EA76DA /* ThinMP */ = {
 			isa = PBXGroup;
 			children = (
+				529566D92368695A0086BCD3 /* View */,
 				526A3B352366AC480070BE0A /* Model */,
 				52323F07235C78E20076F29E /* ViewController */,
 				52C97A4C2325178C002C414B /* Service */,
@@ -185,6 +199,7 @@
 			files = (
 				52C34D6C230ED7C000EA76DA /* LaunchScreen.storyboard in Resources */,
 				52C34D69230ED7C000EA76DA /* Assets.xcassets in Resources */,
+				529566E123686AEF0086BCD3 /* CollectionViewTrackCell.xib in Resources */,
 				52C34D67230ED7BE00EA76DA /* Main.storyboard in Resources */,
 				52DBD73C23408E4F0092DAB9 /* CollectionViewAlubumCell.xib in Resources */,
 				524D58D72338A0AF00F7E5E4 /* TableViewTrackCell.xib in Resources */,
@@ -198,6 +213,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				529566E023686AEF0086BCD3 /* CollectionViewTrackCell.swift in Sources */,
 				529A3FC4231D33710085364D /* AlbumsViewController.swift in Sources */,
 				52C97A4E232517B4002C414B /* MusicService.swift in Sources */,
 				52323F09235C79460076F29E /* ArtistDetailViewController.swift in Sources */,

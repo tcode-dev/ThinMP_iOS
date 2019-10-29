@@ -7,7 +7,9 @@ class CollectionViewAlubumCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+
+        self.artworkView.contentMode = UIView.ContentMode.scaleAspectFill
+        self.artworkView.clipsToBounds = true
     }
 
 }

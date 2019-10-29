@@ -2,8 +2,10 @@ import UIKit
 import MediaPlayer
 
 class ArtistDetailViewController: UIViewController {
+    var NUMBER_OF_SECTIONS = 2
     var identifier: MPMediaEntityPersistentID!
     var albums: [Album] = []
+    var songs: [MPMediaItem] = []
     
     @IBOutlet var artworkView: UIImageView!
     @IBOutlet var primaryText: UILabel!
@@ -13,7 +15,7 @@ class ArtistDetailViewController: UIViewController {
         super.viewDidLoad()
         
         collectionView.register(UINib(nibName: "CollectionViewAlubumCell", bundle: nil), forCellWithReuseIdentifier: "customCollectionViewAlubumCell")
-        collectionView.register(UINib(nibName: "TableViewTrackCell", bundle: nil),forCellWithReuseIdentifier:"customTableViewTrackCell")
+        collectionView.register(UINib(nibName: "CollectionViewTrackCell", bundle: nil),forCellWithReuseIdentifier:"customCollectionViewTrackCell")
         
         setupWithPermissionCheck()
     }
@@ -34,7 +36,7 @@ class ArtistDetailViewController: UIViewController {
         let property = MPMediaPropertyPredicate(value: self.identifier, forProperty: MPMediaItemPropertyArtistPersistentID)
         let query = MPMediaQuery.artists()
         query.addFilterPredicate(property)
-        let songs = query.items!
+        self.songs = query.items!
         let albumMap = Dictionary.init(grouping: songs) { song -> MPMediaEntityPersistentID in
             return song.albumPersistentID
         }
@@ -77,29 +79,32 @@ class ArtistDetailViewController: UIViewController {
 extension ArtistDetailViewController : UICollectionViewDataSource,
 UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return albums.count;
+        if (section == 0) {
+            return albums.count
+        } else {
+            return songs.count
+        }
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "customCollectionViewAlubumCell", for: indexPath) as! CollectionViewAlubumCell
-        
-        let album = albums[indexPath.row]
-        if let title = album.title {
-            cell.primaryText.text = title
+        if (indexPath.section == 0) {
+            let album = albums[indexPath.row]
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "customCollectionViewAlubumCell", for: indexPath) as! CollectionViewAlubumCell
+            cell.primaryText.text = (album.title ?? "")
+            cell.secondaryText.text = (album.artist ?? "")
+            cell.artworkView.image = album.artwork != nil ? album.artwork!.image(at: cell.artworkView!.bounds.size) : nil
+            
+            return cell
+        } else {
+            let song = songs[indexPath.row]
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "customCollectionViewTrackCell", for: indexPath) as! CollectionViewTrackCell
+            cell.primaryText.text = (song.title ?? "")
+            cell.secondaryText.text = (song.artist ?? "")
+            cell.imageView.image = song.artwork != nil ? song.artwork!.image(at: cell.imageView!.bounds.size) : nil
+            
+            return cell
         }
-        
-        if let artist = album.artist {
-            cell.secondaryText.text = artist
-        }
-        
-        cell.artworkView.image = nil
-        if let artwork = album.artwork {
-            cell.artworkView.contentMode = UIView.ContentMode.scaleAspectFill
-            cell.artworkView.clipsToBounds = true
-            cell.artworkView.image = artwork.image(at: cell.artworkView!.bounds.size)
-        }
-        
-        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -112,12 +117,19 @@ UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        let horizontalSpace : CGFloat = 10
-        let width : CGFloat = self.view.bounds.width / 2 - horizontalSpace
-        let vertical : CGFloat = 42
-        let height : CGFloat = width + vertical
-        
-        return CGSize(width: width, height: height)
+        if (indexPath.section == 0) {
+            let horizontalSpace : CGFloat = 10
+            let width : CGFloat = self.view.bounds.width / 2 - horizontalSpace
+            let vertical : CGFloat = 42
+            let height : CGFloat = width + vertical
+            
+            return CGSize(width: width, height: height)
+        } else {
+            return CGSize(width: self.view.bounds.width, height: 42)
+        }
+    }
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return NUMBER_OF_SECTIONS
     }
 }
