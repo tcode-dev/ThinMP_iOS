@@ -3,7 +3,7 @@ import MediaPlayer
 
 class ArtistDetailViewController: UIViewController {
     var NUMBER_OF_SECTIONS = 2
-    var identifier: MPMediaEntityPersistentID!
+    var persistentId: MPMediaEntityPersistentID!
     var albums: [Album] = []
     var songs: [MPMediaItem] = []
     
@@ -33,40 +33,16 @@ class ArtistDetailViewController: UIViewController {
     }
     
     func setup() {
-        let property = MPMediaPropertyPredicate(value: self.identifier, forProperty: MPMediaItemPropertyArtistPersistentID)
-        let query = MPMediaQuery.artists()
-        query.addFilterPredicate(property)
-        self.songs = query.items!
-        let albumMap = Dictionary.init(grouping: songs) { song -> MPMediaEntityPersistentID in
-            return song.albumPersistentID
-        }
-        
-        albums = albumMap.map { (arg0) -> Album in
-            let (persistentID, songs) = arg0
-            let title = songs.first(where: { (song) -> Bool in
-                (song.albumTitle != nil)
-            })?.title
-            let artist = songs.first(where: { (song) -> Bool in
-                (song.albumArtist != nil)
-            })?.artist
-            let artwork = songs.first(where: { (song) -> Bool in
-                (song.artwork != nil)
-            })?.artwork
-            
-            return Album(persistentID: persistentID, title: title, artist: artist, artwork: artwork, songs: songs)
-        }
-        
-        albums.sort(by: {$0.title! < $1.title! })
-        
+        let artistDetail = ArtistDetail(persistentId: self.persistentId)
+
+        self.albums = artistDetail.getAlbums()
+        self.songs = artistDetail.getSongs()
+
         DispatchQueue.global(qos: .userInitiated).async {
             DispatchQueue.main.async {
-                self.primaryText.text = self.albums.first(where: { (album) -> Bool in
-                    (album.artist != nil)
-                })?.artist
+                self.primaryText.text = artistDetail.getName()
                 
-                if let artwork = self.albums.first(where: { (album) -> Bool in
-                    (album.artwork != nil)
-                })?.artwork {
+                if let artwork = artistDetail.getArtwork() {
                     self.artworkView.contentMode = UIView.ContentMode.scaleAspectFill
                     self.artworkView.clipsToBounds = true
                     self.artworkView.image = artwork.image(at: self.artworkView.bounds.size)
@@ -126,6 +102,7 @@ UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
             return CGSize(width: width, height: height)
         } else {
             return CGSize(width: self.view.bounds.width, height: 42)
+//            return CGSize(width: collectionViewLayout.collectionViewContentSize.width, height: collectionViewLayout.collectionViewContentSize.height)
         }
     }
     

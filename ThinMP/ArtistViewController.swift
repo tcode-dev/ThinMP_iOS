@@ -62,7 +62,7 @@ class ArtistViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let storyboard: UIStoryboard = self.storyboard!
         let nextView = storyboard.instantiateViewController(withIdentifier: "ArtistDetail") as! ArtistDetailViewController
         
-        nextView.identifier = artistCollections[indexPath.row].persistentID
+        nextView.persistentId = artistCollections[indexPath.row].persistentID
 
         self.present(nextView, animated: true, completion: nil)
     }
