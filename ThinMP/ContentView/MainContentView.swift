@@ -9,8 +9,10 @@ import SwiftUI
 
 struct MainContentView: View {
     var body: some View {
-        List {
-            Text("Artists")
+        NavigationView {
+            NavigationLink(destination: ArtistsContentView()) {
+                Text("Artists")
+            }
         }
     }
 }
