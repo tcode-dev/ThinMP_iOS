@@ -9,10 +9,12 @@ import SwiftUI
 
 struct ArtistsContentView: View {
     @ObservedObject var artists = Artists()
-
+    
     var body: some View {
-        ForEach(artists.list.indices) { index in
-            ArtistRowView(artist: self.artists.list[index])
+        List{
+            ForEach(artists.list.indices) { index in
+                ArtistRowView(artist: self.artists.list[index])
+            }
         }
     }
 }
