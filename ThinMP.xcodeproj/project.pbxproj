@@ -30,6 +30,7 @@
 		52C34D6C230ED7C000EA76DA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52C34D6A230ED7C000EA76DA /* LaunchScreen.storyboard */; };
 		52C97A4E232517B4002C414B /* MusicService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C97A4D232517B4002C414B /* MusicService.swift */; };
 		52CCDAD523C050E9000C474A /* MainContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CCDAD423C050E9000C474A /* MainContentView.swift */; };
+		52D4B5C823C3EF55000364F4 /* ArtistDetailContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D4B5C723C3EF55000364F4 /* ArtistDetailContentView.swift */; };
 		52DBD73B23408E4F0092DAB9 /* CollectionViewAlubumCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DBD73923408E4F0092DAB9 /* CollectionViewAlubumCell.swift */; };
 		52DBD73C23408E4F0092DAB9 /* CollectionViewAlubumCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52DBD73A23408E4F0092DAB9 /* CollectionViewAlubumCell.xib */; };
 /* End PBXBuildFile section */
@@ -60,6 +61,7 @@
 		52C34D6D230ED7C000EA76DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		52C97A4D232517B4002C414B /* MusicService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicService.swift; sourceTree = "<group>"; };
 		52CCDAD423C050E9000C474A /* MainContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainContentView.swift; sourceTree = "<group>"; };
+		52D4B5C723C3EF55000364F4 /* ArtistDetailContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistDetailContentView.swift; sourceTree = "<group>"; };
 		52DBD73923408E4F0092DAB9 /* CollectionViewAlubumCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewAlubumCell.swift; sourceTree = "<group>"; };
 		52DBD73A23408E4F0092DAB9 /* CollectionViewAlubumCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CollectionViewAlubumCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -93,6 +95,7 @@
 			children = (
 				52CCDAD423C050E9000C474A /* MainContentView.swift */,
 				52B6681F23C19ADE00E70C47 /* ArtistsContentView.swift */,
+				52D4B5C723C3EF55000364F4 /* ArtistDetailContentView.swift */,
 			);
 			path = ContentView;
 			sourceTree = "<group>";
@@ -270,6 +273,7 @@
 				52B6681E23C197E000E70C47 /* SceneDelegate.swift in Sources */,
 				524D58D62338A0AF00F7E5E4 /* TableViewTrackCell.swift in Sources */,
 				529A3FC6231D4A650085364D /* SongsViewController.swift in Sources */,
+				52D4B5C823C3EF55000364F4 /* ArtistDetailContentView.swift in Sources */,
 				52CCDAD523C050E9000C474A /* MainContentView.swift in Sources */,
 				5237636123C360C2003ABD2A /* Artist.swift in Sources */,
 				52B6682523C19D8E00E70C47 /* Artists.swift in Sources */,
