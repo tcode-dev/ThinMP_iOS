@@ -29,7 +29,8 @@ class Artists: ObservableObject {
         query.addFilterPredicate(property)
         
         list = query.collections!.map{
-            Artist(name: $0.representativeItem?.artist ?? "unknown")
+            let item = $0.representativeItem
+            return Artist(persistentId: item?.artistPersistentID, name: item?.artist ?? "unknown")
         }
     }
 }

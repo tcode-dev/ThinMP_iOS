@@ -13,7 +13,7 @@ struct ArtistsContentView: View {
     var body: some View {
         List{
             ForEach(artists.list.indices) { index in
-                NavigationLink(destination: ArtistDetailContentView()) {
+                NavigationLink(destination: ArtistDetailContentView(artist: self.artists.list[index])) {
                     ArtistRowView(artist: self.artists.list[index])
                 }
             }

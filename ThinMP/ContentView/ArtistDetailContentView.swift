@@ -8,13 +8,9 @@
 import SwiftUI
 
 struct ArtistDetailContentView: View {
-    var body: some View {
-        Text("ArtistDetailContentView")
-    }
-}
+    var artist: Artist
 
-struct ArtistDetailContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ArtistDetailContentView()
+    var body: some View {
+        Text(artist.name)
     }
 }
