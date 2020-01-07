@@ -2,7 +2,7 @@
 //  ArtistDetail.swift
 //  ThinMP
 //
-//  Created by tk on 2019/10/30.
+//  Created by tk on 2020/01/08.
 //
 
 import MediaPlayer
