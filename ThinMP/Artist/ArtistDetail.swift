@@ -7,12 +7,12 @@
 
 import MediaPlayer
 
-class ArtistDetail {
+class ArtistDetail: ObservableObject {
     private var persistentId: MPMediaEntityPersistentID!
-    private var name: String?
-    private var artwork: MPMediaItemArtwork?
-    private var albums: [Album] = []
-    private var songs: [MPMediaItem] = []
+    @Published var name: String?
+    @Published var artwork: MPMediaItemArtwork?
+    @Published var albums: [Album] = []
+    @Published var songs: [MPMediaItem] = []
     
     init(persistentId: MPMediaEntityPersistentID) {
         self.persistentId = persistentId

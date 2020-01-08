@@ -129,17 +129,17 @@
 		52C34D60230ED7BE00EA76DA /* ThinMP */ = {
 			isa = PBXGroup;
 			children = (
-				5259691C23C544E7004B9862 /* View */,
-				52EE4D9723C5437800CFF2A3 /* ViewController */,
-				52EE4D9623C5436100CFF2A3 /* Service */,
-				52EE4D9523C5434700CFF2A3 /* Model */,
+				52C34D6D230ED7C000EA76DA /* Info.plist */,
+				52C34D61230ED7BE00EA76DA /* AppDelegate.swift */,
+				52B6681D23C197E000E70C47 /* SceneDelegate.swift */,
+				52C34D68230ED7C000EA76DA /* Assets.xcassets */,
 				52EE4D9423C5430700CFF2A3 /* Artist */,
 				524A51BE23B709DF00FB06DD /* ContentView */,
+				52EE4D9523C5434700CFF2A3 /* Model */,
+				52EE4D9623C5436100CFF2A3 /* Service */,
 				52BBCC23236ECF7300B89A7E /* Storyboard */,
-				52C34D61230ED7BE00EA76DA /* AppDelegate.swift */,
-				52C34D68230ED7C000EA76DA /* Assets.xcassets */,
-				52C34D6D230ED7C000EA76DA /* Info.plist */,
-				52B6681D23C197E000E70C47 /* SceneDelegate.swift */,
+				5259691C23C544E7004B9862 /* View */,
+				52EE4D9723C5437800CFF2A3 /* ViewController */,
 			);
 			path = ThinMP;
 			sourceTree = "<group>";

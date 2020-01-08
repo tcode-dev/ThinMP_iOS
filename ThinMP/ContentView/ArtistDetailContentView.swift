@@ -8,9 +8,12 @@
 import SwiftUI
 
 struct ArtistDetailContentView: View {
-    var artist: Artist
+    @ObservedObject var artistDetail: ArtistDetail
+    init(artist: Artist) {
+        self.artistDetail = ArtistDetail(persistentId: artist.persistentId)
+    }
 
     var body: some View {
-        Text(artist.name)
+        Text(artistDetail.name!)
     }
 }
