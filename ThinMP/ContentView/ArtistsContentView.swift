@@ -18,9 +18,3 @@ struct ArtistsContentView: View {
         }
     }
 }
-
-struct ArtistsContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ArtistsContentView()
-    }
-}
