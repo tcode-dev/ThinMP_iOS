@@ -11,11 +11,9 @@ struct ArtistsContentView: View {
     @ObservedObject var artists = Artists()
     
     var body: some View {
-        List{
-            ForEach(artists.list.indices) { index in
-                NavigationLink(destination: ArtistDetailContentView(artist: self.artists.list[index])) {
-                    ArtistRowView(artist: self.artists.list[index])
-                }
+        List(artists.list){ artist in
+            NavigationLink(destination: ArtistDetailContentView(artist: artist)) {
+                ArtistRowView(artist: artist)
             }
         }
     }

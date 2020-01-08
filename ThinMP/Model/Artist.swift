@@ -7,7 +7,8 @@
 
 import MediaPlayer
 
-struct Artist {
+struct Artist: Identifiable {
+    var id: Int
     var persistentId: MPMediaEntityPersistentID!
     var name:String
 }
