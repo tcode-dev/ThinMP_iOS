@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ArtistsContentView: View {
-    @ObservedObject var artists = Artists()
+    @ObservedObject var artists = ArtistsViewModel()
     
     var body: some View {
         List(artists.list){ artist in

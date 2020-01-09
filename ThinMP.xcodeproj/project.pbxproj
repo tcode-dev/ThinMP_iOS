@@ -21,7 +21,7 @@
 		529A3FC6231D4A650085364D /* SongsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529A3FC5231D4A650085364D /* SongsViewController.swift */; };
 		52B6681E23C197E000E70C47 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B6681D23C197E000E70C47 /* SceneDelegate.swift */; };
 		52B6682023C19ADE00E70C47 /* ArtistsContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B6681F23C19ADE00E70C47 /* ArtistsContentView.swift */; };
-		52B6682523C19D8E00E70C47 /* Artists.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B6682423C19D8E00E70C47 /* Artists.swift */; };
+		52B6682523C19D8E00E70C47 /* ArtistsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B6682423C19D8E00E70C47 /* ArtistsViewModel.swift */; };
 		52C34D62230ED7BE00EA76DA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C34D61230ED7BE00EA76DA /* AppDelegate.swift */; };
 		52C34D64230ED7BE00EA76DA /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C34D63230ED7BE00EA76DA /* MainViewController.swift */; };
 		52C34D67230ED7BE00EA76DA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52C34D65230ED7BE00EA76DA /* Main.storyboard */; };
@@ -50,7 +50,7 @@
 		529A3FC5231D4A650085364D /* SongsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongsViewController.swift; sourceTree = "<group>"; };
 		52B6681D23C197E000E70C47 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		52B6681F23C19ADE00E70C47 /* ArtistsContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistsContentView.swift; sourceTree = "<group>"; };
-		52B6682423C19D8E00E70C47 /* Artists.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Artists.swift; sourceTree = "<group>"; };
+		52B6682423C19D8E00E70C47 /* ArtistsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistsViewModel.swift; sourceTree = "<group>"; };
 		52C34D5E230ED7BE00EA76DA /* ThinMP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ThinMP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52C34D61230ED7BE00EA76DA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		52C34D63230ED7BE00EA76DA /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -101,6 +101,14 @@
 			name = View;
 			sourceTree = "<group>";
 		};
+		528C3D1423C6A1AA005CCA8E /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				52B6682423C19D8E00E70C47 /* ArtistsViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		52BBCC23236ECF7300B89A7E /* Storyboard */ = {
 			isa = PBXGroup;
 			children = (
@@ -129,6 +137,7 @@
 		52C34D60230ED7BE00EA76DA /* ThinMP */ = {
 			isa = PBXGroup;
 			children = (
+				528C3D1423C6A1AA005CCA8E /* ViewModel */,
 				52C34D6D230ED7C000EA76DA /* Info.plist */,
 				52C34D61230ED7BE00EA76DA /* AppDelegate.swift */,
 				52B6681D23C197E000E70C47 /* SceneDelegate.swift */,
@@ -147,7 +156,6 @@
 		52EE4D9423C5430700CFF2A3 /* Artist */ = {
 			isa = PBXGroup;
 			children = (
-				52B6682423C19D8E00E70C47 /* Artists.swift */,
 				52EE4D9223C542A700CFF2A3 /* ArtistDetail.swift */,
 			);
 			path = Artist;
@@ -276,7 +284,7 @@
 				52D4B5C823C3EF55000364F4 /* ArtistDetailContentView.swift in Sources */,
 				52CCDAD523C050E9000C474A /* MainContentView.swift in Sources */,
 				5237636123C360C2003ABD2A /* Artist.swift in Sources */,
-				52B6682523C19D8E00E70C47 /* Artists.swift in Sources */,
+				52B6682523C19D8E00E70C47 /* ArtistsViewModel.swift in Sources */,
 				522A09A6232F47AA00506C7F /* AlbumDetailViewController.swift in Sources */,
 				52C34D62230ED7BE00EA76DA /* AppDelegate.swift in Sources */,
 				52DBD73B23408E4F0092DAB9 /* CollectionViewAlubumCell.swift in Sources */,

@@ -7,7 +7,7 @@
 
 import MediaPlayer
 
-class Artists: ObservableObject {
+class ArtistsViewModel: ObservableObject {
     @Published var list: [Artist] = []
     
     init () {
