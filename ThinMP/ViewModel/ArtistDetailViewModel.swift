@@ -7,7 +7,7 @@
 
 import MediaPlayer
 
-class ArtistDetail: ObservableObject {
+class ArtistDetailViewModel: ObservableObject {
     private var persistentId: MPMediaEntityPersistentID!
     @Published var name: String?
     @Published var artwork: MPMediaItemArtwork?
@@ -29,8 +29,8 @@ class ArtistDetail: ObservableObject {
             return song.albumPersistentID
         }
         
-        self.albums = albumMap.map { (arg0) -> Album in
-            let (persistentID, songs) = arg0
+        self.albums = albumMap.enumerated().map {
+            let (persistentID, songs) = $0.element
             let title = songs.first(where: { (song) -> Bool in
                 (song.albumTitle != nil)
             })?.title
@@ -41,7 +41,7 @@ class ArtistDetail: ObservableObject {
                 (song.artwork != nil)
             })?.artwork
             
-            return Album(persistentID: persistentID, title: title, artist: artist, artwork: artwork, songs: songs)
+            return Album(id: $0.offset, persistentID: persistentID, title: title, artist: artist, artwork: artwork, songs: songs)
         }
         
         self.albums.sort(by: {$0.title! < $1.title! })

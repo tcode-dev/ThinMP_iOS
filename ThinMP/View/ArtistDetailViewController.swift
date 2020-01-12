@@ -33,7 +33,7 @@ class ArtistDetailViewController: UIViewController {
     }
     
     func setup() {
-        let artistDetail = ArtistDetail(persistentId: self.persistentId)
+        let artistDetail = ArtistDetailViewModel(persistentId: self.persistentId)
 
         self.albums = artistDetail.getAlbums()
         self.songs = artistDetail.getSongs()
