@@ -10,5 +10,5 @@ import MediaPlayer
 struct Artist: Identifiable {
     var id: Int
     var persistentId: MPMediaEntityPersistentID!
-    var name:String
+    var name:String?
 }

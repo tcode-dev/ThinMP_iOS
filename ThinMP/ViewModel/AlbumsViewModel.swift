@@ -8,7 +8,7 @@
 import MediaPlayer
 
 class AlbumsViewModel: ObservableObject {
-    @Published var list: [Artist] = []
+    @Published var list: [Album] = []
     
     init () {
         if MPMediaLibrary.authorizationStatus() == .authorized {
@@ -29,7 +29,10 @@ class AlbumsViewModel: ObservableObject {
         query.addFilterPredicate(property)
         
         list = query.collections!.enumerated().map{
-            return Artist(id: $0.offset, persistentId: $0.element.representativeItem?.artistPersistentID, name: $0.element.representativeItem?.artist ?? "unknown")
+            let offset = $0.offset
+            let item = $0.element.representativeItem
+
+            return Album(id: offset, persistentID: item?.albumPersistentID, title: item?.albumTitle, artist: item?.artist, artwork: item?.artwork)
         }
     }
 }

@@ -11,6 +11,6 @@ struct ArtistRowView: View {
     var artist: Artist
 
     var body: some View {
-        Text(artist.name)
+        Text(artist.name ?? "unknown")
     }
 }

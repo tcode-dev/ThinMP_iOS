@@ -29,7 +29,7 @@ class ArtistsViewModel: ObservableObject {
         query.addFilterPredicate(property)
         
         list = query.collections!.enumerated().map{
-            return Artist(id: $0.offset, persistentId: $0.element.representativeItem?.artistPersistentID, name: $0.element.representativeItem?.artist ?? "unknown")
+            return Artist(id: $0.offset, persistentId: $0.element.representativeItem?.artistPersistentID, name: $0.element.representativeItem?.artist)
         }
     }
 }

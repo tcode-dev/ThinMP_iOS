@@ -41,7 +41,7 @@ class ArtistDetailViewModel: ObservableObject {
                 (song.artwork != nil)
             })?.artwork
             
-            return Album(id: $0.offset, persistentID: persistentID, title: title, artist: artist, artwork: artwork, songs: songs)
+            return Album(id: $0.offset, persistentID: persistentID, title: title, artist: artist, artwork: artwork)
         }
         
         self.albums.sort(by: {$0.title! < $1.title! })

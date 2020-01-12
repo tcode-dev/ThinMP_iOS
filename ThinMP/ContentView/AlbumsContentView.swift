@@ -8,7 +8,13 @@
 import SwiftUI
 
 struct AlbumsContentView: View {
+    @ObservedObject var albums = AlbumsViewModel()
+    
     var body: some View {
-        Text("AlbumsContentView")
+        List(albums.list){ album in
+            NavigationLink(destination: AlbumDetailContentView(album: album)) {
+                AlbumRowView(album: album)
+            }
+        }
     }
 }

@@ -13,5 +13,4 @@ struct Album: Identifiable {
     var title: String?
     var artist: String?
     var artwork: MPMediaItemArtwork?
-    var songs: [MPMediaItem]
 }
