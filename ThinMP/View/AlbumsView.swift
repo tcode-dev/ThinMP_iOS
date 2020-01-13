@@ -22,7 +22,9 @@ struct AlbumsView: View {
         ForEach(list.indices) { row in
             HStack {
                 ForEach(self.list[row].indices) { col in
-                    AlbumCellView(album: self.list[row][col], width: self.width, cgSize: self.cgSize)
+                    NavigationLink(destination: AlbumDetailContentView(album: self.list[row][col])) {
+                        AlbumCellView(album: self.list[row][col], width: self.width, cgSize: self.cgSize)
+                    }
                 }
             }
         }
