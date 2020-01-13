@@ -8,8 +8,24 @@
 import SwiftUI
 
 struct AlbumDetailContentView: View {
-    var album: Album
+    @ObservedObject var albumDetail: AlbumDetailViewModel
+    init(album: Album) {
+        self.albumDetail = AlbumDetailViewModel(persistentId: album.persistentID)
+    }
     var body: some View {
-        Text("AlbumDetailContentView")
+        GeometryReader { geometry in
+            ScrollView {
+                VStack(alignment: .leading) {
+                    Image(uiImage: self.albumDetail.artwork?.image(at: CGSize(width: geometry.size.width, height: geometry.size.width)) ?? UIImage())
+                        .renderingMode(.original)
+                        .resizable()
+                        .aspectRatio(1, contentMode: .fit)
+                    
+                    ForEach(self.albumDetail.songs){ song in
+                        SongRowView(song: song)
+                    }
+                }
+            }
+        }
     }
 }

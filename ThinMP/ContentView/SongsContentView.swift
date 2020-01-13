@@ -11,8 +11,6 @@ struct SongsContentView: View {
     @ObservedObject var songs = SongsViewModel()
     
     var body: some View {
-        List(songs.list){ song in
-            SongRowView(song: song)
-        }
+        SongsView(list: songs.list)
     }
 }

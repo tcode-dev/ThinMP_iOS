@@ -9,7 +9,7 @@ import MediaPlayer
 
 struct Album: Identifiable {
     var id: Int
-    var persistentID: MPMediaEntityPersistentID?
+    var persistentID: MPMediaEntityPersistentID!
     var title: String?
     var artist: String?
     var artwork: MPMediaItemArtwork?
