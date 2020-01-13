@@ -12,7 +12,8 @@ class ArtistDetailViewModel: ObservableObject {
     @Published var name: String?
     @Published var artwork: MPMediaItemArtwork?
     @Published var albums: [Album] = []
-    @Published var songs: [MPMediaItem] = []
+    @Published var songs: [Song] = []
+    @Published var mediaItems: [MPMediaItem] = []
     
     init(persistentId: MPMediaEntityPersistentID) {
         self.persistentId = persistentId
@@ -24,8 +25,8 @@ class ArtistDetailViewModel: ObservableObject {
         let property = MPMediaPropertyPredicate(value: self.persistentId, forProperty: MPMediaItemPropertyArtistPersistentID)
         let query = MPMediaQuery.artists()
         query.addFilterPredicate(property)
-        self.songs = query.items!
-        let albumMap = Dictionary.init(grouping: self.songs) { song -> MPMediaEntityPersistentID in
+        self.mediaItems = query.items!
+        let albumMap = Dictionary.init(grouping: self.mediaItems) { song -> MPMediaEntityPersistentID in
             return song.albumPersistentID
         }
         
@@ -42,6 +43,13 @@ class ArtistDetailViewModel: ObservableObject {
             })?.artwork
             
             return Album(id: $0.offset, persistentID: persistentID, title: title, artist: artist, artwork: artwork)
+        }
+        
+        self.songs = mediaItems.enumerated().map {
+            let offset = $0.offset
+            let item = $0.element
+            
+            return Song(id: offset, title: item.title, artist: item.artist, artwork: item.artwork)
         }
         
         self.albums.sort(by: {$0.title! < $1.title! })
@@ -65,6 +73,6 @@ class ArtistDetailViewModel: ObservableObject {
         return self.albums
     }
     func getSongs() -> [MPMediaItem] {
-        return self.songs
+        return self.mediaItems
     }
 }

@@ -14,6 +14,11 @@ struct ArtistDetailContentView: View {
     }
 
     var body: some View {
-        Text(artistDetail.name!)
+        GeometryReader { geometry in
+            ScrollView{
+                AlbumsView(list: self.artistDetail.albums, width: geometry.size.width)
+                ArtistSongsView(list: self.artistDetail.songs)
+            }
+        }
     }
 }

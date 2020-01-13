@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5208A24723CB383000AA4433 /* AlbumCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5208A24623CB383000AA4433 /* AlbumCellView.swift */; };
+		520CA29423CD2E0C00C03F01 /* ArtistSongsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520CA29323CD2E0C00C03F01 /* ArtistSongsView.swift */; };
 		522A09A6232F47AA00506C7F /* AlbumDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522A09A5232F47AA00506C7F /* AlbumDetailViewController.swift */; };
 		52323F09235C79460076F29E /* ArtistDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52323F08235C79460076F29E /* ArtistDetailViewController.swift */; };
 		5237635F23C35BFE003ABD2A /* ArtistRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5237635E23C35BFE003ABD2A /* ArtistRowView.swift */; };
@@ -51,6 +52,7 @@
 
 /* Begin PBXFileReference section */
 		5208A24623CB383000AA4433 /* AlbumCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumCellView.swift; sourceTree = "<group>"; };
+		520CA29323CD2E0C00C03F01 /* ArtistSongsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistSongsView.swift; sourceTree = "<group>"; };
 		522A09A5232F47AA00506C7F /* AlbumDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDetailViewController.swift; sourceTree = "<group>"; };
 		52323F08235C79460076F29E /* ArtistDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistDetailViewController.swift; sourceTree = "<group>"; };
 		5237635E23C35BFE003ABD2A /* ArtistRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistRowView.swift; sourceTree = "<group>"; };
@@ -121,6 +123,7 @@
 				52D98E7923CC6B530032971A /* PrimaryTextView.swift */,
 				52D98E7B23CC6C280032971A /* SecondaryTextView.swift */,
 				52D98E7F23CC76370032971A /* SongsView.swift */,
+				520CA29323CD2E0C00C03F01 /* ArtistSongsView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -344,6 +347,7 @@
 				52CCDAD523C050E9000C474A /* MainContentView.swift in Sources */,
 				5237636123C360C2003ABD2A /* Artist.swift in Sources */,
 				52B6682523C19D8E00E70C47 /* ArtistsViewModel.swift in Sources */,
+				520CA29423CD2E0C00C03F01 /* ArtistSongsView.swift in Sources */,
 				522A09A6232F47AA00506C7F /* AlbumDetailViewController.swift in Sources */,
 				524F8F1C23CAD33C00168019 /* Array.swift in Sources */,
 				52D98E8023CC76370032971A /* SongsView.swift in Sources */,
