@@ -17,6 +17,9 @@ struct MainContentView: View {
                 NavigationLink(destination: AlbumsContentView()) {
                     Text("Albums")
                 }
+                NavigationLink(destination: SongsContentView()) {
+                    Text("Songs")
+                }
             }
             .navigationBarTitle("Library")
         }
