@@ -8,7 +8,11 @@
 import SwiftUI
 
 struct SongsContentView: View {
+    @ObservedObject var songs = SongsViewModel()
+    
     var body: some View {
-        Text("SongsContentView")
+        List(songs.list){ song in
+            Text(song.title ?? "")
+        }
     }
 }
