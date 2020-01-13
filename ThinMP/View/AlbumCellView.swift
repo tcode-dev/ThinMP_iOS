@@ -9,8 +9,15 @@ import SwiftUI
 
 struct AlbumCellView: View {
     var album: Album
-
+    var width: CGFloat
+    var cgSize: CGSize
+    
     var body: some View {
-        Text(album.title ?? "unknown")
+        VStack{
+            Image(uiImage: self.album.artwork?.image(at: cgSize) ?? UIImage())
+                .resizable()
+                .aspectRatio(1, contentMode: .fit)
+            Text(self.album.title ?? "unknown").lineLimit(1)
+        }.frame(width: width)
     }
 }

@@ -11,8 +11,10 @@ struct AlbumsContentView: View {
     @ObservedObject var albums = AlbumsViewModel()
     
     var body: some View {
-        ScrollView{
-            AlbumsView(list: albums.list)
+        GeometryReader { geometry in
+            ScrollView{
+                AlbumsView(list: self.albums.list, width: geometry.size.width)
+            }
         }
     }
 }
