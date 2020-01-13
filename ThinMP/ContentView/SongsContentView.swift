@@ -12,7 +12,7 @@ struct SongsContentView: View {
     
     var body: some View {
         List(songs.list){ song in
-            Text(song.title ?? "")
+            SongRowView(song: song)
         }
     }
 }

@@ -19,9 +19,8 @@ struct AlbumCellView: View {
                 .resizable()
                 .aspectRatio(1, contentMode: .fit)
             
-            Text(self.album.title ?? "unknown").foregroundColor(.primary).lineLimit(1)
-
-            Text(self.album.artist ?? "unknown").foregroundColor(.secondary).lineLimit(1)
+            PrimaryTextView(self.album.title)
+            SecondaryTextView(self.album.artist)
         }.frame(width: width)
     }
 }
