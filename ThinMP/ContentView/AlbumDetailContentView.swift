@@ -29,8 +29,8 @@ struct AlbumDetailContentView: View {
                     }
                     
                     ForEach(self.albumDetail.songs){ song in
-                        SongRowView(song: song)
-                    }
+                        SongRowView(song: song).padding(.bottom, 5)
+                    }.padding(.leading, 10)
                 }
             }
         }
