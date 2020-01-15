@@ -13,7 +13,6 @@ struct SongRowView: View {
     var body: some View {
         HStack {
             Image(uiImage: self.song.artwork?.image(at: cgSize) ?? UIImage())
-                .renderingMode(.original)
                 .resizable()
                 .aspectRatio(1, contentMode: .fit)
                 .frame(width: 40)

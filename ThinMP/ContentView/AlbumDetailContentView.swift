@@ -18,7 +18,6 @@ struct AlbumDetailContentView: View {
                 VStack(alignment: .leading) {
                     ZStack(alignment: .bottom) {
                         Image(uiImage: self.albumDetail.artwork?.image(at: CGSize(width: geometry.size.width, height: geometry.size.width)) ?? UIImage())
-                            .renderingMode(.original)
                             .resizable()
                             .aspectRatio(1, contentMode: .fit)
                         LinearGradient(gradient: Gradient(colors: [Color.init(Color.RGBColorSpace.sRGB, red: 1, green: 1, blue: 1, opacity: 0), .white]), startPoint: .top, endPoint: .bottom).frame(height: 200)
