@@ -15,6 +15,6 @@ struct AlbumsContentView: View {
             ScrollView{
                 AlbumsView(list: self.albums.list, width: geometry.size.width)
             }
-        }
+        }.navigationBarTitle("Albums")
     }
 }

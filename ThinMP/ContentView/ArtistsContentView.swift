@@ -15,6 +15,6 @@ struct ArtistsContentView: View {
             NavigationLink(destination: ArtistDetailContentView(artist: artist)) {
                 ArtistRowView(artist: artist)
             }
-        }
+        }.navigationBarTitle("Artists")
     }
 }
