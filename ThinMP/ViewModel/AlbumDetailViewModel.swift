@@ -13,32 +13,56 @@ class AlbumDetailViewModel: ObservableObject {
     @Published var artist: String?
     @Published var artwork: MPMediaItemArtwork?
     @Published var songs: [Song] = []
-    @Published var songCollections:[MPMediaItemCollection] = []
+    @Published var songCollections: [MPMediaItemCollection] = []
     
     init(persistentId: MPMediaEntityPersistentID) {
         self.persistentId = persistentId
-        
-        self.set()
+        if MPMediaLibrary.authorizationStatus() == .authorized {
+            fetch()
+        } else {
+            MPMediaLibrary.requestAuthorization { status in
+                if status == .authorized {
+                    self.fetch()
+                }
+            }
+        }
     }
     
-    func set() {
-        let property = MPMediaPropertyPredicate(value: self.persistentId, forProperty: MPMediaItemPropertyAlbumPersistentID)
-        let query = MPMediaQuery.songs()
-        query.addFilterPredicate(property)
-        let albums = query.items!.filter({$0.albumTitle != nil})
-        songCollections = query.collections!
-        
-        if (albums.count) > 0 {
-            let album = albums[0]
-            self.title = album.albumTitle
-            self.artist = album.albumArtist
+    func fetch() {
+        if let album = getAlbum() {
+            self.title = album.title
+            self.artist = album.artist
             self.artwork = album.artwork
         }
-        songs = songCollections.enumerated().map{
-            let offset = $0.offset
-            let item = $0.element.representativeItem
-            
-            return Song(id: offset, title: item?.title, artist: item?.artist, artwork: item?.artwork)
+        
+        let songs = getSongs()
+        
+        self.songs = songs.songs
+        self.songCollections = songs.songCollections
+    }
+    
+    func getAlbum() -> Album? {
+        let property = MPMediaPropertyPredicate(value: self.persistentId, forProperty: MPMediaItemPropertyAlbumPersistentID)
+        let query = MPMediaQuery.albums()
+        
+        query.addFilterPredicate(property)
+        
+        return query.collections!.map{
+            return Album(persistentID: $0.representativeItem?.albumPersistentID, title: $0.representativeItem?.albumTitle, artist: $0.representativeItem?.artist, artwork: $0.representativeItem?.artwork)
+        }.first
+    }
+    
+    func getSongs() -> (songs: [Song], songCollections: [MPMediaItemCollection]) {
+        let property = MPMediaPropertyPredicate(value: self.persistentId, forProperty: MPMediaItemPropertyAlbumPersistentID)
+        let query = MPMediaQuery.songs()
+        
+        query.addFilterPredicate(property)
+        
+        let songCollections = query.collections!
+        let songs = songCollections.map{
+            return Song(title: $0.representativeItem?.title, artist: $0.representativeItem?.artist, artwork: $0.representativeItem?.artwork)
         }
+        
+        return (songs, songCollections);
     }
 }

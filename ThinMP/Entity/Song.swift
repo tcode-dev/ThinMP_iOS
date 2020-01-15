@@ -8,7 +8,7 @@
 import MediaPlayer
 
 struct Song: Identifiable {
-    var id: Int
+    var id = UUID()
     var title: String?
     var artist: String?
     var artwork: MPMediaItemArtwork?

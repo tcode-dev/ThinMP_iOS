@@ -28,11 +28,8 @@ class SongsViewModel: ObservableObject {
 
         query.addFilterPredicate(property)
         
-        list = query.collections!.enumerated().map{
-            let offset = $0.offset
-            let item = $0.element.representativeItem
-
-            return Song(id: offset, title: item?.title, artist: item?.artist, artwork: item?.artwork)
+        list = query.collections!.map{
+            return Song(title: $0.representativeItem?.title, artist: $0.representativeItem?.artist, artwork: $0.representativeItem?.artwork)
         }
     }
 }

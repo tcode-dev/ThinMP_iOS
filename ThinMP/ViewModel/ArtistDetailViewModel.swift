@@ -32,8 +32,8 @@ class ArtistDetailViewModel: ObservableObject {
             return song.albumPersistentID
         }
         
-        self.albums = albumMap.enumerated().map {
-            let (persistentID, songs) = $0.element
+        self.albums = albumMap.map {
+            let (persistentID, songs) = $0
             let title = songs.first(where: { (song) -> Bool in
                 (song.albumTitle != nil)
             })?.title
@@ -44,15 +44,12 @@ class ArtistDetailViewModel: ObservableObject {
                 (song.artwork != nil)
             })?.artwork
             
-            return Album(id: $0.offset, persistentID: persistentID, title: title, artist: artist, artwork: artwork)
+            return Album(persistentID: persistentID, title: title, artist: artist, artwork: artwork)
         }
         self.albumCount = self.albums.count
         
-        self.songs = mediaItems.enumerated().map {
-            let offset = $0.offset
-            let item = $0.element
-            
-            return Song(id: offset, title: item.title, artist: item.artist, artwork: item.artwork)
+        self.songs = mediaItems.map {
+            return Song(title: $0.title, artist: $0.artist, artwork: $0.artwork)
         }
         self.songCount = self.songs.count
         
