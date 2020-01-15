@@ -14,6 +14,8 @@ class ArtistDetailViewModel: ObservableObject {
     @Published var albums: [Album] = []
     @Published var songs: [Song] = []
     @Published var mediaItems: [MPMediaItem] = []
+    @Published var albumCount: Int = 0
+    @Published var songCount: Int = 0
     
     init(persistentId: MPMediaEntityPersistentID) {
         self.persistentId = persistentId
@@ -44,6 +46,7 @@ class ArtistDetailViewModel: ObservableObject {
             
             return Album(id: $0.offset, persistentID: persistentID, title: title, artist: artist, artwork: artwork)
         }
+        self.albumCount = self.albums.count
         
         self.songs = mediaItems.enumerated().map {
             let offset = $0.offset
@@ -51,6 +54,7 @@ class ArtistDetailViewModel: ObservableObject {
             
             return Song(id: offset, title: item.title, artist: item.artist, artwork: item.artwork)
         }
+        self.songCount = self.songs.count
         
         self.albums.sort(by: {$0.title! < $1.title! })
         
@@ -61,18 +65,5 @@ class ArtistDetailViewModel: ObservableObject {
         self.artwork = self.albums.first(where: { (album) -> Bool in
             (album.artwork != nil)
         })?.artwork
-    }
-    
-    func getName() -> String? {
-        return self.name
-    }
-    func getArtwork() -> MPMediaItemArtwork? {
-        return self.artwork
-    }
-    func getAlbums() -> [Album] {
-        return self.albums
-    }
-    func getSongs() -> [MPMediaItem] {
-        return self.mediaItems
     }
 }
