@@ -45,6 +45,8 @@ struct ArtistDetailContentView: View {
                     ArtistSongsView(list: self.artistDetail.songs)
                 }.frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 20)
             }
+            .navigationBarHidden(true)
+            .navigationBarTitle(Text(""))
         }
     }
 }

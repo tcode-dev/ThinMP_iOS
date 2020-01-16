@@ -32,6 +32,8 @@ struct AlbumDetailContentView: View {
                     }.padding(.leading, 10)
                 }
             }
+            .navigationBarHidden(true)
+            .navigationBarTitle(Text(""))
         }
     }
 }
