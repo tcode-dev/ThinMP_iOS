@@ -8,28 +8,35 @@
 import SwiftUI
 
 struct AlbumDetailHeaderView: View {
-    @State private var offsetY: CGFloat = 0
     @ObservedObject var albumDetail: AlbumDetailViewModel
+    @Binding var rect: CGRect
     
     private let width = UIScreen.main.bounds.size.width
     
-    init(albumDetail: AlbumDetailViewModel) {
-        self.albumDetail = albumDetail
-    }
-    
     var body: some View {
         GeometryReader { geometry in
-            ZStack(alignment: .bottom) {
-                Image(uiImage: self.albumDetail.artwork?.image(at: CGSize(width: self.width, height: self.width)) ?? UIImage())
-                    .resizable()
-                    .aspectRatio(1, contentMode: .fit)
-                LinearGradient(gradient: Gradient(colors: [Color.init(Color.RGBColorSpace.sRGB, red: 1, green: 1, blue: 1, opacity: 0), .white]), startPoint: .top, endPoint: .bottom).frame(height: 200)
-                VStack {
-                    PrimaryTextView(self.albumDetail.title)
-                    SecondaryTextView(self.albumDetail.artist)
-                    PrimaryTextView("\(geometry.frame(in: .global).origin.y)")
-                }
-            }
+            self.createHeaderView(geometry: geometry)
         }.frame(width: width, height: width)
+    }
+    
+    /// HeaderViewを生成する
+    /// ScrollViewの現在位置を取得する方法がないため、子のgeometryを親から参照できるようにする
+    /// GeometryReader直下で変数を代入すると構文エラーになるので別メソッドにしている
+    /// - Parameter geometry: geometry
+    fileprivate func createHeaderView(geometry: GeometryProxy) -> some View {
+        DispatchQueue.main.async {
+            self.rect = geometry.frame(in: .global)
+        }
+        
+        return ZStack(alignment: .bottom) {
+            Image(uiImage: self.albumDetail.artwork?.image(at: CGSize(width: self.width, height: self.width)) ?? UIImage())
+                .resizable()
+                .aspectRatio(1, contentMode: .fit)
+            LinearGradient(gradient: Gradient(colors: [Color.init(Color.RGBColorSpace.sRGB, red: 1, green: 1, blue: 1, opacity: 0), .white]), startPoint: .top, endPoint: .bottom).frame(height: 200)
+            VStack {
+                PrimaryTextView(self.albumDetail.title)
+                SecondaryTextView(self.albumDetail.artist)
+            }
+        }
     }
 }
