@@ -22,9 +22,13 @@ struct AlbumDetailContentView: View {
             ScrollView(showsIndicators: true) {
                 VStack(alignment: .leading) {
                     AlbumDetailHeaderView(albumDetail: albumDetail, rect: $rect)
-                    ForEach(albumDetail.songs){ song in
-                        SongRowView(song: song).padding(.bottom, 5)
-                    }.padding(.leading, 10)
+                    VStack{
+                        ForEach(albumDetail.songs){ song in
+                            SongRowView(song: song)
+                            Divider()
+                        }.padding(.leading, 10)
+                    }
+                    .frame(minWidth: UIScreen.main.bounds.size.width, maxWidth: .infinity, minHeight: UIScreen.main.bounds.size.height - 70, maxHeight: .infinity, alignment: .topLeading)
                 }
             }
             .navigationBarHidden(true)

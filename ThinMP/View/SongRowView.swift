@@ -22,6 +22,7 @@ struct SongRowView: View {
                 PrimaryTextView(song.title)
                 SecondaryTextView(song.artist)
             }
+            Spacer()
         }
     }
 }
