@@ -17,23 +17,19 @@ struct AlbumDetailContentView: View {
     }
     
     var body: some View {
-        ScrollView(showsIndicators: true) {
-            VStack(alignment: .leading) {
-                AlbumDetailHeaderView(albumDetail: albumDetail, rect: $rect)
-                Text("\(self.rect.origin.y)")
-                Text("\(self.offsetY)")
-                ForEach(albumDetail.songs){ song in
-                    SongRowView(song: song).padding(.bottom, 5)
-                }.padding(.leading, 10)
+        ZStack(alignment: .top) {
+            CustomNavigationBarView(primaryText: albumDetail.title, secondaryText: albumDetail.artist, end: rect.size.width, rect: $rect).zIndex(1)
+            ScrollView(showsIndicators: true) {
+                VStack(alignment: .leading) {
+                    AlbumDetailHeaderView(albumDetail: albumDetail, rect: $rect)
+                    ForEach(albumDetail.songs){ song in
+                        SongRowView(song: song).padding(.bottom, 5)
+                    }.padding(.leading, 10)
+                }
             }
+            .navigationBarHidden(true)
+            .navigationBarTitle(Text(""))
+            .edgesIgnoringSafeArea([.top, .bottom])
         }
-        .navigationBarHidden(true)
-        .navigationBarTitle(Text(""))
-        .gesture(
-            DragGesture()
-                .onChanged{ value in
-                    self.offsetY = self.rect.origin.y
-            }
-        )
     }
 }
