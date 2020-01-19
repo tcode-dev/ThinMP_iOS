@@ -17,23 +17,25 @@ struct AlbumDetailContentView: View {
     }
     
     var body: some View {
-        ZStack(alignment: .top) {
-            CustomNavigationBarView(primaryText: albumDetail.title, secondaryText: albumDetail.artist, end: rect.size.width, rect: $rect).zIndex(1)
-            ScrollView(showsIndicators: true) {
-                VStack(alignment: .leading) {
-                    AlbumDetailHeaderView(albumDetail: albumDetail, rect: $rect)
-                    VStack{
-                        ForEach(albumDetail.songs){ song in
-                            SongRowView(song: song)
-                            Divider()
-                        }.padding(.leading, 10)
+        GeometryReader { geometry in
+            ZStack(alignment: .top) {
+                CustomNavigationBarView(primaryText: self.albumDetail.title, secondaryText: self.albumDetail.artist, end: geometry.size.width, rect: self.$rect).zIndex(1)
+                ScrollView(showsIndicators: true) {
+                    VStack(alignment: .leading) {
+                        AlbumDetailHeaderView(albumDetail: self.albumDetail, rect: self.$rect)
+                        VStack{
+                            ForEach(self.albumDetail.songs){ song in
+                                AlbumSongRowView(song: song)
+                                Divider()
+                            }.padding(.leading, 10)
+                        }
+                        .frame(minWidth: geometry.size.width, maxWidth: .infinity, minHeight: geometry.size.height - 70, maxHeight: .infinity, alignment: .topLeading)
                     }
-                    .frame(minWidth: UIScreen.main.bounds.size.width, maxWidth: .infinity, minHeight: UIScreen.main.bounds.size.height - 70, maxHeight: .infinity, alignment: .topLeading)
                 }
+                .navigationBarHidden(true)
+                .navigationBarTitle(Text(""))
+                .edgesIgnoringSafeArea([.top, .bottom])
             }
-            .navigationBarHidden(true)
-            .navigationBarTitle(Text(""))
-            .edgesIgnoringSafeArea([.top, .bottom])
         }
     }
 }
