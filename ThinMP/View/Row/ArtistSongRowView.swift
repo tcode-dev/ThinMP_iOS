@@ -17,6 +17,8 @@ struct ArtistSongRowView: View {
                 .aspectRatio(1, contentMode: .fit)
                 .frame(width: 40)
                 .cornerRadius(4)
+                .overlay(RoundedRectangle(cornerRadius: 4)
+                    .stroke(Color("#f2f2f2"), lineWidth: 1))
             
             PrimaryTextView(song.title)
             

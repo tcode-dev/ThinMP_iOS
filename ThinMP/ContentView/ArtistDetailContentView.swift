@@ -28,8 +28,11 @@ struct ArtistDetailContentView: View {
                         .resizable()
                         .scaledToFit()
                         .clipShape(Circle())
+                        .overlay(RoundedRectangle(cornerRadius: 60)
+                            .stroke(Color("#f2f2f2"), lineWidth: 1))
                         .offset(y:-100)
                         .frame(width: 120)
+                    
                     
                     VStack {
                         HeaderTextView(self.artistDetail.name)
@@ -40,7 +43,7 @@ struct ArtistDetailContentView: View {
                 VStack(alignment: .leading) {
                     HeaderTextView("Albums")
                     ArtistAlbumListView(list: self.artistDetail.albums, width: geometry.size.width).padding(.bottom, 10)
-
+                    
                     HeaderTextView("Songs")
                     ArtistSongListView(list: self.artistDetail.songs)
                 }.frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 20)

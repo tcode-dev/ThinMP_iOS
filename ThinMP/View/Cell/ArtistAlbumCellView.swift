@@ -19,6 +19,8 @@ struct ArtistAlbumCellView: View {
                 .resizable()
                 .aspectRatio(1, contentMode: .fit)
                 .cornerRadius(4)
+                .overlay(RoundedRectangle(cornerRadius: 4)
+                    .stroke(Color("#f2f2f2"), lineWidth: 1))
             
             PrimaryTextView(self.album.title)
         }.frame(width: width)
