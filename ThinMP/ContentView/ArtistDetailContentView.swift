@@ -39,10 +39,10 @@ struct ArtistDetailContentView: View {
                 
                 VStack(alignment: .leading) {
                     HeaderTextView("Albums")
-                    AlbumsView(list: self.artistDetail.albums, width: geometry.size.width).padding(.bottom, 20)
+                    ArtistAlbumListView(list: self.artistDetail.albums, width: geometry.size.width).padding(.bottom, 10)
 
                     HeaderTextView("Songs")
-                    ArtistSongsView(list: self.artistDetail.songs)
+                    ArtistSongListView(list: self.artistDetail.songs)
                 }.frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 20)
             }
             .navigationBarHidden(true)

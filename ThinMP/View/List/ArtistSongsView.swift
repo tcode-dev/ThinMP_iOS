@@ -7,12 +7,13 @@
 
 import SwiftUI
 
-struct ArtistSongsView: View {
+struct ArtistSongListView: View {
     var list: [Song]
     var body: some View {
         VStack(alignment: .leading) {
             ForEach(list) { song in
-                SongRowView(song: song)
+                ArtistSongRowView(song: song).padding(0)
+                Divider()
             }
         }
     }
