@@ -11,12 +11,12 @@ struct AlbumDetailHeaderView: View {
     @ObservedObject var albumDetail: AlbumDetailViewModel
     @Binding var rect: CGRect
     
-    private let width = UIScreen.main.bounds.size.width
+    var side: CGFloat
     
     var body: some View {
         GeometryReader { geometry in
             self.createHeaderView(geometry: geometry)
-        }.frame(width: width, height: width)
+        }.frame(width: side, height: side)
     }
     
     /// HeaderViewを生成する
@@ -29,7 +29,7 @@ struct AlbumDetailHeaderView: View {
         }
         
         return ZStack(alignment: .bottom) {
-            Image(uiImage: self.albumDetail.artwork?.image(at: CGSize(width: self.width, height: self.width)) ?? UIImage())
+            Image(uiImage: self.albumDetail.artwork?.image(at: CGSize(width: self.side, height: self.side)) ?? UIImage())
                 .resizable()
                 .aspectRatio(1, contentMode: .fit)
             LinearGradient(gradient: Gradient(colors: [Color.init(Color.RGBColorSpace.sRGB, red: 1, green: 1, blue: 1, opacity: 0), .white]), startPoint: .top, endPoint: .bottom).frame(height: 200)

@@ -10,7 +10,7 @@ import SwiftUI
 struct CustomNavigationBarView: View {
     var primaryText: String?
     var secondaryText: String?
-    var end: CGFloat
+    var side: CGFloat
     @Binding var rect: CGRect
     
     var body: some View {
@@ -27,7 +27,7 @@ struct CustomNavigationBarView: View {
     }
     
     func opacity() -> Double {
-        if (-rect.origin.y < (end - 65)) {
+        if (-rect.origin.y < (side - 65)) {
             return 0
         }
         
