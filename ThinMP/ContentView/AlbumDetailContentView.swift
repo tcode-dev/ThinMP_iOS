@@ -19,7 +19,9 @@ struct AlbumDetailContentView: View {
     var body: some View {
         GeometryReader { geometry in
             ZStack(alignment: .top) {
-                CustomNavigationBarView(primaryText: self.albumDetail.title, secondaryText: self.albumDetail.artist, side: geometry.size.width, rect: self.$rect).zIndex(1)
+                CustomNavigationBarView(primaryText: self.albumDetail.title, secondaryText: self.albumDetail.artist, side: geometry.size.width, rect: self.$rect)
+                    .zIndex(1)
+                    .edgesIgnoringSafeArea(.all)
                 ScrollView(showsIndicators: true) {
                     VStack(alignment: .leading) {
                         AlbumDetailHeaderView(albumDetail: self.albumDetail, rect: self.$rect, side: geometry.size.width)
@@ -34,8 +36,8 @@ struct AlbumDetailContentView: View {
                 }
                 .navigationBarHidden(true)
                 .navigationBarTitle(Text(""))
-                .edgesIgnoringSafeArea([.top, .bottom])
             }
+            .edgesIgnoringSafeArea(.all)
         }
     }
 }

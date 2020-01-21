@@ -16,7 +16,8 @@ struct AlbumDetailHeaderView: View {
     var body: some View {
         GeometryReader { geometry in
             self.createHeaderView(geometry: geometry)
-        }.frame(width: side, height: side)
+        }
+        .frame(width: side, height: side)
     }
     
     /// HeaderViewを生成する

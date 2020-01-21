@@ -14,20 +14,22 @@ struct CustomNavigationBarView: View {
     @Binding var rect: CGRect
     
     var body: some View {
-        HStack {
-            VStack {
-                PrimaryTextView(self.primaryText)
-                SecondaryTextView(self.secondaryText)
+        VStack {
+            HStack() {
+                VStack {
+                    PrimaryTextView(self.primaryText)
+                    SecondaryTextView(self.secondaryText)
+                }
+                .frame(width: side, height: 50, alignment: .center)
             }
-            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .center)
         }
-        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 50, alignment: .topLeading)
+        .frame(width: side, height: 95, alignment: .bottomLeading)
         .background(Color.white)
         .opacity(self.opacity())
     }
     
     func opacity() -> Double {
-        if (-rect.origin.y < (side - 65)) {
+        if (-rect.origin.y < (side - 70)) {
             return 0
         }
         
