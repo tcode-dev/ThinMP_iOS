@@ -9,13 +9,12 @@ import SwiftUI
 
 struct ArtistAlbumCellView: View {
     var album: Album
-    var width: CGFloat
-    var cgSize: CGSize
+    var size: CGFloat
     
     var body: some View {
         VStack(){
-            SquareImageView(artwork: self.album.artwork, cgSize: cgSize)
+            SquareImageView(artwork: self.album.artwork, size: size)
             PrimaryTextView(self.album.title)
-        }.frame(width: width)
+        }.frame(width: size)
     }
 }

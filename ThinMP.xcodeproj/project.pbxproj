@@ -10,6 +10,7 @@
 		5208A24723CB383000AA4433 /* AlbumCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5208A24623CB383000AA4433 /* AlbumCellView.swift */; };
 		520CA29423CD2E0C00C03F01 /* ArtistSongsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520CA29323CD2E0C00C03F01 /* ArtistSongsView.swift */; };
 		522366D423D7B6500001624E /* SquareImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522366D323D7B6500001624E /* SquareImageView.swift */; };
+		522366D623D7BADF0001624E /* CircleImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522366D523D7BADF0001624E /* CircleImageView.swift */; };
 		5237635F23C35BFE003ABD2A /* ArtistRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5237635E23C35BFE003ABD2A /* ArtistRowView.swift */; };
 		5237636123C360C2003ABD2A /* Artist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5237636023C360C2003ABD2A /* Artist.swift */; };
 		524F8F1C23CAD33C00168019 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524F8F1B23CAD33C00168019 /* Array.swift */; };
@@ -49,6 +50,7 @@
 		5208A24623CB383000AA4433 /* AlbumCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumCellView.swift; sourceTree = "<group>"; };
 		520CA29323CD2E0C00C03F01 /* ArtistSongsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistSongsView.swift; sourceTree = "<group>"; };
 		522366D323D7B6500001624E /* SquareImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareImageView.swift; sourceTree = "<group>"; };
+		522366D523D7BADF0001624E /* CircleImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleImageView.swift; sourceTree = "<group>"; };
 		5237635E23C35BFE003ABD2A /* ArtistRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistRowView.swift; sourceTree = "<group>"; };
 		5237636023C360C2003ABD2A /* Artist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Artist.swift; sourceTree = "<group>"; };
 		524F8F1B23CAD33C00168019 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
@@ -122,6 +124,7 @@
 			isa = PBXGroup;
 			children = (
 				522366D323D7B6500001624E /* SquareImageView.swift */,
+				522366D523D7BADF0001624E /* CircleImageView.swift */,
 			);
 			path = Image;
 			sourceTree = "<group>";
@@ -342,6 +345,7 @@
 				5279F0C723D520630053BF55 /* ArtistAlbumListView.swift in Sources */,
 				52CCDAD523C050E9000C474A /* MainContentView.swift in Sources */,
 				5279F0C423D51F7D0053BF55 /* ArtistAlbumCellView.swift in Sources */,
+				522366D623D7BADF0001624E /* CircleImageView.swift in Sources */,
 				52AC16ED23CE8BE4001D427B /* HeaderTextView.swift in Sources */,
 				5237636123C360C2003ABD2A /* Artist.swift in Sources */,
 				52B6682523C19D8E00E70C47 /* ArtistsViewModel.swift in Sources */,

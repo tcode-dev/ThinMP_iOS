@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ArtistDetailContentView: View {
     @ObservedObject var artistDetail: ArtistDetailViewModel
+    var artistImageSize:CGFloat = 120
+    
     init(artist: Artist) {
         self.artistDetail = ArtistDetailViewModel(persistentId: artist.persistentId)
     }
@@ -23,17 +25,9 @@ struct ArtistDetailContentView: View {
                         .blur(radius: 10.0)
                     
                     LinearGradient(gradient: Gradient(colors: [Color.init(Color.RGBColorSpace.sRGB, red: 1, green: 1, blue: 1, opacity: 0), .white]), startPoint: .top, endPoint: .bottom).frame(height: 355).offset(y: 25)
-                    
-                    Image(uiImage: self.artistDetail.artwork?.image(at: CGSize(width: 120, height: 120)) ?? UIImage())
-                        .resizable()
-                        .scaledToFit()
-                        .clipShape(Circle())
-                        .overlay(RoundedRectangle(cornerRadius: 60)
-                            .stroke(Color("#f2f2f2"), lineWidth: 1))
+                    CircleImageView(artwork: self.artistDetail.artwork, size: self.artistImageSize)
                         .offset(y:-100)
-                        .frame(width: 120)
-                    
-                    
+
                     VStack {
                         HeaderTextView(self.artistDetail.name)
                         SecondaryTextView("\(self.artistDetail.albumCount) albums, \(self.artistDetail.songCount) songs")
