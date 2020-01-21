@@ -12,12 +12,7 @@ struct SongRowView: View {
     var cgSize: CGSize = CGSize(width: 40, height: 40)
     var body: some View {
         HStack {
-            Image(uiImage: self.song.artwork?.image(at: cgSize) ?? UIImage())
-                .resizable()
-                .aspectRatio(1, contentMode: .fit)
-                .frame(width: 40)
-                .cornerRadius(4)
-
+            SquareImageView(artwork: self.song.artwork, cgSize: cgSize).frame(width: 40)
             VStack(alignment: .leading) {
                 PrimaryTextView(song.title)
                 SecondaryTextView(song.artist)

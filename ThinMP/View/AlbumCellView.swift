@@ -14,11 +14,7 @@ struct AlbumCellView: View {
     
     var body: some View {
         VStack(){
-            Image(uiImage: self.album.artwork?.image(at: cgSize) ?? UIImage())
-                .renderingMode(.original)
-                .resizable()
-                .aspectRatio(1, contentMode: .fit)
-            
+            SquareImageView(artwork: self.album.artwork, cgSize: cgSize)
             PrimaryTextView(self.album.title)
             SecondaryTextView(self.album.artist)
         }.frame(width: width)

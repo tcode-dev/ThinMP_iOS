@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5208A24723CB383000AA4433 /* AlbumCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5208A24623CB383000AA4433 /* AlbumCellView.swift */; };
 		520CA29423CD2E0C00C03F01 /* ArtistSongsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520CA29323CD2E0C00C03F01 /* ArtistSongsView.swift */; };
+		522366D423D7B6500001624E /* SquareImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522366D323D7B6500001624E /* SquareImageView.swift */; };
 		5237635F23C35BFE003ABD2A /* ArtistRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5237635E23C35BFE003ABD2A /* ArtistRowView.swift */; };
 		5237636123C360C2003ABD2A /* Artist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5237636023C360C2003ABD2A /* Artist.swift */; };
 		524F8F1C23CAD33C00168019 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524F8F1B23CAD33C00168019 /* Array.swift */; };
@@ -47,6 +48,7 @@
 /* Begin PBXFileReference section */
 		5208A24623CB383000AA4433 /* AlbumCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumCellView.swift; sourceTree = "<group>"; };
 		520CA29323CD2E0C00C03F01 /* ArtistSongsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistSongsView.swift; sourceTree = "<group>"; };
+		522366D323D7B6500001624E /* SquareImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareImageView.swift; sourceTree = "<group>"; };
 		5237635E23C35BFE003ABD2A /* ArtistRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistRowView.swift; sourceTree = "<group>"; };
 		5237636023C360C2003ABD2A /* Artist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Artist.swift; sourceTree = "<group>"; };
 		524F8F1B23CAD33C00168019 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
@@ -98,6 +100,7 @@
 		5208A24423CB379200AA4433 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				522366D223D7B6330001624E /* Image */,
 				5279F0C523D5204A0053BF55 /* List */,
 				5279F0C223D51F510053BF55 /* Cell */,
 				5279F0BF23D51BF80053BF55 /* Row */,
@@ -113,6 +116,14 @@
 				52A5B4D823D4014A003BE152 /* CustomNavigationBarView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		522366D223D7B6330001624E /* Image */ = {
+			isa = PBXGroup;
+			children = (
+				522366D323D7B6500001624E /* SquareImageView.swift */,
+			);
+			path = Image;
 			sourceTree = "<group>";
 		};
 		524A51BE23B709DF00FB06DD /* ContentView */ = {
@@ -339,6 +350,7 @@
 				52D98E8023CC76370032971A /* SongsView.swift in Sources */,
 				52D98E7C23CC6C280032971A /* SecondaryTextView.swift in Sources */,
 				52D98E7A23CC6B530032971A /* PrimaryTextView.swift in Sources */,
+				522366D423D7B6500001624E /* SquareImageView.swift in Sources */,
 				52C34D62230ED7BE00EA76DA /* AppDelegate.swift in Sources */,
 				52C2535123CB33630075D35F /* AlbumsView.swift in Sources */,
 			);
