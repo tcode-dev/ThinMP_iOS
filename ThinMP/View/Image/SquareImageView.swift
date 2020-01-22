@@ -16,10 +16,10 @@ struct SquareImageView: View {
         Image(uiImage: artwork?.image(at: CGSize(width: size, height: size)) ?? UIImage())
             .renderingMode(.original)
             .resizable()
-            .aspectRatio(1, contentMode: .fit)
+            .scaledToFit()
             .cornerRadius(4)
             .overlay(RoundedRectangle(cornerRadius: 4)
                 .stroke(Color("#f2f2f2"), lineWidth: 1))
-            .frame(width: size)
+            .frame(width: size, height: size)
     }
 }

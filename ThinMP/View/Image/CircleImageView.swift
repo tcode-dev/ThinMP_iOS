@@ -15,10 +15,8 @@ struct CircleImageView: View {
     var body: some View {
         Image(uiImage: self.artwork?.image(at: CGSize(width: size, height: size)) ?? UIImage())
             .resizable()
-            .scaledToFit()
+            .scaledToFill()
             .clipShape(Circle())
-            .overlay(RoundedRectangle(cornerRadius: size / 2)
-                .stroke(Color("#f2f2f2"), lineWidth: 1))
-            .frame(width: size)
+            .frame(width: size, height: size)
     }
 }

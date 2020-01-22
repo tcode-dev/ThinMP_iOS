@@ -21,13 +21,13 @@ struct ArtistDetailContentView: View {
                 ZStack(alignment: .bottom) {
                     Image(uiImage: self.artistDetail.artwork?.image(at: CGSize(width: geometry.size.width, height: geometry.size.width)) ?? UIImage())
                         .resizable()
-                        .aspectRatio(1, contentMode: .fit)
+                        .scaledToFill()
                         .blur(radius: 10.0)
                     
                     LinearGradient(gradient: Gradient(colors: [Color.init(Color.RGBColorSpace.sRGB, red: 1, green: 1, blue: 1, opacity: 0), .white]), startPoint: .top, endPoint: .bottom).frame(height: 355).offset(y: 25)
                     CircleImageView(artwork: self.artistDetail.artwork, size: self.artistImageSize)
                         .offset(y:-100)
-
+                    
                     VStack {
                         HeaderTextView(self.artistDetail.name)
                         SecondaryTextView("\(self.artistDetail.albumCount) albums, \(self.artistDetail.songCount) songs")

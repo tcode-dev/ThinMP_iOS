@@ -102,13 +102,13 @@
 		5208A24423CB379200AA4433 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				522366D723D7C1CA0001624E /* Text */,
-				522366D223D7B6330001624E /* Image */,
-				5279F0C523D5204A0053BF55 /* List */,
-				5279F0C223D51F510053BF55 /* Cell */,
-				5279F0BF23D51BF80053BF55 /* Row */,
 				52A6D38E23D12A72004C4E59 /* AlbumDetailHeaderView.swift */,
 				52A5B4D823D4014A003BE152 /* CustomNavigationBarView.swift */,
+				5279F0C223D51F510053BF55 /* Cell */,
+				522366D223D7B6330001624E /* Image */,
+				5279F0C523D5204A0053BF55 /* List */,
+				5279F0BF23D51BF80053BF55 /* Row */,
+				522366D723D7C1CA0001624E /* Text */,
 			);
 			path = View;
 			sourceTree = "<group>";
