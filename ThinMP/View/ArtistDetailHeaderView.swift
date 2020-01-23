@@ -1,17 +1,18 @@
 //
-//  AlbumDetailHeaderView.swift
+//  ArtistDetailHeaderView.swift
 //  ThinMP
 //
-//  Created by tk on 2020/01/17.
+//  Created by tk on 2020/01/23.
 //
 
 import SwiftUI
 
-struct AlbumDetailHeaderView: View {
-    @ObservedObject var albumDetail: AlbumDetailViewModel
+struct ArtistDetailHeaderView: View {
+    @ObservedObject var artistDetail: ArtistDetailViewModel
     @Binding var rect: CGRect
-    
     var side: CGFloat
+    
+    let artistImageSize:CGFloat = 120
     
     var body: some View {
         GeometryReader { geometry in
@@ -30,13 +31,18 @@ struct AlbumDetailHeaderView: View {
         }
         
         return ZStack(alignment: .bottom) {
-            Image(uiImage: self.albumDetail.artwork?.image(at: CGSize(width: self.side, height: self.side)) ?? UIImage())
+            Image(uiImage: self.artistDetail.artwork?.image(at: CGSize(width: geometry.size.width, height: geometry.size.width)) ?? UIImage())
                 .resizable()
-                .scaledToFit()
-            LinearGradient(gradient: Gradient(colors: [Color.init(Color.RGBColorSpace.sRGB, red: 1, green: 1, blue: 1, opacity: 0), .white]), startPoint: .top, endPoint: .bottom).frame(height: 200)
+                .scaledToFill()
+                .blur(radius: 10.0)
+            
+            LinearGradient(gradient: Gradient(colors: [Color.init(Color.RGBColorSpace.sRGB, red: 1, green: 1, blue: 1, opacity: 0), .white]), startPoint: .top, endPoint: .bottom).frame(height: 355).offset(y: 25)
+            CircleImageView(artwork: self.artistDetail.artwork, size: self.artistImageSize)
+                .offset(y:-100)
+            
             VStack {
-                PrimaryTextView(self.albumDetail.title)
-                SecondaryTextView(self.albumDetail.artist)
+                PrimaryTextView(self.artistDetail.name)
+                SecondaryTextView(self.artistDetail.meta)
             }
         }
     }

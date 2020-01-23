@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ArtistDetailContentView: View {
     @ObservedObject var artistDetail: ArtistDetailViewModel
-    var artistImageSize:CGFloat = 120
+    @State private var rect: CGRect = CGRect()
     
     init(artist: Artist) {
         self.artistDetail = ArtistDetailViewModel(persistentId: artist.persistentId)
@@ -17,33 +17,22 @@ struct ArtistDetailContentView: View {
     
     var body: some View {
         GeometryReader { geometry in
-            ScrollView{
-                ZStack(alignment: .bottom) {
-                    Image(uiImage: self.artistDetail.artwork?.image(at: CGSize(width: geometry.size.width, height: geometry.size.width)) ?? UIImage())
-                        .resizable()
-                        .scaledToFill()
-                        .blur(radius: 10.0)
-                    
-                    LinearGradient(gradient: Gradient(colors: [Color.init(Color.RGBColorSpace.sRGB, red: 1, green: 1, blue: 1, opacity: 0), .white]), startPoint: .top, endPoint: .bottom).frame(height: 355).offset(y: 25)
-                    CircleImageView(artwork: self.artistDetail.artwork, size: self.artistImageSize)
-                        .offset(y:-100)
-                    
-                    VStack {
-                        HeaderTextView(self.artistDetail.name)
-                        SecondaryTextView("\(self.artistDetail.albumCount) albums, \(self.artistDetail.songCount) songs")
-                    }
+            ZStack(alignment: .top) {
+                CustomNavigationBarView(primaryText: self.artistDetail.name, secondaryText: self.artistDetail.meta, side: geometry.size.width, rect: self.$rect)
+                    .opacity(1)
+                ScrollView{
+                    ArtistDetailHeaderView(artistDetail: self.artistDetail, rect: self.$rect, side: geometry.size.width)
+                    VStack(alignment: .leading) {
+                        HeaderTextView("Albums")
+                        ArtistAlbumListView(list: self.artistDetail.albums, width: geometry.size.width).padding(.bottom, 10)
+                        
+                        HeaderTextView("Songs")
+                        ArtistSongListView(list: self.artistDetail.songs)
+                    }.frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 20)
                 }
-                
-                VStack(alignment: .leading) {
-                    HeaderTextView("Albums")
-                    ArtistAlbumListView(list: self.artistDetail.albums, width: geometry.size.width).padding(.bottom, 10)
-                    
-                    HeaderTextView("Songs")
-                    ArtistSongListView(list: self.artistDetail.songs)
-                }.frame(maxWidth: .infinity, alignment: .leading).padding(.leading, 20)
+                .navigationBarHidden(true)
+                .navigationBarTitle(Text(""))
             }
-            .navigationBarHidden(true)
-            .navigationBarTitle(Text(""))
         }
     }
 }

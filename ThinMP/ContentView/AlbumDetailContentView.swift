@@ -10,7 +10,6 @@ import SwiftUI
 struct AlbumDetailContentView: View {
     @ObservedObject var albumDetail: AlbumDetailViewModel
     @State private var rect: CGRect = CGRect()
-    @State private var offsetY: CGFloat = 0
     
     init(album: Album) {
         self.albumDetail = AlbumDetailViewModel(persistentId: album.persistentID)
@@ -20,8 +19,7 @@ struct AlbumDetailContentView: View {
         GeometryReader { geometry in
             ZStack(alignment: .top) {
                 CustomNavigationBarView(primaryText: self.albumDetail.title, secondaryText: self.albumDetail.artist, side: geometry.size.width, rect: self.$rect)
-                    .zIndex(1)
-                    .edgesIgnoringSafeArea(.all)
+
                 ScrollView(showsIndicators: true) {
                     VStack(alignment: .leading) {
                         AlbumDetailHeaderView(albumDetail: self.albumDetail, rect: self.$rect, side: geometry.size.width)

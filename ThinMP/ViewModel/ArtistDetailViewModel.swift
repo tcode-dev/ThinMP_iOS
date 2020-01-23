@@ -16,7 +16,8 @@ class ArtistDetailViewModel: ObservableObject {
     @Published var songCollections: [MPMediaItemCollection] = []
     @Published var albumCount: Int = 0
     @Published var songCount: Int = 0
-    
+    @Published var meta: String?
+
     init(persistentId: MPMediaEntityPersistentID) {
         self.persistentId = persistentId
         if MPMediaLibrary.authorizationStatus() == .authorized {
@@ -52,6 +53,8 @@ class ArtistDetailViewModel: ObservableObject {
             self.songCount = songs.songs.count
             self.songCollections = songs.songCollections
         }
+        
+        self.meta = "\(self.albumCount) albums, \(self.songCount) songs"
     }
     
     func getArtist() -> Artist? {
