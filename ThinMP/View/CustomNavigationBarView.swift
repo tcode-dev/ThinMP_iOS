@@ -25,6 +25,7 @@ struct CustomNavigationBarView: View {
                 }
                 .frame(height: 50, alignment: .center)
                 Spacer()
+                MenuButtonView()
             }
         }
         .frame(width: side, height: 95, alignment: .bottomLeading)

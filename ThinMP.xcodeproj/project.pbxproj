@@ -27,6 +27,7 @@
 		52B6682023C19ADE00E70C47 /* ArtistsContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B6681F23C19ADE00E70C47 /* ArtistsContentView.swift */; };
 		52B6682523C19D8E00E70C47 /* ArtistsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B6682423C19D8E00E70C47 /* ArtistsViewModel.swift */; };
 		52BA93D723DA5A2100CA323F /* BackButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BA93D623DA5A2100CA323F /* BackButtonView.swift */; };
+		52BA93D923DA648F00CA323F /* MenuButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BA93D823DA648F00CA323F /* MenuButtonView.swift */; };
 		52C2535123CB33630075D35F /* AlbumsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C2535023CB33630075D35F /* AlbumsView.swift */; };
 		52C34D62230ED7BE00EA76DA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C34D61230ED7BE00EA76DA /* AppDelegate.swift */; };
 		52C34D69230ED7C000EA76DA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52C34D68230ED7C000EA76DA /* Assets.xcassets */; };
@@ -69,6 +70,7 @@
 		52B6681F23C19ADE00E70C47 /* ArtistsContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistsContentView.swift; sourceTree = "<group>"; };
 		52B6682423C19D8E00E70C47 /* ArtistsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistsViewModel.swift; sourceTree = "<group>"; };
 		52BA93D623DA5A2100CA323F /* BackButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButtonView.swift; sourceTree = "<group>"; };
+		52BA93D823DA648F00CA323F /* MenuButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuButtonView.swift; sourceTree = "<group>"; };
 		52C2535023CB33630075D35F /* AlbumsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsView.swift; sourceTree = "<group>"; };
 		52C34D5E230ED7BE00EA76DA /* ThinMP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ThinMP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52C34D61230ED7BE00EA76DA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -216,6 +218,7 @@
 			isa = PBXGroup;
 			children = (
 				52BA93D623DA5A2100CA323F /* BackButtonView.swift */,
+				52BA93D823DA648F00CA323F /* MenuButtonView.swift */,
 			);
 			path = Button;
 			sourceTree = "<group>";
@@ -355,6 +358,7 @@
 				52D98E7623CC5ED10032971A /* Song.swift in Sources */,
 				526A3B372366AC6F0070BE0A /* Album.swift in Sources */,
 				52D98E7423CC5E780032971A /* SongsViewModel.swift in Sources */,
+				52BA93D923DA648F00CA323F /* MenuButtonView.swift in Sources */,
 				5208A24723CB383000AA4433 /* AlbumCellView.swift in Sources */,
 				52B6681E23C197E000E70C47 /* SceneDelegate.swift in Sources */,
 				52D98E7823CC61870032971A /* SongRowView.swift in Sources */,
