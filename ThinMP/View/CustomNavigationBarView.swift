@@ -13,16 +13,11 @@ struct CustomNavigationBarView: View {
     var side: CGFloat
     
     @Binding var rect: CGRect
-    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     var body: some View {
         VStack {
             HStack() {
-                Button(action: {
-                    self.presentationMode.wrappedValue.dismiss()
-                }) {
-                    Text("<")
-                }
+                BackButtonView()
                 Spacer()
                 VStack {
                     PrimaryTextView(self.primaryText)
@@ -30,11 +25,6 @@ struct CustomNavigationBarView: View {
                 }
                 .frame(height: 50, alignment: .center)
                 Spacer()
-                Button(action: {
-                    self.presentationMode.wrappedValue.dismiss()
-                }) {
-                    Text("<")
-                }
             }
         }
         .frame(width: side, height: 95, alignment: .bottomLeading)
