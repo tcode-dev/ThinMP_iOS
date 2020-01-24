@@ -15,28 +15,37 @@ struct CustomNavigationBarView: View {
     @Binding var rect: CGRect
     
     var body: some View {
-        VStack {
-            HStack() {
+        ZStack {
+            HStack {
                 BackButtonView()
                 Spacer()
+                MenuButtonView()
+            }
+            .frame(width: side, height: 90, alignment: .bottom)
+            .edgesIgnoringSafeArea(.all)
+            .zIndex(3)
+            VStack {
                 VStack {
                     PrimaryTextView(self.primaryText)
                     SecondaryTextView(self.secondaryText)
                 }
+                .padding(.leading, 50)
+                .padding(.trailing, 50)
                 .frame(height: 50, alignment: .center)
-                Spacer()
-                MenuButtonView()
             }
+            .frame(width: side, height: 90, alignment: .bottom)
+            .edgesIgnoringSafeArea(.all)
+            .background(Color.white)
+            .opacity(self.opacity())
+            .zIndex(2)
         }
-        .frame(width: side, height: 95, alignment: .bottomLeading)
-        .background(Color.white)
-        .opacity(self.opacity())
-        .zIndex(1)
+        .frame(width: side, height: 90, alignment: .bottom)
         .edgesIgnoringSafeArea(.all)
+        .zIndex(1)
     }
     
     func opacity() -> Double {
-        if (-rect.origin.y < (side - 70)) {
+        if (-rect.origin.y < (side - 65)) {
             return 0
         }
         

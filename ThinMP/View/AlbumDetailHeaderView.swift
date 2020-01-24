@@ -38,6 +38,8 @@ struct AlbumDetailHeaderView: View {
                 PrimaryTextView(self.albumDetail.title)
                 SecondaryTextView(self.albumDetail.artist)
             }
+            .padding(.leading, 50)
+            .padding(.trailing, 50)
         }
     }
 }
