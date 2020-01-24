@@ -44,6 +44,8 @@ struct ArtistDetailHeaderView: View {
                 PrimaryTextView(self.artistDetail.name)
                 SecondaryTextView(self.artistDetail.meta)
             }
+            .padding(.leading, 50)
+            .padding(.trailing, 50)
         }
     }
 }
