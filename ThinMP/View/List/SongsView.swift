@@ -6,12 +6,13 @@
 //
 
 import SwiftUI
+import MediaPlayer
 
 struct SongsView: View {
-    var list: [Song]
+    var list: [MPMediaItemCollection]
     var body: some View {
-        List(list){ song in
-            SongRowView(song: song)
+        ForEach(list.indices) { index in
+            SongRowView(song: self.list[index])
         }
     }
 }

@@ -6,17 +6,25 @@
 //
 
 import SwiftUI
+import MediaPlayer
 
 struct SongRowView: View {
-    var song: Song
+    var song: MPMediaItemCollection
     var size: CGFloat = 40
-
+    
     var body: some View {
         HStack {
-            SquareImageView(artwork: self.song.artwork, size: size)
-            VStack(alignment: .leading) {
-                PrimaryTextView(song.title)
-                SecondaryTextView(song.artist)
+            Button(action: {
+                let musicService = MusicService.sharedInstance()
+                musicService.start(itemCollection: self.song)
+            }) {
+                HStack {
+                    SquareImageView(artwork: self.song.representativeItem?.artwork, size: size)
+                    VStack(alignment: .leading) {
+                        PrimaryTextView(song.representativeItem?.title)
+                        SecondaryTextView(song.representativeItem?.artist)
+                    }
+                }
             }
             Spacer()
         }

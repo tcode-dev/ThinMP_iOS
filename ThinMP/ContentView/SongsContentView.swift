@@ -11,6 +11,8 @@ struct SongsContentView: View {
     @ObservedObject var songs = SongsViewModel()
     
     var body: some View {
-        SongsView(list: songs.list).navigationBarTitle("Songs")
+        ScrollView{
+            SongsView(list: songs.list).navigationBarTitle("Songs")
+        }
     }
 }
