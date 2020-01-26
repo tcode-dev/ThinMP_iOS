@@ -12,9 +12,7 @@ struct AlbumsContentView: View {
     
     var body: some View {
         GeometryReader { geometry in
-            ScrollView{
-                AlbumsView(list: self.albums.list, width: geometry.size.width)
-            }
+            AlbumsView(list: self.albums.list, width: geometry.size.width)
         }.navigationBarTitle("Albums")
     }
 }
