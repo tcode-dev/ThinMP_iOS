@@ -11,8 +11,9 @@ struct SongsContentView: View {
     @ObservedObject var songs = SongsViewModel()
     
     var body: some View {
-        ScrollView{
-            SongsView(list: songs.list).navigationBarTitle("Songs")
+        List(self.songs.list.indices) { index in
+            SongRowView(song: self.songs.list[index])
         }
+        .navigationBarTitle("Songs")
     }
 }
