@@ -6,13 +6,21 @@
 //
 
 import SwiftUI
+import MediaPlayer
 
 struct AlbumSongRowView: View {
-    var song: Song
+    @EnvironmentObject var musicState: MusicState
+    var song: MPMediaItemCollection
     var body: some View {
-        HStack {
-            PrimaryTextView(song.title)
-            Spacer()
-        }.padding(.top, 5)
+        Button(action: {
+            let musicService = MusicService.sharedInstance()
+            self.musicState.start(song: self.song)
+            musicService.start(itemCollection: self.song)
+        }) {
+            HStack {
+                PrimaryTextView(song.representativeItem?.title)
+                Spacer()
+            }.padding(.top, 5)
+        }
     }
 }

@@ -9,6 +9,7 @@ import SwiftUI
 import MediaPlayer
 
 struct SongRowView: View {
+    @EnvironmentObject var musicState: MusicState
     var song: MPMediaItemCollection
     var size: CGFloat = 40
     
@@ -16,6 +17,7 @@ struct SongRowView: View {
         HStack {
             Button(action: {
                 let musicService = MusicService.sharedInstance()
+                self.musicState.start(song: self.song)
                 musicService.start(itemCollection: self.song)
             }) {
                 HStack {
