@@ -18,11 +18,13 @@ struct AlbumsView: View {
         self.size = (width - (space * CGFloat(colCount + 1))) / CGFloat(colCount)
     }
     var body: some View {
-        List(list.indices) { row in
-            HStack(spacing: self.space) {
-                ForEach(self.list[row].indices) { col in
-                    NavigationLink(destination: AlbumDetailContentView(album: self.list[row][col])) {
-                        AlbumCellView(album: self.list[row][col], size: self.size)
+        ScrollView {
+            ForEach(list.indices) { row in
+                HStack(spacing: self.space) {
+                    ForEach(self.list[row].indices) { col in
+                        NavigationLink(destination: AlbumDetailContentView(album: self.list[row][col])) {
+                            AlbumCellView(album: self.list[row][col], size: self.size)
+                        }
                     }
                 }
             }
