@@ -21,6 +21,7 @@ struct MainContentView: View {
                     Text("Songs")
                 }
             }
+            .listStyle(GroupedListStyle())
             .navigationBarTitle("Library")
         }
     }
