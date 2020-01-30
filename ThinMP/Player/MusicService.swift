@@ -1,6 +1,7 @@
 import MediaPlayer
 
 class MusicService {
+    private var playingList: PlayingList?
     private static let instance: MusicService = {
         return MusicService()
     }()
@@ -18,11 +19,16 @@ class MusicService {
         return self.instance
     }
 
-    func start(itemCollection: MPMediaItemCollection) {
-        let descriptor = MPMusicPlayerMediaItemQueueDescriptor.init(itemCollection: itemCollection)
-        
-        player.setQueue(with: descriptor)
-        player.play()
+    func start(list:[MPMediaItemCollection], currentIndex: Int) {
+        playingList = PlayingList(list: list, currentIndex: currentIndex)
+
+        if let itemCollection = playingList?.getSong() {
+            let descriptor = MPMusicPlayerMediaItemQueueDescriptor.init(itemCollection: itemCollection)
+            
+            player.setQueue(with: descriptor)
+            player.play()
+        }
+
     }
     
     private func addObserver() {
@@ -59,5 +65,9 @@ class MusicService {
             NSLog("default")
             break
         }
+    }
+    
+    func autoNext() {
+        
     }
 }

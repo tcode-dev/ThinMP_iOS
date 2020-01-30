@@ -10,15 +10,23 @@ import MediaPlayer
 
 struct SongRowView: View {
     @EnvironmentObject var musicState: MusicState
+    var list: [MPMediaItemCollection]
+    var index: Int
     var song: MPMediaItemCollection
     var size: CGFloat = 40
+    
+    init(list: [MPMediaItemCollection], index: Int) {
+        self.list = list
+        self.index = index
+        self.song = list[index]
+    }
     
     var body: some View {
         HStack {
             Button(action: {
                 let musicService = MusicService.sharedInstance()
+                musicService.start(list: self.list, currentIndex: self.index ?? 0)
                 self.musicState.start(song: self.song)
-                musicService.start(itemCollection: self.song)
             }) {
                 HStack {
                     SquareImageView(artwork: self.song.representativeItem?.artwork, size: size)

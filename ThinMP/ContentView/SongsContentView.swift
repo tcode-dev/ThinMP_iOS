@@ -13,7 +13,7 @@ struct SongsContentView: View {
     var body: some View {
         Group {
             List(self.songs.list.indices) { index in
-                SongRowView(song: self.songs.list[index])
+                SongRowView(list: self.songs.list, index:index)
             }
             .navigationBarTitle("Songs")
         }

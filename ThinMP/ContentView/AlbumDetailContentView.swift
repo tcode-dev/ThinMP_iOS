@@ -25,7 +25,7 @@ struct AlbumDetailContentView: View {
                             AlbumDetailHeaderView(albumDetail: self.albumDetail, rect: self.$rect, side: geometry.size.width)
                             VStack{
                                 ForEach(self.albumDetail.songs.indices){ index in
-                                    AlbumSongRowView(song: self.albumDetail.songs[index])
+                                    AlbumSongRowView(list: self.albumDetail.songs, index: index)
                                     Divider()
                                 }.padding(.leading, 10)
                             }
