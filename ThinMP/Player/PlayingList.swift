@@ -19,4 +19,14 @@ class PlayingList {
     func getSong() -> MPMediaItemCollection {
         return list[currentIndex]
     }
+    
+    func hasNext() -> Bool {
+        return self.currentIndex < list.count
+    }
+
+    func next() {
+        if (self.hasNext()) {
+            self.currentIndex += 1
+        }
+    }
 }

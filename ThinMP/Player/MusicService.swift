@@ -1,12 +1,12 @@
 import MediaPlayer
 
 class MusicService {
-    private var playingList: PlayingList?
+    private var player: MPMusicPlayerController
+    private var playingList: PlayingList = PlayingList(list: [], currentIndex: 0)
+    private var isPlaying: Bool = false
     private static let instance: MusicService = {
         return MusicService()
     }()
-
-    private var player: MPMusicPlayerController!
     
     private init() {
         player = MPMusicPlayerController.applicationMusicPlayer
@@ -14,21 +14,25 @@ class MusicService {
         addObserver()
         player.beginGeneratingPlaybackNotifications()
     }
-
+    
     class func sharedInstance() -> MusicService {
         return self.instance
     }
-
+    
     func start(list:[MPMediaItemCollection], currentIndex: Int) {
         playingList = PlayingList(list: list, currentIndex: currentIndex)
-
-        if let itemCollection = playingList?.getSong() {
-            let descriptor = MPMusicPlayerMediaItemQueueDescriptor.init(itemCollection: itemCollection)
-            
-            player.setQueue(with: descriptor)
-            player.play()
-        }
-
+        
+        self.play();
+    }
+    
+    func play() {
+        let itemCollection = playingList.getSong()
+        let descriptor = MPMusicPlayerMediaItemQueueDescriptor.init(itemCollection: itemCollection)
+        
+        player.setQueue(with: descriptor)
+        player.play()
+        
+        self.isPlaying = true
     }
     
     private func addObserver() {
@@ -42,15 +46,21 @@ class MusicService {
     }
     
     private func callback() {
-        switch self.player!.playbackState {
+        switch self.player.playbackState {
         case MPMusicPlaybackState.stopped:
             NSLog("stopped")
+            if (self.isPlaying) {
+                self.autoPlay()
+            }
             break
         case MPMusicPlaybackState.playing:
             NSLog("playing")
             break
         case MPMusicPlaybackState.paused:
             NSLog("paused")
+            if (self.isPlaying) {
+                self.autoPlay()
+            }
             break
         case MPMusicPlaybackState.interrupted:
             NSLog("interrupted")
@@ -67,7 +77,14 @@ class MusicService {
         }
     }
     
-    func autoNext() {
+    func next() {
         
+    }
+    
+    func autoPlay() {
+        if (self.playingList.hasNext()) {
+            self.playingList.next()
+            self.play()
+        }
     }
 }

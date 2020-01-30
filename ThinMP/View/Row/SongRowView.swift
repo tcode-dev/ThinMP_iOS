@@ -25,7 +25,7 @@ struct SongRowView: View {
         HStack {
             Button(action: {
                 let musicService = MusicService.sharedInstance()
-                musicService.start(list: self.list, currentIndex: self.index ?? 0)
+                musicService.start(list: self.list, currentIndex: self.index)
                 self.musicState.start(song: self.song)
             }) {
                 HStack {
