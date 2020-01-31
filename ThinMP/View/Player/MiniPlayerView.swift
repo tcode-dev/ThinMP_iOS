@@ -9,16 +9,16 @@ import SwiftUI
 
 
 struct MiniPlayerView: View {
-    @EnvironmentObject var musicState: MusicState
+    @EnvironmentObject var musicPlayer: MusicPlayer
     
     var size: CGFloat = 40
     
     var body: some View {
         Group {
-            if (musicState.isActive) {
+            if (musicPlayer.isActive) {
                 HStack {
-                    SquareImageView(artwork: musicState.song!.representativeItem?.artwork, size: size)
-                    PrimaryTextView(musicState.song!.representativeItem?.title)
+                    SquareImageView(artwork: musicPlayer.song!.representativeItem?.artwork, size: size)
+                    PrimaryTextView(musicPlayer.song!.representativeItem?.title)
                     Spacer()
                 }
                 .frame(height: 50)

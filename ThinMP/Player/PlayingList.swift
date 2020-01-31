@@ -10,7 +10,7 @@ import MediaPlayer
 class PlayingList {
     private var list:[MPMediaItemCollection] = []
     private var currentIndex: Int = 0;
-
+    
     init(list:[MPMediaItemCollection], currentIndex: Int) {
         self.list = list
         self.currentIndex = currentIndex
@@ -23,7 +23,7 @@ class PlayingList {
     func hasNext() -> Bool {
         return self.currentIndex < list.count
     }
-
+    
     func next() {
         if (self.hasNext()) {
             self.currentIndex += 1

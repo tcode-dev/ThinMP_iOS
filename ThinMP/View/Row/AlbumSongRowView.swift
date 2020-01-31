@@ -9,7 +9,7 @@ import SwiftUI
 import MediaPlayer
 
 struct AlbumSongRowView: View {
-    @EnvironmentObject var musicState: MusicState
+    @EnvironmentObject var musicPlayer: MusicPlayer
     var list: [MPMediaItemCollection]
     var index: Int
     var song: MPMediaItemCollection
@@ -22,9 +22,7 @@ struct AlbumSongRowView: View {
     
     var body: some View {
         Button(action: {
-            let musicService = MusicService.sharedInstance()
-            musicService.start(list: self.list, currentIndex: self.index)
-            self.musicState.start(song: self.song)
+            self.musicPlayer.start(list: self.list, currentIndex: self.index)
         }) {
             HStack {
                 PrimaryTextView(song.representativeItem?.title)

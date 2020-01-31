@@ -1,33 +1,38 @@
+//
+//  MusicPlayer.swift
+//  ThinMP
+//
+//  Created by tk on 2020/01/31.
+//
+
 import MediaPlayer
 
-class MusicService {
+class MusicPlayer: ObservableObject {
+    @Published var isActive: Bool = false
+    @Published var isPlaying: Bool = false
+    @Published var song: MPMediaItemCollection?
+
     private var player: MPMusicPlayerController
     private var playingList: PlayingList = PlayingList(list: [], currentIndex: 0)
-    private var isPlaying: Bool = false
-    private static let instance: MusicService = {
-        return MusicService()
-    }()
     
-    private init() {
+    init() {
         player = MPMusicPlayerController.applicationMusicPlayer
         player.repeatMode = .none
         addObserver()
         player.beginGeneratingPlaybackNotifications()
     }
     
-    class func sharedInstance() -> MusicService {
-        return self.instance
-    }
-    
     func start(list:[MPMediaItemCollection], currentIndex: Int) {
         playingList = PlayingList(list: list, currentIndex: currentIndex)
         
         self.play();
+        
+        self.isActive = true
     }
     
     func play() {
-        let itemCollection = playingList.getSong()
-        let descriptor = MPMusicPlayerMediaItemQueueDescriptor.init(itemCollection: itemCollection)
+        self.song = playingList.getSong()
+        let descriptor = MPMusicPlayerMediaItemQueueDescriptor.init(itemCollection: self.song!)
         
         player.setQueue(with: descriptor)
         player.play()

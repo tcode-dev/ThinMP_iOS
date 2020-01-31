@@ -9,7 +9,6 @@ import SwiftUI
 import MediaPlayer
 
 struct SongRowView: View {
-    @EnvironmentObject var musicState: MusicState
     var list: [MPMediaItemCollection]
     var index: Int
     var song: MPMediaItemCollection
@@ -24,9 +23,7 @@ struct SongRowView: View {
     var body: some View {
         HStack {
             Button(action: {
-                let musicService = MusicService.sharedInstance()
-                musicService.start(list: self.list, currentIndex: self.index)
-                self.musicState.start(song: self.song)
+
             }) {
                 HStack {
                     SquareImageView(artwork: self.song.representativeItem?.artwork, size: size)
