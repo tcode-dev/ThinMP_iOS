@@ -31,14 +31,14 @@ struct MiniPlayerView: View {
                         Button(action: {
                             self.musicPlayer.stop()
                         }) {
-                            Image("StopButton").renderingMode(.original)
+                            Image("Stop2Button").renderingMode(.original)
                         }
                         .frame(width: buttonSize, height: buttonSize)
                         
                         Button(action: {
                             self.musicPlayer.playNext()
                         }) {
-                            Image("NextButton").renderingMode(.original)
+                            Image("Next2Button").renderingMode(.original)
                         }
                         .frame(width: buttonSize, height: buttonSize)
                         
@@ -46,13 +46,13 @@ struct MiniPlayerView: View {
                         Button(action: {
                             self.musicPlayer.play()
                         }) {
-                            Image("PlayButton").renderingMode(.original)
+                            Image("Play2Button").renderingMode(.original)
                         }
                         .frame(width: buttonSize, height: buttonSize)
                         Button(action: {
                             self.musicPlayer.next()
                         }) {
-                            Image("NextButton").renderingMode(.original)
+                            Image("Next2Button").renderingMode(.original)
                         }
                         .frame(width: buttonSize, height: buttonSize)
                     }

@@ -9,12 +9,95 @@ import SwiftUI
 
 struct PlayerView: View {
     @EnvironmentObject var musicPlayer: MusicPlayer
-
+    @State var time: Double = 90
+    let size: CGFloat = 220
+    let start: Double = 0
+    var end: Double = 300
+    
     var body: some View {
-        ZStack(alignment: .top) {
-
-            VStack {
-                PrimaryTextView(self.musicPlayer.song?.representativeItem?.title)
+        GeometryReader { geometry in
+            ZStack(alignment: .top) {
+                ZStack {
+                    Image(uiImage: self.musicPlayer.song?.representativeItem?.artwork?.image(at: CGSize(width: geometry.size.width, height: geometry.size.width)) ?? UIImage())
+                        .resizable()
+                        .scaledToFill()
+                        .blur(radius: 10.0)
+                    
+                    LinearGradient(gradient: Gradient(colors: [Color.init(Color.RGBColorSpace.sRGB, red: 1, green: 1, blue: 1, opacity: 0), .white]), startPoint: .top, endPoint: .bottom).frame(height: geometry.size.width).offset(y: 25)
+                }
+                .frame(width: geometry.size.width, height: geometry.size.width)
+                VStack() {
+                    SquareImageView(artwork: self.musicPlayer.song?.representativeItem?.artwork, size: self.size)
+                        .padding(.top, 50)
+                        .padding(.bottom, 10)
+                    VStack {
+                        PrimaryTextView(self.musicPlayer.song?.representativeItem?.title)
+                        SecondaryTextView(self.musicPlayer.song?.representativeItem?.artist)
+                    }
+                    Spacer()
+                    HStack {
+                        SecondaryTextView("2:30").padding(.leading, 10)
+                        Slider(value: self.$time, in: self.start...self.end, step: 1)
+                        SecondaryTextView("5:00").padding(.trailing, 10)
+                    }
+                    Spacer()
+                    HStack {
+                        Spacer()
+                        Button(action: {
+                        }) {
+                            Image("PrevButton").renderingMode(.original)
+                        }
+                        Spacer()
+                        if (self.musicPlayer.isPlaying) {
+                            Button(action: {
+                            }) {
+                                Image("StopButton").renderingMode(.original)
+                            }
+                        } else {
+                            Button(action: {
+                            }) {
+                                Image("PlayButton").renderingMode(.original)
+                            }
+                        }
+                        Spacer()
+                        Button(action: {
+                        }) {
+                            Image("NextButton").renderingMode(.original)
+                        }
+                        Spacer()
+                    }
+                    Spacer()
+                    HStack {
+                        Button(action: {
+                        }) {
+                            Image("RepeatButton").renderingMode(.original)
+                        }
+                        Spacer()
+                        Button(action: {
+                        }) {
+                            Image("ShuffleButton").renderingMode(.original)
+                        }
+                        Spacer()
+                        Button(action: {
+                        }) {
+                            Image("FavoriteArtistOnButton").renderingMode(.original)
+                        }
+                        Spacer()
+                        Button(action: {
+                        }) {
+                            Image("FavoriteSongOnButton").renderingMode(.original)
+                        }
+                        Spacer()
+                        Button(action: {
+                        }) {
+                            Image("AddPlaylistButton").renderingMode(.original)
+                        }
+                    }
+                    .padding(.leading, 30)
+                    .padding(.trailing, 30)
+                    
+                    Spacer()
+                }
             }
         }
     }
