@@ -14,8 +14,7 @@ struct BackButtonView: View {
         Button(action: {
             self.presentationMode.wrappedValue.dismiss()
         }) {
-            Image("BackButton")
-                .renderingMode(.original)
+            Image("BackButton").renderingMode(.original)
         }
         .frame(width: 50, height: 50)
     }

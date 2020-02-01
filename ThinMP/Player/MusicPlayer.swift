@@ -11,7 +11,7 @@ class MusicPlayer: ObservableObject {
     @Published var isActive: Bool = false
     @Published var isPlaying: Bool = false
     @Published var song: MPMediaItemCollection?
-
+    
     private var player: MPMusicPlayerController
     private var playingList: PlayingList = PlayingList(list: [], currentIndex: 0)
     
@@ -25,19 +25,45 @@ class MusicPlayer: ObservableObject {
     func start(list:[MPMediaItemCollection], currentIndex: Int) {
         playingList = PlayingList(list: list, currentIndex: currentIndex)
         
+        self.setSong()
         self.play();
         
         self.isActive = true
     }
     
-    func play() {
+    func setSong() {
         self.song = playingList.getSong()
+    }
+    
+    func play() {
         let descriptor = MPMusicPlayerMediaItemQueueDescriptor.init(itemCollection: self.song!)
         
         player.setQueue(with: descriptor)
         player.play()
         
         self.isPlaying = true
+    }
+    
+    func stop() {
+        self.isPlaying = false
+        player.stop()
+    }
+    
+    func next() {
+        self.playingList.next()
+        self.setSong()
+    }
+    
+    func playNext() {
+        self.isPlaying = true
+        self.next()
+        self.play()
+    }
+    
+    func autoPlay() {
+        if (self.playingList.hasNext()) {
+            self.playNext()
+        }
     }
     
     private func addObserver() {
@@ -79,17 +105,6 @@ class MusicPlayer: ObservableObject {
         default:
             NSLog("default")
             break
-        }
-    }
-    
-    func next() {
-        
-    }
-    
-    func autoPlay() {
-        if (self.playingList.hasNext()) {
-            self.playingList.next()
-            self.play()
         }
     }
 }
