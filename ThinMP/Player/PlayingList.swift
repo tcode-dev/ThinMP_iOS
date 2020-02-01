@@ -21,12 +21,14 @@ class PlayingList {
     }
     
     func hasNext() -> Bool {
-        return self.currentIndex < list.count
+        return self.currentIndex + 1 < list.count
     }
     
     func next() {
         if (self.hasNext()) {
             self.currentIndex += 1
+        } else {
+            self.currentIndex = 0
         }
     }
 }

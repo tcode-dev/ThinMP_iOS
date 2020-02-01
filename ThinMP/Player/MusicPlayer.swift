@@ -55,7 +55,7 @@ class MusicPlayer: ObservableObject {
     }
     
     func playNext() {
-        self.isPlaying = true
+        self.isPlaying = false
         self.next()
         self.play()
     }
