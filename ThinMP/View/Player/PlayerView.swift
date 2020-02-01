@@ -12,6 +12,7 @@ struct PlayerView: View {
 
     var body: some View {
         ZStack(alignment: .top) {
+
             VStack {
                 PrimaryTextView(self.musicPlayer.song?.representativeItem?.title)
             }

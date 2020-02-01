@@ -11,8 +11,9 @@ struct MiniPlayerView: View {
     @EnvironmentObject var musicPlayer: MusicPlayer
     @State var isFullScreen: Bool = false
 
-    var size: CGFloat = 40
-    
+    var imageSize: CGFloat = 40
+    var buttonSize: CGFloat = 50
+
     var body: some View {
         Group {
             if (musicPlayer.isActive) {
@@ -21,7 +22,7 @@ struct MiniPlayerView: View {
                         self.isFullScreen.toggle()
                     }) {
                         HStack {
-                            SquareImageView(artwork: musicPlayer.song!.representativeItem?.artwork, size: size)
+                            SquareImageView(artwork: musicPlayer.song!.representativeItem?.artwork, size: imageSize)
                             PrimaryTextView(musicPlayer.song!.representativeItem?.title)
                             Spacer()
                         }
@@ -32,14 +33,14 @@ struct MiniPlayerView: View {
                         }) {
                             Image("StopButton").renderingMode(.original)
                         }
-                        .frame(width: 50, height: 50)
+                        .frame(width: buttonSize, height: buttonSize)
                         
                         Button(action: {
                             self.musicPlayer.playNext()
                         }) {
                             Image("NextButton").renderingMode(.original)
                         }
-                        .frame(width: 50, height: 50)
+                        .frame(width: buttonSize, height: buttonSize)
                         
                     } else {
                         Button(action: {
@@ -47,13 +48,13 @@ struct MiniPlayerView: View {
                         }) {
                             Image("PlayButton").renderingMode(.original)
                         }
-                        .frame(width: 50, height: 50)
+                        .frame(width: buttonSize, height: buttonSize)
                         Button(action: {
                             self.musicPlayer.next()
                         }) {
                             Image("NextButton").renderingMode(.original)
                         }
-                        .frame(width: 50, height: 50)
+                        .frame(width: buttonSize, height: buttonSize)
                     }
                 }
                 .frame(height: 50)
