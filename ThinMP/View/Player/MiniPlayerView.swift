@@ -60,7 +60,7 @@ struct MiniPlayerView: View {
                 .padding(.leading, 10)
                 .background(Color.white)
                 .sheet(isPresented: $isFullScreen) {
-                    PlayerView()
+                    PlayerView().environmentObject(self.musicPlayer)
                 }
             } else {
                 EmptyView()

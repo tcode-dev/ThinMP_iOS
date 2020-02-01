@@ -8,7 +8,13 @@
 import SwiftUI
 
 struct PlayerView: View {
+    @EnvironmentObject var musicPlayer: MusicPlayer
+
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack(alignment: .top) {
+            VStack {
+                PrimaryTextView(self.musicPlayer.song?.representativeItem?.title)
+            }
+        }
     }
 }
