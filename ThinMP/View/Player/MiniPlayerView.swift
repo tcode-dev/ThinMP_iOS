@@ -7,19 +7,25 @@
 
 import SwiftUI
 
-
 struct MiniPlayerView: View {
     @EnvironmentObject var musicPlayer: MusicPlayer
-    
+    @State var isFullScreen: Bool = false
+
     var size: CGFloat = 40
     
     var body: some View {
         Group {
             if (musicPlayer.isActive) {
                 HStack {
-                    SquareImageView(artwork: musicPlayer.song!.representativeItem?.artwork, size: size)
-                    PrimaryTextView(musicPlayer.song!.representativeItem?.title)
-                    Spacer()
+                    Button(action: {
+                        self.isFullScreen.toggle()
+                    }) {
+                        HStack {
+                            SquareImageView(artwork: musicPlayer.song!.representativeItem?.artwork, size: size)
+                            PrimaryTextView(musicPlayer.song!.representativeItem?.title)
+                            Spacer()
+                        }
+                    }
                     if (musicPlayer.isPlaying) {
                         Button(action: {
                             self.musicPlayer.stop()
@@ -53,6 +59,9 @@ struct MiniPlayerView: View {
                 .frame(height: 50)
                 .padding(.leading, 10)
                 .background(Color.white)
+                .sheet(isPresented: $isFullScreen) {
+                    PlayerView()
+                }
             } else {
                 EmptyView()
             }
