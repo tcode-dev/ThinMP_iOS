@@ -29,7 +29,7 @@ struct MiniPlayerView: View {
                     }
                     if (musicPlayer.isPlaying) {
                         Button(action: {
-                            self.musicPlayer.stop()
+                            self.musicPlayer.pause()
                         }) {
                             Image("Stop2Button").renderingMode(.original)
                         }

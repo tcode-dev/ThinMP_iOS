@@ -10,22 +10,24 @@ import MediaPlayer
 class MusicPlayer: ObservableObject {
     @Published var isActive: Bool = false
     @Published var isPlaying: Bool = false
+    @Published var playable: Bool = false
     @Published var song: MPMediaItemCollection?
     
     private var player: MPMusicPlayerController
     private var playingList: PlayingList = PlayingList(list: [], currentIndex: 0)
     
     init() {
-        player = MPMusicPlayerController.applicationMusicPlayer
-        player.repeatMode = .none
-        addObserver()
-        player.beginGeneratingPlaybackNotifications()
+        self.player = MPMusicPlayerController.applicationMusicPlayer
+        self.player.repeatMode = .none
+        self.addObserver()
+        self.player.beginGeneratingPlaybackNotifications()
     }
     
     func start(list:[MPMediaItemCollection], currentIndex: Int) {
-        playingList = PlayingList(list: list, currentIndex: currentIndex)
+        self.playingList = PlayingList(list: list, currentIndex: currentIndex)
         
         self.setSong()
+        self.playPrepare()
         self.play();
         
         self.isActive = true
@@ -33,20 +35,34 @@ class MusicPlayer: ObservableObject {
     
     func setSong() {
         self.song = playingList.getSong()
+        self.playable = false
     }
     
-    func play() {
+    func playPrepare() {
         let descriptor = MPMusicPlayerMediaItemQueueDescriptor.init(itemCollection: self.song!)
         
-        player.setQueue(with: descriptor)
-        player.play()
-        
+        self.player.setQueue(with: descriptor)
+        self.playable = true
+    }
+
+    func play() {
+        if (!self.playable) {
+            self.playPrepare()
+        }
+
+        self.player.play()
+
         self.isPlaying = true
     }
     
+    func pause() {
+        self.isPlaying = false
+        self.player.pause()
+    }
+
     func stop() {
         self.isPlaying = false
-        player.stop()
+        self.player.stop()
     }
     
     func next() {
