@@ -9,13 +9,13 @@ import SwiftUI
 
 struct PlayerView: View {
     @EnvironmentObject var musicPlayer: MusicPlayer
-    @State var time: Double = 90
     let size: CGFloat = 220
-    let start: Double = 0
-    var end: Double = 300
     
     var body: some View {
-        GeometryReader { geometry in
+        if (self.musicPlayer.isPlaying) {
+            musicPlayer.startProgress()
+        }
+        return GeometryReader { geometry in
             ZStack(alignment: .top) {
                 ZStack {
                     Image(uiImage: self.musicPlayer.song?.representativeItem?.artwork?.image(at: CGSize(width: geometry.size.width, height: geometry.size.width)) ?? UIImage())
@@ -36,10 +36,10 @@ struct PlayerView: View {
                     }
                     Spacer()
                     HStack {
-                        SecondaryTextView("2:30").padding(.leading, 10)
-                        Slider(value: self.$time, in: self.start...self.end, step: 1)
+                        SecondaryTextView("\(self.musicPlayer.currentTime)").padding(.leading, 10)
+                        Slider(value: self.$musicPlayer.currentSecond, in: 0...self.musicPlayer.durationSecond, step: 1)
                             .accentColor(Color("#be88ef"))
-                        SecondaryTextView("5:00").padding(.trailing, 10)
+                        SecondaryTextView("\(self.musicPlayer.durationTime)").padding(.trailing, 10)
                     }
                     Spacer()
                     if (self.musicPlayer.isPlaying) {
@@ -53,6 +53,7 @@ struct PlayerView: View {
                             Spacer()
                             Button(action: {
                                 self.musicPlayer.pause()
+                                self.musicPlayer.stopProgress()
                             }) {
                                 Image("StopButton").renderingMode(.original)
                             }
@@ -75,6 +76,7 @@ struct PlayerView: View {
                             Spacer()
                             Button(action: {
                                 self.musicPlayer.play()
+                                self.musicPlayer.startProgress()
                             }) {
                                 Image("PlayButton").renderingMode(.original)
                             }
@@ -87,7 +89,6 @@ struct PlayerView: View {
                             Spacer()
                         }
                     }
-                    
                     Spacer()
                     HStack {
                         Button(action: {
@@ -122,5 +123,8 @@ struct PlayerView: View {
                 }
             }
         }
+        .onDisappear(perform: {
+            self.musicPlayer.stopProgress()
+        })
     }
 }

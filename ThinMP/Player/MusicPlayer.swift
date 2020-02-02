@@ -12,7 +12,12 @@ class MusicPlayer: ObservableObject {
     @Published var isPlaying: Bool = false
     @Published var playable: Bool = false
     @Published var song: MPMediaItemCollection?
-    
+    @Published var currentSecond: Double = 0
+    @Published var currentTime: String = "0:00"
+    @Published var durationSecond: Double = 0
+    @Published var durationTime: String = "0:00"
+
+    var timer: Timer?
     private var player: MPMusicPlayerController
     private var playingList: PlayingList = PlayingList(list: [], currentIndex: 0)
     
@@ -36,6 +41,10 @@ class MusicPlayer: ObservableObject {
     
     func setSong() {
         self.song = playingList.getSong()
+        self.durationSecond = Double(self.song?.representativeItem?.playbackDuration ?? 0)
+        self.durationTime = self.convertTime(time: self.song?.representativeItem?.playbackDuration ?? 0)
+        self.currentSecond = 0
+        self.currentTime = "0:00"
         self.playable = false
     }
     
@@ -102,6 +111,35 @@ class MusicPlayer: ObservableObject {
         ) { notification in
             self.callback()
         }
+    }
+    
+    private func convertTime(time: TimeInterval) -> String {
+        if (time < 1) {
+            return "0:00"
+        }
+
+        let formatter = DateComponentsFormatter()
+        formatter.unitsStyle = .positional
+        formatter.allowedUnits = [.minute,.second]
+        formatter.zeroFormattingBehavior = [.dropTrailing]
+
+        return formatter.string(from: time) ?? "0:00"
+    }
+    
+    func updateTime() {
+        self.currentSecond = Double(self.player.currentPlaybackTime)
+        self.currentTime = self.convertTime(time: self.player.currentPlaybackTime)
+    }
+    
+    func startProgress() {
+        self.timer?.invalidate()
+        self.timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { _ in
+            self.updateTime()
+        })
+    }
+
+    func stopProgress() {
+        self.timer?.invalidate()
     }
     
     private func callback() {
