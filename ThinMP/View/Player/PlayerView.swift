@@ -41,31 +41,52 @@ struct PlayerView: View {
                         SecondaryTextView("5:00").padding(.trailing, 10)
                     }
                     Spacer()
-                    HStack {
-                        Spacer()
-                        Button(action: {
-                        }) {
-                            Image("PrevButton").renderingMode(.original)
-                        }
-                        Spacer()
-                        if (self.musicPlayer.isPlaying) {
+                    if (self.musicPlayer.isPlaying) {
+                        HStack {
+                            Spacer()
                             Button(action: {
+                                self.musicPlayer.playPrev()
+                            }) {
+                                Image("PrevButton").renderingMode(.original)
+                            }
+                            Spacer()
+                            Button(action: {
+                                self.musicPlayer.pause()
                             }) {
                                 Image("StopButton").renderingMode(.original)
                             }
-                        } else {
+                            Spacer()
                             Button(action: {
+                                self.musicPlayer.playNext()
+                            }) {
+                                Image("NextButton").renderingMode(.original)
+                            }
+                            Spacer()
+                        }
+                    } else {
+                        HStack {
+                            Spacer()
+                            Button(action: {
+                                self.musicPlayer.prev()
+                            }) {
+                                Image("PrevButton").renderingMode(.original)
+                            }
+                            Spacer()
+                            Button(action: {
+                                self.musicPlayer.play()
                             }) {
                                 Image("PlayButton").renderingMode(.original)
                             }
+                            Spacer()
+                            Button(action: {
+                                self.musicPlayer.next()
+                            }) {
+                                Image("NextButton").renderingMode(.original)
+                            }
+                            Spacer()
                         }
-                        Spacer()
-                        Button(action: {
-                        }) {
-                            Image("NextButton").renderingMode(.original)
-                        }
-                        Spacer()
                     }
+                    
                     Spacer()
                     HStack {
                         Button(action: {

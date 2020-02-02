@@ -26,6 +26,7 @@ class MusicPlayer: ObservableObject {
     func start(list:[MPMediaItemCollection], currentIndex: Int) {
         self.playingList = PlayingList(list: list, currentIndex: currentIndex)
         
+        self.stop()
         self.setSong()
         self.playPrepare()
         self.play();
@@ -65,6 +66,17 @@ class MusicPlayer: ObservableObject {
         self.player.stop()
     }
     
+    func prev() {
+        self.playingList.prev()
+        self.setSong()
+    }
+
+    func playPrev() {
+        self.isPlaying = false
+        self.prev()
+        self.play()
+    }
+
     func next() {
         self.playingList.next()
         self.setSong()
