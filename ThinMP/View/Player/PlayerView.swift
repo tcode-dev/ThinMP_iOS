@@ -38,6 +38,7 @@ struct PlayerView: View {
                     HStack {
                         SecondaryTextView("2:30").padding(.leading, 10)
                         Slider(value: self.$time, in: self.start...self.end, step: 1)
+                            .accentColor(Color("#be88ef"))
                         SecondaryTextView("5:00").padding(.trailing, 10)
                     }
                     Spacer()
