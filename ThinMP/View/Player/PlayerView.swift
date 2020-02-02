@@ -9,13 +9,11 @@ import SwiftUI
 
 struct PlayerView: View {
     @EnvironmentObject var musicPlayer: MusicPlayer
+    @State var seeking: Bool = false
     let size: CGFloat = 220
     
     var body: some View {
-        self.musicPlayer.immediateUpdateTime()
-        if (self.musicPlayer.isPlaying) {
-            self.musicPlayer.startProgress()
-        }
+        
         return GeometryReader { geometry in
             ZStack(alignment: .top) {
                 ZStack {
@@ -38,7 +36,19 @@ struct PlayerView: View {
                     Spacer()
                     HStack {
                         SecondaryTextView("\(self.musicPlayer.currentTime)").padding(.leading, 10)
-                        Slider(value: self.$musicPlayer.currentSecond, in: 0...self.musicPlayer.durationSecond, step: 1)
+                        Slider(value: self.$musicPlayer.currentSecond, in: 0...self.musicPlayer.durationSecond, step: 1, onEditingChanged: { changed in
+                            if (self.musicPlayer.isPlaying && !self.seeking && changed) {
+                                self.musicPlayer.stopProgress()
+                                self.seeking = changed
+                            }
+
+                            self.musicPlayer.seek(time: self.musicPlayer.currentSecond)
+
+                            if (self.musicPlayer.isPlaying && self.seeking && !changed) {
+                                self.musicPlayer.startProgress()
+                                self.seeking = changed
+                            }
+                        })
                             .accentColor(Color("#be88ef"))
                         SecondaryTextView("\(self.musicPlayer.durationTime)").padding(.trailing, 10)
                     }
@@ -124,8 +134,15 @@ struct PlayerView: View {
                 }
             }
         }
-        .onDisappear(perform: {
-            self.musicPlayer.stopProgress()
+        .onAppear(perform: {
+            self.musicPlayer.immediateUpdateTime()
+            
+            if (self.musicPlayer.isPlaying) {
+                self.musicPlayer.startProgress()
+            }
         })
+            .onDisappear(perform: {
+                self.musicPlayer.stopProgress()
+            })
     }
 }

@@ -12,9 +12,9 @@ class MusicPlayer: ObservableObject {
     @Published var isPlaying: Bool = false
     @Published var song: MPMediaItemCollection?
     @Published var currentSecond: Double = 0
-    @Published var currentTime: String = "0:00"
+    @Published var currentTime: String = "00:00"
     @Published var durationSecond: Double = 0
-    @Published var durationTime: String = "0:00"
+    @Published var durationTime: String = "00:00"
     
     var timer: Timer?
     private var player: MPMusicPlayerController
@@ -96,6 +96,7 @@ class MusicPlayer: ObservableObject {
     
     func seek(time: TimeInterval) {
         self.player.currentPlaybackTime = time
+        self.currentTime = self.convertTime(time: time)
     }
     
     private func addObserver() {
@@ -110,15 +111,15 @@ class MusicPlayer: ObservableObject {
     
     private func convertTime(time: TimeInterval) -> String {
         if (time < 1) {
-            return "0:00"
+            return "00:00"
         }
         
         let formatter = DateComponentsFormatter()
         formatter.unitsStyle = .positional
         formatter.allowedUnits = [.minute,.second]
-        formatter.zeroFormattingBehavior = [.dropTrailing]
+        formatter.zeroFormattingBehavior = [.pad]
         
-        return formatter.string(from: time) ?? "0:00"
+        return formatter.string(from: time) ?? "00:00"
     }
     
     func updateTime() {
