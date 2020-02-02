@@ -10,13 +10,12 @@ import MediaPlayer
 class MusicPlayer: ObservableObject {
     @Published var isActive: Bool = false
     @Published var isPlaying: Bool = false
-    @Published var playable: Bool = false
     @Published var song: MPMediaItemCollection?
     @Published var currentSecond: Double = 0
     @Published var currentTime: String = "0:00"
     @Published var durationSecond: Double = 0
     @Published var durationTime: String = "0:00"
-
+    
     var timer: Timer?
     private var player: MPMusicPlayerController
     private var playingList: PlayingList = PlayingList(list: [], currentIndex: 0)
@@ -33,7 +32,6 @@ class MusicPlayer: ObservableObject {
         
         self.stop()
         self.setSong()
-        self.playPrepare()
         self.play();
         
         self.isActive = true
@@ -43,25 +41,16 @@ class MusicPlayer: ObservableObject {
         self.song = playingList.getSong()
         self.durationSecond = Double(self.song?.representativeItem?.playbackDuration ?? 0)
         self.durationTime = self.convertTime(time: self.song?.representativeItem?.playbackDuration ?? 0)
-        self.currentSecond = 0
-        self.currentTime = "0:00"
-        self.playable = false
-    }
-    
-    func playPrepare() {
         let descriptor = MPMusicPlayerMediaItemQueueDescriptor.init(itemCollection: self.song!)
         
         self.player.setQueue(with: descriptor)
-        self.playable = true
+        self.seek(time: 0)
+        self.updateTime()
     }
-
+    
     func play() {
-        if (!self.playable) {
-            self.playPrepare()
-        }
-
         self.player.play()
-
+        
         self.isPlaying = true
     }
     
@@ -69,24 +58,26 @@ class MusicPlayer: ObservableObject {
         self.isPlaying = false
         self.player.pause()
     }
-
+    
     func stop() {
         self.isPlaying = false
         self.player.stop()
     }
     
     func prev() {
+        self.stop()
         self.playingList.prev()
         self.setSong()
     }
-
+    
     func playPrev() {
         self.isPlaying = false
         self.prev()
         self.play()
     }
-
+    
     func next() {
+        self.stop()
         self.playingList.next()
         self.setSong()
     }
@@ -103,6 +94,10 @@ class MusicPlayer: ObservableObject {
         }
     }
     
+    func seek(time: TimeInterval) {
+        self.player.currentPlaybackTime = time
+    }
+    
     private func addObserver() {
         NotificationCenter.default.addObserver(
             forName: NSNotification.Name.MPMusicPlayerControllerPlaybackStateDidChange,
@@ -117,12 +112,12 @@ class MusicPlayer: ObservableObject {
         if (time < 1) {
             return "0:00"
         }
-
+        
         let formatter = DateComponentsFormatter()
         formatter.unitsStyle = .positional
         formatter.allowedUnits = [.minute,.second]
         formatter.zeroFormattingBehavior = [.dropTrailing]
-
+        
         return formatter.string(from: time) ?? "0:00"
     }
     
@@ -131,45 +126,51 @@ class MusicPlayer: ObservableObject {
         self.currentTime = self.convertTime(time: self.player.currentPlaybackTime)
     }
     
+    func immediateUpdateTime() {
+        Timer.scheduledTimer(withTimeInterval: 0, repeats: false, block: { _ in
+            self.updateTime()
+        })
+    }
+    
     func startProgress() {
         self.timer?.invalidate()
         self.timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { _ in
             self.updateTime()
         })
     }
-
+    
     func stopProgress() {
         self.timer?.invalidate()
     }
     
     private func callback() {
+        if (!self.isPlaying) {
+            return
+        }
+        
         switch self.player.playbackState {
         case MPMusicPlaybackState.stopped:
-            NSLog("stopped")
-            if (self.isPlaying) {
-                self.autoPlay()
-            }
+            self.autoPlay()
+            
             break
         case MPMusicPlaybackState.playing:
-            NSLog("playing")
+            
             break
         case MPMusicPlaybackState.paused:
-            NSLog("paused")
-            if (self.isPlaying) {
-                self.autoPlay()
-            }
+            self.autoPlay()
+            
             break
         case MPMusicPlaybackState.interrupted:
-            NSLog("interrupted")
+            
             break
         case MPMusicPlaybackState.seekingForward:
-            NSLog("seekingForward")
+            
             break
         case MPMusicPlaybackState.seekingBackward:
-            NSLog("seekingBackward")
+            
             break
         default:
-            NSLog("default")
+            
             break
         }
     }

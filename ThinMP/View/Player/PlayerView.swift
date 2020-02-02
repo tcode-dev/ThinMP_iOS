@@ -12,8 +12,9 @@ struct PlayerView: View {
     let size: CGFloat = 220
     
     var body: some View {
+        self.musicPlayer.immediateUpdateTime()
         if (self.musicPlayer.isPlaying) {
-            musicPlayer.startProgress()
+            self.musicPlayer.startProgress()
         }
         return GeometryReader { geometry in
             ZStack(alignment: .top) {
