@@ -15,6 +15,7 @@ class MusicPlayer: ObservableObject {
     @Published var currentTime: String = "00:00"
     @Published var durationSecond: Double = 0
     @Published var durationTime: String = "00:00"
+    private let PREV_SECOND: Double = 3
     
     var timer: Timer?
     private var player: MPMusicPlayerController
@@ -66,8 +67,13 @@ class MusicPlayer: ObservableObject {
     
     func prev() {
         self.stop()
-        self.playingList.prev()
-        self.setSong()
+        if (self.currentSecond <= self.PREV_SECOND) {
+            self.playingList.prev()
+            self.setSong()
+        } else {
+            self.seek(time: 0)
+            self.updateTime()
+        }
     }
     
     func playPrev() {
