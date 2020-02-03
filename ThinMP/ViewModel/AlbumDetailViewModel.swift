@@ -8,7 +8,7 @@
 import MediaPlayer
 
 class AlbumDetailViewModel: ObservableObject {
-    private var persistentId: MPMediaEntityPersistentID!
+    private var persistentId: MPMediaEntityPersistentID
     @Published var title: String?
     @Published var artist: String?
     @Published var artwork: MPMediaItemArtwork?

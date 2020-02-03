@@ -6,13 +6,14 @@
 //
 
 import SwiftUI
+import MediaPlayer
 
 struct AlbumDetailContentView: View {
     @ObservedObject var albumDetail: AlbumDetailViewModel
     @State private var rect: CGRect = CGRect()
     
-    init(album: Album) {
-        self.albumDetail = AlbumDetailViewModel(persistentId: album.persistentID)
+    init(persistentId: MPMediaEntityPersistentID) {
+        self.albumDetail = AlbumDetailViewModel(persistentId: persistentId)
     }
     
     var body: some View {
