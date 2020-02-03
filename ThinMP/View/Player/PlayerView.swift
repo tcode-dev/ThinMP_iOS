@@ -26,7 +26,12 @@ struct PlayerView: View {
                 }
                 .frame(width: geometry.size.width, height: geometry.size.width)
                 VStack() {
-                    SquareImageView(artwork: self.musicPlayer.song?.representativeItem?.artwork, size: self.size)
+                    Image(uiImage: self.musicPlayer.song?.representativeItem?.artwork?.image(at: CGSize(width: self.size, height: self.size)) ?? UIImage())
+                        .renderingMode(.original)
+                        .resizable()
+                        .scaledToFit()
+                        .cornerRadius(4)
+                        .frame(width: self.size, height: self.size)
                         .padding(.top, 50)
                         .padding(.bottom, 10)
                     VStack {
