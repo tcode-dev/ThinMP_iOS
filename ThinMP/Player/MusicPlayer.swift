@@ -40,7 +40,6 @@ class MusicPlayer: ObservableObject {
     func setSong() {
         self.song = playingList.getSong()
         self.durationSecond = Double(self.song?.representativeItem?.playbackDuration ?? 0)
-        self.durationTime = self.convertTime(time: self.song?.representativeItem?.playbackDuration ?? 0)
         let descriptor = MPMusicPlayerMediaItemQueueDescriptor.init(itemCollection: self.song!)
         
         self.player.setQueue(with: descriptor)
@@ -101,19 +100,6 @@ class MusicPlayer: ObservableObject {
     
     func seek(time: TimeInterval) {
         self.player.currentPlaybackTime = time
-    }
-    
-    func convertTime(time: TimeInterval) -> String {
-        if (time < 1) {
-            return "00:00"
-        }
-        
-        let formatter = DateComponentsFormatter()
-        formatter.unitsStyle = .positional
-        formatter.allowedUnits = [.minute,.second]
-        formatter.zeroFormattingBehavior = [.pad]
-        
-        return formatter.string(from: time) ?? "00:00"
     }
     
     func updateTime() {

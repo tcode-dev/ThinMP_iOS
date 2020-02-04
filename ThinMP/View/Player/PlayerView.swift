@@ -12,6 +12,19 @@ struct PlayerView: View {
     @State var seeking: Bool = false
     let size: CGFloat = 220
     
+    func convertTime(time: TimeInterval) -> String {
+        if (time < 1) {
+            return "00:00"
+        }
+        
+        let formatter = DateComponentsFormatter()
+        formatter.unitsStyle = .positional
+        formatter.allowedUnits = [.minute,.second]
+        formatter.zeroFormattingBehavior = [.pad]
+        
+        return formatter.string(from: time) ?? "00:00"
+    }
+    
     var body: some View {
         
         return GeometryReader { geometry in
@@ -40,22 +53,22 @@ struct PlayerView: View {
                     }
                     Spacer()
                     HStack {
-                        SecondaryTextView("\(self.musicPlayer.convertTime(time: self.musicPlayer.currentSecond))").frame(width: 50).padding(.leading, 10)
+                        SecondaryTextView("\(self.convertTime(time: self.musicPlayer.currentSecond))").frame(width: 50).padding(.leading, 10)
                         Slider(value: self.$musicPlayer.currentSecond, in: 0...self.musicPlayer.durationSecond, step: 1, onEditingChanged: { changed in
                             if (self.musicPlayer.isPlaying && !self.seeking && changed) {
                                 self.musicPlayer.stopProgress()
                                 self.seeking = changed
                             }
-
+                            
                             self.musicPlayer.seek(time: self.musicPlayer.currentSecond)
-
+                            
                             if (self.musicPlayer.isPlaying && self.seeking && !changed) {
                                 self.musicPlayer.startProgress()
                                 self.seeking = changed
                             }
                         })
                             .accentColor(Color("#be88ef"))
-                        SecondaryTextView("\(self.musicPlayer.durationTime)").frame(width: 50).padding(.trailing, 10)
+                        SecondaryTextView("\(self.convertTime(time: self.musicPlayer.durationSecond))").frame(width: 50).padding(.trailing, 10)
                     }
                     Spacer()
                     if (self.musicPlayer.isPlaying) {
