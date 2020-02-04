@@ -12,7 +12,6 @@ class MusicPlayer: ObservableObject {
     @Published var isPlaying: Bool = false
     @Published var song: MPMediaItemCollection?
     @Published var currentSecond: Double = 0
-    @Published var currentTime: String = "00:00"
     @Published var durationSecond: Double = 0
     @Published var durationTime: String = "00:00"
     private let PREV_SECOND: Double = 3
@@ -102,20 +101,9 @@ class MusicPlayer: ObservableObject {
     
     func seek(time: TimeInterval) {
         self.player.currentPlaybackTime = time
-        self.currentTime = self.convertTime(time: time)
     }
     
-    private func addObserver() {
-        NotificationCenter.default.addObserver(
-            forName: NSNotification.Name.MPMusicPlayerControllerPlaybackStateDidChange,
-            object: player,
-            queue: OperationQueue.main
-        ) { notification in
-            self.callback()
-        }
-    }
-    
-    private func convertTime(time: TimeInterval) -> String {
+    func convertTime(time: TimeInterval) -> String {
         if (time < 1) {
             return "00:00"
         }
@@ -130,7 +118,6 @@ class MusicPlayer: ObservableObject {
     
     func updateTime() {
         self.currentSecond = Double(self.player.currentPlaybackTime)
-        self.currentTime = self.convertTime(time: self.player.currentPlaybackTime)
     }
     
     func immediateUpdateTime() {
@@ -148,6 +135,16 @@ class MusicPlayer: ObservableObject {
     
     func stopProgress() {
         self.timer?.invalidate()
+    }
+    
+    private func addObserver() {
+        NotificationCenter.default.addObserver(
+            forName: NSNotification.Name.MPMusicPlayerControllerPlaybackStateDidChange,
+            object: player,
+            queue: OperationQueue.main
+        ) { notification in
+            self.callback()
+        }
     }
     
     private func callback() {

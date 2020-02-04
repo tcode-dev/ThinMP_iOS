@@ -40,7 +40,7 @@ struct PlayerView: View {
                     }
                     Spacer()
                     HStack {
-                        SecondaryTextView("\(self.musicPlayer.currentTime)").frame(width: 50).padding(.leading, 10)
+                        SecondaryTextView("\(self.musicPlayer.convertTime(time: self.musicPlayer.currentSecond))").frame(width: 50).padding(.leading, 10)
                         Slider(value: self.$musicPlayer.currentSecond, in: 0...self.musicPlayer.durationSecond, step: 1, onEditingChanged: { changed in
                             if (self.musicPlayer.isPlaying && !self.seeking && changed) {
                                 self.musicPlayer.stopProgress()
