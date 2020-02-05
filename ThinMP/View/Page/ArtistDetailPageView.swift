@@ -1,5 +1,5 @@
 //
-//  ArtistDetailContentView.swift
+//  ArtistDetailPageView.swift
 //  ThinMP
 //
 //  Created by tk on 2020/01/07.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ArtistDetailContentView: View {
+struct ArtistDetailPageView: View {
     @ObservedObject var artistDetail: ArtistDetailViewModel
     @State private var rect: CGRect = CGRect()
     

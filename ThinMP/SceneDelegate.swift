@@ -21,7 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let musicPlayer = MusicPlayer()
 
         // Create the SwiftUI view that provides the window contents.
-        let contentView = MainContentView().environmentObject(musicPlayer)
+        let contentView = MainPageView().environmentObject(musicPlayer)
 
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {

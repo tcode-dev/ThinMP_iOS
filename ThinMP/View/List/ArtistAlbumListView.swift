@@ -22,7 +22,7 @@ struct ArtistAlbumListView: View {
         ForEach(list.indices) { row in
             HStack(spacing: self.space) {
                 ForEach(self.list[row].indices) { col in
-                    NavigationLink(destination: AlbumDetailContentView(persistentId: self.list[row][col].persistentID)) {
+                    NavigationLink(destination: AlbumDetailPageView(persistentId: self.list[row][col].persistentID)) {
                         ArtistAlbumCellView(album: self.list[row][col], size: self.size)
                     }
                 }

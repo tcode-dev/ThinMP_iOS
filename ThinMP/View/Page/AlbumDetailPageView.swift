@@ -1,5 +1,5 @@
 //
-//  AlbumDetailContentView.swift
+//  AlbumDetailPageView.swift
 //  ThinMP
 //
 //  Created by tk on 2020/01/12.
@@ -8,7 +8,7 @@
 import SwiftUI
 import MediaPlayer
 
-struct AlbumDetailContentView: View {
+struct AlbumDetailPageView: View {
     @ObservedObject var albumDetail: AlbumDetailViewModel
     @State private var rect: CGRect = CGRect()
     

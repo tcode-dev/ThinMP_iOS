@@ -1,5 +1,5 @@
 //
-//  MainContentView.swift
+//  MainPageView.swift
 //  ThinMP
 //
 //  Created by tk on 2020/01/04.
@@ -7,17 +7,17 @@
 
 import SwiftUI
 
-struct MainContentView: View {
+struct MainPageView: View {
     var body: some View {
         NavigationView {
             List {
-                NavigationLink(destination: ArtistsContentView()) {
+                NavigationLink(destination: ArtistsPageView()) {
                     Text("Artists")
                 }
-                NavigationLink(destination: AlbumsContentView()) {
+                NavigationLink(destination: AlbumsPageView()) {
                     Text("Albums")
                 }
-                NavigationLink(destination: SongsContentView()) {
+                NavigationLink(destination: SongsPageView()) {
                     Text("Songs")
                 }
             }

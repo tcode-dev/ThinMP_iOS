@@ -1,5 +1,5 @@
 //
-//  SongsContentView.swift
+//  SongsPageView.swift
 //  ThinMP
 //
 //  Created by tk on 2020/01/13.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SongsContentView: View {
+struct SongsPageView: View {
     @ObservedObject var songs = SongsViewModel()
     
     var body: some View {
