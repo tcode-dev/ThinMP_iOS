@@ -25,6 +25,7 @@
 		52A5B4D923D4014A003BE152 /* CustomNavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A5B4D823D4014A003BE152 /* CustomNavigationBarView.swift */; };
 		52A6D38F23D12A72004C4E59 /* AlbumDetailHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A6D38E23D12A72004C4E59 /* AlbumDetailHeaderView.swift */; };
 		52AC16ED23CE8BE4001D427B /* HeaderTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AC16EC23CE8BE4001D427B /* HeaderTextView.swift */; };
+		52AD232823EB8BC5000D4E4D /* AlbumRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AD232723EB8BC5000D4E4D /* AlbumRowView.swift */; };
 		52B5BC8523DD45FA000C7820 /* MiniPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B5BC8423DD45FA000C7820 /* MiniPlayerView.swift */; };
 		52B6681E23C197E000E70C47 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B6681D23C197E000E70C47 /* SceneDelegate.swift */; };
 		52B6682023C19ADE00E70C47 /* ArtistsPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B6681F23C19ADE00E70C47 /* ArtistsPageView.swift */; };
@@ -69,6 +70,7 @@
 		52A5B4D823D4014A003BE152 /* CustomNavigationBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationBarView.swift; sourceTree = "<group>"; };
 		52A6D38E23D12A72004C4E59 /* AlbumDetailHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDetailHeaderView.swift; sourceTree = "<group>"; };
 		52AC16EC23CE8BE4001D427B /* HeaderTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderTextView.swift; sourceTree = "<group>"; };
+		52AD232723EB8BC5000D4E4D /* AlbumRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumRowView.swift; sourceTree = "<group>"; };
 		52B5BC8423DD45FA000C7820 /* MiniPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerView.swift; sourceTree = "<group>"; };
 		52B6681D23C197E000E70C47 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		52B6681F23C19ADE00E70C47 /* ArtistsPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistsPageView.swift; sourceTree = "<group>"; };
@@ -172,6 +174,7 @@
 				5237635E23C35BFE003ABD2A /* ArtistRowView.swift */,
 				5279F0C823D523610053BF55 /* ArtistSongRowView.swift */,
 				52D98E7723CC61870032971A /* SongRowView.swift */,
+				52AD232723EB8BC5000D4E4D /* AlbumRowView.swift */,
 			);
 			path = Row;
 			sourceTree = "<group>";
@@ -373,6 +376,7 @@
 				52D4B5C823C3EF55000364F4 /* ArtistDetailPageView.swift in Sources */,
 				5279F0C723D520630053BF55 /* ArtistAlbumListView.swift in Sources */,
 				52B5BC8523DD45FA000C7820 /* MiniPlayerView.swift in Sources */,
+				52AD232823EB8BC5000D4E4D /* AlbumRowView.swift in Sources */,
 				52CCDAD523C050E9000C474A /* MainPageView.swift in Sources */,
 				5279F0C423D51F7D0053BF55 /* ArtistAlbumCellView.swift in Sources */,
 				522366D623D7BADF0001624E /* CircleImageView.swift in Sources */,

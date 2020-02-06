@@ -6,29 +6,22 @@
 //
 
 import SwiftUI
-import MediaPlayer
 
 struct AlbumsView: View {
     let colCount = 2
     let space: CGFloat = 20
     var list: [[Album]]
     var size: CGFloat
-    @State var persistentID: MPMediaEntityPersistentID = 0
     
     init(list: [Album], width: CGFloat) {
         self.list = list.chunked(into: colCount)
         self.size = (width - (space * CGFloat(colCount + 1))) / CGFloat(colCount)
     }
+    
     var body: some View {
-        ScrollView {
+        List {
             ForEach(list.indices) { row in
-                HStack(spacing: self.space) {
-                    ForEach(self.list[row].indices) { col in
-                        NavigationLink(destination: AlbumDetailPageView(persistentId: self.list[row][col].persistentID)) {
-                            AlbumCellView(album: self.list[row][col], size: self.size)
-                        }
-                    }
-                }
+                AlbumRowView(list: self.list[row], size: self.size, space: self.space)
             }
         }
     }
