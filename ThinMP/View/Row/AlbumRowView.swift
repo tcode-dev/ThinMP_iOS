@@ -23,6 +23,10 @@ struct AlbumRowView: View {
                         self.isActive = true
                         self.persistentId = self.list[col].persistentID
                 }
+                .onLongPressGesture {
+                    self.isActive = true
+                    self.persistentId = self.list[col].persistentID
+                }
             }
             NavigationLink.init(destination: AlbumDetailPageView(persistentId: self.persistentId), isActive: self.$isActive) {
                 EmptyView()
