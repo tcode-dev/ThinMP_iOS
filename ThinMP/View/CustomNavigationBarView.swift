@@ -25,13 +25,14 @@ struct CustomNavigationBarView: View {
             .edgesIgnoringSafeArea(.all)
             .zIndex(3)
             VStack {
-                VStack {
-                    PrimaryTextView(self.primaryText)
-                    SecondaryTextView(self.secondaryText)
+                GeometryReader { geometry in
+                    VStack {
+                        PrimaryTextView(self.primaryText)
+                        SecondaryTextView(self.secondaryText)
+                    }
+                    .padding(.init(top: -geometry.frame(in: .global).origin.y + 20, leading: 50, bottom: 0, trailing: 50))
+                    .frame(height: 50, alignment: .center)
                 }
-                .padding(.leading, 50)
-                .padding(.trailing, 50)
-                .frame(height: 50, alignment: .center)
             }
             .frame(width: side, height: 90, alignment: .bottom)
             .edgesIgnoringSafeArea(.all)
