@@ -43,7 +43,6 @@ struct AlbumDetailHeaderView: View {
             PrimaryTextView(self.albumDetail.title)
             SecondaryTextView(self.albumDetail.artist)
         }
-        .frame(width: nil, height: 50)
         .padding(.leading, 50)
         .padding(.trailing, 50)
     }

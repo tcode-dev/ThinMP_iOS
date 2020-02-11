@@ -16,7 +16,19 @@ struct ArtistDetailHeaderView: View {
     
     var body: some View {
         GeometryReader { geometry in
-            self.createHeaderView(geometry: geometry)
+            ZStack(alignment: .bottom) {
+                Image(uiImage: self.artistDetail.artwork?.image(at: CGSize(width: geometry.size.width, height: geometry.size.width)) ?? UIImage())
+                    .resizable()
+                    .scaledToFill()
+                    .blur(radius: 10.0)
+                LinearGradient(gradient: Gradient(colors: [Color.init(Color.RGBColorSpace.sRGB, red: 1, green: 1, blue: 1, opacity: 0), .white]), startPoint: .top, endPoint: .bottom).frame(height: 355).offset(y: 25)
+                CircleImageView(artwork: self.artistDetail.artwork, size: self.artistImageSize)
+                    .offset(y:-100)
+                GeometryReader { geometry in
+                    self.createHeaderView(geometry: geometry)
+                }
+                .frame(width: nil, height: 50)
+            }
         }
         .frame(width: side, height: side)
     }
@@ -30,22 +42,11 @@ struct ArtistDetailHeaderView: View {
             self.rect = geometry.frame(in: .global)
         }
         
-        return ZStack(alignment: .bottom) {
-            Image(uiImage: self.artistDetail.artwork?.image(at: CGSize(width: geometry.size.width, height: geometry.size.width)) ?? UIImage())
-                .resizable()
-                .scaledToFill()
-                .blur(radius: 10.0)
-            
-            LinearGradient(gradient: Gradient(colors: [Color.init(Color.RGBColorSpace.sRGB, red: 1, green: 1, blue: 1, opacity: 0), .white]), startPoint: .top, endPoint: .bottom).frame(height: 355).offset(y: 25)
-            CircleImageView(artwork: self.artistDetail.artwork, size: self.artistImageSize)
-                .offset(y:-100)
-            
-            VStack {
-                PrimaryTextView(self.artistDetail.name)
-                SecondaryTextView(self.artistDetail.meta)
-            }
-            .padding(.leading, 50)
-            .padding(.trailing, 50)
+        return VStack {
+            PrimaryTextView(self.artistDetail.name)
+            SecondaryTextView(self.artistDetail.meta)
         }
+        .padding(.leading, 50)
+        .padding(.trailing, 50)
     }
 }
