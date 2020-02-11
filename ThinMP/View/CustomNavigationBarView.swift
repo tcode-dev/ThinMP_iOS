@@ -12,7 +12,8 @@ struct CustomNavigationBarView: View {
     var secondaryText: String?
     var side: CGFloat
     
-    @Binding var rect: CGRect
+    @Binding var pageRect: CGRect
+    @State var headerRect: CGRect!
     
     var body: some View {
         ZStack {
@@ -26,12 +27,7 @@ struct CustomNavigationBarView: View {
             .zIndex(3)
             VStack {
                 GeometryReader { geometry in
-                    VStack {
-                        PrimaryTextView(self.primaryText)
-                        SecondaryTextView(self.secondaryText)
-                    }
-                    .padding(.init(top: -geometry.frame(in: .global).origin.y + 20, leading: 50, bottom: 0, trailing: 50))
-                    .frame(height: 50, alignment: .center)
+                    self.createHeaderView(geometry: geometry)
                 }
             }
             .frame(width: side, height: 90, alignment: .bottom)
@@ -45,8 +41,28 @@ struct CustomNavigationBarView: View {
         .zIndex(1)
     }
     
-    func opacity() -> Double {
-        if (-rect.origin.y < (side - 65)) {
+    fileprivate func createHeaderView(geometry: GeometryProxy) -> some View {
+        DispatchQueue.main.async {
+            self.headerRect = geometry.frame(in: .global)
+        }
+        
+        return ZStack {
+            VStack {
+                PrimaryTextView(self.primaryText)
+                SecondaryTextView(self.secondaryText)
+            }
+            .frame(height: 50, alignment: .center)
+            .offset(y: -geometry.frame(in: .global).origin.y)
+        }
+        .padding(.init(top: 0, leading: 50, bottom: 0, trailing: 50))
+    }
+    
+    fileprivate func opacity() -> Double {
+        if (headerRect == nil) {
+            return 0
+        }
+        
+        if (pageRect.origin.y > -headerRect.origin.y) {
             return 0
         }
         

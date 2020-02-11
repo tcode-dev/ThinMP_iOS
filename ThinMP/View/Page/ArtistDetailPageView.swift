@@ -18,7 +18,7 @@ struct ArtistDetailPageView: View {
     var body: some View {
         GeometryReader { geometry in
             ZStack(alignment: .top) {
-                CustomNavigationBarView(primaryText: self.artistDetail.name, secondaryText: self.artistDetail.meta, side: geometry.size.width, rect: self.$rect)
+                CustomNavigationBarView(primaryText: self.artistDetail.name, secondaryText: self.artistDetail.meta, side: geometry.size.width, pageRect: self.$rect)
                     .opacity(1)
                 ScrollView{
                     ArtistDetailHeaderView(artistDetail: self.artistDetail, rect: self.$rect, side: geometry.size.width)
