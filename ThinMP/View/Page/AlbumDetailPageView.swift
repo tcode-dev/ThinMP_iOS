@@ -13,6 +13,7 @@ struct AlbumDetailPageView: View {
     @ObservedObject var albumDetail: AlbumDetailViewModel
     @State private var pageRect: CGRect = CGRect()
     @State private var headerRect: CGRect = CGRect()
+    let barHeight: CGFloat = 50
     
     init(persistentId: MPMediaEntityPersistentID) {
         self.albumDetail = AlbumDetailViewModel(persistentId: persistentId)
@@ -45,10 +46,8 @@ struct AlbumDetailPageView: View {
     }
     
     fileprivate func minHeight(geometry: GeometryProxy) -> CGFloat{
-        if (musicPlayer.isActive) {
-            return (geometry.size.height - 100) + headerRect.origin.y
-        } else {
-            return (geometry.size.height - 50) + headerRect.origin.y
-        }
+        let miniPlayerHeight = musicPlayer.isActive ? barHeight : 0
+        
+        return geometry.size.height - barHeight - miniPlayerHeight + headerRect.origin.y
     }
 }
