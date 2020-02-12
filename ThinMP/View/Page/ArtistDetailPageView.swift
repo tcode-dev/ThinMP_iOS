@@ -9,8 +9,9 @@ import SwiftUI
 
 struct ArtistDetailPageView: View {
     @ObservedObject var artistDetail: ArtistDetailViewModel
-    @State private var rect: CGRect = CGRect()
-    
+    @State private var pageRect: CGRect = CGRect()
+    @State private var headerRect: CGRect = CGRect()
+
     init(artist: Artist) {
         self.artistDetail = ArtistDetailViewModel(persistentId: artist.persistentId)
     }
@@ -18,10 +19,10 @@ struct ArtistDetailPageView: View {
     var body: some View {
         GeometryReader { geometry in
             ZStack(alignment: .top) {
-                CustomNavigationBarView(primaryText: self.artistDetail.name, secondaryText: self.artistDetail.meta, side: geometry.size.width, pageRect: self.$rect)
+                CustomNavigationBarView(primaryText: self.artistDetail.name, secondaryText: self.artistDetail.meta, side: geometry.size.width, pageRect: self.$pageRect, headerRect: self.$headerRect)
                     .opacity(1)
                 ScrollView{
-                    ArtistDetailHeaderView(artistDetail: self.artistDetail, rect: self.$rect, side: geometry.size.width)
+                    ArtistDetailHeaderView(artistDetail: self.artistDetail, rect: self.$pageRect, side: geometry.size.width)
                     VStack(alignment: .leading) {
                         HeaderTextView("Albums")
                         ArtistAlbumListView(list: self.artistDetail.albums, width: geometry.size.width).padding(.bottom, 10)

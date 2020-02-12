@@ -13,7 +13,7 @@ struct CustomNavigationBarView: View {
     var side: CGFloat
     
     @Binding var pageRect: CGRect
-    @State var headerRect: CGRect!
+    @Binding var headerRect: CGRect
     
     var body: some View {
         ZStack {
