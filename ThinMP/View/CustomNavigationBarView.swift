@@ -58,10 +58,6 @@ struct CustomNavigationBarView: View {
     }
     
     fileprivate func opacity() -> Double {
-        if (headerRect == nil) {
-            return 0
-        }
-        
         if (pageRect.origin.y > -headerRect.origin.y) {
             return 0
         }

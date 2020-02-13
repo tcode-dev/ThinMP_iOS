@@ -30,7 +30,6 @@ struct ArtistDetailPageView: View {
                         HeaderTextView("Songs")
                         ArtistSongListView(list: self.artistDetail.songs)
                     }
-                    .frame(minWidth: geometry.size.width, maxWidth: .infinity, minHeight: geometry.size.height - 50, maxHeight: .infinity, alignment: .topLeading)
                     .padding(.leading, 20)
                 }
                 .navigationBarHidden(true)

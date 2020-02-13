@@ -33,7 +33,6 @@ struct AlbumDetailPageView: View {
                                     Divider()
                                 }.padding(.leading, 10)
                             }
-                            .frame(minWidth: geometry.size.width, maxWidth: .infinity, minHeight: self.minHeight(geometry: geometry), maxHeight: .infinity, alignment: .topLeading)
                         }
                     }
                     .navigationBarHidden(true)
@@ -43,11 +42,5 @@ struct AlbumDetailPageView: View {
             }
             .edgesIgnoringSafeArea(.all)
         }
-    }
-    
-    fileprivate func minHeight(geometry: GeometryProxy) -> CGFloat{
-        let miniPlayerHeight = musicPlayer.isActive ? barHeight : 0
-        
-        return geometry.size.height - barHeight - miniPlayerHeight + headerRect.origin.y
     }
 }
