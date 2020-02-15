@@ -14,6 +14,10 @@ class MusicPlayer: ObservableObject {
     @Published var currentSecond: Double = 0
     @Published var durationSecond: Double = 0
     @Published var durationTime: String = "00:00"
+    @Published var isRepeatOff: Bool = true
+    @Published var isRepeatOne: Bool = false
+    @Published var isRepeatAll: Bool = false
+    
     private let PREV_SECOND: Double = 3
     
     var timer: Timer?
@@ -87,14 +91,22 @@ class MusicPlayer: ObservableObject {
     }
     
     func playNext() {
-        self.isPlaying = false
         self.next()
         self.play()
     }
     
     func autoPlay() {
-        if (self.playingList.hasNext()) {
+        if (self.isRepeatAll) {
             self.playNext()
+        } else if (self.isRepeatOff) {
+            if (self.playingList.hasNext()) {
+                self.playNext()
+            } else {
+                self.next()
+            }
+        } else if (self.isRepeatOne) {
+            self.setSong()
+            self.play()
         }
     }
     
@@ -121,6 +133,19 @@ class MusicPlayer: ObservableObject {
     
     func stopProgress() {
         self.timer?.invalidate()
+    }
+    
+    func changeRepeat() {
+        if (self.isRepeatOff) {
+            self.isRepeatOff = false
+            self.isRepeatAll = true
+        } else if (self.isRepeatAll) {
+            self.isRepeatAll = false
+            self.isRepeatOne = true
+        } else if (self.isRepeatOne) {
+            self.isRepeatOne = false
+            self.isRepeatOff = true
+        }
     }
     
     private func addObserver() {

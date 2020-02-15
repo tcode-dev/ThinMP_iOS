@@ -120,9 +120,24 @@ struct PlayerView: View {
                     }
                     Spacer()
                     HStack {
-                        Button(action: {
-                        }) {
-                            Image("RepeatButton").renderingMode(.original)
+                        if (self.musicPlayer.isRepeatOff) {
+                            Button(action: {
+                                self.musicPlayer.changeRepeat()
+                            }) {
+                                Image("RepeatButton").renderingMode(.original).opacity(0.5)
+                            }
+                        } else if (self.musicPlayer.isRepeatAll) {
+                            Button(action: {
+                                self.musicPlayer.changeRepeat()
+                            }) {
+                                Image("RepeatButton").renderingMode(.original)
+                            }
+                        } else if (self.musicPlayer.isRepeatOne) {
+                            Button(action: {
+                                self.musicPlayer.changeRepeat()
+                            }) {
+                                Image("RepeatOneButton").renderingMode(.original)
+                            }
                         }
                         Spacer()
                         Button(action: {
