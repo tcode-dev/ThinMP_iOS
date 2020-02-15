@@ -13,7 +13,6 @@ class MusicPlayer: ObservableObject {
     @Published var song: MPMediaItemCollection?
     @Published var currentSecond: Double = 0
     @Published var durationSecond: Double = 0
-    @Published var durationTime: String = "00:00"
     @Published var isRepeatOff: Bool = true
     @Published var isRepeatOne: Bool = false
     @Published var isRepeatAll: Bool = false
