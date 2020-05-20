@@ -15,7 +15,7 @@ struct ArtistDetailPageView: View {
     init(artist: Artist) {
         self.artistDetail = ArtistDetailViewModel(persistentId: artist.persistentId)
     }
-    
+
     var body: some View {
         GeometryReader { geometry in
             ZStack(alignment: .top) {
@@ -26,7 +26,7 @@ struct ArtistDetailPageView: View {
                     VStack(alignment: .leading) {
                         HeaderTextView("Albums")
                         ArtistAlbumListView(list: self.artistDetail.albums, width: geometry.size.width).padding(.bottom, 10)
-                        
+
                         HeaderTextView("Songs")
                         ArtistSongListView(list: self.artistDetail.songs)
                     }

@@ -9,12 +9,20 @@ import SwiftUI
 
 struct ArtistsPageView: View {
     @ObservedObject var artists = ArtistsViewModel()
-    
+
     var body: some View {
-        List(artists.list){ artist in
-            NavigationLink(destination: ArtistDetailPageView(artist: artist)) {
-                ArtistRowView(artist: artist)
+        ScrollView{
+            VStack(alignment: .leading) {
+
+                ForEach(artists.list) { artist in
+                    NavigationLink(destination: ArtistDetailPageView(artist: artist)) {
+                        ArtistRowView(artist: artist)
+                    }
+                    Divider()
+                }
             }
-        }.navigationBarTitle("Artists")
+            .navigationBarHidden(true)
+            .navigationBarTitle(Text(""))
+        }
     }
 }
