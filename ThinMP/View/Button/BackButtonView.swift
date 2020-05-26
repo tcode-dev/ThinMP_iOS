@@ -8,13 +8,14 @@
 import SwiftUI
 
 struct BackButtonView: View {
-    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    
+    @Environment(\.presentationMode) var presentation
+
     var body: some View {
         Button(action: {
-            self.presentationMode.wrappedValue.dismiss()
+            self.presentation.wrappedValue.dismiss()
         }) {
-            Image("BackButton").renderingMode(.original)
+            // サイズを指定しないと反応しない
+            Image("BackButton").renderingMode(.original).frame(width: 50, height: 50)
         }
         .frame(width: 50, height: 50)
     }
