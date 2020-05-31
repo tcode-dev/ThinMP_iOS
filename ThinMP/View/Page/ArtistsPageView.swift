@@ -11,18 +11,22 @@ struct ArtistsPageView: View {
     @ObservedObject var artists = ArtistsViewModel()
 
     var body: some View {
-        ScrollView{
-            VStack(alignment: .leading) {
-
-                ForEach(artists.list) { artist in
-                    NavigationLink(destination: ArtistDetailPageView(artist: artist)) {
-                        ArtistRowView(artist: artist)
+        ZStack(alignment: .top) {
+            ListHeaderView(primaryText: "artists")
+            ScrollView{
+                VStack(alignment: .leading) {
+                    ForEach(artists.list) { artist in
+                        NavigationLink(destination: ArtistDetailPageView(artist: artist)) {
+                            ArtistRowView(artist: artist)
+                        }
+                        Divider()
                     }
-                    Divider()
                 }
             }
-            .navigationBarHidden(true)
-            .navigationBarTitle(Text(""))
+            .padding(.init(top: 50, leading: 0, bottom: 0, trailing: 0))
+            .frame(alignment: .top)
         }
+        .navigationBarHidden(true)
+        .navigationBarTitle(Text(""))
     }
 }
