@@ -21,9 +21,14 @@ struct MenuButtonView: View {
         .actionSheet(isPresented: $isOpen) {
             ActionSheet(title: Text("What action?"),
                         message: Text("Pick one"),
-                        buttons: [ .default(Text("Option 1"))
-                            , .default(Text("Option 2"))
-                            , .cancel()
+                        buttons: [
+                            .default(Text("Option 1"), action: {
+                                NSLog("clicked Option 1")
+                            }),
+                            .default(Text("Option 2"), action: {
+                                NSLog("clicked Option 2")
+                            }),
+                            .cancel()
             ])
         }
         .frame(width: 50, height: 50)
