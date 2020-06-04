@@ -9,11 +9,14 @@ import SwiftUI
 
 struct ArtistRowView: View {
     var artist: Artist
-
+    
     var body: some View {
-        HStack {
-            Text(artist.name ?? "unknown")
-            Spacer()
+        VStack {
+            HStack {
+                Text(artist.name ?? "unknown")
+                Spacer()
+            }
+            Divider()
         }
     }
 }
