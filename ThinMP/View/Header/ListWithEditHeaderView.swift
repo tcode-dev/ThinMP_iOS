@@ -1,13 +1,13 @@
 //
-//  ListHeaderView.swift
+//  SwiftUIView.swift
 //  ThinMP
 //
-//  Created by tk on 2020/06/01.
+//  Created by tk on 2020/06/05.
 //
 
 import SwiftUI
 
-struct ListHeaderView: View {
+struct ListWithEditHeaderView: View {
     var primaryText: String?
 
     var body: some View {
@@ -16,8 +16,8 @@ struct ListHeaderView: View {
             Spacer()
             PrimaryTextView(self.primaryText)
             Spacer()
+            MenuButtonView()
         }
-        .padding(.trailing, 50)
         .frame(height: 50, alignment: .bottom)
     }
 }

@@ -14,9 +14,7 @@ struct MenuButtonView: View {
         Button(action: {
             self.isOpen.toggle()
         }) {
-            Image("MenuButton")
-                .renderingMode(.original)
-                .frame(width: 50, height: 50)
+            MenuImageView()
         }
         .actionSheet(isPresented: $isOpen) {
             ActionSheet(title: Text("What action?"),
