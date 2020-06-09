@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ArtistRowView: View {
     var artist: Artist
-    
+
     var body: some View {
         VStack {
             HStack {
