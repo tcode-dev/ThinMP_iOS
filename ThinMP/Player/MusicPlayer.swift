@@ -37,7 +37,6 @@ class MusicPlayer: ObservableObject {
         self.setRepeat()
         self.addObserver()
         self.player.beginGeneratingPlaybackNotifications()
-        NSLog("%i", self.repeatValue)
     }
 
     func start(list:[MPMediaItemCollection], currentIndex: Int) {

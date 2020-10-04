@@ -11,12 +11,9 @@ struct ArtistRowView: View {
     var artist: Artist
 
     var body: some View {
-        VStack {
-            HStack {
-                Text(artist.name ?? "unknown")
-                Spacer()
-            }
-            Divider()
+        HStack {
+            Text(artist.name ?? "unknown")
+            Spacer()
         }
     }
 }
