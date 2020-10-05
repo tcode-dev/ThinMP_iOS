@@ -15,6 +15,6 @@ struct ArtistAlbumCellView: View {
         VStack(){
             SquareImageView(artwork: self.album.artwork, size: size)
             PrimaryTextView(self.album.title)
-        }.frame(width: size)
+        }
     }
 }
