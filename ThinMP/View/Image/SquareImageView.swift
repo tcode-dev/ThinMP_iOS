@@ -20,5 +20,6 @@ struct SquareImageView: View {
             .cornerRadius(4)
             .overlay(RoundedRectangle(cornerRadius: 4)
                 .stroke(Color("#f2f2f2"), lineWidth: 1))
+            .frame(width: abs(size), height: abs(size))
     }
 }
