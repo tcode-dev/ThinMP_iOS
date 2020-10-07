@@ -11,6 +11,7 @@ struct ArtistDetailHeaderView: View {
     @ObservedObject var artistDetail: ArtistDetailViewModel
     @Binding var rect: CGRect
     var side: CGFloat
+    var height: CGFloat = 50
     
     let artistImageSize:CGFloat = 120
     
@@ -25,27 +26,34 @@ struct ArtistDetailHeaderView: View {
                 CircleImageView(artwork: self.artistDetail.artwork, size: self.artistImageSize)
                     .offset(y:-100)
                 GeometryReader { geometry in
-                    self.createHeaderView(geometry: geometry)
+                    self.fixableView(geometry: geometry)
                 }
-                .frame(width: nil, height: 50)
+                .frame(height: height)
+                HStack {
+                    Spacer()
+                    SecondaryTextView(self.artistDetail.meta)
+                    Spacer()
+                }
             }
         }
-        .frame(width: side, height: side)
+        .frame(height: side)
     }
     
     /// HeaderViewを生成する
     /// ScrollViewの現在位置を取得する方法がないため、子のgeometryを親から参照できるようにする
     /// GeometryReader直下で変数を代入すると構文エラーになるので別メソッドにしている
     /// - Parameter geometry: geometry
-    fileprivate func createHeaderView(geometry: GeometryProxy) -> some View {
+    fileprivate func fixableView(geometry: GeometryProxy) -> some View {
         DispatchQueue.main.async {
             self.rect = geometry.frame(in: .global)
         }
-        
-        return VStack {
+
+        return HStack {
+            Spacer()
             PrimaryTextView(self.artistDetail.name)
-            SecondaryTextView(self.artistDetail.meta)
+            Spacer()
         }
+        .frame(height: self.height)
         .padding(.leading, 50)
         .padding(.trailing, 50)
     }

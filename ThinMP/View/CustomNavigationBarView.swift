@@ -11,32 +11,32 @@ struct CustomNavigationBarView: View {
     var primaryText: String?
     var secondaryText: String?
     var side: CGFloat
+    let heigt: CGFloat = 50
+    let statusBarHeight: CGFloat = 20
     
     @Binding var pageRect: CGRect
     @Binding var headerRect: CGRect
     
     var body: some View {
         ZStack {
-            HStack {
+            HStack() {
                 BackButtonView()
                 Spacer()
                 MenuButtonView()
             }
-            .frame(width: side, height: 90, alignment: .bottom)
-            .edgesIgnoringSafeArea(.all)
+            .frame(height: heigt)
             .zIndex(3)
             VStack {
                 GeometryReader { geometry in
                     self.createHeaderView(geometry: geometry)
                 }
             }
-            .frame(width: side, height: 90, alignment: .bottom)
-            .edgesIgnoringSafeArea(.all)
+            .frame(height: heigt + statusBarHeight)
             .background(Color.white)
             .opacity(self.opacity())
             .zIndex(2)
         }
-        .frame(width: side, height: 90, alignment: .bottom)
+        .frame(width: side, height: heigt + statusBarHeight, alignment: .bottom)
         .edgesIgnoringSafeArea(.all)
         .zIndex(1)
     }
@@ -47,18 +47,18 @@ struct CustomNavigationBarView: View {
         }
         
         return ZStack {
-            VStack {
+            HStack {
+                Spacer()
                 PrimaryTextView(self.primaryText)
-                SecondaryTextView(self.secondaryText)
+                Spacer()
             }
-            .frame(height: 50, alignment: .center)
-            .offset(y: -geometry.frame(in: .global).origin.y)
+            .frame(height: heigt, alignment: .center)
+            .padding(.top, statusBarHeight)
         }
-        .padding(.init(top: 0, leading: 50, bottom: 0, trailing: 50))
     }
     
     fileprivate func opacity() -> Double {
-        if (pageRect.origin.y > -headerRect.origin.y) {
+        if (pageRect.origin.y - self.statusBarHeight > -headerRect.origin.y) {
             return 0
         }
         
