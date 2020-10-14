@@ -16,6 +16,6 @@ struct AlbumCellView: View {
             SquareImageView(artwork: self.album.artwork, size: size)
             PrimaryTextView(self.album.title)
             SecondaryTextView(self.album.artist)
-        }.frame(width: size)
+        }
     }
 }
