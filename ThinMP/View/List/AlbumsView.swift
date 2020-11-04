@@ -20,9 +20,11 @@ struct AlbumsView: View {
 
     var body: some View {
         ScrollView {
-            LazyVGrid(columns: Array(repeating: GridItem(), count: 2)) { // カラム数の指定
-                ForEach(self.list.indices) { index in
-                    AlbumCellView(album: self.list[index], size: self.size)
+            LazyVGrid(columns: Array(repeating: GridItem(), count: colCount)) {
+                ForEach(list.indices) { index in
+                    NavigationLink(destination: AlbumDetailPageView(persistentId: list[index].persistentID)) {
+                        AlbumCellView(album: list[index], size: size)
+                    }
                 }
             }
         }
