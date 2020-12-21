@@ -25,12 +25,15 @@ struct ArtistDetailPageView: View {
                     ArtistDetailHeaderView(artistDetail: self.artistDetail, rect: self.$pageRect, side: geometry.size.width)
                     VStack(alignment: .leading) {
                         HeaderTextView("Albums")
-                        ArtistAlbumListView(list: self.artistDetail.albums, width: geometry.size.width).padding(.bottom, 10)
+                            .padding(.leading, 20)
+                        ArtistAlbumListView(list: self.artistDetail.albums, width: geometry.size.width)
+                            .padding(.bottom, 10)
 
                         HeaderTextView("Songs")
+                            .padding(.leading, 20)
                         ArtistSongListView(list: self.artistDetail.songs)
+                            .padding(.leading, 20)
                     }
-                    .padding(.leading, 20)
                 }
                 .navigationBarHidden(true)
                 .navigationBarTitle(Text(""))
