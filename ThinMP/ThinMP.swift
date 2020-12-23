@@ -11,7 +11,7 @@ import SwiftUI
 struct ThinMP: App {
     var body: some Scene {
         WindowGroup {
-            MainPageView()
+            MainPageView().environmentObject(MusicPlayer())
         }
     }
 }
