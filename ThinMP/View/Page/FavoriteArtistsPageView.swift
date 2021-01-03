@@ -13,10 +13,10 @@ struct FavoriteArtistsPageView: View {
     var body: some View {
         ZStack(alignment: .top) {
             ListHeaderView(primaryText: "FavoriteArtists")
-            List(self.artists.list.indices) { index in
+            List(self.artists.list) { artist in
                 HStack {
-                    ArtistRowView(artist: self.artists.list[index])
-                    NavigationLink(destination: ArtistDetailPageView(artist: self.artists.list[index])) {
+                    ArtistRowView(artist: artist)
+                    NavigationLink(destination: ArtistDetailPageView(artist: artist)) {
                         EmptyView()
                     }
                     Spacer()
@@ -27,5 +27,8 @@ struct FavoriteArtistsPageView: View {
         }
         .navigationBarHidden(true)
         .navigationBarTitle(Text(""))
+        .onAppear() {
+            artists.load()
+        }
     }
 }

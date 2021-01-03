@@ -9,7 +9,7 @@ import SwiftUI
 import MediaPlayer
 
 struct MenuButtonView: View {
-    var id: MPMediaEntityPersistentID
+    var persistentId: MPMediaEntityPersistentID
     var primaryText: String?
     var ADD_TEXT: String = "お気に入りアーティストに追加"
     var DELETE_TEXT: String = "お気に入りアーティストから削除"
@@ -37,12 +37,12 @@ struct MenuButtonView: View {
     func favoriteArtistButton() -> ActionSheet.Button {
         let favoriteArtistRegister = FavoriteArtistRegister()
 
-        if (!favoriteArtistRegister.exists(id: id)) {
+        if (!favoriteArtistRegister.exists(persistentId: persistentId)) {
             // add
-            return ActionSheet.Button.default(Text(ADD_TEXT), action: {favoriteArtistRegister.add(id: id)})
+            return ActionSheet.Button.default(Text(ADD_TEXT), action: {favoriteArtistRegister.add(persistentId: persistentId)})
         } else {
             // delete
-            return ActionSheet.Button.default(Text(DELETE_TEXT), action: {favoriteArtistRegister.delete(id: id)})
+            return ActionSheet.Button.default(Text(DELETE_TEXT), action: {favoriteArtistRegister.delete(persistentId: persistentId)})
         }
     }
 }

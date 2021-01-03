@@ -9,7 +9,7 @@ import SwiftUI
 import MediaPlayer
 
 struct ListWithEditHeaderView: View {
-    var id: MPMediaEntityPersistentID
+    var persistentId: MPMediaEntityPersistentID
     var primaryText: String?
 
     var body: some View {
@@ -18,7 +18,7 @@ struct ListWithEditHeaderView: View {
             Spacer()
             PrimaryTextView(self.primaryText)
             Spacer()
-            MenuButtonView(id: id, primaryText: primaryText)
+            MenuButtonView(persistentId: persistentId, primaryText: primaryText)
         }
         .frame(height: 50, alignment: .bottom)
     }

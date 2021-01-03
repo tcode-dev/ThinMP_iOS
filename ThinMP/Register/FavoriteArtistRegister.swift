@@ -14,8 +14,8 @@ struct FavoriteArtistRegister {
         realm = try! Realm()
     }
 
-    func add(id: MPMediaEntityPersistentID) {
-        if (exists(id: id)) {
+    func add(persistentId: MPMediaEntityPersistentID) {
+        if (exists(persistentId: persistentId)) {
             return
         }
 
@@ -23,7 +23,7 @@ struct FavoriteArtistRegister {
 
         // MPMediaEntityPersistentID は UInt64のエイリアス
         // realmはUInt64を保存できないのでInt64に変換して保存する
-        favoriteArtist.id = Int64(bitPattern: id)
+        favoriteArtist.persistentId = Int64(bitPattern: persistentId)
         favoriteArtist.order = realm.objects(FavoriteArtistRealm.self).count + 1
 
         try! realm.write {
@@ -31,8 +31,8 @@ struct FavoriteArtistRegister {
         }
     }
 
-    func delete(id: MPMediaEntityPersistentID) {
-        let favoriteArtists = find(id: id)
+    func delete(persistentId: MPMediaEntityPersistentID) {
+        let favoriteArtists = find(persistentId: persistentId)
 
         if (favoriteArtists.count != 1) {
             return
@@ -43,11 +43,11 @@ struct FavoriteArtistRegister {
         }
     }
 
-    func exists(id: MPMediaEntityPersistentID) -> Bool {
-        return find(id: id).count == 1
+    func exists(persistentId: MPMediaEntityPersistentID) -> Bool {
+        return find(persistentId: persistentId).count == 1
     }
 
-    func find(id: MPMediaEntityPersistentID) -> Results<FavoriteArtistRealm> {
-        return realm.objects(FavoriteArtistRealm.self).filter("id = \(Int64(bitPattern: id))")
+    func find(persistentId: MPMediaEntityPersistentID) -> Results<FavoriteArtistRealm> {
+        return realm.objects(FavoriteArtistRealm.self).filter("persistentId = \(Int64(bitPattern: persistentId))")
     }
 }
