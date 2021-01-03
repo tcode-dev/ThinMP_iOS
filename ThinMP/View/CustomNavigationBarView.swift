@@ -6,8 +6,10 @@
 //
 
 import SwiftUI
+import MediaPlayer
 
 struct CustomNavigationBarView: View {
+    var id: MPMediaEntityPersistentID
     var primaryText: String?
     var secondaryText: String?
     var side: CGFloat
@@ -22,7 +24,7 @@ struct CustomNavigationBarView: View {
             HStack() {
                 BackButtonView()
                 Spacer()
-                MenuButtonView()
+                MenuButtonView(id: id, primaryText: primaryText)
             }
             .frame(height: heigt)
             .zIndex(3)

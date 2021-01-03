@@ -6,8 +6,11 @@
 //
 
 import SwiftUI
+import MediaPlayer
 
 struct MenuButtonView: View {
+    var id: MPMediaEntityPersistentID
+    var primaryText: String?
     @State var isOpen: Bool = false
 
     var body: some View {
@@ -17,11 +20,12 @@ struct MenuButtonView: View {
             MenuImageView()
         }
         .actionSheet(isPresented: $isOpen) {
-            ActionSheet(title: Text("What action?"),
-                        message: Text("Pick one"),
+            ActionSheet(title: Text(self.primaryText ?? ""),
                         buttons: [
-                            .default(Text("Option 1"), action: {
-                                NSLog("clicked Option 1")
+                            .default(Text("お気に入りアーティストに追加"), action: {
+                                let favoriteArtistRegister = FavoriteArtistRegister()
+
+                                favoriteArtistRegister.add(id: id)
                             }),
                             .default(Text("Option 2"), action: {
                                 NSLog("clicked Option 2")
