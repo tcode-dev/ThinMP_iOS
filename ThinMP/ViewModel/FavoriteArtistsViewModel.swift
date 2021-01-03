@@ -13,7 +13,7 @@ class FavoriteArtistsViewModel: ObservableObject {
 
     init() {
         let realm = try! Realm()
-        self.persistentIds = realm.objects(FavoriteArtist.self)
+        self.persistentIds = realm.objects(FavoriteArtistRealm.self)
             .sorted(byKeyPath: "order")
             .map { UInt64(bitPattern: $0.id) as MPMediaEntityPersistentID}
 

@@ -11,7 +11,7 @@
 		520CA29423CD2E0C00C03F01 /* ArtistSongListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520CA29323CD2E0C00C03F01 /* ArtistSongListView.swift */; };
 		521C43202592B7D6009194FF /* ThinMP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521C431F2592B7D6009194FF /* ThinMP.swift */; };
 		52217A732598208F00921CFD /* FavoriteArtistRegister.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52217A722598208F00921CFD /* FavoriteArtistRegister.swift */; };
-		52217A782598256400921CFD /* FavoriteArtist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52217A772598256400921CFD /* FavoriteArtist.swift */; };
+		52217A782598256400921CFD /* FavoriteArtistRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52217A772598256400921CFD /* FavoriteArtistRealm.swift */; };
 		522366D423D7B6500001624E /* SquareImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522366D323D7B6500001624E /* SquareImageView.swift */; };
 		522366D623D7BADF0001624E /* CircleImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522366D523D7BADF0001624E /* CircleImageView.swift */; };
 		5237635F23C35BFE003ABD2A /* ArtistRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5237635E23C35BFE003ABD2A /* ArtistRowView.swift */; };
@@ -64,7 +64,7 @@
 		520CA29323CD2E0C00C03F01 /* ArtistSongListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistSongListView.swift; sourceTree = "<group>"; };
 		521C431F2592B7D6009194FF /* ThinMP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThinMP.swift; sourceTree = "<group>"; };
 		52217A722598208F00921CFD /* FavoriteArtistRegister.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteArtistRegister.swift; sourceTree = "<group>"; };
-		52217A772598256400921CFD /* FavoriteArtist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteArtist.swift; sourceTree = "<group>"; };
+		52217A772598256400921CFD /* FavoriteArtistRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteArtistRealm.swift; sourceTree = "<group>"; };
 		522366D323D7B6500001624E /* SquareImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareImageView.swift; sourceTree = "<group>"; };
 		522366D523D7BADF0001624E /* CircleImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleImageView.swift; sourceTree = "<group>"; };
 		5237635E23C35BFE003ABD2A /* ArtistRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistRowView.swift; sourceTree = "<group>"; };
@@ -172,12 +172,12 @@
 			path = Text;
 			sourceTree = "<group>";
 		};
-		523C4C5D2594114100D7D32C /* Model */ = {
+		523C4C5D2594114100D7D32C /* Realm */ = {
 			isa = PBXGroup;
 			children = (
-				52217A772598256400921CFD /* FavoriteArtist.swift */,
+				52217A772598256400921CFD /* FavoriteArtistRealm.swift */,
 			);
-			path = Model;
+			path = Realm;
 			sourceTree = "<group>";
 		};
 		5242C10B2484681300347320 /* Header */ = {
@@ -307,7 +307,7 @@
 				52C34D68230ED7C000EA76DA /* Assets.xcassets */,
 				52795DA5248DA70400DABD9D /* config */,
 				528CA16023CAB8F9003E162F /* Entity */,
-				523C4C5D2594114100D7D32C /* Model */,
+				523C4C5D2594114100D7D32C /* Realm */,
 				52CC2D0923E24E5C009FB57F /* Player */,
 				52217A7025981EE600921CFD /* Register */,
 				5208A24423CB379200AA4433 /* View */,
@@ -416,7 +416,7 @@
 				52A5B4D923D4014A003BE152 /* CustomNavigationBarView.swift in Sources */,
 				52D98E7623CC5ED10032971A /* Song.swift in Sources */,
 				526A3B372366AC6F0070BE0A /* Album.swift in Sources */,
-				52217A782598256400921CFD /* FavoriteArtist.swift in Sources */,
+				52217A782598256400921CFD /* FavoriteArtistRealm.swift in Sources */,
 				52D98E7423CC5E780032971A /* SongsViewModel.swift in Sources */,
 				52BA93D923DA648F00CA323F /* MenuButtonView.swift in Sources */,
 				5208A24723CB383000AA4433 /* AlbumCellView.swift in Sources */,

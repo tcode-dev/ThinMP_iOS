@@ -11,6 +11,8 @@ import MediaPlayer
 struct MenuButtonView: View {
     var id: MPMediaEntityPersistentID
     var primaryText: String?
+    var ADD_TEXT: String = "お気に入りアーティストに追加"
+    var DELETE_TEXT: String = "お気に入りアーティストから削除"
     @State var isOpen: Bool = false
 
     var body: some View {
@@ -22,11 +24,7 @@ struct MenuButtonView: View {
         .actionSheet(isPresented: $isOpen) {
             ActionSheet(title: Text(self.primaryText ?? ""),
                         buttons: [
-                            .default(Text("お気に入りアーティストに追加"), action: {
-                                let favoriteArtistRegister = FavoriteArtistRegister()
-
-                                favoriteArtistRegister.add(id: id)
-                            }),
+                            favoriteArtistButton(),
                             .default(Text("Option 2"), action: {
                                 NSLog("clicked Option 2")
                             }),
@@ -34,5 +32,17 @@ struct MenuButtonView: View {
             ])
         }
         .frame(width: 50, height: 50)
+    }
+
+    func favoriteArtistButton() -> ActionSheet.Button {
+        let favoriteArtistRegister = FavoriteArtistRegister()
+
+        if (!favoriteArtistRegister.exists(id: id)) {
+            // add
+            return ActionSheet.Button.default(Text(ADD_TEXT), action: {favoriteArtistRegister.add(id: id)})
+        } else {
+            // delete
+            return ActionSheet.Button.default(Text(DELETE_TEXT), action: {favoriteArtistRegister.delete(id: id)})
+        }
     }
 }
