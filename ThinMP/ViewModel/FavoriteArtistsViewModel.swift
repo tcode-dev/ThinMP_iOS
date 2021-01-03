@@ -32,11 +32,13 @@ class FavoriteArtistsViewModel: ObservableObject {
 
         query.addFilterPredicate(property)
 
-        let list = query.collections!
-            .filter{persistentIds.contains($0.representativeItem?.artistPersistentID ?? 0)}
-            .map{return Artist(persistentId: $0.representativeItem?.artistPersistentID, name: $0.representativeItem?.artist)}
+        let filtered = query.collections!.filter{persistentIds.contains($0.representativeItem?.artistPersistentID ?? 0)}
+        let sorted = persistentIds
+            .map{ (persistentId) in filtered.first { $0.representativeItem?.artistPersistentID == persistentId }}
+            .map{ Artist(persistentId: $0?.representativeItem?.artistPersistentID, name:$0?.representativeItem?.artist)}
+
         DispatchQueue.main.async {
-            self.list = list
+            self.list = Array(sorted)
         }
     }
 }
