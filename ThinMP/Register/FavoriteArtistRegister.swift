@@ -24,7 +24,7 @@ struct FavoriteArtistRegister {
         // MPMediaEntityPersistentID は UInt64のエイリアス
         // realmはUInt64を保存できないのでInt64に変換して保存する
         favoriteArtist.persistentId = Int64(bitPattern: persistentId)
-        favoriteArtist.order = realm.objects(FavoriteArtistRealm.self).count + 1
+        favoriteArtist.order = incrementOrder()
 
         try! realm.write {
             realm.add(favoriteArtist)
@@ -49,5 +49,9 @@ struct FavoriteArtistRegister {
 
     func find(persistentId: MPMediaEntityPersistentID) -> Results<FavoriteArtistRealm> {
         return realm.objects(FavoriteArtistRealm.self).filter("persistentId = \(Int64(bitPattern: persistentId))")
+    }
+
+    func incrementOrder() -> Int {
+        return (realm.objects(FavoriteArtistRealm.self).max(ofProperty: "order") as Int? ?? 0) + 1
     }
 }
