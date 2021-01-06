@@ -43,6 +43,17 @@ struct FavoriteArtistRegister {
         }
     }
 
+    func truncate() {
+        let results = realm.objects(FavoriteArtistRealm.self)
+        if results.count == 0 {
+            return
+        }
+
+        try! realm.write {
+            realm.delete(results)
+        }
+    }
+
     func update(persistentIdList: [MPMediaEntityPersistentID]) {
         realm.beginWrite()
 
