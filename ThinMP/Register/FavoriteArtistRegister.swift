@@ -43,6 +43,19 @@ struct FavoriteArtistRegister {
         }
     }
 
+    func update(persistentIdList: [MPMediaEntityPersistentID]) {
+        realm.beginWrite()
+
+        for index in 0..<persistentIdList.count {
+            realm.create(FavoriteArtistRealm.self, value: [
+                "persistentId": persistentIdList[index],
+                "order": index
+            ])
+        }
+
+        try! realm.commitWrite()
+    }
+
     func exists(persistentId: MPMediaEntityPersistentID) -> Bool {
         return find(persistentId: persistentId).count == 1
     }
