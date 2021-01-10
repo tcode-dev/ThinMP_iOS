@@ -1,24 +1,21 @@
 //
-//  FavoriteArtistsPageView.swift
+//  FavoriteArtistsEditPage.swift
 //  ThinMP
 //
-//  Created by tk on 2021/01/02.
+//  Created by tk on 2021/01/10.
 //
 
 import SwiftUI
 
-struct FavoriteArtistsPageView: View {
+struct FavoriteArtistsEditPage: View {
     @ObservedObject var artists = FavoriteArtistsViewModel()
 
     var body: some View {
         ZStack(alignment: .top) {
-            FavoriteArtistsHeader()
+            ListHeaderView(primaryText: "Edit")
             List(self.artists.list) { artist in
                 HStack {
                     ArtistRowView(artist: artist)
-                    NavigationLink(destination: ArtistDetailPageView(artist: artist)) {
-                        EmptyView()
-                    }
                     Spacer()
                 }
             }
