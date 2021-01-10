@@ -21,6 +21,9 @@ struct FavoriteArtistsEditPageView: View {
                 .onMove { source, destination in
                     self.artists.list.move(fromOffsets: source, toOffset: destination)
                 }
+                .onDelete { offsets in
+                    self.artists.list.remove(atOffsets: offsets)
+                }
             }
             .padding(.init(top: 50, leading: 0, bottom: 0, trailing: 0))
             .frame(alignment: .top)
