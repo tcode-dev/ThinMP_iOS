@@ -1,5 +1,5 @@
 //
-//  FavoriteArtistsHeader.swift
+//  FavoriteArtistsHeaderView.swift
 //  ThinMP
 //
 //  Created by tk on 2021/01/10.
@@ -8,7 +8,7 @@
 import SwiftUI
 import MediaPlayer
 
-struct FavoriteArtistsHeader: View {
+struct FavoriteArtistsHeaderView: View {
     var primaryText: String = "FavoriteArtists"
 
     var body: some View {
@@ -17,7 +17,7 @@ struct FavoriteArtistsHeader: View {
             Spacer()
             PrimaryTextView(self.primaryText)
             Spacer()
-            FavoriteArtistsMenuButton()
+            FavoriteArtistsMenuButtonView()
         }
         .frame(height: 50, alignment: .bottom)
     }

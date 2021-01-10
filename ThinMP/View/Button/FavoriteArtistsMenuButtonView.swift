@@ -1,5 +1,5 @@
 //
-//  FavoriteArtistsMenuButton.swift
+//  FavoriteArtistsMenuButtonView.swift
 //  ThinMP
 //
 //  Created by tk on 2021/01/10.
@@ -8,7 +8,7 @@
 import SwiftUI
 import MediaPlayer
 
-struct FavoriteArtistsMenuButton: View {
+struct FavoriteArtistsMenuButtonView: View {
     @State var isOpen: Bool = false
     @State var isEdit: Bool = false
 
@@ -28,7 +28,7 @@ struct FavoriteArtistsMenuButton: View {
                         ])
         }
         .frame(width: 50, height: 50)
-        NavigationLink(destination: FavoriteArtistsEditPage(), isActive: $isEdit) {
+        NavigationLink(destination: FavoriteArtistsEditPageView(), isActive: $isEdit) {
             EmptyView()
         }
     }

@@ -1,5 +1,5 @@
 //
-//  FavoriteArtistsEditPage.swift
+//  FavoriteArtistsEditPageView.swift
 //  ThinMP
 //
 //  Created by tk on 2021/01/10.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct FavoriteArtistsEditPage: View {
+struct FavoriteArtistsEditPageView: View {
     @ObservedObject var artists = FavoriteArtistsViewModel()
 
     var body: some View {

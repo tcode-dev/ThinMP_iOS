@@ -12,7 +12,7 @@ struct FavoriteArtistsPageView: View {
 
     var body: some View {
         ZStack(alignment: .top) {
-            FavoriteArtistsHeader()
+            FavoriteArtistsHeaderView()
             List(self.artists.list) { artist in
                 HStack {
                     ArtistRowView(artist: artist)
