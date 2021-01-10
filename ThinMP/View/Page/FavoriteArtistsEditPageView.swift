@@ -9,14 +9,17 @@ import SwiftUI
 
 struct FavoriteArtistsEditPageView: View {
     @ObservedObject var artists = FavoriteArtistsViewModel()
+    @Environment(\.editMode) var editMode
 
     var body: some View {
+        EditButton()
         ZStack(alignment: .top) {
-            ListHeaderView(primaryText: "Edit")
-            List(self.artists.list) { artist in
-                HStack {
+            List() {
+                ForEach (self.artists.list) { artist in
                     ArtistRowView(artist: artist)
-                    Spacer()
+                }
+                .onMove { source, destination in
+                    self.artists.list.move(fromOffsets: source, toOffset: destination)
                 }
             }
             .padding(.init(top: 50, leading: 0, bottom: 0, trailing: 0))
