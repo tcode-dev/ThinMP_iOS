@@ -11,24 +11,25 @@ struct FavoriteArtistsEditPageView: View {
     @Environment(\.editMode) var editMode
     @Environment(\.presentationMode) var presentation
     @ObservedObject var artists = FavoriteArtistsViewModel()
+    private var DONE_TEXT: String = "Done"
+    private var CANCEL_TEXT: String = "Cancel"
 
     var body: some View {
-        Button(action: {
-            withAnimation() {
-                if editMode?.wrappedValue.isEditing == true {
-                    update()
-                    back()
-                } else {
-                    editMode?.wrappedValue = .active
-                }
+        HStack {
+            Button(action: {
+                back()
+            }) {
+                Text(CANCEL_TEXT)
             }
-        }) {
-            if editMode?.wrappedValue.isEditing == true {
-                Text("終了")
-            } else {
-                Text("編集")
+            Spacer()
+            Button(action: {
+                update()
+                back()
+            }) {
+                Text(DONE_TEXT)
             }
         }
+
         ZStack(alignment: .top) {
             List() {
                 ForEach (self.artists.list) { artist in

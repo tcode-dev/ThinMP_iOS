@@ -11,6 +11,7 @@ import MediaPlayer
 struct FavoriteArtistsMenuButtonView: View {
     @State var isOpen: Bool = false
     @State var isEdit: Bool = false
+    @State var editMode: EditMode = .active
 
     var body: some View {
         Button(action: {
@@ -28,7 +29,7 @@ struct FavoriteArtistsMenuButtonView: View {
                         ])
         }
         .frame(width: 50, height: 50)
-        NavigationLink(destination: FavoriteArtistsEditPageView(), isActive: $isEdit) {
+        NavigationLink(destination: FavoriteArtistsEditPageView().environment(\.editMode, $editMode), isActive: $isEdit) {
             EmptyView()
         }
     }
