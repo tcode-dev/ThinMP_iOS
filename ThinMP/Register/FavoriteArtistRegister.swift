@@ -43,6 +43,11 @@ struct FavoriteArtistRegister {
         }
     }
 
+    func update(persistentIdList: [MPMediaEntityPersistentID]) {
+        truncate()
+        bulkInsert(persistentIdList: persistentIdList)
+    }
+
     func truncate() {
         let results = realm.objects(FavoriteArtistRealm.self)
         if results.count == 0 {
@@ -54,7 +59,7 @@ struct FavoriteArtistRegister {
         }
     }
 
-    func update(persistentIdList: [MPMediaEntityPersistentID]) {
+    func bulkInsert(persistentIdList: [MPMediaEntityPersistentID]) {
         realm.beginWrite()
 
         for index in 0..<persistentIdList.count {

@@ -8,22 +8,34 @@
 import SwiftUI
 
 struct FavoriteArtistsEditPageView: View {
-    @ObservedObject var artists = FavoriteArtistsViewModel()
     @Environment(\.editMode) var editMode
+    @Environment(\.presentationMode) var presentation
+    @ObservedObject var artists = FavoriteArtistsViewModel()
 
     var body: some View {
-        EditButton()
+        Button(action: {
+            withAnimation() {
+                if editMode?.wrappedValue.isEditing == true {
+                    update()
+                    back()
+                } else {
+                    editMode?.wrappedValue = .active
+                }
+            }
+        }) {
+            if editMode?.wrappedValue.isEditing == true {
+                Text("終了")
+            } else {
+                Text("編集")
+            }
+        }
         ZStack(alignment: .top) {
             List() {
                 ForEach (self.artists.list) { artist in
                     ArtistRowView(artist: artist)
                 }
-                .onMove { source, destination in
-                    self.artists.list.move(fromOffsets: source, toOffset: destination)
-                }
-                .onDelete { offsets in
-                    self.artists.list.remove(atOffsets: offsets)
-                }
+                .onMove(perform: move)
+                .onDelete(perform: delete)
             }
             .padding(.init(top: 50, leading: 0, bottom: 0, trailing: 0))
             .frame(alignment: .top)
@@ -33,5 +45,23 @@ struct FavoriteArtistsEditPageView: View {
         .onAppear() {
             artists.load()
         }
+    }
+
+    func move(source: IndexSet, destination: Int) {
+        self.artists.list.move(fromOffsets: source, toOffset: destination)
+    }
+
+    func delete(offsets: IndexSet) {
+        self.artists.list.remove(atOffsets: offsets)
+    }
+
+    func update() {
+        let favoriteArtistRegister = FavoriteArtistRegister()
+
+        favoriteArtistRegister.update(persistentIdList: self.artists.list.map{$0.persistentId})
+    }
+
+    func back() {
+        self.presentation.wrappedValue.dismiss()
     }
 }
