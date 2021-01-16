@@ -21,6 +21,7 @@ class MusicPlayer: ObservableObject {
     static let REPEAT_ONE: Int = 1
     static let REPEAT_ALL: Int = 2
 
+    private var playerState: MPMusicPlaybackState = MPMusicPlaybackState.stopped
     private var repeatValue: Int
     private let playerConfig: PlayerConfig = PlayerConfig()
 
@@ -60,9 +61,8 @@ class MusicPlayer: ObservableObject {
     }
 
     func play() {
-        self.player.play()
-
         self.isPlaying = true
+        self.player.play()
     }
 
     func pause() {
@@ -71,6 +71,10 @@ class MusicPlayer: ObservableObject {
     }
 
     func stop() {
+        if (!self.isPlaying) {
+            return
+        }
+
         self.isPlaying = false
         self.player.stop()
     }
@@ -180,22 +184,27 @@ class MusicPlayer: ObservableObject {
         }
     }
 
+    // NotificationCenterのcallback
+    // playbackStateが正しい状態でなかったり、pausedが複数回呼ばれるので、再生終了時の処理のみ登録
     private func callback() {
+        // ユーザーが停止させた場合処理しない
         if (!self.isPlaying) {
             return
         }
 
         switch self.player.playbackState {
         case MPMusicPlaybackState.stopped:
-            self.autoPlay()
 
             break
         case MPMusicPlaybackState.playing:
+            self.playerState = MPMusicPlaybackState.playing
 
             break
         case MPMusicPlaybackState.paused:
-            self.autoPlay()
-
+            if (self.playerState == MPMusicPlaybackState.playing) {
+                self.playerState = MPMusicPlaybackState.paused
+                self.autoPlay()
+            }
             break
         case MPMusicPlaybackState.interrupted:
 
