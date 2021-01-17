@@ -32,14 +32,14 @@ struct MiniPlayerView: View {
                         Button(action: {
                             self.musicPlayer.pause()
                         }) {
-                            Image("PauseButton").renderingMode(.original).resizable().frame(width: 40, height: 40)
+                            Image("PauseButton").renderingMode(.original).resizable().frame(width: imageSize, height: imageSize)
                         }
                         .frame(width: buttonSize, height: buttonSize)
                         
                         Button(action: {
                             self.musicPlayer.playNext()
                         }) {
-                            Image("NextButton").renderingMode(.original).resizable().frame(width: 40, height: 40)
+                            Image("NextButton").renderingMode(.original).resizable().frame(width: imageSize, height: imageSize)
                         }
                         .frame(width: buttonSize, height: buttonSize)
                         
@@ -47,18 +47,18 @@ struct MiniPlayerView: View {
                         Button(action: {
                             self.musicPlayer.play()
                         }) {
-                            Image("PlayButton").renderingMode(.original).resizable().frame(width: 40, height: 40)
+                            Image("PlayButton").renderingMode(.original).resizable().frame(width: imageSize, height: imageSize)
                         }
                         .frame(width: buttonSize, height: buttonSize)
                         Button(action: {
                             self.musicPlayer.next()
                         }) {
-                            Image("NextButton").renderingMode(.original).resizable().frame(width: 40, height: 40)
+                            Image("NextButton").renderingMode(.original).resizable().frame(width: imageSize, height: imageSize)
                         }
                         .frame(width: buttonSize, height: buttonSize)
                     }
                 }
-                .frame(height: 50)
+                .frame(height: buttonSize)
                 .padding(EdgeInsets(
                     top: 0,
                     leading: 10,

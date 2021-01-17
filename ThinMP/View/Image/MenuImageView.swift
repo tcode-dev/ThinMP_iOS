@@ -11,6 +11,7 @@ struct MenuImageView: View {
     var body: some View {
         Image("MenuButton")
             .renderingMode(.original)
-            .frame(width: 50, height: 50)
+            .resizable()
+            .frame(width: 40, height: 40)
     }
 }
