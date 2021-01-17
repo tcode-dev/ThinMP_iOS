@@ -38,7 +38,7 @@ struct AlbumDetailPageView: View {
                     .navigationBarHidden(true)
                     .navigationBarTitle(Text(""))
                 }
-                MiniPlayerView()
+                MiniPlayerView(bottom: geometry.safeAreaInsets.bottom)
             }
             .edgesIgnoringSafeArea(.all)
         }

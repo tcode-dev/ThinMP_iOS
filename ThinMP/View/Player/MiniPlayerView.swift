@@ -10,6 +10,7 @@ import SwiftUI
 struct MiniPlayerView: View {
     @EnvironmentObject var musicPlayer: MusicPlayer
     @State var isFullScreen: Bool = false
+    var bottom: CGFloat
 
     var imageSize: CGFloat = 40
     var buttonSize: CGFloat = 50
@@ -58,7 +59,12 @@ struct MiniPlayerView: View {
                     }
                 }
                 .frame(height: 50)
-                .padding(.leading, 10)
+                .padding(EdgeInsets(
+                    top: 0,
+                    leading: 10,
+                    bottom: bottom,
+                    trailing: 0
+                ))
                 .background(Color(UIColor.secondarySystemBackground))
                 .sheet(isPresented: $isFullScreen) {
                     PlayerView().environmentObject(self.musicPlayer)
