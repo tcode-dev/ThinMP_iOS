@@ -31,14 +31,14 @@ struct MiniPlayerView: View {
                         Button(action: {
                             self.musicPlayer.pause()
                         }) {
-                            Image("PauseButton").renderingMode(.original)
+                            Image("PauseButton").renderingMode(.original).resizable().frame(width: 40, height: 40)
                         }
                         .frame(width: buttonSize, height: buttonSize)
                         
                         Button(action: {
                             self.musicPlayer.playNext()
                         }) {
-                            Image("Next2Button").renderingMode(.original)
+                            Image("NextButton").renderingMode(.original).resizable().frame(width: 40, height: 40)
                         }
                         .frame(width: buttonSize, height: buttonSize)
                         
@@ -46,20 +46,20 @@ struct MiniPlayerView: View {
                         Button(action: {
                             self.musicPlayer.play()
                         }) {
-                            Image("PlayButton").renderingMode(.original)
+                            Image("PlayButton").renderingMode(.original).resizable().frame(width: 40, height: 40)
                         }
                         .frame(width: buttonSize, height: buttonSize)
                         Button(action: {
                             self.musicPlayer.next()
                         }) {
-                            Image("Next2Button").renderingMode(.original)
+                            Image("NextButton").renderingMode(.original).resizable().frame(width: 40, height: 40)
                         }
                         .frame(width: buttonSize, height: buttonSize)
                     }
                 }
                 .frame(height: 50)
                 .padding(.leading, 10)
-                .background(Color.white)
+                .background(Color(UIColor.secondarySystemBackground))
                 .sheet(isPresented: $isFullScreen) {
                     PlayerView().environmentObject(self.musicPlayer)
                 }

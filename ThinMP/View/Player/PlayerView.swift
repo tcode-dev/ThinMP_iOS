@@ -77,7 +77,7 @@ struct PlayerView: View {
                             Button(action: {
                                 self.musicPlayer.playPrev()
                             }) {
-                                Image("PrevButton").renderingMode(.original)
+                                Image("PrevButton").renderingMode(.original).resizable().frame(width: 72, height: 72)
                             }
                             Spacer()
                             Button(action: {
@@ -90,7 +90,7 @@ struct PlayerView: View {
                             Button(action: {
                                 self.musicPlayer.playNext()
                             }) {
-                                Image("NextButton").renderingMode(.original)
+                                Image("NextButton").renderingMode(.original).resizable().frame(width: 72, height: 72)
                             }
                             Spacer()
                         }
@@ -100,20 +100,20 @@ struct PlayerView: View {
                             Button(action: {
                                 self.musicPlayer.prev()
                             }) {
-                                Image("PrevButton").renderingMode(.original)
+                                Image("PrevButton").renderingMode(.original).resizable().frame(width: 72, height: 72)
                             }
                             Spacer()
                             Button(action: {
                                 self.musicPlayer.play()
                                 self.musicPlayer.startProgress()
                             }) {
-                                Image("PlayButton").renderingMode(.original).resizable().frame(width: 96, height: 96)
+                                Image("PlayButton").renderingMode(.original).resizable().frame(width: 88, height: 88)
                             }
                             Spacer()
                             Button(action: {
                                 self.musicPlayer.next()
                             }) {
-                                Image("NextButton").renderingMode(.original)
+                                Image("NextButton").renderingMode(.original).resizable().frame(width: 72, height: 72)
                             }
                             Spacer()
                         }
@@ -124,41 +124,48 @@ struct PlayerView: View {
                             Button(action: {
                                 self.musicPlayer.changeRepeat()
                             }) {
-                                Image("RepeatButton").renderingMode(.original).opacity(0.5)
+                                Image("RepeatButton").renderingMode(.original).resizable().frame(width: 40, height: 40).opacity(0.5)
                             }
+                            .frame(width: 44, height: 44)
                         } else if (self.musicPlayer.isRepeatAll) {
                             Button(action: {
                                 self.musicPlayer.changeRepeat()
                             }) {
-                                Image("RepeatButton").renderingMode(.original)
+                                Image("RepeatButton").renderingMode(.original).resizable().frame(width: 40, height: 40)
                             }
+                            .frame(width: 44, height: 44)
                         } else if (self.musicPlayer.isRepeatOne) {
                             Button(action: {
                                 self.musicPlayer.changeRepeat()
                             }) {
-                                Image("RepeatOneButton").renderingMode(.original)
+                                Image("RepeatOneButton").renderingMode(.original).resizable().frame(width: 40, height: 40)
                             }
+                            .frame(width: 44, height: 44)
                         }
                         Spacer()
                         Button(action: {
                         }) {
-                            Image("ShuffleButton").renderingMode(.original)
+                            Image("ShuffleButton").renderingMode(.original).resizable().frame(width: 40, height: 40)
                         }
+                        .frame(width: 44, height: 44)
                         Spacer()
                         Button(action: {
                         }) {
-                            Image("FavoriteArtistOnButton").renderingMode(.original)
+                            Image("FavoriteArtistOnButton").renderingMode(.original).resizable().frame(width: 40, height: 40)
                         }
+                        .frame(width: 44, height: 44)
                         Spacer()
                         Button(action: {
                         }) {
-                            Image("FavoriteSongOnButton").renderingMode(.original)
+                            Image("FavoriteSongOnButton").renderingMode(.original).resizable().frame(width: 40, height: 40)
                         }
+                        .frame(width: 44, height: 44)
                         Spacer()
                         Button(action: {
                         }) {
-                            Image("PlaylistAddButton").renderingMode(.original)
+                            Image("PlaylistAddButton").renderingMode(.original).resizable().frame(width: 40, height: 40)
                         }
+                        .frame(width: 44, height: 44)
                     }
                     .padding(.leading, 30)
                     .padding(.trailing, 30)
