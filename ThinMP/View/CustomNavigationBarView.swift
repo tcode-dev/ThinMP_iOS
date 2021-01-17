@@ -13,8 +13,8 @@ struct CustomNavigationBarView: View {
     var primaryText: String?
     var secondaryText: String?
     var side: CGFloat
+    var top: CGFloat
     let heigt: CGFloat = 50
-    let statusBarHeight: CGFloat = 20
     
     @Binding var pageRect: CGRect
     @Binding var headerRect: CGRect
@@ -27,19 +27,19 @@ struct CustomNavigationBarView: View {
                 MenuButtonView(persistentId: persistentId, primaryText: primaryText)
             }
             .frame(height: heigt)
+            .padding(EdgeInsets(
+                top: top,
+                leading: 0,
+                bottom: 0,
+                trailing: 0
+            ))
             .zIndex(3)
-            VStack {
-                GeometryReader { geometry in
-                    self.createHeaderView(geometry: geometry)
-                }
+            GeometryReader { geometry in
+                self.createHeaderView(geometry: geometry)
             }
-            .frame(height: heigt + statusBarHeight)
-            .background(Color.white)
-            .opacity(self.opacity())
             .zIndex(2)
         }
-        .frame(width: side, height: heigt + statusBarHeight, alignment: .bottom)
-        .edgesIgnoringSafeArea(.all)
+        .frame(height: heigt + top)
         .zIndex(1)
     }
     
@@ -48,22 +48,27 @@ struct CustomNavigationBarView: View {
             self.headerRect = geometry.frame(in: .global)
         }
         
-        return ZStack {
-            HStack {
-                Spacer()
-                PrimaryTextView(self.primaryText)
-                Spacer()
-            }
-            .frame(height: heigt, alignment: .center)
-            .padding(.top, statusBarHeight)
+        return HStack(alignment: .center) {
+            Spacer()
+            PrimaryTextView(self.primaryText)
+            Spacer()
         }
+        .frame(height: heigt)
+        .padding(EdgeInsets(
+            top: top,
+            leading: 50,
+            bottom: 0,
+            trailing: 50
+        ))
+        .background(Color(UIColor.secondarySystemBackground))
+        .opacity(self.opacity())
     }
     
     fileprivate func opacity() -> Double {
-        if (pageRect.origin.y - self.statusBarHeight > -headerRect.origin.y) {
+        if (pageRect.origin.y - self.top > -headerRect.origin.y) {
             return 0
         }
         
-        return 0.97
+        return 1
     }
 }

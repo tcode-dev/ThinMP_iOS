@@ -23,7 +23,7 @@ struct AlbumDetailPageView: View {
         GeometryReader { geometry in
             VStack {
                 ZStack(alignment: .top) {
-                    CustomNavigationBarView(persistentId: self.albumDetail.persistentId, primaryText: self.albumDetail.title, secondaryText: self.albumDetail.artist, side: geometry.size.width, pageRect: self.$pageRect, headerRect: self.$headerRect)
+                    CustomNavigationBarView(persistentId: self.albumDetail.persistentId, primaryText: self.albumDetail.title, secondaryText: self.albumDetail.artist, side: geometry.size.width, top: geometry.safeAreaInsets.top, pageRect: self.$pageRect, headerRect: self.$headerRect)
                     ScrollView(showsIndicators: true) {
                         VStack(alignment: .leading) {
                             AlbumDetailHeaderView(albumDetail: self.albumDetail, rect: self.$pageRect, side: geometry.size.width)
