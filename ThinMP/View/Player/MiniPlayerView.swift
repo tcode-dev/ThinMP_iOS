@@ -31,7 +31,7 @@ struct MiniPlayerView: View {
                         Button(action: {
                             self.musicPlayer.pause()
                         }) {
-                            Image("Stop2Button").renderingMode(.original)
+                            Image("PauseButton").renderingMode(.original)
                         }
                         .frame(width: buttonSize, height: buttonSize)
                         
@@ -46,7 +46,7 @@ struct MiniPlayerView: View {
                         Button(action: {
                             self.musicPlayer.play()
                         }) {
-                            Image("Play2Button").renderingMode(.original)
+                            Image("PlayButton").renderingMode(.original)
                         }
                         .frame(width: buttonSize, height: buttonSize)
                         Button(action: {

@@ -84,7 +84,7 @@ struct PlayerView: View {
                                 self.musicPlayer.pause()
                                 self.musicPlayer.stopProgress()
                             }) {
-                                Image("StopButton").renderingMode(.original)
+                                Image("PauseButton").renderingMode(.original).resizable().frame(width: 96, height: 96)
                             }
                             Spacer()
                             Button(action: {
@@ -107,7 +107,7 @@ struct PlayerView: View {
                                 self.musicPlayer.play()
                                 self.musicPlayer.startProgress()
                             }) {
-                                Image("PlayButton").renderingMode(.original)
+                                Image("PlayButton").renderingMode(.original).resizable().frame(width: 96, height: 96)
                             }
                             Spacer()
                             Button(action: {
@@ -157,7 +157,7 @@ struct PlayerView: View {
                         Spacer()
                         Button(action: {
                         }) {
-                            Image("AddPlaylistButton").renderingMode(.original)
+                            Image("PlaylistAddButton").renderingMode(.original)
                         }
                     }
                     .padding(.leading, 30)
