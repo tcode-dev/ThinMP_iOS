@@ -49,6 +49,7 @@ struct CustomNavigationBarView: View {
         .frame(width: side, height: heigt)
         .padding(.top, top)
         .background(Color(UIColor.secondarySystemBackground))
+        .border(Color(UIColor.systemGray5), width: 1)
         .opacity(self.opacity())
         .animation(.easeInOut)
     }

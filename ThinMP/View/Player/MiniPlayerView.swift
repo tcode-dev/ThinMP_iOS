@@ -13,7 +13,7 @@ struct MiniPlayerView: View {
     var bottom: CGFloat
 
     var imageSize: CGFloat = 40
-    var buttonSize: CGFloat = 50
+    var buttonSize: CGFloat = 60
 
     var body: some View {
         Group {
@@ -42,7 +42,6 @@ struct MiniPlayerView: View {
                             Image("NextButton").renderingMode(.original).resizable().frame(width: imageSize, height: imageSize)
                         }
                         .frame(width: buttonSize, height: buttonSize)
-                        
                     } else {
                         Button(action: {
                             self.musicPlayer.play()
@@ -66,6 +65,7 @@ struct MiniPlayerView: View {
                     trailing: 0
                 ))
                 .background(Color(UIColor.secondarySystemBackground))
+                .border(Color(UIColor.systemGray5), width: 1)
                 .sheet(isPresented: $isFullScreen) {
                     PlayerView().environmentObject(self.musicPlayer)
                 }
