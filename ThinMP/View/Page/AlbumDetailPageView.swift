@@ -13,12 +13,10 @@ struct AlbumDetailPageView: View {
     @ObservedObject var albumDetail: AlbumDetailViewModel
     @State private var textRect: CGRect = CGRect()
 
-    let barHeight: CGFloat = 50
-    
     init(persistentId: MPMediaEntityPersistentID) {
         self.albumDetail = AlbumDetailViewModel(persistentId: persistentId)
     }
-    
+
     var body: some View {
         GeometryReader { geometry in
             VStack {

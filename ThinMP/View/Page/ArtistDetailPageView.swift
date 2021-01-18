@@ -19,9 +19,8 @@ struct ArtistDetailPageView: View {
         GeometryReader { geometry in
             ZStack(alignment: .top) {
                 CustomNavigationBarView(persistentId: self.artistDetail.persistentId, primaryText: self.artistDetail.name, secondaryText: self.artistDetail.meta, side: geometry.size.width, top: geometry.safeAreaInsets.top, textRect: self.$textRect)
-                    .opacity(1)
                 ScrollView{
-                    ArtistDetailHeaderView(artistDetail: self.artistDetail, rect: self.$textRect, side: geometry.size.width)
+                    ArtistDetailHeaderView(artistDetail: self.artistDetail, textRect: self.$textRect, side: geometry.size.width, top: geometry.safeAreaInsets.top)
                     VStack(alignment: .leading) {
                         HeaderTextView("Albums")
                             .padding(.leading, 20)
