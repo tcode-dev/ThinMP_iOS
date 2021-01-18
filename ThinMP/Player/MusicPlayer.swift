@@ -67,6 +67,7 @@ class MusicPlayer: ObservableObject {
 
     func pause() {
         self.isPlaying = false
+        self.playerState = MPMusicPlaybackState.paused
         self.player.pause()
     }
 
@@ -76,6 +77,7 @@ class MusicPlayer: ObservableObject {
         }
 
         self.isPlaying = false
+        self.playerState = MPMusicPlaybackState.paused
         self.player.stop()
     }
 
