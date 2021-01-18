@@ -11,8 +11,8 @@ import MediaPlayer
 struct AlbumDetailPageView: View {
     @EnvironmentObject var musicPlayer: MusicPlayer
     @ObservedObject var albumDetail: AlbumDetailViewModel
-    @State private var pageRect: CGRect = CGRect()
-    @State private var headerRect: CGRect = CGRect()
+    @State private var textRect: CGRect = CGRect()
+
     let barHeight: CGFloat = 50
     
     init(persistentId: MPMediaEntityPersistentID) {
@@ -23,10 +23,10 @@ struct AlbumDetailPageView: View {
         GeometryReader { geometry in
             VStack {
                 ZStack(alignment: .top) {
-                    CustomNavigationBarView(persistentId: self.albumDetail.persistentId, primaryText: self.albumDetail.title, secondaryText: self.albumDetail.artist, side: geometry.size.width, top: geometry.safeAreaInsets.top, pageRect: self.$pageRect, headerRect: self.$headerRect)
+                    CustomNavigationBarView(persistentId: self.albumDetail.persistentId, primaryText: self.albumDetail.title, secondaryText: self.albumDetail.artist, side: geometry.size.width, top: geometry.safeAreaInsets.top, textRect: self.$textRect)
                     ScrollView(showsIndicators: true) {
                         VStack(alignment: .leading) {
-                            AlbumDetailHeaderView(albumDetail: self.albumDetail, rect: self.$pageRect, side: geometry.size.width)
+                            AlbumDetailHeaderView(albumDetail: self.albumDetail, textRect: self.$textRect, side: geometry.size.width, top: geometry.safeAreaInsets.top)
                             VStack{
                                 ForEach(self.albumDetail.songs.indices){ index in
                                     AlbumSongRowView(list: self.albumDetail.songs, index: index)

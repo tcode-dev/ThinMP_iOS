@@ -15,10 +15,9 @@ struct CustomNavigationBarView: View {
     var side: CGFloat
     var top: CGFloat
     let heigt: CGFloat = 50
-    
-    @Binding var pageRect: CGRect
-    @Binding var headerRect: CGRect
-    
+
+    @Binding var textRect: CGRect
+
     var body: some View {
         ZStack {
             HStack() {
@@ -36,6 +35,7 @@ struct CustomNavigationBarView: View {
             .zIndex(3)
             GeometryReader { geometry in
                 self.createHeaderView(geometry: geometry)
+                self.createTitleView(geometry: geometry)
             }
             .zIndex(2)
         }
@@ -44,31 +44,34 @@ struct CustomNavigationBarView: View {
     }
     
     fileprivate func createHeaderView(geometry: GeometryProxy) -> some View {
-        DispatchQueue.main.async {
-            self.headerRect = geometry.frame(in: .global)
-        }
-        
         return HStack(alignment: .center) {
-            Spacer()
-            PrimaryTextView(self.primaryText)
-            Spacer()
         }
-        .frame(height: heigt)
+        .frame(width: side, height: heigt)
+        .padding(.top, top)
+        .background(Color(UIColor.secondarySystemBackground))
+        .opacity(self.opacity())
+        .animation(.easeInOut)
+    }
+
+    fileprivate func createTitleView(geometry: GeometryProxy) -> some View {
+        return HStack(alignment: .center) {
+            PrimaryTextView(self.primaryText)
+        }
+        .frame(width: side - 100, height: heigt)
         .padding(EdgeInsets(
             top: top,
             leading: 50,
             bottom: 0,
             trailing: 50
         ))
-        .background(Color(UIColor.secondarySystemBackground))
         .opacity(self.opacity())
     }
-    
-    fileprivate func opacity() -> Double {
-        if (pageRect.origin.y - self.top > -headerRect.origin.y) {
+
+    private func opacity() -> Double {
+        if (textRect.origin.y - self.top > 0) {
             return 0
         }
-        
+
         return 1
     }
 }
