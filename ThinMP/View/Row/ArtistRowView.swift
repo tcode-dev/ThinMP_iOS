@@ -12,7 +12,7 @@ struct ArtistRowView: View {
 
     var body: some View {
         HStack {
-            Text(artist.name ?? "unknown")
+            PrimaryTextView(artist.name)
             Spacer()
         }
     }
