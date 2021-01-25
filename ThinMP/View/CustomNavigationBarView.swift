@@ -15,9 +15,9 @@ struct CustomNavigationBarView: View {
     var side: CGFloat
     var top: CGFloat
     let heigt: CGFloat = 50
-
+    
     @Binding var textRect: CGRect
-
+    
     var body: some View {
         ZStack {
             HStack() {
@@ -33,17 +33,15 @@ struct CustomNavigationBarView: View {
                 trailing: 0
             ))
             .zIndex(3)
-            GeometryReader { geometry in
-                self.createHeaderView(geometry: geometry)
-                self.createTitleView(geometry: geometry)
-            }
-            .zIndex(2)
+            self.createHeaderView()
+            self.createTitleView()
+                .zIndex(2)
         }
         .frame(height: heigt + top)
         .zIndex(1)
     }
     
-    fileprivate func createHeaderView(geometry: GeometryProxy) -> some View {
+    private func createHeaderView() -> some View {
         return HStack(alignment: .center) {
         }
         .frame(width: side, height: heigt)
@@ -53,8 +51,8 @@ struct CustomNavigationBarView: View {
         .opacity(self.opacity())
         .animation(.easeInOut)
     }
-
-    fileprivate func createTitleView(geometry: GeometryProxy) -> some View {
+    
+    private func createTitleView() -> some View {
         return HStack(alignment: .center) {
             PrimaryTextView(self.primaryText)
         }
@@ -67,12 +65,12 @@ struct CustomNavigationBarView: View {
         ))
         .opacity(self.opacity())
     }
-
+    
     private func opacity() -> Double {
         if (textRect.origin.y - self.top > 0) {
             return 0
         }
-
+        
         return 1
     }
 }

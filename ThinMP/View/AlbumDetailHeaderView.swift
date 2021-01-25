@@ -15,7 +15,7 @@ struct AlbumDetailHeaderView: View {
     var top: CGFloat
     var height: CGFloat = 50
     var padding: CGFloat = 50
-
+    
     var body: some View {
         ZStack(alignment: .bottom) {
             Image(uiImage: self.albumDetail.artwork?.image(at: CGSize(width: self.side, height: self.side)) ?? UIImage())
@@ -29,11 +29,11 @@ struct AlbumDetailHeaderView: View {
             .frame(height: 50)
             .offset(y: -30)
             self.createSecondaryTextView()
-
+            
         }
         .frame(width: side, height: side)
     }
-
+    
     /// アルバム名のViewを生成する
     /// ScrollViewの現在位置を取得する方法がないため、親が子のgeometryを参照できるようにする
     /// GeometryReader直下で変数を代入すると構文エラーになるので別メソッドにしている
@@ -49,7 +49,7 @@ struct AlbumDetailHeaderView: View {
         .padding(.leading, padding)
         .padding(.trailing, padding)
     }
-
+    
     private func createSecondaryTextView() -> some View {
         return VStack {
             SecondaryTextView(self.albumDetail.artist).opacity(textOpacity())
@@ -60,12 +60,12 @@ struct AlbumDetailHeaderView: View {
         .padding(.leading, padding)
         .padding(.trailing, padding)
     }
-
+    
     private func textOpacity() -> Double {
         if (textRect.origin.y - self.top > 0) {
             return 1
         }
-
+        
         return 0
     }
 }

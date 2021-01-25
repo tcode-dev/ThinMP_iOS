@@ -9,26 +9,35 @@ import SwiftUI
 
 struct FavoriteArtistsPageView: View {
     @ObservedObject var artists = FavoriteArtistsViewModel()
+    @State private var headerRect: CGRect = CGRect()
 
     var body: some View {
-        ZStack(alignment: .top) {
-            FavoriteArtistsHeaderView()
-            List(self.artists.list) { artist in
-                HStack {
-                    ArtistRowView(artist: artist)
-                    NavigationLink(destination: ArtistDetailPageView(artist: artist)) {
-                        EmptyView()
+        GeometryReader { geometry in
+            VStack(spacing: 0) {
+                ZStack(alignment: .top) {
+                    FavoriteArtistsHeaderView(top: geometry.safeAreaInsets.top, rect: self.$headerRect)
+                    ScrollView(showsIndicators: true) {
+                        VStack(alignment: .leading) {
+                            ListEmptyView(headerRect: self.$headerRect, top: geometry.safeAreaInsets.top)
+                            ForEach(self.artists.list) { artist in
+                                NavigationLink(destination: ArtistDetailPageView(artist: artist)) {
+                                    ArtistRowView(artist: artist)
+                                }
+                                Divider()
+                            }.padding(.leading, 10)
+                        }
                     }
-                    Spacer()
+                    .frame(alignment: .top)
                 }
+                .edgesIgnoringSafeArea(.all)
+                .navigationBarHidden(true)
+                .navigationBarTitle(Text(""))
+                .onAppear() {
+                    artists.load()
+                }
+                MiniPlayerView(bottom: geometry.safeAreaInsets.bottom)
             }
-            .padding(.init(top: 50, leading: 0, bottom: 0, trailing: 0))
-            .frame(alignment: .top)
-        }
-        .navigationBarHidden(true)
-        .navigationBarTitle(Text(""))
-        .onAppear() {
-            artists.load()
+            .edgesIgnoringSafeArea(.all)
         }
     }
 }

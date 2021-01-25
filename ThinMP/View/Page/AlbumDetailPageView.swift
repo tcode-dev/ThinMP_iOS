@@ -12,11 +12,11 @@ struct AlbumDetailPageView: View {
     @EnvironmentObject var musicPlayer: MusicPlayer
     @ObservedObject var albumDetail: AlbumDetailViewModel
     @State private var textRect: CGRect = CGRect()
-
+    
     init(persistentId: MPMediaEntityPersistentID) {
         self.albumDetail = AlbumDetailViewModel(persistentId: persistentId)
     }
-
+    
     var body: some View {
         GeometryReader { geometry in
             VStack(spacing: 0) {
@@ -25,12 +25,10 @@ struct AlbumDetailPageView: View {
                     ScrollView(showsIndicators: true) {
                         VStack(alignment: .leading) {
                             AlbumDetailHeaderView(albumDetail: self.albumDetail, textRect: self.$textRect, side: geometry.size.width, top: geometry.safeAreaInsets.top)
-                            VStack{
-                                ForEach(self.albumDetail.songs.indices){ index in
-                                    AlbumSongRowView(list: self.albumDetail.songs, index: index)
-                                    Divider()
-                                }.padding(.leading, 10)
-                            }
+                            ForEach(self.albumDetail.songs.indices){ index in
+                                AlbumSongRowView(list: self.albumDetail.songs, index: index)
+                                Divider()
+                            }.padding(.leading, 10)
                         }
                     }
                     .navigationBarHidden(true)
