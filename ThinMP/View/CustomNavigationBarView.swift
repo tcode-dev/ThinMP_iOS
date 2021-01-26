@@ -67,6 +67,10 @@ struct CustomNavigationBarView: View {
     }
     
     private func opacity() -> Double {
+        // ページ遷移直後は位置を取得できていない
+        if (textRect == CGRect.zero) {
+            return 0
+        }
         if (textRect.origin.y - self.top > 0) {
             return 0
         }

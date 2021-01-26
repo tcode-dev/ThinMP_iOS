@@ -11,7 +11,7 @@ import MediaPlayer
 struct AlbumDetailPageView: View {
     @EnvironmentObject var musicPlayer: MusicPlayer
     @ObservedObject var albumDetail: AlbumDetailViewModel
-    @State private var textRect: CGRect = CGRect()
+    @State private var textRect: CGRect = CGRect.zero
     
     init(persistentId: MPMediaEntityPersistentID) {
         self.albumDetail = AlbumDetailViewModel(persistentId: persistentId)
