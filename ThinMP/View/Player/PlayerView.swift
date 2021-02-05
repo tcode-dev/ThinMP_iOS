@@ -35,7 +35,7 @@ struct PlayerView: View {
                         .scaledToFill()
                         .blur(radius: 10.0)
                     
-                    LinearGradient(gradient: Gradient(colors: [Color.init(Color.RGBColorSpace.sRGB, red: 1, green: 1, blue: 1, opacity: 0), .white]), startPoint: .top, endPoint: .bottom).frame(height: geometry.size.width).offset(y: 25)
+                    LinearGradient(gradient: Gradient(colors: [Color.init(Color.RGBColorSpace.sRGB, red: 1, green: 1, blue: 1, opacity: 0), Color(UIColor.systemBackground)]), startPoint: .top, endPoint: .bottom).frame(height: geometry.size.width).offset(y: 25)
                 }
                 .frame(width: geometry.size.width, height: geometry.size.width)
                 VStack() {
@@ -52,22 +52,25 @@ struct PlayerView: View {
                         SecondaryTextView(self.musicPlayer.song?.representativeItem?.artist)
                     }
                     Spacer()
+                    Slider(value: self.$musicPlayer.currentSecond, in: 0...self.musicPlayer.durationSecond, step: 1, onEditingChanged: { changed in
+                        if (self.musicPlayer.isPlaying && !self.seeking && changed) {
+                            self.musicPlayer.stopProgress()
+                            self.seeking = changed
+                        }
+
+                        self.musicPlayer.seek(time: self.musicPlayer.currentSecond)
+
+                        if (self.musicPlayer.isPlaying && self.seeking && !changed) {
+                            self.musicPlayer.startProgress()
+                            self.seeking = changed
+                        }
+                    })
+                    .padding(.leading, 10)
+                    .padding(.trailing, 10)
+                    .accentColor(Color(.label))
                     HStack {
                         SecondaryTextView("\(self.convertTime(time: self.musicPlayer.currentSecond))").frame(width: 50).padding(.leading, 10)
-                        Slider(value: self.$musicPlayer.currentSecond, in: 0...self.musicPlayer.durationSecond, step: 1, onEditingChanged: { changed in
-                            if (self.musicPlayer.isPlaying && !self.seeking && changed) {
-                                self.musicPlayer.stopProgress()
-                                self.seeking = changed
-                            }
-                            
-                            self.musicPlayer.seek(time: self.musicPlayer.currentSecond)
-                            
-                            if (self.musicPlayer.isPlaying && self.seeking && !changed) {
-                                self.musicPlayer.startProgress()
-                                self.seeking = changed
-                            }
-                        })
-                            .accentColor(Color("#be88ef"))
+                        Spacer()
                         SecondaryTextView("\(self.convertTime(time: self.musicPlayer.durationSecond))").frame(width: 50).padding(.trailing, 10)
                     }
                     Spacer()
@@ -84,7 +87,7 @@ struct PlayerView: View {
                                 self.musicPlayer.pause()
                                 self.musicPlayer.stopProgress()
                             }) {
-                                Image("PauseButton").renderingMode(.original).resizable().frame(width: 96, height: 96)
+                                Image("PauseButton").renderingMode(.original).resizable().frame(width: 88, height: 88)
                             }
                             Spacer()
                             Button(action: {
@@ -181,8 +184,8 @@ struct PlayerView: View {
                 self.musicPlayer.startProgress()
             }
         })
-            .onDisappear(perform: {
-                self.musicPlayer.stopProgress()
-            })
+        .onDisappear(perform: {
+            self.musicPlayer.stopProgress()
+        })
     }
 }
