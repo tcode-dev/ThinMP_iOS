@@ -10,7 +10,7 @@ import SwiftUI
 struct PlayerView: View {
     @EnvironmentObject var musicPlayer: MusicPlayer
     @State var seeking: Bool = false
-    let size: CGFloat = 220
+    private let size: CGFloat = 220
     
     func convertTime(time: TimeInterval) -> String {
         if (time < 1) {
@@ -47,10 +47,10 @@ struct PlayerView: View {
                         .frame(width: self.size, height: self.size)
                         .padding(.top, 50)
                         .padding(.bottom, 10)
-                    VStack {
-                        PrimaryTextView(self.musicPlayer.song?.representativeItem?.title)
-                        SecondaryTextView(self.musicPlayer.song?.representativeItem?.artist)
-                    }
+                    ZStack(alignment: .bottom) {
+                        SecondaryTitleView(self.musicPlayer.song?.representativeItem?.title).frame(height: 50).offset(y: -10)
+                        SecondaryTextView(self.musicPlayer.song?.representativeItem?.artist).frame(height: 25)
+                    }.frame(height: 60)
                     Spacer()
                     Slider(value: self.$musicPlayer.currentSecond, in: 0...self.musicPlayer.durationSecond, step: 1, onEditingChanged: { changed in
                         if (self.musicPlayer.isPlaying && !self.seeking && changed) {

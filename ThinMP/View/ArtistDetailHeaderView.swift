@@ -29,7 +29,7 @@ struct ArtistDetailHeaderView: View {
             GeometryReader { primaryTextGeometry in
                 self.createPrimaryTextView(primaryTextGeometry: primaryTextGeometry)
             }
-            .frame(height: 50)
+            .frame(height: height)
             .offset(y: -30)
             self.createSecondaryTextView()
         }
@@ -45,9 +45,9 @@ struct ArtistDetailHeaderView: View {
         }
 
         return VStack {
-            PrimaryTextView(self.artistDetail.name).opacity(textOpacity())
+            SecondaryTitleView(self.artistDetail.name).opacity(textOpacity())
         }
-        .frame(width: side - 100, height: 50)
+        .frame(width: side - 100, height: height)
         .padding(.leading, 50)
         .padding(.trailing, 50)
     }

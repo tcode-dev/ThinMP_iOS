@@ -54,7 +54,7 @@ struct CustomNavigationBarView: View {
     
     private func createTitleView() -> some View {
         return HStack(alignment: .center) {
-            PrimaryTextView(self.primaryText)
+            SecondaryTitleView(self.primaryText)
         }
         .frame(width: side - 100, height: heigt)
         .padding(EdgeInsets(

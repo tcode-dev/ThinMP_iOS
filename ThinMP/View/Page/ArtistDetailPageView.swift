@@ -22,12 +22,12 @@ struct ArtistDetailPageView: View {
                 ScrollView{
                     ArtistDetailHeaderView(artistDetail: self.artistDetail, textRect: self.$textRect, side: geometry.size.width, top: geometry.safeAreaInsets.top)
                     VStack(alignment: .leading) {
-                        HeaderTextView("Albums")
+                        PrimaryTitleView("Albums")
                             .padding(.leading, 20)
                         ArtistAlbumListView(list: self.artistDetail.albums, width: geometry.size.width)
                             .padding(.bottom, 10)
 
-                        HeaderTextView("Songs")
+                        PrimaryTitleView("Songs")
                             .padding(.leading, 20)
                         ArtistSongListView(list: self.artistDetail.songs)
                             .padding(.leading, 20)

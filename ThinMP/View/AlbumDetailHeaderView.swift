@@ -29,7 +29,6 @@ struct AlbumDetailHeaderView: View {
             .frame(height: 50)
             .offset(y: -30)
             self.createSecondaryTextView()
-            
         }
         .frame(width: side, height: side)
     }
@@ -43,7 +42,7 @@ struct AlbumDetailHeaderView: View {
         }
         
         return VStack {
-            PrimaryTextView(self.albumDetail.title).opacity(textOpacity())
+            SecondaryTitleView(self.albumDetail.title).opacity(textOpacity())
         }
         .frame(width: side - (padding + padding), height: height)
         .padding(.leading, padding)
