@@ -1,5 +1,5 @@
 //
-//  FavoriteArtistsHeaderView.swift
+//  FavoriteArtistsNavBarView.swift
 //  ThinMP
 //
 //  Created by tk on 2021/01/10.
@@ -8,7 +8,7 @@
 import SwiftUI
 import MediaPlayer
 
-struct FavoriteArtistsHeaderView: View {
+struct FavoriteArtistsNavBarView: View {
     let primaryText: String = "FavoriteArtists"
     let heigt: CGFloat = 50
     

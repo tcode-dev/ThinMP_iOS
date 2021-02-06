@@ -1,5 +1,5 @@
 //
-//  ListEmptyView.swift
+//  ListEmptyHeaderView.swift
 //  ThinMP
 //
 //  Created by tk on 2021/01/25.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ListEmptyView: View {
+struct ListEmptyHeaderView: View {
     @Binding var headerRect: CGRect
 
     var top: CGFloat

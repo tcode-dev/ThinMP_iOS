@@ -15,10 +15,10 @@ struct FavoriteArtistsPageView: View {
         GeometryReader { geometry in
             VStack(spacing: 0) {
                 ZStack(alignment: .top) {
-                    FavoriteArtistsHeaderView(top: geometry.safeAreaInsets.top, rect: self.$headerRect)
+                    FavoriteArtistsNavBarView(top: geometry.safeAreaInsets.top, rect: self.$headerRect)
                     ScrollView(showsIndicators: true) {
                         VStack(alignment: .leading) {
-                            ListEmptyView(headerRect: self.$headerRect, top: geometry.safeAreaInsets.top)
+                            ListEmptyHeaderView(headerRect: self.$headerRect, top: geometry.safeAreaInsets.top)
                             ForEach(self.artists.list) { artist in
                                 NavigationLink(destination: ArtistDetailPageView(artist: artist)) {
                                     ArtistRowView(artist: artist)

@@ -1,5 +1,5 @@
 //
-//  ListHeaderView.swift
+//  ListNavBarView.swift
 //  ThinMP
 //
 //  Created by tk on 2020/06/01.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ListHeaderView: View {
+struct ListNavBarView: View {
     let heigt: CGFloat = 50
 
     var primaryText: String?

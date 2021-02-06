@@ -13,7 +13,7 @@ struct ArtistsPageView: View {
     var body: some View {
         GeometryReader { geometry in
             ZStack(alignment: .top) {
-                ListHeaderView(primaryText: "artists", top: geometry.safeAreaInsets.top)
+                ListNavBarView(primaryText: "artists", top: geometry.safeAreaInsets.top)
                 List(self.artists.list.indices) { index in
                     NavigationLink(destination: ArtistDetailPageView(artist: self.artists.list[index])) {
                         ArtistRowView(artist: self.artists.list[index])

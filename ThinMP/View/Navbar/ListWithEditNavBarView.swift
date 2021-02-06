@@ -1,5 +1,5 @@
 //
-//  SwiftUIView.swift
+//  ListWithEditNavBarView.swift
 //  ThinMP
 //
 //  Created by tk on 2020/06/05.
@@ -8,7 +8,7 @@
 import SwiftUI
 import MediaPlayer
 
-struct ListWithEditHeaderView: View {
+struct ListWithEditNavBarView: View {
     var persistentId: MPMediaEntityPersistentID
     var primaryText: String?
 

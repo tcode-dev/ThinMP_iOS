@@ -1,5 +1,5 @@
 //
-//  CustomNavigationBarView.swift
+//  CustomNavBarView.swift
 //  ThinMP
 //
 //  Created by tk on 2020/01/19.
@@ -8,7 +8,7 @@
 import SwiftUI
 import MediaPlayer
 
-struct CustomNavigationBarView: View {
+struct CustomNavBarView: View {
     var persistentId: MPMediaEntityPersistentID
     var primaryText: String?
     var secondaryText: String?
