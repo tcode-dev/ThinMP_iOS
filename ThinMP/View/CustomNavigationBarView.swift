@@ -42,12 +42,11 @@ struct CustomNavigationBarView: View {
     }
     
     private func createHeaderView() -> some View {
-        return HStack(alignment: .center) {
+        return VStack {
+            Rectangle().frame(width: side, height: heigt + top)
+                .opacity(0.1)
         }
-        .frame(width: side, height: heigt)
-        .padding(.top, top)
-        .background(Color(UIColor.secondarySystemBackground))
-        .border(Color(UIColor.systemGray5), width: 1)
+        .background(BlurView(style: .systemThinMaterial))
         .opacity(self.opacity())
         .animation(.easeInOut)
     }

@@ -32,7 +32,7 @@ struct PlayerView: View {
                 ZStack {
                     Image(uiImage: self.musicPlayer.song?.representativeItem?.artwork?.image(at: CGSize(width: geometry.size.width, height: geometry.size.width)) ?? UIImage())
                         .resizable()
-                        .scaledToFill()
+                        .scaledToFit()
                         .blur(radius: 10.0)
                     
                     LinearGradient(gradient: Gradient(colors: [Color.init(Color.RGBColorSpace.sRGB, red: 1, green: 1, blue: 1, opacity: 0), Color(UIColor.systemBackground)]), startPoint: .top, endPoint: .bottom).frame(height: geometry.size.width).offset(y: 25)
