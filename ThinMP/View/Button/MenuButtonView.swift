@@ -16,33 +16,31 @@ struct MenuButtonView: View {
     @State var isOpen: Bool = false
 
     var body: some View {
-        Button(action: {
-            self.isOpen.toggle()
-        }) {
+        Menu {
+            favoriteArtistButton()
+        } label: {
             MenuImageView()
+                .frame(width: 50, height: 50)
         }
-        .actionSheet(isPresented: $isOpen) {
-            ActionSheet(title: Text(self.primaryText ?? ""),
-                        buttons: [
-                            favoriteArtistButton(),
-                            .default(Text("Option 2"), action: {
-                                NSLog("clicked Option 2")
-                            }),
-                            .cancel()
-            ])
-        }
-        .frame(width: 50, height: 50)
     }
 
-    func favoriteArtistButton() -> ActionSheet.Button {
+    func favoriteArtistButton() -> some View {
         let favoriteArtistRegister = FavoriteArtistRegister()
 
         if (!favoriteArtistRegister.exists(persistentId: persistentId)) {
             // add
-            return ActionSheet.Button.default(Text(ADD_TEXT), action: {favoriteArtistRegister.add(persistentId: persistentId)})
+            return Button(action: {
+                favoriteArtistRegister.add(persistentId: persistentId)
+            }) {
+                Text(ADD_TEXT)
+            }
         } else {
             // delete
-            return ActionSheet.Button.default(Text(DELETE_TEXT), action: {favoriteArtistRegister.delete(persistentId: persistentId)})
+            return Button(action: {
+                favoriteArtistRegister.delete(persistentId: persistentId)
+            }) {
+                Text(DELETE_TEXT)
+            }
         }
     }
 }
