@@ -6,16 +6,29 @@
 //
 
 import SwiftUI
+import MediaPlayer
 
 struct ArtistSongRowView: View {
-    var song: Song
-    var size: CGFloat = 40
+    private let size: CGFloat = 40
+
+    @EnvironmentObject var musicPlayer: MusicPlayer
+
+    let list: [MPMediaItemCollection]
+    let index: Int
+    let song: MPMediaItemCollection
+
+    init(list: [MPMediaItemCollection], index: Int) {
+        self.list = list
+        self.index = index
+        self.song = list[index]
+    }
 
     var body: some View {
         HStack {
-            SquareImageView(artwork: self.song.artwork, size: size)
-            PrimaryTextView(song.title)
+            SquareImageView(artwork: song.representativeItem?.artwork, size: size)
+            PrimaryTextView(song.representativeItem?.title)
             Spacer()
+            SongMenuButtonView(persistentId: self.song.representativeItem!.persistentID)
         }
     }
 }

@@ -10,9 +10,10 @@ import MediaPlayer
 
 struct AlbumSongRowView: View {
     @EnvironmentObject var musicPlayer: MusicPlayer
-    var list: [MPMediaItemCollection]
-    var index: Int
-    var song: MPMediaItemCollection
+
+    let list: [MPMediaItemCollection]
+    let index: Int
+    let song: MPMediaItemCollection
     
     init(list: [MPMediaItemCollection], index: Int) {
         self.list = list

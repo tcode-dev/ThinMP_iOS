@@ -29,8 +29,10 @@ struct ArtistDetailPageView: View {
 
                         PrimaryTitleView("Songs")
                             .padding(.leading, 20)
-                        ArtistSongListView(list: self.artistDetail.songs)
-                            .padding(.leading, 20)
+                        ForEach(self.artistDetail.songs.indices){ index in
+                            ArtistSongRowView(list: self.artistDetail.songs, index: index)
+                            Divider()
+                        }.padding(.leading, 20)
                     }
                 }
                 .navigationBarHidden(true)

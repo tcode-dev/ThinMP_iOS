@@ -12,8 +12,7 @@ class ArtistDetailViewModel: ObservableObject {
     @Published var name: String?
     @Published var artwork: MPMediaItemArtwork?
     @Published var albums: [Album] = []
-    @Published var songs: [Song] = []
-    @Published var songCollections: [MPMediaItemCollection] = []
+    @Published var songs: [MPMediaItemCollection] = []
     @Published var albumCount: Int = 0
     @Published var songCount: Int = 0
     @Published var meta: String?
@@ -46,13 +45,8 @@ class ArtistDetailViewModel: ObservableObject {
             })?.artwork
         }
 
-        let songs = getSongs()
-
-        if !songs.songs.isEmpty && !songs.songCollections.isEmpty {
-            self.songs = songs.songs
-            self.songCount = songs.songs.count
-            self.songCollections = songs.songCollections
-        }
+        self.songs = getSongs()
+        self.songCount = self.songs.count
         
         self.meta = "\(self.albumCount) albums, \(self.songCount) songs"
     }
@@ -79,17 +73,12 @@ class ArtistDetailViewModel: ObservableObject {
         }
     }
     
-    func getSongs() -> (songs: [Song], songCollections: [MPMediaItemCollection]) {
+    func getSongs() -> [MPMediaItemCollection] {
         let property = MPMediaPropertyPredicate(value: self.persistentId, forProperty: MPMediaItemPropertyArtistPersistentID)
         let query = MPMediaQuery.songs()
         
         query.addFilterPredicate(property)
         
-        let songCollections = query.collections!
-        let songs = songCollections.map{
-            return Song(title: $0.representativeItem?.title, artist: $0.representativeItem?.artist, artwork: $0.representativeItem?.artwork)
-        }
-        
-        return (songs, songCollections);
+        return query.collections ?? []
     }
 }
