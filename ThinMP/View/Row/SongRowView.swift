@@ -9,29 +9,16 @@ import SwiftUI
 import MediaPlayer
 
 struct SongRowView: View {
-    var list: [MPMediaItemCollection]
-    var index: Int
-    var song: MPMediaItemCollection
-    var size: CGFloat = 40
-    
-    init(list: [MPMediaItemCollection], index: Int) {
-        self.list = list
-        self.index = index
-        self.song = list[index]
-    }
-    
+    private let size: CGFloat = 40
+
+    let song: MPMediaItemCollection
+
     var body: some View {
         HStack {
-            Button(action: {
-
-            }) {
-                HStack {
-                    SquareImageView(artwork: self.song.representativeItem?.artwork, size: size)
-                    VStack(alignment: .leading) {
-                        PrimaryTextView(song.representativeItem?.title)
-                        SecondaryTextView(song.representativeItem?.artist)
-                    }
-                }
+            SquareImageView(artwork: self.song.representativeItem?.artwork, size: size)
+            VStack(alignment: .leading) {
+                PrimaryTextView(song.representativeItem?.title)
+                SecondaryTextView(song.representativeItem?.artist)
             }
             Spacer()
         }

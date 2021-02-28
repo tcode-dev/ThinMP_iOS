@@ -13,7 +13,9 @@ struct SongsPageView: View {
     var body: some View {
         Group {
             List(self.songs.list.indices) { index in
-                SongRowView(list: self.songs.list, index:index)
+                PlayRowView(list: self.songs.list, index:index) {
+                    SongRowView(song: self.songs.list[index])
+                }
             }
             .navigationBarTitle("Songs")
         }

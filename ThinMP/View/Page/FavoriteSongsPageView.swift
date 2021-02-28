@@ -21,7 +21,9 @@ struct FavoriteSongsPageView: View {
                             ListEmptyHeaderView(headerRect: self.$headerRect, top: geometry.safeAreaInsets.top)
                             ForEach(self.songs.list.indices, id: \.self){ index in
                                 VStack {
-                                    SongRowView(list: self.songs.list, index: index)
+                                    PlayRowView(list: self.songs.list, index: index) {
+                                        SongRowView(song: self.songs.list[index])
+                                    }
                                     Divider()
                                 }
                             }
