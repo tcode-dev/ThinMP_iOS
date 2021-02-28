@@ -9,7 +9,6 @@ import SwiftUI
 import MediaPlayer
 
 struct AlbumDetailPageView: View {
-    @EnvironmentObject var musicPlayer: MusicPlayer
     @ObservedObject var albumDetail: AlbumDetailViewModel
     @State private var textRect: CGRect = CGRect.zero
     
@@ -26,7 +25,9 @@ struct AlbumDetailPageView: View {
                         VStack(alignment: .leading) {
                             AlbumDetailHeaderView(albumDetail: self.albumDetail, textRect: self.$textRect, side: geometry.size.width, top: geometry.safeAreaInsets.top)
                             ForEach(self.albumDetail.songs.indices){ index in
-                                AlbumSongRowView(list: self.albumDetail.songs, index: index)
+                                PlayRowView(list: self.albumDetail.songs, index: index) {
+                                    AlbumSongRowView(song: self.albumDetail.songs[index])
+                                }
                                 Divider()
                             }.padding(.leading, 10)
                         }
