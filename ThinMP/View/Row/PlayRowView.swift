@@ -15,12 +15,6 @@ struct PlayRowView<Content> : View where Content: View {
     let index: Int
     let content: () -> Content
 
-    init(list: [MPMediaItemCollection], index: Int, @ViewBuilder content: @escaping () -> Content) {
-        self.list = list
-        self.index = index
-        self.content = content
-    }
-
     var body: some View {
 
         Button(action: {

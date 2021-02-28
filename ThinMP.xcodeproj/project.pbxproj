@@ -70,6 +70,7 @@
 		52EEEAF725E0CD9000C4DC2B /* FavoriteSongRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EEEAF625E0CD9000C4DC2B /* FavoriteSongRealm.swift */; };
 		52F286FE23C7E5420056BFE3 /* AlbumsPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F286FD23C7E5420056BFE3 /* AlbumsPageView.swift */; };
 		52F63FF423C7FA2500449934 /* AlbumsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F63FF323C7FA2500449934 /* AlbumsViewModel.swift */; };
+		52F979C625EBBCA80085F306 /* EditButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F979C525EBBCA80085F306 /* EditButtonView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -136,6 +137,7 @@
 		52EEEAF625E0CD9000C4DC2B /* FavoriteSongRealm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteSongRealm.swift; sourceTree = "<group>"; };
 		52F286FD23C7E5420056BFE3 /* AlbumsPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsPageView.swift; sourceTree = "<group>"; };
 		52F63FF323C7FA2500449934 /* AlbumsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsViewModel.swift; sourceTree = "<group>"; };
+		52F979C525EBBCA80085F306 /* EditButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditButtonView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -334,6 +336,7 @@
 				52481CD725EB2B2D004DFAEB /* FavoriteSongsMenuButtonView.swift */,
 				52BA93D823DA648F00CA323F /* MenuButtonView.swift */,
 				52EEEAEF25E0CC4300C4DC2B /* SongMenuButtonView.swift */,
+				52F979C525EBBCA80085F306 /* EditButtonView.swift */,
 			);
 			path = Button;
 			sourceTree = "<group>";
@@ -496,6 +499,7 @@
 				52B5BC8523DD45FA000C7820 /* MiniPlayerView.swift in Sources */,
 				52EEEAF425E0CD2700C4DC2B /* FavoriteSongRegister.swift in Sources */,
 				52AD232823EB8BC5000D4E4D /* AlbumRowView.swift in Sources */,
+				52F979C625EBBCA80085F306 /* EditButtonView.swift in Sources */,
 				52CCDAD523C050E9000C474A /* MainPageView.swift in Sources */,
 				5279F0C423D51F7D0053BF55 /* ArtistAlbumCellView.swift in Sources */,
 				522366D623D7BADF0001624E /* CircleImageView.swift in Sources */,
