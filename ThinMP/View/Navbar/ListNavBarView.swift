@@ -7,23 +7,53 @@
 
 import SwiftUI
 
-struct ListNavBarView: View {
-    let heigt: CGFloat = 50
+struct ListNavBarView<Content> : View where Content: View {
+    private let heigt: CGFloat = 50
 
-    var primaryText: String?
-    var top: CGFloat
+    let primaryText: String?
+    let top: CGFloat
+    @Binding var rect: CGRect
+    let content: () -> Content
 
     var body: some View {
-        HStack {
-            BackButtonView()
-            Spacer()
-            PrimaryTextView(self.primaryText)
+        ZStack {
+            self.createHeaderView()
+            HStack {
+                BackButtonView()
+                Spacer()
+                PrimaryTextView(self.primaryText)
+                Spacer()
+                content()
+            }
+            .frame(height: heigt)
+            .padding(EdgeInsets(
+                top: top,
+                leading: 0,
+                bottom: 0,
+                trailing: 0
+            ))
+        }
+        .frame(height: heigt + top, alignment: .bottom)
+        .zIndex(1)
+    }
+
+    private func createHeaderView() -> some View {
+        return HStack(alignment: .center) {
             Spacer()
         }
-        .padding(.trailing, 50)
-        .frame(height: heigt + top, alignment: .bottom)
+        .frame(height: heigt)
+        .padding(.top, top)
         .background(Color(UIColor.secondarySystemBackground))
         .border(Color(UIColor.systemGray5), width: 1)
-        .zIndex(1)
+        .opacity(self.opacity())
+        .animation(.easeInOut)
+    }
+
+    private func opacity() -> Double {
+        if (rect.origin.y >= 0) {
+            return 0
+        }
+
+        return 1
     }
 }

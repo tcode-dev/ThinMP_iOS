@@ -10,10 +10,10 @@ import SwiftUI
 struct EditButtonView<Content> : View where Content: View {
     var BUTTON_TEXT: String = "Edit"
 
+    let content: () -> Content
+
     @State var isEdit: Bool = false
     @State var editMode: EditMode = .active
-
-    let content: () -> Content
 
     var body: some View {
         Menu {

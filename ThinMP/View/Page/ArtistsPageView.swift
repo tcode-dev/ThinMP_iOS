@@ -9,11 +9,13 @@ import SwiftUI
 
 struct ArtistsPageView: View {
     @ObservedObject var artists = ArtistsViewModel()
+    @State private var headerRect: CGRect = CGRect()
     
     var body: some View {
         GeometryReader { geometry in
             ZStack(alignment: .top) {
-                ListNavBarView(primaryText: "artists", top: geometry.safeAreaInsets.top)
+                ArtistsNavBarView(top: geometry.safeAreaInsets.top, rect: self.$headerRect)
+                ListEmptyHeaderView(headerRect: self.$headerRect, top: geometry.safeAreaInsets.top)
                 List(self.artists.list.indices) { index in
                     NavigationLink(destination: ArtistDetailPageView(artist: self.artists.list[index])) {
                         ArtistRowView(artist: self.artists.list[index])

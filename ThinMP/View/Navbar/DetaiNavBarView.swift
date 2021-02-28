@@ -1,5 +1,5 @@
 //
-//  CustomNavBarView.swift
+//  DetaiNavBarView.swift
 //  ThinMP
 //
 //  Created by tk on 2020/01/19.
@@ -8,22 +8,21 @@
 import SwiftUI
 import MediaPlayer
 
-struct CustomNavBarView: View {
-    var persistentId: MPMediaEntityPersistentID
+struct DetaiNavBarView<Content> : View where Content: View {
+    private let heigt: CGFloat = 50
+
     var primaryText: String?
-    var secondaryText: String?
     var side: CGFloat
     var top: CGFloat
-    let heigt: CGFloat = 50
-    
     @Binding var textRect: CGRect
+    let content: () -> Content
     
     var body: some View {
         ZStack {
             HStack() {
                 BackButtonView()
                 Spacer()
-                MenuButtonView(persistentId: persistentId, primaryText: primaryText)
+                content()
             }
             .frame(height: heigt)
             .padding(EdgeInsets(

@@ -1,21 +1,21 @@
 //
-//  FavoriteSongsNavBarView.swift
+//  ArtistsNavBarView.swift
 //  ThinMP
 //
-//  Created by tk on 2021/02/23.
+//  Created by tk on 2021/02/28.
 //
 
 import SwiftUI
 
-struct FavoriteSongsNavBarView: View {
-    private let TITLE: String = "Favorite Songs"
+struct ArtistsNavBarView: View {
+    private let TITLE: String = "Artists"
 
     let top: CGFloat
     @Binding var rect: CGRect
 
     var body: some View {
         ListNavBarView(primaryText: TITLE, top: top, rect: $rect) {
-            FavoriteArtistsMenuButtonView()
+            EmptyView()
         }
     }
 }
