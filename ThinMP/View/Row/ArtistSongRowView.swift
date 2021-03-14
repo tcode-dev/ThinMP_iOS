@@ -28,7 +28,9 @@ struct ArtistSongRowView: View {
             SquareImageView(artwork: song.representativeItem?.artwork, size: size)
             PrimaryTextView(song.representativeItem?.title)
             Spacer()
-            SongMenuButtonView(persistentId: self.song.representativeItem!.persistentID)
+            MenuButtonView {
+                FavoriteSongButtonView(persistentId: self.song.representativeItem!.persistentID)
+            }
         }
     }
 }

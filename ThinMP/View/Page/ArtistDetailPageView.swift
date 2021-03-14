@@ -33,10 +33,12 @@ struct ArtistDetailPageView: View {
 
                         PrimaryTitleView("Songs")
                             .padding(.leading, 20)
-                        ForEach(self.artistDetail.songs.indices){ index in
-                            ArtistSongRowView(list: self.artistDetail.songs, index: index)
-                            Divider()
-                        }.padding(.leading, 20)
+                        LazyVGrid(columns: [GridItem()]) {
+                            ForEach(self.artistDetail.songs.indices){ index in
+                                ArtistSongRowView(list: self.artistDetail.songs, index: index)
+                                Divider()
+                            }.padding(.leading, 20)
+                        }
                     }
                 }
                 .navigationBarHidden(true)
