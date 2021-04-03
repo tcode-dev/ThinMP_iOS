@@ -10,6 +10,7 @@ import SwiftUI
 struct ArtistDetailPageView: View {
     @ObservedObject var artistDetail: ArtistDetailViewModel
     @State private var textRect: CGRect = CGRect()
+    @State var isRegister: Bool = false
 
     init(artist: Artist) {
         self.artistDetail = ArtistDetailViewModel(persistentId: artist.persistentId)
@@ -35,7 +36,7 @@ struct ArtistDetailPageView: View {
                             .padding(.leading, 20)
                         LazyVGrid(columns: [GridItem()]) {
                             ForEach(self.artistDetail.songs.indices){ index in
-                                ArtistSongRowView(list: self.artistDetail.songs, index: index)
+                                ArtistSongRowView(list: self.artistDetail.songs, index: index, isRegister: self.$isRegister )
                                 Divider()
                             }.padding(.leading, 20)
                         }

@@ -16,11 +16,13 @@ struct ArtistSongRowView: View {
     let list: [MPMediaItemCollection]
     let index: Int
     let song: MPMediaItemCollection
+    @Binding var isRegister: Bool
 
-    init(list: [MPMediaItemCollection], index: Int) {
+    init(list: [MPMediaItemCollection], index: Int, isRegister: Binding<Bool>) {
         self.list = list
         self.index = index
         self.song = list[index]
+        self._isRegister = isRegister
     }
 
     var body: some View {
@@ -28,9 +30,12 @@ struct ArtistSongRowView: View {
             SquareImageView(artwork: song.representativeItem?.artwork, size: size)
             PrimaryTextView(song.representativeItem?.title)
             Spacer()
-            MenuButtonView {
-                FavoriteSongButtonView(persistentId: self.song.representativeItem!.persistentID)
-            }
+        }.contextMenu {
+            FavoriteSongButtonView(persistentId: self.song.representativeItem!.persistentID)
+            PlaylistButtonView(isRegister: self.$isRegister)
+        }
+        .sheet(isPresented: $isRegister) {
+            PlaylistRegisterView()
         }
     }
 }
