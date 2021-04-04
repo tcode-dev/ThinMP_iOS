@@ -10,8 +10,9 @@ import Foundation
 
 class PlaylistRealm: Object {
     @objc dynamic var id: String = UUID().uuidString
-    @objc dynamic var persistentId: Int64 = 0
+    @objc dynamic var name: String = ""
     @objc dynamic var order: Int = 1
+    let songs = List<PlaylistSongRealm>()
 
     override static func primaryKey() -> String? {
         return "id"

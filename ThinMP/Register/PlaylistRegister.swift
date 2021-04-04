@@ -15,70 +15,20 @@ struct PlaylistRegister {
         realm = try! Realm()
     }
 
-    func add(persistentId: MPMediaEntityPersistentID) {
-        if (exists(persistentId: persistentId)) {
-            return
-        }
+    func add(persistentId: MPMediaEntityPersistentID, name: String) {
+        let playlist = PlaylistRealm()
+        playlist.name = name
+        playlist.order = incrementOrder()
 
-        let playlistRealm = PlaylistRealm()
+        let song = PlaylistSongRealm()
+        song.persistentId = Int64(bitPattern: persistentId)
+        song.playlistId = playlist.id
 
-        // MPMediaEntityPersistentID は UInt64のエイリアス
-        // realmはUInt64を保存できないのでInt64に変換して保存する
-        playlistRealm.persistentId = Int64(bitPattern: persistentId)
-        playlistRealm.order = incrementOrder()
-
-        try! realm.write {
-            realm.add(playlistRealm)
-        }
-    }
-
-    func delete(persistentId: MPMediaEntityPersistentID) {
-        let songs = find(persistentId: persistentId)
-
-        if (songs.count != 1) {
-            return
-        }
+        playlist.songs.append(song)
 
         try! realm.write {
-            realm.delete(songs)
+            realm.add(playlist)
         }
-    }
-
-    func update(persistentIdList: [MPMediaEntityPersistentID]) {
-        truncate()
-        bulkInsert(persistentIdList: persistentIdList)
-    }
-
-    func truncate() {
-        let results = realm.objects(PlaylistRealm.self)
-        if results.count == 0 {
-            return
-        }
-
-        try! realm.write {
-            realm.delete(results)
-        }
-    }
-
-    func bulkInsert(persistentIdList: [MPMediaEntityPersistentID]) {
-        realm.beginWrite()
-
-        for index in 0..<persistentIdList.count {
-            realm.create(PlaylistRealm.self, value: [
-                "persistentId": persistentIdList[index],
-                "order": index
-            ])
-        }
-
-        try! realm.commitWrite()
-    }
-
-    func exists(persistentId: MPMediaEntityPersistentID) -> Bool {
-        return find(persistentId: persistentId).count == 1
-    }
-
-    func find(persistentId: MPMediaEntityPersistentID) -> Results<PlaylistRealm> {
-        return realm.objects(PlaylistRealm.self).filter("persistentId = \(Int64(bitPattern: persistentId))")
     }
 
     func incrementOrder() -> Int {

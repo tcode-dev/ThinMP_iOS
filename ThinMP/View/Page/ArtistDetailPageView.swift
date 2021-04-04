@@ -10,7 +10,7 @@ import SwiftUI
 struct ArtistDetailPageView: View {
     @ObservedObject var artistDetail: ArtistDetailViewModel
     @State private var textRect: CGRect = CGRect()
-    @State var isRegister: Bool = false
+    @State private var isRegister: Bool = false
 
     init(artist: Artist) {
         self.artistDetail = ArtistDetailViewModel(persistentId: artist.persistentId)

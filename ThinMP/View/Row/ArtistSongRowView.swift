@@ -34,8 +34,5 @@ struct ArtistSongRowView: View {
             FavoriteSongButtonView(persistentId: self.song.representativeItem!.persistentID)
             PlaylistButtonView(isRegister: self.$isRegister)
         }
-        .sheet(isPresented: $isRegister) {
-            PlaylistRegisterView()
-        }
     }
 }
