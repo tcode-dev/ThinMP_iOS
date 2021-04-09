@@ -14,6 +14,7 @@ struct PlaylistRegisterView: View {
     private let OK_TEXT: String = "OK"
     private let CANCEL_TEXT: String = "CANCEL"
 
+    @ObservedObject var playlists = PlaylistViewModel()
     @State private var isCreate: Bool = false
     @State private var name: String = ""
 
@@ -35,8 +36,15 @@ struct PlaylistRegisterView: View {
                         Text(CANCEL_TEXT)
                     }
                 }
-                //            ScrollView() {
-                //            }
+                ScrollView(showsIndicators: true) {
+                    VStack(alignment: .leading) {
+                        ForEach(self.playlists.list.indices, id: \.self) { index in
+                            Text(self.playlists.list[index].name)
+                            Divider()
+                        }.padding(.leading, 10)
+                    }
+                }
+                .frame(alignment: .top)
             } else {
                 VStack {
                     Text(INPUT_TEXT)
@@ -64,5 +72,8 @@ struct PlaylistRegisterView: View {
         .padding(20)
         .background(Color.white)
         .padding(20)
+        .onAppear() {
+            playlists.load()
+        }
     }
 }

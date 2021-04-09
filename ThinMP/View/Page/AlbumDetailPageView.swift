@@ -60,7 +60,6 @@ struct AlbumDetailPageView: View {
                     PopupView(showingPopup: self.$showingPopup) {
                         PlaylistRegisterView(persistentId: self.persistentID!, showingPopup: self.$showingPopup)
                     }
-
                 }
             }
         }
