@@ -9,8 +9,8 @@ import MediaPlayer
 
 class SongsViewModel: ObservableObject {
     @Published var list: [MPMediaItemCollection] = []
-    
-    init () {
+
+    func load() {
         if MPMediaLibrary.authorizationStatus() == .authorized {
             fetch()
         } else {
@@ -21,13 +21,17 @@ class SongsViewModel: ObservableObject {
             }
         }
     }
-    
+
     func fetch() {
         let property = MPMediaPropertyPredicate(value: false, forProperty: MPMediaItemPropertyIsCloudItem)
         let query = MPMediaQuery.songs()
 
         query.addFilterPredicate(property)
-        
-        list = query.collections ?? []
+
+        let songs = query.collections ?? []
+
+        DispatchQueue.main.async {
+            self.list = songs
+        }
     }
 }
