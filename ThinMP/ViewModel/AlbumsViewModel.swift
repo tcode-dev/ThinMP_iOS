@@ -10,7 +10,7 @@ import MediaPlayer
 class AlbumsViewModel: ObservableObject {
     @Published var list: [Album] = []
     
-    init () {
+    func load() {
         if MPMediaLibrary.authorizationStatus() == .authorized {
             fetch()
         } else {
@@ -27,11 +27,15 @@ class AlbumsViewModel: ObservableObject {
         let query = MPMediaQuery.albums()
 
         query.addFilterPredicate(property)
-        
-        list = query.collections!.map{
+
+        let albums: [Album] = query.collections!.map{
             let item = $0.representativeItem
 
             return Album(persistentID: item?.albumPersistentID, title: item?.albumTitle, artist: item?.artist, artwork: item?.artwork)
+        }
+
+        DispatchQueue.main.async {
+            self.list = albums
         }
     }
 }

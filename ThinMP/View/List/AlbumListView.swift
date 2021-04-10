@@ -1,5 +1,5 @@
 //
-//  ArtistAlbumListView.swift
+//  AlbumListView.swift
 //  ThinMP
 //
 //  Created by tk on 2020/01/20.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ArtistAlbumListView: View {
+struct AlbumListView: View {
     private let colCount = 2
     private let space: CGFloat = 20
     private var list: [Album]
@@ -25,7 +25,7 @@ struct ArtistAlbumListView: View {
 
     var body: some View {
         LazyVGrid(columns: columns) {
-            ForEach(list.indices) { index in
+            ForEach(list.indices, id: \.self) { index in
                 NavigationLink(destination: AlbumDetailPageView(persistentId: list[index].persistentID)) {
                     ArtistAlbumCellView(album: list[index], size: size)
                 }
