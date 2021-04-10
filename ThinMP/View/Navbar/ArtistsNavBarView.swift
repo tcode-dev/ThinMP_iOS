@@ -15,7 +15,8 @@ struct ArtistsNavBarView: View {
 
     var body: some View {
         ListNavBarView(primaryText: TITLE, top: top, rect: $rect) {
-            EmptyView()
+            Spacer()
+                .frame(width: 50)
         }
     }
 }

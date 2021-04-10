@@ -13,19 +13,33 @@ struct ArtistsPageView: View {
     
     var body: some View {
         GeometryReader { geometry in
-            ZStack(alignment: .top) {
-                ArtistsNavBarView(top: geometry.safeAreaInsets.top, rect: self.$headerRect)
-                ListEmptyHeaderView(headerRect: self.$headerRect, top: geometry.safeAreaInsets.top)
-                List(self.artists.list.indices) { index in
-                    NavigationLink(destination: ArtistDetailPageView(artist: self.artists.list[index])) {
-                        ArtistRowView(artist: self.artists.list[index])
+            VStack(spacing: 0) {
+                ZStack(alignment: .top) {
+                    ArtistsNavBarView(top: geometry.safeAreaInsets.top, rect: self.$headerRect)
+                    ScrollView(showsIndicators: true) {
+                        VStack(alignment: .leading) {
+                            ListEmptyHeaderView(headerRect: self.$headerRect, top: geometry.safeAreaInsets.top)
+                            ForEach(self.artists.list.indices, id: \.self){ index in
+                                VStack {
+                                    NavigationLink(destination: ArtistDetailPageView(artist: self.artists.list[index])) {
+                                        ArtistRowView(artist: self.artists.list[index])
+                                    }
+                                    Divider()
+                                }
+                            }
+                            .padding(.leading, 10)
+                        }
                     }
+                    .frame(alignment: .top)
                 }
-                .padding(.init(top: 50 + geometry.safeAreaInsets.top, leading: 0, bottom: 0, trailing: 0))
-                .frame(alignment: .top)
+                .edgesIgnoringSafeArea(.all)
+                .navigationBarHidden(true)
+                .navigationBarTitle(Text(""))
+                .onAppear() {
+                    artists.load()
+                }
+                MiniPlayerView(bottom: geometry.safeAreaInsets.bottom)
             }
-            .navigationBarHidden(true)
-            .navigationBarTitle(Text(""))
             .edgesIgnoringSafeArea(.all)
         }
     }
