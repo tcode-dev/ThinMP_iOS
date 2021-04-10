@@ -7,20 +7,8 @@
 import RealmSwift
 import MediaPlayer
 
-class FavoriteArtistsViewModel: ObservableObject {
+class FavoriteArtistsViewModel: ViewModelProtocol {
     @Published var list: [Artist] = []
-
-    func load() {
-        if MPMediaLibrary.authorizationStatus() == .authorized {
-            fetch()
-        } else {
-            MPMediaLibrary.requestAuthorization { status in
-                if status == .authorized {
-                    self.fetch()
-                }
-            }
-        }
-    }
 
     func fetch() {
         let realm = try! Realm()

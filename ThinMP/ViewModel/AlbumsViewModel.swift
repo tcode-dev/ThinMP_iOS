@@ -7,21 +7,9 @@
 
 import MediaPlayer
 
-class AlbumsViewModel: ObservableObject {
+class AlbumsViewModel: ViewModelProtocol {
     @Published var list: [Album] = []
-    
-    func load() {
-        if MPMediaLibrary.authorizationStatus() == .authorized {
-            fetch()
-        } else {
-            MPMediaLibrary.requestAuthorization { status in
-                if status == .authorized {
-                    self.fetch()
-                }
-            }
-        }
-    }
-    
+
     func fetch() {
         let property = MPMediaPropertyPredicate(value: false, forProperty: MPMediaItemPropertyIsCloudItem)
         let query = MPMediaQuery.albums()
