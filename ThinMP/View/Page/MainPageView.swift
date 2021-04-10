@@ -26,6 +26,9 @@ struct MainPageView: View {
                 NavigationLink(destination: FavoriteSongsPageView()) {
                     Text("FavoriteSongs")
                 }
+                NavigationLink(destination: PlaylistsPageView()) {
+                    Text("Playlists")
+                }
             }
             .listStyle(PlainListStyle())
             .navigationBarTitle("Library")
