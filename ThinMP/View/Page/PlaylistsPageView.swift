@@ -20,7 +20,7 @@ struct PlaylistsPageView: View {
                         VStack(alignment: .leading) {
                             ListEmptyHeaderView(headerRect: self.$headerRect, top: geometry.safeAreaInsets.top)
                             ForEach(self.playlists.list.indices, id: \.self) { index in
-                                NavigationLink(destination: PlaylistDetailPageView()) {
+                                NavigationLink(destination: PlaylistDetailPageView(playlistId: self.playlists.list[index].id)) {
                                     PrimaryTextView(self.playlists.list[index].name)
                                     Spacer()
                                 }
