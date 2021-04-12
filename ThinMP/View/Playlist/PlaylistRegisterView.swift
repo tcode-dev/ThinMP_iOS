@@ -23,23 +23,25 @@ struct PlaylistRegisterView: View {
 
     var body: some View {
         VStack {
-            if (!self.isCreate) {
+            if (!isCreate) {
                 HStack {
                     Button(action: {
-                        self.isCreate.toggle()
+                        isCreate.toggle()
                     }) {
                         Text(CREATE_TEXT)
                     }
                     Button(action: {
-                        self.showingPopup.toggle()
+                        showingPopup.toggle()
                     }) {
                         Text(CANCEL_TEXT)
                     }
                 }
                 ScrollView(showsIndicators: true) {
                     VStack(alignment: .leading) {
-                        ForEach(self.playlists.list.indices, id: \.self) { index in
-                            Text(self.playlists.list[index].name)
+                        ForEach(playlists.list.indices, id: \.self) { index in
+                            PlaylistAddRowView(playlistId: playlists.list[index].id, persistentId: persistentId, showingPopup: $showingPopup) {
+                                Text(playlists.list[index].name)
+                            }
                             Divider()
                         }.padding(.leading, 10)
                     }
@@ -54,13 +56,14 @@ struct PlaylistRegisterView: View {
                     HStack {
                         Button(action: {
                             let playlistRegister = PlaylistRegister()
-                            playlistRegister.add(persistentId: persistentId, name: name)
-                            self.showingPopup.toggle()
+
+                            playlistRegister.create(persistentId: persistentId, name: name)
+                            showingPopup.toggle()
                         }) {
                             Text(OK_TEXT)
                         }
                         Button(action: {
-                            self.isCreate.toggle()
+                            isCreate.toggle()
                         }) {
                             Text(CANCEL_TEXT)
                         }

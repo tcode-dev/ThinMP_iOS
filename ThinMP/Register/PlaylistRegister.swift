@@ -15,7 +15,8 @@ struct PlaylistRegister {
         realm = try! Realm()
     }
 
-    func add(persistentId: MPMediaEntityPersistentID, name: String) {
+
+    func create(persistentId: MPMediaEntityPersistentID, name: String) {
         let playlist = PlaylistRealm()
         playlist.name = name
         playlist.order = incrementOrder()
@@ -28,6 +29,18 @@ struct PlaylistRegister {
 
         try! realm.write {
             realm.add(playlist)
+        }
+    }
+
+    func add(playlistId: String, persistentId: MPMediaEntityPersistentID) {
+        let playlist = realm.objects(PlaylistRealm.self).filter("id = '\(playlistId)'").first!
+        let song = PlaylistSongRealm()
+
+        song.persistentId = Int64(bitPattern: persistentId)
+        song.playlistId = playlist.id
+
+        try! realm.write {
+            playlist.songs.append(song)
         }
     }
 
