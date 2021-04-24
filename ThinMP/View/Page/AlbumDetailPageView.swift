@@ -58,7 +58,7 @@ struct AlbumDetailPageView: View {
                 .edgesIgnoringSafeArea(.all)
                 if (showingPopup) {
                     PopupView(showingPopup: self.$showingPopup) {
-                        PlaylistRegisterView(persistentId: self.persistentID!, showingPopup: self.$showingPopup)
+                        PlaylistRegisterView(persistentId: self.persistentID!, showingPopup: self.$showingPopup, height: geometry.size.height)
                     }
                 }
             }

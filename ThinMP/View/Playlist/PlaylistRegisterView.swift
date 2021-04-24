@@ -13,6 +13,7 @@ struct PlaylistRegisterView: View {
     private let INPUT_TEXT: String = "プレイリスト名を入力"
     private let OK_TEXT: String = "OK"
     private let CANCEL_TEXT: String = "CANCEL"
+    private let rowHeight: CGFloat = 44
 
     @ObservedObject var playlists = PlaylistViewModel()
     @State private var isCreate: Bool = false
@@ -20,33 +21,54 @@ struct PlaylistRegisterView: View {
 
     let persistentId: MPMediaEntityPersistentID
     @Binding var showingPopup: Bool
+    let height: CGFloat
+
+    func getHeight() -> CGFloat? {
+        if (isCreate) {
+            return nil
+        }
+
+        let panelHeight = CGFloat(playlists.list.count) * rowHeight + 70
+        if (panelHeight > height) {
+            return height - 40
+        } else {
+            return panelHeight
+        }
+    }
 
     var body: some View {
         VStack {
             if (!isCreate) {
-                HStack {
-                    Button(action: {
-                        isCreate.toggle()
-                    }) {
-                        Text(CREATE_TEXT)
+                VStack {
+                    HStack {
+                        Button(action: {
+                            isCreate.toggle()
+                        }) {
+                            Text(CREATE_TEXT)
+                        }
+                        Button(action: {
+                            showingPopup.toggle()
+                        }) {
+                            Text(CANCEL_TEXT)
+                        }
                     }
-                    Button(action: {
-                        showingPopup.toggle()
-                    }) {
-                        Text(CANCEL_TEXT)
-                    }
-                }
-                ScrollView(showsIndicators: true) {
-                    VStack(alignment: .leading) {
-                        ForEach(playlists.list.indices, id: \.self) { index in
-                            PlaylistAddRowView(playlistId: playlists.list[index].id, persistentId: persistentId, showingPopup: $showingPopup) {
-                                Text(playlists.list[index].name)
+                    .frame(height: 50)
+                    ScrollView(.vertical) {
+                        LazyVStack {
+                            ForEach(playlists.list) { playlist in
+                                PlaylistAddRowView(playlistId: playlist.id, persistentId: persistentId, showingPopup: $showingPopup) {
+                                    HStack {
+                                        Text(playlist.name)
+                                        Spacer()
+                                    }
+                                }
+                                .frame(height: rowHeight)
+//                                .background(Color.red)
                             }
-                            Divider()
-                        }.padding(.leading, 10)
+                        }
                     }
+//                    .background(Color.blue)
                 }
-                .frame(alignment: .top)
             } else {
                 VStack {
                     Text(INPUT_TEXT)
@@ -71,9 +93,10 @@ struct PlaylistRegisterView: View {
                 }
             }
         }
-        .frame(maxWidth: .infinity)
-        .padding(20)
+        .frame(width: .infinity, height: getHeight())
+        .padding(10)
         .background(Color.white)
+        .cornerRadius(4)
         .padding(20)
         .onAppear() {
             playlists.load()

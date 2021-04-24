@@ -8,7 +8,7 @@
 import RealmSwift
 import Foundation
 
-class PlaylistRealm: Object {
+class PlaylistRealm: Object, Identifiable {
     @objc dynamic var id: String = UUID().uuidString
     @objc dynamic var name: String = ""
     @objc dynamic var order: Int = 1

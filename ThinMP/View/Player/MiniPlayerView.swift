@@ -10,7 +10,7 @@ import SwiftUI
 struct MiniPlayerView: View {
     @EnvironmentObject var musicPlayer: MusicPlayer
     @State var isFullScreen: Bool = false
-    var bottom: CGFloat
+    let bottom: CGFloat
 
     var imageSize: CGFloat = 40
     var buttonSize: CGFloat = 60
