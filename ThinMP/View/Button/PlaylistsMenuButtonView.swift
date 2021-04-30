@@ -10,7 +10,7 @@ import SwiftUI
 struct PlaylistsMenuButtonView: View {
     var body: some View {
         EditButtonView {
-            FavoriteSongsEditPageView()
+            EmptyView()
         }
     }
 }

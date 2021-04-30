@@ -15,7 +15,11 @@ struct PlaylistsPageView: View {
         GeometryReader { geometry in
             VStack(spacing: 0) {
                 ZStack(alignment: .top) {
-                    PlaylistsNavBarView(top: geometry.safeAreaInsets.top, rect: self.$headerRect)
+                    ListNavBarView(primaryText: "Playlists", top: geometry.safeAreaInsets.top, rect: $headerRect) {
+                        EditButtonView {
+                            PlaylistsEditPageView(playlists: playlists)
+                        }
+                    }
                     ScrollView(showsIndicators: true) {
                         VStack(alignment: .leading) {
                             ListEmptyHeaderView(headerRect: self.$headerRect, top: geometry.safeAreaInsets.top)

@@ -13,6 +13,7 @@ struct PlaylistDetailPageView: View {
     @State private var textRect: CGRect = CGRect.zero
     @State private var showingPopup: Bool = false
     @State private var persistentID: MPMediaEntityPersistentID?
+    @State private var headerRect: CGRect = CGRect()
 
     init(playlistId: String) {
         self.playlistDetail = PlaylistDetailViewModel(playlistId: playlistId)
@@ -23,6 +24,7 @@ struct PlaylistDetailPageView: View {
             ZStack(alignment: .top) {
                 VStack(spacing: 0) {
                     ZStack(alignment: .top) {
+                        PlaylistsNavBarView(top: geometry.safeAreaInsets.top, rect: self.$headerRect)
                         DetaiNavBarView(primaryText: self.playlistDetail.name, side: geometry.size.width, top: geometry.safeAreaInsets.top, textRect: self.$textRect) {
                             MenuButtonView {
                                 EmptyView()
