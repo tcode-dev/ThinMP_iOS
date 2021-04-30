@@ -8,44 +8,44 @@
 import SwiftUI
 
 struct FavoriteSongsEditPageView: View {
-    private var DONE_TEXT: String = "Done"
-    private var CANCEL_TEXT: String = "Cancel"
-
     @Environment(\.editMode) var editMode
     @Environment(\.presentationMode) var presentation
-    @ObservedObject var songs = FavoriteSongsViewModel()
 
+    @ObservedObject public var songs: FavoriteSongsViewModel
+    
     var body: some View {
-        HStack {
-            Button(action: {
-                back()
-            }) {
-                Text(CANCEL_TEXT)
-            }
-            Spacer()
-            Button(action: {
-                update()
-                back()
-            }) {
-                Text(DONE_TEXT)
-            }
-        }
-
-        ZStack(alignment: .top) {
-            List() {
-                ForEach (self.songs.list, id: \.persistentID) { song in
-                    SongRowView(song: song)
+        GeometryReader { geometry in
+            VStack(spacing: 0) {
+                EditNavBarView(top: geometry.safeAreaInsets.top) {
+                    HStack {
+                        Button(action: {
+                            back()
+                        }) {
+                            Text("Cancel")
+                        }
+                        Spacer()
+                        Button(action: {
+                            update()
+                            back()
+                        }) {
+                            Text("Done")
+                        }
+                    }
+                    .padding(.horizontal, 20)
                 }
-                .onMove(perform: move)
-                .onDelete(perform: delete)
+                VStack(alignment: .leading) {
+                    List {
+                        ForEach (self.songs.list, id: \.persistentID) { song in
+                            SongRowView(song: song)
+                        }
+                        .onMove(perform: move)
+                        .onDelete(perform: delete)
+                    }
+                }
             }
-            .padding(.init(top: 50, leading: 0, bottom: 0, trailing: 0))
-            .frame(alignment: .top)
-        }
-        .navigationBarHidden(true)
-        .navigationBarTitle(Text(""))
-        .onAppear() {
-            songs.load()
+            .edgesIgnoringSafeArea(.all)
+            .navigationBarHidden(true)
+            .navigationBarTitle(Text(""))
         }
     }
 
@@ -67,4 +67,3 @@ struct FavoriteSongsEditPageView: View {
         self.presentation.wrappedValue.dismiss()
     }
 }
-

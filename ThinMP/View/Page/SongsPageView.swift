@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct SongsPageView: View {
+    private let TITLE: String = "Songs"
+
     @ObservedObject var songs = SongsViewModel()
     @State private var headerRect: CGRect = CGRect()
 
@@ -15,17 +17,25 @@ struct SongsPageView: View {
         GeometryReader { geometry in
             VStack(spacing: 0) {
                 ZStack(alignment: .top) {
-                    SongsNavBarView(top: geometry.safeAreaInsets.top, rect: self.$headerRect)
-                    ScrollView(showsIndicators: true) {
+                    ListNavBarView(top: geometry.safeAreaInsets.top, rect: $headerRect) {
+                        HStack {
+                            BackButtonView()
+                            Spacer()
+                            PrimaryTextView(TITLE)
+                            Spacer()
+                            Spacer()
+                                .frame(width: 50)
+                        }
+                    }
+                    ScrollView() {
                         VStack(alignment: .leading) {
                             ListEmptyHeaderView(headerRect: self.$headerRect, top: geometry.safeAreaInsets.top)
-                            LazyVGrid(columns: [GridItem()]) {
+                            LazyVStack() {
                                 ForEach(self.songs.list.indices, id: \.self){ index in
                                     VStack {
                                         PlayRowView(list: self.songs.list, index: index) {
                                             SongRowView(song: self.songs.list[index])
                                         }
-                                        Divider()
                                     }
                                 }
                                 .padding(.leading, 10)

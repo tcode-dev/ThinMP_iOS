@@ -26,15 +26,12 @@
 		523C4C5B259409DE00D7D32C /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 523C4C5A259409DE00D7D32C /* RealmSwift */; };
 		5242C10D2484684200347320 /* ListNavBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5242C10C2484684200347320 /* ListNavBarView.swift */; };
 		52472C2C261FC43F00607809 /* PlaylistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52472C2B261FC43F00607809 /* PlaylistViewModel.swift */; };
-		52481CD825EB2B2D004DFAEB /* FavoriteSongsMenuButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52481CD725EB2B2D004DFAEB /* FavoriteSongsMenuButtonView.swift */; };
 		52481CDE25EB2EEB004DFAEB /* FavoriteSongsEditPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52481CDD25EB2EEB004DFAEB /* FavoriteSongsEditPageView.swift */; };
 		52481CE125EB4273004DFAEB /* PlayRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52481CE025EB4273004DFAEB /* PlayRowView.swift */; };
 		524A76E325E4EDBF0020443E /* FavoriteSongsPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524A76E225E4EDBF0020443E /* FavoriteSongsPageView.swift */; };
 		524A76E825E4EF400020443E /* FavoriteSongsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524A76E725E4EF400020443E /* FavoriteSongsViewModel.swift */; };
-		524A76EE25E4FC170020443E /* FavoriteSongsNavBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524A76ED25E4FC170020443E /* FavoriteSongsNavBarView.swift */; };
+		524BE502263BE1210033E198 /* EditNavBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524BE501263BE1210033E198 /* EditNavBarView.swift */; };
 		525BD0D5261950F700459563 /* PopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525BD0D4261950F600459563 /* PopupView.swift */; };
-		526648EE25AB1F3A0034D912 /* FavoriteArtistsNavBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526648ED25AB1F3A0034D912 /* FavoriteArtistsNavBarView.swift */; };
-		526648F325AB20A30034D912 /* FavoriteArtistsMenuButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526648F225AB20A30034D912 /* FavoriteArtistsMenuButtonView.swift */; };
 		526648F625AB23690034D912 /* FavoriteArtistsEditPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526648F525AB23690034D912 /* FavoriteArtistsEditPageView.swift */; };
 		526A3B372366AC6F0070BE0A /* Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526A3B362366AC6F0070BE0A /* Album.swift */; };
 		52739F7523D914B50010E578 /* ArtistDetailHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52739F7423D914B50010E578 /* ArtistDetailHeaderView.swift */; };
@@ -57,10 +54,6 @@
 		52A75C4025A04CCD0073C01B /* FavoriteArtistsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A75C3F25A04CCD0073C01B /* FavoriteArtistsViewModel.swift */; };
 		52AC16ED23CE8BE4001D427B /* PrimaryTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AC16EC23CE8BE4001D427B /* PrimaryTitleView.swift */; };
 		52AC942A2621376300D41477 /* PlaylistsPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AC94292621376300D41477 /* PlaylistsPageView.swift */; };
-		52AC942E26213B7700D41477 /* PlaylistsNavBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AC942D26213B7600D41477 /* PlaylistsNavBarView.swift */; };
-		52AC943126213C6900D41477 /* PlaylistsMenuButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AC943026213C6900D41477 /* PlaylistsMenuButtonView.swift */; };
-		52AC9438262172A700D41477 /* SongsNavBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AC9437262172A700D41477 /* SongsNavBarView.swift */; };
-		52AC943C2621843800D41477 /* AlbumsNavBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AC943B2621843800D41477 /* AlbumsNavBarView.swift */; };
 		52AC944126218E0F00D41477 /* ViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AC944026218E0F00D41477 /* ViewModelProtocol.swift */; };
 		52B5BC8523DD45FA000C7820 /* MiniPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B5BC8423DD45FA000C7820 /* MiniPlayerView.swift */; };
 		52B6682023C19ADE00E70C47 /* ArtistsPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B6681F23C19ADE00E70C47 /* ArtistsPageView.swift */; };
@@ -88,7 +81,6 @@
 		52F979C625EBBCA80085F306 /* EditButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F979C525EBBCA80085F306 /* EditButtonView.swift */; };
 		52F979CE25EBC3AC0085F306 /* FavoriteArtistButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F979CD25EBC3AC0085F306 /* FavoriteArtistButtonView.swift */; };
 		52F979D225EBC5730085F306 /* FavoriteSongButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F979D125EBC5730085F306 /* FavoriteSongButtonView.swift */; };
-		52F979D925EBDC0C0085F306 /* ArtistsNavBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F979D825EBDC0C0085F306 /* ArtistsNavBarView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -109,15 +101,12 @@
 		5237636023C360C2003ABD2A /* Artist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Artist.swift; sourceTree = "<group>"; };
 		5242C10C2484684200347320 /* ListNavBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListNavBarView.swift; sourceTree = "<group>"; };
 		52472C2B261FC43F00607809 /* PlaylistViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistViewModel.swift; sourceTree = "<group>"; };
-		52481CD725EB2B2D004DFAEB /* FavoriteSongsMenuButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteSongsMenuButtonView.swift; sourceTree = "<group>"; };
 		52481CDD25EB2EEB004DFAEB /* FavoriteSongsEditPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteSongsEditPageView.swift; sourceTree = "<group>"; };
 		52481CE025EB4273004DFAEB /* PlayRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayRowView.swift; sourceTree = "<group>"; };
 		524A76E225E4EDBF0020443E /* FavoriteSongsPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteSongsPageView.swift; sourceTree = "<group>"; };
 		524A76E725E4EF400020443E /* FavoriteSongsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteSongsViewModel.swift; sourceTree = "<group>"; };
-		524A76ED25E4FC170020443E /* FavoriteSongsNavBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteSongsNavBarView.swift; sourceTree = "<group>"; };
+		524BE501263BE1210033E198 /* EditNavBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNavBarView.swift; sourceTree = "<group>"; };
 		525BD0D4261950F600459563 /* PopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupView.swift; sourceTree = "<group>"; };
-		526648ED25AB1F3A0034D912 /* FavoriteArtistsNavBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteArtistsNavBarView.swift; sourceTree = "<group>"; };
-		526648F225AB20A30034D912 /* FavoriteArtistsMenuButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteArtistsMenuButtonView.swift; sourceTree = "<group>"; };
 		526648F525AB23690034D912 /* FavoriteArtistsEditPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteArtistsEditPageView.swift; sourceTree = "<group>"; };
 		526A3B362366AC6F0070BE0A /* Album.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Album.swift; sourceTree = "<group>"; };
 		52739F7423D914B50010E578 /* ArtistDetailHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistDetailHeaderView.swift; sourceTree = "<group>"; };
@@ -140,10 +129,6 @@
 		52A75C3F25A04CCD0073C01B /* FavoriteArtistsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteArtistsViewModel.swift; sourceTree = "<group>"; };
 		52AC16EC23CE8BE4001D427B /* PrimaryTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryTitleView.swift; sourceTree = "<group>"; };
 		52AC94292621376300D41477 /* PlaylistsPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistsPageView.swift; sourceTree = "<group>"; };
-		52AC942D26213B7600D41477 /* PlaylistsNavBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistsNavBarView.swift; sourceTree = "<group>"; };
-		52AC943026213C6900D41477 /* PlaylistsMenuButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistsMenuButtonView.swift; sourceTree = "<group>"; };
-		52AC9437262172A700D41477 /* SongsNavBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongsNavBarView.swift; sourceTree = "<group>"; };
-		52AC943B2621843800D41477 /* AlbumsNavBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsNavBarView.swift; sourceTree = "<group>"; };
 		52AC944026218E0F00D41477 /* ViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelProtocol.swift; sourceTree = "<group>"; };
 		52B5BC8423DD45FA000C7820 /* MiniPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerView.swift; sourceTree = "<group>"; };
 		52B6681F23C19ADE00E70C47 /* ArtistsPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistsPageView.swift; sourceTree = "<group>"; };
@@ -173,7 +158,6 @@
 		52F979C525EBBCA80085F306 /* EditButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditButtonView.swift; sourceTree = "<group>"; };
 		52F979CD25EBC3AC0085F306 /* FavoriteArtistButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteArtistButtonView.swift; sourceTree = "<group>"; };
 		52F979D125EBC5730085F306 /* FavoriteSongButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteSongButtonView.swift; sourceTree = "<group>"; };
-		52F979D825EBDC0C0085F306 /* ArtistsNavBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistsNavBarView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -220,14 +204,9 @@
 		5217BB6225B7A83F00BD64E9 /* Navbar */ = {
 			isa = PBXGroup;
 			children = (
-				52F979D825EBDC0C0085F306 /* ArtistsNavBarView.swift */,
 				52A5B4D823D4014A003BE152 /* DetaiNavBarView.swift */,
-				526648ED25AB1F3A0034D912 /* FavoriteArtistsNavBarView.swift */,
-				524A76ED25E4FC170020443E /* FavoriteSongsNavBarView.swift */,
+				524BE501263BE1210033E198 /* EditNavBarView.swift */,
 				5242C10C2484684200347320 /* ListNavBarView.swift */,
-				52AC942D26213B7600D41477 /* PlaylistsNavBarView.swift */,
-				52AC9437262172A700D41477 /* SongsNavBarView.swift */,
-				52AC943B2621843800D41477 /* AlbumsNavBarView.swift */,
 			);
 			path = Navbar;
 			sourceTree = "<group>";
@@ -393,12 +372,9 @@
 				52BA93D623DA5A2100CA323F /* BackButtonView.swift */,
 				52F979C525EBBCA80085F306 /* EditButtonView.swift */,
 				52F979CD25EBC3AC0085F306 /* FavoriteArtistButtonView.swift */,
-				526648F225AB20A30034D912 /* FavoriteArtistsMenuButtonView.swift */,
 				52F979D125EBC5730085F306 /* FavoriteSongButtonView.swift */,
-				52481CD725EB2B2D004DFAEB /* FavoriteSongsMenuButtonView.swift */,
 				52BA93D823DA648F00CA323F /* MenuButtonView.swift */,
 				527B870C261298E100CB5BEB /* PlaylistButtonView.swift */,
-				52AC943026213C6900D41477 /* PlaylistsMenuButtonView.swift */,
 			);
 			path = Button;
 			sourceTree = "<group>";
@@ -528,11 +504,9 @@
 			files = (
 				5237635F23C35BFE003ABD2A /* ArtistRowView.swift in Sources */,
 				5279F0C923D523610053BF55 /* ArtistSongRowView.swift in Sources */,
-				526648F325AB20A30034D912 /* FavoriteArtistsMenuButtonView.swift in Sources */,
 				52F286FE23C7E5420056BFE3 /* AlbumsPageView.swift in Sources */,
 				5279F0C123D51C2C0053BF55 /* AlbumSongRowView.swift in Sources */,
 				52F63FF423C7FA2500449934 /* AlbumsViewModel.swift in Sources */,
-				52AC942E26213B7700D41477 /* PlaylistsNavBarView.swift in Sources */,
 				52B6682023C19ADE00E70C47 /* ArtistsPageView.swift in Sources */,
 				52A5B4D923D4014A003BE152 /* DetaiNavBarView.swift in Sources */,
 				5210DE0C26232EC1005829BA /* PlaylistDetailViewModel.swift in Sources */,
@@ -548,13 +522,11 @@
 				5211ADD525CEBCEC00604D45 /* BlurView.swift in Sources */,
 				527FCE09262431A50073E4F8 /* PlaylistAddRowView.swift in Sources */,
 				52E21A6F26340ECF00C40464 /* PlaylistRowView.swift in Sources */,
-				52AC943126213C6900D41477 /* PlaylistsMenuButtonView.swift in Sources */,
 				52481CE125EB4273004DFAEB /* PlayRowView.swift in Sources */,
 				52C69DE823CABF48006A0A83 /* AlbumDetailPageView.swift in Sources */,
 				52EE4D9323C542A700CFF2A3 /* ArtistDetailViewModel.swift in Sources */,
 				52A6D38F23D12A72004C4E59 /* AlbumDetailHeaderView.swift in Sources */,
 				527B87112612992A00CB5BEB /* PlaylistRegister.swift in Sources */,
-				52AC9438262172A700D41477 /* SongsNavBarView.swift in Sources */,
 				52795DA7248DA73600DABD9D /* PlayerConfig.swift in Sources */,
 				52D98E7E23CC6F600032971A /* AlbumDetailViewModel.swift in Sources */,
 				5219EA1C26152F3700E3A495 /* PlaylistSongRealm.swift in Sources */,
@@ -564,7 +536,6 @@
 				52BA93D723DA5A2100CA323F /* BackButtonView.swift in Sources */,
 				527B871426129A2700CB5BEB /* PlaylistRealm.swift in Sources */,
 				52481CDE25EB2EEB004DFAEB /* FavoriteSongsEditPageView.swift in Sources */,
-				52481CD825EB2B2D004DFAEB /* FavoriteSongsMenuButtonView.swift in Sources */,
 				527B870D261298E100CB5BEB /* PlaylistButtonView.swift in Sources */,
 				52A75C4025A04CCD0073C01B /* FavoriteArtistsViewModel.swift in Sources */,
 				52D4B5C823C3EF55000364F4 /* ArtistDetailPageView.swift in Sources */,
@@ -588,21 +559,18 @@
 				52472C2C261FC43F00607809 /* PlaylistViewModel.swift in Sources */,
 				52B6682523C19D8E00E70C47 /* ArtistsViewModel.swift in Sources */,
 				522DF95125BE33FF00A95E66 /* ListEmptyHeaderView.swift in Sources */,
-				526648EE25AB1F3A0034D912 /* FavoriteArtistsNavBarView.swift in Sources */,
 				526648F625AB23690034D912 /* FavoriteArtistsEditPageView.swift in Sources */,
-				52AC943C2621843800D41477 /* AlbumsNavBarView.swift in Sources */,
 				52E21A6C26340DF000C40464 /* PlaylistsEditPageView.swift in Sources */,
 				521C43202592B7D6009194FF /* ThinMP.swift in Sources */,
-				524A76EE25E4FC170020443E /* FavoriteSongsNavBarView.swift in Sources */,
 				52A75C3C25A04C0E0073C01B /* FavoriteArtistsPageView.swift in Sources */,
 				52D98E7C23CC6C280032971A /* SecondaryTextView.swift in Sources */,
 				5242C10D2484684200347320 /* ListNavBarView.swift in Sources */,
 				52D98E7A23CC6B530032971A /* PrimaryTextView.swift in Sources */,
 				522366D423D7B6500001624E /* SquareImageView.swift in Sources */,
 				527B870A2612974100CB5BEB /* PlaylistDetailPageView.swift in Sources */,
+				524BE502263BE1210033E198 /* EditNavBarView.swift in Sources */,
 				52739F7523D914B50010E578 /* ArtistDetailHeaderView.swift in Sources */,
 				5211ADCC25CE99E400604D45 /* SecondaryTitleView.swift in Sources */,
-				52F979D925EBDC0C0085F306 /* ArtistsNavBarView.swift in Sources */,
 				52A46DCF23E54B0F00BAC9AA /* PlayerView.swift in Sources */,
 				5210DE1026233721005829BA /* PlaylistDetailHeaderView.swift in Sources */,
 			);

@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct PlaylistsPageView: View {
+    private let TITLE: String = "Playlists"
+
     @ObservedObject var playlists = PlaylistViewModel()
     @State private var headerRect: CGRect = CGRect()
 
@@ -15,21 +17,28 @@ struct PlaylistsPageView: View {
         GeometryReader { geometry in
             VStack(spacing: 0) {
                 ZStack(alignment: .top) {
-                    ListNavBarView(primaryText: "Playlists", top: geometry.safeAreaInsets.top, rect: $headerRect) {
-                        EditButtonView {
-                            PlaylistsEditPageView(playlists: playlists)
+                    ListNavBarView(top: geometry.safeAreaInsets.top, rect: $headerRect) {
+                        HStack {
+                            BackButtonView()
+                            Spacer()
+                            PrimaryTextView(TITLE)
+                            Spacer()
+                            EditButtonView {
+                                PlaylistsEditPageView(playlists: playlists)
+                            }
                         }
                     }
-                    ScrollView(showsIndicators: true) {
+                    ScrollView() {
                         VStack(alignment: .leading) {
                             ListEmptyHeaderView(headerRect: self.$headerRect, top: geometry.safeAreaInsets.top)
-                            ForEach(self.playlists.list.indices, id: \.self) { index in
-                                NavigationLink(destination: PlaylistDetailPageView(playlistId: self.playlists.list[index].id)) {
-                                    PrimaryTextView(self.playlists.list[index].name)
-                                    Spacer()
-                                }
-                                Divider()
-                            }.padding(.leading, 10)
+                            LazyVStack() {
+                                ForEach(self.playlists.list.indices, id: \.self) { index in
+                                    NavigationLink(destination: PlaylistDetailPageView(playlistId: self.playlists.list[index].id)) {
+                                        PlaylistRowView(title: self.playlists.list[index].name)
+                                    }
+                                    Divider()
+                                }.padding(.leading, 10)
+                            }
                         }
                     }
                     .frame(alignment: .top)

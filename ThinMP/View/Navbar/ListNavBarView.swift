@@ -10,7 +10,6 @@ import SwiftUI
 struct ListNavBarView<Content> : View where Content: View {
     private let heigt: CGFloat = 50
 
-    let primaryText: String?
     let top: CGFloat
     @Binding var rect: CGRect
     let content: () -> Content
@@ -18,20 +17,14 @@ struct ListNavBarView<Content> : View where Content: View {
     var body: some View {
         ZStack {
             self.createHeaderView()
-            HStack {
-                BackButtonView()
-                Spacer()
-                PrimaryTextView(self.primaryText)
-                Spacer()
-                content()
-            }
-            .frame(height: heigt)
-            .padding(EdgeInsets(
-                top: top,
-                leading: 0,
-                bottom: 0,
-                trailing: 0
-            ))
+            content()
+                .frame(height: heigt)
+                .padding(EdgeInsets(
+                    top: top,
+                    leading: 0,
+                    bottom: 0,
+                    trailing: 0
+                ))
         }
         .frame(height: heigt + top, alignment: .bottom)
         .zIndex(1)

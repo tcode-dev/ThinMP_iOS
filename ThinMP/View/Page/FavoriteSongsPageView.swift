@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct FavoriteSongsPageView: View {
+    private let TITLE: String = "Favorite Songs"
+
     @ObservedObject var songs = FavoriteSongsViewModel()
     @State private var headerRect: CGRect = CGRect()
 
@@ -15,7 +17,17 @@ struct FavoriteSongsPageView: View {
         GeometryReader { geometry in
             VStack(spacing: 0) {
                 ZStack(alignment: .top) {
-                    FavoriteSongsNavBarView(top: geometry.safeAreaInsets.top, rect: self.$headerRect)
+                    ListNavBarView(top: geometry.safeAreaInsets.top, rect: $headerRect) {
+                        HStack {
+                            BackButtonView()
+                            Spacer()
+                            PrimaryTextView(TITLE)
+                            Spacer()
+                            EditButtonView {
+                                FavoriteSongsEditPageView(songs: songs)
+                            }
+                        }
+                    }
                     ScrollView(showsIndicators: true) {
                         VStack(alignment: .leading) {
                             ListEmptyHeaderView(headerRect: self.$headerRect, top: geometry.safeAreaInsets.top)

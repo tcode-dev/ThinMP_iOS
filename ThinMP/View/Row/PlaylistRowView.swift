@@ -11,9 +11,11 @@ struct PlaylistRowView: View {
     let title: String
 
     var body: some View {
-        HStack {
-            PrimaryTextView(title)
-            Spacer()
+        VStack {
+            HStack {
+                PrimaryTextView(title)
+                Spacer()
+            }
         }
     }
 }

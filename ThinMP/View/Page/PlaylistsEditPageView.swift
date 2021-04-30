@@ -10,36 +10,43 @@ import SwiftUI
 struct PlaylistsEditPageView: View {
     @Environment(\.editMode) var editMode
     @Environment(\.presentationMode) var presentation
-    @ObservedObject public var playlists: PlaylistViewModel
-    var body: some View {
-        HStack {
-            Button(action: {
-                back()
-            }) {
-                Text("Cancel")
-            }
-            Spacer()
-            Button(action: {
-                update()
-                back()
-            }) {
-                Text("Done")
-            }
-        }
 
-        ZStack(alignment: .top) {
-            List() {
-                ForEach (playlists.list, id: \.id) { playlist in
-                    PlaylistRowView(title: playlist.name)
+    @ObservedObject public var playlists: PlaylistViewModel
+
+    var body: some View {
+        GeometryReader { geometry in
+            VStack(spacing: 0) {
+                EditNavBarView(top: geometry.safeAreaInsets.top) {
+                    HStack {
+                        Button(action: {
+                            presentation.wrappedValue.dismiss()
+                        }) {
+                            Text("Cancel")
+                        }
+                        Spacer()
+                        Button(action: {
+                            update()
+                            presentation.wrappedValue.dismiss()
+                        }) {
+                            Text("Done")
+                        }
+                    }
+                    .padding(.horizontal, 20)
                 }
-                .onMove(perform: move)
-                .onDelete(perform: delete)
+                VStack(alignment: .leading) {
+                    List {
+                        ForEach (playlists.list, id: \.id) { playlist in
+                            PlaylistRowView(title: playlist.name)
+                        }
+                        .onMove(perform: move)
+                        .onDelete(perform: delete)
+                    }
+                }
             }
-            .padding(.init(top: 50, leading: 0, bottom: 0, trailing: 0))
-            .frame(alignment: .top)
+            .edgesIgnoringSafeArea(.all)
+            .navigationBarHidden(true)
+            .navigationBarTitle(Text(""))
         }
-        .navigationBarHidden(true)
-        .navigationBarTitle(Text(""))
     }
 
     func move(source: IndexSet, destination: Int) {
@@ -54,10 +61,6 @@ struct PlaylistsEditPageView: View {
         let playlistRegister = PlaylistRegister()
 
         playlistRegister.update(ids: playlists.list.map{$0.id})
-    }
-
-    func back() {
-        presentation.wrappedValue.dismiss()
     }
 }
 

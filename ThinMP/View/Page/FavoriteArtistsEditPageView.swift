@@ -10,41 +10,42 @@ import SwiftUI
 struct FavoriteArtistsEditPageView: View {
     @Environment(\.editMode) var editMode
     @Environment(\.presentationMode) var presentation
-    @ObservedObject var artists = FavoriteArtistsViewModel()
-    private var DONE_TEXT: String = "Done"
-    private var CANCEL_TEXT: String = "Cancel"
+
+    @ObservedObject public var artists: FavoriteArtistsViewModel
 
     var body: some View {
-        HStack {
-            Button(action: {
-                back()
-            }) {
-                Text(CANCEL_TEXT)
-            }
-            Spacer()
-            Button(action: {
-                update()
-                back()
-            }) {
-                Text(DONE_TEXT)
-            }
-        }
-
-        ZStack(alignment: .top) {
-            List() {
-                ForEach (self.artists.list) { artist in
-                    ArtistRowView(artist: artist)
+        GeometryReader { geometry in
+            VStack(spacing: 0) {
+                EditNavBarView(top: geometry.safeAreaInsets.top) {
+                    HStack {
+                        Button(action: {
+                            presentation.wrappedValue.dismiss()
+                        }) {
+                            Text("Cancel")
+                        }
+                        Spacer()
+                        Button(action: {
+                            update()
+                            presentation.wrappedValue.dismiss()
+                        }) {
+                            Text("Done")
+                        }
+                    }
+                    .padding(.horizontal, 20)
                 }
-                .onMove(perform: move)
-                .onDelete(perform: delete)
+                VStack(alignment: .leading) {
+                    List {
+                        ForEach (self.artists.list) { artist in
+                            ArtistRowView(artist: artist)
+                        }
+                        .onMove(perform: move)
+                        .onDelete(perform: delete)
+                    }
+                }
             }
-            .padding(.init(top: 50, leading: 0, bottom: 0, trailing: 0))
-            .frame(alignment: .top)
-        }
-        .navigationBarHidden(true)
-        .navigationBarTitle(Text(""))
-        .onAppear() {
-            artists.load()
+
+            .navigationBarHidden(true)
+            .navigationBarTitle(Text(""))
         }
     }
 
@@ -60,9 +61,5 @@ struct FavoriteArtistsEditPageView: View {
         let favoriteArtistRegister = FavoriteArtistRegister()
 
         favoriteArtistRegister.update(persistentIdList: self.artists.list.map{$0.persistentId})
-    }
-
-    func back() {
-        self.presentation.wrappedValue.dismiss()
     }
 }
