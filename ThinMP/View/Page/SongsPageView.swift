@@ -31,12 +31,11 @@ struct SongsPageView: View {
                         VStack(alignment: .leading) {
                             ListEmptyHeaderView(headerRect: self.$headerRect, top: geometry.safeAreaInsets.top)
                             LazyVStack() {
-                                ForEach(self.songs.list.indices, id: \.self){ index in
-                                    VStack {
-                                        PlayRowView(list: self.songs.list, index: index) {
-                                            SongRowView(song: self.songs.list[index])
-                                        }
+                                ForEach(self.songs.list.indices, id: \.self) { index in
+                                    PlayRowView(list: self.songs.list, index: index) {
+                                        MediaRowView(media: self.songs.list[index])
                                     }
+                                    Divider()
                                 }
                                 .padding(.leading, 10)
                             }

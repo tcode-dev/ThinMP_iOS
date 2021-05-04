@@ -9,7 +9,7 @@ import RealmSwift
 import MediaPlayer
 
 class FavoriteSongsViewModel: ViewModelProtocol {
-    @Published var list: [MPMediaItemCollection] = []
+    @Published var list: [SongModel] = []
 
     func fetch() {
         let realm = try! Realm()
@@ -24,9 +24,11 @@ class FavoriteSongsViewModel: ViewModelProtocol {
         let filtered = query.collections!.filter{persistentIds.contains($0.representativeItem?.persistentID ?? 0)}
         let sorted = persistentIds
             .map{ (persistentId) in filtered.first { $0.representativeItem?.persistentID == persistentId }!}
+            .map{SongModel(media: $0)}
+        let arrayed = Array(sorted)
 
         DispatchQueue.main.async {
-            self.list = Array(sorted)
+            self.list = arrayed
         }
     }
 }

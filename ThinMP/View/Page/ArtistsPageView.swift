@@ -30,15 +30,15 @@ struct ArtistsPageView: View {
                     ScrollView(showsIndicators: true) {
                         VStack(alignment: .leading) {
                             ListEmptyHeaderView(headerRect: self.$headerRect, top: geometry.safeAreaInsets.top)
-                            ForEach(self.artists.list.indices, id: \.self){ index in
-                                VStack {
+                            LazyVStack() {
+                                ForEach(self.artists.list.indices, id: \.self) { index in
                                     NavigationLink(destination: ArtistDetailPageView(artist: self.artists.list[index])) {
                                         ArtistRowView(artist: self.artists.list[index])
                                     }
                                     Divider()
                                 }
+                                .padding(.leading, 10)
                             }
-                            .padding(.leading, 10)
                         }
                     }
                     .frame(alignment: .top)

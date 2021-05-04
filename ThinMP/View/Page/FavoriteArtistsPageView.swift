@@ -9,11 +9,11 @@ import SwiftUI
 
 struct FavoriteArtistsPageView: View {
     private let TITLE: String = "Favorite Artists"
-
+    
     @State private var headerRect: CGRect = CGRect()
-
+    
     @ObservedObject var artists = FavoriteArtistsViewModel()
-
+    
     var body: some View {
         GeometryReader { geometry in
             VStack(spacing: 0) {
@@ -32,12 +32,14 @@ struct FavoriteArtistsPageView: View {
                     ScrollView(showsIndicators: true) {
                         VStack(alignment: .leading) {
                             ListEmptyHeaderView(headerRect: self.$headerRect, top: geometry.safeAreaInsets.top)
-                            ForEach(self.artists.list) { artist in
-                                NavigationLink(destination: ArtistDetailPageView(artist: artist)) {
-                                    ArtistRowView(artist: artist)
-                                }
-                                Divider()
-                            }.padding(.leading, 10)
+                            LazyVStack() {
+                                ForEach(self.artists.list) { artist in
+                                    NavigationLink(destination: ArtistDetailPageView(artist: artist)) {
+                                        ArtistRowView(artist: artist)
+                                    }
+                                    Divider()
+                                }.padding(.leading, 10)
+                            }
                         }
                     }
                     .frame(alignment: .top)

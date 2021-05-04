@@ -32,12 +32,14 @@ struct PlaylistDetailPageView: View {
                         ScrollView(showsIndicators: true) {
                             VStack(alignment: .leading) {
                                 PlaylistDetailHeaderView(textRect: self.$textRect, side: geometry.size.width, top: geometry.safeAreaInsets.top, name: self.playlistDetail.name, artwork: self.playlistDetail.artwork)
-                                ForEach(self.playlistDetail.songs.indices, id: \.self){ index in
-                                    PlayRowView(list: self.playlistDetail.songs, index: index) {
-                                        SongRowView(song: self.playlistDetail.songs[index])
-                                    }
-                                    Divider()
-                                }.padding(.leading, 10)
+                                LazyVStack() {
+                                    ForEach(self.playlistDetail.songs.indices, id: \.self){ index in
+                                        PlayRowView(list: self.playlistDetail.songs, index: index) {
+                                            MediaRowView(media: self.playlistDetail.songs[index])
+                                        }
+                                        Divider()
+                                    }.padding(.leading, 10)
+                                }
                             }
                         }
                         .navigationBarHidden(true)

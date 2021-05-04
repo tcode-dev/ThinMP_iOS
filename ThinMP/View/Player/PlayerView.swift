@@ -26,11 +26,10 @@ struct PlayerView: View {
     }
     
     var body: some View {
-        
-        return GeometryReader { geometry in
+        GeometryReader { geometry in
             ZStack(alignment: .top) {
                 ZStack {
-                    Image(uiImage: self.musicPlayer.song?.representativeItem?.artwork?.image(at: CGSize(width: geometry.size.width, height: geometry.size.width)) ?? UIImage())
+                    Image(uiImage: self.musicPlayer.song?.artwork?.image(at: CGSize(width: geometry.size.width, height: geometry.size.width)) ?? UIImage())
                         .resizable()
                         .scaledToFit()
                         .blur(radius: 10.0)
@@ -39,7 +38,7 @@ struct PlayerView: View {
                 }
                 .frame(width: geometry.size.width, height: geometry.size.width)
                 VStack() {
-                    Image(uiImage: self.musicPlayer.song?.representativeItem?.artwork?.image(at: CGSize(width: self.size, height: self.size)) ?? UIImage())
+                    Image(uiImage: self.musicPlayer.song?.artwork?.image(at: CGSize(width: self.size, height: self.size)) ?? UIImage())
                         .renderingMode(.original)
                         .resizable()
                         .scaledToFit()
@@ -48,8 +47,8 @@ struct PlayerView: View {
                         .padding(.top, 50)
                         .padding(.bottom, 10)
                     ZStack(alignment: .bottom) {
-                        SecondaryTitleView(self.musicPlayer.song?.representativeItem?.title).frame(height: 50).offset(y: -10)
-                        SecondaryTextView(self.musicPlayer.song?.representativeItem?.artist).frame(height: 25)
+                        SecondaryTitleView(self.musicPlayer.song?.primaryText).frame(height: 50).offset(y: -10)
+                        SecondaryTextView(self.musicPlayer.song?.secondaryText).frame(height: 25)
                     }.frame(height: 60)
                     Spacer()
                     Slider(value: self.$musicPlayer.currentSecond, in: 0...self.musicPlayer.durationSecond, step: 1, onEditingChanged: { changed in
@@ -170,9 +169,7 @@ struct PlayerView: View {
                         }
                         .frame(width: 44, height: 44)
                     }
-                    .padding(.leading, 30)
-                    .padding(.trailing, 30)
-                    
+                    .padding(.horizontal, 30)
                     Spacer()
                 }
             }

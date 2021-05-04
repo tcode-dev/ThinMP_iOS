@@ -8,15 +8,15 @@
 import MediaPlayer
 
 class PlayingList {
-    private var list:[MPMediaItemCollection] = []
+    private var list:[SongModel] = []
     private var currentIndex: Int = 0;
     
-    init(list:[MPMediaItemCollection], currentIndex: Int) {
+    init(list:[SongModel], currentIndex: Int) {
         self.list = list
         self.currentIndex = currentIndex
     }
     
-    func getSong() -> MPMediaItemCollection {
+    func getSong() -> SongModel {
         return list[currentIndex]
     }
     

@@ -16,15 +16,15 @@ struct MiniPlayerView: View {
     var buttonSize: CGFloat = 60
 
     var body: some View {
-        Group {
+        VStack {
             if (musicPlayer.isActive) {
                 HStack {
                     Button(action: {
                         self.isFullScreen.toggle()
                     }) {
                         HStack {
-                            SquareImageView(artwork: musicPlayer.song!.representativeItem?.artwork, size: imageSize)
-                            PrimaryTextView(musicPlayer.song!.representativeItem?.title)
+                            SquareImageView(artwork: musicPlayer.song?.artwork, size: imageSize)
+                            PrimaryTextView(musicPlayer.song?.primaryText)
                             Spacer()
                         }
                     }

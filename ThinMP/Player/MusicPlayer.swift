@@ -10,7 +10,7 @@ import MediaPlayer
 class MusicPlayer: ObservableObject {
     @Published var isActive: Bool = false
     @Published var isPlaying: Bool = false
-    @Published var song: MPMediaItemCollection?
+    @Published var song: SongModel?
     @Published var currentSecond: Double = 0
     @Published var durationSecond: Double = 0
     @Published var isRepeatOff: Bool = true
@@ -40,7 +40,7 @@ class MusicPlayer: ObservableObject {
         self.player.beginGeneratingPlaybackNotifications()
     }
 
-    func start(list:[MPMediaItemCollection], currentIndex: Int) {
+    func start(list:[SongModel], currentIndex: Int) {
         self.playingList = PlayingList(list: list, currentIndex: currentIndex)
 
         self.stop()
@@ -52,8 +52,8 @@ class MusicPlayer: ObservableObject {
 
     func setSong() {
         self.song = playingList.getSong()
-        self.durationSecond = Double(self.song?.representativeItem?.playbackDuration ?? 0)
-        let descriptor = MPMusicPlayerMediaItemQueueDescriptor.init(itemCollection: self.song!)
+        self.durationSecond = Double(self.song?.media.representativeItem?.playbackDuration ?? 0)
+        let descriptor = MPMusicPlayerMediaItemQueueDescriptor.init(itemCollection: self.song!.media)
 
         self.player.setQueue(with: descriptor)
         self.seek(time: 0)

@@ -11,7 +11,7 @@ import MediaPlayer
 class PlaylistDetailViewModel: ViewModelProtocol {
     @Published var name: String?
     @Published var artwork: MPMediaItemArtwork?
-    @Published var songs: [MPMediaItemCollection] = []
+    @Published var songs: [SongModel] = []
 
     let playlistId: String
 
@@ -33,10 +33,11 @@ class PlaylistDetailViewModel: ViewModelProtocol {
         let filtered = query.collections!.filter{persistentIds.contains($0.representativeItem?.persistentID ?? 0)}
         let sorted = persistentIds
             .map{ (persistentId) in filtered.first { $0.representativeItem?.persistentID == persistentId }!}
+            .map{SongModel(media: $0)}
         let arrayed = Array(sorted)
         let artwork = arrayed.first(where: { (song) -> Bool in
-            (song.representativeItem?.artwork != nil)
-        })?.representativeItem?.artwork
+            (song.artwork != nil)
+        })?.artwork
         
         DispatchQueue.main.async {
             self.name = playlist.name

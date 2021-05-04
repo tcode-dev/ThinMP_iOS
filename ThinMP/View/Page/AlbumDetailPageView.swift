@@ -12,6 +12,7 @@ struct AlbumDetailPageView: View {
     private let ADD_TEXT: String = "プレイリストに追加"
 
     @ObservedObject var albumDetail: AlbumDetailViewModel
+
     @State private var textRect: CGRect = CGRect.zero
     @State private var showingPopup: Bool = false
     @State private var persistentID: MPMediaEntityPersistentID?
@@ -33,21 +34,23 @@ struct AlbumDetailPageView: View {
                         ScrollView(showsIndicators: true) {
                             VStack(alignment: .leading) {
                                 AlbumDetailHeaderView(albumDetail: self.albumDetail, textRect: self.$textRect, side: geometry.size.width, top: geometry.safeAreaInsets.top)
-                                ForEach(self.albumDetail.songs.indices){ index in
-                                    PlayRowView(list: self.albumDetail.songs, index: index) {
-                                        AlbumSongRowView(song: self.albumDetail.songs[index])
-                                    }
-                                    .contextMenu {
-                                        FavoriteSongButtonView(persistentId: self.albumDetail.songs[index].representativeItem!.persistentID)
-                                        Button(action: {
-                                            persistentID = self.albumDetail.songs[index].representativeItem!.persistentID
-                                            showingPopup.toggle()
-                                        }) {
-                                            Text(ADD_TEXT)
+                                LazyVStack() {
+                                    ForEach(self.albumDetail.songs.indices){ index in
+                                        PlayRowView(list: self.albumDetail.songs, index: index) {
+                                            MediaRowView(media: self.albumDetail.songs[index])
                                         }
-                                    }
-                                    Divider()
-                                }.padding(.leading, 10)
+                                        .contextMenu {
+                                            FavoriteSongButtonView(persistentId: self.albumDetail.songs[index].persistentID)
+                                            Button(action: {
+                                                persistentID = self.albumDetail.songs[index].persistentID
+                                                showingPopup.toggle()
+                                            }) {
+                                                Text(ADD_TEXT)
+                                            }
+                                        }
+                                        Divider()
+                                    }.padding(.leading, 10)
+                                }
                             }
                         }
                         .navigationBarHidden(true)

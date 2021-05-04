@@ -31,15 +31,15 @@ struct FavoriteSongsPageView: View {
                     ScrollView(showsIndicators: true) {
                         VStack(alignment: .leading) {
                             ListEmptyHeaderView(headerRect: self.$headerRect, top: geometry.safeAreaInsets.top)
-                            ForEach(self.songs.list.indices, id: \.self){ index in
-                                VStack {
+                            LazyVStack() {
+                                ForEach(self.songs.list.indices, id: \.self) { index in
                                     PlayRowView(list: self.songs.list, index: index) {
-                                        SongRowView(song: self.songs.list[index])
+                                        MediaRowView(media: self.songs.list[index])
                                     }
                                     Divider()
                                 }
+                                .padding(.leading, 10)
                             }
-                            .padding(.leading, 10)
                         }
                     }
                     .frame(alignment: .top)

@@ -11,7 +11,7 @@ import MediaPlayer
 struct PlayRowView<Content> : View where Content: View {
     @EnvironmentObject var musicPlayer: MusicPlayer
 
-    let list: [MPMediaItemCollection]
+    let list: [SongModel]
     let index: Int
     let content: () -> Content
 

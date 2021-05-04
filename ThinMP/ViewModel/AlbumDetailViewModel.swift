@@ -12,7 +12,7 @@ class AlbumDetailViewModel: ObservableObject {
     @Published var title: String?
     @Published var artist: String?
     @Published var artwork: MPMediaItemArtwork?
-    @Published var songs: [MPMediaItemCollection] = []
+    @Published var songs: [SongModel] = []
     
     init(persistentId: MPMediaEntityPersistentID) {
         self.persistentId = persistentId
@@ -48,12 +48,12 @@ class AlbumDetailViewModel: ObservableObject {
         }.first
     }
     
-    func fetchSongs() -> [MPMediaItemCollection] {
+    func fetchSongs() -> [SongModel] {
         let property = MPMediaPropertyPredicate(value: self.persistentId, forProperty: MPMediaItemPropertyAlbumPersistentID)
         let query = MPMediaQuery.songs()
         
         query.addFilterPredicate(property)
-        
-        return query.collections ?? []
+
+        return query.collections!.map{SongModel(media: $0)}
     }
 }
