@@ -12,8 +12,8 @@ class PlaylistViewModel: ViewModelProtocol {
     @Published var list: [PlaylistModel] = []
 
     func fetch() {
-        let realm = try! Realm()
-        let playlists = Array(realm.objects(PlaylistModel.self).sorted(byKeyPath: "order"))
+        let playlistRepository = PlaylistRepository()
+        let playlists = playlistRepository.findAll()
 
         DispatchQueue.main.async {
             self.list = playlists

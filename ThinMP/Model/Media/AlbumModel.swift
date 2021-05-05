@@ -1,5 +1,5 @@
 //
-//  Album.swift
+//  AlbumModel.swift
 //  ThinMP
 //
 //  Created by tk on 2019/10/28.
@@ -7,7 +7,7 @@
 
 import MediaPlayer
 
-struct Album: Identifiable {
+struct AlbumModel: Identifiable {
     var id = UUID()
     var persistentID: MPMediaEntityPersistentID!
     var title: String?

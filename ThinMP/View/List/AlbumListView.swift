@@ -10,11 +10,11 @@ import SwiftUI
 struct AlbumListView: View {
     private let colCount = 2
     private let space: CGFloat = 20
-    private var list: [Album]
+    private var list: [AlbumModel]
     private var size: CGFloat
     private let columns:[GridItem]
 
-    init(list: [Album], width: CGFloat) {
+    init(list: [AlbumModel], width: CGFloat) {
         self.list = list
         self.size = (width - (space * CGFloat(colCount + 1))) / CGFloat(colCount)
         self.columns = [

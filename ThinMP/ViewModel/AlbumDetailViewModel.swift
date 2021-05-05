@@ -28,32 +28,14 @@ class AlbumDetailViewModel: ObservableObject {
     }
     
     func fetch() {
-        if let album = getAlbum() {
+        let repository = AlbumRepository()
+
+        if let album = repository.findById(persistentId: persistentId) {
             self.title = album.title
             self.artist = album.artist
             self.artwork = album.artwork
         }
         
-        self.songs = fetchSongs()
-    }
-    
-    func getAlbum() -> Album? {
-        let property = MPMediaPropertyPredicate(value: self.persistentId, forProperty: MPMediaItemPropertyAlbumPersistentID)
-        let query = MPMediaQuery.albums()
-        
-        query.addFilterPredicate(property)
-        
-        return query.collections!.map{
-            return Album(persistentID: $0.representativeItem?.albumPersistentID, title: $0.representativeItem?.albumTitle, artist: $0.representativeItem?.artist, artwork: $0.representativeItem?.artwork)
-        }.first
-    }
-    
-    func fetchSongs() -> [SongModel] {
-        let property = MPMediaPropertyPredicate(value: self.persistentId, forProperty: MPMediaItemPropertyAlbumPersistentID)
-        let query = MPMediaQuery.songs()
-        
-        query.addFilterPredicate(property)
-
-        return query.collections!.map{SongModel(media: $0)}
+        self.songs = repository.findSongsById(persistentId: persistentId)
     }
 }

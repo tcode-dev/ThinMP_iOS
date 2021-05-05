@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AlbumCellView: View {
-    var album: Album
+    var album: AlbumModel
     var size: CGFloat
     
     var body: some View {

@@ -11,7 +11,7 @@ class ArtistDetailViewModel: ObservableObject {
     @Published var persistentId: MPMediaEntityPersistentID!
     @Published var name: String?
     @Published var artwork: MPMediaItemArtwork?
-    @Published var albums: [Album] = []
+    @Published var albums: [AlbumModel] = []
     @Published var songs: [SongModel] = []
     @Published var albumCount: Int = 0
     @Published var songCount: Int = 0
@@ -31,11 +31,13 @@ class ArtistDetailViewModel: ObservableObject {
     }
 
     func fetch() {
-        if let artist = getArtist() {
+        let repository = ArtistRepository()
+
+        if let artist = repository.findById(persistentId: persistentId) {
             self.name = artist.primaryText
         }
 
-        let albums = getAlbums()
+        let albums = repository.findAlbumsById(persistentId: persistentId)
 
         if !albums.isEmpty {
             self.albums = albums
@@ -45,40 +47,9 @@ class ArtistDetailViewModel: ObservableObject {
             })?.artwork
         }
 
-        self.songs = getSongs()
+        self.songs = repository.findSongsById(persistentId: persistentId)
         self.songCount = self.songs.count
 
         self.meta = "\(self.albumCount) albums, \(self.songCount) songs"
-    }
-
-    func getArtist() -> ArtistModel? {
-        let property = MPMediaPropertyPredicate(value: self.persistentId, forProperty: MPMediaItemPropertyArtistPersistentID)
-        let query = MPMediaQuery.artists()
-
-        query.addFilterPredicate(property)
-
-        return query.collections!.map{
-            return ArtistModel(persistentId: $0.representativeItem?.artistPersistentID, primaryText: $0.representativeItem?.artist)
-        }.first
-    }
-
-    func getAlbums() -> [Album] {
-        let property = MPMediaPropertyPredicate(value: self.persistentId, forProperty: MPMediaItemPropertyArtistPersistentID)
-        let query = MPMediaQuery.albums()
-
-        query.addFilterPredicate(property)
-
-        return query.collections!.map{
-            return Album(persistentID: $0.representativeItem?.albumPersistentID, title: $0.representativeItem?.albumTitle, artist: $0.representativeItem?.artist, artwork: $0.representativeItem?.artwork)
-        }
-    }
-
-    func getSongs() -> [SongModel] {
-        let property = MPMediaPropertyPredicate(value: self.persistentId, forProperty: MPMediaItemPropertyArtistPersistentID)
-        let query = MPMediaQuery.songs()
-
-        query.addFilterPredicate(property)
-
-        return query.collections!.map{SongModel(media: $0)}
     }
 }

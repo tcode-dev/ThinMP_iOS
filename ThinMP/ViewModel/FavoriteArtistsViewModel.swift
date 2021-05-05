@@ -4,6 +4,7 @@
 //
 //  Created by tk on 2021/01/02.
 //
+
 import RealmSwift
 import MediaPlayer
 
@@ -11,22 +12,13 @@ class FavoriteArtistsViewModel: ViewModelProtocol {
     @Published var list: [ArtistModel] = []
 
     func fetch() {
-        let realm = try! Realm()
-        let persistentIds = realm.objects(FavoriteArtistModel.self)
-            .sorted(byKeyPath: "order")
-            .map { UInt64(bitPattern: $0.persistentId) as MPMediaEntityPersistentID}
-        let property = MPMediaPropertyPredicate(value: false, forProperty: MPMediaItemPropertyIsCloudItem)
-        let query = MPMediaQuery.artists()
-
-        query.addFilterPredicate(property)
-
-        let filtered = query.collections!.filter{persistentIds.contains($0.representativeItem?.artistPersistentID ?? 0)}
-        let sorted = persistentIds
-            .map{ (persistentId) in filtered.first { $0.representativeItem?.artistPersistentID == persistentId }}
-            .map{ ArtistModel(persistentId: $0?.representativeItem?.artistPersistentID, primaryText: $0?.representativeItem?.artist)}
+        let favoriteArtistRepository = FavoriteArtistRepository()
+        let persistentIds = favoriteArtistRepository.findAll()
+        let artistRepository = ArtistRepository()
+        let artists = artistRepository.findByIds(persistentIds: persistentIds)
 
         DispatchQueue.main.async {
-            self.list = Array(sorted)
+            self.list = artists
         }
     }
 }

@@ -1,5 +1,5 @@
 //
-//  FavoriteArtist.swift
+//  FavoriteArtistRegister.swift
 //  ThinMP
 //
 //  Created by tk on 2020/12/27.

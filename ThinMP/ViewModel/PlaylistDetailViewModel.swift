@@ -20,19 +20,13 @@ class PlaylistDetailViewModel: ViewModelProtocol {
     }
 
     func fetch() {
-        let realm = try! Realm()
-        let playlist = realm.objects(PlaylistModel.self).filter("id = '\(playlistId)'").first!
-        let songs = playlist.songs.sorted(byKeyPath: "order")
-        let persistentIds = songs.map { UInt64(bitPattern: $0.persistentId) as MPMediaEntityPersistentID}
-        let property = MPMediaPropertyPredicate(value: false, forProperty: MPMediaItemPropertyIsCloudItem)
-        let query = MPMediaQuery.songs()
-
-        query.addFilterPredicate(property)
-
-        let filtered = query.collections!.filter{persistentIds.contains($0.representativeItem?.persistentID ?? 0)}
-        let sorted = persistentIds
-            .map{ (persistentId) in filtered.first { $0.representativeItem?.persistentID == persistentId }!}
-            .map{SongModel(media: $0)}
+        let playlistRepository = PlaylistRepository()
+        let playlist = playlistRepository.findById(playlistId: playlistId)
+        let playlistSongs = playlist.songs.sorted(byKeyPath: "order")
+        let persistentIds = Array(playlistSongs.map { UInt64(bitPattern: $0.persistentId) as MPMediaEntityPersistentID})
+        let repository = SongRepository()
+        let songs = repository.findByIds(persistentIds: persistentIds)
+        let sorted = persistentIds.map{ (persistentId) in songs.first { $0.persistentID == persistentId }!}
         let arrayed = Array(sorted)
         let artwork = arrayed.first(where: { (song) -> Bool in
             (song.artwork != nil)
