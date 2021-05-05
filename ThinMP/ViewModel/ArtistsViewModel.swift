@@ -8,7 +8,7 @@
 import MediaPlayer
 
 class ArtistsViewModel: ViewModelProtocol {
-    @Published var list: [Artist] = []
+    @Published var list: [ArtistModel] = []
 
     func fetch() {
         let property = MPMediaPropertyPredicate(value: false, forProperty: MPMediaItemPropertyIsCloudItem)
@@ -17,7 +17,7 @@ class ArtistsViewModel: ViewModelProtocol {
         query.addFilterPredicate(property)
         
         let artists = Array(query.collections!.map{
-            return Artist(persistentId: $0.representativeItem?.artistPersistentID, name: $0.representativeItem?.artist)
+            return ArtistModel(persistentId: $0.representativeItem?.artistPersistentID, primaryText: $0.representativeItem?.artist)
         })
         DispatchQueue.main.async {
             self.list = artists

@@ -21,7 +21,7 @@ class PlaylistDetailViewModel: ViewModelProtocol {
 
     func fetch() {
         let realm = try! Realm()
-        let playlist = realm.objects(PlaylistRealm.self).filter("id = '\(playlistId)'").first!
+        let playlist = realm.objects(PlaylistModel.self).filter("id = '\(playlistId)'").first!
         let songs = playlist.songs.sorted(byKeyPath: "order")
         let persistentIds = songs.map { UInt64(bitPattern: $0.persistentId) as MPMediaEntityPersistentID}
         let property = MPMediaPropertyPredicate(value: false, forProperty: MPMediaItemPropertyIsCloudItem)

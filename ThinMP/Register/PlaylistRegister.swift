@@ -16,11 +16,11 @@ struct PlaylistRegister {
     }
 
     func create(persistentId: MPMediaEntityPersistentID, name: String) {
-        let playlist = PlaylistRealm()
+        let playlist = PlaylistModel()
         playlist.name = name
         playlist.order = incrementOrder()
 
-        let song = PlaylistSongRealm()
+        let song = PlaylistSongModel()
         song.persistentId = Int64(bitPattern: persistentId)
         song.playlistId = playlist.id
 
@@ -32,8 +32,8 @@ struct PlaylistRegister {
     }
 
     func add(playlistId: String, persistentId: MPMediaEntityPersistentID) {
-        let playlist = realm.objects(PlaylistRealm.self).filter("id = '\(playlistId)'").first!
-        let song = PlaylistSongRealm()
+        let playlist = realm.objects(PlaylistModel.self).filter("id = '\(playlistId)'").first!
+        let song = PlaylistSongModel()
 
         song.persistentId = Int64(bitPattern: persistentId)
         song.playlistId = playlist.id
@@ -53,7 +53,7 @@ struct PlaylistRegister {
     func update(playlistId: String, name: String, persistentIds: [MPMediaEntityPersistentID]) {
         realm.beginWrite()
 
-        let playlist = realm.objects(PlaylistRealm.self).filter("id = '\(playlistId)'").first!
+        let playlist = realm.objects(PlaylistModel.self).filter("id = '\(playlistId)'").first!
         let deletes = playlist.songs.filter("NOT persistentId IN %@", persistentIds)
 
         realm.delete(deletes)
@@ -70,7 +70,7 @@ struct PlaylistRegister {
     }
 
     func delete(playlistIds: [String]) {
-        let currentIds: [String] = realm.objects(PlaylistRealm.self).map{$0.id}
+        let currentIds: [String] = realm.objects(PlaylistModel.self).map{$0.id}
         let deleteIds = currentIds.filter{ !playlistIds.contains($0)}
         let playlists = find(playlistId: deleteIds)
 
@@ -95,11 +95,11 @@ struct PlaylistRegister {
         }
     }
 
-    func find(playlistId: [String]) -> Results<PlaylistRealm> {
-        return realm.objects(PlaylistRealm.self).filter("id IN %@", playlistId)
+    func find(playlistId: [String]) -> Results<PlaylistModel> {
+        return realm.objects(PlaylistModel.self).filter("id IN %@", playlistId)
     }
 
     func incrementOrder() -> Int {
-        return (realm.objects(PlaylistRealm.self).max(ofProperty: "order") as Int? ?? 0) + 1
+        return (realm.objects(PlaylistModel.self).max(ofProperty: "order") as Int? ?? 0) + 1
     }
 }

@@ -18,7 +18,7 @@ struct ArtistDetailPageView: View {
     @State private var showingPopup: Bool = false
     @State private var persistentID: MPMediaEntityPersistentID?
 
-    init(artist: Artist) {
+    init(artist: ArtistModel) {
         self.artistDetail = ArtistDetailViewModel(persistentId: artist.persistentId)
     }
 

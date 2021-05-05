@@ -1,18 +1,18 @@
 //
-//  PlaylistRealm.swift
+//  PlaylistSongModel.swift
 //  ThinMP
 //
-//  Created by tk on 2021/03/30.
+//  Created by tk on 2021/04/01.
 //
 
-import RealmSwift
 import Foundation
+import RealmSwift
 
-class PlaylistRealm: Object, Identifiable {
+class PlaylistSongModel: Object {
     @objc dynamic var id: String = UUID().uuidString
-    @objc dynamic var name: String = ""
+    @objc dynamic var playlistId: String = ""
+    @objc dynamic var persistentId: Int64 = 0
     @objc dynamic var order: Int = 1
-    let songs = List<PlaylistSongRealm>()
 
     override static func primaryKey() -> String? {
         return "id"

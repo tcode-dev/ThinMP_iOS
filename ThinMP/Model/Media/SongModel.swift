@@ -7,7 +7,7 @@
 
 import MediaPlayer
 
-struct SongModel: EntityProtocol, MediaProtocol, Identifiable {
+struct SongModel: MediaProtocol, Identifiable {
     var id: String = UUID().uuidString
 
     let media: MPMediaItemCollection

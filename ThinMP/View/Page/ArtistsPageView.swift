@@ -33,7 +33,7 @@ struct ArtistsPageView: View {
                             LazyVStack() {
                                 ForEach(self.artists.list.indices, id: \.self) { index in
                                     NavigationLink(destination: ArtistDetailPageView(artist: self.artists.list[index])) {
-                                        ArtistRowView(artist: self.artists.list[index])
+                                        MediaRowView(media: self.artists.list[index])
                                     }
                                     Divider()
                                 }

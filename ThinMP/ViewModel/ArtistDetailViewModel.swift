@@ -32,7 +32,7 @@ class ArtistDetailViewModel: ObservableObject {
 
     func fetch() {
         if let artist = getArtist() {
-            self.name = artist.name
+            self.name = artist.primaryText
         }
 
         let albums = getAlbums()
@@ -51,14 +51,14 @@ class ArtistDetailViewModel: ObservableObject {
         self.meta = "\(self.albumCount) albums, \(self.songCount) songs"
     }
 
-    func getArtist() -> Artist? {
+    func getArtist() -> ArtistModel? {
         let property = MPMediaPropertyPredicate(value: self.persistentId, forProperty: MPMediaItemPropertyArtistPersistentID)
         let query = MPMediaQuery.artists()
 
         query.addFilterPredicate(property)
 
         return query.collections!.map{
-            return Artist(persistentId: $0.representativeItem?.artistPersistentID, name: $0.representativeItem?.artist)
+            return ArtistModel(persistentId: $0.representativeItem?.artistPersistentID, primaryText: $0.representativeItem?.artist)
         }.first
     }
 

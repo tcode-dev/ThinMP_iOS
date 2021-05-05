@@ -1,16 +1,15 @@
 //
-//  PlaylistSongRealm.swift
+//  FavoriteArtistModel.swift
 //  ThinMP
 //
-//  Created by tk on 2021/04/01.
+//  Created by tk on 2020/12/27.
 //
 
-import RealmSwift
 import Foundation
+import RealmSwift
 
-class PlaylistSongRealm: Object {
+class FavoriteArtistModel: Object {
     @objc dynamic var id: String = UUID().uuidString
-    @objc dynamic var playlistId: String = ""
     @objc dynamic var persistentId: Int64 = 0
     @objc dynamic var order: Int = 1
 

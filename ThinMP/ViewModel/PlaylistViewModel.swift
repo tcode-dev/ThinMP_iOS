@@ -9,11 +9,11 @@ import RealmSwift
 import MediaPlayer
 
 class PlaylistViewModel: ViewModelProtocol {
-    @Published var list: [PlaylistRealm] = []
+    @Published var list: [PlaylistModel] = []
 
     func fetch() {
         let realm = try! Realm()
-        let playlists = Array(realm.objects(PlaylistRealm.self).sorted(byKeyPath: "order"))
+        let playlists = Array(realm.objects(PlaylistModel.self).sorted(byKeyPath: "order"))
 
         DispatchQueue.main.async {
             self.list = playlists

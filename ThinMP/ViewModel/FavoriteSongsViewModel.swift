@@ -13,7 +13,7 @@ class FavoriteSongsViewModel: ViewModelProtocol {
 
     func fetch() {
         let realm = try! Realm()
-        let persistentIds = realm.objects(FavoriteSongRealm.self)
+        let persistentIds = realm.objects(FavoriteSongModel.self)
             .sorted(byKeyPath: "order")
             .map { UInt64(bitPattern: $0.persistentId) as MPMediaEntityPersistentID}
         let property = MPMediaPropertyPredicate(value: false, forProperty: MPMediaItemPropertyIsCloudItem)
