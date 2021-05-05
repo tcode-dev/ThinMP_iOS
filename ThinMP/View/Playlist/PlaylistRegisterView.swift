@@ -41,33 +41,32 @@ struct PlaylistRegisterView: View {
             if (!isCreate) {
                 VStack {
                     HStack {
+                        Spacer()
                         Button(action: {
                             isCreate.toggle()
                         }) {
                             Text(CREATE_TEXT)
                         }
+                        Spacer()
                         Button(action: {
                             showingPopup.toggle()
                         }) {
                             Text(CANCEL_TEXT)
                         }
+                        Spacer()
                     }
                     .frame(height: 50)
                     ScrollView(.vertical) {
                         LazyVStack {
                             ForEach(playlists.list) { playlist in
                                 PlaylistAddRowView(playlistId: playlist.id, persistentId: persistentId, showingPopup: $showingPopup) {
-                                    HStack {
-                                        Text(playlist.name)
-                                        Spacer()
-                                    }
+                                    MediaRowView(media: playlist)
                                 }
-                                .frame(height: rowHeight)
-//                                .background(Color.red)
+                                Divider()
+                                    .frame(height: 1)
                             }
                         }
                     }
-//                    .background(Color.blue)
                 }
             } else {
                 VStack {
@@ -76,6 +75,7 @@ struct PlaylistRegisterView: View {
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .padding()
                     HStack {
+                        Spacer()
                         Button(action: {
                             let playlistRegister = PlaylistRegister()
 
@@ -84,11 +84,13 @@ struct PlaylistRegisterView: View {
                         }) {
                             Text(OK_TEXT)
                         }
+                        Spacer()
                         Button(action: {
                             isCreate.toggle()
                         }) {
                             Text(CANCEL_TEXT)
                         }
+                        Spacer()
                     }
                 }
             }
