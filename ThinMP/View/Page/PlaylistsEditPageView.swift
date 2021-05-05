@@ -43,9 +43,9 @@ struct PlaylistsEditPageView: View {
                     }
                 }
             }
-            .edgesIgnoringSafeArea(.all)
             .navigationBarHidden(true)
             .navigationBarTitle(Text(""))
+            .edgesIgnoringSafeArea(.all)
         }
     }
 

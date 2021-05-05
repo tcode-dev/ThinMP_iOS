@@ -43,15 +43,14 @@ struct SongsPageView: View {
                     }
                     .frame(alignment: .top)
                 }
-                .edgesIgnoringSafeArea(.all)
-                .navigationBarHidden(true)
-                .navigationBarTitle(Text(""))
-                .onAppear() {
-                    songs.load()
-                }
                 MiniPlayerView(bottom: geometry.safeAreaInsets.bottom)
             }
+            .navigationBarHidden(true)
+            .navigationBarTitle(Text(""))
             .edgesIgnoringSafeArea(.all)
+            .onAppear() {
+                songs.load()
+            }
         }
     }
 }

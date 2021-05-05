@@ -53,18 +53,18 @@ struct AlbumDetailPageView: View {
                                 }
                             }
                         }
-                        .navigationBarHidden(true)
-                        .navigationBarTitle(Text(""))
                     }
                     MiniPlayerView(bottom: geometry.safeAreaInsets.bottom)
                 }
-                .edgesIgnoringSafeArea(.all)
                 if (showingPopup) {
                     PopupView(showingPopup: self.$showingPopup) {
                         PlaylistRegisterView(persistentId: self.persistentID!, showingPopup: self.$showingPopup, height: geometry.size.height)
                     }
                 }
             }
+            .navigationBarHidden(true)
+            .navigationBarTitle(Text(""))
+            .edgesIgnoringSafeArea(.all)
         }
     }
 }

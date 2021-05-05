@@ -43,15 +43,14 @@ struct ArtistsPageView: View {
                     }
                     .frame(alignment: .top)
                 }
-                .edgesIgnoringSafeArea(.all)
-                .navigationBarHidden(true)
-                .navigationBarTitle(Text(""))
-                .onAppear() {
-                    artists.load()
-                }
                 MiniPlayerView(bottom: geometry.safeAreaInsets.bottom)
             }
+            .navigationBarHidden(true)
+            .navigationBarTitle(Text(""))
             .edgesIgnoringSafeArea(.all)
+            .onAppear() {
+                artists.load()
+            }
         }
     }
 }

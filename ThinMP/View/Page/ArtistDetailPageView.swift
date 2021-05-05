@@ -63,13 +63,15 @@ struct ArtistDetailPageView: View {
                     }
                     MiniPlayerView(bottom: geometry.safeAreaInsets.bottom)
                 }
-                .edgesIgnoringSafeArea(.all)
                 if (showingPopup) {
                     PopupView(showingPopup: $showingPopup) {
                         PlaylistRegisterView(persistentId: persistentID!, showingPopup: $showingPopup, height: geometry.size.height)
                     }
                 }
             }
+            .navigationBarHidden(true)
+            .navigationBarTitle(Text(""))
+            .edgesIgnoringSafeArea(.all)
         }
     }
 }

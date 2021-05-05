@@ -43,9 +43,9 @@ struct FavoriteArtistsEditPageView: View {
                     }
                 }
             }
-
             .navigationBarHidden(true)
             .navigationBarTitle(Text(""))
+            .edgesIgnoringSafeArea(.all)
         }
     }
 

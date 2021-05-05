@@ -36,15 +36,14 @@ struct AlbumsPageView: View {
                     }
                     .frame(alignment: .top)
                 }
-                .edgesIgnoringSafeArea(.all)
-                .navigationBarHidden(true)
-                .navigationBarTitle(Text(""))
-                .onAppear() {
-                    albums.load()
-                }
                 MiniPlayerView(bottom: geometry.safeAreaInsets.bottom)
             }
+            .navigationBarHidden(true)
+            .navigationBarTitle(Text(""))
             .edgesIgnoringSafeArea(.all)
+            .onAppear() {
+                albums.load()
+            }
         }
     }
 }
