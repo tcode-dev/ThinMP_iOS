@@ -9,42 +9,39 @@ import SwiftUI
 import MediaPlayer
 
 struct PlaylistDetailPageView: View {
-    @ObservedObject var playlistDetail: PlaylistDetailViewModel
+    @StateObject var vm: PlaylistDetailViewModel
     @State private var textRect: CGRect = CGRect.zero
     @State private var showingPopup: Bool = false
     @State private var persistentID: MPMediaEntityPersistentID?
     @State private var headerRect: CGRect = CGRect()
-
-    init(playlistId: String) {
-        self.playlistDetail = PlaylistDetailViewModel(playlistId: playlistId)
-    }
+    let playlistId: String
 
     var body: some View {
         GeometryReader { geometry in
             ZStack(alignment: .top) {
                 VStack(spacing: 0) {
                     ZStack(alignment: .top) {
-                        DetaiNavBarView(primaryText: self.playlistDetail.name, side: geometry.size.width, top: geometry.safeAreaInsets.top, textRect: self.$textRect) {
-                            MenuButtonView {
-                                EmptyView()
+                        DetaiNavBarView(primaryText: vm.name, side: geometry.size.width, top: geometry.safeAreaInsets.top, textRect: self.$textRect) {
+                            EditButtonView {
+                                PlaylistDetailEditPageView(vm: vm)
                             }
                         }
                         ScrollView(showsIndicators: true) {
                             VStack(alignment: .leading) {
-                                PlaylistDetailHeaderView(textRect: self.$textRect, side: geometry.size.width, top: geometry.safeAreaInsets.top, name: self.playlistDetail.name, artwork: self.playlistDetail.artwork)
+                                PlaylistDetailHeaderView(textRect: self.$textRect, side: geometry.size.width, top: geometry.safeAreaInsets.top, name: vm.name, artwork: vm.artwork)
                                 LazyVStack() {
-                                    ForEach(self.playlistDetail.songs.indices, id: \.self){ index in
-                                        PlayRowView(list: self.playlistDetail.songs, index: index) {
-                                            MediaRowView(media: self.playlistDetail.songs[index])
+                                    ForEach(vm.list.indices, id: \.self){ index in
+                                        PlayRowView(list: vm.list, index: index) {
+                                            MediaRowView(media: vm.list[index])
                                         }
                                         Divider()
                                     }.padding(.leading, 10)
                                 }
                             }
                         }
-                        .navigationBarHidden(true)
-                        .navigationBarTitle(Text(""))
                     }
+                    .navigationBarHidden(true)
+                    .navigationBarTitle(Text(""))
                     MiniPlayerView(bottom: geometry.safeAreaInsets.bottom)
                 }
                 .edgesIgnoringSafeArea(.all)
@@ -54,6 +51,9 @@ struct PlaylistDetailPageView: View {
                     }
                 }
             }
+        }
+        .onAppear() {
+            vm.load()
         }
     }
 }

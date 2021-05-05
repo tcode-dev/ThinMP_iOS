@@ -11,19 +11,18 @@ import MediaPlayer
 class PlaylistDetailViewModel: ViewModelProtocol {
     @Published var name: String?
     @Published var artwork: MPMediaItemArtwork?
-    @Published var songs: [SongModel] = []
+    @Published var list: [SongModel] = []
 
     let playlistId: String
 
     init(playlistId: String) {
         self.playlistId = playlistId
-        self.load()
     }
 
     func fetch() {
         let realm = try! Realm()
         let playlist = realm.objects(PlaylistRealm.self).filter("id = '\(playlistId)'").first!
-        let songs = playlist.songs
+        let songs = playlist.songs.sorted(byKeyPath: "order")
         let persistentIds = songs.map { UInt64(bitPattern: $0.persistentId) as MPMediaEntityPersistentID}
         let property = MPMediaPropertyPredicate(value: false, forProperty: MPMediaItemPropertyIsCloudItem)
         let query = MPMediaQuery.songs()
@@ -42,8 +41,7 @@ class PlaylistDetailViewModel: ViewModelProtocol {
         DispatchQueue.main.async {
             self.name = playlist.name
             self.artwork = artwork
-            self.songs = arrayed
+            self.list = arrayed
         }
     }
 }
-

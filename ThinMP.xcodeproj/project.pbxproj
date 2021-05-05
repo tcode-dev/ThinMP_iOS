@@ -63,6 +63,7 @@
 		52C5FA43264127AC00B6269C /* MediaProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C5FA42264127AC00B6269C /* MediaProtocol.swift */; };
 		52C5FA47264127F600B6269C /* EntityProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C5FA46264127F600B6269C /* EntityProtocol.swift */; };
 		52C5FA49264129D900B6269C /* SongModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C5FA48264129D900B6269C /* SongModel.swift */; };
+		52C5FA4E2641711C00B6269C /* PlaylistDetailEditPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C5FA4D2641711C00B6269C /* PlaylistDetailEditPageView.swift */; };
 		52C69DE823CABF48006A0A83 /* AlbumDetailPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C69DE723CABF48006A0A83 /* AlbumDetailPageView.swift */; };
 		52CC2D0B23E24F05009FB57F /* PlayingList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CC2D0A23E24F05009FB57F /* PlayingList.swift */; };
 		52CCDAD523C050E9000C474A /* MainPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52CCDAD423C050E9000C474A /* MainPageView.swift */; };
@@ -141,6 +142,7 @@
 		52C5FA42264127AC00B6269C /* MediaProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaProtocol.swift; sourceTree = "<group>"; };
 		52C5FA46264127F600B6269C /* EntityProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityProtocol.swift; sourceTree = "<group>"; };
 		52C5FA48264129D900B6269C /* SongModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongModel.swift; sourceTree = "<group>"; };
+		52C5FA4D2641711C00B6269C /* PlaylistDetailEditPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistDetailEditPageView.swift; sourceTree = "<group>"; };
 		52C69DE723CABF48006A0A83 /* AlbumDetailPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDetailPageView.swift; sourceTree = "<group>"; };
 		52CC2D0A23E24F05009FB57F /* PlayingList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayingList.swift; sourceTree = "<group>"; };
 		52CCDAD423C050E9000C474A /* MainPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPageView.swift; sourceTree = "<group>"; };
@@ -286,6 +288,7 @@
 				52481CDD25EB2EEB004DFAEB /* FavoriteSongsEditPageView.swift */,
 				524A76E225E4EDBF0020443E /* FavoriteSongsPageView.swift */,
 				52CCDAD423C050E9000C474A /* MainPageView.swift */,
+				52C5FA4D2641711C00B6269C /* PlaylistDetailEditPageView.swift */,
 				527B87092612974100CB5BEB /* PlaylistDetailPageView.swift */,
 				52E21A6B26340DF000C40464 /* PlaylistsEditPageView.swift */,
 				52AC94292621376300D41477 /* PlaylistsPageView.swift */,
@@ -528,6 +531,7 @@
 				52A5B4D923D4014A003BE152 /* DetaiNavBarView.swift in Sources */,
 				5210DE0C26232EC1005829BA /* PlaylistDetailViewModel.swift in Sources */,
 				52EEEAF725E0CD9000C4DC2B /* FavoriteSongRealm.swift in Sources */,
+				52C5FA4E2641711C00B6269C /* PlaylistDetailEditPageView.swift in Sources */,
 				526A3B372366AC6F0070BE0A /* Album.swift in Sources */,
 				52217A782598256400921CFD /* FavoriteArtistRealm.swift in Sources */,
 				5219EA21261539DB00E3A495 /* PlaylistRegisterView.swift in Sources */,
