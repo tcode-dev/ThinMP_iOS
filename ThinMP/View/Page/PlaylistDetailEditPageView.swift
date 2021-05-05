@@ -39,13 +39,13 @@ struct PlaylistDetailEditPageView: View {
                 .modifier(EditModifier(editing: editing))
                 VStack(alignment: .leading) {
                     TextField("", text: $name, onEditingChanged: { begin in
-                        self.editing = begin
+                        editing = begin
                     })
                     .autocapitalization(.none)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding()
                     .onAppear {
-                        self.name = vm.name ?? ""
+                        name = vm.name ?? ""
                     }
                     ZStack {
                         List {
@@ -83,7 +83,7 @@ struct PlaylistDetailEditPageView: View {
 
         playlistRegister.update(playlistId: vm.playlistId, name: name, persistentIds: vm.list.map{$0.persistentID})
 
-        vm.name = self.name
+        vm.name = name
     }
 }
 

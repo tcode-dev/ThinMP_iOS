@@ -34,7 +34,7 @@ struct PlaylistsPageView: View {
                             LazyVStack() {
                                 ForEach(self.playlists.list.indices, id: \.self) { index in
                                     NavigationLink(destination: PlaylistDetailPageView(vm: PlaylistDetailViewModel(playlistId: self.playlists.list[index].id), playlistId: self.playlists.list[index].id)) {
-                                        PlaylistRowView(title: self.playlists.list[index].name)
+                                        MediaRowView(media: self.playlists.list[index])
                                     }
                                     Divider()
                                 }.padding(.leading, 10)

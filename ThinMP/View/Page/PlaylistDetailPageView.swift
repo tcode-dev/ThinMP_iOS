@@ -9,11 +9,14 @@ import SwiftUI
 import MediaPlayer
 
 struct PlaylistDetailPageView: View {
+    private let ADD_TEXT: String = "プレイリストに追加"
+
     @StateObject var vm: PlaylistDetailViewModel
     @State private var textRect: CGRect = CGRect.zero
+    @State private var headerRect: CGRect = CGRect()
     @State private var showingPopup: Bool = false
     @State private var persistentID: MPMediaEntityPersistentID?
-    @State private var headerRect: CGRect = CGRect()
+
     let playlistId: String
 
     var body: some View {
@@ -33,6 +36,15 @@ struct PlaylistDetailPageView: View {
                                     ForEach(vm.list.indices, id: \.self){ index in
                                         PlayRowView(list: vm.list, index: index) {
                                             MediaRowView(media: vm.list[index])
+                                        }
+                                        .contextMenu {
+                                            FavoriteSongButtonView(persistentId: vm.list[index].persistentID)
+                                            Button(action: {
+                                                persistentID = vm.list[index].persistentID
+                                                showingPopup.toggle()
+                                            }) {
+                                                Text(ADD_TEXT)
+                                            }
                                         }
                                         Divider()
                                     }.padding(.leading, 10)

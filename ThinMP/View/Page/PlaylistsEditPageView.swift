@@ -36,7 +36,7 @@ struct PlaylistsEditPageView: View {
                 VStack(alignment: .leading) {
                     List {
                         ForEach (playlists.list, id: \.id) { playlist in
-                            PlaylistRowView(title: playlist.name)
+                            MediaRowView(media: playlist)
                         }
                         .onMove(perform: move)
                         .onDelete(perform: delete)
