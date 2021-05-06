@@ -62,14 +62,14 @@ struct PlaylistRepository {
         realm.beginWrite()
 
         let playlist = realm.objects(PlaylistModel.self).filter("id = '\(playlistId)'").first!
-        let deletes = playlist.songs.filter("NOT persistentId IN %@", persistentIds)
 
-        realm.delete(deletes)
+        realm.delete(playlist.songs)
 
-        let updates = playlist.songs.filter("persistentId IN %@", persistentIds)
-
-        for (index, persistentId) in persistentIds.enumerated() {
-            updates.first { $0.persistentId == persistentId }!.order = index + 1
+        persistentIds.forEach { persistentId in
+            let song = PlaylistSongModel()
+            song.persistentId = Int64(bitPattern: persistentId)
+            song.playlistId = playlist.id
+            playlist.songs.append(song)
         }
 
         playlist.name = name
