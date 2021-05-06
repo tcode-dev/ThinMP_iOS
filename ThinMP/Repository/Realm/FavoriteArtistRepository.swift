@@ -22,4 +22,74 @@ struct FavoriteArtistRepository {
             .sorted(byKeyPath: "order")
             .map { UInt64(bitPattern: $0.persistentId) as MPMediaEntityPersistentID}
     }
+
+    func exists(persistentId: MPMediaEntityPersistentID) -> Bool {
+        return find(persistentId: persistentId).count == 1
+    }
+
+    func add(persistentId: MPMediaEntityPersistentID) {
+        if (exists(persistentId: persistentId)) {
+            return
+        }
+
+        let favoriteArtist = FavoriteArtistModel()
+
+        // MPMediaEntityPersistentID は UInt64のエイリアス
+        // realmはUInt64を保存できないのでInt64に変換して保存する
+        favoriteArtist.persistentId = Int64(bitPattern: persistentId)
+        favoriteArtist.order = incrementOrder()
+
+        try! realm.write {
+            realm.add(favoriteArtist)
+        }
+    }
+
+    func delete(persistentId: MPMediaEntityPersistentID) {
+        let favoriteArtists = find(persistentId: persistentId)
+
+        if (favoriteArtists.count != 1) {
+            return
+        }
+
+        try! realm.write {
+            realm.delete(favoriteArtists)
+        }
+    }
+
+    func update(persistentIdList: [MPMediaEntityPersistentID]) {
+        truncate()
+        bulkInsert(persistentIdList: persistentIdList)
+    }
+
+    private func find(persistentId: MPMediaEntityPersistentID) -> Results<FavoriteArtistModel> {
+        return realm.objects(FavoriteArtistModel.self).filter("persistentId = \(Int64(bitPattern: persistentId))")
+    }
+
+    private func incrementOrder() -> Int {
+        return (realm.objects(FavoriteArtistModel.self).max(ofProperty: "order") as Int? ?? 0) + 1
+    }
+
+    private func truncate() {
+        let results = realm.objects(FavoriteArtistModel.self)
+        if results.count == 0 {
+            return
+        }
+
+        try! realm.write {
+            realm.delete(results)
+        }
+    }
+
+    private func bulkInsert(persistentIdList: [MPMediaEntityPersistentID]) {
+        realm.beginWrite()
+
+        for index in 0..<persistentIdList.count {
+            realm.create(FavoriteArtistModel.self, value: [
+                "persistentId": persistentIdList[index],
+                "order": index
+            ])
+        }
+
+        try! realm.commitWrite()
+    }
 }
