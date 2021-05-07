@@ -33,6 +33,8 @@
 		525BD0D5261950F700459563 /* PopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525BD0D4261950F600459563 /* PopupView.swift */; };
 		526648F625AB23690034D912 /* FavoriteArtistsEditPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526648F525AB23690034D912 /* FavoriteArtistsEditPageView.swift */; };
 		526A3B372366AC6F0070BE0A /* AlbumModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526A3B362366AC6F0070BE0A /* AlbumModel.swift */; };
+		52735EFC264441F600056222 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52735EFB264441F600056222 /* MainViewModel.swift */; };
+		5273820026457DF5005DCE75 /* MenuModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527381FF26457DF5005DCE75 /* MenuModel.swift */; };
 		52739F7523D914B50010E578 /* ArtistDetailHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52739F7423D914B50010E578 /* ArtistDetailHeaderView.swift */; };
 		52795DA7248DA73600DABD9D /* PlayerConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52795DA6248DA73600DABD9D /* PlayerConfig.swift */; };
 		5279F0C423D51F7D0053BF55 /* ArtistAlbumCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5279F0C323D51F7D0053BF55 /* ArtistAlbumCellView.swift */; };
@@ -113,6 +115,8 @@
 		525BD0D4261950F600459563 /* PopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupView.swift; sourceTree = "<group>"; };
 		526648F525AB23690034D912 /* FavoriteArtistsEditPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteArtistsEditPageView.swift; sourceTree = "<group>"; };
 		526A3B362366AC6F0070BE0A /* AlbumModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumModel.swift; sourceTree = "<group>"; };
+		52735EFB264441F600056222 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		527381FF26457DF5005DCE75 /* MenuModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuModel.swift; sourceTree = "<group>"; };
 		52739F7423D914B50010E578 /* ArtistDetailHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistDetailHeaderView.swift; sourceTree = "<group>"; };
 		52795DA6248DA73600DABD9D /* PlayerConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerConfig.swift; sourceTree = "<group>"; };
 		5279F0C323D51F7D0053BF55 /* ArtistAlbumCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistAlbumCellView.swift; sourceTree = "<group>"; };
@@ -347,6 +351,7 @@
 				52B6682423C19D8E00E70C47 /* ArtistsViewModel.swift */,
 				52A75C3F25A04CCD0073C01B /* FavoriteArtistsViewModel.swift */,
 				524A76E725E4EF400020443E /* FavoriteSongsViewModel.swift */,
+				52735EFB264441F600056222 /* MainViewModel.swift */,
 				5210DE0B26232EC1005829BA /* PlaylistDetailViewModel.swift */,
 				52472C2B261FC43F00607809 /* PlaylistViewModel.swift */,
 				52D98E7323CC5E780032971A /* SongsViewModel.swift */,
@@ -360,6 +365,7 @@
 			children = (
 				526A3B362366AC6F0070BE0A /* AlbumModel.swift */,
 				5237636023C360C2003ABD2A /* ArtistModel.swift */,
+				527381FF26457DF5005DCE75 /* MenuModel.swift */,
 				52C5FA48264129D900B6269C /* SongModel.swift */,
 			);
 			path = Media;
@@ -570,6 +576,7 @@
 				52D98E7223CC5D9D0032971A /* SongsPageView.swift in Sources */,
 				5211ADD525CEBCEC00604D45 /* BlurView.swift in Sources */,
 				527FCE09262431A50073E4F8 /* PlaylistAddRowView.swift in Sources */,
+				52735EFC264441F600056222 /* MainViewModel.swift in Sources */,
 				52481CE125EB4273004DFAEB /* PlayRowView.swift in Sources */,
 				52C69DE823CABF48006A0A83 /* AlbumDetailPageView.swift in Sources */,
 				52EE4D9323C542A700CFF2A3 /* ArtistDetailViewModel.swift in Sources */,
@@ -622,6 +629,7 @@
 				527B870A2612974100CB5BEB /* PlaylistDetailPageView.swift in Sources */,
 				524BE502263BE1210033E198 /* EditNavBarView.swift in Sources */,
 				52739F7523D914B50010E578 /* ArtistDetailHeaderView.swift in Sources */,
+				5273820026457DF5005DCE75 /* MenuModel.swift in Sources */,
 				5211ADCC25CE99E400604D45 /* SecondaryTitleView.swift in Sources */,
 				52A46DCF23E54B0F00BAC9AA /* PlayerView.swift in Sources */,
 				5210DE1026233721005829BA /* PlaylistDetailHeaderView.swift in Sources */,

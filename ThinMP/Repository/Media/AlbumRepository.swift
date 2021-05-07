@@ -23,6 +23,25 @@ class AlbumRepository {
         return albums
     }
 
+    func findRecently(count: Int) -> [AlbumModel] {
+        let property = MPMediaPropertyPredicate(value: false, forProperty: MPMediaItemPropertyIsCloudItem)
+        let query = MPMediaQuery.albums()
+
+        query.addFilterPredicate(property)
+
+        let albums: [AlbumModel] = query.collections!.sorted(by: { l, r in
+            return l.representativeItem!.dateAdded > r.representativeItem!.dateAdded
+        })
+        .prefix(count)
+        .map {
+            let item = $0.representativeItem
+
+            return AlbumModel(persistentID: item?.albumPersistentID, title: item?.albumTitle, artist: item?.artist, artwork: item?.artwork)
+        }
+
+        return albums
+    }
+
     func findById(persistentId: MPMediaEntityPersistentID) -> AlbumModel? {
         let property = MPMediaPropertyPredicate(value: persistentId, forProperty: MPMediaItemPropertyAlbumPersistentID)
         let query = MPMediaQuery.albums()
