@@ -15,6 +15,10 @@ struct ShortcutRepository {
         realm = try! Realm()
     }
 
+    func findAll() -> [ShortcutModel] {
+        return Array(realm.objects(ShortcutModel.self).sorted(byKeyPath: "order"))
+    }
+
     func existsArtist(itemId: MPMediaEntityPersistentID) -> Bool {
         return exists(itemId: String(itemId), type: ShortcutType.ARTIST.rawValue)
     }

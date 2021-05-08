@@ -13,8 +13,12 @@ enum ShortcutType: Int {
     case ALBUM = 2
     case PLAYLIST = 3
 }
-
-class ShortcutModel: Object {
+enum ShortcutText: String {
+    case ARTIST = "Artist"
+    case ALBUM = "Album"
+    case PLAYLIST = "Playlist"
+}
+class ShortcutModel: Object, MediaProtocol, Identifiable {
     @objc dynamic var id: String = UUID().uuidString
     @objc dynamic var itemId: String = ""
     @objc dynamic var type: Int = ShortcutType.ARTIST.rawValue
@@ -22,5 +26,27 @@ class ShortcutModel: Object {
 
     override static func primaryKey() -> String? {
         return "id"
+    }
+
+    var primaryText: String? {
+        get {
+            self.primaryText
+        }
+        set(primaryText) {
+            self.primaryText = primaryText
+        }
+    }
+    var secondaryText: String? {
+        get {
+            if (type == ShortcutType.ARTIST.rawValue) {
+                return ShortcutText.ARTIST.rawValue
+            } else if (type == ShortcutType.ALBUM.rawValue) {
+                return ShortcutText.ALBUM.rawValue
+            } else if(type == ShortcutType.PLAYLIST.rawValue) {
+                return ShortcutText.PLAYLIST.rawValue
+            } else {
+                return ""
+            }
+        }
     }
 }
