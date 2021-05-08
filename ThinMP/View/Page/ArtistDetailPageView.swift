@@ -29,7 +29,10 @@ struct ArtistDetailPageView: View {
                     ZStack(alignment: .top) {
                         DetaiNavBarView(primaryText: artistDetail.name, side: geometry.size.width, top: geometry.safeAreaInsets.top, textRect: self.$textRect) {
                             MenuButtonView {
-                                FavoriteArtistButtonView(persistentId: artistDetail.persistentId)
+                                VStack {
+                                    FavoriteArtistButtonView(persistentId: artistDetail.persistentId)
+                                    ShortcutArtistButtonView(persistentId: artistDetail.persistentId)
+                                }
                             }
                         }
                         ScrollView{
