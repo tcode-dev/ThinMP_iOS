@@ -28,7 +28,9 @@ struct AlbumDetailPageView: View {
                     ZStack(alignment: .top) {
                         DetaiNavBarView(primaryText: self.albumDetail.title, side: geometry.size.width, top: geometry.safeAreaInsets.top, textRect: self.$textRect) {
                             MenuButtonView {
-                                EmptyView()
+                                VStack {
+                                    ShortcutButtonView(itemId: albumDetail.persistentId, type: ShortcutType.ALBUM)
+                                }
                             }
                         }
                         ScrollView(showsIndicators: true) {

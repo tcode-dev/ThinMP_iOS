@@ -1,5 +1,5 @@
 //
-//  ShortcutArtistButtonView.swift
+//  ShortcutButtonView.swift
 //  ThinMP
 //
 //  Created by tk on 2021/05/08.
@@ -8,26 +8,27 @@
 import SwiftUI
 import MediaPlayer
 
-struct ShortcutArtistButtonView: View {
+struct ShortcutButtonView: View {
     private let ADD_TEXT: String = "ショートカットに追加"
     private let DELETE_TEXT: String = "ショートカットから削除"
 
-    let persistentId: MPMediaEntityPersistentID
+    let itemId: ShortcutItemIdProtocol
+    let type: ShortcutType
 
     var body: some View {
         let register = ShortcutRegister()
 
-        if (!register.existsArtist(persistentId: persistentId)) {
+        if (!register.exists(itemId: itemId, type: type)) {
             // add
             return Button(action: {
-                register.addArtist(persistentId: persistentId)
+                register.add(itemId: itemId, type: type)
             }) {
                 Text(ADD_TEXT)
             }
         } else {
             // delete
             return Button(action: {
-                register.deleteArtist(persistentId: persistentId)
+                register.delete(itemId: itemId, type: type)
             }) {
                 Text(DELETE_TEXT)
             }

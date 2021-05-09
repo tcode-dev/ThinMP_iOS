@@ -14,15 +14,15 @@ struct ShortcutRegister {
         repository = ShortcutRepository()
     }
 
-    func existsArtist(persistentId: MPMediaEntityPersistentID) -> Bool {
-        return repository.existsArtist(itemId: persistentId)
+    func exists(itemId: ShortcutItemIdProtocol, type: ShortcutType) -> Bool {
+        return repository.exists(itemId: itemId, type: type)
     }
 
-    func addArtist(persistentId: MPMediaEntityPersistentID) {
-        repository.addArtist(itemId: persistentId)
+    func add(itemId: ShortcutItemIdProtocol, type: ShortcutType) {
+        repository.add(itemId: itemId, type: type)
     }
 
-    func deleteArtist(persistentId: MPMediaEntityPersistentID) {
-        repository.deleteArtist(itemId: persistentId)
+    func delete(itemId: ShortcutItemIdProtocol, type: ShortcutType) {
+        repository.delete(itemId: itemId, type: type)
     }
 }

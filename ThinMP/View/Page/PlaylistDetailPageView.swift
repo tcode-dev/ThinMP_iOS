@@ -9,6 +9,7 @@ import SwiftUI
 import MediaPlayer
 
 struct PlaylistDetailPageView: View {
+    private let BUTTON_TEXT: String = "Edit"
     private let ADD_TEXT: String = "プレイリストに追加"
 
     @StateObject var vm: PlaylistDetailViewModel
@@ -16,6 +17,8 @@ struct PlaylistDetailPageView: View {
     @State private var headerRect: CGRect = CGRect()
     @State private var showingPopup: Bool = false
     @State private var persistentID: MPMediaEntityPersistentID?
+    @State var isEdit: Bool = false
+    @State var editMode: EditMode = .active
 
     let playlistId: String
 
@@ -25,9 +28,22 @@ struct PlaylistDetailPageView: View {
                 VStack(spacing: 0) {
                     ZStack(alignment: .top) {
                         DetaiNavBarView(primaryText: vm.name, side: geometry.size.width, top: geometry.safeAreaInsets.top, textRect: self.$textRect) {
-                            EditButtonView {
-                                PlaylistDetailEditPageView(vm: vm)
+                            MenuButtonView {
+                                VStack {
+                                    ShortcutButtonView(itemId: vm.playlistId, type: ShortcutType.PLAYLIST)
+                                    Button(BUTTON_TEXT) {
+                                        self.isEdit = true
+                                    }
+                                    .background(
+                                        NavigationLink(destination: PlaylistDetailEditPageView(vm: vm).environment(\.editMode, $editMode), isActive: $isEdit) {
+                                            EmptyView()
+                                        })
+                                    //                                    EditButtonView {
+                                    //                                        PlaylistDetailEditPageView(vm: vm)
+                                    //                                    }
+                                }
                             }
+
                         }
                         ScrollView(showsIndicators: true) {
                             VStack(alignment: .leading) {
@@ -56,7 +72,7 @@ struct PlaylistDetailPageView: View {
                 }
                 if (showingPopup) {
                     PopupView(showingPopup: self.$showingPopup) {
-                        PlaylistRegisterView(persistentId: self.persistentID!, showingPopup: self.$showingPopup, height: geometry.size.height)
+                        PlaylistRegisterView(persistentId: persistentID!, showingPopup: $showingPopup, height: geometry.size.height)
                     }
                 }
             }

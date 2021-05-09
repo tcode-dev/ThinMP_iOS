@@ -19,22 +19,48 @@ struct ShortcutRepository {
         return Array(realm.objects(ShortcutModel.self).sorted(byKeyPath: "order"))
     }
 
-    func existsArtist(itemId: MPMediaEntityPersistentID) -> Bool {
-        return exists(itemId: String(itemId), type: ShortcutType.ARTIST.rawValue)
+    func add(itemId: ShortcutItemIdProtocol, type: ShortcutType) {
+        switch itemId {
+        case let value as MPMediaEntityPersistentID: add(itemId: String(value), type: type)
+        case let value as String: add(itemId: value, type: type)
+        default: break
+        }
     }
 
-    func addArtist(itemId: MPMediaEntityPersistentID) {
-        if (existsArtist(itemId: itemId)) {
+    func delete(itemId: ShortcutItemIdProtocol, type: ShortcutType) {
+        switch itemId {
+        case let value as MPMediaEntityPersistentID: delete(itemId: String(value), type: type)
+        case let value as String: delete(itemId: value, type: type)
+        default: break
+        }
+    }
+
+    func exists(itemId: ShortcutItemIdProtocol, type: ShortcutType) -> Bool {
+        switch itemId {
+        case let value as MPMediaEntityPersistentID: return exists(itemId: String(value), type: type)
+        case let value as String: return exists(itemId: value, type: type)
+        default: return false
+        }
+    }
+
+    private func add(itemId: String, type: ShortcutType) {
+        if (exists(itemId: itemId, type: type)) {
             return
         }
 
-        // MPMediaEntityPersistentID は UInt64のエイリアス
-        // realmはUInt64を保存できないのでStringに変換して保存する
-        add(itemId: String(itemId), type: ShortcutType.ARTIST)
+        let shortcut = ShortcutModel()
+
+        shortcut.itemId = itemId
+        shortcut.type = type.rawValue
+        shortcut.order = incrementOrder()
+
+        try! realm.write {
+            realm.add(shortcut)
+        }
     }
 
-    func deleteArtist(itemId: MPMediaEntityPersistentID) {
-        let model = find(itemId: String(itemId), type: ShortcutType.ARTIST.rawValue)
+    private func delete(itemId: String, type: ShortcutType) {
+        let model = find(itemId: itemId, type: type)
 
         if (model.count == 0) {
             return
@@ -45,24 +71,12 @@ struct ShortcutRepository {
         }
     }
 
-    private func exists(itemId: String, type: Int) -> Bool {
+    private func exists(itemId: String, type: ShortcutType) -> Bool {
         return find(itemId: itemId, type: type).count == 1
     }
 
-    private func find(itemId: String, type: Int) -> Results<ShortcutModel> {
-        return realm.objects(ShortcutModel.self).filter("itemId = '\(itemId)' AND type = \(type)")
-    }
-
-    private func add(itemId: String, type: ShortcutType) {
-        let shortcut = ShortcutModel()
-
-        shortcut.itemId = itemId
-        shortcut.type = type.rawValue
-        shortcut.order = incrementOrder()
-
-        try! realm.write {
-            realm.add(shortcut)
-        }
+    private func find(itemId: String, type: ShortcutType) -> Results<ShortcutModel> {
+        return realm.objects(ShortcutModel.self).filter("itemId = '\(itemId)' AND type = \(type.rawValue)")
     }
 
     private func incrementOrder() -> Int {

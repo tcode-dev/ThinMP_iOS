@@ -31,7 +31,7 @@ struct ArtistDetailPageView: View {
                             MenuButtonView {
                                 VStack {
                                     FavoriteArtistButtonView(persistentId: artistDetail.persistentId)
-                                    ShortcutArtistButtonView(persistentId: artistDetail.persistentId)
+                                    ShortcutButtonView(itemId: artistDetail.persistentId, type: ShortcutType.ARTIST)
                                 }
                             }
                         }
