@@ -28,22 +28,19 @@ struct PlaylistDetailPageView: View {
                 VStack(spacing: 0) {
                     ZStack(alignment: .top) {
                         DetaiNavBarView(primaryText: vm.name, side: geometry.size.width, top: geometry.safeAreaInsets.top, textRect: self.$textRect) {
-                            MenuButtonView {
-                                VStack {
-                                    ShortcutButtonView(itemId: vm.playlistId, type: ShortcutType.PLAYLIST)
-                                    Button(BUTTON_TEXT) {
-                                        self.isEdit = true
+                            VStack {
+                                MenuButtonView {
+                                    VStack {
+                                        ShortcutButtonView(itemId: vm.playlistId, type: ShortcutType.PLAYLIST)
+                                        Button(BUTTON_TEXT) {
+                                            self.isEdit = true
+                                        }
                                     }
-                                    .background(
-                                        NavigationLink(destination: PlaylistDetailEditPageView(vm: vm).environment(\.editMode, $editMode), isActive: $isEdit) {
-                                            EmptyView()
-                                        })
-                                    //                                    EditButtonView {
-                                    //                                        PlaylistDetailEditPageView(vm: vm)
-                                    //                                    }
+                                }
+                                NavigationLink(destination: PlaylistDetailEditPageView(vm: vm).environment(\.editMode, $editMode), isActive: $isEdit) {
+                                    EmptyView()
                                 }
                             }
-
                         }
                         ScrollView(showsIndicators: true) {
                             VStack(alignment: .leading) {
