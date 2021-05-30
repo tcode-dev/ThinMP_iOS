@@ -83,7 +83,7 @@ struct MainPageView: View {
                     VStack(alignment: .leading) {
                         PrimaryTitleView(RECENTLY_ADDED)
                             .padding(.leading, 20)
-                        AlbumListView(list: self.vm.albums, width: geometry.size.width)
+                        ArtistAlbumListView(list: self.vm.albums, width: geometry.size.width)
                             .padding(.bottom, 10)
                     }
                 }

@@ -44,7 +44,7 @@ struct ArtistDetailPageView: View {
                             VStack(alignment: .leading) {
                                 PrimaryTitleView(ALBUMS)
                                     .padding(.leading, LEADING)
-                                AlbumListView(list: self.artistDetail.albums, width: geometry.size.width)
+                                ArtistAlbumListView(list: self.artistDetail.albums, width: geometry.size.width)
                                     .padding(.bottom, BOTTOM)
                                 PrimaryTitleView(SONGS)
                                     .padding(.leading, LEADING)

@@ -1,5 +1,5 @@
 //
-//  AlbumListView.swift
+//  ArtistAlbumListView.swift
 //  ThinMP
 //
 //  Created by tk on 2020/01/20.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct AlbumListView: View {
+struct ArtistAlbumListView: View {
     private let colCount = 2
     private let space: CGFloat = 20
     private var list: [AlbumModel]
