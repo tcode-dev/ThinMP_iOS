@@ -11,4 +11,8 @@ struct ArtistModel: MediaProtocol, Identifiable {
     var id: String = UUID().uuidString
     var persistentId: MPMediaEntityPersistentID!
     var primaryText: String?
+
+    var shortcutId: String {
+        return String(persistentId)
+    }
 }

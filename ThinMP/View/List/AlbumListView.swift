@@ -26,7 +26,7 @@ struct AlbumListView: View {
     var body: some View {
         LazyVGrid(columns: columns) {
             ForEach(list.indices, id: \.self) { index in
-                NavigationLink(destination: AlbumDetailPageView(persistentId: list[index].persistentID)) {
+                NavigationLink(destination: AlbumDetailPageView(persistentId: list[index].persistentId)) {
                     ArtistAlbumCellView(album: list[index], size: size)
                 }
             }

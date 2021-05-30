@@ -24,4 +24,8 @@ class PlaylistModel: Object, MediaProtocol, Identifiable {
             self.name
         }
     }
+
+    var shortcutId: String {
+        return id
+    }
 }

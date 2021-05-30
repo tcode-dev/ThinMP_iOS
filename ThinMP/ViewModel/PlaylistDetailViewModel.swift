@@ -26,7 +26,7 @@ class PlaylistDetailViewModel: ViewModelProtocol {
         let persistentIds = Array(playlistSongs.map { UInt64(bitPattern: $0.persistentId) as MPMediaEntityPersistentID})
         let repository = SongRepository()
         let songs = repository.findByIds(persistentIds: persistentIds)
-        let sorted = persistentIds.map{ (persistentId) in songs.first { $0.persistentID == persistentId }!}
+        let sorted = persistentIds.map{ (persistentId) in songs.first { $0.persistentId == persistentId }!}
         let arrayed = Array(sorted)
         let artwork = arrayed.first(where: { (song) -> Bool in
             (song.artwork != nil)

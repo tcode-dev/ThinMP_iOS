@@ -23,6 +23,10 @@ struct PlaylistRepository {
         return realm.objects(PlaylistModel.self).filter("id = '\(playlistId)'").first!
     }
 
+    func findByIds(playlistIds: [String]) -> Results<PlaylistModel> {
+        return realm.objects(PlaylistModel.self).filter("id IN %@", playlistIds)
+    }
+
     func create(persistentId: MPMediaEntityPersistentID, name: String) {
         let playlist = PlaylistModel()
         playlist.name = name
@@ -80,7 +84,7 @@ struct PlaylistRepository {
     func delete(playlistIds: [String]) {
         let currentIds: [String] = realm.objects(PlaylistModel.self).map{$0.id}
         let deleteIds = currentIds.filter{ !playlistIds.contains($0)}
-        let playlists = find(playlistId: deleteIds)
+        let playlists = findByIds(playlistIds: deleteIds)
 
         if (playlists.count == 0) {
             return
@@ -92,7 +96,7 @@ struct PlaylistRepository {
     }
 
     private func sort(playlistIds: [String]) {
-        let playlists = find(playlistId: playlistIds)
+        let playlists = findByIds(playlistIds: playlistIds)
         let sorted = playlistIds.map { id in
             playlists.first{$0.id == id}
         }
@@ -101,10 +105,6 @@ struct PlaylistRepository {
                 playlist?.order = index
             }
         }
-    }
-
-    private func find(playlistId: [String]) -> Results<PlaylistModel> {
-        return realm.objects(PlaylistModel.self).filter("id IN %@", playlistId)
     }
 
     private func incrementOrder() -> Int {

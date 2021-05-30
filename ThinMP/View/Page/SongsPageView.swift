@@ -41,9 +41,9 @@ struct SongsPageView: View {
                                             MediaRowView(media: vm.list[index])
                                         }
                                         .contextMenu {
-                                            FavoriteSongButtonView(persistentId: vm.list[index].persistentID)
+                                            FavoriteSongButtonView(persistentId: vm.list[index].persistentId)
                                             Button(action: {
-                                                persistentID = vm.list[index].persistentID
+                                                persistentID = vm.list[index].persistentId
                                                 showingPopup.toggle()
                                             }) {
                                                 Text(ADD_TEXT)

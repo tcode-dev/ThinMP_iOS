@@ -42,7 +42,7 @@ struct AlbumDetailHeaderView: View {
         }
         
         return VStack {
-            SecondaryTitleView(self.albumDetail.title).opacity(textOpacity())
+            SecondaryTitleView(self.albumDetail.primaryText).opacity(textOpacity())
         }
         .frame(width: side - (padding + padding), height: height)
         .padding(.leading, padding)
@@ -51,7 +51,7 @@ struct AlbumDetailHeaderView: View {
     
     private func createSecondaryTextView() -> some View {
         return VStack {
-            SecondaryTextView(self.albumDetail.artist).opacity(textOpacity())
+            SecondaryTextView(self.albumDetail.secondaryText).opacity(textOpacity())
         }
         .frame(width: side - 100, height: 25, alignment: .center)
         .offset(y: -20)

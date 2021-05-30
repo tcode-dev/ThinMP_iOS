@@ -39,7 +39,7 @@ class ArtistRepository {
         query.addFilterPredicate(property)
 
         return query.collections!.map{
-            return AlbumModel(persistentID: $0.representativeItem?.albumPersistentID, title: $0.representativeItem?.albumTitle, artist: $0.representativeItem?.artist, artwork: $0.representativeItem?.artwork)
+            return AlbumModel(persistentId: $0.representativeItem?.albumPersistentID, primaryText: $0.representativeItem?.albumTitle, secondaryText: $0.representativeItem?.artist, artwork: $0.representativeItem?.artwork)
         }
     }
 

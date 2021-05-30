@@ -26,7 +26,7 @@ struct AlbumDetailPageView: View {
             ZStack(alignment: .top) {
                 VStack(spacing: 0) {
                     ZStack(alignment: .top) {
-                        DetaiNavBarView(primaryText: self.albumDetail.title, side: geometry.size.width, top: geometry.safeAreaInsets.top, textRect: self.$textRect) {
+                        DetaiNavBarView(primaryText: self.albumDetail.primaryText, side: geometry.size.width, top: geometry.safeAreaInsets.top, textRect: self.$textRect) {
                             MenuButtonView {
                                 VStack {
                                     ShortcutButtonView(itemId: albumDetail.persistentId, type: ShortcutType.ALBUM)
@@ -42,9 +42,9 @@ struct AlbumDetailPageView: View {
                                             MediaRowView(media: self.albumDetail.songs[index])
                                         }
                                         .contextMenu {
-                                            FavoriteSongButtonView(persistentId: self.albumDetail.songs[index].persistentID)
+                                            FavoriteSongButtonView(persistentId: self.albumDetail.songs[index].persistentId)
                                             Button(action: {
-                                                persistentID = self.albumDetail.songs[index].persistentID
+                                                persistentID = self.albumDetail.songs[index].persistentId
                                                 showingPopup.toggle()
                                             }) {
                                                 Text(ADD_TEXT)

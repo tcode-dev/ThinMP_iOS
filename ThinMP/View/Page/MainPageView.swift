@@ -16,6 +16,7 @@ struct MainPageView: View {
     private let FAVORITE_SONGS: String = "Favorite Songs"
     private let PLAYLISTS: String = "Playlists"
     private let RECENTLY_ADDED: String = "Recently Added"
+    private let SHORTCUTS: String = "Shortcuts"
 
     private var HEADER_HEIGHT: CGFloat = 90
     private var ROW_HEIGHT: CGFloat = 44
@@ -74,9 +75,15 @@ struct MainPageView: View {
                     .padding(.leading, 20)
                     .padding(.bottom, 20)
                     VStack(alignment: .leading) {
+                        PrimaryTitleView(SHORTCUTS)
+                            .padding(.leading, 20)
+                        ShortcutListView(list: self.vm.shortcuts, width: geometry.size.width)
+                            .padding(.bottom, 10)
+                    }
+                    VStack(alignment: .leading) {
                         PrimaryTitleView(RECENTLY_ADDED)
                             .padding(.leading, 20)
-                        AlbumListView(list: self.vm.list, width: geometry.size.width)
+                        AlbumListView(list: self.vm.albums, width: geometry.size.width)
                             .padding(.bottom, 10)
                     }
                 }

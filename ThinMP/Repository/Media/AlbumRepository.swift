@@ -17,7 +17,7 @@ class AlbumRepository {
         let albums: [AlbumModel] = query.collections!.map{
             let item = $0.representativeItem
 
-            return AlbumModel(persistentID: item?.albumPersistentID, title: item?.albumTitle, artist: item?.artist, artwork: item?.artwork)
+            return AlbumModel(persistentId: item?.albumPersistentID, primaryText: item?.albumTitle, secondaryText: item?.artist, artwork: item?.artwork)
         }
 
         return albums
@@ -36,7 +36,7 @@ class AlbumRepository {
         .map {
             let item = $0.representativeItem
 
-            return AlbumModel(persistentID: item?.albumPersistentID, title: item?.albumTitle, artist: item?.artist, artwork: item?.artwork)
+            return AlbumModel(persistentId: item?.albumPersistentID, primaryText: item?.albumTitle, secondaryText: item?.artist, artwork: item?.artwork)
         }
 
         return albums
@@ -49,7 +49,7 @@ class AlbumRepository {
         query.addFilterPredicate(property)
 
         return query.collections!.map{
-            return AlbumModel(persistentID: $0.representativeItem?.albumPersistentID, title: $0.representativeItem?.albumTitle, artist: $0.representativeItem?.artist, artwork: $0.representativeItem?.artwork)
+            return AlbumModel(persistentId: $0.representativeItem?.albumPersistentID, primaryText: $0.representativeItem?.albumTitle, secondaryText: $0.representativeItem?.artist, artwork: $0.representativeItem?.artwork)
         }.first
     }
 
@@ -60,5 +60,19 @@ class AlbumRepository {
         query.addFilterPredicate(property)
 
         return query.collections!.map{SongModel(media: $0)}
+    }
+
+    func findByIds(persistentIds: [MPMediaEntityPersistentID]) -> [AlbumModel] {
+        let property = MPMediaPropertyPredicate(value: false, forProperty: MPMediaItemPropertyIsCloudItem)
+        let query = MPMediaQuery.albums()
+
+        query.addFilterPredicate(property)
+
+        let filtered = query.collections!.filter{persistentIds.contains($0.representativeItem?.albumPersistentID ?? 0)}
+        let albums = filtered.map{
+            return AlbumModel(persistentId: $0.representativeItem?.albumPersistentID, primaryText: $0.representativeItem?.albumTitle, secondaryText: $0.representativeItem?.artist, artwork: $0.representativeItem?.artwork)
+        }
+
+        return Array(albums)
     }
 }

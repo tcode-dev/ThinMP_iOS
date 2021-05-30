@@ -10,6 +10,10 @@ import MediaPlayer
 
 struct ArtistDetailPageView: View {
     private let ADD_TEXT: String = "プレイリストに追加"
+    private let ALBUMS: String = "Albums"
+    private let SONGS: String = "Songs"
+    private let LEADING: CGFloat = 20
+    private let BOTTOM: CGFloat = 20
 
     @ObservedObject var artistDetail: ArtistDetailViewModel
 
@@ -38,28 +42,28 @@ struct ArtistDetailPageView: View {
                         ScrollView{
                             ArtistDetailHeaderView(artistDetail: artistDetail, textRect: $textRect, side: geometry.size.width, top: geometry.safeAreaInsets.top)
                             VStack(alignment: .leading) {
-                                PrimaryTitleView("Albums")
-                                    .padding(.leading, 20)
+                                PrimaryTitleView(ALBUMS)
+                                    .padding(.leading, LEADING)
                                 AlbumListView(list: self.artistDetail.albums, width: geometry.size.width)
-                                    .padding(.bottom, 10)
-                                PrimaryTitleView("Songs")
-                                    .padding(.leading, 20)
+                                    .padding(.bottom, BOTTOM)
+                                PrimaryTitleView(SONGS)
+                                    .padding(.leading, LEADING)
                                 LazyVStack() {
                                     ForEach(artistDetail.songs.indices){ index in
                                         PlayRowView(list: artistDetail.songs, index: index) {
                                             MediaRowView(media: artistDetail.songs[index])
                                         }
                                         .contextMenu {
-                                            FavoriteSongButtonView(persistentId: artistDetail.songs[index].persistentID)
+                                            FavoriteSongButtonView(persistentId: artistDetail.songs[index].persistentId)
                                             Button(action: {
-                                                persistentID = artistDetail.songs[index].persistentID
+                                                persistentID = artistDetail.songs[index].persistentId
                                                 showingPopup.toggle()
                                             }) {
                                                 Text(ADD_TEXT)
                                             }
                                         }
                                         Divider()
-                                    }.padding(.leading, 20)
+                                    }.padding(.leading, LEADING)
                                 }
                             }
                         }

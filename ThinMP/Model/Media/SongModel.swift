@@ -12,7 +12,7 @@ struct SongModel: MediaProtocol, Identifiable {
 
     let media: MPMediaItemCollection
 
-    var persistentID: MPMediaEntityPersistentID {
+    var persistentId: MPMediaEntityPersistentID {
         get {
             media.persistentID
         }

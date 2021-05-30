@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import MediaPlayer
 import RealmSwift
 
 enum ShortcutType: Int {
@@ -18,6 +19,7 @@ enum ShortcutText: String {
     case ALBUM = "Album"
     case PLAYLIST = "Playlist"
 }
+
 class ShortcutModel: Object, MediaProtocol, Identifiable {
     @objc dynamic var id: String = UUID().uuidString
     @objc dynamic var itemId: String = ""
@@ -28,12 +30,13 @@ class ShortcutModel: Object, MediaProtocol, Identifiable {
         return "id"
     }
 
+    var name: String = ""
     var primaryText: String? {
         get {
-            self.primaryText
+            self.name
         }
-        set(primaryText) {
-            self.primaryText = primaryText
+        set(text) {
+            self.name = text ?? ""
         }
     }
     var secondaryText: String? {
@@ -48,5 +51,13 @@ class ShortcutModel: Object, MediaProtocol, Identifiable {
                 return ""
             }
         }
+    }
+    var artwork: MPMediaItemArtwork? {
+        get {
+            self.artwork
+        }
+//        set(artwork) {
+//            self.artwork = artwork
+//        }
     }
 }

@@ -14,7 +14,7 @@ struct ArtistAlbumCellView: View {
     var body: some View {
         VStack(){
             SquareImageView(artwork: self.album.artwork, size: size)
-            PrimaryTextView(self.album.title)
+            PrimaryTextView(self.album.primaryText)
         }.padding(.bottom, 10)
     }
 }

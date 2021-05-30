@@ -9,8 +9,8 @@ import MediaPlayer
 
 class AlbumDetailViewModel: ObservableObject {
     @Published var persistentId: MPMediaEntityPersistentID
-    @Published var title: String?
-    @Published var artist: String?
+    @Published var primaryText: String?
+    @Published var secondaryText: String?
     @Published var artwork: MPMediaItemArtwork?
     @Published var songs: [SongModel] = []
     
@@ -31,8 +31,8 @@ class AlbumDetailViewModel: ObservableObject {
         let repository = AlbumRepository()
 
         if let album = repository.findById(persistentId: persistentId) {
-            self.title = album.title
-            self.artist = album.artist
+            self.primaryText = album.primaryText
+            self.secondaryText = album.secondaryText
             self.artwork = album.artwork
         }
         
