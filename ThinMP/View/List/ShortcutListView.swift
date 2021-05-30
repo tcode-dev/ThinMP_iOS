@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import MediaPlayer
 
 struct ShortcutListView: View {
     private let colCount = 2
@@ -26,24 +27,22 @@ struct ShortcutListView: View {
     var body: some View {
         LazyVGrid(columns: columns) {
             ForEach(list.indices, id: \.self) { index in
-                ShortcutCellView(shortcut: list[index], size: size)
-//                switch list[index].type {
-//                case ShortcutType.ARTIST:
-//                    NavigationLink(destination: ArtistDetailPageView(persistentId: list[index].persistentId)) {
-//                        ShortcutCellView(shortcut: list[index], size: size)
-//                    }
-//                case ShortcutType.ALBUM:
-//                    NavigationLink(destination: AlbumDetailPageView(persistentId: list[index].persistentId)) {
-//                        ShortcutCellView(shortcut: list[index], size: size)
-//                    }
-//                case ShortcutType.PLAYLIST:
-//                    NavigationLink(destination: AlbumDetailPageView(persistentId: list[index].persistentId)) {
-//                        ShortcutCellView(shortcut: list[index], size: size)
-//                    }
-//                default:
-//                    EmptyView()
-//                }
-
+                switch list[index].type {
+                case ShortcutType.ARTIST.rawValue:
+                    NavigationLink(destination: ArtistDetailPageView(persistentId: UInt64(list[index].itemId)! as MPMediaEntityPersistentID)) {
+                        ShortcutCellView(shortcut: list[index], size: size)
+                    }
+                case ShortcutType.ALBUM.rawValue:
+                    NavigationLink(destination: AlbumDetailPageView(persistentId: UInt64(list[index].itemId)! as MPMediaEntityPersistentID)) {
+                        ShortcutCellView(shortcut: list[index], size: size)
+                    }
+                case ShortcutType.PLAYLIST.rawValue:
+                    NavigationLink(destination: PlaylistDetailPageView(vm: PlaylistDetailViewModel(playlistId: list[index].itemId), playlistId: list[index].shortcutId)) {
+                        ShortcutCellView(shortcut: list[index], size: size)
+                    }
+                default:
+                    EmptyView()
+                }
             }
         }
     }
