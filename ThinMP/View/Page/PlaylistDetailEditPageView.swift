@@ -45,7 +45,7 @@ struct PlaylistDetailEditPageView: View {
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding()
                     .onAppear {
-                        name = vm.name ?? ""
+                        name = vm.primaryText ?? ""
                     }
                     ZStack {
                         List {
@@ -83,7 +83,7 @@ struct PlaylistDetailEditPageView: View {
 
         playlistRegister.update(playlistId: vm.playlistId, name: name, persistentIds: vm.list.map{$0.persistentId})
 
-        vm.name = name
+        vm.primaryText = name
     }
 }
 
