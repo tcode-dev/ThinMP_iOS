@@ -11,7 +11,7 @@ struct FavoriteArtistsEditPageView: View {
     @Environment(\.editMode) var editMode
     @Environment(\.presentationMode) var presentation
 
-    @ObservedObject public var artists: FavoriteArtistsViewModel
+    @ObservedObject public var vm: FavoriteArtistsViewModel
 
     var body: some View {
         GeometryReader { geometry in
@@ -35,7 +35,7 @@ struct FavoriteArtistsEditPageView: View {
                 }
                 VStack(alignment: .leading) {
                     List {
-                        ForEach (self.artists.list) { artist in
+                        ForEach (vm.artists) { artist in
                             MediaRowView(media: artist)
                         }
                         .onMove(perform: move)
@@ -50,16 +50,16 @@ struct FavoriteArtistsEditPageView: View {
     }
 
     func move(source: IndexSet, destination: Int) {
-        self.artists.list.move(fromOffsets: source, toOffset: destination)
+        vm.artists.move(fromOffsets: source, toOffset: destination)
     }
 
     func delete(offsets: IndexSet) {
-        self.artists.list.remove(atOffsets: offsets)
+        vm.artists.remove(atOffsets: offsets)
     }
 
     func update() {
         let favoriteArtistRegister = FavoriteArtistRegister()
 
-        favoriteArtistRegister.update(persistentIdList: self.artists.list.map{$0.persistentId})
+        favoriteArtistRegister.update(persistentIdList: vm.artists.map{$0.persistentId})
     }
 }

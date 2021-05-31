@@ -9,11 +9,10 @@ import SwiftUI
 
 struct FavoriteArtistsPageView: View {
     private let TITLE: String = "Favorite Artists"
-    
+
+    @StateObject var vm = FavoriteArtistsViewModel()
     @State private var headerRect: CGRect = CGRect()
-    
-    @ObservedObject var artists = FavoriteArtistsViewModel()
-    
+
     var body: some View {
         GeometryReader { geometry in
             VStack(spacing: 0) {
@@ -25,7 +24,7 @@ struct FavoriteArtistsPageView: View {
                             PrimaryTextView(TITLE)
                             Spacer()
                             EditButtonView {
-                                FavoriteArtistsEditPageView(artists: artists)
+                                FavoriteArtistsEditPageView(vm: vm)
                             }
                         }
                     }
@@ -33,7 +32,7 @@ struct FavoriteArtistsPageView: View {
                         VStack(alignment: .leading) {
                             ListEmptyHeaderView(headerRect: self.$headerRect, top: geometry.safeAreaInsets.top)
                             LazyVStack() {
-                                ForEach(self.artists.list) { artist in
+                                ForEach(vm.artists) { artist in
                                     NavigationLink(destination: ArtistDetailPageView(persistentId: artist.persistentId)) {
                                         MediaRowView(media: artist)
                                     }
@@ -50,7 +49,7 @@ struct FavoriteArtistsPageView: View {
             .navigationBarTitle(Text(""))
             .edgesIgnoringSafeArea(.all)
             .onAppear() {
-                artists.load()
+                vm.load()
             }
         }
     }
