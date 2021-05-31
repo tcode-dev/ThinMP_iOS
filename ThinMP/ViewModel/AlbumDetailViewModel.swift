@@ -7,26 +7,19 @@
 
 import MediaPlayer
 
-class AlbumDetailViewModel: ObservableObject {
-    @Published var persistentId: MPMediaEntityPersistentID
+class AlbumDetailViewModel: ViewModelProtocol {
     @Published var primaryText: String?
     @Published var secondaryText: String?
     @Published var artwork: MPMediaItemArtwork?
     @Published var songs: [SongModel] = []
-    
-    init(persistentId: MPMediaEntityPersistentID) {
+
+    private var persistentId: MPMediaEntityPersistentID!
+
+    func load(persistentId: MPMediaEntityPersistentID) {
         self.persistentId = persistentId
-        if MPMediaLibrary.authorizationStatus() == .authorized {
-            fetch()
-        } else {
-            MPMediaLibrary.requestAuthorization { status in
-                if status == .authorized {
-                    self.fetch()
-                }
-            }
-        }
+        self.load()
     }
-    
+
     func fetch() {
         let repository = AlbumRepository()
 

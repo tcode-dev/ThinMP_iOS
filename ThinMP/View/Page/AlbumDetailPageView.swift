@@ -11,14 +11,15 @@ import MediaPlayer
 struct AlbumDetailPageView: View {
     private let ADD_TEXT: String = "プレイリストに追加"
 
-    @ObservedObject var albumDetail: AlbumDetailViewModel
-
+    @StateObject private var vm = AlbumDetailViewModel()
     @State private var textRect: CGRect = CGRect.zero
     @State private var showingPopup: Bool = false
-    @State private var persistentID: MPMediaEntityPersistentID?
+    @State private var playlistRegisterId: MPMediaEntityPersistentID?
+
+    private let persistentId: MPMediaEntityPersistentID
 
     init(persistentId: MPMediaEntityPersistentID) {
-        self.albumDetail = AlbumDetailViewModel(persistentId: persistentId)
+        self.persistentId = persistentId
     }
     
     var body: some View {
@@ -26,25 +27,25 @@ struct AlbumDetailPageView: View {
             ZStack(alignment: .top) {
                 VStack(spacing: 0) {
                     ZStack(alignment: .top) {
-                        DetaiNavBarView(primaryText: self.albumDetail.primaryText, side: geometry.size.width, top: geometry.safeAreaInsets.top, textRect: self.$textRect) {
+                        DetaiNavBarView(primaryText: vm.primaryText, side: geometry.size.width, top: geometry.safeAreaInsets.top, textRect: self.$textRect) {
                             MenuButtonView {
                                 VStack {
-                                    ShortcutButtonView(itemId: albumDetail.persistentId, type: ShortcutType.ALBUM)
+                                    ShortcutButtonView(itemId: persistentId, type: ShortcutType.ALBUM)
                                 }
                             }
                         }
                         ScrollView(showsIndicators: true) {
                             VStack(alignment: .leading) {
-                                AlbumDetailHeaderView(albumDetail: self.albumDetail, textRect: self.$textRect, side: geometry.size.width, top: geometry.safeAreaInsets.top)
+                                AlbumDetailHeaderView(albumDetail: vm, textRect: self.$textRect, side: geometry.size.width, top: geometry.safeAreaInsets.top)
                                 LazyVStack() {
-                                    ForEach(self.albumDetail.songs.indices){ index in
-                                        PlayRowView(list: self.albumDetail.songs, index: index) {
-                                            MediaRowView(media: self.albumDetail.songs[index])
+                                    ForEach(vm.songs.indices, id: \.self) { index in
+                                        PlayRowView(list: vm.songs, index: index) {
+                                            MediaRowView(media: vm.songs[index])
                                         }
                                         .contextMenu {
-                                            FavoriteSongButtonView(persistentId: self.albumDetail.songs[index].persistentId)
+                                            FavoriteSongButtonView(persistentId: vm.songs[index].persistentId)
                                             Button(action: {
-                                                persistentID = self.albumDetail.songs[index].persistentId
+                                                playlistRegisterId = vm.songs[index].persistentId
                                                 showingPopup.toggle()
                                             }) {
                                                 Text(ADD_TEXT)
@@ -60,13 +61,16 @@ struct AlbumDetailPageView: View {
                 }
                 if (showingPopup) {
                     PopupView(showingPopup: self.$showingPopup) {
-                        PlaylistRegisterView(persistentId: self.persistentID!, showingPopup: self.$showingPopup, height: geometry.size.height)
+                        PlaylistRegisterView(persistentId: self.playlistRegisterId!, showingPopup: self.$showingPopup, height: geometry.size.height)
                     }
                 }
             }
             .navigationBarHidden(true)
             .navigationBarTitle(Text(""))
             .edgesIgnoringSafeArea(.all)
+            .onAppear() {
+                vm.load(persistentId: persistentId)
+            }
         }
     }
 }
