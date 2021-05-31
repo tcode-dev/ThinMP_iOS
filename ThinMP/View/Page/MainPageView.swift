@@ -21,7 +21,7 @@ struct MainPageView: View {
     private var HEADER_HEIGHT: CGFloat = 90
     private var ROW_HEIGHT: CGFloat = 44
 
-    @ObservedObject var vm = MainViewModel()
+    @StateObject private var vm = MainViewModel()
 
     var body: some View {
         GeometryReader { geometry in
