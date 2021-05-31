@@ -12,7 +12,7 @@ struct PlaylistDetailPageView: View {
     private let BUTTON_TEXT: String = "Edit"
     private let ADD_TEXT: String = "プレイリストに追加"
 
-    @StateObject var vm: PlaylistDetailViewModel
+    @StateObject var vm = PlaylistDetailViewModel()
     @State private var textRect: CGRect = CGRect.zero
     @State private var headerRect: CGRect = CGRect()
     @State private var showingPopup: Bool = false
@@ -31,7 +31,7 @@ struct PlaylistDetailPageView: View {
                             VStack {
                                 MenuButtonView {
                                     VStack {
-                                        ShortcutButtonView(itemId: vm.playlistId, type: ShortcutType.PLAYLIST)
+                                        ShortcutButtonView(itemId: playlistId, type: ShortcutType.PLAYLIST)
                                         Button(BUTTON_TEXT) {
                                             self.isEdit = true
                                         }
@@ -77,7 +77,7 @@ struct PlaylistDetailPageView: View {
             .navigationBarTitle(Text(""))
             .edgesIgnoringSafeArea(.all)
             .onAppear() {
-                vm.load()
+                vm.load(playlistId: playlistId)
             }
         }
     }

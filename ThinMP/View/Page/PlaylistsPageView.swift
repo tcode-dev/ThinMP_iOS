@@ -33,7 +33,7 @@ struct PlaylistsPageView: View {
                             ListEmptyHeaderView(headerRect: self.$headerRect, top: geometry.safeAreaInsets.top)
                             LazyVStack() {
                                 ForEach(self.playlists.list.indices, id: \.self) { index in
-                                    NavigationLink(destination: PlaylistDetailPageView(vm: PlaylistDetailViewModel(playlistId: self.playlists.list[index].id), playlistId: self.playlists.list[index].id)) {
+                                    NavigationLink(destination: PlaylistDetailPageView(playlistId: self.playlists.list[index].id)) {
                                         MediaRowView(media: self.playlists.list[index])
                                     }
                                     Divider()
