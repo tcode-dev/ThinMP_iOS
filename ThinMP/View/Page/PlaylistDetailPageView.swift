@@ -12,7 +12,7 @@ struct PlaylistDetailPageView: View {
     private let BUTTON_TEXT: String = "Edit"
     private let ADD_TEXT: String = "プレイリストに追加"
 
-    @StateObject var vm = PlaylistDetailViewModel()
+    @StateObject private var vm = PlaylistDetailViewModel()
     @State private var textRect: CGRect = CGRect.zero
     @State private var headerRect: CGRect = CGRect()
     @State private var showingPopup: Bool = false

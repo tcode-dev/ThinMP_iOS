@@ -10,7 +10,7 @@ import SwiftUI
 struct PlaylistsPageView: View {
     private let TITLE: String = "Playlists"
 
-    @ObservedObject var playlists = PlaylistViewModel()
+    @StateObject private var playlists = PlaylistViewModel()
     @State private var headerRect: CGRect = CGRect()
 
     var body: some View {

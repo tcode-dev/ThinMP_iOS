@@ -10,7 +10,7 @@ import SwiftUI
 struct FavoriteArtistsPageView: View {
     private let TITLE: String = "Favorite Artists"
 
-    @StateObject var vm = FavoriteArtistsViewModel()
+    @StateObject private var vm = FavoriteArtistsViewModel()
     @State private var headerRect: CGRect = CGRect()
 
     var body: some View {
