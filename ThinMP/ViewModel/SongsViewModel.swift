@@ -8,14 +8,14 @@
 import MediaPlayer
 
 class SongsViewModel: ViewModelProtocol {
-    @Published var list: [SongModel] = []
+    @Published var songs: [SongModel] = []
 
     func fetch() {
         let repository = SongRepository()
         let songs = repository.findAll()
 
         DispatchQueue.main.async {
-            self.list = songs
+            self.songs = songs
         }
     }
 }

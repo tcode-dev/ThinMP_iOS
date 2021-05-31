@@ -12,7 +12,7 @@ struct SongsPageView: View {
     private let ADD_TEXT: String = "プレイリストに追加"
     private let TITLE: String = "Songs"
 
-    @ObservedObject var vm = SongsViewModel()
+    @StateObject private var vm = SongsViewModel()
     @State private var headerRect: CGRect = CGRect()
     @State private var showingPopup: Bool = false
     @State private var persistentID: MPMediaEntityPersistentID?
@@ -36,14 +36,14 @@ struct SongsPageView: View {
                             VStack(alignment: .leading) {
                                 ListEmptyHeaderView(headerRect: self.$headerRect, top: geometry.safeAreaInsets.top)
                                 LazyVStack() {
-                                    ForEach(vm.list.indices, id: \.self) { index in
-                                        PlayRowView(list: vm.list, index: index) {
-                                            MediaRowView(media: vm.list[index])
+                                    ForEach(vm.songs.indices, id: \.self) { index in
+                                        PlayRowView(list: vm.songs, index: index) {
+                                            MediaRowView(media: vm.songs[index])
                                         }
                                         .contextMenu {
-                                            FavoriteSongButtonView(persistentId: vm.list[index].persistentId)
+                                            FavoriteSongButtonView(persistentId: vm.songs[index].persistentId)
                                             Button(action: {
-                                                persistentID = vm.list[index].persistentId
+                                                persistentID = vm.songs[index].persistentId
                                                 showingPopup.toggle()
                                             }) {
                                                 Text(ADD_TEXT)
