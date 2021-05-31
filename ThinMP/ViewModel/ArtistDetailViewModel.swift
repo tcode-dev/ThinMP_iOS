@@ -14,10 +14,11 @@ class ArtistDetailViewModel: ViewModelProtocol {
     @Published var albums: [AlbumModel] = []
     @Published var songs: [SongModel] = []
 
-    let persistentId: MPMediaEntityPersistentID!
+    private var persistentId: MPMediaEntityPersistentID!
 
-    init(persistentId: MPMediaEntityPersistentID) {
+    func load(persistentId: MPMediaEntityPersistentID) {
         self.persistentId = persistentId
+        self.load()
     }
 
     func fetch() {

@@ -15,15 +15,16 @@ struct ArtistDetailPageView: View {
     private let LEADING: CGFloat = 20
     private let BOTTOM: CGFloat = 20
 
-    @ObservedObject var vm: ArtistDetailViewModel
-
+    @StateObject private var vm = ArtistDetailViewModel()
     @State private var textRect: CGRect = CGRect()
     @State private var isRegister: Bool = false
     @State private var showingPopup: Bool = false
-    @State private var persistentID: MPMediaEntityPersistentID?
+    @State private var playlistRegisterId: MPMediaEntityPersistentID?
+
+    private let persistentId: MPMediaEntityPersistentID
 
     init(persistentId: MPMediaEntityPersistentID) {
-        vm = ArtistDetailViewModel(persistentId: persistentId)
+        self.persistentId = persistentId
     }
 
     var body: some View {
@@ -34,8 +35,8 @@ struct ArtistDetailPageView: View {
                         DetaiNavBarView(primaryText: vm.primaryText, side: geometry.size.width, top: geometry.safeAreaInsets.top, textRect: self.$textRect) {
                             MenuButtonView {
                                 VStack {
-                                    FavoriteArtistButtonView(persistentId: vm.persistentId)
-                                    ShortcutButtonView(itemId: vm.persistentId, type: ShortcutType.ARTIST)
+                                    FavoriteArtistButtonView(persistentId: persistentId)
+                                    ShortcutButtonView(itemId: persistentId, type: ShortcutType.ARTIST)
                                 }
                             }
                         }
@@ -56,7 +57,7 @@ struct ArtistDetailPageView: View {
                                         .contextMenu {
                                             FavoriteSongButtonView(persistentId: vm.songs[index].persistentId)
                                             Button(action: {
-                                                persistentID = vm.songs[index].persistentId
+                                                playlistRegisterId = vm.songs[index].persistentId
                                                 showingPopup.toggle()
                                             }) {
                                                 Text(ADD_TEXT)
@@ -72,7 +73,7 @@ struct ArtistDetailPageView: View {
                 }
                 if (showingPopup) {
                     PopupView(showingPopup: $showingPopup) {
-                        PlaylistRegisterView(persistentId: persistentID!, showingPopup: $showingPopup, height: geometry.size.height)
+                        PlaylistRegisterView(persistentId: playlistRegisterId!, showingPopup: $showingPopup, height: geometry.size.height)
                     }
                 }
             }
@@ -80,7 +81,7 @@ struct ArtistDetailPageView: View {
             .navigationBarTitle(Text(""))
             .edgesIgnoringSafeArea(.all)
             .onAppear() {
-                vm.load()
+                vm.load(persistentId: persistentId)
             }
         }
     }
