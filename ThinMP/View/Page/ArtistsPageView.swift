@@ -10,9 +10,9 @@ import SwiftUI
 struct ArtistsPageView: View {
     private let TITLE: String = "Artists"
 
-    @ObservedObject var artists = ArtistsViewModel()
+    @StateObject private var vm = ArtistsViewModel()
     @State private var headerRect: CGRect = CGRect()
-    
+
     var body: some View {
         GeometryReader { geometry in
             VStack(spacing: 0) {
@@ -31,9 +31,9 @@ struct ArtistsPageView: View {
                         VStack(alignment: .leading) {
                             ListEmptyHeaderView(headerRect: self.$headerRect, top: geometry.safeAreaInsets.top)
                             LazyVStack() {
-                                ForEach(self.artists.list.indices, id: \.self) { index in
-                                    NavigationLink(destination: ArtistDetailPageView(persistentId: self.artists.list[index].persistentId)) {
-                                        MediaRowView(media: self.artists.list[index])
+                                ForEach(vm.list.indices, id: \.self) { index in
+                                    NavigationLink(destination: ArtistDetailPageView(persistentId: vm.list[index].persistentId)) {
+                                        MediaRowView(media: vm.list[index])
                                     }
                                     Divider()
                                 }
@@ -49,7 +49,7 @@ struct ArtistsPageView: View {
             .navigationBarTitle(Text(""))
             .edgesIgnoringSafeArea(.all)
             .onAppear() {
-                artists.load()
+                vm.load()
             }
         }
     }
