@@ -10,8 +10,7 @@ import SwiftUI
 struct AlbumsPageView: View {
     private let TITLE: String = "Albums"
     
-    @ObservedObject var albums = AlbumsViewModel()
-    
+    @StateObject private var vm = AlbumsViewModel()
     @State private var headerRect: CGRect = CGRect()
     
     var body: some View {
@@ -31,7 +30,7 @@ struct AlbumsPageView: View {
                     ScrollView(showsIndicators: true) {
                         VStack(alignment: .leading) {
                             ListEmptyHeaderView(headerRect: self.$headerRect, top: geometry.safeAreaInsets.top)
-                            AlbumListView(list: self.albums.list, width: geometry.size.width)
+                            AlbumListView(list: vm.albums, width: geometry.size.width)
                         }
                     }
                     .frame(alignment: .top)
@@ -42,7 +41,7 @@ struct AlbumsPageView: View {
             .navigationBarTitle(Text(""))
             .edgesIgnoringSafeArea(.all)
             .onAppear() {
-                albums.load()
+                vm.load()
             }
         }
     }
