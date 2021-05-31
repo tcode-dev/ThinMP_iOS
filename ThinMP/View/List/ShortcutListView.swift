@@ -37,7 +37,7 @@ struct ShortcutListView: View {
                         ShortcutCellView(shortcut: list[index], size: size)
                     }
                 case ShortcutType.PLAYLIST.rawValue:
-                    NavigationLink(destination: PlaylistDetailPageView(playlistId: list[index].shortcutId)) {
+                    NavigationLink(destination: PlaylistDetailPageView(playlistId: list[index].itemId)) {
                         ShortcutCellView(shortcut: list[index], size: size)
                     }
                 default:
