@@ -9,7 +9,7 @@ import RealmSwift
 import MediaPlayer
 
 class FavoriteSongsViewModel: ViewModelProtocol {
-    @Published var list: [SongModel] = []
+    @Published var songs: [SongModel] = []
 
     func fetch() {
         let favoriteSongRepository = FavoriteSongRepository()
@@ -18,7 +18,7 @@ class FavoriteSongsViewModel: ViewModelProtocol {
         let songs = songRepository.findByIds(persistentIds: persistentIds)
 
         DispatchQueue.main.async {
-            self.list = songs
+            self.songs = songs
         }
     }
 }
