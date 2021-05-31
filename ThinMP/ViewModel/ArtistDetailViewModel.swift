@@ -7,49 +7,29 @@
 
 import MediaPlayer
 
-class ArtistDetailViewModel: ObservableObject {
-    @Published var persistentId: MPMediaEntityPersistentID!
-    @Published var name: String?
+class ArtistDetailViewModel: ViewModelProtocol {
+    @Published var primaryText: String?
+    @Published var secondaryText: String?
     @Published var artwork: MPMediaItemArtwork?
     @Published var albums: [AlbumModel] = []
     @Published var songs: [SongModel] = []
-    @Published var albumCount: Int = 0
-    @Published var songCount: Int = 0
-    @Published var meta: String?
+
+    let persistentId: MPMediaEntityPersistentID!
 
     init(persistentId: MPMediaEntityPersistentID) {
         self.persistentId = persistentId
-        if MPMediaLibrary.authorizationStatus() == .authorized {
-            fetch()
-        } else {
-            MPMediaLibrary.requestAuthorization { status in
-                if status == .authorized {
-                    self.fetch()
-                }
-            }
-        }
     }
 
     func fetch() {
-        let repository = ArtistRepository()
+        let artistDetailService = ArtistDetailService()
+        let artistDetailModel = artistDetailService.findById(persistentId: persistentId)
 
-        if let artist = repository.findById(persistentId: persistentId) {
-            self.name = artist.primaryText
+        DispatchQueue.main.async {
+            self.primaryText = artistDetailModel.primaryText
+            self.secondaryText = artistDetailModel.secondaryText
+            self.artwork = artistDetailModel.artwork
+            self.albums = artistDetailModel.albums
+            self.songs = artistDetailModel.songs
         }
-
-        let albums = repository.findAlbumsById(persistentId: persistentId)
-
-        if !albums.isEmpty {
-            self.albums = albums
-            self.albumCount = albums.count
-            self.artwork = self.albums.first(where: { (album) -> Bool in
-                (album.artwork != nil)
-            })?.artwork
-        }
-
-        self.songs = repository.findSongsById(persistentId: persistentId)
-        self.songCount = self.songs.count
-
-        self.meta = "\(self.albumCount) albums, \(self.songCount) songs"
     }
 }

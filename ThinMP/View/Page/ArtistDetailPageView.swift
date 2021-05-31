@@ -15,7 +15,7 @@ struct ArtistDetailPageView: View {
     private let LEADING: CGFloat = 20
     private let BOTTOM: CGFloat = 20
 
-    @ObservedObject var artistDetail: ArtistDetailViewModel
+    @ObservedObject var vm: ArtistDetailViewModel
 
     @State private var textRect: CGRect = CGRect()
     @State private var isRegister: Bool = false
@@ -23,7 +23,7 @@ struct ArtistDetailPageView: View {
     @State private var persistentID: MPMediaEntityPersistentID?
 
     init(persistentId: MPMediaEntityPersistentID) {
-        self.artistDetail = ArtistDetailViewModel(persistentId: persistentId)
+        vm = ArtistDetailViewModel(persistentId: persistentId)
     }
 
     var body: some View {
@@ -31,32 +31,32 @@ struct ArtistDetailPageView: View {
             ZStack(alignment: .top) {
                 VStack(spacing: 0) {
                     ZStack(alignment: .top) {
-                        DetaiNavBarView(primaryText: artistDetail.name, side: geometry.size.width, top: geometry.safeAreaInsets.top, textRect: self.$textRect) {
+                        DetaiNavBarView(primaryText: vm.primaryText, side: geometry.size.width, top: geometry.safeAreaInsets.top, textRect: self.$textRect) {
                             MenuButtonView {
                                 VStack {
-                                    FavoriteArtistButtonView(persistentId: artistDetail.persistentId)
-                                    ShortcutButtonView(itemId: artistDetail.persistentId, type: ShortcutType.ARTIST)
+                                    FavoriteArtistButtonView(persistentId: vm.persistentId)
+                                    ShortcutButtonView(itemId: vm.persistentId, type: ShortcutType.ARTIST)
                                 }
                             }
                         }
                         ScrollView{
-                            ArtistDetailHeaderView(artistDetail: artistDetail, textRect: $textRect, side: geometry.size.width, top: geometry.safeAreaInsets.top)
+                            ArtistDetailHeaderView(artistDetail: vm, textRect: $textRect, side: geometry.size.width, top: geometry.safeAreaInsets.top)
                             VStack(alignment: .leading) {
                                 PrimaryTitleView(ALBUMS)
                                     .padding(.leading, LEADING)
-                                ArtistAlbumListView(list: self.artistDetail.albums, width: geometry.size.width)
+                                ArtistAlbumListView(list: vm.albums, width: geometry.size.width)
                                     .padding(.bottom, BOTTOM)
                                 PrimaryTitleView(SONGS)
                                     .padding(.leading, LEADING)
                                 LazyVStack() {
-                                    ForEach(artistDetail.songs.indices){ index in
-                                        PlayRowView(list: artistDetail.songs, index: index) {
-                                            MediaRowView(media: artistDetail.songs[index])
+                                    ForEach(vm.songs.indices, id: \.self){ index in
+                                        PlayRowView(list: vm.songs, index: index) {
+                                            MediaRowView(media: vm.songs[index])
                                         }
                                         .contextMenu {
-                                            FavoriteSongButtonView(persistentId: artistDetail.songs[index].persistentId)
+                                            FavoriteSongButtonView(persistentId: vm.songs[index].persistentId)
                                             Button(action: {
-                                                persistentID = artistDetail.songs[index].persistentId
+                                                persistentID = vm.songs[index].persistentId
                                                 showingPopup.toggle()
                                             }) {
                                                 Text(ADD_TEXT)
@@ -79,6 +79,9 @@ struct ArtistDetailPageView: View {
             .navigationBarHidden(true)
             .navigationBarTitle(Text(""))
             .edgesIgnoringSafeArea(.all)
+            .onAppear() {
+                vm.load()
+            }
         }
     }
 }

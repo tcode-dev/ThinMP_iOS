@@ -77,13 +77,13 @@ struct MainPageView: View {
                     VStack(alignment: .leading) {
                         PrimaryTitleView(SHORTCUTS)
                             .padding(.leading, 20)
-                        ShortcutListView(list: self.vm.shortcuts, width: geometry.size.width)
+                        ShortcutListView(list: vm.shortcuts, width: geometry.size.width)
                             .padding(.bottom, 10)
                     }
                     VStack(alignment: .leading) {
                         PrimaryTitleView(RECENTLY_ADDED)
                             .padding(.leading, 20)
-                        AlbumListView(list: self.vm.albums, width: geometry.size.width)
+                        AlbumListView(list: vm.albums, width: geometry.size.width)
                             .padding(.bottom, 10)
                     }
                 }
