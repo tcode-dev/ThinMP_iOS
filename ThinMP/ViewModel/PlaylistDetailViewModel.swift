@@ -11,7 +11,7 @@ import MediaPlayer
 class PlaylistDetailViewModel: ViewModelProtocol {
     @Published var primaryText: String?
     @Published var artwork: MPMediaItemArtwork?
-    @Published var list: [SongModel] = []
+    @Published var songs: [SongModel] = []
 
     var playlistId: String!
 
@@ -27,7 +27,7 @@ class PlaylistDetailViewModel: ViewModelProtocol {
         DispatchQueue.main.async {
             self.primaryText = playlistDetailModel.primaryText
             self.artwork = playlistDetailModel.artwork
-            self.list = playlistDetailModel.list
+            self.songs = playlistDetailModel.songs
         }
     }
 }

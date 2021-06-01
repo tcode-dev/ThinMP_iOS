@@ -46,14 +46,14 @@ struct PlaylistDetailPageView: View {
                             VStack(alignment: .leading) {
                                 PlaylistDetailHeaderView(textRect: self.$textRect, side: geometry.size.width, top: geometry.safeAreaInsets.top, name: vm.primaryText, artwork: vm.artwork)
                                 LazyVStack() {
-                                    ForEach(vm.list.indices, id: \.self){ index in
-                                        PlayRowView(list: vm.list, index: index) {
-                                            MediaRowView(media: vm.list[index])
+                                    ForEach(vm.songs.indices, id: \.self){ index in
+                                        PlayRowView(list: vm.songs, index: index) {
+                                            MediaRowView(media: vm.songs[index])
                                         }
                                         .contextMenu {
-                                            FavoriteSongButtonView(persistentId: vm.list[index].persistentId)
+                                            FavoriteSongButtonView(persistentId: vm.songs[index].persistentId)
                                             Button(action: {
-                                                persistentID = vm.list[index].persistentId
+                                                persistentID = vm.songs[index].persistentId
                                                 showingPopup.toggle()
                                             }) {
                                                 Text(ADD_TEXT)

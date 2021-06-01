@@ -31,6 +31,7 @@ class ShortcutModel: Object, MediaProtocol, Identifiable {
     }
 
     var name: String = ""
+    var img: MPMediaItemArtwork?
     var primaryText: String? {
         get {
             self.name
@@ -54,10 +55,10 @@ class ShortcutModel: Object, MediaProtocol, Identifiable {
     }
     var artwork: MPMediaItemArtwork? {
         get {
-            self.artwork
+            self.img
         }
-//        set(artwork) {
-//            self.artwork = artwork
-//        }
+        set(artwork) {
+            self.img = artwork
+        }
     }
 }

@@ -7,8 +7,13 @@
 
 import MediaPlayer
 
-struct PlaylistDetailModel {
-    var primaryText: String
+struct PlaylistDetailModel: DetailProtocol {
+    var id: String
+    var primaryText: String?
+    var secondaryText:String?
     var artwork: MPMediaItemArtwork?
-    var list: [SongModel] = []
+    var songs: [SongModel] = []
+    var shortcutId: String {
+        return id
+    }
 }

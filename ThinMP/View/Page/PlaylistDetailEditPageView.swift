@@ -49,7 +49,7 @@ struct PlaylistDetailEditPageView: View {
                     }
                     ZStack {
                         List {
-                            ForEach (vm.list, id: \.id) { media in
+                            ForEach (vm.songs, id: \.id) { media in
                                 MediaRowView(media: media)
                             }
                             .onMove(perform: move)
@@ -71,17 +71,17 @@ struct PlaylistDetailEditPageView: View {
     }
 
     func move(source: IndexSet, destination: Int) {
-        vm.list.move(fromOffsets: source, toOffset: destination)
+        vm.songs.move(fromOffsets: source, toOffset: destination)
     }
 
     func delete(offsets: IndexSet) {
-        vm.list.remove(atOffsets: offsets)
+        vm.songs.remove(atOffsets: offsets)
     }
 
     func update() {
         let playlistRegister = PlaylistRegister()
 
-        playlistRegister.update(playlistId: vm.playlistId, name: name, persistentIds: vm.list.map{$0.persistentId})
+        playlistRegister.update(playlistId: vm.playlistId, name: name, persistentIds: vm.songs.map{$0.persistentId})
 
         vm.primaryText = name
     }

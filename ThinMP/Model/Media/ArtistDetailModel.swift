@@ -7,10 +7,14 @@
 
 import MediaPlayer
 
-struct ArtistDetailModel {
+struct ArtistDetailModel: DetailProtocol {
+    var persistentId: MPMediaEntityPersistentID!
     var primaryText: String?
-    var secondaryText:String
+    var secondaryText:String?
     var artwork: MPMediaItemArtwork?
     var albums: [AlbumModel]
     var songs: [SongModel]
+    var shortcutId: String {
+        return String(persistentId)
+    }
 }
