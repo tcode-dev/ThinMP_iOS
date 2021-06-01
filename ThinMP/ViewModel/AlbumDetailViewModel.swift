@@ -21,14 +21,14 @@ class AlbumDetailViewModel: ViewModelProtocol {
     }
 
     func fetch() {
-        let repository = AlbumRepository()
+        let albumDetailService = AlbumDetailService()
+        let albumDetailModel = albumDetailService.findById(persistentId: persistentId)
 
-        if let album = repository.findById(persistentId: persistentId) {
-            self.primaryText = album.primaryText
-            self.secondaryText = album.secondaryText
-            self.artwork = album.artwork
+        DispatchQueue.main.async {
+            self.primaryText = albumDetailModel.primaryText
+            self.secondaryText = albumDetailModel.secondaryText
+            self.artwork = albumDetailModel.artwork
+            self.songs = albumDetailModel.songs
         }
-        
-        self.songs = repository.findSongsById(persistentId: persistentId)
     }
 }
