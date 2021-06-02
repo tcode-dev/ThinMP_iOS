@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ArtistDetailHeaderView: View {
-    @ObservedObject var artistDetail: ArtistDetailViewModel
+    @ObservedObject var vm: ArtistDetailViewModel
     @Binding var textRect: CGRect
 
     var side: CGFloat
@@ -19,12 +19,12 @@ struct ArtistDetailHeaderView: View {
     
     var body: some View {
         ZStack(alignment: .bottom) {
-            Image(uiImage: self.artistDetail.artwork?.image(at: CGSize(width: self.side, height: self.side)) ?? UIImage())
+            Image(uiImage: self.vm.artwork?.image(at: CGSize(width: self.side, height: self.side)) ?? UIImage())
                 .resizable()
                 .scaledToFit()
                 .blur(radius: 10.0)
             LinearGradient(gradient: Gradient(colors: [Color.init(Color.RGBColorSpace.sRGB, red: 1, green: 1, blue: 1, opacity: 0), Color(UIColor.systemBackground)]), startPoint: .top, endPoint: .bottom).frame(height: 355).offset(y: 25)
-            CircleImageView(artwork: self.artistDetail.artwork, size: self.artistImageSize)
+            CircleImageView(artwork: self.vm.artwork, size: self.artistImageSize)
                 .offset(y:-100)
             GeometryReader { primaryTextGeometry in
                 self.createPrimaryTextView(primaryTextGeometry: primaryTextGeometry)
@@ -45,7 +45,7 @@ struct ArtistDetailHeaderView: View {
         }
 
         return VStack {
-            SecondaryTitleView(self.artistDetail.primaryText).opacity(textOpacity())
+            SecondaryTitleView(self.vm.primaryText).opacity(textOpacity())
         }
         .frame(width: side - 100, height: height)
         .padding(.leading, 50)
@@ -54,7 +54,7 @@ struct ArtistDetailHeaderView: View {
 
     private func createSecondaryTextView() -> some View {
         return VStack {
-            SecondaryTextView(artistDetail.secondaryText).opacity(textOpacity())
+            SecondaryTextView(vm.secondaryText).opacity(textOpacity())
         }
         .frame(width: side - 100, height: 25, alignment: .center)
         .offset(y: -20)

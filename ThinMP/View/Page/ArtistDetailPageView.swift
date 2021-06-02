@@ -41,7 +41,7 @@ struct ArtistDetailPageView: View {
                             }
                         }
                         ScrollView{
-                            ArtistDetailHeaderView(artistDetail: vm, textRect: $textRect, side: geometry.size.width, top: geometry.safeAreaInsets.top)
+                            ArtistDetailHeaderView(vm: vm, textRect: $textRect, side: geometry.size.width, top: geometry.safeAreaInsets.top)
                             VStack(alignment: .leading) {
                                 PrimaryTitleView(ALBUMS)
                                     .padding(.leading, LEADING)

@@ -11,7 +11,7 @@ struct PlaylistsEditPageView: View {
     @Environment(\.editMode) var editMode
     @Environment(\.presentationMode) var presentation
 
-    @ObservedObject public var playlists: PlaylistViewModel
+    @ObservedObject public var vm: PlaylistViewModel
 
     var body: some View {
         GeometryReader { geometry in
@@ -35,7 +35,7 @@ struct PlaylistsEditPageView: View {
                 }
                 VStack(alignment: .leading) {
                     List {
-                        ForEach (playlists.list, id: \.id) { playlist in
+                        ForEach (vm.list, id: \.id) { playlist in
                             MediaRowView(media: playlist)
                         }
                         .onMove(perform: move)
@@ -50,16 +50,16 @@ struct PlaylistsEditPageView: View {
     }
 
     func move(source: IndexSet, destination: Int) {
-        playlists.list.move(fromOffsets: source, toOffset: destination)
+        vm.list.move(fromOffsets: source, toOffset: destination)
     }
 
     func delete(offsets: IndexSet) {
-        playlists.list.remove(atOffsets: offsets)
+        vm.list.remove(atOffsets: offsets)
     }
 
     func update() {
         let playlistRegister = PlaylistRegister()
 
-        playlistRegister.update(playlistIds: playlists.list.map{$0.id})
+        playlistRegister.update(playlistIds: vm.list.map{$0.id})
     }
 }

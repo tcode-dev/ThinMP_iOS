@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AlbumDetailHeaderView: View {
-    @ObservedObject var albumDetail: AlbumDetailViewModel
+    @ObservedObject var vm: AlbumDetailViewModel
     @Binding var textRect: CGRect
     
     var side: CGFloat
@@ -18,7 +18,7 @@ struct AlbumDetailHeaderView: View {
     
     var body: some View {
         ZStack(alignment: .bottom) {
-            Image(uiImage: self.albumDetail.artwork?.image(at: CGSize(width: self.side, height: self.side)) ?? UIImage())
+            Image(uiImage: self.vm.artwork?.image(at: CGSize(width: self.side, height: self.side)) ?? UIImage())
                 .resizable()
                 .scaledToFit()
             LinearGradient(gradient: Gradient(colors: [Color.init(Color.RGBColorSpace.sRGB, red: 1, green: 1, blue: 1, opacity: 0), Color(UIColor.systemBackground)]), startPoint: .top, endPoint: .bottom)
@@ -42,7 +42,7 @@ struct AlbumDetailHeaderView: View {
         }
         
         return VStack {
-            SecondaryTitleView(self.albumDetail.primaryText).opacity(textOpacity())
+            SecondaryTitleView(self.vm.primaryText).opacity(textOpacity())
         }
         .frame(width: side - (padding + padding), height: height)
         .padding(.leading, padding)
@@ -51,7 +51,7 @@ struct AlbumDetailHeaderView: View {
     
     private func createSecondaryTextView() -> some View {
         return VStack {
-            SecondaryTextView(self.albumDetail.secondaryText).opacity(textOpacity())
+            SecondaryTextView(self.vm.secondaryText).opacity(textOpacity())
         }
         .frame(width: side - 100, height: 25, alignment: .center)
         .offset(y: -20)

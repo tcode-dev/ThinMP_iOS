@@ -36,7 +36,7 @@ struct AlbumDetailPageView: View {
                         }
                         ScrollView(showsIndicators: true) {
                             VStack(alignment: .leading) {
-                                AlbumDetailHeaderView(albumDetail: vm, textRect: self.$textRect, side: geometry.size.width, top: geometry.safeAreaInsets.top)
+                                AlbumDetailHeaderView(vm: vm, textRect: self.$textRect, side: geometry.size.width, top: geometry.safeAreaInsets.top)
                                 LazyVStack() {
                                     ForEach(vm.songs.indices, id: \.self) { index in
                                         PlayRowView(list: vm.songs, index: index) {

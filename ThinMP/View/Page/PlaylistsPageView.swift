@@ -24,7 +24,7 @@ struct PlaylistsPageView: View {
                             PrimaryTextView(TITLE)
                             Spacer()
                             EditButtonView {
-                                PlaylistsEditPageView(playlists: playlists)
+                                PlaylistsEditPageView(vm: playlists)
                             }
                         }
                     }
