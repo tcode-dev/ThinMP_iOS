@@ -16,7 +16,7 @@ struct PlaylistDetailPageView: View {
     @State private var textRect: CGRect = CGRect.zero
     @State private var headerRect: CGRect = CGRect()
     @State private var showingPopup: Bool = false
-    @State private var persistentID: MPMediaEntityPersistentID?
+    @State private var playlistRegisterId: MPMediaEntityPersistentID = 0
     @State var isEdit: Bool = false
     @State var editMode: EditMode = .active
 
@@ -53,7 +53,7 @@ struct PlaylistDetailPageView: View {
                                         .contextMenu {
                                             FavoriteSongButtonView(persistentId: vm.songs[index].persistentId)
                                             Button(action: {
-                                                persistentID = vm.songs[index].persistentId
+                                                playlistRegisterId = vm.songs[index].persistentId
                                                 showingPopup.toggle()
                                             }) {
                                                 Text(ADD_TEXT)
@@ -69,7 +69,7 @@ struct PlaylistDetailPageView: View {
                 }
                 if (showingPopup) {
                     PopupView(showingPopup: self.$showingPopup) {
-                        PlaylistRegisterView(persistentId: persistentID!, showingPopup: $showingPopup, height: geometry.size.height)
+                        PlaylistRegisterView(persistentId: playlistRegisterId, showingPopup: $showingPopup, height: geometry.size.height)
                     }
                 }
             }

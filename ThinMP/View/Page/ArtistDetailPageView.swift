@@ -19,7 +19,7 @@ struct ArtistDetailPageView: View {
     @State private var textRect: CGRect = CGRect()
     @State private var isRegister: Bool = false
     @State private var showingPopup: Bool = false
-    @State private var playlistRegisterId: MPMediaEntityPersistentID?
+    @State private var playlistRegisterId: MPMediaEntityPersistentID = 0
 
     private let persistentId: MPMediaEntityPersistentID
 
@@ -73,7 +73,7 @@ struct ArtistDetailPageView: View {
                 }
                 if (showingPopup) {
                     PopupView(showingPopup: $showingPopup) {
-                        PlaylistRegisterView(persistentId: playlistRegisterId!, showingPopup: $showingPopup, height: geometry.size.height)
+                        PlaylistRegisterView(persistentId: playlistRegisterId, showingPopup: $showingPopup, height: geometry.size.height)
                     }
                 }
             }

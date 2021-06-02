@@ -14,7 +14,7 @@ struct AlbumDetailPageView: View {
     @StateObject private var vm = AlbumDetailViewModel()
     @State private var textRect: CGRect = CGRect.zero
     @State private var showingPopup: Bool = false
-    @State private var playlistRegisterId: MPMediaEntityPersistentID?
+    @State private var playlistRegisterId: MPMediaEntityPersistentID = 0
 
     private let persistentId: MPMediaEntityPersistentID
 
@@ -61,7 +61,7 @@ struct AlbumDetailPageView: View {
                 }
                 if (showingPopup) {
                     PopupView(showingPopup: self.$showingPopup) {
-                        PlaylistRegisterView(persistentId: self.playlistRegisterId!, showingPopup: self.$showingPopup, height: geometry.size.height)
+                        PlaylistRegisterView(persistentId: self.playlistRegisterId, showingPopup: self.$showingPopup, height: geometry.size.height)
                     }
                 }
             }
