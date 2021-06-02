@@ -15,7 +15,7 @@ struct PlaylistRegisterView: View {
     private let CANCEL_TEXT: String = "CANCEL"
     private let rowHeight: CGFloat = 44
 
-    @ObservedObject var playlists = PlaylistViewModel()
+    @StateObject var vm = PlaylistViewModel()
     @State private var isCreate: Bool = false
     @State private var name: String = ""
 
@@ -28,7 +28,7 @@ struct PlaylistRegisterView: View {
             return nil
         }
 
-        let panelHeight = CGFloat(playlists.list.count) * rowHeight + 70
+        let panelHeight = CGFloat(vm.list.count) * rowHeight + 70
         if (panelHeight > height) {
             return height - 40
         } else {
@@ -58,7 +58,7 @@ struct PlaylistRegisterView: View {
                     .frame(height: 50)
                     ScrollView(.vertical) {
                         LazyVStack {
-                            ForEach(playlists.list) { playlist in
+                            ForEach(vm.list) { playlist in
                                 PlaylistAddRowView(playlistId: playlist.id, persistentId: persistentId, showingPopup: $showingPopup) {
                                     MediaRowView(media: playlist)
                                 }
@@ -101,7 +101,7 @@ struct PlaylistRegisterView: View {
         .cornerRadius(4)
         .padding(20)
         .onAppear() {
-            playlists.load()
+            vm.load()
         }
     }
 }
