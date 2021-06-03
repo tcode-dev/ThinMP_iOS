@@ -26,66 +26,69 @@ struct MainPageView: View {
     var body: some View {
         GeometryReader { geometry in
             NavigationView {
-                ScrollView {
-                    VStack(alignment: .leading) {
-                        Spacer()
-                        Text(LIBRARY).fontWeight(.bold).font(.largeTitle)
-                        Divider()
+                VStack(spacing: 0) {
+                    ScrollView {
+                        VStack(alignment: .leading) {
+                            Spacer()
+                            Text(LIBRARY).fontWeight(.bold).font(.largeTitle)
+                            Divider()
+                        }
+                        .frame(height: geometry.safeAreaInsets.top + HEADER_HEIGHT)
+                        .padding(.leading, 20)
+                        VStack {
+                            VStack {
+                                NavigationLink(destination: ArtistsPageView()) {
+                                    MediaRowView(media: MenuModel(primaryText: ARTISTS))
+                                }
+                                Divider()
+                            }
+                            VStack {
+                                NavigationLink(destination: AlbumsPageView()) {
+                                    MediaRowView(media: MenuModel(primaryText: ALBUMS))
+                                }
+                                Divider()
+                            }
+                            VStack {
+                                NavigationLink(destination: SongsPageView()) {
+                                    MediaRowView(media: MenuModel(primaryText: SONGS))
+                                }
+                                Divider()
+                            }
+                            VStack {
+                                NavigationLink(destination: FavoriteArtistsPageView()) {
+                                    MediaRowView(media: MenuModel(primaryText: FAVORITE_ARTISTS))
+                                }
+                                Divider()
+                            }
+                            VStack {
+                                NavigationLink(destination: FavoriteSongsPageView()) {
+                                    MediaRowView(media: MenuModel(primaryText: FAVORITE_SONGS))
+                                }
+                                Divider()
+                            }
+                            VStack {
+                                NavigationLink(destination: PlaylistsPageView()) {
+                                    MediaRowView(media: MenuModel(primaryText: PLAYLISTS))
+                                }
+                                Divider()
+                            }
+                        }
+                        .padding(.leading, 20)
+                        .padding(.bottom, 20)
+                        VStack(alignment: .leading) {
+                            PrimaryTitleView(SHORTCUTS)
+                                .padding(.leading, 20)
+                            ShortcutListView(list: vm.shortcuts, width: geometry.size.width)
+                                .padding(.bottom, 10)
+                        }
+                        VStack(alignment: .leading) {
+                            PrimaryTitleView(RECENTLY_ADDED)
+                                .padding(.leading, 20)
+                            AlbumListView(list: vm.albums, width: geometry.size.width)
+                                .padding(.bottom, 10)
+                        }
                     }
-                    .frame(height: geometry.safeAreaInsets.top + HEADER_HEIGHT)
-                    .padding(.leading, 20)
-                    VStack {
-                        VStack {
-                            NavigationLink(destination: ArtistsPageView()) {
-                                MediaRowView(media: MenuModel(primaryText: ARTISTS))
-                            }
-                            Divider()
-                        }
-                        VStack {
-                            NavigationLink(destination: AlbumsPageView()) {
-                                MediaRowView(media: MenuModel(primaryText: ALBUMS))
-                            }
-                            Divider()
-                        }
-                        VStack {
-                            NavigationLink(destination: SongsPageView()) {
-                                MediaRowView(media: MenuModel(primaryText: SONGS))
-                            }
-                            Divider()
-                        }
-                        VStack {
-                            NavigationLink(destination: FavoriteArtistsPageView()) {
-                                MediaRowView(media: MenuModel(primaryText: FAVORITE_ARTISTS))
-                            }
-                            Divider()
-                        }
-                        VStack {
-                            NavigationLink(destination: FavoriteSongsPageView()) {
-                                MediaRowView(media: MenuModel(primaryText: FAVORITE_SONGS))
-                            }
-                            Divider()
-                        }
-                        VStack {
-                            NavigationLink(destination: PlaylistsPageView()) {
-                                MediaRowView(media: MenuModel(primaryText: PLAYLISTS))
-                            }
-                            Divider()
-                        }
-                    }
-                    .padding(.leading, 20)
-                    .padding(.bottom, 20)
-                    VStack(alignment: .leading) {
-                        PrimaryTitleView(SHORTCUTS)
-                            .padding(.leading, 20)
-                        ShortcutListView(list: vm.shortcuts, width: geometry.size.width)
-                            .padding(.bottom, 10)
-                    }
-                    VStack(alignment: .leading) {
-                        PrimaryTitleView(RECENTLY_ADDED)
-                            .padding(.leading, 20)
-                        AlbumListView(list: vm.albums, width: geometry.size.width)
-                            .padding(.bottom, 10)
-                    }
+                    MiniPlayerView(bottom: geometry.safeAreaInsets.bottom)
                 }
                 .navigationBarHidden(true)
                 .navigationBarTitle(Text(""))
