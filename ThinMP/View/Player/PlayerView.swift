@@ -145,11 +145,21 @@ struct PlayerView: View {
                             .frame(width: 44, height: 44)
                         }
                         Spacer()
-                        Button(action: {
-                        }) {
-                            Image("ShuffleButton").renderingMode(.original).resizable().frame(width: 40, height: 40)
+                        if (musicPlayer.shuffleMode) {
+                            Button(action: {
+                                self.musicPlayer.shuffle()
+                            }) {
+                                Image("ShuffleButton").renderingMode(.original).resizable().frame(width: 40, height: 40)
+                            }
+                            .frame(width: 44, height: 44)
+                        } else {
+                            Button(action: {
+                                self.musicPlayer.shuffle()
+                            }) {
+                                Image("ShuffleButton").renderingMode(.original).resizable().frame(width: 40, height: 40).opacity(0.5)
+                            }
+                            .frame(width: 44, height: 44)
                         }
-                        .frame(width: 44, height: 44)
                         Spacer()
                         Button(action: {
                         }) {

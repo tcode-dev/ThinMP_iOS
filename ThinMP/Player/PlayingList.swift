@@ -9,13 +9,34 @@ import MediaPlayer
 
 class PlayingList {
     private var list:[SongModel] = []
-    private var currentIndex: Int = 0;
-    
+    private var originalList:[SongModel] = []
+    private var currentIndex: Int
+
     init(list:[SongModel], currentIndex: Int) {
+        self.originalList = list
         self.list = list
         self.currentIndex = currentIndex
     }
-    
+
+    func shuffle(shuffleMode: Bool) {
+        let currentSong = getSong()
+
+        if (shuffleMode) {
+            var list = originalList
+            list.remove(at: currentIndex)
+
+            var shuffled = list.shuffled()
+            shuffled.insert(currentSong, at: 0)
+            self.list = shuffled
+            currentIndex = 0
+        } else {
+            list = originalList
+            if let index = list.firstIndex(where: {$0.id == currentSong.id}) {
+                currentIndex = index
+            }
+        }
+    }
+
     func getSong() -> SongModel {
         return list[currentIndex]
     }

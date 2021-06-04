@@ -8,6 +8,14 @@
 import MediaPlayer
 
 class MusicPlayer: ObservableObject {
+    static let REPEAT_OFF: Int = 0
+    static let REPEAT_ONE: Int = 1
+    static let REPEAT_ALL: Int = 2
+    static let SHUFFLE_ON: Bool = true
+    static let SHUFFLE_OFF: Bool = false
+
+    private let PREV_SECOND: Double = 3
+
     @Published var isActive: Bool = false
     @Published var isPlaying: Bool = false
     @Published var song: SongModel?
@@ -16,120 +24,122 @@ class MusicPlayer: ObservableObject {
     @Published var isRepeatOff: Bool = true
     @Published var isRepeatOne: Bool = false
     @Published var isRepeatAll: Bool = false
+    @Published var shuffleMode: Bool = false
 
-    static let REPEAT_OFF: Int = 0
-    static let REPEAT_ONE: Int = 1
-    static let REPEAT_ALL: Int = 2
-
-    private var playerState: MPMusicPlaybackState = MPMusicPlaybackState.stopped
-    private var repeatValue: Int
-    private let playerConfig: PlayerConfig = PlayerConfig()
-
-    private let PREV_SECOND: Double = 3
-
+    private let playerConfig: PlayerConfig
+    private let player: MPMusicPlayerController
+    private var playerState: MPMusicPlaybackState
+    private var playingList: PlayingList
+    private var repeatMode: Int
     private var timer: Timer?
-    private var player: MPMusicPlayerController
-    private var playingList: PlayingList = PlayingList(list: [], currentIndex: 0)
 
     init() {
-        self.player = MPMusicPlayerController.applicationMusicPlayer
-        self.player.repeatMode = .none
-        self.repeatValue = self.playerConfig.getRepeat()
-        self.setRepeat()
-        self.addObserver()
-        self.player.beginGeneratingPlaybackNotifications()
+        playerConfig = PlayerConfig()
+        playerState = MPMusicPlaybackState.stopped
+        playingList = PlayingList(list: [], currentIndex: 0)
+        player = MPMusicPlayerController.applicationMusicPlayer
+        player.repeatMode = .none
+        repeatMode = playerConfig.getRepeat()
+        shuffleMode = playerConfig.getShuffle()
+        setRepeat()
+        addObserver()
+        player.beginGeneratingPlaybackNotifications()
     }
 
     func start(list:[SongModel], currentIndex: Int) {
-        self.playingList = PlayingList(list: list, currentIndex: currentIndex)
+        playingList = PlayingList(list: list, currentIndex: currentIndex)
 
-        self.stop()
-        self.setSong()
-        self.play();
+        if (shuffleMode) {
+            playingList.shuffle(shuffleMode: shuffleMode)
+        }
 
-        self.isActive = true
+        stop()
+        setSong()
+        play();
+
+        isActive = true
     }
 
     func setSong() {
-        self.song = playingList.getSong()
-        self.durationSecond = Double(self.song?.media.representativeItem?.playbackDuration ?? 0)
-        let descriptor = MPMusicPlayerMediaItemQueueDescriptor.init(itemCollection: self.song!.media)
+        song = playingList.getSong()
+        durationSecond = Double(song?.media.representativeItem?.playbackDuration ?? 0)
+        let descriptor = MPMusicPlayerMediaItemQueueDescriptor.init(itemCollection: song!.media)
 
-        self.player.setQueue(with: descriptor)
-        self.seek(time: 0)
-        self.updateTime()
+        player.setQueue(with: descriptor)
+        seek(time: 0)
+        updateTime()
     }
 
     func play() {
-        self.isPlaying = true
-        self.player.play()
+        isPlaying = true
+        player.play()
     }
 
     func pause() {
-        self.isPlaying = false
-        self.playerState = MPMusicPlaybackState.paused
-        self.player.pause()
+        isPlaying = false
+        playerState = MPMusicPlaybackState.paused
+        player.pause()
     }
 
     func stop() {
-        if (!self.isPlaying) {
+        if (!isPlaying) {
             return
         }
 
-        self.isPlaying = false
-        self.playerState = MPMusicPlaybackState.paused
-        self.player.stop()
+        isPlaying = false
+        playerState = MPMusicPlaybackState.paused
+        player.stop()
     }
 
     func prev() {
-        self.stop()
-        if (self.currentSecond <= self.PREV_SECOND) {
-            self.playingList.prev()
-            self.setSong()
+        stop()
+        if (currentSecond <= PREV_SECOND) {
+            playingList.prev()
+            setSong()
         } else {
-            self.seek(time: 0)
-            self.updateTime()
+            seek(time: 0)
+            updateTime()
         }
     }
 
     func playPrev() {
-        self.isPlaying = false
-        self.prev()
-        self.play()
+        isPlaying = false
+        prev()
+        play()
     }
 
     func next() {
-        self.stop()
-        self.playingList.next()
-        self.setSong()
+        stop()
+        playingList.next()
+        setSong()
     }
 
     func playNext() {
-        self.next()
-        self.play()
+        next()
+        play()
     }
 
     func autoPlay() {
-        if (self.isRepeatAll) {
-            self.playNext()
-        } else if (self.isRepeatOff) {
-            if (self.playingList.hasNext()) {
-                self.playNext()
+        if (isRepeatAll) {
+            playNext()
+        } else if (isRepeatOff) {
+            if (playingList.hasNext()) {
+                playNext()
             } else {
-                self.next()
+                next()
             }
-        } else if (self.isRepeatOne) {
-            self.setSong()
-            self.play()
+        } else if (isRepeatOne) {
+            setSong()
+            play()
         }
     }
 
     func seek(time: TimeInterval) {
-        self.player.currentPlaybackTime = time
+        player.currentPlaybackTime = time
     }
 
     func updateTime() {
-        self.currentSecond = Double(self.player.currentPlaybackTime)
+        currentSecond = Double(player.currentPlaybackTime)
     }
 
     func immediateUpdateTime() {
@@ -139,41 +149,44 @@ class MusicPlayer: ObservableObject {
     }
 
     func startProgress() {
-        self.timer?.invalidate()
-        self.timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { _ in
+        timer?.invalidate()
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { _ in
             self.updateTime()
         })
     }
 
     func stopProgress() {
-        self.timer?.invalidate()
+        timer?.invalidate()
     }
 
-    /**
-     * setRepeat
-     */
     func setRepeat() {
-        self.isRepeatOff = self.repeatValue == MusicPlayer.self.REPEAT_OFF
-        self.isRepeatOne = self.repeatValue == MusicPlayer.REPEAT_ONE
-        self.isRepeatAll = self.repeatValue == MusicPlayer.REPEAT_ALL
+        isRepeatOff = repeatMode == MusicPlayer.REPEAT_OFF
+        isRepeatOne = repeatMode == MusicPlayer.REPEAT_ONE
+        isRepeatAll = repeatMode == MusicPlayer.REPEAT_ALL
     }
 
     func changeRepeat() {
-        if (self.isRepeatOff) {
-            self.isRepeatOff = false
-            self.isRepeatAll = true
-        } else if (self.isRepeatAll) {
-            self.isRepeatAll = false
-            self.isRepeatOne = true
-        } else if (self.isRepeatOne) {
-            self.isRepeatOne = false
-            self.isRepeatOff = true
+        if (isRepeatOff) {
+            isRepeatOff = false
+            isRepeatAll = true
+        } else if (isRepeatAll) {
+            isRepeatAll = false
+            isRepeatOne = true
+        } else if (isRepeatOne) {
+            isRepeatOne = false
+            isRepeatOff = true
         }
-        self.repeatValue = self.repeatValue == MusicPlayer.REPEAT_OFF ? MusicPlayer.REPEAT_ALL
-            : self.repeatValue == MusicPlayer.REPEAT_ALL ? MusicPlayer.REPEAT_ONE
+        repeatMode = repeatMode == MusicPlayer.REPEAT_OFF ? MusicPlayer.REPEAT_ALL
+            : repeatMode == MusicPlayer.REPEAT_ALL ? MusicPlayer.REPEAT_ONE
             : MusicPlayer.REPEAT_OFF
-        self.setRepeat()
-        self.playerConfig.setRepeat(value: self.repeatValue)
+        setRepeat()
+        playerConfig.setRepeat(value: repeatMode)
+    }
+
+    func shuffle() {
+        shuffleMode = !shuffleMode
+        playingList.shuffle(shuffleMode: shuffleMode)
+        playerConfig.setShuffle(shuffle: shuffleMode)
     }
 
     private func addObserver() {
@@ -190,22 +203,22 @@ class MusicPlayer: ObservableObject {
     // playbackStateが正しい状態でなかったり、pausedが複数回呼ばれるので、再生終了時の処理のみ登録
     private func callback() {
         // ユーザーが停止させた場合処理しない
-        if (!self.isPlaying) {
+        if (!isPlaying) {
             return
         }
 
-        switch self.player.playbackState {
+        switch player.playbackState {
         case MPMusicPlaybackState.stopped:
 
             break
         case MPMusicPlaybackState.playing:
-            self.playerState = MPMusicPlaybackState.playing
+            playerState = MPMusicPlaybackState.playing
 
             break
         case MPMusicPlaybackState.paused:
-            if (self.playerState == MPMusicPlaybackState.playing) {
-                self.playerState = MPMusicPlaybackState.paused
-                self.autoPlay()
+            if (playerState == MPMusicPlaybackState.playing) {
+                playerState = MPMusicPlaybackState.paused
+                autoPlay()
             }
             break
         case MPMusicPlaybackState.interrupted:
