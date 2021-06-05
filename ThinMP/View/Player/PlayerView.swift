@@ -29,7 +29,7 @@ struct PlayerView: View {
         GeometryReader { geometry in
             ZStack(alignment: .top) {
                 ZStack {
-                    Image(uiImage: self.musicPlayer.song?.artwork?.image(at: CGSize(width: geometry.size.width, height: geometry.size.width)) ?? UIImage())
+                    Image(uiImage: musicPlayer.song?.artwork?.image(at: CGSize(width: geometry.size.width, height: geometry.size.width)) ?? UIImage())
                         .resizable()
                         .scaledToFit()
                         .blur(radius: 10.0)
@@ -38,161 +38,138 @@ struct PlayerView: View {
                 }
                 .frame(width: geometry.size.width, height: geometry.size.width)
                 VStack() {
-                    Image(uiImage: self.musicPlayer.song?.artwork?.image(at: CGSize(width: self.size, height: self.size)) ?? UIImage())
+                    Image(uiImage: musicPlayer.song?.artwork?.image(at: CGSize(width: size, height: size)) ?? UIImage())
                         .renderingMode(.original)
                         .resizable()
                         .scaledToFit()
                         .cornerRadius(4)
-                        .frame(width: self.size, height: self.size)
+                        .frame(width: size, height: size)
                         .padding(.top, 50)
                         .padding(.bottom, 10)
                     ZStack(alignment: .bottom) {
-                        SecondaryTitleView(self.musicPlayer.song?.primaryText).frame(height: 50).offset(y: -10)
-                        SecondaryTextView(self.musicPlayer.song?.secondaryText).frame(height: 25)
+                        SecondaryTitleView(musicPlayer.song?.primaryText).frame(height: 50).offset(y: -10)
+                        SecondaryTextView(musicPlayer.song?.secondaryText).frame(height: 25)
                     }.frame(height: 60)
+
                     Spacer()
-                    Slider(value: self.$musicPlayer.currentSecond, in: 0...self.musicPlayer.durationSecond, step: 1, onEditingChanged: { changed in
-                        if (self.musicPlayer.isPlaying && !self.seeking && changed) {
-                            self.musicPlayer.stopProgress()
-                            self.seeking = changed
+
+                    Slider(value: $musicPlayer.currentSecond, in: 0...musicPlayer.durationSecond, step: 1, onEditingChanged: { changed in
+                        if (musicPlayer.isPlaying && !seeking && changed) {
+                            musicPlayer.stopProgress()
+                            seeking = changed
                         }
 
-                        self.musicPlayer.seek(time: self.musicPlayer.currentSecond)
+                        musicPlayer.seek(time: musicPlayer.currentSecond)
 
-                        if (self.musicPlayer.isPlaying && self.seeking && !changed) {
-                            self.musicPlayer.startProgress()
-                            self.seeking = changed
+                        if (musicPlayer.isPlaying && seeking && !changed) {
+                            musicPlayer.startProgress()
+                            seeking = changed
                         }
                     })
                     .padding(.leading, 10)
                     .padding(.trailing, 10)
                     .accentColor(Color(.label))
+
                     HStack {
-                        SecondaryTextView("\(self.convertTime(time: self.musicPlayer.currentSecond))").frame(width: 50).padding(.leading, 10)
+                        SecondaryTextView("\(convertTime(time: musicPlayer.currentSecond))").frame(width: 50).padding(.leading, 10)
                         Spacer()
-                        SecondaryTextView("\(self.convertTime(time: self.musicPlayer.durationSecond))").frame(width: 50).padding(.trailing, 10)
+                        SecondaryTextView("\(convertTime(time: musicPlayer.durationSecond))").frame(width: 50).padding(.trailing, 10)
                     }
+
                     Spacer()
-                    if (self.musicPlayer.isPlaying) {
-                        HStack {
-                            Spacer()
+
+                    HStack {
+                        Spacer()
+                        Button(action: {
+                            musicPlayer.doPrev()
+                        }) {
+                            Image("PrevButton").renderingMode(.original).resizable().frame(width: 72, height: 72)
+                        }
+
+                        Spacer()
+
+                        if (musicPlayer.isPlaying) {
                             Button(action: {
-                                self.musicPlayer.playPrev()
-                            }) {
-                                Image("PrevButton").renderingMode(.original).resizable().frame(width: 72, height: 72)
-                            }
-                            Spacer()
-                            Button(action: {
-                                self.musicPlayer.pause()
-                                self.musicPlayer.stopProgress()
+                                musicPlayer.doPause()
                             }) {
                                 Image("PauseButton").renderingMode(.original).resizable().frame(width: 88, height: 88)
                             }
-                            Spacer()
+                        } else {
                             Button(action: {
-                                self.musicPlayer.playNext()
-                            }) {
-                                Image("NextButton").renderingMode(.original).resizable().frame(width: 72, height: 72)
-                            }
-                            Spacer()
-                        }
-                    } else {
-                        HStack {
-                            Spacer()
-                            Button(action: {
-                                self.musicPlayer.prev()
-                            }) {
-                                Image("PrevButton").renderingMode(.original).resizable().frame(width: 72, height: 72)
-                            }
-                            Spacer()
-                            Button(action: {
-                                self.musicPlayer.play()
-                                self.musicPlayer.startProgress()
+                                musicPlayer.doPlay()
                             }) {
                                 Image("PlayButton").renderingMode(.original).resizable().frame(width: 88, height: 88)
                             }
-                            Spacer()
-                            Button(action: {
-                                self.musicPlayer.next()
-                            }) {
-                                Image("NextButton").renderingMode(.original).resizable().frame(width: 72, height: 72)
-                            }
-                            Spacer()
                         }
+
+                        Spacer()
+
+                        Button(action: {
+                            musicPlayer.doNext()
+                        }) {
+                            Image("NextButton").renderingMode(.original).resizable().frame(width: 72, height: 72)
+                        }
+
+                        Spacer()
                     }
+
                     Spacer()
+
                     HStack {
-                        if (self.musicPlayer.isRepeatOff) {
-                            Button(action: {
-                                self.musicPlayer.changeRepeat()
-                            }) {
+                        Button(action: {
+                            musicPlayer.changeRepeat()
+                        }) {
+                            if (musicPlayer.isRepeatOff) {
                                 Image("RepeatButton").renderingMode(.original).resizable().frame(width: 40, height: 40).opacity(0.5)
-                            }
-                            .frame(width: 44, height: 44)
-                        } else if (self.musicPlayer.isRepeatAll) {
-                            Button(action: {
-                                self.musicPlayer.changeRepeat()
-                            }) {
+                            } else if (musicPlayer.isRepeatAll) {
                                 Image("RepeatButton").renderingMode(.original).resizable().frame(width: 40, height: 40)
-                            }
-                            .frame(width: 44, height: 44)
-                        } else if (self.musicPlayer.isRepeatOne) {
-                            Button(action: {
-                                self.musicPlayer.changeRepeat()
-                            }) {
+                            } else if (musicPlayer.isRepeatOne) {
                                 Image("RepeatOneButton").renderingMode(.original).resizable().frame(width: 40, height: 40)
                             }
-                            .frame(width: 44, height: 44)
                         }
+                        .frame(width: 44, height: 44)
+
                         Spacer()
-                        if (musicPlayer.shuffleMode) {
-                            Button(action: {
-                                self.musicPlayer.shuffle()
-                            }) {
+
+                        Button(action: {
+                            musicPlayer.shuffle()
+                        }) {
+                            if (musicPlayer.shuffleMode) {
                                 Image("ShuffleButton").renderingMode(.original).resizable().frame(width: 40, height: 40)
-                            }
-                            .frame(width: 44, height: 44)
-                        } else {
-                            Button(action: {
-                                self.musicPlayer.shuffle()
-                            }) {
+                            } else {
                                 Image("ShuffleButton").renderingMode(.original).resizable().frame(width: 40, height: 40).opacity(0.5)
                             }
-                            .frame(width: 44, height: 44)
                         }
+                        .frame(width: 44, height: 44)
+
                         Spacer()
-                        if (musicPlayer.isFavoriteArtist) {
-                            Button(action: {
-                                self.musicPlayer.favoriteArtist()
-                            }) {
+
+                        Button(action: {
+                            musicPlayer.favoriteArtist()
+                        }) {
+                            if (musicPlayer.isFavoriteArtist) {
                                 Image("FavoriteArtistButton").renderingMode(.original).resizable().frame(width: 40, height: 40)
-                            }
-                            .frame(width: 44, height: 44)
-                        } else {
-                            Button(action: {
-                                self.musicPlayer.favoriteArtist()
-                            }) {
+                            } else {
                                 Image("FavoriteArtistButton").renderingMode(.original).resizable().frame(width: 40, height: 40).opacity(0.5)
                             }
-                            .frame(width: 44, height: 44)
                         }
+                        .frame(width: 44, height: 44)
+
                         Spacer()
-                        if (musicPlayer.isFavoriteSong) {
-                            Button(action: {
-                                self.musicPlayer.favoriteSong()
-                            }) {
+
+                        Button(action: {
+                            musicPlayer.favoriteSong()
+                        }) {
+                            if (musicPlayer.isFavoriteSong) {
                                 Image("FavoriteSongButton").renderingMode(.original).resizable().frame(width: 30, height: 30)
-                            }
-                            .frame(width: 44, height: 44)
-                        } else {
-                            Button(action: {
-                                self.musicPlayer.favoriteSong()
-                            }) {
+                            } else {
                                 Image("FavoriteSongButton").renderingMode(.original).resizable().frame(width: 30, height: 30).opacity(0.5)
                             }
-                            .frame(width: 44, height: 44)
                         }
+                        .frame(width: 44, height: 44)
+
                         Spacer()
+
                         Button(action: {
                         }) {
                             Image("PlaylistAddButton").renderingMode(.original).resizable().frame(width: 40, height: 40)
@@ -200,19 +177,20 @@ struct PlayerView: View {
                         .frame(width: 44, height: 44)
                     }
                     .padding(.horizontal, 30)
+
                     Spacer()
                 }
             }
         }
         .onAppear(perform: {
-            self.musicPlayer.immediateUpdateTime()
+            musicPlayer.immediateUpdateTime()
             
-            if (self.musicPlayer.isPlaying) {
-                self.musicPlayer.startProgress()
+            if (musicPlayer.isPlaying) {
+                musicPlayer.startProgress()
             }
         })
         .onDisappear(perform: {
-            self.musicPlayer.stopProgress()
+            musicPlayer.stopProgress()
         })
     }
 }

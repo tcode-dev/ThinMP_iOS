@@ -74,9 +74,19 @@ class MusicPlayer: ObservableObject {
         updateTime()
     }
 
+    func doPlay() {
+        play()
+        startProgress()
+    }
+
     func play() {
         isPlaying = true
         player.play()
+    }
+
+    func doPause() {
+        pause()
+        stopProgress()
     }
 
     func pause() {
@@ -95,6 +105,14 @@ class MusicPlayer: ObservableObject {
         player.stop()
     }
 
+    func doPrev() {
+        if (isPlaying) {
+            playPrev()
+        } else {
+            prev()
+        }
+    }
+
     func prev() {
         stop()
         if (currentSecond <= PREV_SECOND) {
@@ -110,6 +128,14 @@ class MusicPlayer: ObservableObject {
         isPlaying = false
         prev()
         play()
+    }
+
+    func doNext() {
+        if (isPlaying) {
+            playNext()
+        } else {
+            next()
+        }
     }
 
     func next() {
