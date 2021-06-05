@@ -228,7 +228,7 @@ class MusicPlayer: ObservableObject {
             register.add(persistentId: persistentId)
         }
 
-        isFavoriteSong = !isFavoriteArtist
+        isFavoriteSong = !isFavoriteSong
     }
 
     private func addObserver() {
