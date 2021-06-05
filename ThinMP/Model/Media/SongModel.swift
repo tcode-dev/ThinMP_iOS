@@ -32,4 +32,9 @@ struct SongModel: MediaProtocol, Identifiable {
             media.representativeItem?.artwork
         }
     }
+    var artistPersistentId: MPMediaEntityPersistentID? {
+        get {
+            media.representativeItem?.artistPersistentID
+        }
+    }
 }
