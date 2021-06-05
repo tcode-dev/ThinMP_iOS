@@ -177,11 +177,21 @@ struct PlayerView: View {
                             .frame(width: 44, height: 44)
                         }
                         Spacer()
-                        Button(action: {
-                        }) {
-                            Image("FavoriteSongButton").renderingMode(.original).resizable().frame(width: 30, height: 30)
+                        if (musicPlayer.isFavoriteSong) {
+                            Button(action: {
+                                self.musicPlayer.favoriteSong()
+                            }) {
+                                Image("FavoriteSongButton").renderingMode(.original).resizable().frame(width: 30, height: 30)
+                            }
+                            .frame(width: 44, height: 44)
+                        } else {
+                            Button(action: {
+                                self.musicPlayer.favoriteSong()
+                            }) {
+                                Image("FavoriteSongButton").renderingMode(.original).resizable().frame(width: 30, height: 30).opacity(0.5)
+                            }
+                            .frame(width: 44, height: 44)
                         }
-                        .frame(width: 44, height: 44)
                         Spacer()
                         Button(action: {
                         }) {

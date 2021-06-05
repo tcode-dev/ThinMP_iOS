@@ -26,6 +26,7 @@ class MusicPlayer: ObservableObject {
     @Published var isRepeatAll: Bool = false
     @Published var shuffleMode: Bool = false
     @Published var isFavoriteArtist: Bool = false
+    @Published var isFavoriteSong: Bool = false
 
     private let playerConfig: PlayerConfig
     private let player: MPMusicPlayerController
@@ -57,6 +58,7 @@ class MusicPlayer: ObservableObject {
         stop()
         setSong()
         setFavoriteArtist()
+        setFavoriteSong()
         play();
 
         isActive = true
@@ -199,15 +201,34 @@ class MusicPlayer: ObservableObject {
 
     func favoriteArtist() {
         let persistentId = song!.artistPersistentId!
-        let favoriteArtistRegister = FavoriteArtistRegister()
+        let register = FavoriteArtistRegister()
 
-        if (favoriteArtistRegister.exists(persistentId: persistentId)) {
-            favoriteArtistRegister.delete(persistentId: persistentId)
+        if (register.exists(persistentId: persistentId)) {
+            register.delete(persistentId: persistentId)
         } else {
-            favoriteArtistRegister.add(persistentId: persistentId)
+            register.add(persistentId: persistentId)
         }
 
         isFavoriteArtist = !isFavoriteArtist
+    }
+
+    func setFavoriteSong() {
+        let register = FavoriteSongRegister()
+
+        isFavoriteSong = register.exists(persistentId: song!.persistentId)
+    }
+
+    func favoriteSong() {
+        let persistentId = song!.persistentId
+        let register = FavoriteSongRegister()
+
+        if (register.exists(persistentId: persistentId)) {
+            register.delete(persistentId: persistentId)
+        } else {
+            register.add(persistentId: persistentId)
+        }
+
+        isFavoriteSong = !isFavoriteArtist
     }
 
     private func addObserver() {
