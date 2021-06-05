@@ -163,13 +163,13 @@ struct PlayerView: View {
                         Spacer()
                         Button(action: {
                         }) {
-                            Image("FavoriteArtistOnButton").renderingMode(.original).resizable().frame(width: 40, height: 40)
+                            Image("FavoriteArtistButton").renderingMode(.original).resizable().frame(width: 40, height: 40)
                         }
                         .frame(width: 44, height: 44)
                         Spacer()
                         Button(action: {
                         }) {
-                            Image("FavoriteSongOnButton").renderingMode(.original).resizable().frame(width: 30, height: 30)
+                            Image("FavoriteSongButton").renderingMode(.original).resizable().frame(width: 30, height: 30)
                         }
                         .frame(width: 44, height: 44)
                         Spacer()
