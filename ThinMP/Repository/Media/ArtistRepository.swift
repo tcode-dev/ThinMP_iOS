@@ -38,8 +38,8 @@ class ArtistRepository {
 
         query.addFilterPredicate(property)
 
-        return query.collections!.map{
-            return AlbumModel(persistentId: $0.representativeItem?.albumPersistentID, primaryText: $0.representativeItem?.albumTitle, secondaryText: $0.representativeItem?.artist, artwork: $0.representativeItem?.artwork)
+        return query.collections!.sorted(by: { String($0.representativeItem?.albumTitle ?? "") < String($1.representativeItem?.albumTitle ?? "") })
+            .map{AlbumModel(persistentId: $0.representativeItem?.albumPersistentID, primaryText: $0.representativeItem?.albumTitle, secondaryText: $0.representativeItem?.artist, artwork: $0.representativeItem?.artwork)
         }
     }
 
