@@ -8,9 +8,12 @@
 import SwiftUI
 
 struct PlayerView: View {
-    @EnvironmentObject var musicPlayer: MusicPlayer
-    @State var seeking: Bool = false
     private let size: CGFloat = 220
+
+    @EnvironmentObject var musicPlayer: MusicPlayer
+
+    @State var seeking: Bool = false
+    @State private var showingPopup: Bool = false
     
     func convertTime(time: TimeInterval) -> String {
         if (time < 1) {
@@ -171,6 +174,7 @@ struct PlayerView: View {
                         Spacer()
 
                         Button(action: {
+                            showingPopup.toggle()
                         }) {
                             Image("PlaylistAddButton").renderingMode(.original).resizable().frame(width: 40, height: 40)
                         }
@@ -179,6 +183,11 @@ struct PlayerView: View {
                     .padding(.horizontal, 30)
 
                     Spacer()
+                }
+                if (showingPopup) {
+                    PopupView(showingPopup: $showingPopup) {
+                        PlaylistRegisterView(persistentId: musicPlayer.song!.persistentId, showingPopup: $showingPopup, height: geometry.size.height)
+                    }
                 }
             }
         }
