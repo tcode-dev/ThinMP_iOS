@@ -49,7 +49,8 @@ class ArtistRepository {
 
         query.addFilterPredicate(property)
 
-        return query.collections!.map{SongModel(media: $0)}
+        return query.collections!.sorted(by: { String($0.representativeItem?.albumTitle ?? "") < String($1.representativeItem?.albumTitle ?? "") })
+        .map{SongModel(media: $0)}
     }
 
     func findByIds(persistentIds: [MPMediaEntityPersistentID]) -> [ArtistModel] {
