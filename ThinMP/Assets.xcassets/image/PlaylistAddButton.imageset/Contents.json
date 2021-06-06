@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "queue_music-black-48dp.svg",
+      "filename" : "playlist_add_black_24dp.svg",
       "idiom" : "universal"
     },
     {
@@ -11,7 +11,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "queue_music-white-48dp.svg",
+      "filename" : "playlist_add_white_24dp.svg",
       "idiom" : "universal"
     }
   ],
