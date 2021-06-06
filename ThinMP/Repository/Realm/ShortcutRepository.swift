@@ -16,7 +16,7 @@ struct ShortcutRepository {
     }
 
     func findAll() -> [ShortcutModel] {
-        return Array(realm.objects(ShortcutModel.self).sorted(byKeyPath: "order"))
+        return Array(realm.objects(ShortcutModel.self).sorted(byKeyPath: "order", ascending: false))
     }
 
     func add(itemId: ShortcutItemIdProtocol, type: ShortcutType) {
