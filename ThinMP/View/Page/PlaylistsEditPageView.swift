@@ -11,7 +11,7 @@ struct PlaylistsEditPageView: View {
     @Environment(\.editMode) var editMode
     @Environment(\.presentationMode) var presentation
 
-    @ObservedObject public var vm: PlaylistViewModel
+    @ObservedObject public var vm: PlaylistsViewModel
 
     var body: some View {
         GeometryReader { geometry in

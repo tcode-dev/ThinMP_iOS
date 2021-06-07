@@ -15,7 +15,7 @@ struct PlaylistRegisterView: View {
     private let CANCEL_TEXT: String = "CANCEL"
     private let rowHeight: CGFloat = 44
 
-    @StateObject var vm = PlaylistViewModel()
+    @StateObject var vm = PlaylistsViewModel()
     @State private var isCreate: Bool = false
     @State private var name: String = ""
 

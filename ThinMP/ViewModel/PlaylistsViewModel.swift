@@ -5,15 +5,14 @@
 //  Created by tk on 2021/04/09.
 //
 
-import RealmSwift
 import MediaPlayer
 
-class PlaylistViewModel: ViewModelProtocol {
+class PlaylistsViewModel: ViewModelProtocol {
     @Published var list: [PlaylistModel] = []
 
     func fetch() {
-        let playlistRepository = PlaylistRepository()
-        let playlists = playlistRepository.findAll()
+        let playlistsService = PlaylistsService()
+        let playlists = playlistsService.findAll()
 
         DispatchQueue.main.async {
             self.list = playlists

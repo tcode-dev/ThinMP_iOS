@@ -11,8 +11,8 @@ class AlbumsViewModel: ViewModelProtocol {
     @Published var albums: [AlbumModel] = []
 
     func fetch() {
-        let repository = AlbumRepository()
-        let albums: [AlbumModel] = repository.findAll()
+        let albumsService = AlbumsService()
+        let albums: [AlbumModel] = albumsService.findAll()
 
         DispatchQueue.main.async {
             self.albums = albums

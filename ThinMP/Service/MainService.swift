@@ -5,8 +5,6 @@
 //  Created by tk on 2021/06/02.
 //
 
-import Foundation
-import RealmSwift
 import MediaPlayer
 
 struct MainService {

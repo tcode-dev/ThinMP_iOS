@@ -5,7 +5,6 @@
 //  Created by tk on 2021/05/30.
 //
 
-import RealmSwift
 import MediaPlayer
 
 struct PlaylistDetailService {

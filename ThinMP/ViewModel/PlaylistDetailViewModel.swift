@@ -5,7 +5,6 @@
 //  Created by tk on 2021/04/11.
 //
 
-import RealmSwift
 import MediaPlayer
 
 class PlaylistDetailViewModel: ViewModelProtocol {

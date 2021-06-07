@@ -11,8 +11,8 @@ class SongsViewModel: ViewModelProtocol {
     @Published var songs: [SongModel] = []
 
     func fetch() {
-        let repository = SongRepository()
-        let songs = repository.findAll()
+        let songsService = SongsService()
+        let songs = songsService.findAll()
 
         DispatchQueue.main.async {
             self.songs = songs

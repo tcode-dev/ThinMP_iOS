@@ -11,8 +11,8 @@ class ArtistsViewModel: ViewModelProtocol {
     @Published var artists: [ArtistModel] = []
 
     func fetch() {
-        let repository = ArtistRepository()
-        let artists = repository.findAll()
+        let artistsService = ArtistsService()
+        let artists = artistsService.findAll()
 
         DispatchQueue.main.async {
             self.artists = artists
