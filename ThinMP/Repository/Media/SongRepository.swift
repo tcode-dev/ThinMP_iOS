@@ -30,4 +30,21 @@ class SongRepository {
 
         return Array(sorted)
     }
+
+    func findByAlbumId(persistentId: MPMediaEntityPersistentID) -> [SongModel] {
+        let property = MPMediaPropertyPredicate(value: persistentId, forProperty: MPMediaItemPropertyAlbumPersistentID)
+        let query = MPMediaQuery.songs()
+
+        query.addFilterPredicate(property)
+
+        return query.collections!.map{SongModel(media: $0)}
+    }
+
+    func findByAlbumIds(persistentIds: [MPMediaEntityPersistentID]) -> [SongModel] {
+        return Array(
+            persistentIds
+                .map { findByAlbumId(persistentId: $0)}
+                .joined()
+        )
+    }
 }

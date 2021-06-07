@@ -9,9 +9,10 @@ import MediaPlayer
 
 struct AlbumDetailService {
     func findById(persistentId: MPMediaEntityPersistentID) -> AlbumDetailModel {
-        let repository = AlbumRepository()
-        let album = repository.findById(persistentId: persistentId)
-        let songs = repository.findSongsById(persistentId: persistentId)
+        let albumRepository = AlbumRepository()
+        let songRepository = SongRepository()
+        let album = albumRepository.findById(persistentId: persistentId)
+        let songs = songRepository.findByAlbumId(persistentId: persistentId)
 
         return AlbumDetailModel(persistentId: album?.persistentId, primaryText: album?.primaryText, secondaryText: album?.secondaryText, artwork: album?.artwork, songs: songs)
     }

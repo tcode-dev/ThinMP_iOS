@@ -32,27 +32,6 @@ class ArtistRepository {
         }.first
     }
 
-    func findAlbumsById(persistentId: MPMediaEntityPersistentID) -> [AlbumModel] {
-        let property = MPMediaPropertyPredicate(value: persistentId, forProperty: MPMediaItemPropertyArtistPersistentID)
-        let query = MPMediaQuery.albums()
-
-        query.addFilterPredicate(property)
-
-        return query.collections!.sorted(by: { String($0.representativeItem?.albumTitle ?? "") < String($1.representativeItem?.albumTitle ?? "") })
-            .map{AlbumModel(persistentId: $0.representativeItem?.albumPersistentID, primaryText: $0.representativeItem?.albumTitle, secondaryText: $0.representativeItem?.artist, artwork: $0.representativeItem?.artwork)
-        }
-    }
-
-    func findSongsById(persistentId: MPMediaEntityPersistentID) -> [SongModel] {
-        let property = MPMediaPropertyPredicate(value: persistentId, forProperty: MPMediaItemPropertyArtistPersistentID)
-        let query = MPMediaQuery.songs()
-
-        query.addFilterPredicate(property)
-
-        return query.collections!.sorted(by: { String($0.representativeItem?.albumTitle ?? "") < String($1.representativeItem?.albumTitle ?? "") })
-        .map{SongModel(media: $0)}
-    }
-
     func findByIds(persistentIds: [MPMediaEntityPersistentID]) -> [ArtistModel] {
         let property = MPMediaPropertyPredicate(value: false, forProperty: MPMediaItemPropertyIsCloudItem)
         let query = MPMediaQuery.artists()
