@@ -1,5 +1,5 @@
 //
-//  BaseViewModel.swift
+//  ViewModelProtocol.swift
 //  ThinMP
 //
 //  Created by tk on 2021/04/10.

@@ -1,5 +1,5 @@
 //
-//  PlaylistViewModel.swift
+//  PlaylistsViewModel.swift
 //  ThinMP
 //
 //  Created by tk on 2021/04/09.

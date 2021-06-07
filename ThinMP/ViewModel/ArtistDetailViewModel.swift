@@ -1,5 +1,5 @@
 //
-//  ArtistDetail.swift
+//  ArtistDetailViewModel.swift
 //  ThinMP
 //
 //  Created by tk on 2020/01/08.
