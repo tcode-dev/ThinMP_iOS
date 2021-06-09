@@ -30,7 +30,13 @@ struct MainPageView: View {
                     ScrollView {
                         VStack(alignment: .leading) {
                             Spacer()
-                            Text(LIBRARY).fontWeight(.bold).font(.largeTitle)
+                            HStack {
+                                Text(LIBRARY).fontWeight(.bold).font(.largeTitle)
+                                Spacer()
+                                EditButtonView {
+                                    MainEditPageView(vm: vm)
+                                }
+                            }
                             Divider()
                         }
                         .frame(height: geometry.safeAreaInsets.top + HEADER_HEIGHT)

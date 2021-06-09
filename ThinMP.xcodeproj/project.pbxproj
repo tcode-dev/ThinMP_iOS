@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5208604F266F9F73000155C2 /* MainEditPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5208604E266F9F73000155C2 /* MainEditPageView.swift */; };
 		5208A24723CB383000AA4433 /* AlbumCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5208A24623CB383000AA4433 /* AlbumCellView.swift */; };
 		5210DE0C26232EC1005829BA /* PlaylistDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5210DE0B26232EC1005829BA /* PlaylistDetailViewModel.swift */; };
 		5210DE1026233721005829BA /* PlaylistDetailHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5210DE0F26233721005829BA /* PlaylistDetailHeaderView.swift */; };
@@ -113,6 +114,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5208604E266F9F73000155C2 /* MainEditPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainEditPageView.swift; sourceTree = "<group>"; };
 		5208A24623CB383000AA4433 /* AlbumCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumCellView.swift; sourceTree = "<group>"; };
 		5210DE0B26232EC1005829BA /* PlaylistDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistDetailViewModel.swift; sourceTree = "<group>"; };
 		5210DE0F26233721005829BA /* PlaylistDetailHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistDetailHeaderView.swift; sourceTree = "<group>"; };
@@ -343,6 +345,7 @@
 				52A75C3B25A04C0E0073C01B /* FavoriteArtistsPageView.swift */,
 				52481CDD25EB2EEB004DFAEB /* FavoriteSongsEditPageView.swift */,
 				524A76E225E4EDBF0020443E /* FavoriteSongsPageView.swift */,
+				5208604E266F9F73000155C2 /* MainEditPageView.swift */,
 				52CCDAD423C050E9000C474A /* MainPageView.swift */,
 				52C5FA4D2641711C00B6269C /* PlaylistDetailEditPageView.swift */,
 				527B87092612974100CB5BEB /* PlaylistDetailPageView.swift */,
@@ -694,6 +697,7 @@
 				52CCDAD523C050E9000C474A /* MainPageView.swift in Sources */,
 				5279F0C423D51F7D0053BF55 /* ArtistAlbumCellView.swift in Sources */,
 				527177A42663CA4A00390A32 /* ShortcutListView.swift in Sources */,
+				5208604F266F9F73000155C2 /* MainEditPageView.swift in Sources */,
 				52CEABF52642EABD000A3958 /* FavoriteArtistRepository.swift in Sources */,
 				527177AD2663E21900390A32 /* ArtistDetailService.swift in Sources */,
 				522366D623D7BADF0001624E /* CircleImageView.swift in Sources */,
