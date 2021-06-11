@@ -16,13 +16,3 @@ enum LabelConstant {
     static let shortcuts: String = "Shortcuts"
     static let recentlyAdded: String = "Recently Added"
 }
-extension LabelConstant {
-    enum MenuType: String, CaseIterable {
-        case artists
-        case albums
-        case songs
-        case favoriteArtists
-        case favoriteSongs
-        case playlists
-    }
-}

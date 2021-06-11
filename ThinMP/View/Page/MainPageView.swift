@@ -21,8 +21,8 @@ struct MainPageView: View {
 
     init() {
         menus = mainMenuConfig.getList()
-        print(LabelConstant.MenuType.allCases)
     }
+
     var body: some View {
         GeometryReader { geometry in
             NavigationView {
@@ -68,6 +68,7 @@ struct MainPageView: View {
                 .navigationBarTitle(Text(""))
                 .edgesIgnoringSafeArea(.all)
                 .onAppear() {
+                    menus = mainMenuConfig.getList()
                     vm.load()
                 }
             }
