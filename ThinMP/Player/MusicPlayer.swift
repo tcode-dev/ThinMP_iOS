@@ -216,7 +216,7 @@ class MusicPlayer: ObservableObject {
     func shuffle() {
         shuffleMode = !shuffleMode
         playingList.shuffle(shuffleMode: shuffleMode)
-        playerConfig.setShuffle(shuffle: shuffleMode)
+        playerConfig.setShuffle(value: shuffleMode)
     }
 
     func setFavoriteArtist() {

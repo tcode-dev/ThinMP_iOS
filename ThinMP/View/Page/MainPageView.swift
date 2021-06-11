@@ -8,21 +8,21 @@
 import SwiftUI
 
 struct MainPageView: View {
-    private let LIBRARY: String = "Library"
-    private let ARTISTS: String = "Artists"
-    private let ALBUMS: String = "Albums"
-    private let SONGS: String = "Songs"
-    private let FAVORITE_ARTISTS: String = "Favorite Artists"
-    private let FAVORITE_SONGS: String = "Favorite Songs"
-    private let PLAYLISTS: String = "Playlists"
     private let RECENTLY_ADDED: String = "Recently Added"
     private let SHORTCUTS: String = "Shortcuts"
 
     private var HEADER_HEIGHT: CGFloat = 90
     private var ROW_HEIGHT: CGFloat = 44
 
-    @StateObject private var vm = MainViewModel()
+    private let mainMenuConfig = MainMenuConfig()
 
+    @StateObject private var vm = MainViewModel()
+    @State private var menus: [MenuItem]
+
+    init() {
+        menus = mainMenuConfig.getList()
+        print(LabelConstant.MenuType.allCases)
+    }
     var body: some View {
         GeometryReader { geometry in
             NavigationView {
@@ -31,7 +31,7 @@ struct MainPageView: View {
                         VStack(alignment: .leading) {
                             Spacer()
                             HStack {
-                                Text(LIBRARY).fontWeight(.bold).font(.largeTitle)
+                                Text(LabelConstant.library).fontWeight(.bold).font(.largeTitle)
                                 Spacer()
                                 EditButtonView {
                                     MainEditPageView(vm: vm)
@@ -42,40 +42,8 @@ struct MainPageView: View {
                         .frame(height: geometry.safeAreaInsets.top + HEADER_HEIGHT)
                         .padding(.leading, 20)
                         VStack {
-                            VStack {
-                                NavigationLink(destination: ArtistsPageView()) {
-                                    MediaRowView(media: MenuModel(primaryText: ARTISTS))
-                                }
-                                Divider()
-                            }
-                            VStack {
-                                NavigationLink(destination: AlbumsPageView()) {
-                                    MediaRowView(media: MenuModel(primaryText: ALBUMS))
-                                }
-                                Divider()
-                            }
-                            VStack {
-                                NavigationLink(destination: SongsPageView()) {
-                                    MediaRowView(media: MenuModel(primaryText: SONGS))
-                                }
-                                Divider()
-                            }
-                            VStack {
-                                NavigationLink(destination: FavoriteArtistsPageView()) {
-                                    MediaRowView(media: MenuModel(primaryText: FAVORITE_ARTISTS))
-                                }
-                                Divider()
-                            }
-                            VStack {
-                                NavigationLink(destination: FavoriteSongsPageView()) {
-                                    MediaRowView(media: MenuModel(primaryText: FAVORITE_SONGS))
-                                }
-                                Divider()
-                            }
-                            VStack {
-                                NavigationLink(destination: PlaylistsPageView()) {
-                                    MediaRowView(media: MenuModel(primaryText: PLAYLISTS))
-                                }
+                            ForEach(menus) { menu in
+                                MainMenuButtonView(type: menu.name)
                                 Divider()
                             }
                         }

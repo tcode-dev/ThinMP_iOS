@@ -7,6 +7,7 @@
 
 import MediaPlayer
 
-struct MenuModel: MediaProtocol {
+struct MenuModel: MediaProtocol, Identifiable {
+    var id = UUID()
     var primaryText: String?
 }
