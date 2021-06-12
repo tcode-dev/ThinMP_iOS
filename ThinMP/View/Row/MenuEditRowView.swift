@@ -20,14 +20,13 @@ struct MenuEditRowView: View {
     var body: some View {
         HStack(alignment: .center) {
             CheckboxButton()
-                .renderingMode(.original).resizable().frame(width: 30, height: 30)
-                .frame(width: 44, height: 44)
-                .onTapGesture {
-                    menu.toggleVisibility()
-                }
+                .renderingMode(.original).resizable().frame(width: 24, height: 24)
+                .frame(width: 36, height: 36)
             PrimaryTextView(menu.primaryText)
-                .frame(height: 44)
             Spacer()
+        }
+        .onTapGesture {
+            menu.toggleVisibility()
         }
     }
     
