@@ -14,14 +14,7 @@ struct MainPageView: View {
     private var HEADER_HEIGHT: CGFloat = 90
     private var ROW_HEIGHT: CGFloat = 44
 
-    private let mainMenuConfig = MainMenuConfig()
-
     @StateObject private var vm = MainViewModel()
-    @State private var menus: [MenuItem]
-
-    init() {
-        menus = mainMenuConfig.getList()
-    }
 
     var body: some View {
         GeometryReader { geometry in
@@ -34,7 +27,7 @@ struct MainPageView: View {
                                 Text(LabelConstant.library).fontWeight(.bold).font(.largeTitle)
                                 Spacer()
                                 EditButtonView {
-                                    MainEditPageView(vm: vm)
+                                    MainEditPageView()
                                 }
                             }
                             Divider()
@@ -42,9 +35,11 @@ struct MainPageView: View {
                         .frame(height: geometry.safeAreaInsets.top + HEADER_HEIGHT)
                         .padding(.leading, 20)
                         VStack {
-                            ForEach(menus) { menu in
-                                MainMenuButtonView(type: menu.name)
-                                Divider()
+                            ForEach(vm.menus.indices, id: \.self) { index in
+                                if (vm.menus[index].visibility) {
+                                    MainMenuButtonView(type: vm.menus[index].primaryText!)
+                                    Divider()
+                                }
                             }
                         }
                         .padding(.leading, 20)
@@ -68,7 +63,6 @@ struct MainPageView: View {
                 .navigationBarTitle(Text(""))
                 .edgesIgnoringSafeArea(.all)
                 .onAppear() {
-                    menus = mainMenuConfig.getList()
                     vm.load()
                 }
             }

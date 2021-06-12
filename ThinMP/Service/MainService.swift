@@ -66,4 +66,10 @@ struct MainService {
             return shortcut
         }
     }
+
+    func getMenus() -> [MenuModel] {
+        let mainMenuConfig = MainMenuConfig()
+
+        return mainMenuConfig.getList()
+    }
 }

@@ -8,29 +8,14 @@
 import SwiftUI
 
 struct MainEditPageView: View {
-    private let ARTISTS: String = "Artists"
-    private let ALBUMS: String = "Albums"
-    private let SONGS: String = "Songs"
-    private let FAVORITE_ARTISTS: String = "Favorite Artists"
-    private let FAVORITE_SONGS: String = "Favorite Songs"
-    private let PLAYLISTS: String = "Playlists"
-
     private let RECENTLY_ADDED: String = "Recently Added"
     private let SHORTCUTS: String = "Shortcuts"
 
     @Environment(\.editMode) var editMode
     @Environment(\.presentationMode) var presentation
 
-    @ObservedObject public var vm: MainViewModel
-    // データコレクションの準備
-    @State private var list = [
-        MenuModel(primaryText: "Artists"),
-        MenuModel(primaryText: "Albums"),
-        MenuModel(primaryText: "Songs"),
-        MenuModel(primaryText: "Favorite Artists"),
-        MenuModel(primaryText: "Favorite Songs"),
-        MenuModel(primaryText: "Playlists")
-    ]
+    @StateObject private var vm = MainViewModel()
+
     var body: some View {
         GeometryReader { geometry in
             VStack(spacing: 0) {
@@ -53,10 +38,10 @@ struct MainEditPageView: View {
                 }
                 VStack(alignment: .leading) {
                     List {
-                        ForEach (list) { menu in
+                        ForEach (vm.menus, id: \.id) { menu in
                             MediaRowView(media: menu)
                         }
-                        .onMove(perform: move)
+                        .onMove(perform: moveMenu)
                     }
 
                 }
@@ -64,10 +49,14 @@ struct MainEditPageView: View {
             .navigationBarHidden(true)
             .navigationBarTitle(Text(""))
             .edgesIgnoringSafeArea(.all)
+            .onAppear() {
+                vm.load()
+            }
         }
     }
-    func move(source: IndexSet, destination: Int) {
-        //        vm.songs.move(fromOffsets: source, toOffset: destination)
+
+    func moveMenu(source: IndexSet, destination: Int) {
+        vm.menus.move(fromOffsets: source, toOffset: destination)
     }
 
     func delete(offsets: IndexSet) {
@@ -75,7 +64,10 @@ struct MainEditPageView: View {
     }
 
     func update() {
+        let mainMenuConfig = MainMenuConfig()
+        let menus = vm.menus.map {$0.primaryText!}
 
+        mainMenuConfig.setSort(value: menus)
     }
 
     func back() {

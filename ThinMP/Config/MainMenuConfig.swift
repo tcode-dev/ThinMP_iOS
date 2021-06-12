@@ -7,11 +7,6 @@
 
 import Foundation
 
-struct MenuItem: Identifiable {
-    var id: Int
-    var name: String
-}
-
 class MainMenuConfig {
     private let KEY_SORT = "sort"
 
@@ -43,11 +38,10 @@ class MainMenuConfig {
         UserDefaults.standard.set(value, forKey: key)
     }
 
-    func getList() -> [MenuItem] {
+    func getList() -> [MenuModel] {
         return getSort()
-            .filter {getVisibility(key: $0)}
             .enumerated()
-            .map{MenuItem(id: $0.offset, name: $0.element)}
+            .map{MenuModel(primaryText: $0.element, visibility: getVisibility(key: $0.element))}
     }
 
     private func getSort() -> [String] {
