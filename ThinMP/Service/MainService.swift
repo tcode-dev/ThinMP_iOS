@@ -67,9 +67,21 @@ struct MainService {
         }
     }
 
-    func getMenus() -> [MenuModel] {
-        let mainMenuConfig = MainMenuConfig()
+    func getMainMenus() -> [MenuModel] {
+        let config = MainMenuConfig()
 
-        return mainMenuConfig.getList()
+        return config.getList()
+    }
+
+    func getShortcutMenu() -> MenuModel {
+        let config = MainSectionConfig()
+
+        return config.getShortcut()
+    }
+
+    func getRecentlyMenu() -> MenuModel {
+        let config = MainSectionConfig()
+
+        return config.getRecently()
     }
 }

@@ -25,7 +25,7 @@ class MainMenuConfig {
             LabelConstant.favoriteArtists: true,
             LabelConstant.favoriteSongs: true,
             LabelConstant.playlists: true,
-            LabelConstant.shortcuts: true,
+            LabelConstant.shortcut: true,
             LabelConstant.recentlyAdded: true
         ])
     }

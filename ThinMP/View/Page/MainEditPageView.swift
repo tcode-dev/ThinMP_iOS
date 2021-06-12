@@ -41,10 +41,12 @@ struct MainEditPageView: View {
                         ForEach (vm.menus) { menu in
                             GeometryReader { menuGeometry in
                                 MenuEditRowView(menu: menu)
-                                    .padding(.leading, -abs(menuGeometry.frame(in: .global).minX) + 10)
+                                    .padding(.leading, -abs(menuGeometry.frame(in: .global).minX) + 16)
                             }
                         }
                         .onMove(perform: moveMenu)
+                        MenuEditRowView(menu: vm.shortcutMenu)
+                        MenuEditRowView(menu: vm.recentlyMenu)
                     }
                 }
             }
@@ -57,6 +59,10 @@ struct MainEditPageView: View {
         }
     }
 
+    func mainMenu(x: CGFloat) {
+
+    }
+
     func moveMenu(source: IndexSet, destination: Int) {
         vm.menus.move(fromOffsets: source, toOffset: destination)
     }
@@ -67,6 +73,7 @@ struct MainEditPageView: View {
 
     func update() {
         let mainMenuConfig = MainMenuConfig()
+        let mainSectionConfig = MainSectionConfig()
         let menus = vm.menus.map {$0.primaryText!}
 
         mainMenuConfig.setSort(value: menus)
@@ -74,6 +81,9 @@ struct MainEditPageView: View {
         vm.menus.forEach{
             mainMenuConfig.setVisibility(value: $0.visibility, key: $0.primaryText!)
         }
+
+        mainSectionConfig.setShortcutVisibility(value: vm.shortcutMenu.visibility)
+        mainSectionConfig.setRecentlyVisibility(value: vm.recentlyMenu.visibility)
     }
 
     func back() {

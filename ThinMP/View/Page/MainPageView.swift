@@ -8,9 +8,6 @@
 import SwiftUI
 
 struct MainPageView: View {
-    private let RECENTLY_ADDED: String = "Recently Added"
-    private let SHORTCUTS: String = "Shortcuts"
-
     private var HEADER_HEIGHT: CGFloat = 90
     private var ROW_HEIGHT: CGFloat = 44
 
@@ -44,17 +41,21 @@ struct MainPageView: View {
                         }
                         .padding(.leading, 20)
                         .padding(.bottom, 20)
-                        VStack(alignment: .leading) {
-                            PrimaryTitleView(SHORTCUTS)
-                                .padding(.leading, 20)
-                            ShortcutListView(list: vm.shortcuts, width: geometry.size.width)
-                                .padding(.bottom, 10)
+                        if (vm.shortcutMenu.visibility) {
+                            VStack(alignment: .leading) {
+                                PrimaryTitleView(vm.shortcutMenu.primaryText)
+                                    .padding(.leading, 20)
+                                ShortcutListView(list: vm.shortcuts, width: geometry.size.width)
+                                    .padding(.bottom, 10)
+                            }
                         }
-                        VStack(alignment: .leading) {
-                            PrimaryTitleView(RECENTLY_ADDED)
-                                .padding(.leading, 20)
-                            AlbumListView(list: vm.albums, width: geometry.size.width)
-                                .padding(.bottom, 10)
+                        if (vm.recentlyMenu.visibility) {
+                            VStack(alignment: .leading) {
+                                PrimaryTitleView(vm.recentlyMenu.primaryText)
+                                    .padding(.leading, 20)
+                                AlbumListView(list: vm.albums, width: geometry.size.width)
+                                    .padding(.bottom, 10)
+                            }
                         }
                     }
                     MiniPlayerView(bottom: geometry.safeAreaInsets.bottom)
