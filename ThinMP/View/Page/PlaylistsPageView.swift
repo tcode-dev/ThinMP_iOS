@@ -10,7 +10,8 @@ import SwiftUI
 struct PlaylistsPageView: View {
     private let TITLE: String = "Playlists"
 
-    @StateObject private var playlists = PlaylistsViewModel()
+    @StateObject private var vm = PlaylistsViewModel()
+
     @State private var headerRect: CGRect = CGRect()
 
     var body: some View {
@@ -24,17 +25,17 @@ struct PlaylistsPageView: View {
                             PrimaryTextView(TITLE)
                             Spacer()
                             EditButtonView {
-                                PlaylistsEditPageView(vm: playlists)
+                                PlaylistsEditPageView(vm: vm)
                             }
                         }
                     }
                     ScrollView() {
                         VStack(alignment: .leading) {
-                            ListEmptyHeaderView(headerRect: self.$headerRect, top: geometry.safeAreaInsets.top)
+                            ListEmptyHeaderView(headerRect: $headerRect, top: geometry.safeAreaInsets.top)
                             LazyVStack() {
-                                ForEach(self.playlists.list.indices, id: \.self) { index in
-                                    NavigationLink(destination: PlaylistDetailPageView(playlistId: self.playlists.list[index].id)) {
-                                        MediaRowView(media: self.playlists.list[index])
+                                ForEach(vm.playlists.indices, id: \.self) { index in
+                                    NavigationLink(destination: PlaylistDetailPageView(playlistId: vm.playlists[index].id)) {
+                                        MediaRowView(media: vm.playlists[index])
                                     }
                                     Divider()
                                 }.padding(.leading, 10)
@@ -49,7 +50,7 @@ struct PlaylistsPageView: View {
             .navigationBarTitle(Text(""))
             .edgesIgnoringSafeArea(.all)
             .onAppear() {
-                playlists.load()
+                vm.load()
             }
         }
     }

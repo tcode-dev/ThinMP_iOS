@@ -35,7 +35,7 @@ struct PlaylistsEditPageView: View {
                 }
                 VStack(alignment: .leading) {
                     List {
-                        ForEach (vm.list, id: \.id) { playlist in
+                        ForEach (vm.playlists, id: \.id) { playlist in
                             MediaRowView(media: playlist)
                         }
                         .onMove(perform: move)
@@ -50,16 +50,16 @@ struct PlaylistsEditPageView: View {
     }
 
     func move(source: IndexSet, destination: Int) {
-        vm.list.move(fromOffsets: source, toOffset: destination)
+        vm.playlists.move(fromOffsets: source, toOffset: destination)
     }
 
     func delete(offsets: IndexSet) {
-        vm.list.remove(atOffsets: offsets)
+        vm.playlists.remove(atOffsets: offsets)
     }
 
     func update() {
         let playlistRegister = PlaylistRegister()
 
-        playlistRegister.update(playlistIds: vm.list.map{$0.id})
+        playlistRegister.update(playlistIds: vm.playlists.map{$0.id})
     }
 }
