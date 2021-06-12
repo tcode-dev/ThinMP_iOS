@@ -38,12 +38,14 @@ struct MainEditPageView: View {
                 }
                 VStack(alignment: .leading) {
                     List {
-                        ForEach (vm.menus, id: \.id) { menu in
-                            MediaRowView(media: menu)
+                        ForEach (vm.menus) { menu in
+                            GeometryReader { menuGeometry in
+                                MenuEditRowView(menu: menu)
+                                    .padding(.leading, -abs(menuGeometry.frame(in: .global).minX) + 10)
+                            }
                         }
                         .onMove(perform: moveMenu)
                     }
-
                 }
             }
             .navigationBarHidden(true)
@@ -68,6 +70,10 @@ struct MainEditPageView: View {
         let menus = vm.menus.map {$0.primaryText!}
 
         mainMenuConfig.setSort(value: menus)
+
+        vm.menus.forEach{
+            mainMenuConfig.setVisibility(value: $0.visibility, key: $0.primaryText!)
+        }
     }
 
     func back() {

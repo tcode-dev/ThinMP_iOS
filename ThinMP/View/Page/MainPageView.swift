@@ -37,7 +37,7 @@ struct MainPageView: View {
                         VStack {
                             ForEach(vm.menus.indices, id: \.self) { index in
                                 if (vm.menus[index].visibility) {
-                                    MainMenuButtonView(type: vm.menus[index].primaryText!)
+                                    MainMenuButtonView(menu: vm.menus[index])
                                     Divider()
                                 }
                             }

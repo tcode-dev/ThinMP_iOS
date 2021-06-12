@@ -8,34 +8,34 @@
 import SwiftUI
 
 struct MainMenuButtonView: View {
-    let type: String
+    let menu: MenuModel
 
     var body: some View {
         Group {
-            switch type {
+            switch menu.primaryText {
             case LabelConstant.artists:
                 NavigationLink(destination: ArtistsPageView()) {
-                    MediaRowView(media: MenuModel(primaryText: LabelConstant.artists))
+                    MediaRowView(media: menu)
                 }
             case LabelConstant.albums:
                 NavigationLink(destination: AlbumsPageView()) {
-                    MediaRowView(media: MenuModel(primaryText: LabelConstant.albums))
+                    MediaRowView(media: menu)
                 }
             case LabelConstant.songs:
                 NavigationLink(destination: SongsPageView()) {
-                    MediaRowView(media: MenuModel(primaryText: LabelConstant.songs))
+                    MediaRowView(media: menu)
                 }
             case LabelConstant.favoriteArtists:
                 NavigationLink(destination: FavoriteArtistsPageView()) {
-                    MediaRowView(media: MenuModel(primaryText: LabelConstant.favoriteArtists))
+                    MediaRowView(media: menu)
                 }
             case LabelConstant.favoriteSongs:
                 NavigationLink(destination: FavoriteSongsPageView()) {
-                    MediaRowView(media: MenuModel(primaryText: LabelConstant.favoriteSongs))
+                    MediaRowView(media: menu)
                 }
             case LabelConstant.playlists:
                 NavigationLink(destination: PlaylistsPageView()) {
-                    MediaRowView(media: MenuModel(primaryText: LabelConstant.playlists))
+                    MediaRowView(media: menu)
                 }
             default:
                 EmptyView()

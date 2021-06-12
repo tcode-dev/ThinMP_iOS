@@ -7,8 +7,17 @@
 
 import MediaPlayer
 
-struct MenuModel: MediaProtocol, Identifiable {
-    var id = UUID()
-    var primaryText: String?
-    var visibility = true
+class MenuModel: MediaProtocol, Identifiable, ObservableObject {
+    let id = UUID()
+    let primaryText: String?
+    @Published var visibility: Bool
+
+    init(primaryText: String, visibility: Bool) {
+        self.primaryText = primaryText
+        self.visibility = visibility
+    }
+
+    func toggleVisibility() {
+        visibility.toggle()
+    }
 }
