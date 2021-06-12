@@ -43,6 +43,25 @@ struct ShortcutRepository {
         }
     }
 
+    func update(ids: [String]) {
+        delete(ids: ids)
+        sort(ids: ids)
+    }
+
+    private func sort(ids: [String]) {
+        let models = findByIds(ids: ids)
+        let sorted = ids.map { id in
+            models.first{$0.id == id}
+        }
+        let count = sorted.count
+
+        try! realm.write {
+            for (index, model) in sorted.enumerated() {
+                model?.order = count - index
+            }
+        }
+    }
+
     private func add(itemId: String, type: ShortcutType) {
         if (exists(itemId: itemId, type: type)) {
             return
@@ -69,6 +88,24 @@ struct ShortcutRepository {
         try! realm.write {
             realm.delete(model)
         }
+    }
+
+    private func delete(ids: [String]) {
+        let currentIds: [String] = realm.objects(ShortcutModel.self).map{$0.id}
+        let deleteIds = currentIds.filter{ !ids.contains($0)}
+        let models = findByIds(ids: deleteIds)
+
+        if (models.count == 0) {
+            return
+        }
+
+        try! realm.write {
+            realm.delete(models)
+        }
+    }
+
+    private func findByIds(ids: [String]) -> Results<ShortcutModel> {
+        return realm.objects(ShortcutModel.self).filter("id IN %@", ids)
     }
 
     private func exists(itemId: String, type: ShortcutType) -> Bool {

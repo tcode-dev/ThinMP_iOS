@@ -46,6 +46,11 @@ struct MainEditPageView: View {
                         }
                         .onMove(perform: moveMenu)
                         MenuEditRowView(menu: vm.shortcutMenu)
+                        ForEach (vm.shortcuts, id: \.id) { media in
+                            MediaRowView(media: media)
+                        }
+                        .onMove(perform: moveShortcut)
+                        .onDelete(perform: deleteShortcut)
                         MenuEditRowView(menu: vm.recentlyMenu)
                     }
                 }
@@ -59,21 +64,20 @@ struct MainEditPageView: View {
         }
     }
 
-    func mainMenu(x: CGFloat) {
-
-    }
-
     func moveMenu(source: IndexSet, destination: Int) {
         vm.menus.move(fromOffsets: source, toOffset: destination)
     }
 
-    func delete(offsets: IndexSet) {
-        //        vm.songs.remove(atOffsets: offsets)
+    func moveShortcut(source: IndexSet, destination: Int) {
+        vm.shortcuts.move(fromOffsets: source, toOffset: destination)
+    }
+
+    func deleteShortcut(offsets: IndexSet) {
+        vm.shortcuts.remove(atOffsets: offsets)
     }
 
     func update() {
         let mainMenuConfig = MainMenuConfig()
-        let mainSectionConfig = MainSectionConfig()
         let menus = vm.menus.map {$0.primaryText!}
 
         mainMenuConfig.setSort(value: menus)
@@ -82,8 +86,15 @@ struct MainEditPageView: View {
             mainMenuConfig.setVisibility(value: $0.visibility, key: $0.primaryText!)
         }
 
+        let mainSectionConfig = MainSectionConfig()
+
         mainSectionConfig.setShortcutVisibility(value: vm.shortcutMenu.visibility)
         mainSectionConfig.setRecentlyVisibility(value: vm.recentlyMenu.visibility)
+
+        let shortcutRegister = ShortcutRegister()
+        let shortcutIds = vm.shortcuts.map {$0.id}
+
+        shortcutRegister.update(ids: shortcutIds)
     }
 
     func back() {
