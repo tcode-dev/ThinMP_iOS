@@ -18,13 +18,17 @@ struct MenuEditRowView: View {
     }
     
     var body: some View {
-        HStack(alignment: .center) {
-            CheckboxButton().renderingMode(.original)
-            PrimaryTextView(menu.primaryText)
+        VStack {
             Spacer()
-        }
-        .onTapGesture {
-            menu.toggleVisibility()
+            HStack(alignment: .center) {
+                CheckboxButton().renderingMode(.original)
+                PrimaryTextView(menu.primaryText)
+                Spacer()
+            }
+            .onTapGesture {
+                menu.toggleVisibility()
+            }
+            Spacer()
         }
     }
     
