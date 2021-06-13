@@ -40,20 +40,17 @@ struct MainEditPageView: View {
                     List {
                         ForEach (vm.menus) { menu in
                             GeometryReader { menuGeometry in
-                                MenuEditRowView(menu: menu)
-                                    .padding(.leading, -abs(menuGeometry.frame(in: .global).minX) + 10)
+                                MenuEditRowView(menu: menu).frame(height: 40)
                             }
                         }
                         .onMove(perform: moveMenu)
-                        MenuEditRowView(menu: vm.shortcutMenu)
-                            .padding(.leading, -6)
+                        MenuEditRowView(menu: vm.shortcutMenu).padding(.leading, 40)
                         ForEach (vm.shortcuts, id: \.id) { media in
                             MediaRowView(media: media)
                         }
                         .onMove(perform: moveShortcut)
                         .onDelete(perform: deleteShortcut)
-                        MenuEditRowView(menu: vm.recentlyMenu)
-                            .padding(.leading, -6)
+                        MenuEditRowView(menu: vm.recentlyMenu).padding(.leading, 40)
                     }
                 }
             }

@@ -19,9 +19,7 @@ struct MenuEditRowView: View {
     
     var body: some View {
         HStack(alignment: .center) {
-            CheckboxButton()
-                .renderingMode(.original).resizable().frame(width: 24, height: 24)
-                .frame(width: 36, height: 36)
+            CheckboxButton().renderingMode(.original)
             PrimaryTextView(menu.primaryText)
             Spacer()
         }
