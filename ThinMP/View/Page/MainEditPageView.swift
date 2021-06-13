@@ -39,9 +39,7 @@ struct MainEditPageView: View {
                 VStack(alignment: .leading) {
                     List {
                         ForEach (vm.menus) { menu in
-                            GeometryReader { menuGeometry in
-                                MenuEditRowView(menu: menu)
-                            }
+                            MenuEditRowView(menu: menu)
                         }
                         .onMove(perform: moveMenu)
                         MenuEditRowView(menu: vm.shortcutMenu)
