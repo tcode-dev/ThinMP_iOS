@@ -42,12 +42,14 @@ struct MainEditPageView: View {
                             MenuEditRowView(menu: menu)
                         }
                         .onMove(perform: moveMenu)
+                        .listRowInsets(.init())
                         MenuEditRowView(menu: vm.shortcutMenu)
                         ForEach (vm.shortcuts, id: \.id) { media in
                             MediaRowView(media: media)
                         }
                         .onMove(perform: moveShortcut)
                         .onDelete(perform: deleteShortcut)
+                        .listRowInsets(.init())
                         MenuEditRowView(menu: vm.recentlyMenu)
                     }
                 }
