@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MainPageView: View {
-    private var HEADER_HEIGHT: CGFloat = 90
+    private var HEADER_HEIGHT: CGFloat = 70
     private var ROW_HEIGHT: CGFloat = 44
 
     @StateObject private var vm = MainViewModel()
