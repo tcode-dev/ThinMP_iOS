@@ -24,7 +24,9 @@ struct MediaRowView: View {
                     SecondaryTextView(media.secondaryText)
                 }
             }
+            .frame(height: 34)
             Spacer()
         }
+        .padding(5)
     }
 }

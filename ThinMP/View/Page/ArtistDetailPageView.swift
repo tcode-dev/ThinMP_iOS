@@ -49,7 +49,7 @@ struct ArtistDetailPageView: View {
                                     .padding(.bottom, BOTTOM)
                                 PrimaryTitleView(SONGS)
                                     .padding(.leading, LEADING)
-                                LazyVStack() {
+                                LazyVStack(spacing: 0) {
                                     ForEach(vm.songs.indices, id: \.self){ index in
                                         PlayRowView(list: vm.songs, index: index) {
                                             MediaRowView(media: vm.songs[index])

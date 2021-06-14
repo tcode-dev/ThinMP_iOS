@@ -45,7 +45,7 @@ struct PlaylistDetailPageView: View {
                         ScrollView(showsIndicators: true) {
                             VStack(alignment: .leading) {
                                 PlaylistDetailHeaderView(textRect: self.$textRect, side: geometry.size.width, top: geometry.safeAreaInsets.top, name: vm.primaryText, artwork: vm.artwork)
-                                LazyVStack() {
+                                LazyVStack(spacing: 0) {
                                     ForEach(vm.songs.indices, id: \.self){ index in
                                         PlayRowView(list: vm.songs, index: index) {
                                             MediaRowView(media: vm.songs[index])

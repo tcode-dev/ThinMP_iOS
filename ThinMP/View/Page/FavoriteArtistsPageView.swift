@@ -31,7 +31,7 @@ struct FavoriteArtistsPageView: View {
                     ScrollView(showsIndicators: true) {
                         VStack(alignment: .leading) {
                             ListEmptyHeaderView(headerRect: self.$headerRect, top: geometry.safeAreaInsets.top)
-                            LazyVStack() {
+                            LazyVStack(spacing: 0) {
                                 ForEach(vm.artists) { artist in
                                     NavigationLink(destination: ArtistDetailPageView(persistentId: artist.persistentId)) {
                                         MediaRowView(media: artist)

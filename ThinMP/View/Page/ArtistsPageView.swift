@@ -30,7 +30,7 @@ struct ArtistsPageView: View {
                     ScrollView(showsIndicators: true) {
                         VStack(alignment: .leading) {
                             ListEmptyHeaderView(headerRect: self.$headerRect, top: geometry.safeAreaInsets.top)
-                            LazyVStack() {
+                            LazyVStack(spacing: 0) {
                                 ForEach(vm.artists.indices, id: \.self) { index in
                                     NavigationLink(destination: ArtistDetailPageView(persistentId: vm.artists[index].persistentId)) {
                                         MediaRowView(media: vm.artists[index])

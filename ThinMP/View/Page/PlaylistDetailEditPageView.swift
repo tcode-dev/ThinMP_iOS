@@ -54,6 +54,7 @@ struct PlaylistDetailEditPageView: View {
                             }
                             .onMove(perform: move)
                             .onDelete(perform: delete)
+                            .listRowInsets(.init())
                         }
                         if (editing) {
                             VStack {

@@ -40,6 +40,7 @@ struct FavoriteSongsEditPageView: View {
                         }
                         .onMove(perform: move)
                         .onDelete(perform: delete)
+                        .listRowInsets(.init())
                     }
                 }
             }

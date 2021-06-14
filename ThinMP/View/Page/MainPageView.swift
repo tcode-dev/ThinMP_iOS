@@ -27,11 +27,11 @@ struct MainPageView: View {
                                     MainEditPageView()
                                 }
                             }
-                            Divider()
                         }
                         .frame(height: geometry.safeAreaInsets.top + HEADER_HEIGHT)
                         .padding(.leading, 20)
-                        VStack {
+                        VStack(spacing: 0) {
+                            Divider()
                             ForEach(vm.menus.indices, id: \.self) { index in
                                 if (vm.menus[index].visibility) {
                                     MainMenuButtonView(menu: vm.menus[index])
