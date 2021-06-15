@@ -18,7 +18,7 @@ struct FavoriteArtistRepository {
     func findAll() -> [MPMediaEntityPersistentID] {
         let realm = try! Realm()
 
-        return realm.objects(FavoriteArtistModel.self)
+        return realm.objects(FavoriteArtistRealmModel.self)
             .sorted(byKeyPath: "order")
             .map { UInt64(bitPattern: $0.persistentId) as MPMediaEntityPersistentID}
     }
@@ -32,7 +32,7 @@ struct FavoriteArtistRepository {
             return
         }
 
-        let favoriteArtist = FavoriteArtistModel()
+        let favoriteArtist = FavoriteArtistRealmModel()
 
         // MPMediaEntityPersistentID は UInt64のエイリアス
         // realmはUInt64を保存できないのでInt64に変換して保存する
@@ -61,16 +61,16 @@ struct FavoriteArtistRepository {
         bulkInsert(persistentIdList: persistentIdList)
     }
 
-    private func find(persistentId: MPMediaEntityPersistentID) -> Results<FavoriteArtistModel> {
-        return realm.objects(FavoriteArtistModel.self).filter("persistentId = \(Int64(bitPattern: persistentId))")
+    private func find(persistentId: MPMediaEntityPersistentID) -> Results<FavoriteArtistRealmModel> {
+        return realm.objects(FavoriteArtistRealmModel.self).filter("persistentId = \(Int64(bitPattern: persistentId))")
     }
 
     private func incrementOrder() -> Int {
-        return (realm.objects(FavoriteArtistModel.self).max(ofProperty: "order") as Int? ?? 0) + 1
+        return (realm.objects(FavoriteArtistRealmModel.self).max(ofProperty: "order") as Int? ?? 0) + 1
     }
 
     private func truncate() {
-        let results = realm.objects(FavoriteArtistModel.self)
+        let results = realm.objects(FavoriteArtistRealmModel.self)
         if results.count == 0 {
             return
         }
@@ -84,7 +84,7 @@ struct FavoriteArtistRepository {
         realm.beginWrite()
 
         for index in 0..<persistentIdList.count {
-            realm.create(FavoriteArtistModel.self, value: [
+            realm.create(FavoriteArtistRealmModel.self, value: [
                 "persistentId": persistentIdList[index],
                 "order": index
             ])

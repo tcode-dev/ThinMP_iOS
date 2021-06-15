@@ -1,5 +1,5 @@
 //
-//  ShortcutModel.swift
+//  ShortcutRealmModel.swift
 //  ThinMP
 //
 //  Created by tk on 2021/05/08.
@@ -20,7 +20,7 @@ enum ShortcutText: String {
     case PLAYLIST = "Playlist"
 }
 
-class ShortcutModel: Object, MediaProtocol, Identifiable {
+class ShortcutRealmModel: Object, MediaProtocol, Identifiable {
     @objc dynamic var id: String = UUID().uuidString
     @objc dynamic var itemId: String = ""
     @objc dynamic var type: Int = ShortcutType.ARTIST.rawValue

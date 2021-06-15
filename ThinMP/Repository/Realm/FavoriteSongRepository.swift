@@ -16,7 +16,7 @@ struct FavoriteSongRepository {
     }
 
     func findAll() -> [MPMediaEntityPersistentID] {
-        return realm.objects(FavoriteSongModel.self)
+        return realm.objects(FavoriteSongRealmModel.self)
             .sorted(byKeyPath: "order")
             .map { UInt64(bitPattern: $0.persistentId) as MPMediaEntityPersistentID}
     }
@@ -26,7 +26,7 @@ struct FavoriteSongRepository {
             return
         }
 
-        let favoriteSong = FavoriteSongModel()
+        let favoriteSong = FavoriteSongRealmModel()
 
         // MPMediaEntityPersistentID は UInt64のエイリアス
         // realmはUInt64を保存できないのでInt64に変換して保存する
@@ -60,7 +60,7 @@ struct FavoriteSongRepository {
     }
 
     private func truncate() {
-        let results = realm.objects(FavoriteSongModel.self)
+        let results = realm.objects(FavoriteSongRealmModel.self)
         if results.count == 0 {
             return
         }
@@ -74,7 +74,7 @@ struct FavoriteSongRepository {
         realm.beginWrite()
 
         for index in 0..<persistentIdList.count {
-            realm.create(FavoriteSongModel.self, value: [
+            realm.create(FavoriteSongRealmModel.self, value: [
                 "persistentId": persistentIdList[index],
                 "order": index
             ])
@@ -83,11 +83,11 @@ struct FavoriteSongRepository {
         try! realm.commitWrite()
     }
 
-    private func find(persistentId: MPMediaEntityPersistentID) -> Results<FavoriteSongModel> {
-        return realm.objects(FavoriteSongModel.self).filter("persistentId = \(Int64(bitPattern: persistentId))")
+    private func find(persistentId: MPMediaEntityPersistentID) -> Results<FavoriteSongRealmModel> {
+        return realm.objects(FavoriteSongRealmModel.self).filter("persistentId = \(Int64(bitPattern: persistentId))")
     }
 
     private func incrementOrder() -> Int {
-        return (realm.objects(FavoriteSongModel.self).max(ofProperty: "order") as Int? ?? 0) + 1
+        return (realm.objects(FavoriteSongRealmModel.self).max(ofProperty: "order") as Int? ?? 0) + 1
     }
 }

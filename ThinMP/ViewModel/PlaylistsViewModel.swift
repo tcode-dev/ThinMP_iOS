@@ -13,7 +13,7 @@ class PlaylistsViewModel: ViewModelProtocol {
     func fetch() {
         let playlistsService = PlaylistsService()
         let playlists = playlistsService.findAll()
-
+print(playlists)
         DispatchQueue.main.async {
             self.playlists = playlists
         }

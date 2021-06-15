@@ -16,7 +16,7 @@ struct MainService {
         return repository.findRecently(count: COUNT)
     }
 
-    func findShortcuts() -> [ShortcutModel] {
+    func findShortcuts() -> [ShortcutRealmModel] {
         let shortcutRepository = ShortcutRepository()
         let shortcutModels = shortcutRepository.findAll()
         let grouping = Dictionary(grouping: shortcutModels) { shortcutModel -> Int in
@@ -55,7 +55,7 @@ struct MainService {
             shortcutDictionary[ShortcutType.PLAYLIST.rawValue] = playlistDetailService.findByIds(playlistIds: playlistIds)
         }
         
-        return shortcutModels.map { shortcut -> ShortcutModel in
+        return shortcutModels.map { shortcut -> ShortcutRealmModel in
             let shortcut = shortcut
             let dictionary = shortcutDictionary[shortcut.type]
             let model = dictionary!.first { $0.shortcutId == shortcut.itemId }!

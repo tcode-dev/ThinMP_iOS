@@ -13,7 +13,7 @@ struct PlaylistRegisterView: View {
     private let INPUT_TEXT: String = "プレイリスト名を入力"
     private let OK_TEXT: String = "OK"
     private let CANCEL_TEXT: String = "CANCEL"
-    private let rowHeight: CGFloat = 44
+    private let rowHeight: CGFloat = 51
 
     @StateObject var vm = PlaylistsViewModel()
     @State private var isCreate: Bool = false
@@ -56,14 +56,14 @@ struct PlaylistRegisterView: View {
                         Spacer()
                     }
                     .frame(height: 50)
-                    ScrollView(.vertical) {
-                        LazyVStack {
+                    ScrollView() {
+                        LazyVStack(spacing: 0) {
+                            Divider()
                             ForEach(vm.playlists) { playlist in
                                 PlaylistAddRowView(playlistId: playlist.id, persistentId: persistentId, showingPopup: $showingPopup) {
                                     MediaRowView(media: playlist)
                                 }
                                 Divider()
-                                    .frame(height: 1)
                             }
                         }
                     }

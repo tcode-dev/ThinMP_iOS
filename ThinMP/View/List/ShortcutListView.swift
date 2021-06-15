@@ -11,11 +11,11 @@ import MediaPlayer
 struct ShortcutListView: View {
     private let colCount = 2
     private let space: CGFloat = 20
-    private var list: [ShortcutModel]
+    private var list: [ShortcutRealmModel]
     private var size: CGFloat
     private let columns:[GridItem]
 
-    init(list: [ShortcutModel], width: CGFloat) {
+    init(list: [ShortcutRealmModel], width: CGFloat) {
         self.list = list
         self.size = (width - (space * CGFloat(colCount + 1))) / CGFloat(colCount)
         self.columns = [

@@ -11,6 +11,20 @@ struct PlaylistDetailService {
     func findById(playlistId: String) -> PlaylistDetailModel {
         let playlistRepository = PlaylistRepository()
         let playlist = playlistRepository.findById(playlistId: playlistId)
+
+        return createModel(playlist: playlist)
+    }
+
+    func findByIds(playlistIds: [String]) -> [PlaylistDetailModel] {
+        let playlistRepository = PlaylistRepository()
+        let playlists = playlistRepository.findByIds(playlistIds: playlistIds)
+
+        return playlists.map { playlist in
+            return createModel(playlist: playlist)
+        }
+    }
+
+    private func createModel(playlist: PlaylistRealmModel) -> PlaylistDetailModel {
         let playlistSongs = playlist.songs.sorted(byKeyPath: "order")
         let persistentIds = Array(playlistSongs.map { UInt64(bitPattern: $0.persistentId) as MPMediaEntityPersistentID})
         let repository = SongRepository()
@@ -22,24 +36,5 @@ struct PlaylistDetailService {
         })?.artwork
 
         return PlaylistDetailModel(id: playlist.id, primaryText: playlist.name, artwork: artwork, songs: arrayed)
-    }
-
-    func findByIds(playlistIds: [String]) -> [PlaylistDetailModel] {
-        let playlistRepository = PlaylistRepository()
-        let playlists = playlistRepository.findByIds(playlistIds: playlistIds)
-
-        return playlists.map { playlist in
-            let playlistSongs = playlist.songs.sorted(byKeyPath: "order")
-            let persistentIds = Array(playlistSongs.map { UInt64(bitPattern: $0.persistentId) as MPMediaEntityPersistentID})
-            let songRepository = SongRepository()
-            let songs = songRepository.findByIds(persistentIds: persistentIds)
-            let sorted = persistentIds.map{ (persistentId) in songs.first { $0.persistentId == persistentId }!}
-            let arrayed = Array(sorted)
-            let artwork = arrayed.first(where: { (song) -> Bool in
-                (song.artwork != nil)
-            })?.artwork
-
-            return PlaylistDetailModel(id: playlist.id, primaryText: playlist.name, artwork: artwork, songs: [])
-        }
     }
 }

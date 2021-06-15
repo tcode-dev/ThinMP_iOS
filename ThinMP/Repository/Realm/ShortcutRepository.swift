@@ -15,8 +15,8 @@ struct ShortcutRepository {
         realm = try! Realm()
     }
 
-    func findAll() -> [ShortcutModel] {
-        return Array(realm.objects(ShortcutModel.self).sorted(byKeyPath: "order", ascending: false))
+    func findAll() -> [ShortcutRealmModel] {
+        return Array(realm.objects(ShortcutRealmModel.self).sorted(byKeyPath: "order", ascending: false))
     }
 
     func add(itemId: ShortcutItemIdProtocol, type: ShortcutType) {
@@ -67,7 +67,7 @@ struct ShortcutRepository {
             return
         }
 
-        let shortcut = ShortcutModel()
+        let shortcut = ShortcutRealmModel()
 
         shortcut.itemId = itemId
         shortcut.type = type.rawValue
@@ -91,7 +91,7 @@ struct ShortcutRepository {
     }
 
     private func delete(ids: [String]) {
-        let currentIds: [String] = realm.objects(ShortcutModel.self).map{$0.id}
+        let currentIds: [String] = realm.objects(ShortcutRealmModel.self).map{$0.id}
         let deleteIds = currentIds.filter{ !ids.contains($0)}
         let models = findByIds(ids: deleteIds)
 
@@ -104,19 +104,19 @@ struct ShortcutRepository {
         }
     }
 
-    private func findByIds(ids: [String]) -> Results<ShortcutModel> {
-        return realm.objects(ShortcutModel.self).filter("id IN %@", ids)
+    private func findByIds(ids: [String]) -> Results<ShortcutRealmModel> {
+        return realm.objects(ShortcutRealmModel.self).filter("id IN %@", ids)
     }
 
     private func exists(itemId: String, type: ShortcutType) -> Bool {
         return find(itemId: itemId, type: type).count == 1
     }
 
-    private func find(itemId: String, type: ShortcutType) -> Results<ShortcutModel> {
-        return realm.objects(ShortcutModel.self).filter("itemId = '\(itemId)' AND type = \(type.rawValue)")
+    private func find(itemId: String, type: ShortcutType) -> Results<ShortcutRealmModel> {
+        return realm.objects(ShortcutRealmModel.self).filter("itemId = '\(itemId)' AND type = \(type.rawValue)")
     }
 
     private func incrementOrder() -> Int {
-        return (realm.objects(ShortcutModel.self).max(ofProperty: "order") as Int? ?? 0) + 1
+        return (realm.objects(ShortcutRealmModel.self).max(ofProperty: "order") as Int? ?? 0) + 1
     }
 }

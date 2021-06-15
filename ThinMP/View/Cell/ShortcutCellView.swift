@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ShortcutCellView: View {
-    var shortcut: ShortcutModel
+    var shortcut: ShortcutRealmModel
     var size: CGFloat
 
     var body: some View {

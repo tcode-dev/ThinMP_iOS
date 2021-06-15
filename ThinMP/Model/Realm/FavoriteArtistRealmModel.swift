@@ -1,19 +1,19 @@
 //
-//  FavoriteSongModel.swift
+//  FavoriteArtistRealmModel.swift
 //  ThinMP
 //
-//  Created by tk on 2021/02/20.
+//  Created by tk on 2020/12/27.
 //
 
 import Foundation
 import RealmSwift
 
-class FavoriteSongModel: Object {
+class FavoriteArtistRealmModel: Object {
     @objc dynamic var id: String = UUID().uuidString
     @objc dynamic var persistentId: Int64 = 0
     @objc dynamic var order: Int = 1
 
-    override static func primaryKey() -> String {
+    override static func primaryKey() -> String? {
         return "id"
     }
 }
