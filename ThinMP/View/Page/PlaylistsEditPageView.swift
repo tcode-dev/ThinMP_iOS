@@ -11,7 +11,7 @@ struct PlaylistsEditPageView: View {
     @Environment(\.editMode) var editMode
     @Environment(\.presentationMode) var presentation
 
-    @ObservedObject public var vm: PlaylistsViewModel
+    @StateObject private var vm = PlaylistsViewModel()
 
     var body: some View {
         GeometryReader { geometry in
@@ -47,6 +47,9 @@ struct PlaylistsEditPageView: View {
             .navigationBarHidden(true)
             .navigationBarTitle(Text(""))
             .edgesIgnoringSafeArea(.all)
+            .onAppear() {
+                vm.load()
+            }
         }
     }
 
