@@ -13,7 +13,12 @@ struct PlaylistRegisterView: View {
     private let INPUT_TEXT: String = "プレイリスト名を入力"
     private let OK_TEXT: String = "OK"
     private let CANCEL_TEXT: String = "CANCEL"
-    private let rowHeight: CGFloat = 51
+    private let headerHeight: CGFloat = 60
+    private let rowHeight: CGFloat = 50
+    private let outerPadding: CGFloat = 20
+    private let innerPadding: CGFloat = 10
+    private let dividerHeight: CGFloat = 0.5
+
 
     @StateObject var vm = PlaylistsViewModel()
     @State private var isCreate: Bool = false
@@ -24,23 +29,20 @@ struct PlaylistRegisterView: View {
     let height: CGFloat
 
     func getHeight() -> CGFloat? {
-        if (isCreate) {
-            return nil
-        }
+        let panelHeight = CGFloat(vm.playlists.count) * (rowHeight + dividerHeight) + (headerHeight + dividerHeight)
 
-        let panelHeight = CGFloat(vm.playlists.count) * rowHeight + 70
         if (panelHeight > height) {
-            return height - 40
+            return height - (outerPadding * 2)
         } else {
             return panelHeight
         }
     }
 
     var body: some View {
-        VStack {
-            if (!isCreate) {
-                VStack {
-                    HStack {
+        VStack(spacing: 0) {
+            if (vm.playlists.count != 0 && !isCreate) {
+                VStack(spacing: 0) {
+                    HStack() {
                         Spacer()
                         Button(action: {
                             isCreate.toggle()
@@ -55,25 +57,27 @@ struct PlaylistRegisterView: View {
                         }
                         Spacer()
                     }
-                    .frame(height: 50)
+                    .frame(height: headerHeight)
+                    Divider().frame(height: dividerHeight)
                     ScrollView() {
                         LazyVStack(spacing: 0) {
-                            Divider()
                             ForEach(vm.playlists) { playlist in
                                 PlaylistAddRowView(playlistId: playlist.id, persistentId: persistentId, showingPopup: $showingPopup) {
                                     MediaRowView(media: playlist)
                                 }
-                                Divider()
+                                Divider().frame(height: dividerHeight)
                             }
                         }
                     }
                 }
+                .frame(height: getHeight())
+                .padding(.bottom, innerPadding)
             } else {
-                VStack {
+                VStack(spacing: 0) {
                     Text(INPUT_TEXT)
+                        .frame(height: rowHeight)
                     TextField("", text: $name)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .padding()
                     HStack {
                         Spacer()
                         Button(action: {
@@ -92,14 +96,15 @@ struct PlaylistRegisterView: View {
                         }
                         Spacer()
                     }
+                    .frame(height: rowHeight)
                 }
             }
         }
-        .frame(width: .infinity, height: getHeight())
-        .padding(10)
+        .frame(width: .infinity)
+        .padding(.horizontal, innerPadding)
         .background(Color.white)
         .cornerRadius(4)
-        .padding(20)
+        .padding(.horizontal, outerPadding)
         .onAppear() {
             vm.load()
         }
