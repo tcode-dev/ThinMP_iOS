@@ -90,7 +90,11 @@ struct PlaylistRegisterView: View {
                         }
                         Spacer()
                         Button(action: {
-                            isCreate.toggle()
+                            if (vm.playlists.count > 0) {
+                                isCreate.toggle()
+                            } else {
+                                showingPopup.toggle()
+                            }
                         }) {
                             Text(CANCEL_TEXT)
                         }
