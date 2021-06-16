@@ -11,7 +11,7 @@ struct FavoriteArtistsEditPageView: View {
     @Environment(\.editMode) var editMode
     @Environment(\.presentationMode) var presentation
 
-    @ObservedObject public var vm: FavoriteArtistsViewModel
+    @StateObject private var vm = FavoriteArtistsViewModel()
 
     var body: some View {
         GeometryReader { geometry in
@@ -47,6 +47,9 @@ struct FavoriteArtistsEditPageView: View {
             .navigationBarHidden(true)
             .navigationBarTitle(Text(""))
             .edgesIgnoringSafeArea(.all)
+            .onAppear() {
+                vm.load()
+            }
         }
     }
 

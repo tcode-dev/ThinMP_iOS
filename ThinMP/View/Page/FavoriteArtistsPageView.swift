@@ -24,7 +24,7 @@ struct FavoriteArtistsPageView: View {
                             PrimaryTextView(TITLE)
                             Spacer()
                             EditButtonView {
-                                FavoriteArtistsEditPageView(vm: vm)
+                                FavoriteArtistsEditPageView()
                             }
                         }
                     }
