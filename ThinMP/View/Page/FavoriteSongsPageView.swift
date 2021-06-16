@@ -29,7 +29,7 @@ struct FavoriteSongsPageView: View {
                                 PrimaryTextView(TITLE)
                                 Spacer()
                                 EditButtonView {
-                                    FavoriteSongsEditPageView(vm: vm)
+                                    FavoriteSongsEditPageView()
                                 }
                             }
                         }
