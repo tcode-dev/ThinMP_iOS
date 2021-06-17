@@ -37,7 +37,7 @@ struct PlaylistDetailPageView: View {
                                         }
                                     }
                                 }
-                                NavigationLink(destination: PlaylistDetailEditPageView(playlistId: playlistId).environment(\.editMode, $editMode), isActive: $isEdit) {
+                                NavigationLink(destination: PlaylistDetailEditPageView(playlistId: playlistId, primaryText: vm.primaryText).environment(\.editMode, $editMode), isActive: $isEdit) {
                                     EmptyView()
                                 }
                             }

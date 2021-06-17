@@ -17,6 +17,7 @@ struct PlaylistDetailEditPageView: View {
     @State private var editing: Bool = false
 
     let playlistId: String
+    let primaryText: String?
 
     var body: some View {
         GeometryReader { geometry in
@@ -47,7 +48,7 @@ struct PlaylistDetailEditPageView: View {
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding()
                     .onAppear {
-                        name = vm.primaryText ?? ""
+                        name = primaryText ?? ""
                     }
                     ZStack {
                         List {
