@@ -101,6 +101,7 @@ struct PlaylistRegisterView: View {
                     }
                     .frame(height: rowHeight)
                 }
+                .padding(.horizontal, innerPadding)
             }
         }
         .frame(width: .infinity)
