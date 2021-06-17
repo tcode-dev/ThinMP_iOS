@@ -31,10 +31,10 @@ struct PlaylistDetailPageView: View {
                             VStack {
                                 MenuButtonView {
                                     VStack {
-                                        ShortcutButtonView(itemId: playlistId, type: ShortcutType.PLAYLIST)
                                         Button(BUTTON_TEXT) {
                                             self.isEdit = true
                                         }
+                                        ShortcutButtonView(itemId: playlistId, type: ShortcutType.PLAYLIST)
                                     }
                                 }
                                 NavigationLink(destination: PlaylistDetailEditPageView(playlistId: playlistId, primaryText: vm.primaryText).environment(\.editMode, $editMode), isActive: $isEdit) {
