@@ -69,7 +69,7 @@ struct PlaylistDetailPageView: View {
                 }
                 if (showingPopup) {
                     PopupView(showingPopup: self.$showingPopup) {
-                        PlaylistRegisterView(persistentId: playlistRegisterId, showingPopup: $showingPopup, height: geometry.size.height)
+                        PlaylistRegisterView(persistentId: playlistRegisterId, height: geometry.size.height, showingPopup: $showingPopup)
                     }
                 }
             }

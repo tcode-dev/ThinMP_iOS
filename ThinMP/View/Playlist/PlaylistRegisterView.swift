@@ -19,20 +19,19 @@ struct PlaylistRegisterView: View {
     private let innerPadding: CGFloat = 10
     private let dividerHeight: CGFloat = 0.5
 
-
     @StateObject var vm = PlaylistsViewModel()
     @State private var isCreate: Bool = false
     @State private var name: String = ""
 
     let persistentId: MPMediaEntityPersistentID
-    @Binding var showingPopup: Bool
     let height: CGFloat
+    @Binding var showingPopup: Bool
 
     func getHeight() -> CGFloat? {
-        let panelHeight = CGFloat(vm.playlists.count) * (rowHeight + dividerHeight) + (headerHeight + dividerHeight)
+        let panelHeight = headerHeight + (CGFloat(vm.playlists.count) * (rowHeight + dividerHeight)) + innerPadding
 
         if (panelHeight > height) {
-            return height - (outerPadding * 2)
+            return height
         } else {
             return panelHeight
         }
@@ -58,20 +57,20 @@ struct PlaylistRegisterView: View {
                         Spacer()
                     }
                     .frame(height: headerHeight)
-                    Divider().frame(height: dividerHeight)
                     ScrollView() {
                         LazyVStack(spacing: 0) {
                             ForEach(vm.playlists) { playlist in
                                 PlaylistAddRowView(playlistId: playlist.id, persistentId: persistentId, showingPopup: $showingPopup) {
                                     MediaRowView(media: playlist)
                                 }
+                                .frame(height: rowHeight)
                                 Divider().frame(height: dividerHeight)
                             }
                         }
                     }
                 }
-                .frame(height: getHeight())
                 .padding(.bottom, innerPadding)
+                .frame(height: getHeight())
             } else {
                 VStack(spacing: 0) {
                     Text(INPUT_TEXT)

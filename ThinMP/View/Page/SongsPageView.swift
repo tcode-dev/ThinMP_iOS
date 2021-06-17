@@ -60,8 +60,8 @@ struct SongsPageView: View {
                     MiniPlayerView(bottom: geometry.safeAreaInsets.bottom)
                 }
                 if (showingPopup) {
-                    PopupView(showingPopup: self.$showingPopup) {
-                        PlaylistRegisterView(persistentId: playlistRegisterId, showingPopup: self.$showingPopup, height: geometry.size.height)
+                    PopupView(showingPopup: $showingPopup) {
+                        PlaylistRegisterView(persistentId: playlistRegisterId, height: geometry.size.height, showingPopup: $showingPopup)
                     }
                 }
             }

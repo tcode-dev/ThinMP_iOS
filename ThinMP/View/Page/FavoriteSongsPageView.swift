@@ -62,7 +62,7 @@ struct FavoriteSongsPageView: View {
                 }
                 if (showingPopup) {
                     PopupView(showingPopup: $showingPopup) {
-                        PlaylistRegisterView(persistentId: playlistRegisterId, showingPopup: $showingPopup, height: geometry.size.height)
+                        PlaylistRegisterView(persistentId: playlistRegisterId, height: geometry.size.height, showingPopup: $showingPopup)
                     }
                 }
             }
