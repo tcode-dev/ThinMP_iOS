@@ -11,10 +11,12 @@ struct PlaylistDetailEditPageView: View {
     @Environment(\.editMode) var editMode
     @Environment(\.presentationMode) var presentation
 
-    @ObservedObject public var vm: PlaylistDetailViewModel
+    @StateObject private var vm = PlaylistDetailViewModel()
 
     @State private var name: String = ""
     @State private var editing: Bool = false
+
+    let playlistId: String
 
     var body: some View {
         GeometryReader { geometry in
@@ -68,6 +70,9 @@ struct PlaylistDetailEditPageView: View {
             .navigationBarHidden(true)
             .navigationBarTitle(Text(""))
             .edgesIgnoringSafeArea(.all)
+            .onAppear() {
+                vm.load(playlistId: playlistId)
+            }
         }
     }
 
