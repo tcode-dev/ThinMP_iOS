@@ -31,7 +31,7 @@ struct PlaylistRegisterView: View {
         let panelHeight = headerHeight + (CGFloat(vm.playlists.count) * (rowHeight + dividerHeight)) + innerPadding
 
         if (panelHeight > height) {
-            return height
+            return height - (outerPadding * 2)
         } else {
             return panelHeight
         }
