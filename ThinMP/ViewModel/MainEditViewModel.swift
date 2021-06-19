@@ -1,16 +1,16 @@
 //
-//  MainViewModel.swift
+//  MainEditViewModel.swift
 //  ThinMP
 //
-//  Created by tk on 2021/05/07.
+//  Created by tk on 2021/06/19.
 //
 
 import MediaPlayer
 
-class MainViewModel: ViewModelProtocol {
+class MainEditViewModel: ViewModelProtocol {
     @Published var menus: [MenuModel] = []
-    @Published var shortcutMenu = MenuModel(primaryText: "", visibility: false)
-    @Published var recentlyMenu = MenuModel(primaryText: "", visibility: false)
+    @Published var shortcutMenu = MenuModel(primaryText: "", visibility: true)
+    @Published var recentlyMenu = MenuModel(primaryText: "", visibility: true)
     @Published var shortcuts: [ShortcutRealmModel] = []
     @Published var albums: [AlbumModel] = []
 
@@ -19,8 +19,8 @@ class MainViewModel: ViewModelProtocol {
         let menus = mainService.getMainMenus()
         let shortcutMenu = mainService.getShortcutMenu()
         let recentlyMenu = mainService.getRecentlyMenu()
-        let shortcuts = shortcutMenu.visibility ? mainService.findShortcuts() : []
-        let albums = recentlyMenu.visibility ? mainService.findRecentlyAlbums() : []
+        let shortcuts = mainService.findShortcuts()
+        let albums = mainService.findRecentlyAlbums()
 
         DispatchQueue.main.async {
             self.menus = menus
@@ -31,3 +31,4 @@ class MainViewModel: ViewModelProtocol {
         }
     }
 }
+
