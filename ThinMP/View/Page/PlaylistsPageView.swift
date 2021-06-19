@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct PlaylistsPageView: View {
-    private let TITLE: String = "Playlists"
-
     @StateObject private var vm = PlaylistsViewModel()
 
     @State private var headerRect: CGRect = CGRect()
@@ -22,7 +20,7 @@ struct PlaylistsPageView: View {
                         HStack {
                             BackButtonView()
                             Spacer()
-                            PrimaryTextView(TITLE)
+                            SecondaryTitleView("Playlists")
                             Spacer()
                             EditButtonView {
                                 PlaylistsEditPageView()

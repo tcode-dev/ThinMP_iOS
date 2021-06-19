@@ -18,6 +18,6 @@ struct SecondaryTextView: View {
     }
     
     var body: some View {
-        Text(text).font(.subheadline).foregroundColor(.secondary).lineLimit(1)
+        Text(LocalizedStringKey(text)).font(.subheadline).foregroundColor(.secondary).lineLimit(1)
     }
 }

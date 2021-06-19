@@ -9,8 +9,6 @@ import SwiftUI
 import MediaPlayer
 
 struct SongsPageView: View {
-    private let TITLE: String = "Songs"
-
     @StateObject private var vm = SongsViewModel()
     @State private var headerRect: CGRect = CGRect()
     @State private var showingPopup: Bool = false
@@ -25,7 +23,7 @@ struct SongsPageView: View {
                             HStack {
                                 BackButtonView()
                                 Spacer()
-                                PrimaryTextView(TITLE)
+                                SecondaryTitleView("Songs")
                                 Spacer()
                                 Spacer()
                                     .frame(width: 50)

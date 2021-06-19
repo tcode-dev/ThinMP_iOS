@@ -19,7 +19,7 @@ struct AlbumsPageView: View {
                         HStack {
                             BackButtonView()
                             Spacer()
-                            PrimaryTextView("Albums")
+                            SecondaryTitleView("Albums")
                             Spacer()
                             Spacer()
                                 .frame(width: 50)
