@@ -9,11 +9,8 @@ import SwiftUI
 import MediaPlayer
 
 struct ArtistDetailPageView: View {
-    private let ADD_TEXT: String = "プレイリストに追加"
-    private let ALBUMS: String = "Albums"
-    private let SONGS: String = "Songs"
-    private let LEADING: CGFloat = 20
-    private let BOTTOM: CGFloat = 20
+    private let leading: CGFloat = 20
+    private let bottom: CGFloat = 20
 
     @StateObject private var vm = ArtistDetailViewModel()
     @State private var textRect: CGRect = CGRect()
@@ -43,12 +40,12 @@ struct ArtistDetailPageView: View {
                         ScrollView{
                             ArtistDetailHeaderView(vm: vm, textRect: $textRect, side: geometry.size.width, top: geometry.safeAreaInsets.top)
                             VStack(alignment: .leading) {
-                                PrimaryTitleView(ALBUMS)
-                                    .padding(.leading, LEADING)
+                                PrimaryTitleView("Albums")
+                                    .padding(.leading, leading)
                                 ArtistAlbumListView(list: vm.albums, width: geometry.size.width)
-                                    .padding(.bottom, BOTTOM)
-                                PrimaryTitleView(SONGS)
-                                    .padding(.leading, LEADING)
+                                    .padding(.bottom, bottom)
+                                PrimaryTitleView("Songs")
+                                    .padding(.leading, leading)
                                 LazyVStack(spacing: 0) {
                                     ForEach(vm.songs.indices, id: \.self){ index in
                                         PlayRowView(list: vm.songs, index: index) {
@@ -60,11 +57,11 @@ struct ArtistDetailPageView: View {
                                                 playlistRegisterId = vm.songs[index].persistentId
                                                 showingPopup.toggle()
                                             }) {
-                                                Text(ADD_TEXT)
+                                                Text("AddPlaylist")
                                             }
                                         }
                                         Divider()
-                                    }.padding(.leading, LEADING)
+                                    }.padding(.leading, leading)
                                 }
                             }
                         }

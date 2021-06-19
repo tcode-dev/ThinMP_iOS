@@ -1,0 +1,52 @@
+/* 
+  Localizable.strings
+  ThinMP
+
+  Created by tk on 2021/06/19.
+  
+*/
+
+// library
+"Library" = "ライブラリ";
+
+// Artists
+"Artists" = "アーティスト";
+
+// Albums
+"Albums" = "アルバム";
+
+// Songs
+"Songs" = "曲";
+
+// Favorite Artists
+"FavoriteArtists" = "お気に入りアーティスト";
+
+// Favorite Songs
+"FavoriteSongs" = "お気に入り曲";
+
+// Playlists
+"Playlists" = "プレイリスト";
+
+// Shortcut
+"Shortcut" = "ショートカット";
+
+// Recently Added
+"RecentlyAdded" = "最近追加した項目";
+
+// favorite
+"AddFavorites" = "お気に入りに追加";
+"RemoveFavorites" = "お気に入りから削除";
+
+// playlist
+"AddPlaylist" = "プレイリストに追加";
+"NewPlaylist" = "プレイリストを作成";
+"PlaylistName" = "プレイリスト名";
+
+// shortcut
+"AddShortcut" = "ショートカットに追加";
+"RemoveShortcut" = "ショートカットから削除";
+
+// edit
+"Edit" = "編集";
+"Done" = "完了";
+"Cancel" = "キャンセル";

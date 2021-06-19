@@ -12,9 +12,6 @@ import MediaPlayer
 // スクロールで画面表出した時にinitが呼ばれるのでinitでは処理しない
 // 長押しで表出した時にbodyが呼ばれるのでbodyで処理する
 struct FavoriteSongButtonView: View {
-    private let ADD_TEXT: String = "お気に入りに追加"
-    private let DELETE_TEXT: String = "お気に入りから削除"
-
     @State private var displayed: Bool = false
     @State private var exists: Bool = false
 
@@ -33,7 +30,7 @@ struct FavoriteSongButtonView: View {
                     exists = true
                     displayed.toggle()
                 }) {
-                    Text(ADD_TEXT)
+                    Text("AddFavorites")
                 }
             } else {
                 return Button(action: {
@@ -43,7 +40,7 @@ struct FavoriteSongButtonView: View {
                     exists = false
                     displayed.toggle()
                 }) {
-                    Text(DELETE_TEXT)
+                    Text("RemoveFavorites")
                 }
             }
         } else {
@@ -55,7 +52,7 @@ struct FavoriteSongButtonView: View {
                     register.add(persistentId: persistentId)
                     exists.toggle()
                 }) {
-                    Text(ADD_TEXT)
+                    Text("AddFavorites")
                 }
             } else {
                 return Button(action: {
@@ -64,7 +61,7 @@ struct FavoriteSongButtonView: View {
                     register.delete(persistentId: persistentId)
                     exists.toggle()
                 }) {
-                    Text(DELETE_TEXT)
+                    Text("RemoveFavorites")
                 }
             }
         }

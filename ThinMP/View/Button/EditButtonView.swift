@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct EditButtonView<Content> : View where Content: View {
-    var BUTTON_TEXT: String = "Edit"
-
     let content: () -> Content
 
     @State var isEdit: Bool = false
@@ -17,7 +15,7 @@ struct EditButtonView<Content> : View where Content: View {
 
     var body: some View {
         Menu {
-            Button(BUTTON_TEXT) {
+            Button("Edit") {
                 self.isEdit = true
             }
         } label: {

@@ -9,9 +9,6 @@ import SwiftUI
 import MediaPlayer
 
 struct ShortcutButtonView: View {
-    private let ADD_TEXT: String = "ショートカットに追加"
-    private let DELETE_TEXT: String = "ショートカットから削除"
-
     @State private var displayed: Bool = false
     @State private var exists: Bool = false
 
@@ -30,7 +27,7 @@ struct ShortcutButtonView: View {
                     exists = true
                     displayed.toggle()
                 }) {
-                    Text(ADD_TEXT)
+                    Text("AddShortcut")
                 }
             } else {
                 return Button(action: {
@@ -40,7 +37,7 @@ struct ShortcutButtonView: View {
                     exists = false
                     displayed.toggle()
                 }) {
-                    Text(DELETE_TEXT)
+                    Text("RemoveShortcut")
                 }
             }
         } else {
@@ -51,7 +48,7 @@ struct ShortcutButtonView: View {
                     register.add(itemId: itemId, type: type)
                     exists.toggle()
                 }) {
-                    Text(ADD_TEXT)
+                    Text("AddShortcut")
                 }
             } else {
                 return Button(action: {
@@ -60,7 +57,7 @@ struct ShortcutButtonView: View {
                     register.delete(itemId: itemId, type: type)
                     exists.toggle()
                 }) {
-                    Text(DELETE_TEXT)
+                    Text("RemoveShortcut")
                 }
             }
         }

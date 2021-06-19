@@ -15,6 +15,6 @@ struct PrimaryTitleView: View {
     }
 
     var body: some View {
-        Text(text).font(.title).foregroundColor(.primary).lineLimit(1)
+        Text(LocalizedStringKey(text)).font(.title).foregroundColor(.primary).lineLimit(1)
     }
 }

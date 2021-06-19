@@ -14,7 +14,8 @@ class MainMenuConfig {
         UserDefaults.standard.register(defaults: [KEY_SORT : [
             LabelConstant.artists,
             LabelConstant.albums,
-            LabelConstant.songs, LabelConstant.favoriteArtists,
+            LabelConstant.songs,
+            LabelConstant.favoriteArtists,
             LabelConstant.favoriteSongs,
             LabelConstant.playlists
         ]])

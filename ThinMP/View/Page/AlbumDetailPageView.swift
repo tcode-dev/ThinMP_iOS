@@ -9,8 +9,6 @@ import SwiftUI
 import MediaPlayer
 
 struct AlbumDetailPageView: View {
-    private let ADD_TEXT: String = "プレイリストに追加"
-
     @StateObject private var vm = AlbumDetailViewModel()
     @State private var textRect: CGRect = CGRect.zero
     @State private var showingPopup: Bool = false
@@ -48,7 +46,7 @@ struct AlbumDetailPageView: View {
                                                 playlistRegisterId = vm.songs[index].persistentId
                                                 showingPopup.toggle()
                                             }) {
-                                                Text(ADD_TEXT)
+                                                Text("AddPlaylist")
                                             }
                                         }
                                         Divider()

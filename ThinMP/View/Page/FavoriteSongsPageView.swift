@@ -9,9 +9,6 @@ import SwiftUI
 import MediaPlayer
 
 struct FavoriteSongsPageView: View {
-    private let ADD_TEXT: String = "プレイリストに追加"
-    private let TITLE: String = "Favorite Songs"
-
     @StateObject private var vm = FavoriteSongsViewModel()
     @State private var headerRect: CGRect = CGRect()
     @State private var showingPopup: Bool = false
@@ -26,7 +23,7 @@ struct FavoriteSongsPageView: View {
                             HStack {
                                 BackButtonView()
                                 Spacer()
-                                PrimaryTextView(TITLE)
+                                PrimaryTextView("FavoriteSongs")
                                 Spacer()
                                 EditButtonView {
                                     FavoriteSongsEditPageView()
@@ -47,7 +44,7 @@ struct FavoriteSongsPageView: View {
                                                 playlistRegisterId = vm.songs[index].persistentId
                                                 showingPopup.toggle()
                                             }) {
-                                                Text(ADD_TEXT)
+                                                Text("AddPlaylist")
                                             }
                                         }
                                         Divider()

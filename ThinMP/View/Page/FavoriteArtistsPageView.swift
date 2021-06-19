@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct FavoriteArtistsPageView: View {
-    private let TITLE: String = "Favorite Artists"
-
     @StateObject private var vm = FavoriteArtistsViewModel()
     @State private var headerRect: CGRect = CGRect()
 
@@ -21,7 +19,7 @@ struct FavoriteArtistsPageView: View {
                         HStack {
                             BackButtonView()
                             Spacer()
-                            PrimaryTextView(TITLE)
+                            PrimaryTextView("FavoriteArtists")
                             Spacer()
                             EditButtonView {
                                 FavoriteArtistsEditPageView()

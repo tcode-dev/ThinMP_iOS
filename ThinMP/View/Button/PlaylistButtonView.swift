@@ -8,15 +8,13 @@
 import SwiftUI
 
 struct PlaylistButtonView: View {
-    private let ADD_TEXT: String = "プレイリストに追加"
-
     @Binding var isRegister: Bool
 
     var body: some View {
         Button(action: {
             self.isRegister.toggle()
         }) {
-            Text(ADD_TEXT)
+            Text("AddPlaylist")
         }
     }
 }

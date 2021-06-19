@@ -9,9 +9,6 @@ import SwiftUI
 import MediaPlayer
 
 struct PlaylistDetailPageView: View {
-    private let BUTTON_TEXT: String = "Edit"
-    private let ADD_TEXT: String = "プレイリストに追加"
-
     @StateObject private var vm = PlaylistDetailViewModel()
     @State private var textRect: CGRect = CGRect.zero
     @State private var headerRect: CGRect = CGRect()
@@ -31,7 +28,7 @@ struct PlaylistDetailPageView: View {
                             VStack {
                                 MenuButtonView {
                                     VStack {
-                                        Button(BUTTON_TEXT) {
+                                        Button("Edit") {
                                             self.isEdit = true
                                         }
                                         ShortcutButtonView(itemId: playlistId, type: ShortcutType.PLAYLIST)
@@ -56,7 +53,7 @@ struct PlaylistDetailPageView: View {
                                                 playlistRegisterId = vm.songs[index].persistentId
                                                 showingPopup.toggle()
                                             }) {
-                                                Text(ADD_TEXT)
+                                                Text("AddPlaylist")
                                             }
                                         }
                                         Divider()

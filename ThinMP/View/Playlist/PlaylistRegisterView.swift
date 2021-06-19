@@ -9,10 +9,6 @@ import SwiftUI
 import MediaPlayer
 
 struct PlaylistRegisterView: View {
-    private let CREATE_TEXT: String = "プレイリストを作成"
-    private let INPUT_TEXT: String = "プレイリスト名を入力"
-    private let OK_TEXT: String = "OK"
-    private let CANCEL_TEXT: String = "CANCEL"
     private let headerHeight: CGFloat = 60
     private let rowHeight: CGFloat = 50
     private let outerPadding: CGFloat = 20
@@ -46,13 +42,13 @@ struct PlaylistRegisterView: View {
                         Button(action: {
                             isCreate.toggle()
                         }) {
-                            Text(CREATE_TEXT)
+                            Text("NewPlaylist")
                         }
                         Spacer()
                         Button(action: {
                             showingPopup.toggle()
                         }) {
-                            Text(CANCEL_TEXT)
+                            Text("Cancel")
                         }
                         Spacer()
                     }
@@ -73,7 +69,7 @@ struct PlaylistRegisterView: View {
                 .frame(height: getHeight())
             } else {
                 VStack(spacing: 0) {
-                    Text(INPUT_TEXT)
+                    Text("PlaylistName")
                         .frame(height: rowHeight)
                     TextField("", text: $name)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -85,7 +81,7 @@ struct PlaylistRegisterView: View {
                             playlistRegister.create(persistentId: persistentId, name: name)
                             showingPopup.toggle()
                         }) {
-                            Text(OK_TEXT)
+                            Text("Done")
                         }
                         Spacer()
                         Button(action: {
@@ -95,7 +91,7 @@ struct PlaylistRegisterView: View {
                                 showingPopup.toggle()
                             }
                         }) {
-                            Text(CANCEL_TEXT)
+                            Text("Cancel")
                         }
                         Spacer()
                     }

@@ -9,7 +9,6 @@ import SwiftUI
 import MediaPlayer
 
 struct SongsPageView: View {
-    private let ADD_TEXT: String = "プレイリストに追加"
     private let TITLE: String = "Songs"
 
     @StateObject private var vm = SongsViewModel()
@@ -46,7 +45,7 @@ struct SongsPageView: View {
                                                 playlistRegisterId = vm.songs[index].persistentId
                                                 showingPopup.toggle()
                                             }) {
-                                                Text(ADD_TEXT)
+                                                Text("AddPlaylist")
                                             }
                                         }
                                         Divider()

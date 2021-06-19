@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct ArtistsPageView: View {
-    private let TITLE: String = "Artists"
-
     @StateObject private var vm = ArtistsViewModel()
     @State private var headerRect: CGRect = CGRect()
 
@@ -21,7 +19,7 @@ struct ArtistsPageView: View {
                         HStack {
                             BackButtonView()
                             Spacer()
-                            PrimaryTextView(TITLE)
+                            PrimaryTextView("Artists")
                             Spacer()
                             Spacer()
                                 .frame(width: 50)

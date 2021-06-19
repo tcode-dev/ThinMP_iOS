@@ -1,0 +1,52 @@
+/* 
+  Localizable.strings
+  ThinMP
+
+  Created by tk on 2021/06/19.
+  
+*/
+
+// library
+"Library" = "Library";
+
+// Artists
+"Artists" = "Artists";
+
+// Albums
+"Albums" = "Albums";
+
+// Songs
+"Songs" = "Songs";
+
+// Favorite Artists
+"FavoriteArtists" = "Favorite Artists";
+
+// Favorite Songs
+"FavoriteSongs" = "Favorite Songs";
+
+// Playlists
+"Playlists" = "Playlists";
+
+// Shortcut
+"Shortcut" = "Shortcut";
+
+// Recently Added
+"RecentlyAdded" = "Recently Added";
+
+// favorite
+"AddFavorites" = "Add to favorites";
+"RemoveFavorites" = "Remove from favorites";
+
+// playlist
+"AddPlaylist" = "Add to a playlist";
+"NewPlaylist" = "New playlist";
+"PlaylistName" = "Playlist name";
+
+// shortcut
+"AddShortcut" = "Add to a shortcut";
+"RemoveShortcut" = "Remove from shortcut";
+
+// edit
+"Edit" = "Edit";
+"Done" = "Done";
+"Cancel" = "Cancel";

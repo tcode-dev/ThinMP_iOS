@@ -18,6 +18,6 @@ struct PrimaryTextView: View {
     }
     
     var body: some View {
-        Text(text).font(.body).foregroundColor(.primary).lineLimit(1)
+        Text(LocalizedStringKey(text)).font(.body).foregroundColor(.primary).lineLimit(1)
     }
 }

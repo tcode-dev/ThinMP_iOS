@@ -9,9 +9,6 @@ import SwiftUI
 import MediaPlayer
 
 struct FavoriteArtistButtonView: View {
-    private let ADD_TEXT: String = "お気に入りに追加"
-    private let DELETE_TEXT: String = "お気に入りから削除"
-
     @State private var displayed: Bool = false
     @State private var exists: Bool = false
 
@@ -23,13 +20,13 @@ struct FavoriteArtistButtonView: View {
 
             if (!register.exists(persistentId: persistentId)) {
                 return Button(action: {
-                    let register = FavoriteSongRegister()
+                    let register = FavoriteArtistRegister()
 
                     register.add(persistentId: persistentId)
                     exists = true
                     displayed.toggle()
                 }) {
-                    Text(ADD_TEXT)
+                    Text("AddFavorites")
                 }
             } else {
                 return Button(action: {
@@ -39,7 +36,7 @@ struct FavoriteArtistButtonView: View {
                     exists = false
                     displayed.toggle()
                 }) {
-                    Text(DELETE_TEXT)
+                    Text("RemoveFavorites")
                 }
             }
         } else {
@@ -50,7 +47,7 @@ struct FavoriteArtistButtonView: View {
                     register.add(persistentId: persistentId)
                     exists.toggle()
                 }) {
-                    Text(ADD_TEXT)
+                    Text("AddFavorites")
                 }
             } else {
                 return Button(action: {
@@ -59,7 +56,7 @@ struct FavoriteArtistButtonView: View {
                     register.delete(persistentId: persistentId)
                     exists.toggle()
                 }) {
-                    Text(DELETE_TEXT)
+                    Text("RemoveFavorites")
                 }
             }
         }

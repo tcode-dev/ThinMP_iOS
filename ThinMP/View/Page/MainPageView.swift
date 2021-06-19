@@ -21,7 +21,7 @@ struct MainPageView: View {
                         VStack(alignment: .leading) {
                             Spacer()
                             HStack {
-                                Text(LabelConstant.library).fontWeight(.bold).font(.largeTitle)
+                                Text("Library").fontWeight(.bold).font(.largeTitle)
                                 Spacer()
                                 EditButtonView {
                                     MainEditPageView()

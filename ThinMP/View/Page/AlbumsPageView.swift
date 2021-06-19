@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct AlbumsPageView: View {
-    private let TITLE: String = "Albums"
-    
     @StateObject private var vm = AlbumsViewModel()
     @State private var headerRect: CGRect = CGRect()
     
@@ -21,7 +19,7 @@ struct AlbumsPageView: View {
                         HStack {
                             BackButtonView()
                             Spacer()
-                            PrimaryTextView(TITLE)
+                            PrimaryTextView("Albums")
                             Spacer()
                             Spacer()
                                 .frame(width: 50)

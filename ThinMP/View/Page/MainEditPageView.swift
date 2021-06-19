@@ -8,9 +8,6 @@
 import SwiftUI
 
 struct MainEditPageView: View {
-    private let RECENTLY_ADDED: String = "Recently Added"
-    private let SHORTCUTS: String = "Shortcuts"
-
     @Environment(\.editMode) var editMode
     @Environment(\.presentationMode) var presentation
 
