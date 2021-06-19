@@ -12,24 +12,55 @@ struct FavoriteArtistButtonView: View {
     private let ADD_TEXT: String = "お気に入りに追加"
     private let DELETE_TEXT: String = "お気に入りから削除"
 
+    @State private var displayed: Bool = false
+    @State private var exists: Bool = false
+
     let persistentId: MPMediaEntityPersistentID
 
     var body: some View {
-        let favoriteArtistRegister = FavoriteArtistRegister()
+        if (!displayed) {
+            let register = FavoriteArtistRegister()
 
-        if (!favoriteArtistRegister.exists(persistentId: persistentId)) {
-            // add
-            return Button(action: {
-                favoriteArtistRegister.add(persistentId: persistentId)
-            }) {
-                Text(ADD_TEXT)
+            if (!register.exists(persistentId: persistentId)) {
+                return Button(action: {
+                    let register = FavoriteSongRegister()
+
+                    register.add(persistentId: persistentId)
+                    exists = true
+                    displayed.toggle()
+                }) {
+                    Text(ADD_TEXT)
+                }
+            } else {
+                return Button(action: {
+                    let register = FavoriteArtistRegister()
+
+                    register.delete(persistentId: persistentId)
+                    exists = false
+                    displayed.toggle()
+                }) {
+                    Text(DELETE_TEXT)
+                }
             }
         } else {
-            // delete
-            return Button(action: {
-                favoriteArtistRegister.delete(persistentId: persistentId)
-            }) {
-                Text(DELETE_TEXT)
+            if (!exists) {
+                return Button(action: {
+                    let register = FavoriteArtistRegister()
+
+                    register.add(persistentId: persistentId)
+                    exists.toggle()
+                }) {
+                    Text(ADD_TEXT)
+                }
+            } else {
+                return Button(action: {
+                    let register = FavoriteArtistRegister()
+
+                    register.delete(persistentId: persistentId)
+                    exists.toggle()
+                }) {
+                    Text(DELETE_TEXT)
+                }
             }
         }
     }
