@@ -16,7 +16,7 @@ struct PlaylistDetailEditPageView: View {
     @State private var name: String = ""
     @State private var editing: Bool = false
 
-    let playlistId: String
+    let playlistId: PlaylistId
     let primaryText: String?
 
     var body: some View {

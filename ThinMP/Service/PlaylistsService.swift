@@ -28,6 +28,6 @@ struct PlaylistsService {
             (song.artwork != nil)
         })?.artwork
 
-        return PlaylistModel(id: playlist.id, primaryText: playlist.name, artwork: artwork)
+        return PlaylistModel(playlistId: PlaylistId(id: playlist.id), primaryText: playlist.name, artwork: artwork)
     }
 }

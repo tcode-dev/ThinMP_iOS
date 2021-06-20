@@ -8,7 +8,6 @@
 import MediaPlayer
 
 protocol MediaProtocol {
-    var id: String? { get }
     var persistentId: MPMediaEntityPersistentID? { get }
     var primaryText: String? { get }
     var secondaryText: String? { get }

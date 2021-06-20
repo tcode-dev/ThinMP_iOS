@@ -64,6 +64,6 @@ struct PlaylistsEditPageView: View {
     func update() {
         let playlistRegister = PlaylistRegister()
 
-        playlistRegister.update(playlistIds: vm.playlists.map{$0.id})
+        playlistRegister.update(playlistIds: vm.playlists.map{$0.playlistId})
     }
 }

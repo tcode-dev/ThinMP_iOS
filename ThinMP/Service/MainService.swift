@@ -52,7 +52,7 @@ struct MainService {
         if let playlistIds = grouping[ShortcutType.PLAYLIST.rawValue] {
             let playlistDetailService = PlaylistDetailService()
 
-            shortcutDictionary[ShortcutType.PLAYLIST.rawValue] = playlistDetailService.findByIds(playlistIds: playlistIds)
+            shortcutDictionary[ShortcutType.PLAYLIST.rawValue] = playlistDetailService.findByIds(playlistIds: playlistIds.map{PlaylistId(id: $0)})
         }
         
         return shortcutModels.map { shortcut -> ShortcutRealmModel in

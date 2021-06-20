@@ -12,9 +12,9 @@ class PlaylistDetailViewModel: ViewModelProtocol {
     @Published var artwork: MPMediaItemArtwork?
     @Published var songs: [SongModel] = []
 
-    var playlistId: String!
+    var playlistId: PlaylistId!
 
-    func load(playlistId: String) {
+    func load(playlistId: PlaylistId) {
         self.playlistId = playlistId
         self.load()
     }

@@ -9,7 +9,7 @@ import SwiftUI
 import MediaPlayer
 
 struct PlaylistAddRowView<Content> : View where Content: View {
-    let playlistId: String
+    let playlistId: PlaylistId
     let persistentId: MPMediaEntityPersistentID
     @Binding var showingPopup: Bool
     let content: () -> Content

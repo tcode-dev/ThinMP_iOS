@@ -8,14 +8,14 @@
 import MediaPlayer
 
 struct PlaylistDetailService {
-    func findById(playlistId: String) -> PlaylistDetailModel {
+    func findById(playlistId: PlaylistId) -> PlaylistDetailModel {
         let playlistRepository = PlaylistRepository()
         let playlist = playlistRepository.findById(playlistId: playlistId)
 
         return createModel(playlist: playlist)
     }
 
-    func findByIds(playlistIds: [String]) -> [PlaylistDetailModel] {
+    func findByIds(playlistIds: [PlaylistId]) -> [PlaylistDetailModel] {
         let playlistRepository = PlaylistRepository()
         let playlists = playlistRepository.findByIds(playlistIds: playlistIds)
 
@@ -35,6 +35,6 @@ struct PlaylistDetailService {
             (song.artwork != nil)
         })?.artwork
 
-        return PlaylistDetailModel(id: playlist.id, primaryText: playlist.name, artwork: artwork, songs: arrayed)
+        return PlaylistDetailModel(playlistId: PlaylistId(id: playlist.id), primaryText: playlist.name, artwork: artwork, songs: arrayed)
     }
 }

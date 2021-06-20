@@ -17,7 +17,7 @@ struct PlaylistDetailPageView: View {
     @State var isEdit: Bool = false
     @State var editMode: EditMode = .active
 
-    let playlistId: String
+    let playlistId: PlaylistId
 
     var body: some View {
         GeometryReader { geometry in
@@ -31,7 +31,7 @@ struct PlaylistDetailPageView: View {
                                         Button("Edit") {
                                             self.isEdit = true
                                         }
-                                        ShortcutButtonView(itemId: playlistId, type: ShortcutType.PLAYLIST)
+                                        ShortcutButtonView(itemId: playlistId.id, type: ShortcutType.PLAYLIST)
                                     }
                                 }
                                 NavigationLink(destination: PlaylistDetailEditPageView(playlistId: playlistId, primaryText: vm.primaryText).environment(\.editMode, $editMode), isActive: $isEdit) {

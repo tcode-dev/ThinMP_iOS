@@ -8,12 +8,15 @@
 import MediaPlayer
 
 struct PlaylistDetailModel: DetailProtocol {
-    var id: String
+    var playlistId: PlaylistId
     var primaryText: String?
     var secondaryText:String?
     var artwork: MPMediaItemArtwork?
     var songs: [SongModel] = []
     var shortcutId: String {
-        return id
+        return playlistId.id
+    }
+    var id: String {
+        return playlistId.id
     }
 }

@@ -8,11 +8,14 @@
 import MediaPlayer
 
 struct PlaylistModel: MediaProtocol, Identifiable {
-    var id: String
+    var playlistId: PlaylistId
     var primaryText: String?
     var secondaryText:String?
     var artwork: MPMediaItemArtwork?
     var shortcutId: String {
-        return id
+        return playlistId.id
+    }
+    var id: String {
+        return playlistId.id
     }
 }

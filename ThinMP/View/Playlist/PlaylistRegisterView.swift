@@ -56,7 +56,7 @@ struct PlaylistRegisterView: View {
                     ScrollView() {
                         LazyVStack(spacing: 0) {
                             ForEach(vm.playlists) { playlist in
-                                PlaylistAddRowView(playlistId: playlist.id, persistentId: persistentId, showingPopup: $showingPopup) {
+                                PlaylistAddRowView(playlistId: playlist.playlistId, persistentId: persistentId, showingPopup: $showingPopup) {
                                     MediaRowView(media: playlist)
                                 }
                                 .frame(height: rowHeight)

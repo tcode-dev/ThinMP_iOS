@@ -13,5 +13,5 @@ enum LabelConstant {
     static let favoriteSongs: String = "FavoriteSongs"
     static let playlists: String = "Playlists"
     static let shortcut: String = "Shortcut"
-    static let recentlyAdded: String = "Recently Added"
+    static let recentlyAdded: String = "RecentlyAdded"
 }
