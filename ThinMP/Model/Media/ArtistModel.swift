@@ -8,11 +8,12 @@
 import MediaPlayer
 
 struct ArtistModel: MediaProtocol, Identifiable {
-    var id: String = UUID().uuidString
-    var persistentId: MPMediaEntityPersistentID!
+    var artistId: ArtistId
     var primaryText: String?
-
+    var id: String {
+        return String(artistId.id)
+    }
     var shortcutId: String {
-        return String(persistentId)
+        return String(artistId.id)
     }
 }

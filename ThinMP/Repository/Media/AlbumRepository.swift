@@ -48,8 +48,8 @@ class AlbumRepository {
         return Array(albums)
     }
 
-    func findByArtistId(persistentId: MPMediaEntityPersistentID) -> [AlbumModel] {
-        let property = MPMediaPropertyPredicate(value: persistentId, forProperty: MPMediaItemPropertyArtistPersistentID)
+    func findByArtistId(artistId: ArtistId) -> [AlbumModel] {
+        let property = MPMediaPropertyPredicate(value: artistId.id, forProperty: MPMediaItemPropertyArtistPersistentID)
         let query = MPMediaQuery.albums()
 
         query.addFilterPredicate(property)

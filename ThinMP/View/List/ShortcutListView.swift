@@ -29,7 +29,7 @@ struct ShortcutListView: View {
             ForEach(list.indices, id: \.self) { index in
                 switch list[index].type {
                 case ShortcutType.ARTIST.rawValue:
-                    NavigationLink(destination: ArtistDetailPageView(persistentId: UInt64(list[index].itemId)! as MPMediaEntityPersistentID)) {
+                    NavigationLink(destination: ArtistDetailPageView(artistId: ArtistId(id: UInt64(list[index].itemId)!))) {
                         ShortcutCellView(shortcut: list[index], size: size)
                     }
                 case ShortcutType.ALBUM.rawValue:

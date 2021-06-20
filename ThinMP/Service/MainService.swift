@@ -37,9 +37,9 @@ struct MainService {
 
         if let artistIds = grouping[ShortcutType.ARTIST.rawValue] {
             let artistDetailService = ArtistDetailService()
-            let persistentIds = artistIds.map { UInt64($0)! as MPMediaEntityPersistentID}
+            let artistIds = artistIds.map { ArtistId(id: UInt64($0)!)}
 
-            shortcutDictionary[ShortcutType.ARTIST.rawValue] = artistDetailService.findByIds(persistentIds: persistentIds)
+            shortcutDictionary[ShortcutType.ARTIST.rawValue] = artistDetailService.findByIds(artistIds: artistIds)
         }
 
         if let albumIds = grouping[ShortcutType.ALBUM.rawValue] {

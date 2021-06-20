@@ -8,9 +8,9 @@
 struct FavoriteArtistsService {
     func findAll() -> [ArtistModel] {
         let favoriteArtistRepository = FavoriteArtistRepository()
-        let persistentIds = favoriteArtistRepository.findAll()
+        let artistIds = favoriteArtistRepository.findAll()
         let artistRepository = ArtistRepository()
 
-        return artistRepository.findByIds(persistentIds: persistentIds)
+        return artistRepository.findByIds(artistIds: artistIds)
     }
 }

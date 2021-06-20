@@ -76,6 +76,7 @@
 		52A75C3C25A04C0E0073C01B /* FavoriteArtistsPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A75C3B25A04C0E0073C01B /* FavoriteArtistsPageView.swift */; };
 		52A75C4025A04CCD0073C01B /* FavoriteArtistsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A75C3F25A04CCD0073C01B /* FavoriteArtistsViewModel.swift */; };
 		52AAAA39267F536B000880E0 /* PlaylistId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AAAA38267F536B000880E0 /* PlaylistId.swift */; };
+		52AAAA3E267F6F4B000880E0 /* ArtistId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AAAA3D267F6F4B000880E0 /* ArtistId.swift */; };
 		52AC16ED23CE8BE4001D427B /* PrimaryTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AC16EC23CE8BE4001D427B /* PrimaryTitleView.swift */; };
 		52AC942A2621376300D41477 /* PlaylistsPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AC94292621376300D41477 /* PlaylistsPageView.swift */; };
 		52AC944126218E0F00D41477 /* ViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AC944026218E0F00D41477 /* ViewModelProtocol.swift */; };
@@ -191,6 +192,7 @@
 		52A75C3B25A04C0E0073C01B /* FavoriteArtistsPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteArtistsPageView.swift; sourceTree = "<group>"; };
 		52A75C3F25A04CCD0073C01B /* FavoriteArtistsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteArtistsViewModel.swift; sourceTree = "<group>"; };
 		52AAAA38267F536B000880E0 /* PlaylistId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistId.swift; sourceTree = "<group>"; };
+		52AAAA3D267F6F4B000880E0 /* ArtistId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistId.swift; sourceTree = "<group>"; };
 		52AC16EC23CE8BE4001D427B /* PrimaryTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryTitleView.swift; sourceTree = "<group>"; };
 		52AC94292621376300D41477 /* PlaylistsPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistsPageView.swift; sourceTree = "<group>"; };
 		52AC944026218E0F00D41477 /* ViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelProtocol.swift; sourceTree = "<group>"; };
@@ -467,14 +469,39 @@
 				526A3B362366AC6F0070BE0A /* AlbumModel.swift */,
 				527177AE2663E2F800390A32 /* ArtistDetailModel.swift */,
 				5237636023C360C2003ABD2A /* ArtistModel.swift */,
-				523E77E42665E95F0006B7F5 /* DetailProtocol.swift */,
 				527381FF26457DF5005DCE75 /* MenuModel.swift */,
 				527177AA2663DD6500390A32 /* PlaylistDetailModel.swift */,
-				52AAAA38267F536B000880E0 /* PlaylistId.swift */,
 				5264BDD4267822F1009C7400 /* PlaylistModel.swift */,
 				52C5FA48264129D900B6269C /* SongModel.swift */,
+				52AAAA3A267F694E000880E0 /* Protocol */,
+				52AAAA3B267F6E85000880E0 /* ValueObject */,
 			);
 			path = Media;
+			sourceTree = "<group>";
+		};
+		52AAAA3A267F694E000880E0 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				523E77E42665E95F0006B7F5 /* DetailProtocol.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		52AAAA3B267F6E85000880E0 /* ValueObject */ = {
+			isa = PBXGroup;
+			children = (
+				52AAAA3D267F6F4B000880E0 /* ArtistId.swift */,
+				52AAAA38267F536B000880E0 /* PlaylistId.swift */,
+			);
+			path = ValueObject;
+			sourceTree = "<group>";
+		};
+		52AAAA3C267F6EAD000880E0 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				52C5FA42264127AC00B6269C /* MediaProtocol.swift */,
+			);
+			path = Protocol;
 			sourceTree = "<group>";
 		};
 		52B5BC8323DD45DB000C7820 /* Player */ = {
@@ -540,8 +567,8 @@
 		52C5FA3F264122A700B6269C /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				52C5FA42264127AC00B6269C /* MediaProtocol.swift */,
 				528CA16023CAB8F9003E162F /* Media */,
+				52AAAA3C267F6EAD000880E0 /* Protocol */,
 				523C4C5D2594114100D7D32C /* Realm */,
 			);
 			path = Model;
@@ -779,6 +806,7 @@
 				5211ADCC25CE99E400604D45 /* SecondaryTitleView.swift in Sources */,
 				52A46DCF23E54B0F00BAC9AA /* PlayerView.swift in Sources */,
 				5210DE1026233721005829BA /* PlaylistDetailHeaderView.swift in Sources */,
+				52AAAA3E267F6F4B000880E0 /* ArtistId.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

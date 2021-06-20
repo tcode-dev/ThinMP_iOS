@@ -31,7 +31,7 @@ struct FavoriteArtistsPageView: View {
                             ListEmptyHeaderView(headerRect: self.$headerRect, top: geometry.safeAreaInsets.top)
                             LazyVStack(spacing: 0) {
                                 ForEach(vm.artists) { artist in
-                                    NavigationLink(destination: ArtistDetailPageView(persistentId: artist.persistentId)) {
+                                    NavigationLink(destination: ArtistDetailPageView(artistId: artist.artistId)) {
                                         MediaRowView(media: artist)
                                     }
                                     Divider()

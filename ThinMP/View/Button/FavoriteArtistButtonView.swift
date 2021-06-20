@@ -12,17 +12,17 @@ struct FavoriteArtistButtonView: View {
     @State private var displayed: Bool = false
     @State private var exists: Bool = false
 
-    let persistentId: MPMediaEntityPersistentID
+    let artistId: ArtistId
 
     var body: some View {
         if (!displayed) {
             let register = FavoriteArtistRegister()
 
-            if (!register.exists(persistentId: persistentId)) {
+            if (!register.exists(artistId: artistId)) {
                 return Button(action: {
                     let register = FavoriteArtistRegister()
 
-                    register.add(persistentId: persistentId)
+                    register.add(artistId: artistId)
                     exists = true
                     displayed.toggle()
                 }) {
@@ -32,7 +32,7 @@ struct FavoriteArtistButtonView: View {
                 return Button(action: {
                     let register = FavoriteArtistRegister()
 
-                    register.delete(persistentId: persistentId)
+                    register.delete(artistId: artistId)
                     exists = false
                     displayed.toggle()
                 }) {
@@ -44,7 +44,7 @@ struct FavoriteArtistButtonView: View {
                 return Button(action: {
                     let register = FavoriteArtistRegister()
 
-                    register.add(persistentId: persistentId)
+                    register.add(artistId: artistId)
                     exists.toggle()
                 }) {
                     Text("AddFavorites")
@@ -53,7 +53,7 @@ struct FavoriteArtistButtonView: View {
                 return Button(action: {
                     let register = FavoriteArtistRegister()
 
-                    register.delete(persistentId: persistentId)
+                    register.delete(artistId: artistId)
                     exists.toggle()
                 }) {
                     Text("RemoveFavorites")

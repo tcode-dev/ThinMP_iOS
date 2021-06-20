@@ -8,13 +8,13 @@
 import MediaPlayer
 
 struct ArtistDetailService {
-    func findById(persistentId: MPMediaEntityPersistentID) -> ArtistDetailModel {
+    func findById(artistId: ArtistId) -> ArtistDetailModel {
         let artistRepository = ArtistRepository()
         let albumRepository = AlbumRepository()
         let songRepository = SongRepository()
-        let artist = artistRepository.findById(persistentId: persistentId)
+        let artist = artistRepository.findById(artistId: artistId)
         let primaryText  = artist?.primaryText
-        let albums = albumRepository.findByArtistId(persistentId: persistentId)
+        let albums = albumRepository.findByArtistId(artistId: artistId)
         let albumIds = albums.map{$0.persistentId!}
         let artwork = albums.first(where: { (album) -> Bool in
             (album.artwork != nil)
@@ -22,21 +22,21 @@ struct ArtistDetailService {
         let songs = songRepository.findByAlbumIds(persistentIds: albumIds)
         let secondaryText = "\(albums.count) albums, \(songs.count) songs"
 
-        return ArtistDetailModel(persistentId: artist?.persistentId, primaryText: primaryText, secondaryText: secondaryText, artwork: artwork, albums: albums, songs: songs)
+        return ArtistDetailModel(artistId: artist!.artistId, primaryText: primaryText, secondaryText: secondaryText, artwork: artwork, albums: albums, songs: songs)
     }
 
-    func findByIds(persistentIds: [MPMediaEntityPersistentID]) -> [ArtistDetailModel] {
+    func findByIds(artistIds: [ArtistId]) -> [ArtistDetailModel] {
         let artistRepository = ArtistRepository()
         let albumRepository = AlbumRepository()
-        let artists = artistRepository.findByIds(persistentIds: persistentIds)
+        let artists = artistRepository.findByIds(artistIds: artistIds)
 
         return artists.map { artist in
-            let albums = albumRepository.findByArtistId(persistentId: artist.persistentId)
+            let albums = albumRepository.findByArtistId(artistId: artist.artistId)
             let artwork = albums.first(where: { (album) -> Bool in
                 (album.artwork != nil)
             })?.artwork
 
-            return ArtistDetailModel(persistentId: artist.persistentId, primaryText: artist.primaryText, secondaryText: artist.secondaryText, artwork: artwork, albums: [], songs: [])
+            return ArtistDetailModel(artistId: artist.artistId, primaryText: artist.primaryText, secondaryText: artist.secondaryText, artwork: artwork, albums: [], songs: [])
         }
     }
 }

@@ -18,10 +18,10 @@ struct ArtistDetailPageView: View {
     @State private var showingPopup: Bool = false
     @State private var playlistRegisterId: MPMediaEntityPersistentID = 0
 
-    private let persistentId: MPMediaEntityPersistentID
+    private let artistId: ArtistId
 
-    init(persistentId: MPMediaEntityPersistentID) {
-        self.persistentId = persistentId
+    init(artistId: ArtistId) {
+        self.artistId = artistId
     }
 
     var body: some View {
@@ -32,8 +32,8 @@ struct ArtistDetailPageView: View {
                         DetaiNavBarView(primaryText: vm.primaryText, side: geometry.size.width, top: geometry.safeAreaInsets.top, textRect: self.$textRect) {
                             MenuButtonView {
                                 VStack {
-                                    FavoriteArtistButtonView(persistentId: persistentId)
-                                    ShortcutButtonView(itemId: persistentId, type: ShortcutType.ARTIST)
+                                    FavoriteArtistButtonView(artistId: artistId)
+                                    ShortcutButtonView(itemId: artistId.id, type: ShortcutType.ARTIST)
                                 }
                             }
                         }
@@ -78,7 +78,7 @@ struct ArtistDetailPageView: View {
             .navigationBarTitle(Text(""))
             .edgesIgnoringSafeArea(.all)
             .onAppear() {
-                vm.load(persistentId: persistentId)
+                vm.load(artistId: artistId)
             }
         }
     }
