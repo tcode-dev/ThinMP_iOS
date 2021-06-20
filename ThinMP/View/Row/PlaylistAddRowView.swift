@@ -10,7 +10,7 @@ import MediaPlayer
 
 struct PlaylistAddRowView<Content> : View where Content: View {
     let playlistId: PlaylistId
-    let persistentId: MPMediaEntityPersistentID
+    let songId: SongId
     @Binding var showingPopup: Bool
     let content: () -> Content
 
@@ -18,7 +18,7 @@ struct PlaylistAddRowView<Content> : View where Content: View {
         Button(action: {
             let playlistRegister = PlaylistRegister()
 
-            playlistRegister.add(playlistId: playlistId, persistentId: persistentId)
+            playlistRegister.add(playlistId: playlistId, songId: songId)
 
             showingPopup.toggle()
         }) {

@@ -27,13 +27,13 @@ struct PlaylistRepository {
         return realm.objects(PlaylistRealmModel.self).filter("id IN %@", playlistIds.map{ $0.id })
     }
 
-    func create(persistentId: MPMediaEntityPersistentID, name: String) {
+    func create(songId: SongId, name: String) {
         let playlist = PlaylistRealmModel()
         playlist.name = name
         playlist.order = incrementOrder()
 
         let song = PlaylistSongRealmModel()
-        song.persistentId = Int64(bitPattern: persistentId)
+        song.persistentId = Int64(bitPattern: songId.id)
         song.playlistId = playlist.id
 
         playlist.songs.append(song)
@@ -43,11 +43,11 @@ struct PlaylistRepository {
         }
     }
 
-    func add(playlistId: PlaylistId, persistentId: MPMediaEntityPersistentID) {
+    func add(playlistId: PlaylistId, songId: SongId) {
         let playlist = realm.objects(PlaylistRealmModel.self).filter("id = '\(playlistId.id)'").first!
         let song = PlaylistSongRealmModel()
 
-        song.persistentId = Int64(bitPattern: persistentId)
+        song.persistentId = Int64(bitPattern: songId.id)
         song.playlistId = playlist.id
 
         try! realm.write {
@@ -62,16 +62,16 @@ struct PlaylistRepository {
     }
 
     // プレイリスト詳細の更新
-    func update(playlistId: PlaylistId, name: String, persistentIds: [MPMediaEntityPersistentID]) {
+    func update(playlistId: PlaylistId, name: String, songIds: [SongId]) {
         realm.beginWrite()
 
         let playlist = realm.objects(PlaylistRealmModel.self).filter("id = '\(playlistId.id)'").first!
 
         realm.delete(playlist.songs)
 
-        persistentIds.forEach { persistentId in
+        songIds.forEach { songId in
             let song = PlaylistSongRealmModel()
-            song.persistentId = Int64(bitPattern: persistentId)
+            song.persistentId = Int64(bitPattern: songId.id)
             song.playlistId = playlist.id
             playlist.songs.append(song)
         }

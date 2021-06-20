@@ -26,10 +26,10 @@ struct PlaylistDetailService {
 
     private func createModel(playlist: PlaylistRealmModel) -> PlaylistDetailModel {
         let playlistSongs = playlist.songs.sorted(byKeyPath: "order")
-        let persistentIds = Array(playlistSongs.map { UInt64(bitPattern: $0.persistentId) as MPMediaEntityPersistentID})
+        let songIds = Array(playlistSongs.map { SongId(id: UInt64(bitPattern: $0.persistentId))})
         let repository = SongRepository()
-        let songs = repository.findByIds(persistentIds: persistentIds)
-        let sorted = persistentIds.map{ (persistentId) in songs.first { $0.persistentId == persistentId }!}
+        let songs = repository.findByIds(songIds: songIds)
+        let sorted = songIds.map{ (songId) in songs.first { songId.equals($0.songId) }!}
         let arrayed = Array(sorted)
         let artwork = arrayed.first(where: { (song) -> Bool in
             (song.artwork != nil)

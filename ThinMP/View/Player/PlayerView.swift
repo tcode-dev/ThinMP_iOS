@@ -186,7 +186,7 @@ struct PlayerView: View {
                 }
                 if (showingPopup) {
                     PopupView(showingPopup: $showingPopup) {
-                        PlaylistRegisterView(persistentId: musicPlayer.song!.persistentId, height: geometry.size.height, showingPopup: $showingPopup)
+                        PlaylistRegisterView(songId: musicPlayer.song!.songId, height: geometry.size.height, showingPopup: $showingPopup)
                     }
                 }
             }

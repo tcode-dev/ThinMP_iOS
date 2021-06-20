@@ -15,14 +15,14 @@ struct FavoriteSongRepository {
         realm = try! Realm()
     }
 
-    func findAll() -> [MPMediaEntityPersistentID] {
+    func findAll() -> [SongId] {
         return realm.objects(FavoriteSongRealmModel.self)
             .sorted(byKeyPath: "order")
-            .map { UInt64(bitPattern: $0.persistentId) as MPMediaEntityPersistentID}
+            .map { SongId(id: UInt64(bitPattern: $0.persistentId))}
     }
 
-    func add(persistentId: MPMediaEntityPersistentID) {
-        if (exists(persistentId: persistentId)) {
+    func add(songId: SongId) {
+        if (exists(songId: songId)) {
             return
         }
 
@@ -30,7 +30,7 @@ struct FavoriteSongRepository {
 
         // MPMediaEntityPersistentID は UInt64のエイリアス
         // realmはUInt64を保存できないのでInt64に変換して保存する
-        favoriteSong.persistentId = Int64(bitPattern: persistentId)
+        favoriteSong.persistentId = Int64(bitPattern: songId.id)
         favoriteSong.order = incrementOrder()
 
         try! realm.write {
@@ -38,8 +38,8 @@ struct FavoriteSongRepository {
         }
     }
 
-    func delete(persistentId: MPMediaEntityPersistentID) {
-        let favoriteSongs = find(persistentId: persistentId)
+    func delete(songId: SongId) {
+        let favoriteSongs = find(songId: songId)
 
         if (favoriteSongs.count != 1) {
             return
@@ -50,13 +50,13 @@ struct FavoriteSongRepository {
         }
     }
 
-    func update(persistentIdList: [MPMediaEntityPersistentID]) {
+    func update(songIds: [SongId]) {
         truncate()
-        bulkInsert(persistentIdList: persistentIdList)
+        bulkInsert(songIds: songIds)
     }
 
-    func exists(persistentId: MPMediaEntityPersistentID) -> Bool {
-        return find(persistentId: persistentId).count == 1
+    func exists(songId: SongId) -> Bool {
+        return find(songId: songId).count == 1
     }
 
     private func truncate() {
@@ -70,12 +70,12 @@ struct FavoriteSongRepository {
         }
     }
 
-    private func bulkInsert(persistentIdList: [MPMediaEntityPersistentID]) {
+    private func bulkInsert(songIds: [SongId]) {
         realm.beginWrite()
 
-        for index in 0..<persistentIdList.count {
+        for index in 0..<songIds.count {
             realm.create(FavoriteSongRealmModel.self, value: [
-                "persistentId": persistentIdList[index],
+                "persistentId": songIds[index],
                 "order": index
             ])
         }
@@ -83,8 +83,8 @@ struct FavoriteSongRepository {
         try! realm.commitWrite()
     }
 
-    private func find(persistentId: MPMediaEntityPersistentID) -> Results<FavoriteSongRealmModel> {
-        return realm.objects(FavoriteSongRealmModel.self).filter("persistentId = \(Int64(bitPattern: persistentId))")
+    private func find(songId: SongId) -> Results<FavoriteSongRealmModel> {
+        return realm.objects(FavoriteSongRealmModel.self).filter("persistentId = \(Int64(bitPattern: songId.id))")
     }
 
     private func incrementOrder() -> Int {

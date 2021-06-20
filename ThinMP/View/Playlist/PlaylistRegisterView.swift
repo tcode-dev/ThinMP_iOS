@@ -19,7 +19,7 @@ struct PlaylistRegisterView: View {
     @State private var isCreate: Bool = false
     @State private var name: String = ""
 
-    let persistentId: MPMediaEntityPersistentID
+    let songId: SongId
     let height: CGFloat
     @Binding var showingPopup: Bool
 
@@ -56,7 +56,7 @@ struct PlaylistRegisterView: View {
                     ScrollView() {
                         LazyVStack(spacing: 0) {
                             ForEach(vm.playlists) { playlist in
-                                PlaylistAddRowView(playlistId: playlist.playlistId, persistentId: persistentId, showingPopup: $showingPopup) {
+                                PlaylistAddRowView(playlistId: playlist.playlistId, songId: songId, showingPopup: $showingPopup) {
                                     MediaRowView(media: playlist)
                                 }
                                 .frame(height: rowHeight)
@@ -78,7 +78,7 @@ struct PlaylistRegisterView: View {
                         Button(action: {
                             let playlistRegister = PlaylistRegister()
 
-                            playlistRegister.create(persistentId: persistentId, name: name)
+                            playlistRegister.create(songId: songId, name: name)
                             showingPopup.toggle()
                         }) {
                             Text("Done")

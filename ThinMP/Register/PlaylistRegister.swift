@@ -14,12 +14,12 @@ struct PlaylistRegister {
         repository = PlaylistRepository()
     }
 
-    func create(persistentId: MPMediaEntityPersistentID, name: String) {
-        repository.create(persistentId: persistentId, name: name)
+    func create(songId: SongId, name: String) {
+        repository.create(songId: songId, name: name)
     }
 
-    func add(playlistId: PlaylistId, persistentId: MPMediaEntityPersistentID) {
-        repository.add(playlistId: playlistId, persistentId: persistentId)
+    func add(playlistId: PlaylistId, songId: SongId) {
+        repository.add(playlistId: playlistId, songId: songId)
     }
 
     // プレイリスト一覧の更新
@@ -28,8 +28,8 @@ struct PlaylistRegister {
     }
 
     // プレイリスト詳細の更新
-    func update(playlistId: PlaylistId, name: String, persistentIds: [MPMediaEntityPersistentID]) {
-        repository.update(playlistId: playlistId, name: name, persistentIds: persistentIds)
+    func update(playlistId: PlaylistId, name: String, songIds: [SongId]) {
+        repository.update(playlistId: playlistId, name: name, songIds: songIds)
     }
 
     func delete(playlistIds: [PlaylistId]) {

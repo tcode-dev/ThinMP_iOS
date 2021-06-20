@@ -12,7 +12,7 @@ struct FavoriteSongsPageView: View {
     @StateObject private var vm = FavoriteSongsViewModel()
     @State private var headerRect: CGRect = CGRect()
     @State private var showingPopup: Bool = false
-    @State private var playlistRegisterId: MPMediaEntityPersistentID = 0
+    @State private var playlistRegisterSongId = SongId(id: 0)
 
     var body: some View {
         GeometryReader { geometry in
@@ -39,9 +39,9 @@ struct FavoriteSongsPageView: View {
                                             MediaRowView(media: vm.songs[index])
                                         }
                                         .contextMenu {
-                                            FavoriteSongButtonView(persistentId: vm.songs[index].persistentId)
+                                            FavoriteSongButtonView(songId: vm.songs[index].songId)
                                             Button(action: {
-                                                playlistRegisterId = vm.songs[index].persistentId
+                                                playlistRegisterSongId = vm.songs[index].songId
                                                 showingPopup.toggle()
                                             }) {
                                                 Text("AddPlaylist")
@@ -59,7 +59,7 @@ struct FavoriteSongsPageView: View {
                 }
                 if (showingPopup) {
                     PopupView(showingPopup: $showingPopup) {
-                        PlaylistRegisterView(persistentId: playlistRegisterId, height: geometry.size.height, showingPopup: $showingPopup)
+                        PlaylistRegisterView(songId: playlistRegisterSongId, height: geometry.size.height, showingPopup: $showingPopup)
                     }
                 }
             }

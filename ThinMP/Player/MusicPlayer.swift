@@ -241,17 +241,17 @@ class MusicPlayer: ObservableObject {
     func setFavoriteSong() {
         let register = FavoriteSongRegister()
 
-        isFavoriteSong = register.exists(persistentId: song!.persistentId)
+        isFavoriteSong = register.exists(songId: song!.songId)
     }
 
     func favoriteSong() {
-        let persistentId = song!.persistentId
+        let songId = song!.songId
         let register = FavoriteSongRegister()
 
-        if (register.exists(persistentId: persistentId)) {
-            register.delete(persistentId: persistentId)
+        if (register.exists(songId: songId)) {
+            register.delete(songId: songId)
         } else {
-            register.add(persistentId: persistentId)
+            register.add(songId: songId)
         }
 
         isFavoriteSong = !isFavoriteSong

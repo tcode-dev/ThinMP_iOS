@@ -13,7 +13,7 @@ struct PlaylistDetailPageView: View {
     @State private var textRect: CGRect = CGRect.zero
     @State private var headerRect: CGRect = CGRect()
     @State private var showingPopup: Bool = false
-    @State private var playlistRegisterId: MPMediaEntityPersistentID = 0
+    @State private var playlistRegisterSongId = SongId(id: 0)
     @State var isEdit: Bool = false
     @State var editMode: EditMode = .active
 
@@ -41,16 +41,16 @@ struct PlaylistDetailPageView: View {
                         }
                         ScrollView(showsIndicators: true) {
                             VStack(alignment: .leading) {
-                                PlaylistDetailHeaderView(textRect: self.$textRect, side: geometry.size.width, top: geometry.safeAreaInsets.top, name: vm.primaryText, artwork: vm.artwork)
+                                PlaylistDetailHeaderView(textRect: $textRect, side: geometry.size.width, top: geometry.safeAreaInsets.top, name: vm.primaryText, artwork: vm.artwork)
                                 LazyVStack(spacing: 0) {
                                     ForEach(vm.songs.indices, id: \.self){ index in
                                         PlayRowView(list: vm.songs, index: index) {
                                             MediaRowView(media: vm.songs[index])
                                         }
                                         .contextMenu {
-                                            FavoriteSongButtonView(persistentId: vm.songs[index].persistentId)
+                                            FavoriteSongButtonView(songId: vm.songs[index].songId)
                                             Button(action: {
-                                                playlistRegisterId = vm.songs[index].persistentId
+                                                playlistRegisterSongId = vm.songs[index].songId
                                                 showingPopup.toggle()
                                             }) {
                                                 Text("AddPlaylist")
@@ -66,7 +66,7 @@ struct PlaylistDetailPageView: View {
                 }
                 if (showingPopup) {
                     PopupView(showingPopup: self.$showingPopup) {
-                        PlaylistRegisterView(persistentId: playlistRegisterId, height: geometry.size.height, showingPopup: $showingPopup)
+                        PlaylistRegisterView(songId: playlistRegisterSongId, height: geometry.size.height, showingPopup: $showingPopup)
                     }
                 }
             }

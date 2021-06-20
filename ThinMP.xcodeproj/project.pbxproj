@@ -44,6 +44,7 @@
 		524A76E825E4EF400020443E /* FavoriteSongsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524A76E725E4EF400020443E /* FavoriteSongsViewModel.swift */; };
 		524BE502263BE1210033E198 /* EditNavBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524BE501263BE1210033E198 /* EditNavBarView.swift */; };
 		525BD0D5261950F700459563 /* PopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525BD0D4261950F600459563 /* PopupView.swift */; };
+		5260D768267F92CA00B4155D /* SongId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5260D767267F92CA00B4155D /* SongId.swift */; };
 		5264BDD5267822F1009C7400 /* PlaylistModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5264BDD4267822F1009C7400 /* PlaylistModel.swift */; };
 		526648F625AB23690034D912 /* FavoriteArtistsEditPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526648F525AB23690034D912 /* FavoriteArtistsEditPageView.swift */; };
 		526A3B372366AC6F0070BE0A /* AlbumModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526A3B362366AC6F0070BE0A /* AlbumModel.swift */; };
@@ -160,6 +161,7 @@
 		524A76E725E4EF400020443E /* FavoriteSongsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteSongsViewModel.swift; sourceTree = "<group>"; };
 		524BE501263BE1210033E198 /* EditNavBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNavBarView.swift; sourceTree = "<group>"; };
 		525BD0D4261950F600459563 /* PopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupView.swift; sourceTree = "<group>"; };
+		5260D767267F92CA00B4155D /* SongId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongId.swift; sourceTree = "<group>"; };
 		5264BDD4267822F1009C7400 /* PlaylistModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistModel.swift; sourceTree = "<group>"; };
 		526648F525AB23690034D912 /* FavoriteArtistsEditPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteArtistsEditPageView.swift; sourceTree = "<group>"; };
 		526A3B362366AC6F0070BE0A /* AlbumModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumModel.swift; sourceTree = "<group>"; };
@@ -495,6 +497,7 @@
 				52AAAA3F267F799B000880E0 /* AlbumId.swift */,
 				52AAAA3D267F6F4B000880E0 /* ArtistId.swift */,
 				52AAAA38267F536B000880E0 /* PlaylistId.swift */,
+				5260D767267F92CA00B4155D /* SongId.swift */,
 			);
 			path = ValueObject;
 			sourceTree = "<group>";
@@ -775,6 +778,7 @@
 				527177A22663C99400390A32 /* ShortcutCellView.swift in Sources */,
 				52F979CE25EBC3AC0085F306 /* FavoriteArtistButtonView.swift in Sources */,
 				52CC2D0B23E24F05009FB57F /* PlayingList.swift in Sources */,
+				5260D768267F92CA00B4155D /* SongId.swift in Sources */,
 				528AF179267DC39900B7C620 /* MainEditViewModel.swift in Sources */,
 				524A76E825E4EF400020443E /* FavoriteSongsViewModel.swift in Sources */,
 				527B33EA26710F72002DD924 /* MainMenuButtonView.swift in Sources */,

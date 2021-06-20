@@ -8,13 +8,14 @@
 import MediaPlayer
 
 struct SongModel: MediaProtocol, Identifiable {
-    var id: String = UUID().uuidString
-
     let media: MPMediaItemCollection
 
-    var persistentId: MPMediaEntityPersistentID {
+    var id: String {
+        return String(songId.id)
+    }
+    var songId: SongId {
         get {
-            media.persistentID
+            SongId(id: media.persistentID)
         }
     }
     var primaryText: String? {

@@ -88,7 +88,7 @@ struct PlaylistDetailEditPageView: View {
     func update() {
         let playlistRegister = PlaylistRegister()
 
-        playlistRegister.update(playlistId: vm.playlistId, name: name, persistentIds: vm.songs.map{$0.persistentId})
+        playlistRegister.update(playlistId: vm.playlistId, name: name, songIds: vm.songs.map{$0.songId})
 
         vm.primaryText = name
     }

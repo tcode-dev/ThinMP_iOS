@@ -14,19 +14,19 @@ struct FavoriteSongRegister {
         repository = FavoriteSongRepository()
     }
 
-    func add(persistentId: MPMediaEntityPersistentID) {
-        repository.add(persistentId: persistentId)
+    func add(songId: SongId) {
+        repository.add(songId: songId)
     }
 
-    func delete(persistentId: MPMediaEntityPersistentID) {
-        repository.delete(persistentId: persistentId)
+    func delete(songId: SongId) {
+        repository.delete(songId: songId)
     }
 
-    func update(persistentIdList: [MPMediaEntityPersistentID]) {
-        repository.update(persistentIdList: persistentIdList)
+    func update(songIds: [SongId]) {
+        repository.update(songIds: songIds)
     }
 
-    func exists(persistentId: MPMediaEntityPersistentID) -> Bool {
-        return repository.exists(persistentId: persistentId)
+    func exists(songId: SongId) -> Bool {
+        return repository.exists(songId: songId)
     }
 }
