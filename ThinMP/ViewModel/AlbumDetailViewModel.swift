@@ -13,16 +13,16 @@ class AlbumDetailViewModel: ViewModelProtocol {
     @Published var artwork: MPMediaItemArtwork?
     @Published var songs: [SongModel] = []
 
-    private var persistentId: MPMediaEntityPersistentID!
+    private var albumId: AlbumId!
 
-    func load(persistentId: MPMediaEntityPersistentID) {
-        self.persistentId = persistentId
+    func load(albumId: AlbumId) {
+        self.albumId = albumId
         self.load()
     }
 
     func fetch() {
         let albumDetailService = AlbumDetailService()
-        let albumDetailModel = albumDetailService.findById(persistentId: persistentId)
+        let albumDetailModel = albumDetailService.findById(albumId: albumId)
 
         DispatchQueue.main.async {
             self.primaryText = albumDetailModel.primaryText

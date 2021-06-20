@@ -13,10 +13,10 @@ struct PlaylistDetailModel: DetailProtocol {
     var secondaryText:String?
     var artwork: MPMediaItemArtwork?
     var songs: [SongModel] = []
-    var shortcutId: String {
+    var id: String {
         return playlistId.id
     }
-    var id: String {
+    var shortcutId: String {
         return playlistId.id
     }
 }

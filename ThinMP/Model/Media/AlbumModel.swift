@@ -8,13 +8,14 @@
 import MediaPlayer
 
 struct AlbumModel: MediaProtocol, Identifiable {
-    var id = UUID()
-    var persistentId: MPMediaEntityPersistentID!
+    var albumId: AlbumId
     var primaryText: String?
     var secondaryText: String?
     var artwork: MPMediaItemArtwork?
-
+    var id: String {
+        return String(albumId.id)
+    }
     var shortcutId: String {
-        return String(persistentId)
+        return String(albumId.id)
     }
 }

@@ -8,21 +8,21 @@
 import MediaPlayer
 
 struct AlbumDetailService {
-    func findById(persistentId: MPMediaEntityPersistentID) -> AlbumDetailModel {
+    func findById(albumId: AlbumId) -> AlbumDetailModel {
         let albumRepository = AlbumRepository()
         let songRepository = SongRepository()
-        let album = albumRepository.findById(persistentId: persistentId)
-        let songs = songRepository.findByAlbumId(persistentId: persistentId)
+        let album = albumRepository.findById(albumId: albumId)
+        let songs = songRepository.findByAlbumId(albumId: albumId)
 
-        return AlbumDetailModel(persistentId: album?.persistentId, primaryText: album?.primaryText, secondaryText: album?.secondaryText, artwork: album?.artwork, songs: songs)
+        return AlbumDetailModel(albumId: album!.albumId, primaryText: album?.primaryText, secondaryText: album?.secondaryText, artwork: album?.artwork, songs: songs)
     }
 
-    func findByIds(persistentIds: [MPMediaEntityPersistentID]) -> [AlbumDetailModel] {
+    func findByIds(albumIds: [AlbumId]) -> [AlbumDetailModel] {
         let repository = AlbumRepository()
-        let albums = repository.findByIds(persistentIds: persistentIds)
+        let albums = repository.findByIds(albumIds: albumIds)
 
         return albums.map { album in
-            return AlbumDetailModel(persistentId: album.persistentId, primaryText: album.primaryText, secondaryText: album.secondaryText, artwork: album.artwork, songs: [])
+            return AlbumDetailModel(albumId: album.albumId, primaryText: album.primaryText, secondaryText: album.secondaryText, artwork: album.artwork, songs: [])
         }
     }
 }

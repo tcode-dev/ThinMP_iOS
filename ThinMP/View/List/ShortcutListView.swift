@@ -33,7 +33,7 @@ struct ShortcutListView: View {
                         ShortcutCellView(shortcut: list[index], size: size)
                     }
                 case ShortcutType.ALBUM.rawValue:
-                    NavigationLink(destination: AlbumDetailPageView(persistentId: UInt64(list[index].itemId)! as MPMediaEntityPersistentID)) {
+                    NavigationLink(destination: AlbumDetailPageView(albumId: AlbumId(id: UInt64(list[index].itemId)!))) {
                         ShortcutCellView(shortcut: list[index], size: size)
                     }
                 case ShortcutType.PLAYLIST.rawValue:

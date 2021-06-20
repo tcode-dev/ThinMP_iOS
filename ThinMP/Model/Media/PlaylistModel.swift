@@ -12,10 +12,10 @@ struct PlaylistModel: MediaProtocol, Identifiable {
     var primaryText: String?
     var secondaryText:String?
     var artwork: MPMediaItemArtwork?
-    var shortcutId: String {
-        return playlistId.id
-    }
     var id: String {
         return playlistId.id
+    }
+    var shortcutId: String {
+        return id
     }
 }

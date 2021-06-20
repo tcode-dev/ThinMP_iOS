@@ -14,12 +14,12 @@ struct AlbumDetailPageView: View {
     @State private var showingPopup: Bool = false
     @State private var playlistRegisterId: MPMediaEntityPersistentID = 0
 
-    private let persistentId: MPMediaEntityPersistentID
+    private let albumId: AlbumId
 
-    init(persistentId: MPMediaEntityPersistentID) {
-        self.persistentId = persistentId
+    init(albumId: AlbumId) {
+        self.albumId = albumId
     }
-    
+
     var body: some View {
         GeometryReader { geometry in
             ZStack(alignment: .top) {
@@ -28,7 +28,7 @@ struct AlbumDetailPageView: View {
                         DetaiNavBarView(primaryText: vm.primaryText, side: geometry.size.width, top: geometry.safeAreaInsets.top, textRect: self.$textRect) {
                             MenuButtonView {
                                 VStack {
-                                    ShortcutButtonView(itemId: persistentId, type: ShortcutType.ALBUM)
+                                    ShortcutButtonView(itemId: albumId.id, type: ShortcutType.ALBUM)
                                 }
                             }
                         }
@@ -67,7 +67,7 @@ struct AlbumDetailPageView: View {
             .navigationBarTitle(Text(""))
             .edgesIgnoringSafeArea(.all)
             .onAppear() {
-                vm.load(persistentId: persistentId)
+                vm.load(albumId: albumId)
             }
         }
     }

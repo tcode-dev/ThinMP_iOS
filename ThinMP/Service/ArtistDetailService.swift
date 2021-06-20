@@ -15,11 +15,11 @@ struct ArtistDetailService {
         let artist = artistRepository.findById(artistId: artistId)
         let primaryText  = artist?.primaryText
         let albums = albumRepository.findByArtistId(artistId: artistId)
-        let albumIds = albums.map{$0.persistentId!}
+        let albumIds = albums.map{$0.albumId}
         let artwork = albums.first(where: { (album) -> Bool in
             (album.artwork != nil)
         })?.artwork
-        let songs = songRepository.findByAlbumIds(persistentIds: albumIds)
+        let songs = songRepository.findByAlbumIds(albumIds: albumIds)
         let secondaryText = "\(albums.count) albums, \(songs.count) songs"
 
         return ArtistDetailModel(artistId: artist!.artistId, primaryText: primaryText, secondaryText: secondaryText, artwork: artwork, albums: albums, songs: songs)
