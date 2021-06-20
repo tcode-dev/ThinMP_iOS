@@ -14,11 +14,6 @@ enum ShortcutType: Int {
     case ALBUM = 2
     case PLAYLIST = 3
 }
-enum ShortcutText: String {
-    case ARTIST = "Artist"
-    case ALBUM = "Album"
-    case PLAYLIST = "Playlist"
-}
 
 class ShortcutRealmModel: Object, MediaProtocol, Identifiable {
     @objc dynamic var id: String = UUID().uuidString
@@ -43,11 +38,11 @@ class ShortcutRealmModel: Object, MediaProtocol, Identifiable {
     var secondaryText: String? {
         get {
             if (type == ShortcutType.ARTIST.rawValue) {
-                return ShortcutText.ARTIST.rawValue
+                return "Artist"
             } else if (type == ShortcutType.ALBUM.rawValue) {
-                return ShortcutText.ALBUM.rawValue
+                return "Album"
             } else if(type == ShortcutType.PLAYLIST.rawValue) {
-                return ShortcutText.PLAYLIST.rawValue
+                return "Playlist"
             } else {
                 return ""
             }

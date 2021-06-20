@@ -8,7 +8,6 @@
 import MediaPlayer
 
 protocol MediaProtocol {
-    var persistentId: MPMediaEntityPersistentID? { get }
     var primaryText: String? { get }
     var secondaryText: String? { get }
     var artwork: MPMediaItemArtwork? { get }
@@ -16,9 +15,6 @@ protocol MediaProtocol {
 
 extension MediaProtocol {
     var id: String? {
-        return nil
-    }
-    var persistentId: MPMediaEntityPersistentID? {
         return nil
     }
     var primaryText: String? {

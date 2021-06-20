@@ -9,10 +9,12 @@
 // library
 "Library" = "ライブラリ";
 
-// Artists
+// Artist
+"Artist" = "アーティスト";
 "Artists" = "アーティスト";
 
-// Albums
+// Album
+"Album" = "アルバム";
 "Albums" = "アルバム";
 
 // Songs
@@ -24,7 +26,8 @@
 // Favorite Songs
 "FavoriteSongs" = "お気に入り曲";
 
-// Playlists
+// Playlist
+"Playlist" = "プレイリスト";
 "Playlists" = "プレイリスト";
 
 // Shortcut

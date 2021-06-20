@@ -8,19 +8,9 @@
 import MediaPlayer
 
 protocol DetailProtocol {
-    var id: String? { get }
-    var persistentId: MPMediaEntityPersistentID? { get }
+    var id: String { get }
     var primaryText: String? { get }
     var secondaryText: String? { get }
     var artwork: MPMediaItemArtwork? { get }
     var shortcutId: String { get }
-}
-
-extension DetailProtocol {
-    var id: String? {
-        return nil
-    }
-    var persistentId: MPMediaEntityPersistentID? {
-        return nil
-    }
 }

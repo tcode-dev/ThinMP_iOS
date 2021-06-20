@@ -9,10 +9,12 @@
 // library
 "Library" = "Library";
 
-// Artists
+// Artist
+"Artist" = "Artist";
 "Artists" = "Artists";
 
-// Albums
+// Album
+"Album" = "Album";
 "Albums" = "Albums";
 
 // Songs
@@ -24,7 +26,8 @@
 // Favorite Songs
 "FavoriteSongs" = "Favorite Songs";
 
-// Playlists
+// Playlist
+"Playlist" = "Playlist";
 "Playlists" = "Playlists";
 
 // Shortcut
