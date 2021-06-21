@@ -17,7 +17,7 @@ class FavoriteArtistRealmModel: Object {
     @objc dynamic var artistId: String = ""
     @objc dynamic var order: Int = 1
 
-    override static func primaryKey() -> String? {
+    override static func primaryKey() -> String {
         return ID
     }
 }
