@@ -16,6 +16,12 @@ struct FavoriteSongButtonView: View {
     @State private var exists: Bool = false
 
     let songId: SongId
+    let callback: () -> Void
+
+    init(songId: SongId, callback: @escaping () -> Void = {}) {
+        self.songId = songId
+        self.callback = callback
+    }
 
     var body: some View {
         if (!displayed) {
@@ -29,6 +35,7 @@ struct FavoriteSongButtonView: View {
                     register.add(songId: songId)
                     exists = true
                     displayed.toggle()
+                    callback()
                 }) {
                     Text("AddFavorites")
                 }
@@ -39,6 +46,7 @@ struct FavoriteSongButtonView: View {
                     register.delete(songId: songId)
                     exists = false
                     displayed.toggle()
+                    callback()
                 }) {
                     Text("RemoveFavorites")
                 }
@@ -51,6 +59,7 @@ struct FavoriteSongButtonView: View {
 
                     register.add(songId: songId)
                     exists.toggle()
+                    callback()
                 }) {
                     Text("AddFavorites")
                 }
@@ -60,6 +69,7 @@ struct FavoriteSongButtonView: View {
 
                     register.delete(songId: songId)
                     exists.toggle()
+                    callback()
                 }) {
                     Text("RemoveFavorites")
                 }

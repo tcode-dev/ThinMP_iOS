@@ -39,7 +39,7 @@ struct FavoriteSongsPageView: View {
                                             MediaRowView(media: vm.songs[index])
                                         }
                                         .contextMenu {
-                                            FavoriteSongButtonView(songId: vm.songs[index].songId)
+                                            FavoriteSongButtonView(songId: vm.songs[index].songId, callback: {vm.load()})
                                             Button(action: {
                                                 playlistRegisterSongId = vm.songs[index].songId
                                                 showingPopup.toggle()
