@@ -16,15 +16,15 @@ struct PlaylistRepository {
     }
 
     func findAll() -> [PlaylistRealmModel] {
-        return Array(realm.objects(PlaylistRealmModel.self).sorted(byKeyPath: "order"))
+        return Array(realm.objects(PlaylistRealmModel.self).sorted(byKeyPath: PlaylistRealmModel.ORDER))
     }
 
     func findById(playlistId: PlaylistId) -> PlaylistRealmModel {
-        return realm.objects(PlaylistRealmModel.self).filter("id = '\(playlistId.id)'").first!
+        return realm.objects(PlaylistRealmModel.self).filter("\(PlaylistRealmModel.ID) = '\(playlistId.id)'").first!
     }
 
     func findByIds(playlistIds: [PlaylistId]) -> Results<PlaylistRealmModel> {
-        return realm.objects(PlaylistRealmModel.self).filter("id IN %@", playlistIds.map{ $0.id })
+        return realm.objects(PlaylistRealmModel.self).filter("\(PlaylistRealmModel.ID) IN %@", playlistIds.map{ $0.id })
     }
 
     func create(songId: SongId, name: String) {
@@ -44,7 +44,7 @@ struct PlaylistRepository {
     }
 
     func add(playlistId: PlaylistId, songId: SongId) {
-        let playlist = realm.objects(PlaylistRealmModel.self).filter("id = '\(playlistId.id)'").first!
+        let playlist = realm.objects(PlaylistRealmModel.self).filter("\(PlaylistRealmModel.ID) = '\(playlistId.id)'").first!
         let song = PlaylistSongRealmModel()
 
         song.songId = String(songId.id)
@@ -65,7 +65,7 @@ struct PlaylistRepository {
     func update(playlistId: PlaylistId, name: String, songIds: [SongId]) {
         realm.beginWrite()
 
-        let playlist = realm.objects(PlaylistRealmModel.self).filter("id = '\(playlistId.id)'").first!
+        let playlist = realm.objects(PlaylistRealmModel.self).filter("\(PlaylistRealmModel.ID) = '\(playlistId.id)'").first!
 
         realm.delete(playlist.songs)
 
@@ -108,6 +108,6 @@ struct PlaylistRepository {
     }
 
     private func incrementOrder() -> Int {
-        return (realm.objects(PlaylistRealmModel.self).max(ofProperty: "order") as Int? ?? 0) + 1
+        return (realm.objects(PlaylistRealmModel.self).max(ofProperty: PlaylistRealmModel.ORDER) as Int? ?? 0) + 1
     }
 }

@@ -16,7 +16,7 @@ struct ShortcutRepository {
     }
 
     func findAll() -> [ShortcutRealmModel] {
-        return Array(realm.objects(ShortcutRealmModel.self).sorted(byKeyPath: "order", ascending: false))
+        return Array(realm.objects(ShortcutRealmModel.self).sorted(byKeyPath: ShortcutRealmModel.ORDER, ascending: false))
     }
 
     func add(itemId: ShortcutItemIdProtocol, type: ShortcutType) {
@@ -105,7 +105,7 @@ struct ShortcutRepository {
     }
 
     private func findByIds(ids: [String]) -> Results<ShortcutRealmModel> {
-        return realm.objects(ShortcutRealmModel.self).filter("id IN %@", ids)
+        return realm.objects(ShortcutRealmModel.self).filter("\(ShortcutRealmModel.ID) IN %@", ids)
     }
 
     private func exists(itemId: String, type: ShortcutType) -> Bool {
@@ -113,10 +113,10 @@ struct ShortcutRepository {
     }
 
     private func find(itemId: String, type: ShortcutType) -> Results<ShortcutRealmModel> {
-        return realm.objects(ShortcutRealmModel.self).filter("itemId = '\(itemId)' AND type = \(type.rawValue)")
+        return realm.objects(ShortcutRealmModel.self).filter("\(ShortcutRealmModel.ITEM_ID) = '\(itemId)' AND \(ShortcutRealmModel.TYPE) = \(type.rawValue)")
     }
 
     private func incrementOrder() -> Int {
-        return (realm.objects(ShortcutRealmModel.self).max(ofProperty: "order") as Int? ?? 0) + 1
+        return (realm.objects(ShortcutRealmModel.self).max(ofProperty: ShortcutRealmModel.ORDER) as Int? ?? 0) + 1
     }
 }

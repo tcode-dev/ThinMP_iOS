@@ -11,7 +11,7 @@ class MainViewModel: ViewModelProtocol {
     @Published var menus: [MenuModel] = []
     @Published var shortcutMenu = MenuModel(primaryText: "", visibility: false)
     @Published var recentlyMenu = MenuModel(primaryText: "", visibility: false)
-    @Published var shortcuts: [ShortcutRealmModel] = []
+    @Published var shortcuts: [ShortcutModel] = []
     @Published var albums: [AlbumModel] = []
 
     func fetch() {
