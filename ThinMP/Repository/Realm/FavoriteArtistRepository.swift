@@ -19,8 +19,8 @@ struct FavoriteArtistRepository {
         let realm = try! Realm()
 
         return realm.objects(FavoriteArtistRealmModel.self)
-            .sorted(byKeyPath: "order")
-            .map { ArtistId(id: UInt64(bitPattern: $0.persistentId))}
+            .sorted(byKeyPath: FavoriteArtistRealmModel.ORDER)
+            .map { ArtistId(id: UInt64($0.artistId)!)}
     }
 
     func exists(artistId: ArtistId) -> Bool {
@@ -34,9 +34,7 @@ struct FavoriteArtistRepository {
 
         let favoriteArtist = FavoriteArtistRealmModel()
 
-        // MPMediaEntityPersistentID は UInt64のエイリアス
-        // realmはUInt64を保存できないのでInt64に変換して保存する
-        favoriteArtist.persistentId = Int64(bitPattern: artistId.id)
+        favoriteArtist.artistId = String(artistId.id)
         favoriteArtist.order = incrementOrder()
 
         try! realm.write {
@@ -62,11 +60,11 @@ struct FavoriteArtistRepository {
     }
 
     private func find(artistId: ArtistId) -> Results<FavoriteArtistRealmModel> {
-        return realm.objects(FavoriteArtistRealmModel.self).filter("persistentId = \(Int64(bitPattern: artistId.id))")
+        return realm.objects(FavoriteArtistRealmModel.self).filter("\(FavoriteArtistRealmModel.ARTIST_ID) = '\(String(artistId.id))'")
     }
 
     private func incrementOrder() -> Int {
-        return (realm.objects(FavoriteArtistRealmModel.self).max(ofProperty: "order") as Int? ?? 0) + 1
+        return (realm.objects(FavoriteArtistRealmModel.self).max(ofProperty: FavoriteArtistRealmModel.ORDER) as Int? ?? 0) + 1
     }
 
     private func truncate() {
@@ -85,8 +83,8 @@ struct FavoriteArtistRepository {
 
         for index in 0..<artistIds.count {
             realm.create(FavoriteArtistRealmModel.self, value: [
-                "persistentId": artistIds[index].id,
-                "order": index
+                FavoriteArtistRealmModel.ARTIST_ID: String(artistIds[index].id),
+                FavoriteArtistRealmModel.ORDER: index
             ])
         }
 
