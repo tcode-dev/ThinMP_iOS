@@ -25,8 +25,8 @@ struct PlaylistDetailService {
     }
 
     private func createModel(playlist: PlaylistRealmModel) -> PlaylistDetailModel {
-        let playlistSongs = playlist.songs.sorted(byKeyPath: "order")
-        let songIds = Array(playlistSongs.map { SongId(id: UInt64(bitPattern: $0.persistentId))})
+        let playlistSongs = playlist.songs.sorted(byKeyPath: PlaylistSongRealmModel.ORDER)
+        let songIds = Array(playlistSongs.map { SongId(id: UInt64($0.songId)!)})
         let repository = SongRepository()
         let songs = repository.findByIds(songIds: songIds)
         let sorted = songIds.map{ (songId) in songs.first { songId.equals($0.songId) }!}

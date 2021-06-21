@@ -33,7 +33,7 @@ struct PlaylistRepository {
         playlist.order = incrementOrder()
 
         let song = PlaylistSongRealmModel()
-        song.persistentId = Int64(bitPattern: songId.id)
+        song.songId = String(songId.id)
         song.playlistId = playlist.id
 
         playlist.songs.append(song)
@@ -47,7 +47,7 @@ struct PlaylistRepository {
         let playlist = realm.objects(PlaylistRealmModel.self).filter("id = '\(playlistId.id)'").first!
         let song = PlaylistSongRealmModel()
 
-        song.persistentId = Int64(bitPattern: songId.id)
+        song.songId = String(songId.id)
         song.playlistId = playlist.id
 
         try! realm.write {
@@ -71,7 +71,7 @@ struct PlaylistRepository {
 
         songIds.forEach { songId in
             let song = PlaylistSongRealmModel()
-            song.persistentId = Int64(bitPattern: songId.id)
+            song.songId = String(songId.id)
             song.playlistId = playlist.id
             playlist.songs.append(song)
         }
