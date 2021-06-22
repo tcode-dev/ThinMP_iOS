@@ -478,9 +478,9 @@
 				527381FF26457DF5005DCE75 /* MenuModel.swift */,
 				527177AA2663DD6500390A32 /* PlaylistDetailModel.swift */,
 				5264BDD4267822F1009C7400 /* PlaylistModel.swift */,
-				52AAAA3A267F694E000880E0 /* Protocol */,
 				52B03A5D2681503900ECA36A /* ShortcutModel.swift */,
 				52C5FA48264129D900B6269C /* SongModel.swift */,
+				52AAAA3A267F694E000880E0 /* Protocol */,
 				52AAAA3B267F6E85000880E0 /* ValueObject */,
 			);
 			path = Media;
