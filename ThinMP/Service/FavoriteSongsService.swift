@@ -10,7 +10,29 @@ struct FavoriteSongsService {
         let favoriteSongRepository = FavoriteSongRepository()
         let songIds = favoriteSongRepository.findAll()
         let songRepository = SongRepository()
+        let songs = songRepository.findByIds(songIds: songIds)
 
-        return songRepository.findByIds(songIds: songIds)
+        if (!validation(songIds: songIds, songs:songs)) {
+            return findAll()
+        }
+
+        return songs
+    }
+
+    private func validation(songIds: [SongId], songs: [SongModel]) -> Bool {
+        if (songIds.count == songs.count) {
+            return true
+        }
+
+        update(songs: songs)
+
+        return false
+    }
+
+    private func update(songs: [SongModel]) {
+        let register = FavoriteSongRegister()
+        let songIds = songs.map{$0.songId}
+
+        register.update(songIds: songIds)
     }
 }
