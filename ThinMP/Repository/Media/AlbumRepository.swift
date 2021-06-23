@@ -14,13 +14,9 @@ class AlbumRepository {
 
         query.addFilterPredicate(property)
 
-        let albums: [AlbumModel] = query.collections!.map{
-            let item = $0.representativeItem
-
-            return AlbumModel(albumId: AlbumId(id: item!.albumPersistentID), primaryText: item?.albumTitle, secondaryText: item?.artist, artwork: item?.artwork)
+        return query.collections!.map{
+            return AlbumModel(albumId: AlbumId(id: $0.representativeItem!.albumPersistentID), primaryText: $0.representativeItem?.albumTitle, secondaryText: $0.representativeItem?.artist, artwork: $0.representativeItem?.artwork)
         }
-
-        return albums
     }
 
     func findById(albumId: AlbumId) -> AlbumModel? {
@@ -37,16 +33,14 @@ class AlbumRepository {
     func findByIds(albumIds: [AlbumId]) -> [AlbumModel] {
         let property = MPMediaPropertyPredicate(value: false, forProperty: MPMediaItemPropertyIsCloudItem)
         let query = MPMediaQuery.albums()
+        let ids = albumIds.map{$0.id}
 
         query.addFilterPredicate(property)
 
-        let ids = albumIds.map{$0.id}
-        let filtered = query.collections!.filter{ids.contains($0.representativeItem?.albumPersistentID ?? 0)}
-        let albums = filtered.map{
+        return query.collections!.filter{ids.contains($0.representativeItem?.albumPersistentID ?? 0)}
+            .map{
             return AlbumModel(albumId: AlbumId(id: ($0.representativeItem?.albumPersistentID)!), primaryText: $0.representativeItem?.albumTitle, secondaryText: $0.representativeItem?.artist, artwork: $0.representativeItem?.artwork)
         }
-
-        return Array(albums)
     }
 
     func findByArtistId(artistId: ArtistId) -> [AlbumModel] {
@@ -66,16 +60,10 @@ class AlbumRepository {
 
         query.addFilterPredicate(property)
 
-        let albums: [AlbumModel] = query.collections!.sorted(by: { l, r in
+        return query.collections!.sorted(by: { l, r in
             return l.representativeItem!.dateAdded > r.representativeItem!.dateAdded
         })
         .prefix(count)
-        .map {
-            let item = $0.representativeItem
-
-            return AlbumModel(albumId: AlbumId(id: item!.albumPersistentID), primaryText: item?.albumTitle, secondaryText: item?.artist, artwork: item?.artwork)
-        }
-
-        return albums
+        .map {AlbumModel(albumId: AlbumId(id: $0.representativeItem!.albumPersistentID), primaryText: $0.representativeItem?.albumTitle, secondaryText: $0.representativeItem?.artist, artwork: $0.representativeItem?.artwork)}
     }
 }
