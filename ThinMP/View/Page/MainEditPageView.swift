@@ -88,9 +88,9 @@ struct MainEditPageView: View {
         mainSectionConfig.setRecentlyVisibility(value: vm.recentlyMenu.visibility)
 
         let shortcutRegister = ShortcutRegister()
-        let shortcutIds = vm.shortcuts.map {$0.id}
+        let shortcutIds = vm.shortcuts.map {$0.shortcutId}
 
-        shortcutRegister.update(ids: shortcutIds)
+        shortcutRegister.update(shortcutIds: shortcutIds)
     }
 
     func back() {

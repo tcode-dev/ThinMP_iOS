@@ -18,8 +18,8 @@ struct MainService {
 
     func findShortcuts() -> [ShortcutModel] {
         let shortcutRepository = ShortcutRepository()
-        let shortcutModels = shortcutRepository.findAll()
-        let grouping = Dictionary(grouping: shortcutModels) { shortcutModel -> Int in
+        let ShortcutRealmModels = shortcutRepository.findAll()
+        let grouping = Dictionary(grouping: ShortcutRealmModels) { shortcutModel -> Int in
             switch shortcutModel.type {
             case ShortcutType.ARTIST.rawValue: return ShortcutType.ARTIST.rawValue
             case ShortcutType.ALBUM.rawValue: return ShortcutType.ALBUM.rawValue
@@ -54,13 +54,13 @@ struct MainService {
 
             shortcutDictionary[ShortcutType.PLAYLIST.rawValue] = playlistDetailService.findByIds(playlistIds: playlistIds.map{PlaylistId(id: $0)})
         }
-        
-        return shortcutModels.map { shortcut -> ShortcutModel in
-            let shortcut = shortcut
-            let dictionary = shortcutDictionary[shortcut.type]
-            let model = dictionary!.first { $0.shortcutId == shortcut.itemId }!
 
-            return ShortcutModel(id: shortcut.id, itemId: shortcut.itemId, type: shortcut.type, primaryText: model.primaryText, artwork: model.artwork)
+        return ShortcutRealmModels.map { shortcutRealmModel -> ShortcutModel in
+            let shortcut = shortcutRealmModel
+            let dictionary = shortcutDictionary[shortcut.type]
+            let itemModel = dictionary!.first { $0.shortcutId == shortcut.itemId }!
+
+            return ShortcutModel(shortcutId: ShortcutId(id: shortcut.id), itemId: shortcut.itemId, type: shortcut.type, primaryText: itemModel.primaryText, artwork: itemModel.artwork)
         }
     }
 

@@ -8,11 +8,14 @@
 import MediaPlayer
 
 struct ShortcutModel: MediaProtocol, Identifiable {
-    var id: String
+    var shortcutId: ShortcutId
     var itemId: String
     var type: Int
     var primaryText: String?
     var artwork: MPMediaItemArtwork?
+    var id: String {
+        return shortcutId.id
+    }
     var secondaryText: String? {
         get {
             if (type == ShortcutType.ARTIST.rawValue) {

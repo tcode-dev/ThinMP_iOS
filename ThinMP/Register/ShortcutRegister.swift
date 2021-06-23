@@ -26,7 +26,7 @@ struct ShortcutRegister {
         repository.delete(itemId: itemId, type: type)
     }
 
-    func update(ids: [String]) {
-        repository.update(ids: ids)
+    func update(shortcutIds: [ShortcutId]) {
+        repository.update(shortcutIds: shortcutIds)
     }
 }

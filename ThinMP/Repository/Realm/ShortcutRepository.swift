@@ -43,15 +43,15 @@ struct ShortcutRepository {
         }
     }
 
-    func update(ids: [String]) {
-        delete(ids: ids)
-        sort(ids: ids)
+    func update(shortcutIds: [ShortcutId]) {
+        delete(shortcutIds: shortcutIds)
+        sort(shortcutIds: shortcutIds)
     }
 
-    private func sort(ids: [String]) {
-        let models = findByIds(ids: ids)
-        let sorted = ids.map { id in
-            models.first{$0.id == id}
+    private func sort(shortcutIds: [ShortcutId]) {
+        let models = findByIds(shortcutIds: shortcutIds)
+        let sorted = shortcutIds.map { shortcutId in
+            models.first{$0.id == shortcutId.id}
         }
         let count = sorted.count
 
@@ -90,10 +90,10 @@ struct ShortcutRepository {
         }
     }
 
-    private func delete(ids: [String]) {
-        let currentIds: [String] = realm.objects(ShortcutRealmModel.self).map{$0.id}
-        let deleteIds = currentIds.filter{ !ids.contains($0)}
-        let models = findByIds(ids: deleteIds)
+    private func delete(shortcutIds: [ShortcutId]) {
+        let currentIds = realm.objects(ShortcutRealmModel.self).map{ShortcutId(id: $0.id)}
+        let deleteIds = Array(currentIds.filter{ !shortcutIds.contains($0)})
+        let models = findByIds(shortcutIds: deleteIds)
 
         if (models.count == 0) {
             return
@@ -104,8 +104,8 @@ struct ShortcutRepository {
         }
     }
 
-    private func findByIds(ids: [String]) -> Results<ShortcutRealmModel> {
-        return realm.objects(ShortcutRealmModel.self).filter("\(ShortcutRealmModel.ID) IN %@", ids)
+    private func findByIds(shortcutIds: [ShortcutId]) -> Results<ShortcutRealmModel> {
+        return realm.objects(ShortcutRealmModel.self).filter("\(ShortcutRealmModel.ID) IN %@", shortcutIds.map{$0.id})
     }
 
     private func exists(itemId: String, type: ShortcutType) -> Bool {
