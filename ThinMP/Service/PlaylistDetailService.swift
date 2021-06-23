@@ -35,6 +35,27 @@ struct PlaylistDetailService {
             (song.artwork != nil)
         })?.artwork
 
+        if (!validation(playlist: playlist, songIds: songIds, songs: songs)) {
+            return createModel(playlist: playlist)
+        }
+
         return PlaylistDetailModel(playlistId: PlaylistId(id: playlist.id), primaryText: playlist.name, artwork: artwork, songs: arrayed)
+    }
+
+    private func validation(playlist: PlaylistRealmModel, songIds: [SongId], songs: [SongModel]) -> Bool {
+        if (songIds.count == songs.count) {
+            return true
+        }
+
+        update(playlist: playlist, songs: songs)
+
+        return false
+    }
+
+    private func update(playlist: PlaylistRealmModel, songs: [SongModel]) {
+        let playlistRegister = PlaylistRegister()
+        let songIds = songs.map{$0.songId}
+
+        playlistRegister.update(playlistId: PlaylistId(id: playlist.id), name: playlist.name, songIds: songIds)
     }
 }
