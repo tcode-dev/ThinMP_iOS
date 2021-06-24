@@ -29,15 +29,15 @@ struct ShortcutListView: View {
             ForEach(list.indices, id: \.self) { index in
                 switch list[index].type {
                 case ShortcutType.ARTIST.rawValue:
-                    NavigationLink(destination: ArtistDetailPageView(artistId: ArtistId(id: UInt64(list[index].itemId)!))) {
+                    NavigationLink(destination: ArtistDetailPageView(artistId: list[index].itemId.artistId)) {
                         ShortcutCellView(shortcut: list[index], size: size)
                     }
                 case ShortcutType.ALBUM.rawValue:
-                    NavigationLink(destination: AlbumDetailPageView(albumId: AlbumId(id: UInt64(list[index].itemId)!))) {
+                    NavigationLink(destination: AlbumDetailPageView(albumId: list[index].itemId.albumId)) {
                         ShortcutCellView(shortcut: list[index], size: size)
                     }
                 case ShortcutType.PLAYLIST.rawValue:
-                    NavigationLink(destination: PlaylistDetailPageView(playlistId: PlaylistId(id: list[index].itemId))) {
+                    NavigationLink(destination: PlaylistDetailPageView(playlistId: list[index].itemId.playlistId)) {
                         ShortcutCellView(shortcut: list[index], size: size)
                     }
                 default:

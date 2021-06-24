@@ -85,6 +85,7 @@
 		52B03A5E2681503900ECA36A /* ShortcutModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B03A5D2681503900ECA36A /* ShortcutModel.swift */; };
 		52B03A602683EF0D00ECA36A /* ShortcutId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B03A5F2683EF0D00ECA36A /* ShortcutId.swift */; };
 		52B03A642683FEB100ECA36A /* ShortcutService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B03A632683FEB100ECA36A /* ShortcutService.swift */; };
+		52B03A6626854A5500ECA36A /* ItemId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B03A6526854A5400ECA36A /* ItemId.swift */; };
 		52B5BC8523DD45FA000C7820 /* MiniPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B5BC8423DD45FA000C7820 /* MiniPlayerView.swift */; };
 		52B6682023C19ADE00E70C47 /* ArtistsPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B6681F23C19ADE00E70C47 /* ArtistsPageView.swift */; };
 		52B6682523C19D8E00E70C47 /* ArtistsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B6682423C19D8E00E70C47 /* ArtistsViewModel.swift */; };
@@ -206,6 +207,7 @@
 		52B03A5D2681503900ECA36A /* ShortcutModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutModel.swift; sourceTree = "<group>"; };
 		52B03A5F2683EF0D00ECA36A /* ShortcutId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutId.swift; sourceTree = "<group>"; };
 		52B03A632683FEB100ECA36A /* ShortcutService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutService.swift; sourceTree = "<group>"; };
+		52B03A6526854A5400ECA36A /* ItemId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemId.swift; sourceTree = "<group>"; };
 		52B5BC8423DD45FA000C7820 /* MiniPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerView.swift; sourceTree = "<group>"; };
 		52B6681F23C19ADE00E70C47 /* ArtistsPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistsPageView.swift; sourceTree = "<group>"; };
 		52B6682423C19D8E00E70C47 /* ArtistsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistsViewModel.swift; sourceTree = "<group>"; };
@@ -505,6 +507,7 @@
 			children = (
 				52AAAA3F267F799B000880E0 /* AlbumId.swift */,
 				52AAAA3D267F6F4B000880E0 /* ArtistId.swift */,
+				52B03A6526854A5400ECA36A /* ItemId.swift */,
 				52AAAA38267F536B000880E0 /* PlaylistId.swift */,
 				52B03A5F2683EF0D00ECA36A /* ShortcutId.swift */,
 				5260D767267F92CA00B4155D /* SongId.swift */,
@@ -803,6 +806,7 @@
 				527B33EA26710F72002DD924 /* MainMenuButtonView.swift in Sources */,
 				5296E88C2489B27E0041D3A5 /* MenuImageView.swift in Sources */,
 				52AC16ED23CE8BE4001D427B /* PrimaryTitleView.swift in Sources */,
+				52B03A6626854A5500ECA36A /* ItemId.swift in Sources */,
 				5237636123C360C2003ABD2A /* ArtistModel.swift in Sources */,
 				525BD0D5261950F700459563 /* PopupView.swift in Sources */,
 				523DAC5F266E4A210036843A /* ArtistsService.swift in Sources */,

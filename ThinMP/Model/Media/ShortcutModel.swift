@@ -9,7 +9,7 @@ import MediaPlayer
 
 struct ShortcutModel: MediaProtocol, Identifiable {
     var shortcutId: ShortcutId
-    var itemId: String
+    var itemId: ItemId
     var type: Int
     var primaryText: String?
     var artwork: MPMediaItemArtwork?
