@@ -43,16 +43,14 @@ struct MainPageView: View {
                         .padding(.bottom, 20)
                         if (vm.shortcutMenu.visibility) {
                             VStack(alignment: .leading) {
-                                PrimaryTitleView(vm.shortcutMenu.primaryText)
-                                    .padding(.leading, 20)
+                                Text(LocalizedStringKey(vm.shortcutMenu.primaryText!)).fontWeight(.bold).font(.title3).padding(.leading, 20)
                                 ShortcutListView(list: vm.shortcuts, width: geometry.size.width)
                                     .padding(.bottom, 10)
                             }
                         }
                         if (vm.recentlyMenu.visibility) {
                             VStack(alignment: .leading) {
-                                PrimaryTitleView(vm.recentlyMenu.primaryText)
-                                    .padding(.leading, 20)
+                                Text(LocalizedStringKey(vm.recentlyMenu.primaryText!)).fontWeight(.bold).font(.title3).padding(.leading, 20)
                                 AlbumListView(list: vm.albums, width: geometry.size.width)
                                     .padding(.bottom, 10)
                             }
