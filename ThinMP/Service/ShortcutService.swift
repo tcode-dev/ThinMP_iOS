@@ -17,26 +17,20 @@ struct ShortcutService {
             default: return 0
             }
         }
-        .reduce([Int: [String]]()) { dic, tuple in
-            var dic = dic
-            dic[tuple.key] = tuple.value.map { $0.itemId }
-            return dic
-        }
+        .reduce(into:[Int: [String]]()) { $0[$1.key] = $1.value.map { $0.itemId }}
 
         var shortcutDictionary: [Int: [DetailProtocol]] = [ShortcutType.ARTIST.rawValue: [], ShortcutType.ALBUM.rawValue: [], ShortcutType.PLAYLIST.rawValue:[]]
 
         if let artistIds = grouping[ShortcutType.ARTIST.rawValue] {
             let artistDetailService = ArtistDetailService()
-            let artistIds = artistIds.map { ArtistId(id: UInt64($0)!)}
 
-            shortcutDictionary[ShortcutType.ARTIST.rawValue] = artistDetailService.findByIds(artistIds: artistIds)
+            shortcutDictionary[ShortcutType.ARTIST.rawValue] = artistDetailService.findByIds(artistIds: artistIds.map { ArtistId(id: UInt64($0)!)})
         }
 
         if let albumIds = grouping[ShortcutType.ALBUM.rawValue] {
             let albumDetailService = AlbumDetailService()
-            let albumIds = albumIds.map {AlbumId(id: UInt64($0)!)}
 
-            shortcutDictionary[ShortcutType.ALBUM.rawValue] = albumDetailService.findByIds(albumIds: albumIds)
+            shortcutDictionary[ShortcutType.ALBUM.rawValue] = albumDetailService.findByIds(albumIds: albumIds.map {AlbumId(id: UInt64($0)!)})
         }
 
         if let playlistIds = grouping[ShortcutType.PLAYLIST.rawValue] {
@@ -46,16 +40,12 @@ struct ShortcutService {
         }
 
         let shortcutModels = shortcutRealmModels.map { shortcutRealmModel -> ShortcutModel in
-            let shortcut = shortcutRealmModel
-            let dictionary = shortcutDictionary[shortcut.type]
-            let itemModel = dictionary!.first { $0.shortcutId == shortcut.itemId }!
+            let itemModel = shortcutDictionary[shortcutRealmModel.type]!.first { $0.shortcutId == shortcutRealmModel.itemId }!
 
-            return ShortcutModel(shortcutId: ShortcutId(id: shortcut.id), itemId: shortcut.itemId, type: shortcut.type, primaryText: itemModel.primaryText, artwork: itemModel.artwork)
+            return ShortcutModel(shortcutId: ShortcutId(id: shortcutRealmModel.id), itemId: shortcutRealmModel.itemId, type: shortcutRealmModel.type, primaryText: itemModel.primaryText, artwork: itemModel.artwork)
         }
 
-        let shortcutIds = shortcutRealmModels.map{$0.id}
-
-        if (!validation(shortcutIds: shortcutIds, shortcutModels: shortcutModels)) {
+        if (!validation(shortcutIds: shortcutRealmModels.map{$0.id}, shortcutModels: shortcutModels)) {
             return findAll()
         }
 
@@ -74,8 +64,7 @@ struct ShortcutService {
 
     private func update(shortcutModels: [ShortcutModel]) {
         let register = ShortcutRegister()
-        let shortcutIds = shortcutModels.map{$0.shortcutId}
 
-        register.update(shortcutIds: shortcutIds)
+        register.update(shortcutIds: shortcutModels.map{$0.shortcutId})
     }
 }
