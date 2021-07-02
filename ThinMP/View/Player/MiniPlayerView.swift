@@ -30,27 +30,27 @@ struct MiniPlayerView: View {
                     }
                     if (musicPlayer.isPlaying) {
                         Button(action: {
-                            self.musicPlayer.pause()
+                            self.musicPlayer.doPause()
                         }) {
                             Image("PauseButton").renderingMode(.original).resizable().frame(width: imageSize, height: imageSize)
                         }
                         .frame(width: buttonSize, height: buttonSize)
                         
                         Button(action: {
-                            self.musicPlayer.playNext()
+                            self.musicPlayer.doNext()
                         }) {
                             Image("NextButton").renderingMode(.original).resizable().frame(width: imageSize, height: imageSize)
                         }
                         .frame(width: buttonSize, height: buttonSize)
                     } else {
                         Button(action: {
-                            self.musicPlayer.play()
+                            self.musicPlayer.doPlay()
                         }) {
                             Image("PlayButton").renderingMode(.original).resizable().frame(width: imageSize, height: imageSize)
                         }
                         .frame(width: buttonSize, height: buttonSize)
                         Button(action: {
-                            self.musicPlayer.next()
+                            self.musicPlayer.doNext()
                         }) {
                             Image("NextButton").renderingMode(.original).resizable().frame(width: imageSize, height: imageSize)
                         }

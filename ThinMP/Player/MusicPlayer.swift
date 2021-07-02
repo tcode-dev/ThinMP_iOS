@@ -8,12 +8,6 @@
 import MediaPlayer
 
 class MusicPlayer: ObservableObject {
-    static let REPEAT_OFF: Int = 0
-    static let REPEAT_ONE: Int = 1
-    static let REPEAT_ALL: Int = 2
-    static let SHUFFLE_ON: Bool = true
-    static let SHUFFLE_OFF: Bool = false
-
     private let PREV_SECOND: Double = 3
 
     @Published var isActive: Bool = false
@@ -30,48 +24,32 @@ class MusicPlayer: ObservableObject {
 
     private let playerConfig: PlayerConfig
     private let player: MPMusicPlayerController
-    private var playerState: MPMusicPlaybackState
-    private var playingList: PlayingList
-    private var repeatMode: Int
     private var timer: Timer?
 
     init() {
         playerConfig = PlayerConfig()
-        playerState = MPMusicPlaybackState.stopped
-        playingList = PlayingList(list: [], currentIndex: 0)
         player = MPMusicPlayerController.applicationMusicPlayer
-        player.repeatMode = .none
-        repeatMode = playerConfig.getRepeat()
-        shuffleMode = playerConfig.getShuffle()
+        player.repeatMode = playerConfig.getRepeat()
+        player.shuffleMode = playerConfig.getShuffle()
         setRepeat()
-        addObserver()
+        setShuffle()
         player.beginGeneratingPlaybackNotifications()
     }
 
     func start(list:[SongModel], currentIndex: Int) {
-        playingList = PlayingList(list: list, currentIndex: currentIndex)
-
-        if (shuffleMode) {
-            playingList.shuffle(shuffleMode: shuffleMode)
-        }
-
         stop()
-        setSong()
+        song = SongModel(media: MPMediaItemCollection(items:[list[currentIndex].media.representativeItem! as MPMediaItem]))
+
+        let items = MPMediaItemCollection(items: list.map{$0.media.representativeItem! as MPMediaItem})
+        let descriptor = MPMusicPlayerMediaItemQueueDescriptor.init(itemCollection: items)
+        descriptor.startItem = song?.media.representativeItem
+        player.setQueue(with: descriptor)
+
+        play();
+        isActive = true
         setFavoriteArtist()
         setFavoriteSong()
-        play();
-
-        isActive = true
-    }
-
-    func setSong() {
-        song = playingList.getSong()
-        durationSecond = Double(song?.media.representativeItem?.playbackDuration ?? 0)
-        let descriptor = MPMusicPlayerMediaItemQueueDescriptor.init(itemCollection: song!.media)
-
-        player.setQueue(with: descriptor)
-        seek(time: 0)
-        updateTime()
+        addObserver()
     }
 
     func doPlay() {
@@ -79,30 +57,9 @@ class MusicPlayer: ObservableObject {
         startProgress()
     }
 
-    func play() {
-        isPlaying = true
-        player.play()
-    }
-
     func doPause() {
         pause()
         stopProgress()
-    }
-
-    func pause() {
-        isPlaying = false
-        playerState = MPMusicPlaybackState.paused
-        player.pause()
-    }
-
-    func stop() {
-        if (!isPlaying) {
-            return
-        }
-
-        isPlaying = false
-        playerState = MPMusicPlaybackState.paused
-        player.stop()
     }
 
     func doPrev() {
@@ -113,23 +70,6 @@ class MusicPlayer: ObservableObject {
         }
     }
 
-    func prev() {
-        stop()
-        if (currentSecond <= PREV_SECOND) {
-            playingList.prev()
-            setSong()
-        } else {
-            seek(time: 0)
-            updateTime()
-        }
-    }
-
-    func playPrev() {
-        isPlaying = false
-        prev()
-        play()
-    }
-
     func doNext() {
         if (isPlaying) {
             playNext()
@@ -138,38 +78,8 @@ class MusicPlayer: ObservableObject {
         }
     }
 
-    func next() {
-        stop()
-        playingList.next()
-        setSong()
-    }
-
-    func playNext() {
-        next()
-        play()
-    }
-
-    func autoPlay() {
-        if (isRepeatAll) {
-            playNext()
-        } else if (isRepeatOff) {
-            if (playingList.hasNext()) {
-                playNext()
-            } else {
-                next()
-            }
-        } else if (isRepeatOne) {
-            setSong()
-            play()
-        }
-    }
-
     func seek(time: TimeInterval) {
         player.currentPlaybackTime = time
-    }
-
-    func updateTime() {
-        currentSecond = Double(player.currentPlaybackTime)
     }
 
     func immediateUpdateTime() {
@@ -189,12 +99,6 @@ class MusicPlayer: ObservableObject {
         timer?.invalidate()
     }
 
-    func setRepeat() {
-        isRepeatOff = repeatMode == MusicPlayer.REPEAT_OFF
-        isRepeatOne = repeatMode == MusicPlayer.REPEAT_ONE
-        isRepeatAll = repeatMode == MusicPlayer.REPEAT_ALL
-    }
-
     func changeRepeat() {
         if (isRepeatOff) {
             isRepeatOff = false
@@ -206,88 +110,133 @@ class MusicPlayer: ObservableObject {
             isRepeatOne = false
             isRepeatOff = true
         }
-        repeatMode = repeatMode == MusicPlayer.REPEAT_OFF ? MusicPlayer.REPEAT_ALL
-            : repeatMode == MusicPlayer.REPEAT_ALL ? MusicPlayer.REPEAT_ONE
-            : MusicPlayer.REPEAT_OFF
+        player.repeatMode = player.repeatMode == .none ? .all
+            : player.repeatMode == .all ? .one
+            : .none
         setRepeat()
-        playerConfig.setRepeat(value: repeatMode)
+        playerConfig.setRepeat(value: player.repeatMode)
     }
 
     func shuffle() {
-        shuffleMode = !shuffleMode
-        playingList.shuffle(shuffleMode: shuffleMode)
-        playerConfig.setShuffle(value: shuffleMode)
-    }
-
-    func setFavoriteArtist() {
-        let favoriteArtistRegister = FavoriteArtistRegister()
-
-        isFavoriteArtist = favoriteArtistRegister.exists(artistId: ArtistId(id: song!.artistPersistentId!))
+        player.shuffleMode = player.shuffleMode == .off ? .songs : .off
+        setShuffle();
+        playerConfig.setShuffle(value: player.shuffleMode)
     }
 
     func favoriteArtist() {
-        let artistId = ArtistId(id: song!.artistPersistentId!)
-        let register = FavoriteArtistRegister()
+        if let artistPersistentId = song?.artistPersistentId {
+            let artistId = ArtistId(id: artistPersistentId)
+            let register = FavoriteArtistRegister()
 
-        if (register.exists(artistId: artistId)) {
-            register.delete(artistId: artistId)
-        } else {
-            register.add(artistId: artistId)
+            if (register.exists(artistId: artistId)) {
+                register.delete(artistId: artistId)
+            } else {
+                register.add(artistId: artistId)
+            }
+
+            isFavoriteArtist = !isFavoriteArtist
         }
-
-        isFavoriteArtist = !isFavoriteArtist
-    }
-
-    func setFavoriteSong() {
-        let register = FavoriteSongRegister()
-
-        isFavoriteSong = register.exists(songId: song!.songId)
     }
 
     func favoriteSong() {
-        let songId = song!.songId
-        let register = FavoriteSongRegister()
+        if let songId = song?.songId {
+            let register = FavoriteSongRegister()
 
-        if (register.exists(songId: songId)) {
-            register.delete(songId: songId)
-        } else {
-            register.add(songId: songId)
+            if (register.exists(songId: songId)) {
+                register.delete(songId: songId)
+            } else {
+                register.add(songId: songId)
+            }
+            isFavoriteSong = !isFavoriteSong
+        }
+    }
+
+    private func setSong() {
+        song = SongModel(media: MPMediaItemCollection(items:[player.nowPlayingItem! as MPMediaItem]))
+        player.skipToBeginning()
+        resetTime()
+    }
+
+    private func play() {
+        isPlaying = true
+
+        self.player.prepareToPlay()
+        self.player.play()
+    }
+
+    private func next() {
+        stop()
+        player.skipToNextItem()
+        setSong()
+        resetTime()
+    }
+
+    private func playNext() {
+        next()
+        play()
+    }
+
+    private func pause() {
+        isPlaying = false
+        player.pause()
+    }
+
+    private func stop() {
+        if (!isPlaying) {
+            return
         }
 
-        isFavoriteSong = !isFavoriteSong
+        isPlaying = false
+        player.stop()
+    }
+
+    private func prev() {
+        stop()
+        if (currentSecond <= PREV_SECOND) {
+            player.skipToPreviousItem()
+            setSong()
+        } else {
+            player.skipToBeginning()
+            resetTime()
+        }
+    }
+
+    private func playPrev() {
+        isPlaying = false
+        prev()
+        play()
     }
 
     private func addObserver() {
+        NotificationCenter.default.addObserver(
+            forName: NSNotification.Name.MPMusicPlayerControllerNowPlayingItemDidChange,
+            object: player,
+            queue: OperationQueue.main
+        ) { notification in
+            self.MPMusicPlayerControllerNowPlayingItemDidChangeCallback()
+        }
+
         NotificationCenter.default.addObserver(
             forName: NSNotification.Name.MPMusicPlayerControllerPlaybackStateDidChange,
             object: player,
             queue: OperationQueue.main
         ) { notification in
-            self.callback()
+            self.MPMusicPlayerControllerPlaybackStateDidChangeCallback()
         }
     }
 
-    // NotificationCenterのcallback
-    // playbackStateが正しい状態でなかったり、pausedが複数回呼ばれるので、再生終了時の処理のみ登録
-    private func callback() {
-        // ユーザーが停止させた場合処理しない
-        if (!isPlaying) {
-            return
-        }
-
+    private func MPMusicPlayerControllerPlaybackStateDidChangeCallback() {
         switch player.playbackState {
         case MPMusicPlaybackState.stopped:
 
             break
         case MPMusicPlaybackState.playing:
-            playerState = MPMusicPlaybackState.playing
+            isPlaying = true
 
             break
         case MPMusicPlaybackState.paused:
-            if (playerState == MPMusicPlaybackState.playing) {
-                playerState = MPMusicPlaybackState.paused
-                autoPlay()
-            }
+            isPlaying = false
+
             break
         case MPMusicPlaybackState.interrupted:
 
@@ -302,5 +251,44 @@ class MusicPlayer: ObservableObject {
 
             break
         }
+    }
+
+    private func MPMusicPlayerControllerNowPlayingItemDidChangeCallback() {
+        setSong()
+    }
+
+    private func setFavoriteArtist() {
+        if let artistPersistentID = song?.artistPersistentId {
+            let favoriteArtistRegister = FavoriteArtistRegister()
+
+            isFavoriteArtist = favoriteArtistRegister.exists(artistId: ArtistId(id: artistPersistentID))
+        }
+    }
+
+    private func setFavoriteSong() {
+        if let songId = song?.songId {
+            let register = FavoriteSongRegister()
+
+            isFavoriteSong = register.exists(songId: songId)
+        }
+    }
+
+    private func resetTime() {
+        durationSecond = Double(song?.media.representativeItem?.playbackDuration ?? 0)
+        updateTime()
+    }
+
+    private func updateTime() {
+        currentSecond = Double(player.currentPlaybackTime)
+    }
+
+    private func setRepeat() {
+        isRepeatOff = player.repeatMode == .none
+        isRepeatOne = player.repeatMode == .one
+        isRepeatAll = player.repeatMode == .all
+    }
+
+    private func setShuffle() {
+        shuffleMode = player.shuffleMode == .songs
     }
 }
