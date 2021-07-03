@@ -20,8 +20,8 @@ struct EditButtonView<Content> : View where Content: View {
             }
         } label: {
             MenuImageView()
-                .frame(width: 50, height: 50)
         }
+        .frame(width: StyleConstant.button, height: StyleConstant.button)
         .background(
             NavigationLink(destination: content().environment(\.editMode, $editMode), isActive: $isEdit) {
                 EmptyView()

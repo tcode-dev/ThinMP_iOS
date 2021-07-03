@@ -15,7 +15,7 @@ struct MenuButtonView<Content> : View where Content: View {
             content()
         } label: {
             MenuImageView()
-                .frame(width: 50, height: 50)
         }
+        .frame(width: StyleConstant.button, height: StyleConstant.button)
     }
 }

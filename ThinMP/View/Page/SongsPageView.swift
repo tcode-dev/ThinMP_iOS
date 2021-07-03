@@ -26,7 +26,7 @@ struct SongsPageView: View {
                                 SecondaryTitleView("Songs")
                                 Spacer()
                                 Spacer()
-                                    .frame(width: 50)
+                                    .frame(width: StyleConstant.button)
                             }
                         }
                         ScrollView() {

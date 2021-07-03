@@ -15,8 +15,8 @@ struct BackButtonView: View {
             self.presentation.wrappedValue.dismiss()
         }) {
             // サイズを指定しないと反応しない
-            Image("BackButton").renderingMode(.original).frame(width: 50, height: 50)
+            Image("BackButton").renderingMode(.original).frame(width: StyleConstant.button, height: StyleConstant.button)
         }
-        .frame(width: 50, height: 50)
+        .frame(width: StyleConstant.button, height: StyleConstant.button)
     }
 }

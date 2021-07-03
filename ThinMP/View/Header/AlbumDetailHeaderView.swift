@@ -13,8 +13,6 @@ struct AlbumDetailHeaderView: View {
     
     var side: CGFloat
     var top: CGFloat
-    var height: CGFloat = 50
-    var padding: CGFloat = 50
     
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -26,7 +24,7 @@ struct AlbumDetailHeaderView: View {
             GeometryReader { primaryTextGeometry in
                 self.createPrimaryTextView(primaryTextGeometry: primaryTextGeometry)
             }
-            .frame(height: 50)
+            .frame(height: StyleConstant.height.row)
             .offset(y: -30)
             self.createSecondaryTextView()
         }
@@ -44,9 +42,9 @@ struct AlbumDetailHeaderView: View {
         return VStack {
             SecondaryTitleView(self.vm.primaryText).opacity(textOpacity())
         }
-        .frame(width: side - (padding + padding), height: height)
-        .padding(.leading, padding)
-        .padding(.trailing, padding)
+        .frame(width: side - (StyleConstant.button + StyleConstant.button), height: StyleConstant.height.row)
+        .padding(.leading, StyleConstant.button)
+        .padding(.trailing, StyleConstant.button)
     }
     
     private func createSecondaryTextView() -> some View {
@@ -56,8 +54,8 @@ struct AlbumDetailHeaderView: View {
         .frame(width: side - 100, height: 25, alignment: .center)
         .offset(y: -20)
         .animation(.easeInOut)
-        .padding(.leading, padding)
-        .padding(.trailing, padding)
+        .padding(.leading, StyleConstant.button)
+        .padding(.trailing, StyleConstant.button)
     }
     
     private func textOpacity() -> Double {

@@ -22,7 +22,7 @@ struct AlbumsPageView: View {
                             SecondaryTitleView("Albums")
                             Spacer()
                             Spacer()
-                                .frame(width: 50)
+                                .frame(width: StyleConstant.button)
                         }
                     }
                     ScrollView(showsIndicators: true) {

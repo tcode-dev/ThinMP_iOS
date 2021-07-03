@@ -9,9 +9,6 @@ import SwiftUI
 import MediaPlayer
 
 struct PlaylistDetailHeaderView: View {
-    var height: CGFloat = 50
-    var padding: CGFloat = 50
-
     @Binding var textRect: CGRect
     var side: CGFloat
     var top: CGFloat
@@ -28,7 +25,7 @@ struct PlaylistDetailHeaderView: View {
             GeometryReader { primaryTextGeometry in
                 self.createPrimaryTextView(primaryTextGeometry: primaryTextGeometry)
             }
-            .frame(height: 50)
+            .frame(height: StyleConstant.height.row)
             .offset(y: -30)
             self.createSecondaryTextView()
         }
@@ -46,9 +43,9 @@ struct PlaylistDetailHeaderView: View {
         return VStack {
             SecondaryTitleView(self.name).opacity(textOpacity())
         }
-        .frame(width: side - (padding + padding), height: height)
-        .padding(.leading, padding)
-        .padding(.trailing, padding)
+        .frame(width: side - (StyleConstant.button + StyleConstant.button), height: StyleConstant.height.row)
+        .padding(.leading, StyleConstant.button)
+        .padding(.trailing, StyleConstant.button)
     }
 
     private func createSecondaryTextView() -> some View {
@@ -58,8 +55,8 @@ struct PlaylistDetailHeaderView: View {
         .frame(width: side - 100, height: 25, alignment: .center)
         .offset(y: -20)
         .animation(.easeInOut)
-        .padding(.leading, padding)
-        .padding(.trailing, padding)
+        .padding(.leading, StyleConstant.button)
+        .padding(.trailing, StyleConstant.button)
     }
 
     private func textOpacity() -> Double {

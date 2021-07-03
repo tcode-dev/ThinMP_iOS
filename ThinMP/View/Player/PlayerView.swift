@@ -130,7 +130,7 @@ struct PlayerView: View {
                                 Image("RepeatOneButton").renderingMode(.original).resizable().frame(width: 40, height: 40)
                             }
                         }
-                        .frame(width: 44, height: 44)
+                        .frame(width: StyleConstant.button, height: StyleConstant.button)
 
                         Spacer()
 
@@ -143,7 +143,7 @@ struct PlayerView: View {
                                 Image("ShuffleButton").renderingMode(.original).resizable().frame(width: 40, height: 40).opacity(0.5)
                             }
                         }
-                        .frame(width: 44, height: 44)
+                        .frame(width: StyleConstant.button, height: StyleConstant.button)
 
                         Spacer()
 
@@ -156,7 +156,7 @@ struct PlayerView: View {
                                 Image("FavoriteArtistButton").renderingMode(.original).resizable().frame(width: 40, height: 40).opacity(0.5)
                             }
                         }
-                        .frame(width: 44, height: 44)
+                        .frame(width: StyleConstant.button, height: StyleConstant.button)
 
                         Spacer()
 
@@ -169,7 +169,7 @@ struct PlayerView: View {
                                 Image("FavoriteSongButton").renderingMode(.original).resizable().frame(width: 30, height: 30).opacity(0.5)
                             }
                         }
-                        .frame(width: 44, height: 44)
+                        .frame(width: StyleConstant.button, height: StyleConstant.button)
 
                         Spacer()
 
@@ -178,7 +178,7 @@ struct PlayerView: View {
                         }) {
                             Image("PlaylistAddButton").renderingMode(.original).resizable().frame(width: 40, height: 40)
                         }
-                        .frame(width: 44, height: 44)
+                        .frame(width: StyleConstant.button, height: StyleConstant.button)
                     }
                     .padding(.horizontal, 30)
 

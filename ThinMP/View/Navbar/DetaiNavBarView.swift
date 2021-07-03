@@ -55,9 +55,9 @@ struct DetaiNavBarView<Content> : View where Content: View {
         .frame(width: side - 100, height: StyleConstant.height.row)
         .padding(EdgeInsets(
             top: top,
-            leading: 50,
+            leading: StyleConstant.button,
             bottom: 0,
-            trailing: 50
+            trailing: StyleConstant.button
         ))
         .opacity(self.opacity())
     }

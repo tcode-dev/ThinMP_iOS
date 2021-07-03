@@ -11,8 +11,6 @@ struct ListEmptyHeaderView: View {
     @Binding var headerRect: CGRect
 
     var top: CGFloat
-    var height: CGFloat = 50
-    var padding: CGFloat = 50
 
     var body: some View {
         ZStack {
@@ -20,7 +18,7 @@ struct ListEmptyHeaderView: View {
                 self.createEmptyView(gometry: gometry)
             }
         }
-        .frame(height: height + top)
+        .frame(height: StyleConstant.height.row + top)
     }
 
     private func createEmptyView(gometry: GeometryProxy) -> some View {
@@ -30,6 +28,6 @@ struct ListEmptyHeaderView: View {
 
         return HStack() {
             Text("")
-        }.frame(height: height + top)
+        }.frame(height: StyleConstant.height.row + top)
     }
 }

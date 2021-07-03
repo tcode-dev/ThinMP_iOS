@@ -8,6 +8,7 @@
 import SwiftUI
 
 enum StyleConstant {
+    static let button: CGFloat = 50
     enum height {
         static let row: CGFloat = 50
         static let header: CGFloat = 60
