@@ -9,10 +9,6 @@ import SwiftUI
 import MediaPlayer
 
 struct PlaylistRegisterView: View {
-    private let headerHeight: CGFloat = 60
-    private let rowHeight: CGFloat = 50
-    private let dividerHeight: CGFloat = 0.5
-
     @StateObject var vm = PlaylistsViewModel()
     @State private var isCreate: Bool = false
     @State private var name: String = ""
@@ -22,7 +18,7 @@ struct PlaylistRegisterView: View {
     @Binding var showingPopup: Bool
 
     func getHeight() -> CGFloat? {
-        let panelHeight = headerHeight + (CGFloat(vm.playlists.count) * (rowHeight + dividerHeight)) + StyleConstant.padding.medium
+        let panelHeight = StyleConstant.height.header + (CGFloat(vm.playlists.count) * (StyleConstant.height.row + StyleConstant.height.divider)) + StyleConstant.padding.medium
 
         if (panelHeight > height) {
             return height - (StyleConstant.padding.large * 2)
@@ -50,15 +46,15 @@ struct PlaylistRegisterView: View {
                         }
                         Spacer()
                     }
-                    .frame(height: headerHeight)
+                    .frame(height: StyleConstant.height.header)
                     ScrollView() {
                         LazyVStack(spacing: 0) {
                             ForEach(vm.playlists) { playlist in
                                 PlaylistAddRowView(playlistId: playlist.playlistId, songId: songId, showingPopup: $showingPopup) {
                                     MediaRowView(media: playlist)
                                 }
-                                .frame(height: rowHeight)
-                                Divider().frame(height: dividerHeight)
+                                .frame(height: StyleConstant.height.row)
+                                Divider().frame(height: StyleConstant.height.divider)
                             }
                         }
                     }
@@ -68,7 +64,7 @@ struct PlaylistRegisterView: View {
             } else {
                 VStack(spacing: 0) {
                     Text("PlaylistName")
-                        .frame(height: rowHeight)
+                        .frame(height: StyleConstant.height.row)
                     TextField("", text: $name)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                     HStack {
@@ -93,7 +89,7 @@ struct PlaylistRegisterView: View {
                         }
                         Spacer()
                     }
-                    .frame(height: rowHeight)
+                    .frame(height: StyleConstant.height.row)
                 }
                 .padding(.horizontal, StyleConstant.padding.medium)
             }

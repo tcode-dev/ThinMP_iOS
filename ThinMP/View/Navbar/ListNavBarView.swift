@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct ListNavBarView<Content> : View where Content: View {
-    private let heigt: CGFloat = 50
-
     let top: CGFloat
     @Binding var rect: CGRect
     let content: () -> Content
@@ -18,7 +16,7 @@ struct ListNavBarView<Content> : View where Content: View {
         ZStack {
             self.createHeaderView()
             content()
-                .frame(height: heigt)
+                .frame(height: StyleConstant.height.row)
                 .padding(EdgeInsets(
                     top: top,
                     leading: 0,
@@ -26,7 +24,7 @@ struct ListNavBarView<Content> : View where Content: View {
                     trailing: 0
                 ))
         }
-        .frame(height: heigt + top, alignment: .bottom)
+        .frame(height: StyleConstant.height.row + top, alignment: .bottom)
         .zIndex(1)
     }
 
@@ -34,7 +32,7 @@ struct ListNavBarView<Content> : View where Content: View {
         return HStack(alignment: .center) {
             Spacer()
         }
-        .frame(height: heigt)
+        .frame(height: StyleConstant.height.row)
         .padding(.top, top)
         .background(Color(UIColor.secondarySystemBackground))
         .border(Color(UIColor.systemGray5), width: 1)

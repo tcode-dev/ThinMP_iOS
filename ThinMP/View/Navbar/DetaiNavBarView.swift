@@ -9,8 +9,6 @@ import SwiftUI
 import MediaPlayer
 
 struct DetaiNavBarView<Content> : View where Content: View {
-    private let heigt: CGFloat = 50
-
     var primaryText: String?
     var side: CGFloat
     var top: CGFloat
@@ -24,7 +22,7 @@ struct DetaiNavBarView<Content> : View where Content: View {
                 Spacer()
                 content()
             }
-            .frame(height: heigt)
+            .frame(height: StyleConstant.height.row)
             .padding(EdgeInsets(
                 top: top,
                 leading: 0,
@@ -36,13 +34,13 @@ struct DetaiNavBarView<Content> : View where Content: View {
             self.createTitleView()
                 .zIndex(2)
         }
-        .frame(height: heigt + top)
+        .frame(height: StyleConstant.height.row + top)
         .zIndex(1)
     }
     
     private func createHeaderView() -> some View {
         return VStack {
-            Rectangle().frame(width: side, height: heigt + top)
+            Rectangle().frame(width: side, height: StyleConstant.height.row + top)
                 .opacity(0.1)
         }
         .background(BlurView(style: .systemThinMaterial))
@@ -54,7 +52,7 @@ struct DetaiNavBarView<Content> : View where Content: View {
         return HStack(alignment: .center) {
             SecondaryTitleView(self.primaryText)
         }
-        .frame(width: side - 100, height: heigt)
+        .frame(width: side - 100, height: StyleConstant.height.row)
         .padding(EdgeInsets(
             top: top,
             leading: 50,
