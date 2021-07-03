@@ -11,6 +11,7 @@ struct MiniPlayerView: View {
     private let imageSize: CGFloat = 40
     private let buttonSize: CGFloat = 60
 
+    @Environment(\.scenePhase) private var scenePhase
     @EnvironmentObject var musicPlayer: MusicPlayer
     @State var isFullScreen: Bool = false
     let bottom: CGFloat
@@ -71,6 +72,13 @@ struct MiniPlayerView: View {
                 }
             } else {
                 EmptyView()
+            }
+        }
+        .onChange(of: scenePhase) { phase in
+            if (phase == .background) {
+                musicPlayer.setBackground(background: true)
+            } else if (phase == .active) {
+                musicPlayer.setBackground(background: false)
             }
         }
     }

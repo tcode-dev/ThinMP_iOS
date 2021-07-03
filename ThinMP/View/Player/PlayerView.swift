@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct PlayerView: View {
-    private let size: CGFloat = 220
-
+    @Environment(\.scenePhase) private var scenePhase
     @EnvironmentObject var musicPlayer: MusicPlayer
 
     @State var seeking: Bool = false
@@ -28,12 +27,12 @@ struct PlayerView: View {
                 }
                 .frame(width: geometry.size.width, height: geometry.size.width)
                 VStack() {
-                    Image(uiImage: musicPlayer.song?.artwork?.image(at: CGSize(width: size, height: size)) ?? UIImage())
+                    Image(uiImage: musicPlayer.song?.artwork?.image(at: CGSize(width: 220, height: 220)) ?? UIImage())
                         .renderingMode(.original)
                         .resizable()
                         .scaledToFit()
                         .cornerRadius(4)
-                        .frame(width: size, height: size)
+                        .frame(width: 220, height: 220)
                         .padding(.top, 50)
                         .padding(.bottom, 10)
                     ZStack(alignment: .bottom) {
@@ -188,6 +187,13 @@ struct PlayerView: View {
         .onDisappear(perform: {
             musicPlayer.stopProgress()
         })
+        .onChange(of: scenePhase) { phase in
+            if (phase == .background) {
+                musicPlayer.setBackground(background: true)
+            } else if (phase == .active) {
+                musicPlayer.setBackground(background: false)
+            }
+        }
     }
 
     private func convertTime(time: TimeInterval) -> String {

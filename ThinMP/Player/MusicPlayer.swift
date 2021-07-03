@@ -25,6 +25,7 @@ class MusicPlayer: ObservableObject {
     private let playerConfig: PlayerConfig
     private let player: MPMusicPlayerController
     private var timer: Timer?
+    private var isBackground = false
 
     init() {
         playerConfig = PlayerConfig()
@@ -99,6 +100,10 @@ class MusicPlayer: ObservableObject {
         timer?.invalidate()
     }
 
+    func setBackground(background: Bool) {
+        isBackground = background
+    }
+
     func changeRepeat() {
         if (isRepeatOff) {
             isRepeatOff = false
@@ -164,18 +169,6 @@ class MusicPlayer: ObservableObject {
         self.player.play()
     }
 
-    private func next() {
-        stop()
-        player.skipToNextItem()
-        setSong()
-        resetTime()
-    }
-
-    private func playNext() {
-        next()
-        play()
-    }
-
     private func pause() {
         isPlaying = false
         player.pause()
@@ -202,8 +195,19 @@ class MusicPlayer: ObservableObject {
     }
 
     private func playPrev() {
-        isPlaying = false
         prev()
+        play()
+    }
+
+    private func next() {
+        stop()
+        player.skipToNextItem()
+        setSong()
+        resetTime()
+    }
+
+    private func playNext() {
+        next()
         play()
     }
 
@@ -226,6 +230,10 @@ class MusicPlayer: ObservableObject {
     }
 
     private func MPMusicPlayerControllerPlaybackStateDidChangeCallback() {
+        if (isPlaying && !isBackground) {
+            return
+        }
+
         switch player.playbackState {
         case MPMusicPlaybackState.stopped:
 
