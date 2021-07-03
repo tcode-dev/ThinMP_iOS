@@ -37,7 +37,7 @@ struct PlaylistDetailEditPageView: View {
                             Text("Done")
                         }
                     }
-                    .padding(.horizontal, 20)
+                    .padding(.horizontal, StyleConstant.padding.large)
                 }
                 .modifier(EditModifier(editing: editing))
                 VStack(alignment: .leading) {

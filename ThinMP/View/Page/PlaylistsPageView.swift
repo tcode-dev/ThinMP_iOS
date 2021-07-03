@@ -36,7 +36,7 @@ struct PlaylistsPageView: View {
                                         MediaRowView(media: vm.playlists[index])
                                     }
                                     Divider()
-                                }.padding(.leading, 10)
+                                }.padding(.leading, StyleConstant.padding.medium)
                             }
                         }
                     }

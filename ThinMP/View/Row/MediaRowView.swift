@@ -27,6 +27,6 @@ struct MediaRowView: View {
             .frame(height: 34)
             Spacer()
         }
-        .padding(5)
+        .padding(StyleConstant.padding.small)
     }
 }

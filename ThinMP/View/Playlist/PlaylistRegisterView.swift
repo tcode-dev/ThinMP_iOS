@@ -11,8 +11,6 @@ import MediaPlayer
 struct PlaylistRegisterView: View {
     private let headerHeight: CGFloat = 60
     private let rowHeight: CGFloat = 50
-    private let outerPadding: CGFloat = 20
-    private let innerPadding: CGFloat = 10
     private let dividerHeight: CGFloat = 0.5
 
     @StateObject var vm = PlaylistsViewModel()
@@ -24,10 +22,10 @@ struct PlaylistRegisterView: View {
     @Binding var showingPopup: Bool
 
     func getHeight() -> CGFloat? {
-        let panelHeight = headerHeight + (CGFloat(vm.playlists.count) * (rowHeight + dividerHeight)) + innerPadding
+        let panelHeight = headerHeight + (CGFloat(vm.playlists.count) * (rowHeight + dividerHeight)) + StyleConstant.padding.medium
 
         if (panelHeight > height) {
-            return height - (outerPadding * 2)
+            return height - (StyleConstant.padding.large * 2)
         } else {
             return panelHeight
         }
@@ -65,7 +63,7 @@ struct PlaylistRegisterView: View {
                         }
                     }
                 }
-                .padding(.bottom, innerPadding)
+                .padding(.bottom, StyleConstant.padding.medium)
                 .frame(height: getHeight())
             } else {
                 VStack(spacing: 0) {
@@ -97,14 +95,14 @@ struct PlaylistRegisterView: View {
                     }
                     .frame(height: rowHeight)
                 }
-                .padding(.horizontal, innerPadding)
+                .padding(.horizontal, StyleConstant.padding.medium)
             }
         }
         .frame(width: .infinity)
-        .padding(.horizontal, innerPadding)
+        .padding(.horizontal, StyleConstant.padding.medium)
         .background(Color.white)
         .cornerRadius(4)
-        .padding(.horizontal, outerPadding)
+        .padding(.horizontal, StyleConstant.padding.large)
         .onAppear() {
             vm.load()
         }

@@ -9,9 +9,6 @@ import SwiftUI
 import MediaPlayer
 
 struct ArtistDetailPageView: View {
-    private let leading: CGFloat = 20
-    private let bottom: CGFloat = 20
-
     @StateObject private var vm = ArtistDetailViewModel()
     @State private var textRect: CGRect = CGRect()
     @State private var isRegister: Bool = false
@@ -41,11 +38,11 @@ struct ArtistDetailPageView: View {
                             ArtistDetailHeaderView(vm: vm, textRect: $textRect, side: geometry.size.width, top: geometry.safeAreaInsets.top)
                             VStack(alignment: .leading) {
                                 PrimaryTitleView("Albums")
-                                    .padding(.leading, leading)
+                                    .padding(.leading, StyleConstant.padding.large)
                                 ArtistAlbumListView(list: vm.albums, width: geometry.size.width)
-                                    .padding(.bottom, bottom)
+                                    .padding(.bottom, StyleConstant.padding.large)
                                 PrimaryTitleView("Songs")
-                                    .padding(.leading, leading)
+                                    .padding(.leading, StyleConstant.padding.large)
                                 LazyVStack(spacing: 0) {
                                     ForEach(vm.songs.indices, id: \.self){ index in
                                         PlayRowView(list: vm.songs, index: index) {
@@ -61,7 +58,7 @@ struct ArtistDetailPageView: View {
                                             }
                                         }
                                         Divider()
-                                    }.padding(.leading, leading)
+                                    }.padding(.leading, StyleConstant.padding.large)
                                 }
                             }
                         }

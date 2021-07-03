@@ -57,7 +57,7 @@ struct PlaylistDetailPageView: View {
                                             }
                                         }
                                         Divider()
-                                    }.padding(.leading, 10)
+                                    }.padding(.leading, StyleConstant.padding.medium)
                                 }
                             }
                         }

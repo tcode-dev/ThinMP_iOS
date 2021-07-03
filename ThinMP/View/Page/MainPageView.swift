@@ -21,7 +21,9 @@ struct MainPageView: View {
                         VStack(alignment: .leading) {
                             Spacer()
                             HStack {
-                                Text("Library").fontWeight(.bold).font(.largeTitle)
+                                Text("Library")
+                                    .fontWeight(.bold)
+                                    .font(.largeTitle)
                                 Spacer()
                                 EditButtonView {
                                     MainEditPageView()
@@ -29,7 +31,7 @@ struct MainPageView: View {
                             }
                         }
                         .frame(height: geometry.safeAreaInsets.top + HEADER_HEIGHT)
-                        .padding(.leading, 20)
+                        .padding(.leading, StyleConstant.padding.large)
                         VStack(spacing: 0) {
                             Divider()
                             ForEach(vm.menus.indices, id: \.self) { index in
@@ -39,20 +41,26 @@ struct MainPageView: View {
                                 }
                             }
                         }
-                        .padding(.leading, 20)
-                        .padding(.bottom, 20)
+                        .padding(.leading, StyleConstant.padding.large)
+                        .padding(.bottom, StyleConstant.padding.large)
                         if (vm.shortcutMenu.visibility) {
                             VStack(alignment: .leading) {
-                                Text(LocalizedStringKey(vm.shortcutMenu.primaryText!)).fontWeight(.bold).font(.title3).padding(.leading, 20)
+                                Text(LocalizedStringKey(vm.shortcutMenu.primaryText!))
+                                    .fontWeight(.bold)
+                                    .font(.title3)
+                                    .padding(.leading, StyleConstant.padding.large)
                                 ShortcutListView(list: vm.shortcuts, width: geometry.size.width)
-                                    .padding(.bottom, 10)
+                                    .padding(.bottom, StyleConstant.padding.medium)
                             }
                         }
                         if (vm.recentlyMenu.visibility) {
                             VStack(alignment: .leading) {
-                                Text(LocalizedStringKey(vm.recentlyMenu.primaryText!)).fontWeight(.bold).font(.title3).padding(.leading, 20)
+                                Text(LocalizedStringKey(vm.recentlyMenu.primaryText!))
+                                    .fontWeight(.bold)
+                                    .font(.title3)
+                                    .padding(.leading, StyleConstant.padding.large)
                                 AlbumListView(list: vm.albums, width: geometry.size.width)
-                                    .padding(.bottom, 10)
+                                    .padding(.bottom, StyleConstant.padding.medium)
                             }
                         }
                     }

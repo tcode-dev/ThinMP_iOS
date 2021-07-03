@@ -35,7 +35,7 @@ struct FavoriteArtistsPageView: View {
                                         MediaRowView(media: artist)
                                     }
                                     Divider()
-                                }.padding(.leading, 10)
+                                }.padding(.leading, StyleConstant.padding.medium)
                             }
                         }
                     }

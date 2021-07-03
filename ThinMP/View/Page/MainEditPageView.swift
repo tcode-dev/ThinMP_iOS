@@ -31,7 +31,7 @@ struct MainEditPageView: View {
                             Text("Done")
                         }
                     }
-                    .padding(.horizontal, 20)
+                    .padding(.horizontal, StyleConstant.padding.large)
                 }
                 VStack(alignment: .leading) {
                     List {
