@@ -26,6 +26,7 @@ class MusicPlayer: ObservableObject {
     private let player: MPMusicPlayerController
     private var timer: Timer?
     private var isBackground = false
+    private var isFirst = false
 
     init() {
         playerConfig = PlayerConfig()
@@ -51,6 +52,7 @@ class MusicPlayer: ObservableObject {
         setFavoriteArtist()
         setFavoriteSong()
         addObserver()
+        isFirst = true
     }
 
     func doPlay() {
@@ -263,6 +265,11 @@ class MusicPlayer: ObservableObject {
 
     private func MPMusicPlayerControllerNowPlayingItemDidChangeCallback() {
         setSong()
+
+        if (player.repeatMode == .none && player.indexOfNowPlayingItem == 0 && !isFirst) {
+            isPlaying = false
+        }
+        isFirst = false
     }
 
     private func setFavoriteArtist() {
