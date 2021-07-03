@@ -14,20 +14,7 @@ struct PlayerView: View {
 
     @State var seeking: Bool = false
     @State private var showingPopup: Bool = false
-    
-    func convertTime(time: TimeInterval) -> String {
-        if (time < 1) {
-            return "00:00"
-        }
-        
-        let formatter = DateComponentsFormatter()
-        formatter.unitsStyle = .positional
-        formatter.allowedUnits = [.minute,.second]
-        formatter.zeroFormattingBehavior = [.pad]
-        
-        return formatter.string(from: time) ?? "00:00"
-    }
-    
+
     var body: some View {
         GeometryReader { geometry in
             ZStack(alignment: .top) {
@@ -201,5 +188,18 @@ struct PlayerView: View {
         .onDisappear(perform: {
             musicPlayer.stopProgress()
         })
+    }
+
+    private func convertTime(time: TimeInterval) -> String {
+        if (time < 1) {
+            return "00:00"
+        }
+
+        let formatter = DateComponentsFormatter()
+        formatter.unitsStyle = .positional
+        formatter.allowedUnits = [.minute,.second]
+        formatter.zeroFormattingBehavior = [.pad]
+
+        return formatter.string(from: time) ?? "00:00"
     }
 }
