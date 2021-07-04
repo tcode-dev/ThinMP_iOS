@@ -10,10 +10,10 @@ import MediaPlayer
 
 struct PlaylistDetailHeaderView: View {
     @Binding var textRect: CGRect
-    var side: CGFloat
-    var top: CGFloat
-    var name: String?
-    var artwork: MPMediaItemArtwork?
+    let side: CGFloat
+    let top: CGFloat
+    let name: String?
+    let artwork: MPMediaItemArtwork?
 
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -26,15 +26,12 @@ struct PlaylistDetailHeaderView: View {
                 self.createPrimaryTextView(primaryTextGeometry: primaryTextGeometry)
             }
             .frame(height: StyleConstant.height.row)
-            .offset(y: -30)
+            .offset(y: -40)
             self.createSecondaryTextView()
         }
         .frame(width: side, height: side)
     }
 
-    /// アルバム名のViewを生成する
-    /// ScrollViewの現在位置を取得する方法がないため、親が子のgeometryを参照できるようにする
-    /// GeometryReader直下で変数を代入すると構文エラーになるので別メソッドにしている
     private func createPrimaryTextView(primaryTextGeometry: GeometryProxy) -> some View {
         DispatchQueue.main.async {
             self.textRect = primaryTextGeometry.frame(in: .global)
@@ -53,7 +50,7 @@ struct PlaylistDetailHeaderView: View {
             SecondaryTextView("Playlist").opacity(textOpacity())
         }
         .frame(width: side - 100, height: 25, alignment: .center)
-        .offset(y: -20)
+        .offset(y: -30)
         .animation(.easeInOut)
         .padding(.leading, StyleConstant.button)
         .padding(.trailing, StyleConstant.button)

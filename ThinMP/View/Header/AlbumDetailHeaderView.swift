@@ -25,15 +25,12 @@ struct AlbumDetailHeaderView: View {
                 self.createPrimaryTextView(primaryTextGeometry: primaryTextGeometry)
             }
             .frame(height: StyleConstant.height.row)
-            .offset(y: -30)
+            .offset(y: -40)
             self.createSecondaryTextView()
         }
         .frame(width: side, height: side)
     }
-    
-    /// アルバム名のViewを生成する
-    /// ScrollViewの現在位置を取得する方法がないため、親が子のgeometryを参照できるようにする
-    /// GeometryReader直下で変数を代入すると構文エラーになるので別メソッドにしている
+
     private func createPrimaryTextView(primaryTextGeometry: GeometryProxy) -> some View {
         DispatchQueue.main.async {
             self.textRect = primaryTextGeometry.frame(in: .global)
@@ -52,7 +49,7 @@ struct AlbumDetailHeaderView: View {
             SecondaryTextView(self.vm.secondaryText).opacity(textOpacity())
         }
         .frame(width: side - (StyleConstant.button * 2), height: 25, alignment: .center)
-        .offset(y: -20)
+        .offset(y: -30)
         .animation(.easeInOut)
         .padding(.leading, StyleConstant.button)
         .padding(.trailing, StyleConstant.button)

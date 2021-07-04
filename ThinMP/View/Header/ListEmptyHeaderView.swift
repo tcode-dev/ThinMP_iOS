@@ -10,7 +10,7 @@ import SwiftUI
 struct ListEmptyHeaderView: View {
     @Binding var headerRect: CGRect
 
-    var top: CGFloat
+    let top: CGFloat
 
     var body: some View {
         ZStack {

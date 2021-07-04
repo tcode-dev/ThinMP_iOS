@@ -27,7 +27,7 @@ struct ArtistDetailHeaderView: View {
                 createPrimaryTextView(primaryTextGeometry: primaryTextGeometry)
             }
             .frame(height: StyleConstant.height.row)
-            .offset(y: -30)
+            .offset(y: -40)
             createSecondaryTextView()
         }
         .frame(height: side)
@@ -54,7 +54,7 @@ struct ArtistDetailHeaderView: View {
             SecondaryTextView(vm.secondaryText).opacity(textOpacity())
         }
         .frame(width: side - (StyleConstant.button * 2), height: 25, alignment: .center)
-        .offset(y: -20)
+        .offset(y: -30)
         .animation(.easeInOut)
         .padding(.leading, StyleConstant.button)
         .padding(.trailing, StyleConstant.button)
