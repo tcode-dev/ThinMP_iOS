@@ -11,8 +11,8 @@ struct AlbumDetailHeaderView: View {
     @ObservedObject var vm: AlbumDetailViewModel
     @Binding var textRect: CGRect
     
-    var side: CGFloat
-    var top: CGFloat
+    let side: CGFloat
+    let top: CGFloat
     
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -51,7 +51,7 @@ struct AlbumDetailHeaderView: View {
         return VStack {
             SecondaryTextView(self.vm.secondaryText).opacity(textOpacity())
         }
-        .frame(width: side - 100, height: 25, alignment: .center)
+        .frame(width: side - (StyleConstant.button * 2), height: 25, alignment: .center)
         .offset(y: -20)
         .animation(.easeInOut)
         .padding(.leading, StyleConstant.button)

@@ -11,26 +11,24 @@ struct ArtistDetailHeaderView: View {
     @ObservedObject var vm: ArtistDetailViewModel
     @Binding var textRect: CGRect
 
-    var side: CGFloat
-    var top: CGFloat
-    
-    let artistImageSize:CGFloat = 120
-    
+    let side: CGFloat
+    let top: CGFloat
+
     var body: some View {
         ZStack(alignment: .bottom) {
-            Image(uiImage: self.vm.artwork?.image(at: CGSize(width: self.side, height: self.side)) ?? UIImage())
+            Image(uiImage: vm.artwork?.image(at: CGSize(width: side, height: side)) ?? UIImage())
                 .resizable()
                 .scaledToFit()
                 .blur(radius: 10.0)
             LinearGradient(gradient: Gradient(colors: [Color.init(Color.RGBColorSpace.sRGB, red: 1, green: 1, blue: 1, opacity: 0), Color(UIColor.systemBackground)]), startPoint: .top, endPoint: .bottom).frame(height: 355).offset(y: 25)
-            CircleImageView(artwork: self.vm.artwork, size: self.artistImageSize)
-                .offset(y:-100)
+            CircleImageView(artwork: vm.artwork, size: side / 3)
+                .offset(y: -(side / 3))
             GeometryReader { primaryTextGeometry in
-                self.createPrimaryTextView(primaryTextGeometry: primaryTextGeometry)
+                createPrimaryTextView(primaryTextGeometry: primaryTextGeometry)
             }
             .frame(height: StyleConstant.height.row)
             .offset(y: -30)
-            self.createSecondaryTextView()
+            createSecondaryTextView()
         }
         .frame(height: side)
     }
@@ -40,13 +38,13 @@ struct ArtistDetailHeaderView: View {
     /// GeometryReader直下で変数を代入すると構文エラーになるので別メソッドにしている
     private func createPrimaryTextView(primaryTextGeometry: GeometryProxy) -> some View {
         DispatchQueue.main.async {
-            self.textRect = primaryTextGeometry.frame(in: .global)
+            textRect = primaryTextGeometry.frame(in: .global)
         }
 
         return VStack {
             SecondaryTitleView(self.vm.primaryText).opacity(textOpacity())
         }
-        .frame(width: side - 100, height: StyleConstant.height.row)
+        .frame(width: side - (StyleConstant.button * 2), height: StyleConstant.height.row)
         .padding(.leading, StyleConstant.button)
         .padding(.trailing, StyleConstant.button)
     }
@@ -55,7 +53,7 @@ struct ArtistDetailHeaderView: View {
         return VStack {
             SecondaryTextView(vm.secondaryText).opacity(textOpacity())
         }
-        .frame(width: side - 100, height: 25, alignment: .center)
+        .frame(width: side - (StyleConstant.button * 2), height: 25, alignment: .center)
         .offset(y: -20)
         .animation(.easeInOut)
         .padding(.leading, StyleConstant.button)
@@ -63,7 +61,7 @@ struct ArtistDetailHeaderView: View {
     }
 
     private func textOpacity() -> Double {
-        if (textRect.origin.y - self.top > 0) {
+        if (textRect.origin.y - top > 0) {
             return 1
         }
 
