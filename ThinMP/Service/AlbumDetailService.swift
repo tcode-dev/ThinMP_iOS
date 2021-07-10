@@ -8,13 +8,17 @@
 import MediaPlayer
 
 struct AlbumDetailService {
-    func findById(albumId: AlbumId) -> AlbumDetailModel {
+    func findById(albumId: AlbumId) -> AlbumDetailModel? {
         let albumRepository = AlbumRepository()
         let songRepository = SongRepository()
         let album = albumRepository.findById(albumId: albumId)
         let songs = songRepository.findByAlbumId(albumId: albumId)
 
-        return AlbumDetailModel(albumId: album!.albumId, primaryText: album?.primaryText, secondaryText: album?.secondaryText, artwork: album?.artwork, songs: songs)
+        if let album = album {
+            return AlbumDetailModel(albumId: album.albumId, primaryText: album.primaryText, secondaryText: album.secondaryText, artwork: album.artwork, songs: songs)
+        }
+
+        return Optional.none
     }
 
     func findByIds(albumIds: [AlbumId]) -> [AlbumDetailModel] {

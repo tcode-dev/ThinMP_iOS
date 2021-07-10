@@ -25,10 +25,12 @@ class AlbumDetailViewModel: ViewModelProtocol {
         let albumDetailModel = albumDetailService.findById(albumId: albumId)
 
         DispatchQueue.main.async {
-            self.primaryText = albumDetailModel.primaryText
-            self.secondaryText = albumDetailModel.secondaryText
-            self.artwork = albumDetailModel.artwork
-            self.songs = albumDetailModel.songs
+            if let albumDetailModel = albumDetailModel {
+                self.primaryText = albumDetailModel.primaryText
+                self.secondaryText = albumDetailModel.secondaryText
+                self.artwork = albumDetailModel.artwork
+                self.songs = albumDetailModel.songs
+            }
         }
     }
 }
