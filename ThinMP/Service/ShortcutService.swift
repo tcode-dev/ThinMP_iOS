@@ -39,11 +39,13 @@ struct ShortcutService {
             shortcutDictionary[ShortcutType.PLAYLIST.rawValue] = playlistDetailService.findByIds(playlistIds: playlistIds.map{PlaylistId(id: $0)})
         }
 
-        let shortcutModels = shortcutRealmModels.map { shortcutRealmModel -> ShortcutModel in
-            let itemModel = shortcutDictionary[shortcutRealmModel.type]!.first { $0.shortcutId == shortcutRealmModel.itemId }!
+        let shortcutModels = shortcutRealmModels
+            .filter{(shortcutRealmModel) in shortcutDictionary[shortcutRealmModel.type]!.contains(where: {$0.shortcutId == shortcutRealmModel.itemId})}
+            .map { shortcutRealmModel -> ShortcutModel in
+                let itemModel = shortcutDictionary[shortcutRealmModel.type]!.first { $0.shortcutId == shortcutRealmModel.itemId }!
 
-            return ShortcutModel(shortcutId: ShortcutId(id: shortcutRealmModel.id), itemId: ItemId(id: shortcutRealmModel.itemId), type: shortcutRealmModel.type, primaryText: itemModel.primaryText, artwork: itemModel.artwork)
-        }
+                return ShortcutModel(shortcutId: ShortcutId(id: shortcutRealmModel.id), itemId: ItemId(id: shortcutRealmModel.itemId), type: shortcutRealmModel.type, primaryText: itemModel.primaryText, artwork: itemModel.artwork)
+            }
 
         if (!validation(shortcutIds: shortcutRealmModels.map{$0.id}, shortcutModels: shortcutModels)) {
             return findAll()

@@ -37,9 +37,15 @@ class ArtistRepository {
 
         query.addFilterPredicate(property)
 
-        let filtered = query.collections!.filter{ids.contains($0.representativeItem?.artistPersistentID ?? 0)}
+        let filtered = query.collections!.filter{
+            if let artistPersistentId = $0.representativeItem?.artistPersistentID {
+                return ids.contains(artistPersistentId)
+            }
+            return false
+        }
 
         return artistIds
+            .filter{(artistId) in filtered.contains(where: {$0.representativeItem?.artistPersistentID == artistId.id})}
             .map{ (artistId) in filtered.first { $0.representativeItem?.artistPersistentID == artistId.id }}
             .map{ ArtistModel(artistId: ArtistId(id: ($0?.representativeItem!.artistPersistentID)!), primaryText: $0?.representativeItem?.artist)}
     }

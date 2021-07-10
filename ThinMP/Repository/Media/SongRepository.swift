@@ -27,6 +27,7 @@ class SongRepository {
         let filtered = query.collections!.filter{ids.contains($0.representativeItem?.persistentID ?? 0)}
 
         return songIds
+            .filter{(songId) in filtered.contains(where: {$0.representativeItem?.persistentID == songId.id})}
             .map{ (songId) in filtered.first { $0.representativeItem?.persistentID == songId.id }!}
             .map{SongModel(media: $0)}
     }
