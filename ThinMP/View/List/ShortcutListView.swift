@@ -10,8 +10,8 @@ import MediaPlayer
 
 struct ShortcutListView: View {
     private let colCount = 2
-    private var list: [ShortcutModel]
-    private var size: CGFloat
+    private let list: [ShortcutModel]
+    private let size: CGFloat
     private let columns:[GridItem]
 
     init(list: [ShortcutModel], width: CGFloat) {

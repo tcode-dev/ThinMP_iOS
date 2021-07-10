@@ -9,8 +9,8 @@ import SwiftUI
 
 struct AlbumListView: View {
     private let colCount = 2
-    private var list: [AlbumModel]
-    private var size: CGFloat
+    private let list: [AlbumModel]
+    private let size: CGFloat
     private let columns:[GridItem]
 
     init(list: [AlbumModel], width: CGFloat) {

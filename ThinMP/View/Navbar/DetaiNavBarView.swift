@@ -9,9 +9,9 @@ import SwiftUI
 import MediaPlayer
 
 struct DetaiNavBarView<Content> : View where Content: View {
-    var primaryText: String?
-    var side: CGFloat
-    var top: CGFloat
+    let primaryText: String?
+    let side: CGFloat
+    let top: CGFloat
     @Binding var textRect: CGRect
     let content: () -> Content
     

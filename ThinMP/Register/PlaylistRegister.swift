@@ -8,7 +8,7 @@
 import MediaPlayer
 
 struct PlaylistRegister {
-    var repository: PlaylistRepository
+    let repository: PlaylistRepository
 
     init() {
         repository = PlaylistRepository()

@@ -9,8 +9,8 @@ import SwiftUI
 import MediaPlayer
 
 struct SquareImageView: View {
-    var artwork: MPMediaItemArtwork?
-    var size: CGFloat
+    let artwork: MPMediaItemArtwork?
+    let size: CGFloat
     
     var body: some View {
         Image(uiImage: artwork?.image(at: CGSize(width: size, height: size)) ?? UIImage(imageLiteralResourceName: "Song"))

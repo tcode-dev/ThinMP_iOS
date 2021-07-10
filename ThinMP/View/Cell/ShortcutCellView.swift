@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct ShortcutCellView: View {
-    var shortcut: ShortcutModel
-    var size: CGFloat
+    let shortcut: ShortcutModel
+    let size: CGFloat
 
     var body: some View {
         VStack(){

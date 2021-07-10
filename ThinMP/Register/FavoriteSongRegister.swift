@@ -8,7 +8,7 @@
 import MediaPlayer
 
 struct FavoriteSongRegister {
-    var repository: FavoriteSongRepository
+    let repository: FavoriteSongRepository
 
     init() {
         repository = FavoriteSongRepository()

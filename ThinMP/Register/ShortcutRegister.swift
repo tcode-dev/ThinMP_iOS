@@ -8,7 +8,7 @@
 import MediaPlayer
 
 struct ShortcutRegister {
-    var repository: ShortcutRepository
+    let repository: ShortcutRepository
 
     init() {
         repository = ShortcutRepository()

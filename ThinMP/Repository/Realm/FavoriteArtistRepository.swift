@@ -9,7 +9,7 @@ import RealmSwift
 import MediaPlayer
 
 struct FavoriteArtistRepository {
-    var realm: Realm
+    let realm: Realm
 
     init() {
         realm = try! Realm()

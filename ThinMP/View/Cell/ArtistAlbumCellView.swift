@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct ArtistAlbumCellView: View {
-    var album: AlbumModel
-    var size: CGFloat
+    let album: AlbumModel
+    let size: CGFloat
     
     var body: some View {
         VStack(){
