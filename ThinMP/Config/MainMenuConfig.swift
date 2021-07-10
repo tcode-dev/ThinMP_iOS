@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 class MainMenuConfig {
     private let KEY_SORT = "sort"

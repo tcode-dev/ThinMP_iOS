@@ -15,6 +15,6 @@ struct SecondaryTitleView: View {
     }
 
     var body: some View {
-        Text(LocalizedStringKey(text)).font(.body).fontWeight(.medium).foregroundColor(.primary).lineLimit(1)
+        Text(text).font(.body).fontWeight(.medium).foregroundColor(.primary).lineLimit(1)
     }
 }

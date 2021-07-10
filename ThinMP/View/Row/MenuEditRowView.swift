@@ -22,7 +22,7 @@ struct MenuEditRowView: View {
             Spacer()
             HStack(alignment: .center) {
                 CheckboxButton().renderingMode(.original)
-                PrimaryTextView(menu.primaryText)
+                Text(LocalizedStringKey(menu.primaryText!)).font(.body).foregroundColor(.primary).lineLimit(1)
                 Spacer()
             }
             .onTapGesture {

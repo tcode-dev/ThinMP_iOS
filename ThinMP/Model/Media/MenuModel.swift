@@ -7,7 +7,7 @@
 
 import MediaPlayer
 
-class MenuModel: MediaProtocol, Identifiable, ObservableObject {
+class MenuModel: Identifiable, ObservableObject {
     let id = UUID()
     let primaryText: String?
     @Published var visibility: Bool

@@ -8,16 +8,13 @@
 import SwiftUI
 
 struct SecondaryTextView: View {
-    var text: String
+    let text: String
+
     init(_ text: String?) {
-        if let text = text {
-            self.text = text.isEmpty ? "unknown" : text
-        } else {
-            self.text = "unknown"
-        }
+        self.text = text ?? "unknown"
     }
     
     var body: some View {
-        Text(LocalizedStringKey(text)).font(.subheadline).foregroundColor(.secondary).lineLimit(1)
+        Text(text).font(.subheadline).foregroundColor(.secondary).lineLimit(1)
     }
 }

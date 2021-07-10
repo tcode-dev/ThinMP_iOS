@@ -19,7 +19,7 @@ struct ArtistsPageView: View {
                         HStack {
                             BackButtonView()
                             Spacer()
-                            SecondaryTitleView("Artists")
+                            HeaderTitleView("Artists")
                             Spacer()
                             Spacer()
                                 .frame(width: StyleConstant.button)

@@ -8,16 +8,13 @@
 import SwiftUI
 
 struct PrimaryTextView: View {
-    var text: String
+    private let text: String
+
     init(_ text: String?) {
-        if let text = text {
-            self.text = text.isEmpty ? "unknown" : text
-        } else {
-            self.text = "unknown"
-        }
+        self.text = text ?? "unknown"
     }
     
     var body: some View {
-        Text(LocalizedStringKey(text)).font(.body).foregroundColor(.primary).lineLimit(1)
+        Text(text).font(.body).foregroundColor(.primary).lineLimit(1)
     }
 }

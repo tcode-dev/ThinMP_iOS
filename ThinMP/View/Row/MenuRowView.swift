@@ -1,5 +1,5 @@
 //
-//  PlainRowView.swift
+//  MenuRowView.swift
 //  ThinMP
 //
 //  Created by tk on 2021/07/10.
@@ -7,13 +7,13 @@
 
 import SwiftUI
 
-struct PlainRowView: View {
-    let media: MediaProtocol
+struct MenuRowView: View {
+    let text: String
 
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
-                PrimaryTextView(media.primaryText)
+                Text(LocalizedStringKey(text)).font(.body).foregroundColor(.primary).lineLimit(1)
             }
             .frame(height: 34)
             Spacer()
