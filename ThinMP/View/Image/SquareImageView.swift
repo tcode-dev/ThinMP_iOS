@@ -18,10 +18,6 @@ struct SquareImageView: View {
             .resizable()
             .scaledToFit()
             .cornerRadius(4)
-            .overlay(
-                RoundedRectangle(cornerRadius: 4)
-                    .stroke(Color(UIColor.secondarySystemBackground), lineWidth: 1)
-            )
             .frame(width: abs(size), height: abs(size))
     }
 }
