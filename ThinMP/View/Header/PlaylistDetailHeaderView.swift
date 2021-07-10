@@ -40,7 +40,7 @@ struct PlaylistDetailHeaderView: View {
         return VStack {
             SecondaryTitleView(self.name).opacity(textOpacity())
         }
-        .frame(width: side - (StyleConstant.button + StyleConstant.button), height: StyleConstant.height.row)
+        .frame(width: side - (StyleConstant.button * 2), height: StyleConstant.height.row)
         .padding(.leading, StyleConstant.button)
         .padding(.trailing, StyleConstant.button)
     }
@@ -49,7 +49,7 @@ struct PlaylistDetailHeaderView: View {
         return VStack {
             SecondaryTextView("Playlist").opacity(textOpacity())
         }
-        .frame(width: side - 100, height: 25, alignment: .center)
+        .frame(width: side - (StyleConstant.button * 2), height: 25, alignment: .center)
         .offset(y: -30)
         .animation(.easeInOut)
         .padding(.leading, StyleConstant.button)

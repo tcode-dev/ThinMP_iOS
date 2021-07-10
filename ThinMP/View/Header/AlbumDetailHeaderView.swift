@@ -39,7 +39,7 @@ struct AlbumDetailHeaderView: View {
         return VStack {
             SecondaryTitleView(self.vm.primaryText).opacity(textOpacity())
         }
-        .frame(width: side - (StyleConstant.button + StyleConstant.button), height: StyleConstant.height.row)
+        .frame(width: side - (StyleConstant.button * 2), height: StyleConstant.height.row)
         .padding(.leading, StyleConstant.button)
         .padding(.trailing, StyleConstant.button)
     }
