@@ -8,7 +8,7 @@
 import MediaPlayer
 
 struct ArtistDetailService {
-    func findById(artistId: ArtistId) -> ArtistDetailModel {
+    func findById(artistId: ArtistId) -> ArtistDetailModel? {
         let artistRepository = ArtistRepository()
         let albumRepository = AlbumRepository()
         let songRepository = SongRepository()
@@ -22,7 +22,11 @@ struct ArtistDetailService {
         let songs = songRepository.findByAlbumIds(albumIds: albumIds)
         let secondaryText = "\(albums.count) albums, \(songs.count) songs"
 
-        return ArtistDetailModel(artistId: artist!.artistId, primaryText: primaryText, secondaryText: secondaryText, artwork: artwork, albums: albums, songs: songs)
+        if let artist = artist {
+            return ArtistDetailModel(artistId: artist.artistId, primaryText: primaryText, secondaryText: secondaryText, artwork: artwork, albums: albums, songs: songs)
+        }
+
+        return Optional.none
     }
 
     func findByIds(artistIds: [ArtistId]) -> [ArtistDetailModel] {

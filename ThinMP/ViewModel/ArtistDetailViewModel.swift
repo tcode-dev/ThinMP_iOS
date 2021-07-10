@@ -26,11 +26,13 @@ class ArtistDetailViewModel: ViewModelProtocol {
         let artistDetailModel = artistDetailService.findById(artistId: artistId)
 
         DispatchQueue.main.async {
-            self.primaryText = artistDetailModel.primaryText
-            self.secondaryText = artistDetailModel.secondaryText
-            self.artwork = artistDetailModel.artwork
-            self.albums = artistDetailModel.albums
-            self.songs = artistDetailModel.songs
+            if let artistDetailModel = artistDetailModel {
+                self.primaryText = artistDetailModel.primaryText
+                self.secondaryText = artistDetailModel.secondaryText
+                self.artwork = artistDetailModel.artwork
+                self.albums = artistDetailModel.albums
+                self.songs = artistDetailModel.songs
+            }
         }
     }
 }
