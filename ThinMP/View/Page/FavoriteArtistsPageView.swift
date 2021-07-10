@@ -32,7 +32,7 @@ struct FavoriteArtistsPageView: View {
                             LazyVStack(spacing: 0) {
                                 ForEach(vm.artists) { artist in
                                     NavigationLink(destination: ArtistDetailPageView(artistId: artist.artistId)) {
-                                        MediaRowView(media: artist)
+                                        PlainRowView(media: artist)
                                     }
                                     Divider()
                                 }.padding(.leading, StyleConstant.padding.medium)

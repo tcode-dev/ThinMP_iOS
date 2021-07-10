@@ -15,27 +15,27 @@ struct MainMenuButtonView: View {
             switch menu.primaryText {
             case LabelConstant.artists:
                 NavigationLink(destination: ArtistsPageView()) {
-                    MediaRowView(media: menu)
+                    PlainRowView(media: menu)
                 }
             case LabelConstant.albums:
                 NavigationLink(destination: AlbumsPageView()) {
-                    MediaRowView(media: menu)
+                    PlainRowView(media: menu)
                 }
             case LabelConstant.songs:
                 NavigationLink(destination: SongsPageView()) {
-                    MediaRowView(media: menu)
+                    PlainRowView(media: menu)
                 }
             case LabelConstant.favoriteArtists:
                 NavigationLink(destination: FavoriteArtistsPageView()) {
-                    MediaRowView(media: menu)
+                    PlainRowView(media: menu)
                 }
             case LabelConstant.favoriteSongs:
                 NavigationLink(destination: FavoriteSongsPageView()) {
-                    MediaRowView(media: menu)
+                    PlainRowView(media: menu)
                 }
             case LabelConstant.playlists:
                 NavigationLink(destination: PlaylistsPageView()) {
-                    MediaRowView(media: menu)
+                    PlainRowView(media: menu)
                 }
             default:
                 EmptyView()

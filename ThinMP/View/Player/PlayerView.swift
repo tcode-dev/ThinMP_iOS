@@ -27,7 +27,7 @@ struct PlayerView: View {
                 }
                 .frame(width: geometry.size.width, height: geometry.size.width)
                 VStack() {
-                    Image(uiImage: musicPlayer.song?.artwork?.image(at: CGSize(width: 220, height: 220)) ?? UIImage())
+                    Image(uiImage: musicPlayer.song?.artwork?.image(at: CGSize(width: 220, height: 220)) ?? UIImage(imageLiteralResourceName: "Song"))
                         .renderingMode(.original)
                         .resizable()
                         .scaledToFit()
