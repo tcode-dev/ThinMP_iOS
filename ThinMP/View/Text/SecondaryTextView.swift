@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SecondaryTextView: View {
-    let text: String
+    private let text: String
 
     init(_ text: String?) {
         self.text = text ?? "unknown"

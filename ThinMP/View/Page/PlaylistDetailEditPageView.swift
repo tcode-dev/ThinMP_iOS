@@ -77,15 +77,15 @@ struct PlaylistDetailEditPageView: View {
         }
     }
 
-    func move(source: IndexSet, destination: Int) {
+    private func move(source: IndexSet, destination: Int) {
         vm.songs.move(fromOffsets: source, toOffset: destination)
     }
 
-    func delete(offsets: IndexSet) {
+    private func delete(offsets: IndexSet) {
         vm.songs.remove(atOffsets: offsets)
     }
 
-    func update() {
+    private func update() {
         let playlistRegister = PlaylistRegister()
 
         playlistRegister.update(playlistId: vm.playlistId, name: name, songIds: vm.songs.map{$0.songId})

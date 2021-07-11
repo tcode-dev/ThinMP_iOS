@@ -46,4 +46,3 @@ struct ShortcutListView: View {
         }
     }
 }
-

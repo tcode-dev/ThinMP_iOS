@@ -93,7 +93,7 @@ struct MainEditPageView: View {
         shortcutRegister.update(shortcutIds: shortcutIds)
     }
 
-    func back() {
+    private func back() {
         presentation.wrappedValue.dismiss()
     }
 }

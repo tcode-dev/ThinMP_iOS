@@ -53,15 +53,15 @@ struct FavoriteArtistsEditPageView: View {
         }
     }
 
-    func move(source: IndexSet, destination: Int) {
+    private func move(source: IndexSet, destination: Int) {
         vm.artists.move(fromOffsets: source, toOffset: destination)
     }
 
-    func delete(offsets: IndexSet) {
+    private func delete(offsets: IndexSet) {
         vm.artists.remove(atOffsets: offsets)
     }
 
-    func update() {
+    private func update() {
         let favoriteArtistRegister = FavoriteArtistRegister()
 
         favoriteArtistRegister.update(artistIds: vm.artists.map{$0.artistId})

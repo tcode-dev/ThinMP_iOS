@@ -17,16 +17,6 @@ struct PlaylistRegisterView: View {
     let height: CGFloat
     @Binding var showingPopup: Bool
 
-    func getHeight() -> CGFloat? {
-        let panelHeight = StyleConstant.height.header + (CGFloat(vm.playlists.count) * (StyleConstant.height.row + StyleConstant.height.divider)) + StyleConstant.padding.medium
-
-        if (panelHeight > height) {
-            return height - (StyleConstant.padding.large * 2)
-        } else {
-            return panelHeight
-        }
-    }
-
     var body: some View {
         VStack(spacing: 0) {
             if (vm.playlists.count != 0 && !isCreate) {
@@ -101,6 +91,16 @@ struct PlaylistRegisterView: View {
         .padding(.horizontal, StyleConstant.padding.large)
         .onAppear() {
             vm.load()
+        }
+    }
+
+    private func getHeight() -> CGFloat? {
+        let panelHeight = StyleConstant.height.header + (CGFloat(vm.playlists.count) * (StyleConstant.height.row + StyleConstant.height.divider)) + StyleConstant.padding.medium
+
+        if (panelHeight > height) {
+            return height - (StyleConstant.padding.large * 2)
+        } else {
+            return panelHeight
         }
     }
 }

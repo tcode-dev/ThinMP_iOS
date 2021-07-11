@@ -52,7 +52,7 @@ struct DetaiNavBarView<Content> : View where Content: View {
         return HStack(alignment: .center) {
             SecondaryTitleView(self.primaryText)
         }
-        .frame(width: side - (StyleConstant.button * 2), height: StyleConstant.height.row)
+        .frame(width: abs(side - (StyleConstant.button * 2)), height: StyleConstant.height.row)
         .padding(EdgeInsets(
             top: top,
             leading: StyleConstant.button,

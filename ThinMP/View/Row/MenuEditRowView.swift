@@ -32,7 +32,7 @@ struct MenuEditRowView: View {
         }
     }
     
-    func CheckboxButton() -> Image {
+    private func CheckboxButton() -> Image {
         if (menu.visibility) {
             return Image("CheckboxOn")
         } else {
