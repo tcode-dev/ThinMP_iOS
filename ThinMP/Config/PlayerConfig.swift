@@ -13,8 +13,8 @@ class PlayerConfig {
     private let KEY_SHUFFLE = "shuffle"
 
     init() {
-        UserDefaults.standard.register(defaults: [KEY_REPEAT : MPMusicRepeatMode.none.rawValue])
-        UserDefaults.standard.register(defaults: [KEY_SHUFFLE : MPMusicShuffleMode.off.rawValue])
+        UserDefaults.standard.register(defaults: [KEY_REPEAT: MPMusicRepeatMode.none.rawValue])
+        UserDefaults.standard.register(defaults: [KEY_SHUFFLE: MPMusicShuffleMode.off.rawValue])
     }
 
     func setRepeat(value: MPMusicRepeatMode) {

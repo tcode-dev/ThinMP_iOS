@@ -12,8 +12,8 @@ struct ShortcutCellView: View {
     let size: CGFloat
 
     var body: some View {
-        VStack(){
-            if (shortcut.type == ShortcutType.ARTIST.rawValue) {
+        VStack {
+            if shortcut.type == ShortcutType.ARTIST.rawValue {
                 CircleImageView(artwork: shortcut.artwork, size: size)
             } else {
                 SquareImageView(artwork: shortcut.artwork, size: size)

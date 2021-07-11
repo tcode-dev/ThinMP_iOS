@@ -46,7 +46,7 @@ struct ArtistsPageView: View {
             .navigationBarHidden(true)
             .navigationBarTitle(Text(""))
             .edgesIgnoringSafeArea(.all)
-            .onAppear() {
+            .onAppear {
                 vm.load()
             }
         }

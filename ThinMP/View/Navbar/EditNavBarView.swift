@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct EditNavBarView<Content> : View where Content: View {
+struct EditNavBarView<Content>: View where Content: View {
     let top: CGFloat
     let content: () -> Content
 

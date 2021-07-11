@@ -24,11 +24,11 @@ struct FavoriteSongButtonView: View {
     }
 
     var body: some View {
-        if (!displayed) {
+        if !displayed {
             // 初回描画時
             let register = FavoriteSongRegister()
 
-            if (!register.exists(songId: songId)) {
+            if !register.exists(songId: songId) {
                 return Button(action: {
                     let register = FavoriteSongRegister()
 
@@ -53,7 +53,7 @@ struct FavoriteSongButtonView: View {
             }
         } else {
             // 2回目以降
-            if (!exists) {
+            if !exists {
                 return Button(action: {
                     let register = FavoriteSongRegister()
 

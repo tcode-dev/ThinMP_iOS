@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct EditButtonView<Content> : View where Content: View {
+struct EditButtonView<Content>: View where Content: View {
     let content: () -> Content
 
     @State var isEdit: Bool = false

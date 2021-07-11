@@ -61,7 +61,7 @@ struct ArtistDetailHeaderView: View {
     }
 
     private func textOpacity() -> Double {
-        if (textRect.origin.y - top > 0) {
+        if textRect.origin.y - top > 0 {
             return 1
         }
 

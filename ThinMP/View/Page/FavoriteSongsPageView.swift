@@ -57,7 +57,7 @@ struct FavoriteSongsPageView: View {
                     }
                     MiniPlayerView(bottom: geometry.safeAreaInsets.bottom)
                 }
-                if (showingPopup) {
+                if showingPopup {
                     PopupView(showingPopup: $showingPopup) {
                         PlaylistRegisterView(songId: playlistRegisterSongId, height: geometry.size.height, showingPopup: $showingPopup)
                     }
@@ -66,7 +66,7 @@ struct FavoriteSongsPageView: View {
             .navigationBarHidden(true)
             .navigationBarTitle(Text(""))
             .edgesIgnoringSafeArea(.all)
-            .onAppear() {
+            .onAppear {
                 vm.load()
             }
         }

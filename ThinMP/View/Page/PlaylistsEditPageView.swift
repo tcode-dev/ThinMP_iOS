@@ -35,7 +35,7 @@ struct PlaylistsEditPageView: View {
                 }
                 VStack(alignment: .leading) {
                     List {
-                        ForEach (vm.playlists, id: \.id) { playlist in
+                        ForEach(vm.playlists, id: \.id) { playlist in
                             MediaRowView(media: playlist)
                         }
                         .onMove(perform: move)
@@ -47,7 +47,7 @@ struct PlaylistsEditPageView: View {
             .navigationBarHidden(true)
             .navigationBarTitle(Text(""))
             .edgesIgnoringSafeArea(.all)
-            .onAppear() {
+            .onAppear {
                 vm.load()
             }
         }
@@ -64,6 +64,6 @@ struct PlaylistsEditPageView: View {
     private func update() {
         let playlistRegister = PlaylistRegister()
 
-        playlistRegister.update(playlistIds: vm.playlists.map{$0.playlistId})
+        playlistRegister.update(playlistIds: vm.playlists.map {$0.playlistId})
     }
 }

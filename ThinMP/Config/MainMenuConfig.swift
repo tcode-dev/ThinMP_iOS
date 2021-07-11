@@ -12,7 +12,7 @@ class MainMenuConfig {
     private let KEY_SORT = "sort"
 
     init() {
-        UserDefaults.standard.register(defaults: [KEY_SORT : [
+        UserDefaults.standard.register(defaults: [KEY_SORT: [
             LabelConstant.artists,
             LabelConstant.albums,
             LabelConstant.songs,
@@ -43,7 +43,7 @@ class MainMenuConfig {
     func getList() -> [MenuModel] {
         return getSort()
             .enumerated()
-            .map{MenuModel(primaryText: $0.element, visibility: getVisibility(key: $0.element))}
+            .map {MenuModel(primaryText: $0.element, visibility: getVisibility(key: $0.element))}
     }
 
     private func getSort() -> [String] {

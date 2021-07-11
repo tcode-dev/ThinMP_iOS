@@ -11,14 +11,14 @@ struct AlbumListView: View {
     private let colCount = 2
     private let list: [AlbumModel]
     private let size: CGFloat
-    private let columns:[GridItem]
+    private let columns: [GridItem]
 
     init(list: [AlbumModel], width: CGFloat) {
         self.list = list
         self.size = (width - (StyleConstant.padding.large * CGFloat(colCount + 1))) / CGFloat(colCount)
         self.columns = [
             GridItem(.fixed(size), spacing: StyleConstant.padding.large),
-            GridItem(.fixed(size), spacing: 0),
+            GridItem(.fixed(size), spacing: 0)
         ]
     }
 

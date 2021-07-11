@@ -8,7 +8,7 @@
 import SwiftUI
 import MediaPlayer
 
-struct PlaylistAddRowView<Content> : View where Content: View {
+struct PlaylistAddRowView<Content>: View where Content: View {
     let playlistId: PlaylistId
     let songId: SongId
     @Binding var showingPopup: Bool

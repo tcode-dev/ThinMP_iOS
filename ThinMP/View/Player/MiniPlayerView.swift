@@ -18,7 +18,7 @@ struct MiniPlayerView: View {
 
     var body: some View {
         VStack {
-            if (musicPlayer.isActive) {
+            if musicPlayer.isActive {
                 HStack {
                     Button(action: {
                         self.isFullScreen.toggle()
@@ -29,7 +29,7 @@ struct MiniPlayerView: View {
                             Spacer()
                         }
                     }
-                    if (musicPlayer.isPlaying) {
+                    if musicPlayer.isPlaying {
                         Button(action: {
                             self.musicPlayer.doPause()
                         }) {
@@ -68,9 +68,9 @@ struct MiniPlayerView: View {
             }
         }
         .onChange(of: scenePhase) { phase in
-            if (phase == .background) {
+            if phase == .background {
                 musicPlayer.setBackground(background: true)
-            } else if (phase == .active) {
+            } else if phase == .active {
                 musicPlayer.setBackground(background: false)
             }
         }

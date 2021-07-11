@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ListNavBarView<Content> : View where Content: View {
+struct ListNavBarView<Content>: View where Content: View {
     let top: CGFloat
     @Binding var rect: CGRect
     let content: () -> Content
@@ -41,7 +41,7 @@ struct ListNavBarView<Content> : View where Content: View {
     }
 
     private func opacity() -> Double {
-        if (rect.origin.y >= 0) {
+        if rect.origin.y >= 0 {
             return 0
         }
 

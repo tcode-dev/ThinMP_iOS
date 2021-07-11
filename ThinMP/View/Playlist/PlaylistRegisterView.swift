@@ -19,9 +19,9 @@ struct PlaylistRegisterView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            if (vm.playlists.count != 0 && !isCreate) {
+            if vm.playlists.count != 0 && !isCreate {
                 VStack(spacing: 0) {
-                    HStack() {
+                    HStack {
                         Spacer()
                         Button(action: {
                             isCreate.toggle()
@@ -37,7 +37,7 @@ struct PlaylistRegisterView: View {
                         Spacer()
                     }
                     .frame(height: StyleConstant.height.header)
-                    ScrollView() {
+                    ScrollView {
                         LazyVStack(spacing: 0) {
                             ForEach(vm.playlists) { playlist in
                                 PlaylistAddRowView(playlistId: playlist.playlistId, songId: songId, showingPopup: $showingPopup) {
@@ -69,7 +69,7 @@ struct PlaylistRegisterView: View {
                         }
                         Spacer()
                         Button(action: {
-                            if (vm.playlists.count > 0) {
+                            if vm.playlists.count > 0 {
                                 isCreate.toggle()
                             } else {
                                 showingPopup.toggle()
@@ -89,7 +89,7 @@ struct PlaylistRegisterView: View {
         .background(Color(UIColor.systemGray5))
         .cornerRadius(4)
         .padding(.horizontal, StyleConstant.padding.large)
-        .onAppear() {
+        .onAppear {
             vm.load()
         }
     }
@@ -97,7 +97,7 @@ struct PlaylistRegisterView: View {
     private func getHeight() -> CGFloat? {
         let panelHeight = StyleConstant.height.header + (CGFloat(vm.playlists.count) * (StyleConstant.height.row + StyleConstant.height.divider)) + StyleConstant.padding.medium
 
-        if (panelHeight > height) {
+        if panelHeight > height {
             return height - (StyleConstant.padding.large * 2)
         } else {
             return panelHeight

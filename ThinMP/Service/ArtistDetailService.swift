@@ -15,7 +15,7 @@ struct ArtistDetailService {
         let artist = artistRepository.findById(artistId: artistId)
         let primaryText  = artist?.primaryText
         let albums = albumRepository.findByArtistId(artistId: artistId)
-        let albumIds = albums.map{$0.albumId}
+        let albumIds = albums.map {$0.albumId}
         let artwork = albums.first(where: { (album) -> Bool in
             (album.artwork != nil)
         })?.artwork

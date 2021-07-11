@@ -10,7 +10,7 @@ import MediaPlayer
 struct AlbumDetailModel: DetailProtocol {
     var albumId: AlbumId
     var primaryText: String?
-    var secondaryText:String?
+    var secondaryText: String?
     var artwork: MPMediaItemArtwork?
     var songs: [SongModel]
     var id: String {

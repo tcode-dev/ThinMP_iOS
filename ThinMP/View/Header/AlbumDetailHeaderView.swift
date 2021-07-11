@@ -10,10 +10,10 @@ import SwiftUI
 struct AlbumDetailHeaderView: View {
     @ObservedObject var vm: AlbumDetailViewModel
     @Binding var textRect: CGRect
-    
+
     let side: CGFloat
     let top: CGFloat
-    
+
     var body: some View {
         ZStack(alignment: .bottom) {
             Image(uiImage: self.vm.artwork?.image(at: CGSize(width: self.side, height: self.side)) ?? UIImage(imageLiteralResourceName: "Song"))
@@ -35,7 +35,7 @@ struct AlbumDetailHeaderView: View {
         DispatchQueue.main.async {
             self.textRect = primaryTextGeometry.frame(in: .global)
         }
-        
+
         return VStack {
             SecondaryTitleView(self.vm.primaryText).opacity(textOpacity())
         }
@@ -43,7 +43,7 @@ struct AlbumDetailHeaderView: View {
         .padding(.leading, StyleConstant.button)
         .padding(.trailing, StyleConstant.button)
     }
-    
+
     private func createSecondaryTextView() -> some View {
         return VStack {
             SecondaryTextView(self.vm.secondaryText).opacity(textOpacity())
@@ -54,12 +54,12 @@ struct AlbumDetailHeaderView: View {
         .padding(.leading, StyleConstant.button)
         .padding(.trailing, StyleConstant.button)
     }
-    
+
     private func textOpacity() -> Double {
-        if (textRect.origin.y - self.top > 0) {
+        if textRect.origin.y - self.top > 0 {
             return 1
         }
-        
+
         return 0
     }
 }

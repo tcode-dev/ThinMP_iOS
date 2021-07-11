@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MenuButtonView<Content> : View where Content: View {
+struct MenuButtonView<Content>: View where Content: View {
     let content: () -> Content
 
     var body: some View {

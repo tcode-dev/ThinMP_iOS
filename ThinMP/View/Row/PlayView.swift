@@ -8,7 +8,7 @@
 import SwiftUI
 import MediaPlayer
 
-struct PlayRowView<Content> : View where Content: View {
+struct PlayRowView<Content>: View where Content: View {
     let list: [MPMediaItemCollection]
     let index: Int
     let content: () -> Content

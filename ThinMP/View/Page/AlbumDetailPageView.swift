@@ -57,7 +57,7 @@ struct AlbumDetailPageView: View {
                     }
                     MiniPlayerView(bottom: geometry.safeAreaInsets.bottom)
                 }
-                if (showingPopup) {
+                if showingPopup {
                     PopupView(showingPopup: self.$showingPopup) {
                         PlaylistRegisterView(songId: playlistRegisterSongId, height: geometry.size.height, showingPopup: self.$showingPopup)
                     }
@@ -66,7 +66,7 @@ struct AlbumDetailPageView: View {
             .navigationBarHidden(true)
             .navigationBarTitle(Text(""))
             .edgesIgnoringSafeArea(.all)
-            .onAppear() {
+            .onAppear {
                 vm.load(albumId: albumId)
             }
         }

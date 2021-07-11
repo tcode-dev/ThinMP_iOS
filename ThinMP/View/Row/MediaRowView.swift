@@ -18,7 +18,7 @@ struct MediaRowView: View {
             SquareImageView(artwork: media.artwork, size: size)
             VStack(alignment: .leading) {
                 PrimaryTextView(media.primaryText)
-                if (media.secondaryText != nil) {
+                if media.secondaryText != nil {
                     SecondaryTextView(media.secondaryText)
                 }
             }

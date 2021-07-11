@@ -13,7 +13,7 @@ struct SecondaryTextView: View {
     init(_ text: String?) {
         self.text = text ?? "unknown"
     }
-    
+
     var body: some View {
         Text(text).font(.subheadline).foregroundColor(.secondary).lineLimit(1)
     }

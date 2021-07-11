@@ -43,7 +43,7 @@ struct PlaylistDetailPageView: View {
                             VStack(alignment: .leading) {
                                 PlaylistDetailHeaderView(textRect: $textRect, side: geometry.size.width, top: geometry.safeAreaInsets.top, name: vm.primaryText, artwork: vm.artwork)
                                 LazyVStack(spacing: 0) {
-                                    ForEach(vm.songs.indices, id: \.self){ index in
+                                    ForEach(vm.songs.indices, id: \.self) { index in
                                         PlayRowView(list: vm.songs, index: index) {
                                             MediaRowView(media: vm.songs[index])
                                         }
@@ -64,7 +64,7 @@ struct PlaylistDetailPageView: View {
                     }
                     MiniPlayerView(bottom: geometry.safeAreaInsets.bottom)
                 }
-                if (showingPopup) {
+                if showingPopup {
                     PopupView(showingPopup: self.$showingPopup) {
                         PlaylistRegisterView(songId: playlistRegisterSongId, height: geometry.size.height, showingPopup: $showingPopup)
                     }
@@ -73,7 +73,7 @@ struct PlaylistDetailPageView: View {
             .navigationBarHidden(true)
             .navigationBarTitle(Text(""))
             .edgesIgnoringSafeArea(.all)
-            .onAppear() {
+            .onAppear {
                 vm.load(playlistId: playlistId)
             }
         }

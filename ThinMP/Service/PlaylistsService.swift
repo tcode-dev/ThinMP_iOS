@@ -22,7 +22,7 @@ struct PlaylistsService {
         let songIds = Array(playlistSongs.map { SongId(id: UInt64($0.songId)!)})
         let repository = SongRepository()
         let songs = repository.findByIds(songIds: songIds)
-        let sorted = songIds.map{ (songId) in songs.first { songId.equals($0.songId) }!}
+        let sorted = songIds.map { (songId) in songs.first { songId.equals($0.songId) }!}
         let arrayed = Array(sorted)
         let artwork = arrayed.first(where: { (song) -> Bool in
             (song.artwork != nil)

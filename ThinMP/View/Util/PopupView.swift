@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct PopupView<Content> : View where Content: View {
+struct PopupView<Content>: View where Content: View {
     @Binding var showingPopup: Bool
     let content: () -> Content
 

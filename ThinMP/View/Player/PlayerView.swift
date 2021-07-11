@@ -22,11 +22,11 @@ struct PlayerView: View {
                         .resizable()
                         .scaledToFit()
                         .blur(radius: 10.0)
-                    
+
                     LinearGradient(gradient: Gradient(colors: [Color.init(Color.RGBColorSpace.sRGB, red: 1, green: 1, blue: 1, opacity: 0), Color(UIColor.systemBackground)]), startPoint: .top, endPoint: .bottom).frame(height: geometry.size.width).offset(y: 25)
                 }
                 .frame(width: geometry.size.width, height: geometry.size.width)
-                VStack() {
+                VStack {
                     Image(uiImage: musicPlayer.song?.artwork?.image(at: CGSize(width: 220, height: 220)) ?? UIImage(imageLiteralResourceName: "Song"))
                         .renderingMode(.original)
                         .resizable()
@@ -45,14 +45,14 @@ struct PlayerView: View {
                     Spacer()
 
                     Slider(value: $musicPlayer.currentSecond, in: 0...musicPlayer.durationSecond, step: 1, onEditingChanged: { changed in
-                        if (musicPlayer.isPlaying && !seeking && changed) {
+                        if musicPlayer.isPlaying && !seeking && changed {
                             musicPlayer.stopProgress()
                             seeking = changed
                         }
 
                         musicPlayer.seek(time: musicPlayer.currentSecond)
 
-                        if (musicPlayer.isPlaying && seeking && !changed) {
+                        if musicPlayer.isPlaying && seeking && !changed {
                             musicPlayer.startProgress()
                             seeking = changed
                         }
@@ -79,7 +79,7 @@ struct PlayerView: View {
 
                         Spacer()
 
-                        if (musicPlayer.isPlaying) {
+                        if musicPlayer.isPlaying {
                             Button(action: {
                                 musicPlayer.doPause()
                             }) {
@@ -110,11 +110,11 @@ struct PlayerView: View {
                         Button(action: {
                             musicPlayer.changeRepeat()
                         }) {
-                            if (musicPlayer.isRepeatOff) {
+                            if musicPlayer.isRepeatOff {
                                 Image("RepeatButton").renderingMode(.original).resizable().frame(width: 40, height: 40).opacity(0.5)
-                            } else if (musicPlayer.isRepeatAll) {
+                            } else if musicPlayer.isRepeatAll {
                                 Image("RepeatButton").renderingMode(.original).resizable().frame(width: 40, height: 40)
-                            } else if (musicPlayer.isRepeatOne) {
+                            } else if musicPlayer.isRepeatOne {
                                 Image("RepeatOneButton").renderingMode(.original).resizable().frame(width: 40, height: 40)
                             }
                         }
@@ -125,7 +125,7 @@ struct PlayerView: View {
                         Button(action: {
                             musicPlayer.shuffle()
                         }) {
-                            if (musicPlayer.shuffleMode) {
+                            if musicPlayer.shuffleMode {
                                 Image("ShuffleButton").renderingMode(.original).resizable().frame(width: 40, height: 40)
                             } else {
                                 Image("ShuffleButton").renderingMode(.original).resizable().frame(width: 40, height: 40).opacity(0.5)
@@ -138,7 +138,7 @@ struct PlayerView: View {
                         Button(action: {
                             musicPlayer.favoriteArtist()
                         }) {
-                            if (musicPlayer.isFavoriteArtist) {
+                            if musicPlayer.isFavoriteArtist {
                                 Image("FavoriteArtistButton").renderingMode(.original).resizable().frame(width: 40, height: 40)
                             } else {
                                 Image("FavoriteArtistButton").renderingMode(.original).resizable().frame(width: 40, height: 40).opacity(0.5)
@@ -151,7 +151,7 @@ struct PlayerView: View {
                         Button(action: {
                             musicPlayer.favoriteSong()
                         }) {
-                            if (musicPlayer.isFavoriteSong) {
+                            if musicPlayer.isFavoriteSong {
                                 Image("FavoriteSongButton").renderingMode(.original).resizable().frame(width: 30, height: 30)
                             } else {
                                 Image("FavoriteSongButton").renderingMode(.original).resizable().frame(width: 30, height: 30).opacity(0.5)
@@ -172,7 +172,7 @@ struct PlayerView: View {
 
                     Spacer()
                 }
-                if (showingPopup) {
+                if showingPopup {
                     PopupView(showingPopup: $showingPopup) {
                         PlaylistRegisterView(songId: musicPlayer.song!.songId, height: geometry.size.height, showingPopup: $showingPopup)
                     }
@@ -181,8 +181,8 @@ struct PlayerView: View {
         }
         .onAppear(perform: {
             musicPlayer.immediateUpdateTime()
-            
-            if (musicPlayer.isPlaying) {
+
+            if musicPlayer.isPlaying {
                 musicPlayer.startProgress()
             }
         })
@@ -190,14 +190,14 @@ struct PlayerView: View {
             musicPlayer.stopProgress()
         })
         .onChange(of: scenePhase) { phase in
-            if (phase == .background) {
+            if phase == .background {
                 musicPlayer.setBackground(background: true)
                 musicPlayer.stopProgress()
-            } else if (phase == .active) {
+            } else if phase == .active {
                 musicPlayer.setBackground(background: false)
                 musicPlayer.immediateUpdateTime()
 
-                if (musicPlayer.isPlaying) {
+                if musicPlayer.isPlaying {
                     musicPlayer.startProgress()
                 }
             }
@@ -205,13 +205,13 @@ struct PlayerView: View {
     }
 
     private func convertTime(time: TimeInterval) -> String {
-        if (time < 1) {
+        if time < 1 {
             return "00:00"
         }
 
         let formatter = DateComponentsFormatter()
         formatter.unitsStyle = .positional
-        formatter.allowedUnits = [.minute,.second]
+        formatter.allowedUnits = [.minute, .second]
         formatter.zeroFormattingBehavior = [.pad]
 
         return formatter.string(from: time) ?? "00:00"

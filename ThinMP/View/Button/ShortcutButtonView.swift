@@ -16,10 +16,10 @@ struct ShortcutButtonView: View {
     let type: ShortcutType
 
     var body: some View {
-        if (!displayed) {
+        if !displayed {
             let register = ShortcutRegister()
 
-            if (!register.exists(itemId: itemId, type: type)) {
+            if !register.exists(itemId: itemId, type: type) {
                 return Button(action: {
                     let register = ShortcutRegister()
 
@@ -41,7 +41,7 @@ struct ShortcutButtonView: View {
                 }
             }
         } else {
-            if (!exists) {
+            if !exists {
                 return Button(action: {
                     let register = ShortcutRegister()
 

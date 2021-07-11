@@ -8,16 +8,16 @@
 import SwiftUI
 import MediaPlayer
 
-struct DetaiNavBarView<Content> : View where Content: View {
+struct DetaiNavBarView<Content>: View where Content: View {
     let primaryText: String?
     let side: CGFloat
     let top: CGFloat
     @Binding var textRect: CGRect
     let content: () -> Content
-    
+
     var body: some View {
         ZStack {
-            HStack() {
+            HStack {
                 BackButtonView()
                 Spacer()
                 content()
@@ -37,7 +37,7 @@ struct DetaiNavBarView<Content> : View where Content: View {
         .frame(height: StyleConstant.height.row + top)
         .zIndex(1)
     }
-    
+
     private func createHeaderView() -> some View {
         return VStack {
             Rectangle().frame(width: side, height: StyleConstant.height.row + top)
@@ -47,7 +47,7 @@ struct DetaiNavBarView<Content> : View where Content: View {
         .opacity(self.opacity())
         .animation(.easeInOut)
     }
-    
+
     private func createTitleView() -> some View {
         return HStack(alignment: .center) {
             SecondaryTitleView(self.primaryText)
@@ -61,16 +61,16 @@ struct DetaiNavBarView<Content> : View where Content: View {
         ))
         .opacity(self.opacity())
     }
-    
+
     private func opacity() -> Double {
         // ページ遷移直後は位置を取得できていない
-        if (textRect == CGRect.zero) {
+        if textRect == CGRect.zero {
             return 0
         }
-        if (textRect.origin.y - self.top > 0) {
+        if textRect.origin.y - self.top > 0 {
             return 0
         }
-        
+
         return 1
     }
 }

@@ -22,7 +22,7 @@ struct FavoriteSongRepository {
     }
 
     func add(songId: SongId) {
-        if (exists(songId: songId)) {
+        if exists(songId: songId) {
             return
         }
 
@@ -41,7 +41,7 @@ struct FavoriteSongRepository {
     func delete(songId: SongId) {
         let favoriteSongs = find(songId: songId)
 
-        if (favoriteSongs.count != 1) {
+        if favoriteSongs.count != 1 {
             return
         }
 

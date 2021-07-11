@@ -52,14 +52,14 @@ struct PlaylistDetailEditPageView: View {
                     }
                     ZStack {
                         List {
-                            ForEach (vm.songs, id: \.id) { media in
+                            ForEach(vm.songs, id: \.id) { media in
                                 MediaRowView(media: media)
                             }
                             .onMove(perform: move)
                             .onDelete(perform: delete)
                             .listRowInsets(.init())
                         }
-                        if (editing) {
+                        if editing {
                             VStack {
                                 Rectangle().fill(Color.white.opacity(0.5))
                             }
@@ -71,7 +71,7 @@ struct PlaylistDetailEditPageView: View {
             .navigationBarHidden(true)
             .navigationBarTitle(Text(""))
             .edgesIgnoringSafeArea(.all)
-            .onAppear() {
+            .onAppear {
                 vm.load(playlistId: playlistId)
             }
         }
@@ -88,7 +88,7 @@ struct PlaylistDetailEditPageView: View {
     private func update() {
         let playlistRegister = PlaylistRegister()
 
-        playlistRegister.update(playlistId: vm.playlistId, name: name, songIds: vm.songs.map{$0.songId})
+        playlistRegister.update(playlistId: vm.playlistId, name: name, songIds: vm.songs.map {$0.songId})
 
         vm.primaryText = name
     }
@@ -104,7 +104,7 @@ struct EditModifier: ViewModifier {
     let editing: Bool
 
     func body(content: Content) -> some View {
-        if (editing) {
+        if editing {
             content.onTapGesture {UIApplication.shared.endEditing()}
         } else {
             content

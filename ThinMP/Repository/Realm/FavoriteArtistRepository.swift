@@ -28,7 +28,7 @@ struct FavoriteArtistRepository {
     }
 
     func add(artistId: ArtistId) {
-        if (exists(artistId: artistId)) {
+        if exists(artistId: artistId) {
             return
         }
 
@@ -45,7 +45,7 @@ struct FavoriteArtistRepository {
     func delete(artistId: ArtistId) {
         let favoriteArtists = find(artistId: artistId)
 
-        if (favoriteArtists.count != 1) {
+        if favoriteArtists.count != 1 {
             return
         }
 

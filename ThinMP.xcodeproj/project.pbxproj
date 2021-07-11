@@ -659,6 +659,7 @@
 				52C34D5A230ED7BE00EA76DA /* Sources */,
 				52C34D5B230ED7BE00EA76DA /* Frameworks */,
 				52C34D5C230ED7BE00EA76DA /* Resources */,
+				526B8CDD269B1C8F00A39770 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -726,6 +727,26 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		526B8CDD269B1C8F00A39770 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint autocorrect --format\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		52C34D5A230ED7BE00EA76DA /* Sources */ = {

@@ -35,13 +35,13 @@ struct MainEditPageView: View {
                 }
                 VStack(alignment: .leading) {
                     List {
-                        ForEach (vm.menus) { menu in
+                        ForEach(vm.menus) { menu in
                             MenuEditRowView(menu: menu)
                         }
                         .onMove(perform: moveMenu)
                         .listRowInsets(.init())
                         MenuEditRowView(menu: vm.shortcutMenu)
-                        ForEach (vm.shortcuts, id: \.id) { media in
+                        ForEach(vm.shortcuts, id: \.id) { media in
                             MediaRowView(media: media)
                         }
                         .onMove(perform: moveShortcut)
@@ -54,7 +54,7 @@ struct MainEditPageView: View {
             .navigationBarHidden(true)
             .navigationBarTitle(Text(""))
             .edgesIgnoringSafeArea(.all)
-            .onAppear() {
+            .onAppear {
                 vm.load()
             }
         }
@@ -78,7 +78,7 @@ struct MainEditPageView: View {
 
         mainMenuConfig.setSort(value: menus)
 
-        vm.menus.forEach{
+        vm.menus.forEach {
             mainMenuConfig.setVisibility(value: $0.visibility, key: $0.primaryText!)
         }
 

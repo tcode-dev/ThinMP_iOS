@@ -13,7 +13,7 @@ struct PrimaryTextView: View {
     init(_ text: String?) {
         self.text = text ?? "unknown"
     }
-    
+
     var body: some View {
         Text(text).font(.body).foregroundColor(.primary).lineLimit(1)
     }

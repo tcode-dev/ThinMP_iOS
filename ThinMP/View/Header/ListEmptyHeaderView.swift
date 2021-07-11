@@ -26,7 +26,7 @@ struct ListEmptyHeaderView: View {
             self.headerRect = gometry.frame(in: .global)
         }
 
-        return HStack() {
+        return HStack {
             Text("")
         }.frame(height: StyleConstant.height.row + top)
     }

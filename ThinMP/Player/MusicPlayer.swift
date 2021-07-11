@@ -38,16 +38,16 @@ class MusicPlayer: ObservableObject {
         player.beginGeneratingPlaybackNotifications()
     }
 
-    func start(list:[SongModel], currentIndex: Int) {
+    func start(list: [SongModel], currentIndex: Int) {
         stop()
-        song = SongModel(media: MPMediaItemCollection(items:[list[currentIndex].media.representativeItem! as MPMediaItem]))
+        song = SongModel(media: MPMediaItemCollection(items: [list[currentIndex].media.representativeItem! as MPMediaItem]))
 
-        let items = MPMediaItemCollection(items: list.map{$0.media.representativeItem! as MPMediaItem})
+        let items = MPMediaItemCollection(items: list.map {$0.media.representativeItem! as MPMediaItem})
         let descriptor = MPMusicPlayerMediaItemQueueDescriptor.init(itemCollection: items)
         descriptor.startItem = song?.media.representativeItem
         player.setQueue(with: descriptor)
 
-        play();
+        play()
         setFavoriteArtist()
         setFavoriteSong()
         addObserver()
@@ -66,7 +66,7 @@ class MusicPlayer: ObservableObject {
     }
 
     func doPrev() {
-        if (isPlaying) {
+        if isPlaying {
             playPrev()
         } else {
             prev()
@@ -74,7 +74,7 @@ class MusicPlayer: ObservableObject {
     }
 
     func doNext() {
-        if (isPlaying) {
+        if isPlaying {
             playNext()
         } else {
             next()
@@ -107,13 +107,13 @@ class MusicPlayer: ObservableObject {
     }
 
     func changeRepeat() {
-        if (isRepeatOff) {
+        if isRepeatOff {
             isRepeatOff = false
             isRepeatAll = true
-        } else if (isRepeatAll) {
+        } else if isRepeatAll {
             isRepeatAll = false
             isRepeatOne = true
-        } else if (isRepeatOne) {
+        } else if isRepeatOne {
             isRepeatOne = false
             isRepeatOff = true
         }
@@ -126,7 +126,7 @@ class MusicPlayer: ObservableObject {
 
     func shuffle() {
         player.shuffleMode = player.shuffleMode == .off ? .songs : .off
-        setShuffle();
+        setShuffle()
         playerConfig.setShuffle(value: player.shuffleMode)
     }
 
@@ -135,7 +135,7 @@ class MusicPlayer: ObservableObject {
             let artistId = ArtistId(id: artistPersistentId)
             let register = FavoriteArtistRegister()
 
-            if (register.exists(artistId: artistId)) {
+            if register.exists(artistId: artistId) {
                 register.delete(artistId: artistId)
             } else {
                 register.add(artistId: artistId)
@@ -149,7 +149,7 @@ class MusicPlayer: ObservableObject {
         if let songId = song?.songId {
             let register = FavoriteSongRegister()
 
-            if (register.exists(songId: songId)) {
+            if register.exists(songId: songId) {
                 register.delete(songId: songId)
             } else {
                 register.add(songId: songId)
@@ -160,7 +160,7 @@ class MusicPlayer: ObservableObject {
 
     private func setSong() {
         if player.nowPlayingItem != nil {
-            song = SongModel(media: MPMediaItemCollection(items:[player.nowPlayingItem! as MPMediaItem]))
+            song = SongModel(media: MPMediaItemCollection(items: [player.nowPlayingItem! as MPMediaItem]))
             player.skipToBeginning()
             resetTime()
             isActive = true
@@ -184,7 +184,7 @@ class MusicPlayer: ObservableObject {
     }
 
     private func stop() {
-        if (!isPlaying) {
+        if !isPlaying {
             return
         }
 
@@ -194,7 +194,7 @@ class MusicPlayer: ObservableObject {
 
     private func prev() {
         stop()
-        if (currentSecond <= PREV_SECOND) {
+        if currentSecond <= PREV_SECOND {
             player.skipToPreviousItem()
             setSong()
         } else {
@@ -225,7 +225,7 @@ class MusicPlayer: ObservableObject {
             forName: NSNotification.Name.MPMusicPlayerControllerNowPlayingItemDidChange,
             object: player,
             queue: OperationQueue.main
-        ) { notification in
+        ) { _ in
             self.MPMusicPlayerControllerNowPlayingItemDidChangeCallback()
         }
 
@@ -233,13 +233,13 @@ class MusicPlayer: ObservableObject {
             forName: NSNotification.Name.MPMusicPlayerControllerPlaybackStateDidChange,
             object: player,
             queue: OperationQueue.main
-        ) { notification in
+        ) { _ in
             self.MPMusicPlayerControllerPlaybackStateDidChangeCallback()
         }
     }
 
     private func MPMusicPlayerControllerPlaybackStateDidChangeCallback() {
-        if (isPlaying && !isBackground) {
+        if isPlaying && !isBackground {
             return
         }
 
@@ -273,7 +273,7 @@ class MusicPlayer: ObservableObject {
     private func MPMusicPlayerControllerNowPlayingItemDidChangeCallback() {
         setSong()
 
-        if (player.repeatMode == .none && player.indexOfNowPlayingItem == 0 && !isFirst) {
+        if player.repeatMode == .none && player.indexOfNowPlayingItem == 0 && !isFirst {
             isPlaying = false
         }
         isFirst = false

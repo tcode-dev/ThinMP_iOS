@@ -57,7 +57,7 @@ struct PlaylistDetailHeaderView: View {
     }
 
     private func textOpacity() -> Double {
-        if (textRect.origin.y - self.top > 0) {
+        if textRect.origin.y - self.top > 0 {
             return 1
         }
 

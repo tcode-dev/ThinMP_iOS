@@ -27,7 +27,7 @@ struct PlaylistsPageView: View {
                             }
                         }
                     }
-                    ScrollView() {
+                    ScrollView {
                         VStack(alignment: .leading) {
                             ListEmptyHeaderView(headerRect: $headerRect, top: geometry.safeAreaInsets.top)
                             LazyVStack(spacing: 0) {
@@ -47,7 +47,7 @@ struct PlaylistsPageView: View {
             .navigationBarHidden(true)
             .navigationBarTitle(Text(""))
             .edgesIgnoringSafeArea(.all)
-            .onAppear() {
+            .onAppear {
                 vm.load()
             }
         }

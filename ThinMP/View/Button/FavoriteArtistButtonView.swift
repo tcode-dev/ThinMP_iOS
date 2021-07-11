@@ -15,10 +15,10 @@ struct FavoriteArtistButtonView: View {
     let artistId: ArtistId
 
     var body: some View {
-        if (!displayed) {
+        if !displayed {
             let register = FavoriteArtistRegister()
 
-            if (!register.exists(artistId: artistId)) {
+            if !register.exists(artistId: artistId) {
                 return Button(action: {
                     let register = FavoriteArtistRegister()
 
@@ -40,7 +40,7 @@ struct FavoriteArtistButtonView: View {
                 }
             }
         } else {
-            if (!exists) {
+            if !exists {
                 return Button(action: {
                     let register = FavoriteArtistRegister()
 

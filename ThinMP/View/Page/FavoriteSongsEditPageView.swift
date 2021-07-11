@@ -35,7 +35,7 @@ struct FavoriteSongsEditPageView: View {
                 }
                 VStack(alignment: .leading) {
                     List {
-                        ForEach (vm.songs, id: \.id) { media in
+                        ForEach(vm.songs, id: \.id) { media in
                             MediaRowView(media: media)
                         }
                         .onMove(perform: move)
@@ -47,7 +47,7 @@ struct FavoriteSongsEditPageView: View {
             .navigationBarHidden(true)
             .navigationBarTitle(Text(""))
             .edgesIgnoringSafeArea(.all)
-            .onAppear() {
+            .onAppear {
                 vm.load()
             }
         }
@@ -64,7 +64,7 @@ struct FavoriteSongsEditPageView: View {
     private func update() {
         let favoriteSongRegister = FavoriteSongRegister()
 
-        favoriteSongRegister.update(songIds: vm.songs.map{$0.songId})
+        favoriteSongRegister.update(songIds: vm.songs.map {$0.songId})
     }
 
     private func back() {

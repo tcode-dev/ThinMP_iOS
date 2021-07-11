@@ -34,7 +34,7 @@ struct ArtistDetailPageView: View {
                                 }
                             }
                         }
-                        ScrollView{
+                        ScrollView {
                             ArtistDetailHeaderView(vm: vm, textRect: $textRect, side: geometry.size.width, top: geometry.safeAreaInsets.top)
                             VStack(alignment: .leading) {
                                 PrimaryTitleView("Albums")
@@ -44,7 +44,7 @@ struct ArtistDetailPageView: View {
                                 PrimaryTitleView("Songs")
                                     .padding(.leading, StyleConstant.padding.large)
                                 LazyVStack(spacing: 0) {
-                                    ForEach(vm.songs.indices, id: \.self){ index in
+                                    ForEach(vm.songs.indices, id: \.self) { index in
                                         PlayRowView(list: vm.songs, index: index) {
                                             MediaRowView(media: vm.songs[index])
                                         }
@@ -65,7 +65,7 @@ struct ArtistDetailPageView: View {
                     }
                     MiniPlayerView(bottom: geometry.safeAreaInsets.bottom)
                 }
-                if (showingPopup) {
+                if showingPopup {
                     PopupView(showingPopup: $showingPopup) {
                         PlaylistRegisterView(songId: playlistRegisterSongId, height: geometry.size.height, showingPopup: $showingPopup)
                     }
@@ -74,7 +74,7 @@ struct ArtistDetailPageView: View {
             .navigationBarHidden(true)
             .navigationBarTitle(Text(""))
             .edgesIgnoringSafeArea(.all)
-            .onAppear() {
+            .onAppear {
                 vm.load(artistId: artistId)
             }
         }

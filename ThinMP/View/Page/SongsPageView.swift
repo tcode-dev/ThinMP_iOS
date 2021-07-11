@@ -29,7 +29,7 @@ struct SongsPageView: View {
                                     .frame(width: StyleConstant.button)
                             }
                         }
-                        ScrollView() {
+                        ScrollView {
                             VStack(alignment: .leading) {
                                 ListEmptyHeaderView(headerRect: self.$headerRect, top: geometry.safeAreaInsets.top)
                                 LazyVStack(spacing: 0) {
@@ -56,7 +56,7 @@ struct SongsPageView: View {
                     }
                     MiniPlayerView(bottom: geometry.safeAreaInsets.bottom)
                 }
-                if (showingPopup) {
+                if showingPopup {
                     PopupView(showingPopup: $showingPopup) {
                         PlaylistRegisterView(songId: playlistRegisterSongId, height: geometry.size.height, showingPopup: $showingPopup)
                     }
@@ -65,7 +65,7 @@ struct SongsPageView: View {
             .navigationBarHidden(true)
             .navigationBarTitle(Text(""))
             .edgesIgnoringSafeArea(.all)
-            .onAppear() {
+            .onAppear {
                 vm.load()
             }
         }

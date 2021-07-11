@@ -34,7 +34,7 @@ struct MainPageView: View {
                         VStack(spacing: 0) {
                             Divider()
                             ForEach(vm.menus.indices, id: \.self) { index in
-                                if (vm.menus[index].visibility) {
+                                if vm.menus[index].visibility {
                                     MainMenuButtonView(menu: vm.menus[index])
                                     Divider()
                                 }
@@ -42,7 +42,7 @@ struct MainPageView: View {
                         }
                         .padding(.leading, StyleConstant.padding.large)
                         .padding(.bottom, StyleConstant.padding.large)
-                        if (vm.shortcutMenu.visibility) {
+                        if vm.shortcutMenu.visibility {
                             VStack(alignment: .leading) {
                                 Text(LocalizedStringKey(vm.shortcutMenu.primaryText!))
                                     .fontWeight(.bold)
@@ -52,7 +52,7 @@ struct MainPageView: View {
                                     .padding(.bottom, StyleConstant.padding.medium)
                             }
                         }
-                        if (vm.recentlyMenu.visibility) {
+                        if vm.recentlyMenu.visibility {
                             VStack(alignment: .leading) {
                                 Text(LocalizedStringKey(vm.recentlyMenu.primaryText!))
                                     .fontWeight(.bold)
@@ -68,7 +68,7 @@ struct MainPageView: View {
                 .navigationBarHidden(true)
                 .navigationBarTitle(Text(""))
                 .edgesIgnoringSafeArea(.all)
-                .onAppear() {
+                .onAppear {
                     vm.load()
                 }
             }
