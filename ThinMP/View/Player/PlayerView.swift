@@ -192,8 +192,14 @@ struct PlayerView: View {
         .onChange(of: scenePhase) { phase in
             if (phase == .background) {
                 musicPlayer.setBackground(background: true)
+                musicPlayer.stopProgress()
             } else if (phase == .active) {
                 musicPlayer.setBackground(background: false)
+                musicPlayer.immediateUpdateTime()
+
+                if (musicPlayer.isPlaying) {
+                    musicPlayer.startProgress()
+                }
             }
         }
     }
