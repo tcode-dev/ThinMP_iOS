@@ -5,12 +5,12 @@
 //  Created by tk on 2020/01/12.
 //
 
-import SwiftUI
 import MediaPlayer
+import SwiftUI
 
 struct AlbumDetailPageView: View {
     @StateObject private var vm = AlbumDetailViewModel()
-    @State private var textRect: CGRect = CGRect.zero
+    @State private var textRect = CGRect.zero
     @State private var showingPopup: Bool = false
     @State private var playlistRegisterSongId = SongId(id: 0)
 

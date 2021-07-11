@@ -31,7 +31,7 @@ struct FavoriteArtistsService {
 
     private func update(artists: [ArtistModel]) {
         let favoriteArtistRegister = FavoriteArtistRegister()
-        let artistIds = artists.map {$0.artistId}
+        let artistIds = artists.map { $0.artistId }
 
         favoriteArtistRegister.update(artistIds: artistIds)
     }

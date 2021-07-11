@@ -17,7 +17,7 @@ class AlbumDetailViewModel: ViewModelProtocol {
 
     func load(albumId: AlbumId) {
         self.albumId = albumId
-        self.load()
+        load()
     }
 
     func fetch() {

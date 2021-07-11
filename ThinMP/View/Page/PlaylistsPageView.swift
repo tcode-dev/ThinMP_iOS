@@ -10,7 +10,7 @@ import SwiftUI
 struct PlaylistsPageView: View {
     @StateObject private var vm = PlaylistsViewModel()
 
-    @State private var headerRect: CGRect = CGRect()
+    @State private var headerRect = CGRect()
 
     var body: some View {
         GeometryReader { geometry in

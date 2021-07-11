@@ -11,6 +11,6 @@ struct SongId {
     var id: MPMediaEntityPersistentID
 
     func equals(_ songId: SongId) -> Bool {
-        return songId.id == self.id
+        return songId.id == id
     }
 }

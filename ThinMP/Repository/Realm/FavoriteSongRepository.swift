@@ -5,8 +5,8 @@
 //  Created by tk on 2021/05/06.
 //
 
-import RealmSwift
 import MediaPlayer
+import RealmSwift
 
 struct FavoriteSongRepository {
     let realm: Realm
@@ -18,7 +18,7 @@ struct FavoriteSongRepository {
     func findAll() -> [SongId] {
         return realm.objects(FavoriteSongRealmModel.self)
             .sorted(byKeyPath: FavoriteSongRealmModel.ORDER)
-            .map { SongId(id: UInt64($0.songId)!)}
+            .map { SongId(id: UInt64($0.songId)!) }
     }
 
     func add(songId: SongId) {
@@ -73,7 +73,7 @@ struct FavoriteSongRepository {
     private func bulkInsert(songIds: [SongId]) {
         realm.beginWrite()
 
-        for index in 0..<songIds.count {
+        for index in 0 ..< songIds.count {
             realm.create(FavoriteSongRealmModel.self, value: [
                 FavoriteSongRealmModel.SONG_ID: String(songIds[index].id),
                 FavoriteSongRealmModel.ORDER: index

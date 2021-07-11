@@ -5,8 +5,8 @@
 //  Created by tk on 2021/02/28.
 //
 
-import SwiftUI
 import MediaPlayer
+import SwiftUI
 
 struct FavoriteArtistButtonView: View {
     @State private var displayed: Bool = false

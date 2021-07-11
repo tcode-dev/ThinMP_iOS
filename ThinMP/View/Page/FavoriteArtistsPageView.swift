@@ -9,7 +9,7 @@ import SwiftUI
 
 struct FavoriteArtistsPageView: View {
     @StateObject private var vm = FavoriteArtistsViewModel()
-    @State private var headerRect: CGRect = CGRect()
+    @State private var headerRect = CGRect()
 
     var body: some View {
         GeometryReader { geometry in

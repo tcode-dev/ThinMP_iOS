@@ -15,6 +15,7 @@ struct PlaylistModel: MediaProtocol, Identifiable {
     var id: String {
         return playlistId.id
     }
+
     var shortcutId: String {
         return id
     }

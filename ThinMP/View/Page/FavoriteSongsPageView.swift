@@ -5,12 +5,12 @@
 //  Created by tk on 2021/02/23.
 //
 
-import SwiftUI
 import MediaPlayer
+import SwiftUI
 
 struct FavoriteSongsPageView: View {
     @StateObject private var vm = FavoriteSongsViewModel()
-    @State private var headerRect: CGRect = CGRect()
+    @State private var headerRect = CGRect()
     @State private var showingPopup: Bool = false
     @State private var playlistRegisterSongId = SongId(id: 0)
 
@@ -39,7 +39,7 @@ struct FavoriteSongsPageView: View {
                                             MediaRowView(media: vm.songs[index])
                                         }
                                         .contextMenu {
-                                            FavoriteSongButtonView(songId: vm.songs[index].songId, callback: {vm.load()})
+                                            FavoriteSongButtonView(songId: vm.songs[index].songId, callback: { vm.load() })
                                             Button(action: {
                                                 playlistRegisterSongId = vm.songs[index].songId
                                                 showingPopup.toggle()

@@ -63,7 +63,7 @@ struct PlaylistDetailEditPageView: View {
                             VStack {
                                 Rectangle().fill(Color.white.opacity(0.5))
                             }
-                            .onTapGesture {UIApplication.shared.endEditing()}
+                            .onTapGesture { UIApplication.shared.endEditing() }
                         }
                     }
                 }
@@ -88,7 +88,7 @@ struct PlaylistDetailEditPageView: View {
     private func update() {
         let playlistRegister = PlaylistRegister()
 
-        playlistRegister.update(playlistId: vm.playlistId, name: name, songIds: vm.songs.map {$0.songId})
+        playlistRegister.update(playlistId: vm.playlistId, name: name, songIds: vm.songs.map { $0.songId })
 
         vm.primaryText = name
     }
@@ -105,7 +105,7 @@ struct EditModifier: ViewModifier {
 
     func body(content: Content) -> some View {
         if editing {
-            content.onTapGesture {UIApplication.shared.endEditing()}
+            content.onTapGesture { UIApplication.shared.endEditing() }
         } else {
             content
         }

@@ -64,6 +64,6 @@ struct FavoriteArtistsEditPageView: View {
     private func update() {
         let favoriteArtistRegister = FavoriteArtistRegister()
 
-        favoriteArtistRegister.update(artistIds: vm.artists.map {$0.artistId})
+        favoriteArtistRegister.update(artistIds: vm.artists.map { $0.artistId })
     }
 }

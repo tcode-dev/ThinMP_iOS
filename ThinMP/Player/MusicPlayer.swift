@@ -42,8 +42,8 @@ class MusicPlayer: ObservableObject {
         stop()
         song = SongModel(media: MPMediaItemCollection(items: [list[currentIndex].media.representativeItem! as MPMediaItem]))
 
-        let items = MPMediaItemCollection(items: list.map {$0.media.representativeItem! as MPMediaItem})
-        let descriptor = MPMusicPlayerMediaItemQueueDescriptor.init(itemCollection: items)
+        let items = MPMediaItemCollection(items: list.map { $0.media.representativeItem! as MPMediaItem })
+        let descriptor = MPMusicPlayerMediaItemQueueDescriptor(itemCollection: items)
         descriptor.startItem = song?.media.representativeItem
         player.setQueue(with: descriptor)
 
@@ -174,8 +174,8 @@ class MusicPlayer: ObservableObject {
     private func play() {
         isPlaying = true
 
-        self.player.prepareToPlay()
-        self.player.play()
+        player.prepareToPlay()
+        player.play()
     }
 
     private func pause() {
@@ -239,7 +239,7 @@ class MusicPlayer: ObservableObject {
     }
 
     private func MPMusicPlayerControllerPlaybackStateDidChangeCallback() {
-        if isPlaying && !isBackground {
+        if isPlaying, !isBackground {
             return
         }
 
@@ -250,11 +250,9 @@ class MusicPlayer: ObservableObject {
         case MPMusicPlaybackState.playing:
             isPlaying = true
 
-            break
         case MPMusicPlaybackState.paused:
             isPlaying = false
 
-            break
         case MPMusicPlaybackState.interrupted:
 
             break
@@ -273,7 +271,7 @@ class MusicPlayer: ObservableObject {
     private func MPMusicPlayerControllerNowPlayingItemDidChangeCallback() {
         setSong()
 
-        if player.repeatMode == .none && player.indexOfNowPlayingItem == 0 && !isFirst {
+        if player.repeatMode == .none, player.indexOfNowPlayingItem == 0, !isFirst {
             isPlaying = false
         }
         isFirst = false

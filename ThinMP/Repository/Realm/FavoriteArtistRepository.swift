@@ -5,8 +5,8 @@
 //  Created by tk on 2021/05/06.
 //
 
-import RealmSwift
 import MediaPlayer
+import RealmSwift
 
 struct FavoriteArtistRepository {
     let realm: Realm
@@ -20,7 +20,7 @@ struct FavoriteArtistRepository {
 
         return realm.objects(FavoriteArtistRealmModel.self)
             .sorted(byKeyPath: FavoriteArtistRealmModel.ORDER)
-            .map { ArtistId(id: UInt64($0.artistId)!)}
+            .map { ArtistId(id: UInt64($0.artistId)!) }
     }
 
     func exists(artistId: ArtistId) -> Bool {
@@ -81,7 +81,7 @@ struct FavoriteArtistRepository {
     private func bulkInsert(artistIds: [ArtistId]) {
         realm.beginWrite()
 
-        for index in 0..<artistIds.count {
+        for index in 0 ..< artistIds.count {
             realm.create(FavoriteArtistRealmModel.self, value: [
                 FavoriteArtistRealmModel.ARTIST_ID: String(artistIds[index].id),
                 FavoriteArtistRealmModel.ORDER: index

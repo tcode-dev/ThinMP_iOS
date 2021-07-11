@@ -16,7 +16,7 @@ class PlaylistDetailViewModel: ViewModelProtocol {
 
     func load(playlistId: PlaylistId) {
         self.playlistId = playlistId
-        self.load()
+        load()
     }
 
     func fetch() {

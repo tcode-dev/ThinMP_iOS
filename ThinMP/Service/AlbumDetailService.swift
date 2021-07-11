@@ -26,7 +26,7 @@ struct AlbumDetailService {
         let albums = repository.findByIds(albumIds: albumIds)
 
         return albums.map { album in
-            return AlbumDetailModel(albumId: album.albumId, primaryText: album.primaryText, secondaryText: album.secondaryText, artwork: album.artwork, songs: [])
+            AlbumDetailModel(albumId: album.albumId, primaryText: album.primaryText, secondaryText: album.secondaryText, artwork: album.artwork, songs: [])
         }
     }
 }

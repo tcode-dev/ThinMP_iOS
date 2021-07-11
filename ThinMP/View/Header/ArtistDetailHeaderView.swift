@@ -20,7 +20,7 @@ struct ArtistDetailHeaderView: View {
                 .resizable()
                 .scaledToFit()
                 .blur(radius: 10.0)
-            LinearGradient(gradient: Gradient(colors: [Color.init(Color.RGBColorSpace.sRGB, red: 1, green: 1, blue: 1, opacity: 0), Color(UIColor.systemBackground)]), startPoint: .top, endPoint: .bottom).frame(height: 355).offset(y: 25)
+            LinearGradient(gradient: Gradient(colors: [Color(Color.RGBColorSpace.sRGB, red: 1, green: 1, blue: 1, opacity: 0), Color(UIColor.systemBackground)]), startPoint: .top, endPoint: .bottom).frame(height: 355).offset(y: 25)
             CircleImageView(artwork: vm.artwork, size: side / 3)
                 .offset(y: -(side / 3))
             GeometryReader { primaryTextGeometry in

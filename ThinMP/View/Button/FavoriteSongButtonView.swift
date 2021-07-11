@@ -5,8 +5,8 @@
 //  Created by tk on 2021/02/28.
 //
 
-import SwiftUI
 import MediaPlayer
+import SwiftUI
 
 // 登録、削除後にボタンが切り替わらないので初回描画と2回目以降の描画で処理を分ける
 // スクロールで画面表出した時にinitが呼ばれるのでinitでは処理しない

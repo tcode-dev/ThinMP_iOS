@@ -23,7 +23,7 @@ struct PlayerView: View {
                         .scaledToFit()
                         .blur(radius: 10.0)
 
-                    LinearGradient(gradient: Gradient(colors: [Color.init(Color.RGBColorSpace.sRGB, red: 1, green: 1, blue: 1, opacity: 0), Color(UIColor.systemBackground)]), startPoint: .top, endPoint: .bottom).frame(height: geometry.size.width).offset(y: 25)
+                    LinearGradient(gradient: Gradient(colors: [Color(Color.RGBColorSpace.sRGB, red: 1, green: 1, blue: 1, opacity: 0), Color(UIColor.systemBackground)]), startPoint: .top, endPoint: .bottom).frame(height: geometry.size.width).offset(y: 25)
                 }
                 .frame(width: geometry.size.width, height: geometry.size.width)
                 VStack {
@@ -44,15 +44,15 @@ struct PlayerView: View {
 
                     Spacer()
 
-                    Slider(value: $musicPlayer.currentSecond, in: 0...musicPlayer.durationSecond, step: 1, onEditingChanged: { changed in
-                        if musicPlayer.isPlaying && !seeking && changed {
+                    Slider(value: $musicPlayer.currentSecond, in: 0 ... musicPlayer.durationSecond, step: 1, onEditingChanged: { changed in
+                        if musicPlayer.isPlaying, !seeking, changed {
                             musicPlayer.stopProgress()
                             seeking = changed
                         }
 
                         musicPlayer.seek(time: musicPlayer.currentSecond)
 
-                        if musicPlayer.isPlaying && seeking && !changed {
+                        if musicPlayer.isPlaying, seeking, !changed {
                             musicPlayer.startProgress()
                             seeking = changed
                         }

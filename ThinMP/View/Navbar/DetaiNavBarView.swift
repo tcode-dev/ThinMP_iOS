@@ -5,8 +5,8 @@
 //  Created by tk on 2020/01/19.
 //
 
-import SwiftUI
 import MediaPlayer
+import SwiftUI
 
 struct DetaiNavBarView<Content>: View where Content: View {
     let primaryText: String?
@@ -44,7 +44,7 @@ struct DetaiNavBarView<Content>: View where Content: View {
                 .opacity(0.1)
         }
         .background(BlurView(style: .systemThinMaterial))
-        .opacity(self.opacity())
+        .opacity(opacity())
         .animation(.easeInOut)
     }
 
@@ -59,7 +59,7 @@ struct DetaiNavBarView<Content>: View where Content: View {
             bottom: 0,
             trailing: StyleConstant.button
         ))
-        .opacity(self.opacity())
+        .opacity(opacity())
     }
 
     private func opacity() -> Double {
@@ -67,7 +67,7 @@ struct DetaiNavBarView<Content>: View where Content: View {
         if textRect == CGRect.zero {
             return 0
         }
-        if textRect.origin.y - self.top > 0 {
+        if textRect.origin.y - top > 0 {
             return 0
         }
 

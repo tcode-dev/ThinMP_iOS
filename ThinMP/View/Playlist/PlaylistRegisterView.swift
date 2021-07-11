@@ -5,8 +5,8 @@
 //  Created by tk on 2021/04/01.
 //
 
-import SwiftUI
 import MediaPlayer
+import SwiftUI
 
 struct PlaylistRegisterView: View {
     @StateObject var vm = PlaylistsViewModel()

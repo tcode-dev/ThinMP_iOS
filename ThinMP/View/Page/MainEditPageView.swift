@@ -74,7 +74,7 @@ struct MainEditPageView: View {
 
     func update() {
         let mainMenuConfig = MainMenuConfig()
-        let menus = vm.menus.map {$0.primaryText!}
+        let menus = vm.menus.map { $0.primaryText! }
 
         mainMenuConfig.setSort(value: menus)
 
@@ -88,7 +88,7 @@ struct MainEditPageView: View {
         mainSectionConfig.setRecentlyVisibility(value: vm.recentlyMenu.visibility)
 
         let shortcutRegister = ShortcutRegister()
-        let shortcutIds = vm.shortcuts.map {$0.shortcutId}
+        let shortcutIds = vm.shortcuts.map { $0.shortcutId }
 
         shortcutRegister.update(shortcutIds: shortcutIds)
     }

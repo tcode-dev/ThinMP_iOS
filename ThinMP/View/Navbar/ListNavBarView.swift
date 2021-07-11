@@ -36,7 +36,7 @@ struct ListNavBarView<Content>: View where Content: View {
         .padding(.top, top)
         .background(Color(UIColor.secondarySystemBackground))
         .border(Color(UIColor.systemGray5), width: 1)
-        .opacity(self.opacity())
+        .opacity(opacity())
         .animation(.easeInOut)
     }
 

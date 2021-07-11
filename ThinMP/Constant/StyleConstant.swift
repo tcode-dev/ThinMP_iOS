@@ -14,6 +14,7 @@ enum StyleConstant {
         static let header: CGFloat = 60
         static let divider: CGFloat = 0.5
     }
+
     enum padding {
         static let small: CGFloat = 5
         static let medium: CGFloat = 10

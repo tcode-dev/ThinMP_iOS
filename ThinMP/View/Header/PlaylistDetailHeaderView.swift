@@ -5,8 +5,8 @@
 //  Created by tk on 2021/04/11.
 //
 
-import SwiftUI
 import MediaPlayer
+import SwiftUI
 
 struct PlaylistDetailHeaderView: View {
     @Binding var textRect: CGRect
@@ -20,7 +20,7 @@ struct PlaylistDetailHeaderView: View {
             Image(uiImage: self.artwork?.image(at: CGSize(width: self.side, height: self.side)) ?? UIImage(imageLiteralResourceName: "Song"))
                 .resizable()
                 .scaledToFit()
-            LinearGradient(gradient: Gradient(colors: [Color.init(Color.RGBColorSpace.sRGB, red: 1, green: 1, blue: 1, opacity: 0), Color(UIColor.systemBackground)]), startPoint: .top, endPoint: .bottom)
+            LinearGradient(gradient: Gradient(colors: [Color(Color.RGBColorSpace.sRGB, red: 1, green: 1, blue: 1, opacity: 0), Color(UIColor.systemBackground)]), startPoint: .top, endPoint: .bottom)
                 .frame(height: 200)
             GeometryReader { primaryTextGeometry in
                 self.createPrimaryTextView(primaryTextGeometry: primaryTextGeometry)
@@ -57,7 +57,7 @@ struct PlaylistDetailHeaderView: View {
     }
 
     private func textOpacity() -> Double {
-        if textRect.origin.y - self.top > 0 {
+        if textRect.origin.y - top > 0 {
             return 1
         }
 

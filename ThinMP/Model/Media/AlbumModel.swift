@@ -15,6 +15,7 @@ struct AlbumModel: MediaProtocol, Identifiable {
     var id: String {
         return String(albumId.id)
     }
+
     var shortcutId: String {
         return String(albumId.id)
     }

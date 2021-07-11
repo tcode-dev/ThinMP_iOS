@@ -5,8 +5,8 @@
 //  Created by tk on 2020/01/22.
 //
 
-import SwiftUI
 import MediaPlayer
+import SwiftUI
 
 struct SquareImageView: View {
     let artwork: MPMediaItemArtwork?

@@ -13,29 +13,24 @@ struct SongModel: MediaProtocol, Identifiable {
     var id: String {
         return String(songId.id)
     }
+
     var songId: SongId {
-        get {
-            SongId(id: media.persistentID)
-        }
+        SongId(id: media.persistentID)
     }
+
     var primaryText: String? {
-        get {
-            media.representativeItem?.title
-        }
+        media.representativeItem?.title
     }
+
     var secondaryText: String? {
-        get {
-            media.representativeItem?.artist
-        }
+        media.representativeItem?.artist
     }
+
     var artwork: MPMediaItemArtwork? {
-        get {
-            media.representativeItem?.artwork
-        }
+        media.representativeItem?.artwork
     }
+
     var artistPersistentId: MPMediaEntityPersistentID? {
-        get {
-            media.representativeItem?.artistPersistentID
-        }
+        media.representativeItem?.artistPersistentID
     }
 }

@@ -5,8 +5,8 @@
 //  Created by tk on 2021/05/08.
 //
 
-import SwiftUI
 import MediaPlayer
+import SwiftUI
 
 struct ShortcutButtonView: View {
     @State private var displayed: Bool = false

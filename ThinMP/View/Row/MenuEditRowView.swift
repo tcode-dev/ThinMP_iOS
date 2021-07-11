@@ -5,8 +5,8 @@
 //  Created by tk on 2021/06/12.
 //
 
-import SwiftUI
 import MediaPlayer
+import SwiftUI
 
 struct MenuEditRowView: View {
     private let size: CGFloat = 40

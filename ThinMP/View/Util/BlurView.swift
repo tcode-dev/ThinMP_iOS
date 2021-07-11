@@ -12,7 +12,7 @@ struct BlurView: UIViewRepresentable {
     typealias UIViewType = UIView
     var style: UIBlurEffect.Style
 
-    func makeUIView(context: UIViewRepresentableContext<BlurView>) -> UIView {
+    func makeUIView(context _: UIViewRepresentableContext<BlurView>) -> UIView {
         let view = UIView(frame: CGRect.zero)
         view.backgroundColor = .clear
 
@@ -29,6 +29,5 @@ struct BlurView: UIViewRepresentable {
         return view
     }
 
-    func updateUIView(_ uiView: UIView, context: UIViewRepresentableContext<BlurView>) {
-    }
+    func updateUIView(_: UIView, context _: UIViewRepresentableContext<BlurView>) {}
 }

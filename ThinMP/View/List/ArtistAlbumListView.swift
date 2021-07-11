@@ -15,8 +15,8 @@ struct ArtistAlbumListView: View {
 
     init(list: [AlbumModel], width: CGFloat) {
         self.list = list
-        self.size = (width - (StyleConstant.padding.large * CGFloat(colCount + 1))) / CGFloat(colCount)
-        self.columns = [
+        size = (width - (StyleConstant.padding.large * CGFloat(colCount + 1))) / CGFloat(colCount)
+        columns = [
             GridItem(.fixed(size), spacing: StyleConstant.padding.large),
             GridItem(.fixed(size), spacing: 0)
         ]

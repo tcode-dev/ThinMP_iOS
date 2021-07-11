@@ -20,21 +20,21 @@ struct PlaylistDetailService {
         let playlists = playlistRepository.findByIds(playlistIds: playlistIds)
 
         return playlists.map { playlist in
-            return createModel(playlist: playlist)
+            createModel(playlist: playlist)
         }
     }
 
     private func createModel(playlist: PlaylistRealmModel) -> PlaylistDetailModel {
         let playlistSongs = playlist.songs.sorted(byKeyPath: PlaylistSongRealmModel.ORDER)
-        let songIds = Array(playlistSongs.map { SongId(id: UInt64($0.songId)!)})
+        let songIds = Array(playlistSongs.map { SongId(id: UInt64($0.songId)!) })
         let repository = SongRepository()
         let songs = repository.findByIds(songIds: songIds)
         let sorted = songIds
-            .filter {(songId) in songs.contains(where: {$0.songId.equals(songId)})}
-            .map { (songId) in songs.first { songId.equals($0.songId) }!}
+            .filter { songId in songs.contains(where: { $0.songId.equals(songId) }) }
+            .map { songId in songs.first { songId.equals($0.songId) }! }
         let arrayed = Array(sorted)
-        let artwork = arrayed.first(where: { (song) -> Bool in
-            (song.artwork != nil)
+        let artwork = arrayed.first(where: { song -> Bool in
+            song.artwork != nil
         })?.artwork
 
         if !validation(playlist: playlist, songIds: songIds, songs: songs) {
@@ -56,7 +56,7 @@ struct PlaylistDetailService {
 
     private func update(playlist: PlaylistRealmModel, songs: [SongModel]) {
         let playlistRegister = PlaylistRegister()
-        let songIds = songs.map {$0.songId}
+        let songIds = songs.map { $0.songId }
 
         playlistRegister.update(playlistId: PlaylistId(id: playlist.id), name: playlist.name, songIds: songIds)
     }

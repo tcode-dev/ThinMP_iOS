@@ -24,9 +24,7 @@ class PlaylistRealmModel: Object {
     }
 
     var primaryText: String? {
-        get {
-            self.name
-        }
+        name
     }
 
     var shortcutId: String {

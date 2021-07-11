@@ -13,11 +13,11 @@ struct ArtistDetailService {
         let albumRepository = AlbumRepository()
         let songRepository = SongRepository()
         let artist = artistRepository.findById(artistId: artistId)
-        let primaryText  = artist?.primaryText
+        let primaryText = artist?.primaryText
         let albums = albumRepository.findByArtistId(artistId: artistId)
-        let albumIds = albums.map {$0.albumId}
-        let artwork = albums.first(where: { (album) -> Bool in
-            (album.artwork != nil)
+        let albumIds = albums.map { $0.albumId }
+        let artwork = albums.first(where: { album -> Bool in
+            album.artwork != nil
         })?.artwork
         let songs = songRepository.findByAlbumIds(albumIds: albumIds)
         let secondaryText = "\(albums.count) albums, \(songs.count) songs"
@@ -36,8 +36,8 @@ struct ArtistDetailService {
 
         return artists.map { artist in
             let albums = albumRepository.findByArtistId(artistId: artist.artistId)
-            let artwork = albums.first(where: { (album) -> Bool in
-                (album.artwork != nil)
+            let artwork = albums.first(where: { album -> Bool in
+                album.artwork != nil
             })?.artwork
 
             return ArtistDetailModel(artistId: artist.artistId, primaryText: artist.primaryText, secondaryText: artist.secondaryText, artwork: artwork, albums: [], songs: [])

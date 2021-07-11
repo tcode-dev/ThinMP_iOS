@@ -5,8 +5,8 @@
 //  Created by tk on 2021/05/06.
 //
 
-import RealmSwift
 import MediaPlayer
+import RealmSwift
 
 struct PlaylistRepository {
     let realm: Realm
@@ -82,9 +82,9 @@ struct PlaylistRepository {
     }
 
     func delete(playlistIds: [PlaylistId]) {
-        let currentIds: [String] = realm.objects(PlaylistRealmModel.self).map {$0.id}
-        let deleteIds = currentIds.filter { !playlistIds.map {$0.id}.contains($0)}
-        let playlists = findByIds(playlistIds: deleteIds.map {PlaylistId(id: $0)})
+        let currentIds: [String] = realm.objects(PlaylistRealmModel.self).map { $0.id }
+        let deleteIds = currentIds.filter { !playlistIds.map { $0.id }.contains($0) }
+        let playlists = findByIds(playlistIds: deleteIds.map { PlaylistId(id: $0) })
 
         if playlists.count == 0 {
             return
@@ -98,7 +98,7 @@ struct PlaylistRepository {
     private func sort(playlistIds: [PlaylistId]) {
         let playlists = findByIds(playlistIds: playlistIds)
         let sorted = playlistIds.map { playlistId in
-            playlists.first {$0.id == playlistId.id}
+            playlists.first { $0.id == playlistId.id }
         }
         try! realm.write {
             for (index, playlist) in sorted.enumerated() {

@@ -5,8 +5,8 @@
 //  Created by tk on 2021/05/08.
 //
 
-import RealmSwift
 import MediaPlayer
+import RealmSwift
 
 struct ShortcutRepository {
     let realm: Realm
@@ -51,7 +51,7 @@ struct ShortcutRepository {
     private func sort(shortcutIds: [ShortcutId]) {
         let models = findByIds(shortcutIds: shortcutIds)
         let sorted = shortcutIds.map { shortcutId in
-            models.first {$0.id == shortcutId.id}
+            models.first { $0.id == shortcutId.id }
         }
         let count = sorted.count
 
@@ -91,8 +91,8 @@ struct ShortcutRepository {
     }
 
     private func delete(shortcutIds: [ShortcutId]) {
-        let currentIds = realm.objects(ShortcutRealmModel.self).map {ShortcutId(id: $0.id)}
-        let deleteIds = Array(currentIds.filter { !shortcutIds.contains($0)})
+        let currentIds = realm.objects(ShortcutRealmModel.self).map { ShortcutId(id: $0.id) }
+        let deleteIds = Array(currentIds.filter { !shortcutIds.contains($0) })
         let models = findByIds(shortcutIds: deleteIds)
 
         if models.count == 0 {
@@ -105,7 +105,7 @@ struct ShortcutRepository {
     }
 
     private func findByIds(shortcutIds: [ShortcutId]) -> Results<ShortcutRealmModel> {
-        return realm.objects(ShortcutRealmModel.self).filter("\(ShortcutRealmModel.ID) IN %@", shortcutIds.map {$0.id})
+        return realm.objects(ShortcutRealmModel.self).filter("\(ShortcutRealmModel.ID) IN %@", shortcutIds.map { $0.id })
     }
 
     private func exists(itemId: String, type: ShortcutType) -> Bool {

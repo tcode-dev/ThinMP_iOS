@@ -5,8 +5,8 @@
 //  Created by tk on 2021/04/12.
 //
 
-import SwiftUI
 import MediaPlayer
+import SwiftUI
 
 struct PlaylistAddRowView<Content>: View where Content: View {
     let playlistId: PlaylistId

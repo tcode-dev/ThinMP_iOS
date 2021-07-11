@@ -16,17 +16,16 @@ struct ShortcutModel: MediaProtocol, Identifiable {
     var id: String {
         return shortcutId.id
     }
+
     var secondaryText: String? {
-        get {
-            if type == ShortcutType.ARTIST.rawValue {
-                return "Artist"
-            } else if type == ShortcutType.ALBUM.rawValue {
-                return "Album"
-            } else if type == ShortcutType.PLAYLIST.rawValue {
-                return "Playlist"
-            } else {
-                return ""
-            }
+        if type == ShortcutType.ARTIST.rawValue {
+            return "Artist"
+        } else if type == ShortcutType.ALBUM.rawValue {
+            return "Album"
+        } else if type == ShortcutType.PLAYLIST.rawValue {
+            return "Playlist"
+        } else {
+            return ""
         }
     }
 }

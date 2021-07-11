@@ -17,6 +17,7 @@ struct ArtistDetailModel: DetailProtocol {
     var id: String {
         return String(artistId.id)
     }
+
     var shortcutId: String {
         return String(artistId.id)
     }

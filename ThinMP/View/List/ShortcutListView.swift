@@ -5,8 +5,8 @@
 //  Created by tk on 2021/05/30.
 //
 
-import SwiftUI
 import MediaPlayer
+import SwiftUI
 
 struct ShortcutListView: View {
     private let colCount = 2
@@ -16,8 +16,8 @@ struct ShortcutListView: View {
 
     init(list: [ShortcutModel], width: CGFloat) {
         self.list = list
-        self.size = (width - (StyleConstant.padding.large * CGFloat(colCount + 1))) / CGFloat(colCount)
-        self.columns = [
+        size = (width - (StyleConstant.padding.large * CGFloat(colCount + 1))) / CGFloat(colCount)
+        columns = [
             GridItem(.fixed(size), spacing: StyleConstant.padding.large),
             GridItem(.fixed(size), spacing: 0)
         ]

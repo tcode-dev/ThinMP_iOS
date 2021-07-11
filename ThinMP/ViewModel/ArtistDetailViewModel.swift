@@ -18,7 +18,7 @@ class ArtistDetailViewModel: ViewModelProtocol {
 
     func load(artistId: ArtistId) {
         self.artistId = artistId
-        self.load()
+        load()
     }
 
     func fetch() {
