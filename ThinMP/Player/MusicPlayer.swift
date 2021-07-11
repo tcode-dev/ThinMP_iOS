@@ -21,7 +21,6 @@ class MusicPlayer: ObservableObject {
     @Published var shuffleMode: Bool = false
     @Published var isFavoriteArtist: Bool = false
     @Published var isFavoriteSong: Bool = false
-    @Published var notFound: Bool = false
 
     private let playerConfig: PlayerConfig
     private let player: MPMusicPlayerController
@@ -53,7 +52,6 @@ class MusicPlayer: ObservableObject {
         setFavoriteSong()
         addObserver()
         isFirst = true
-        notFound = false
         isActive = true
     }
 
@@ -165,12 +163,10 @@ class MusicPlayer: ObservableObject {
             song = SongModel(media: MPMediaItemCollection(items:[player.nowPlayingItem! as MPMediaItem]))
             player.skipToBeginning()
             resetTime()
-            notFound = false
             isActive = true
         } else {
             currentSecond = 0
             durationSecond = 1
-            notFound = true
             isActive = false
         }
     }

@@ -60,7 +60,6 @@ struct PlayerView: View {
                     .padding(.leading, StyleConstant.padding.medium)
                     .padding(.trailing, StyleConstant.padding.medium)
                     .accentColor(Color(.label))
-                    .disabled(musicPlayer.notFound)
 
                     HStack {
                         SecondaryTextView("\(convertTime(time: musicPlayer.currentSecond))").frame(width: 50).padding(.leading, StyleConstant.padding.medium)
@@ -77,7 +76,6 @@ struct PlayerView: View {
                         }) {
                             Image("PrevButton").renderingMode(.original).resizable().frame(width: 72, height: 72)
                         }
-                        .disabled(musicPlayer.notFound)
 
                         Spacer()
 
@@ -93,7 +91,6 @@ struct PlayerView: View {
                             }) {
                                 Image("PlayButton").renderingMode(.original).resizable().frame(width: 88, height: 88)
                             }
-                            .disabled(musicPlayer.notFound)
                         }
 
                         Spacer()
@@ -103,7 +100,6 @@ struct PlayerView: View {
                         }) {
                             Image("NextButton").renderingMode(.original).resizable().frame(width: 72, height: 72)
                         }
-                        .disabled(musicPlayer.notFound)
 
                         Spacer()
                     }
@@ -123,7 +119,6 @@ struct PlayerView: View {
                             }
                         }
                         .frame(width: StyleConstant.button, height: StyleConstant.button)
-                        .disabled(musicPlayer.notFound)
 
                         Spacer()
 
@@ -137,7 +132,6 @@ struct PlayerView: View {
                             }
                         }
                         .frame(width: StyleConstant.button, height: StyleConstant.button)
-                        .disabled(musicPlayer.notFound)
 
                         Spacer()
 
@@ -151,7 +145,6 @@ struct PlayerView: View {
                             }
                         }
                         .frame(width: StyleConstant.button, height: StyleConstant.button)
-                        .disabled(musicPlayer.notFound)
 
                         Spacer()
 
@@ -165,7 +158,6 @@ struct PlayerView: View {
                             }
                         }
                         .frame(width: StyleConstant.button, height: StyleConstant.button)
-                        .disabled(musicPlayer.notFound)
 
                         Spacer()
 
@@ -175,7 +167,6 @@ struct PlayerView: View {
                             Image("PlaylistAddButton").renderingMode(.original).resizable().frame(width: 40, height: 40)
                         }
                         .frame(width: StyleConstant.button, height: StyleConstant.button)
-                        .disabled(musicPlayer.notFound)
                     }
                     .padding(.horizontal, 30)
 
