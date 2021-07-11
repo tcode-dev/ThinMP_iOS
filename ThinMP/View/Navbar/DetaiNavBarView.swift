@@ -22,7 +22,7 @@ struct DetaiNavBarView<Content>: View where Content: View {
                 Spacer()
                 content()
             }
-            .frame(height: StyleConstant.height.row)
+            .frame(height: StyleConstant.Height.row)
             .padding(EdgeInsets(
                 top: top,
                 leading: 0,
@@ -34,13 +34,13 @@ struct DetaiNavBarView<Content>: View where Content: View {
             self.createTitleView()
                 .zIndex(2)
         }
-        .frame(height: StyleConstant.height.row + top)
+        .frame(height: StyleConstant.Height.row + top)
         .zIndex(1)
     }
 
     private func createHeaderView() -> some View {
         return VStack {
-            Rectangle().frame(width: side, height: StyleConstant.height.row + top)
+            Rectangle().frame(width: side, height: StyleConstant.Height.row + top)
                 .opacity(0.1)
         }
         .background(BlurView(style: .systemThinMaterial))
@@ -52,7 +52,7 @@ struct DetaiNavBarView<Content>: View where Content: View {
         return HStack(alignment: .center) {
             SecondaryTitleView(self.primaryText)
         }
-        .frame(width: abs(side - (StyleConstant.button * 2)), height: StyleConstant.height.row)
+        .frame(width: abs(side - (StyleConstant.button * 2)), height: StyleConstant.Height.row)
         .padding(EdgeInsets(
             top: top,
             leading: StyleConstant.button,

@@ -37,19 +37,19 @@ struct PlaylistDetailEditPageView: View {
                             Text("Done")
                         }
                     }
-                    .padding(.horizontal, StyleConstant.padding.large)
+                    .padding(.horizontal, StyleConstant.Padding.large)
                 }
                 .modifier(EditModifier(editing: editing))
                 VStack(alignment: .leading) {
                     TextField("", text: $name, onEditingChanged: { begin in
                         editing = begin
                     })
-                    .autocapitalization(.none)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding()
-                    .onAppear {
-                        name = primaryText ?? ""
-                    }
+                        .autocapitalization(.none)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .padding()
+                        .onAppear {
+                            name = primaryText ?? ""
+                        }
                     ZStack {
                         List {
                             ForEach(vm.songs, id: \.id) { media in

@@ -50,6 +50,7 @@
 		526648F625AB23690034D912 /* FavoriteArtistsEditPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526648F525AB23690034D912 /* FavoriteArtistsEditPageView.swift */; };
 		5269C8B12699803A00A3E7DE /* PlainRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5269C8B02699803A00A3E7DE /* PlainRowView.swift */; };
 		526A3B372366AC6F0070BE0A /* AlbumModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526A3B362366AC6F0070BE0A /* AlbumModel.swift */; };
+		526B8CE0269B30AC00A39770 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 526B8CDF269B30AC00A39770 /* .swiftlint.yml */; };
 		527177A22663C99400390A32 /* ShortcutCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527177A12663C99400390A32 /* ShortcutCellView.swift */; };
 		527177A42663CA4A00390A32 /* ShortcutListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527177A32663CA4A00390A32 /* ShortcutListView.swift */; };
 		527177A62663D5D400390A32 /* AlbumListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527177A52663D5D400390A32 /* AlbumListView.swift */; };
@@ -174,6 +175,7 @@
 		526648F525AB23690034D912 /* FavoriteArtistsEditPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteArtistsEditPageView.swift; sourceTree = "<group>"; };
 		5269C8B02699803A00A3E7DE /* PlainRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainRowView.swift; sourceTree = "<group>"; };
 		526A3B362366AC6F0070BE0A /* AlbumModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumModel.swift; sourceTree = "<group>"; };
+		526B8CDF269B30AC00A39770 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		527177A12663C99400390A32 /* ShortcutCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutCellView.swift; sourceTree = "<group>"; };
 		527177A32663CA4A00390A32 /* ShortcutListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutListView.swift; sourceTree = "<group>"; };
 		527177A52663D5D400390A32 /* AlbumListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumListView.swift; sourceTree = "<group>"; };
@@ -568,9 +570,10 @@
 		52C34D55230ED7BE00EA76DA = {
 			isa = PBXGroup;
 			children = (
+				526B8CDF269B30AC00A39770 /* .swiftlint.yml */,
 				528AF182267E251100B7C620 /* Localizable.strings */,
-				52C34D60230ED7BE00EA76DA /* ThinMP */,
 				52C34D5F230ED7BE00EA76DA /* Products */,
+				52C34D60230ED7BE00EA76DA /* ThinMP */,
 			);
 			sourceTree = "<group>";
 		};
@@ -659,7 +662,7 @@
 				52C34D5A230ED7BE00EA76DA /* Sources */,
 				52C34D5B230ED7BE00EA76DA /* Frameworks */,
 				52C34D5C230ED7BE00EA76DA /* Resources */,
-				526B8CDD269B1C8F00A39770 /* ShellScript */,
+				526B8CDE269B300100A39770 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -721,6 +724,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				526B8CE0269B30AC00A39770 /* .swiftlint.yml in Resources */,
 				52C34D69230ED7C000EA76DA /* Assets.xcassets in Resources */,
 				528AF180267E251100B7C620 /* Localizable.strings in Resources */,
 			);
@@ -729,7 +733,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		526B8CDD269B1C8F00A39770 /* ShellScript */ = {
+		526B8CDE269B300100A39770 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -744,7 +748,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint autocorrect --format\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

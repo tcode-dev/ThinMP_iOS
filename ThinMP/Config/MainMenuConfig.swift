@@ -9,16 +9,16 @@ import Foundation
 import SwiftUI
 
 class MainMenuConfig {
-    private let KEY_SORT = "sort"
+    private let SORT = "sort"
 
     init() {
-        UserDefaults.standard.register(defaults: [KEY_SORT: [
+        UserDefaults.standard.register(defaults: [SORT: [
             LabelConstant.artists,
             LabelConstant.albums,
             LabelConstant.songs,
             LabelConstant.favoriteArtists,
             LabelConstant.favoriteSongs,
-            LabelConstant.playlists
+            LabelConstant.playlists,
         ]])
         UserDefaults.standard.register(defaults: [
             LabelConstant.artists: true,
@@ -28,12 +28,12 @@ class MainMenuConfig {
             LabelConstant.favoriteSongs: true,
             LabelConstant.playlists: true,
             LabelConstant.shortcut: true,
-            LabelConstant.recentlyAdded: true
+            LabelConstant.recentlyAdded: true,
         ])
     }
 
     func setSort(value: [String]) {
-        UserDefaults.standard.set(value, forKey: KEY_SORT)
+        UserDefaults.standard.set(value, forKey: SORT)
     }
 
     func setVisibility(value: Bool, key: String) {
@@ -47,7 +47,7 @@ class MainMenuConfig {
     }
 
     private func getSort() -> [String] {
-        return UserDefaults.standard.array(forKey: KEY_SORT) as! [String]
+        return UserDefaults.standard.array(forKey: SORT) as! [String]
     }
 
     private func getVisibility(key: String) -> Bool {

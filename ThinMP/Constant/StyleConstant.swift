@@ -9,13 +9,13 @@ import SwiftUI
 
 enum StyleConstant {
     static let button: CGFloat = 50
-    enum height {
+    enum Height {
         static let row: CGFloat = 50
         static let header: CGFloat = 60
         static let divider: CGFloat = 0.5
     }
 
-    enum padding {
+    enum Padding {
         static let small: CGFloat = 5
         static let medium: CGFloat = 10
         static let large: CGFloat = 20

@@ -36,25 +36,25 @@ struct PlaylistRegisterView: View {
                         }
                         Spacer()
                     }
-                    .frame(height: StyleConstant.height.header)
+                    .frame(height: StyleConstant.Height.header)
                     ScrollView {
                         LazyVStack(spacing: 0) {
                             ForEach(vm.playlists) { playlist in
                                 PlaylistAddRowView(playlistId: playlist.playlistId, songId: songId, showingPopup: $showingPopup) {
                                     MediaRowView(media: playlist)
                                 }
-                                .frame(height: StyleConstant.height.row)
-                                Divider().frame(height: StyleConstant.height.divider)
+                                .frame(height: StyleConstant.Height.row)
+                                Divider().frame(height: StyleConstant.Height.divider)
                             }
                         }
                     }
                 }
-                .padding(.bottom, StyleConstant.padding.medium)
+                .padding(.bottom, StyleConstant.Padding.medium)
                 .frame(height: getHeight())
             } else {
                 VStack(spacing: 0) {
                     Text("PlaylistName")
-                        .frame(height: StyleConstant.height.row)
+                        .frame(height: StyleConstant.Height.row)
                     TextField("", text: $name)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                     HStack {
@@ -79,26 +79,26 @@ struct PlaylistRegisterView: View {
                         }
                         Spacer()
                     }
-                    .frame(height: StyleConstant.height.row)
+                    .frame(height: StyleConstant.Height.row)
                 }
-                .padding(.horizontal, StyleConstant.padding.medium)
+                .padding(.horizontal, StyleConstant.Padding.medium)
             }
         }
         .frame(width: .infinity)
-        .padding(.horizontal, StyleConstant.padding.medium)
+        .padding(.horizontal, StyleConstant.Padding.medium)
         .background(Color(UIColor.systemGray5))
         .cornerRadius(4)
-        .padding(.horizontal, StyleConstant.padding.large)
+        .padding(.horizontal, StyleConstant.Padding.large)
         .onAppear {
             vm.load()
         }
     }
 
     private func getHeight() -> CGFloat? {
-        let panelHeight = StyleConstant.height.header + (CGFloat(vm.playlists.count) * (StyleConstant.height.row + StyleConstant.height.divider)) + StyleConstant.padding.medium
+        let panelHeight = StyleConstant.Height.header + (CGFloat(vm.playlists.count) * (StyleConstant.Height.row + StyleConstant.Height.divider)) + StyleConstant.Padding.medium
 
         if panelHeight > height {
-            return height - (StyleConstant.padding.large * 2)
+            return height - (StyleConstant.Padding.large * 2)
         } else {
             return panelHeight
         }

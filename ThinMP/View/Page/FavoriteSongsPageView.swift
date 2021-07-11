@@ -49,7 +49,7 @@ struct FavoriteSongsPageView: View {
                                         }
                                         Divider()
                                     }
-                                    .padding(.leading, StyleConstant.padding.medium)
+                                    .padding(.leading, StyleConstant.Padding.medium)
                                 }
                             }
                         }

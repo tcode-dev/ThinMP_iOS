@@ -35,7 +35,7 @@ struct ArtistsPageView: View {
                                     }
                                     Divider()
                                 }
-                                .padding(.leading, StyleConstant.padding.medium)
+                                .padding(.leading, StyleConstant.Padding.medium)
                             }
                         }
                     }

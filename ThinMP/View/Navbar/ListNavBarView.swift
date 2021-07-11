@@ -16,7 +16,7 @@ struct ListNavBarView<Content>: View where Content: View {
         ZStack {
             self.createHeaderView()
             content()
-                .frame(height: StyleConstant.height.row)
+                .frame(height: StyleConstant.Height.row)
                 .padding(EdgeInsets(
                     top: top,
                     leading: 0,
@@ -24,7 +24,7 @@ struct ListNavBarView<Content>: View where Content: View {
                     trailing: 0
                 ))
         }
-        .frame(height: StyleConstant.height.row + top, alignment: .bottom)
+        .frame(height: StyleConstant.Height.row + top, alignment: .bottom)
         .zIndex(1)
     }
 
@@ -32,7 +32,7 @@ struct ListNavBarView<Content>: View where Content: View {
         return HStack(alignment: .center) {
             Spacer()
         }
-        .frame(height: StyleConstant.height.row)
+        .frame(height: StyleConstant.Height.row)
         .padding(.top, top)
         .background(Color(UIColor.secondarySystemBackground))
         .border(Color(UIColor.systemGray5), width: 1)

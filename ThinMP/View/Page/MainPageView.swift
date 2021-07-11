@@ -30,7 +30,7 @@ struct MainPageView: View {
                             }
                         }
                         .frame(height: geometry.safeAreaInsets.top + HEADER_HEIGHT)
-                        .padding(.leading, StyleConstant.padding.large)
+                        .padding(.leading, StyleConstant.Padding.large)
                         VStack(spacing: 0) {
                             Divider()
                             ForEach(vm.menus.indices, id: \.self) { index in
@@ -40,16 +40,16 @@ struct MainPageView: View {
                                 }
                             }
                         }
-                        .padding(.leading, StyleConstant.padding.large)
-                        .padding(.bottom, StyleConstant.padding.large)
+                        .padding(.leading, StyleConstant.Padding.large)
+                        .padding(.bottom, StyleConstant.Padding.large)
                         if vm.shortcutMenu.visibility {
                             VStack(alignment: .leading) {
                                 Text(LocalizedStringKey(vm.shortcutMenu.primaryText!))
                                     .fontWeight(.bold)
                                     .font(.title3)
-                                    .padding(.leading, StyleConstant.padding.large)
+                                    .padding(.leading, StyleConstant.Padding.large)
                                 ShortcutListView(list: vm.shortcuts, width: geometry.size.width)
-                                    .padding(.bottom, StyleConstant.padding.medium)
+                                    .padding(.bottom, StyleConstant.Padding.medium)
                             }
                         }
                         if vm.recentlyMenu.visibility {
@@ -57,9 +57,9 @@ struct MainPageView: View {
                                 Text(LocalizedStringKey(vm.recentlyMenu.primaryText!))
                                     .fontWeight(.bold)
                                     .font(.title3)
-                                    .padding(.leading, StyleConstant.padding.large)
+                                    .padding(.leading, StyleConstant.Padding.large)
                                 AlbumListView(list: vm.albums, width: geometry.size.width)
-                                    .padding(.bottom, StyleConstant.padding.medium)
+                                    .padding(.bottom, StyleConstant.Padding.medium)
                             }
                         }
                     }

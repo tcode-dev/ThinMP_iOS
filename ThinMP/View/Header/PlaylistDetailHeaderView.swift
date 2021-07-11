@@ -25,7 +25,7 @@ struct PlaylistDetailHeaderView: View {
             GeometryReader { primaryTextGeometry in
                 self.createPrimaryTextView(primaryTextGeometry: primaryTextGeometry)
             }
-            .frame(height: StyleConstant.height.row)
+            .frame(height: StyleConstant.Height.row)
             .offset(y: -40)
             self.createSecondaryTextView()
         }
@@ -40,7 +40,7 @@ struct PlaylistDetailHeaderView: View {
         return VStack {
             SecondaryTitleView(self.name).opacity(textOpacity())
         }
-        .frame(width: abs(side - (StyleConstant.button * 2)), height: StyleConstant.height.row)
+        .frame(width: abs(side - (StyleConstant.button * 2)), height: StyleConstant.Height.row)
         .padding(.leading, StyleConstant.button)
         .padding(.trailing, StyleConstant.button)
     }

@@ -8,7 +8,7 @@
 import MediaPlayer
 
 class MusicPlayer: ObservableObject {
-    private let PREV_SECOND: Double = 3
+    private let SECOND: Double = 3
 
     @Published var isActive: Bool = false
     @Published var isPlaying: Bool = false
@@ -194,7 +194,7 @@ class MusicPlayer: ObservableObject {
 
     private func prev() {
         stop()
-        if currentSecond <= PREV_SECOND {
+        if currentSecond <= SECOND {
             player.skipToPreviousItem()
             setSong()
         } else {

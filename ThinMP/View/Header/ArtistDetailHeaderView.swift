@@ -26,7 +26,7 @@ struct ArtistDetailHeaderView: View {
             GeometryReader { primaryTextGeometry in
                 createPrimaryTextView(primaryTextGeometry: primaryTextGeometry)
             }
-            .frame(height: StyleConstant.height.row)
+            .frame(height: StyleConstant.Height.row)
             .offset(y: -40)
             createSecondaryTextView()
         }
@@ -44,7 +44,7 @@ struct ArtistDetailHeaderView: View {
         return VStack {
             SecondaryTitleView(self.vm.primaryText).opacity(textOpacity())
         }
-        .frame(width: abs(side - (StyleConstant.button * 2)), height: StyleConstant.height.row)
+        .frame(width: abs(side - (StyleConstant.button * 2)), height: StyleConstant.Height.row)
         .padding(.leading, StyleConstant.button)
         .padding(.trailing, StyleConstant.button)
     }

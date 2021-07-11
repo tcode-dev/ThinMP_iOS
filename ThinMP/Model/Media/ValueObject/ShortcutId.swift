@@ -8,7 +8,7 @@
 struct ShortcutId: Equatable {
     var id: String
 
-    static func == (l: ShortcutId, r: ShortcutId) -> Bool {
-        return l.id == r.id
+    static func == (left: ShortcutId, right: ShortcutId) -> Bool {
+        return left.id == right.id
     }
 }

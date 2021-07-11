@@ -76,7 +76,7 @@ struct FavoriteSongRepository {
         for index in 0 ..< songIds.count {
             realm.create(FavoriteSongRealmModel.self, value: [
                 FavoriteSongRealmModel.SONG_ID: String(songIds[index].id),
-                FavoriteSongRealmModel.ORDER: index
+                FavoriteSongRealmModel.ORDER: index,
             ])
         }
 
@@ -84,10 +84,12 @@ struct FavoriteSongRepository {
     }
 
     private func find(songId: SongId) -> Results<FavoriteSongRealmModel> {
-        return realm.objects(FavoriteSongRealmModel.self).filter("\(FavoriteSongRealmModel.SONG_ID) = '\(String(songId.id))'")
+        return realm.objects(FavoriteSongRealmModel.self)
+            .filter("\(FavoriteSongRealmModel.SONG_ID) = '\(String(songId.id))'")
     }
 
     private func incrementOrder() -> Int {
-        return (realm.objects(FavoriteSongRealmModel.self).max(ofProperty: FavoriteSongRealmModel.ORDER) as Int? ?? 0) + 1
+        return (realm.objects(FavoriteSongRealmModel.self)
+            .max(ofProperty: FavoriteSongRealmModel.ORDER) as Int? ?? 0) + 1
     }
 }

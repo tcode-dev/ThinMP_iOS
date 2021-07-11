@@ -13,7 +13,7 @@ struct EditNavBarView<Content>: View where Content: View {
 
     var body: some View {
         content()
-            .frame(height: StyleConstant.height.row)
+            .frame(height: StyleConstant.Height.row)
             .padding(EdgeInsets(
                 top: top,
                 leading: 0,
@@ -21,7 +21,7 @@ struct EditNavBarView<Content>: View where Content: View {
                 trailing: 0
             ))
 
-            .frame(height: StyleConstant.height.row + top, alignment: .bottom)
+            .frame(height: StyleConstant.Height.row + top, alignment: .bottom)
             .background(Color(UIColor.secondarySystemBackground))
             .border(Color(UIColor.systemGray5), width: 1)
             .zIndex(1)

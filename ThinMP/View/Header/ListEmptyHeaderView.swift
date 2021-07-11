@@ -18,7 +18,7 @@ struct ListEmptyHeaderView: View {
                 self.createEmptyView(gometry: gometry)
             }
         }
-        .frame(height: StyleConstant.height.row + top)
+        .frame(height: StyleConstant.Height.row + top)
     }
 
     private func createEmptyView(gometry: GeometryProxy) -> some View {
@@ -28,6 +28,6 @@ struct ListEmptyHeaderView: View {
 
         return HStack {
             Text("")
-        }.frame(height: StyleConstant.height.row + top)
+        }.frame(height: StyleConstant.Height.row + top)
     }
 }

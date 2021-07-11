@@ -60,10 +60,10 @@ class AlbumRepository {
 
         query.addFilterPredicate(property)
 
-        return query.collections!.sorted(by: { l, r in
-            l.representativeItem!.dateAdded > r.representativeItem!.dateAdded
+        return query.collections!.sorted(by: { left, right in
+            left.representativeItem!.dateAdded > right.representativeItem!.dateAdded
         })
-        .prefix(count)
-        .map { AlbumModel(albumId: AlbumId(id: $0.representativeItem!.albumPersistentID), primaryText: $0.representativeItem?.albumTitle, secondaryText: $0.representativeItem?.artist, artwork: $0.representativeItem?.artwork) }
+            .prefix(count)
+            .map { AlbumModel(albumId: AlbumId(id: $0.representativeItem!.albumPersistentID), primaryText: $0.representativeItem?.albumTitle, secondaryText: $0.representativeItem?.artist, artwork: $0.representativeItem?.artwork) }
     }
 }

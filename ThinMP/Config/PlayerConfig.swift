@@ -9,27 +9,27 @@ import Foundation
 import MediaPlayer
 
 class PlayerConfig {
-    private let KEY_REPEAT = "repeat"
-    private let KEY_SHUFFLE = "shuffle"
+    private let REPEAT = "repeat"
+    private let SHUFFLE = "shuffle"
 
     init() {
-        UserDefaults.standard.register(defaults: [KEY_REPEAT: MPMusicRepeatMode.none.rawValue])
-        UserDefaults.standard.register(defaults: [KEY_SHUFFLE: MPMusicShuffleMode.off.rawValue])
+        UserDefaults.standard.register(defaults: [REPEAT: MPMusicRepeatMode.none.rawValue])
+        UserDefaults.standard.register(defaults: [SHUFFLE: MPMusicShuffleMode.off.rawValue])
     }
 
     func setRepeat(value: MPMusicRepeatMode) {
-        UserDefaults.standard.set(value.rawValue, forKey: KEY_REPEAT)
+        UserDefaults.standard.set(value.rawValue, forKey: REPEAT)
     }
 
     func getRepeat() -> MPMusicRepeatMode {
-        return MPMusicRepeatMode(rawValue: UserDefaults.standard.integer(forKey: KEY_REPEAT)) ?? MPMusicRepeatMode.none
+        return MPMusicRepeatMode(rawValue: UserDefaults.standard.integer(forKey: REPEAT)) ?? MPMusicRepeatMode.none
     }
 
     func setShuffle(value: MPMusicShuffleMode) {
-        UserDefaults.standard.set(value.rawValue, forKey: KEY_SHUFFLE)
+        UserDefaults.standard.set(value.rawValue, forKey: SHUFFLE)
     }
 
     func getShuffle() -> MPMusicShuffleMode {
-        return MPMusicShuffleMode(rawValue: UserDefaults.standard.integer(forKey: KEY_SHUFFLE)) ?? MPMusicShuffleMode.off
+        return MPMusicShuffleMode(rawValue: UserDefaults.standard.integer(forKey: SHUFFLE)) ?? MPMusicShuffleMode.off
     }
 }

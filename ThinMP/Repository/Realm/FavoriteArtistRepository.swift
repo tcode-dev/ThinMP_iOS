@@ -84,7 +84,7 @@ struct FavoriteArtistRepository {
         for index in 0 ..< artistIds.count {
             realm.create(FavoriteArtistRealmModel.self, value: [
                 FavoriteArtistRealmModel.ARTIST_ID: String(artistIds[index].id),
-                FavoriteArtistRealmModel.ORDER: index
+                FavoriteArtistRealmModel.ORDER: index,
             ])
         }
 

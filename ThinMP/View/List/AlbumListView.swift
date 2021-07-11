@@ -15,10 +15,10 @@ struct AlbumListView: View {
 
     init(list: [AlbumModel], width: CGFloat) {
         self.list = list
-        size = (width - (StyleConstant.padding.large * CGFloat(colCount + 1))) / CGFloat(colCount)
+        size = (width - (StyleConstant.Padding.large * CGFloat(colCount + 1))) / CGFloat(colCount)
         columns = [
-            GridItem(.fixed(size), spacing: StyleConstant.padding.large),
-            GridItem(.fixed(size), spacing: 0)
+            GridItem(.fixed(size), spacing: StyleConstant.Padding.large),
+            GridItem(.fixed(size), spacing: 0),
         ]
     }
 

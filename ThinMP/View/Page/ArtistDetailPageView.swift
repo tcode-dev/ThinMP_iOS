@@ -38,11 +38,11 @@ struct ArtistDetailPageView: View {
                             ArtistDetailHeaderView(vm: vm, textRect: $textRect, side: geometry.size.width, top: geometry.safeAreaInsets.top)
                             VStack(alignment: .leading) {
                                 PrimaryTitleView("Albums")
-                                    .padding(.leading, StyleConstant.padding.large)
+                                    .padding(.leading, StyleConstant.Padding.large)
                                 ArtistAlbumListView(list: vm.albums, width: geometry.size.width)
-                                    .padding(.bottom, StyleConstant.padding.large)
+                                    .padding(.bottom, StyleConstant.Padding.large)
                                 PrimaryTitleView("Songs")
-                                    .padding(.leading, StyleConstant.padding.large)
+                                    .padding(.leading, StyleConstant.Padding.large)
                                 LazyVStack(spacing: 0) {
                                     ForEach(vm.songs.indices, id: \.self) { index in
                                         PlayRowView(list: vm.songs, index: index) {
@@ -58,7 +58,7 @@ struct ArtistDetailPageView: View {
                                             }
                                         }
                                         Divider()
-                                    }.padding(.leading, StyleConstant.padding.large)
+                                    }.padding(.leading, StyleConstant.Padding.large)
                                 }
                             }
                         }
