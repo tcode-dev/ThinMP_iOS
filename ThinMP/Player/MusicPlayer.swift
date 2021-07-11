@@ -14,13 +14,14 @@ class MusicPlayer: ObservableObject {
     @Published var isPlaying: Bool = false
     @Published var song: SongModel?
     @Published var currentSecond: Double = 0
-    @Published var durationSecond: Double = 0
+    @Published var durationSecond: Double = 1
     @Published var isRepeatOff: Bool = true
     @Published var isRepeatOne: Bool = false
     @Published var isRepeatAll: Bool = false
     @Published var shuffleMode: Bool = false
     @Published var isFavoriteArtist: Bool = false
     @Published var isFavoriteSong: Bool = false
+    @Published var notFound: Bool = false
 
     private let playerConfig: PlayerConfig
     private let player: MPMusicPlayerController
@@ -48,11 +49,12 @@ class MusicPlayer: ObservableObject {
         player.setQueue(with: descriptor)
 
         play();
-        isActive = true
         setFavoriteArtist()
         setFavoriteSong()
         addObserver()
         isFirst = true
+        notFound = false
+        isActive = true
     }
 
     func doPlay() {
@@ -159,9 +161,18 @@ class MusicPlayer: ObservableObject {
     }
 
     private func setSong() {
-        song = SongModel(media: MPMediaItemCollection(items:[player.nowPlayingItem! as MPMediaItem]))
-        player.skipToBeginning()
-        resetTime()
+        if player.nowPlayingItem != nil {
+            song = SongModel(media: MPMediaItemCollection(items:[player.nowPlayingItem! as MPMediaItem]))
+            player.skipToBeginning()
+            resetTime()
+            notFound = false
+            isActive = true
+        } else {
+            currentSecond = 0
+            durationSecond = 1
+            notFound = true
+            isActive = false
+        }
     }
 
     private func play() {
@@ -289,7 +300,8 @@ class MusicPlayer: ObservableObject {
     }
 
     private func resetTime() {
-        durationSecond = Double(song?.media.representativeItem?.playbackDuration ?? 0)
+        let second = player.nowPlayingItem?.playbackDuration ?? 0
+        durationSecond = second > 0 ? second : 1
         updateTime()
     }
 

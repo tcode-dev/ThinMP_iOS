@@ -36,13 +36,6 @@ struct MiniPlayerView: View {
                             Image("PauseButton").renderingMode(.original).resizable().frame(width: imageSize, height: imageSize)
                         }
                         .frame(width: buttonSize, height: buttonSize)
-                        
-                        Button(action: {
-                            self.musicPlayer.doNext()
-                        }) {
-                            Image("NextButton").renderingMode(.original).resizable().frame(width: imageSize, height: imageSize)
-                        }
-                        .frame(width: buttonSize, height: buttonSize)
                     } else {
                         Button(action: {
                             self.musicPlayer.doPlay()
@@ -50,13 +43,13 @@ struct MiniPlayerView: View {
                             Image("PlayButton").renderingMode(.original).resizable().frame(width: imageSize, height: imageSize)
                         }
                         .frame(width: buttonSize, height: buttonSize)
-                        Button(action: {
-                            self.musicPlayer.doNext()
-                        }) {
-                            Image("NextButton").renderingMode(.original).resizable().frame(width: imageSize, height: imageSize)
-                        }
-                        .frame(width: buttonSize, height: buttonSize)
                     }
+                    Button(action: {
+                        self.musicPlayer.doNext()
+                    }) {
+                        Image("NextButton").renderingMode(.original).resizable().frame(width: imageSize, height: imageSize)
+                    }
+                    .frame(width: buttonSize, height: buttonSize)
                 }
                 .frame(height: buttonSize)
                 .padding(EdgeInsets(
