@@ -44,7 +44,7 @@ struct ArtistDetailHeaderView: View {
         return VStack {
             SecondaryTitleView(self.vm.primaryText).opacity(textOpacity())
         }
-        .frame(width: side - (StyleConstant.button * 2), height: StyleConstant.height.row)
+        .frame(width: abs(side - (StyleConstant.button * 2)), height: StyleConstant.height.row)
         .padding(.leading, StyleConstant.button)
         .padding(.trailing, StyleConstant.button)
     }
@@ -53,7 +53,7 @@ struct ArtistDetailHeaderView: View {
         return VStack {
             SecondaryTextView(vm.secondaryText).opacity(textOpacity())
         }
-        .frame(width: side - (StyleConstant.button * 2), height: 25, alignment: .center)
+        .frame(width: abs(side - (StyleConstant.button * 2)), height: 25, alignment: .center)
         .offset(y: -30)
         .animation(.easeInOut)
         .padding(.leading, StyleConstant.button)
