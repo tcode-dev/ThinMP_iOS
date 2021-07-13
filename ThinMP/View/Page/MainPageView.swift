@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct MainPageView: View {
-    private let HEADER_HEIGHT: CGFloat = 70
-
     @StateObject private var vm = MainViewModel()
 
     var body: some View {
@@ -29,7 +27,7 @@ struct MainPageView: View {
                                 }
                             }
                         }
-                        .frame(height: geometry.safeAreaInsets.top + HEADER_HEIGHT)
+                        .frame(height: geometry.safeAreaInsets.top + StyleConstant.Height.header)
                         .padding(.leading, StyleConstant.Padding.large)
                         VStack(spacing: 0) {
                             Divider()

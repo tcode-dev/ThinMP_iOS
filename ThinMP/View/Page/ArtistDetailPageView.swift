@@ -15,11 +15,7 @@ struct ArtistDetailPageView: View {
     @State private var showingPopup: Bool = false
     @State private var playlistRegisterSongId = SongId(id: 0)
 
-    private let artistId: ArtistId
-
-    init(artistId: ArtistId) {
-        self.artistId = artistId
-    }
+    let artistId: ArtistId
 
     var body: some View {
         GeometryReader { geometry in

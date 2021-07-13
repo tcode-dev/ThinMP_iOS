@@ -10,7 +10,6 @@ import SwiftUI
 struct PlaylistsEditPageView: View {
     @Environment(\.editMode) var editMode
     @Environment(\.presentationMode) var presentation
-
     @StateObject private var vm = PlaylistsViewModel()
 
     var body: some View {

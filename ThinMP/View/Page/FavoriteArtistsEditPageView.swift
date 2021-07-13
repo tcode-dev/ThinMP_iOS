@@ -10,7 +10,6 @@ import SwiftUI
 struct FavoriteArtistsEditPageView: View {
     @Environment(\.editMode) var editMode
     @Environment(\.presentationMode) var presentation
-
     @StateObject private var vm = FavoriteArtistsViewModel()
 
     var body: some View {

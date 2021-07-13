@@ -10,9 +10,7 @@ import SwiftUI
 struct PlaylistDetailEditPageView: View {
     @Environment(\.editMode) var editMode
     @Environment(\.presentationMode) var presentation
-
     @StateObject private var vm = PlaylistDetailViewModel()
-
     @State private var name: String = ""
     @State private var editing: Bool = false
 

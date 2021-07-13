@@ -10,7 +10,6 @@ import SwiftUI
 struct MainEditPageView: View {
     @Environment(\.editMode) var editMode
     @Environment(\.presentationMode) var presentation
-
     @StateObject private var vm = MainEditViewModel()
 
     var body: some View {
