@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AlbumDetailHeaderView: View {
     @ObservedObject var vm: AlbumDetailViewModel
-    @Binding var textRect: CGRect
+    @Binding var headerRect: CGRect
 
     let side: CGFloat
     let top: CGFloat
@@ -33,7 +33,7 @@ struct AlbumDetailHeaderView: View {
 
     private func createPrimaryTextView(primaryTextGeometry: GeometryProxy) -> some View {
         DispatchQueue.main.async {
-            self.textRect = primaryTextGeometry.frame(in: .global)
+            self.headerRect = primaryTextGeometry.frame(in: .global)
         }
 
         return VStack {
@@ -56,7 +56,7 @@ struct AlbumDetailHeaderView: View {
     }
 
     private func textOpacity() -> Double {
-        if textRect.origin.y - top > 0 {
+        if headerRect.origin.y - top > 0 {
             return 1
         }
 

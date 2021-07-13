@@ -12,7 +12,7 @@ struct DetaiNavBarView<Content>: View where Content: View {
     let primaryText: String?
     let side: CGFloat
     let top: CGFloat
-    @Binding var textRect: CGRect
+    @Binding var headerRect: CGRect
     let content: () -> Content
 
     var body: some View {
@@ -64,10 +64,10 @@ struct DetaiNavBarView<Content>: View where Content: View {
 
     private func opacity() -> Double {
         // ページ遷移直後は位置を取得できていない
-        if textRect == CGRect.zero {
+        if headerRect == CGRect.zero {
             return 0
         }
-        if textRect.origin.y - top > 0 {
+        if headerRect.origin.y - top > 0 {
             return 0
         }
 

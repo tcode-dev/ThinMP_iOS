@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ArtistDetailPageView: View {
     @StateObject private var vm = ArtistDetailViewModel()
-    @State private var textRect = CGRect()
+    @State private var headerRect = CGRect()
     @State private var isRegister: Bool = false
     @State private var showingPopup: Bool = false
     @State private var playlistRegisterSongId = SongId(id: 0)
@@ -22,7 +22,7 @@ struct ArtistDetailPageView: View {
             ZStack(alignment: .top) {
                 VStack(spacing: 0) {
                     ZStack(alignment: .top) {
-                        DetaiNavBarView(primaryText: vm.primaryText, side: geometry.size.width, top: geometry.safeAreaInsets.top, textRect: self.$textRect) {
+                        DetaiNavBarView(primaryText: vm.primaryText, side: geometry.size.width, top: geometry.safeAreaInsets.top, headerRect: self.$headerRect) {
                             MenuButtonView {
                                 VStack {
                                     FavoriteArtistButtonView(artistId: artistId)
@@ -31,7 +31,7 @@ struct ArtistDetailPageView: View {
                             }
                         }
                         ScrollView {
-                            ArtistDetailHeaderView(vm: vm, textRect: $textRect, side: geometry.size.width, top: geometry.safeAreaInsets.top)
+                            ArtistDetailHeaderView(vm: vm, headerRect: $headerRect, side: geometry.size.width, top: geometry.safeAreaInsets.top)
                             VStack(alignment: .leading) {
                                 PrimaryTitleView("Albums")
                                     .padding(.leading, StyleConstant.Padding.large)

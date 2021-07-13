@@ -10,7 +10,7 @@ import SwiftUI
 
 struct AlbumDetailPageView: View {
     @StateObject private var vm = AlbumDetailViewModel()
-    @State private var textRect = CGRect.zero
+    @State private var headerRect = CGRect.zero
     @State private var showingPopup: Bool = false
     @State private var playlistRegisterSongId = SongId(id: 0)
 
@@ -21,7 +21,7 @@ struct AlbumDetailPageView: View {
             ZStack(alignment: .top) {
                 VStack(spacing: 0) {
                     ZStack(alignment: .top) {
-                        DetaiNavBarView(primaryText: vm.primaryText, side: geometry.size.width, top: geometry.safeAreaInsets.top, textRect: self.$textRect) {
+                        DetaiNavBarView(primaryText: vm.primaryText, side: geometry.size.width, top: geometry.safeAreaInsets.top, headerRect: self.$headerRect) {
                             MenuButtonView {
                                 VStack {
                                     ShortcutButtonView(itemId: albumId.id, type: ShortcutType.ALBUM)
@@ -30,7 +30,7 @@ struct AlbumDetailPageView: View {
                         }
                         ScrollView(showsIndicators: true) {
                             VStack(alignment: .leading) {
-                                AlbumDetailHeaderView(vm: vm, textRect: self.$textRect, side: geometry.size.width, top: geometry.safeAreaInsets.top)
+                                AlbumDetailHeaderView(vm: vm, headerRect: self.$headerRect, side: geometry.size.width, top: geometry.safeAreaInsets.top)
                                 LazyVStack(spacing: 0) {
                                     ForEach(vm.songs.indices, id: \.self) { index in
                                         PlayRowView(list: vm.songs, index: index) {

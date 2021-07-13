@@ -10,8 +10,7 @@ import SwiftUI
 
 struct PlaylistDetailPageView: View {
     @StateObject private var vm = PlaylistDetailViewModel()
-    @State private var textRect = CGRect.zero
-    @State private var headerRect = CGRect()
+    @State private var headerRect = CGRect.zero
     @State private var showingPopup: Bool = false
     @State private var playlistRegisterSongId = SongId(id: 0)
     @State var isEdit: Bool = false
@@ -24,7 +23,7 @@ struct PlaylistDetailPageView: View {
             ZStack(alignment: .top) {
                 VStack(spacing: 0) {
                     ZStack(alignment: .top) {
-                        DetaiNavBarView(primaryText: vm.primaryText, side: geometry.size.width, top: geometry.safeAreaInsets.top, textRect: self.$textRect) {
+                        DetaiNavBarView(primaryText: vm.primaryText, side: geometry.size.width, top: geometry.safeAreaInsets.top, headerRect: self.$headerRect) {
                             VStack {
                                 MenuButtonView {
                                     VStack {
@@ -41,7 +40,7 @@ struct PlaylistDetailPageView: View {
                         }
                         ScrollView(showsIndicators: true) {
                             VStack(alignment: .leading) {
-                                PlaylistDetailHeaderView(textRect: $textRect, side: geometry.size.width, top: geometry.safeAreaInsets.top, name: vm.primaryText, artwork: vm.artwork)
+                                PlaylistDetailHeaderView(headerRect: $headerRect, side: geometry.size.width, top: geometry.safeAreaInsets.top, name: vm.primaryText, artwork: vm.artwork)
                                 LazyVStack(spacing: 0) {
                                     ForEach(vm.songs.indices, id: \.self) { index in
                                         PlayRowView(list: vm.songs, index: index) {
