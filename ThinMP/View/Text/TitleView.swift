@@ -1,13 +1,13 @@
 //
-//  SectionHeaderTextView.swift
+//  TitleView.swift
 //  ThinMP
 //
-//  Created by tk on 2020/01/15.
+//  Created by tk on 2021/02/06.
 //
 
 import SwiftUI
 
-struct PrimaryTitleView: View {
+struct TitleView: View {
     private let text: String
 
     init(_ text: String?) {
@@ -15,6 +15,6 @@ struct PrimaryTitleView: View {
     }
 
     var body: some View {
-        Text(text).font(.title).foregroundColor(.primary).lineLimit(1)
+        Text(text).font(.body).fontWeight(.medium).foregroundColor(.primary).lineLimit(1)
     }
 }

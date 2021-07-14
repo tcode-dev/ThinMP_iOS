@@ -73,12 +73,12 @@ struct MainEditPageView: View {
 
     func update() {
         let mainMenuConfig = MainMenuConfig()
-        let menus = vm.menus.map { $0.primaryText! }
+        let menus = vm.menus.map { $0.primaryText }
 
         mainMenuConfig.setSort(value: menus)
 
         vm.menus.forEach {
-            mainMenuConfig.setVisibility(value: $0.visibility, key: $0.primaryText!)
+            mainMenuConfig.setVisibility(value: $0.visibility, key: $0.primaryText)
         }
 
         let mainSectionConfig = MainSectionConfig()

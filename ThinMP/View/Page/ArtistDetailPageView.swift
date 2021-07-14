@@ -33,11 +33,11 @@ struct ArtistDetailPageView: View {
                         ScrollView {
                             ArtistDetailHeaderView(vm: vm, headerRect: $headerRect, side: geometry.size.width, top: geometry.safeAreaInsets.top)
                             VStack(alignment: .leading) {
-                                PrimaryTitleView("Albums")
+                                SectionTitleView("Albums")
                                     .padding(.leading, StyleConstant.Padding.large)
                                 ArtistAlbumListView(list: vm.albums, width: geometry.size.width)
                                     .padding(.bottom, StyleConstant.Padding.large)
-                                PrimaryTitleView("Songs")
+                                SectionTitleView("Songs")
                                     .padding(.leading, StyleConstant.Padding.large)
                                 LazyVStack(spacing: 0) {
                                     ForEach(vm.songs.indices, id: \.self) { index in

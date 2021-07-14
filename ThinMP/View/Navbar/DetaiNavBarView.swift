@@ -50,7 +50,7 @@ struct DetaiNavBarView<Content>: View where Content: View {
 
     private func createTitleView() -> some View {
         return HStack(alignment: .center) {
-            SecondaryTitleView(self.primaryText)
+            TitleView(self.primaryText)
         }
         .frame(width: abs(side - (StyleConstant.button * 2)), height: StyleConstant.Height.row)
         .padding(EdgeInsets(

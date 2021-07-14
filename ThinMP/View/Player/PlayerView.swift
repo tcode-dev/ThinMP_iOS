@@ -36,7 +36,7 @@ struct PlayerView: View {
                         .padding(.top, 50)
                         .padding(.bottom, 10)
                     ZStack(alignment: .bottom) {
-                        SecondaryTitleView(musicPlayer.song?.primaryText).frame(height: 50).offset(y: -10)
+                        TitleView(musicPlayer.song?.primaryText).frame(height: 50).offset(y: -10)
                         SecondaryTextView(musicPlayer.song?.secondaryText).frame(height: 25)
                     }
                     .frame(height: 60)

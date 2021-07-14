@@ -10,8 +10,8 @@ import SwiftUI
 struct HeaderTitleView: View {
     private let text: String
 
-    init(_ text: String?) {
-        self.text = text ?? "unknown"
+    init(_ text: String) {
+        self.text = text
     }
 
     var body: some View {

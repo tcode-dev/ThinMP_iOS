@@ -8,9 +8,10 @@
 import MediaPlayer
 
 class MenuModel: Identifiable, ObservableObject {
-    let id = UUID()
-    let primaryText: String?
     @Published var visibility: Bool
+
+    let id = UUID()
+    let primaryText: String
 
     init(primaryText: String, visibility: Bool) {
         self.primaryText = primaryText
