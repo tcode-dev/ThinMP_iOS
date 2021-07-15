@@ -13,7 +13,7 @@ struct MenuRowView: View {
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
-                Text(LocalizedStringKey(text)).font(.body).foregroundColor(.primary).lineLimit(1)
+                MenuTextView(text)
             }
             .frame(height: 34)
             Spacer()
