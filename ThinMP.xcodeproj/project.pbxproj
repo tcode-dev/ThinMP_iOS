@@ -292,7 +292,7 @@
 				5219EA1F2615399E00E3A495 /* Playlist */,
 				5279F0BF23D51BF80053BF55 /* Row */,
 				522366D723D7C1CA0001624E /* Text */,
-				52E7AC7426A06E5A00B61EAD /* Title */,
+				5218100426A09436007F7185 /* Title */,
 				5211ADD325CEBCC100604D45 /* Util */,
 			);
 			path = View;
@@ -315,6 +315,17 @@
 				5242C10C2484684200347320 /* ListNavBarView.swift */,
 			);
 			path = Navbar;
+			sourceTree = "<group>";
+		};
+		5218100426A09436007F7185 /* Title */ = {
+			isa = PBXGroup;
+			children = (
+				52E8EF782699B11F005C8E62 /* HeaderTitleView.swift */,
+				52E7AC7126A06DA500B61EAD /* MainTitleView.swift */,
+				52AC16EC23CE8BE4001D427B /* SectionTitleView.swift */,
+				5211ADCB25CE99E400604D45 /* TitleView.swift */,
+			);
+			path = Title;
 			sourceTree = "<group>";
 		};
 		5219EA1F2615399E00E3A495 /* Playlist */ = {
@@ -653,17 +664,6 @@
 				52B03A5B2680DC6400ECA36A /* Protocol */,
 			);
 			path = Realm;
-			sourceTree = "<group>";
-		};
-		52E7AC7426A06E5A00B61EAD /* Title */ = {
-			isa = PBXGroup;
-			children = (
-				52E8EF782699B11F005C8E62 /* HeaderTitleView.swift */,
-				52E7AC7126A06DA500B61EAD /* MainTitleView.swift */,
-				52AC16EC23CE8BE4001D427B /* SectionTitleView.swift */,
-				5211ADCB25CE99E400604D45 /* TitleView.swift */,
-			);
-			name = Title;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
