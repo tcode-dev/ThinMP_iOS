@@ -48,6 +48,8 @@ struct ShortcutService {
             }
 
         if !validation(shortcutIds: shortcutRealmModels.map { $0.id }, shortcutModels: shortcutModels) {
+            fix(shortcutModels: shortcutModels)
+
             return findAll()
         }
 
@@ -55,16 +57,10 @@ struct ShortcutService {
     }
 
     private func validation(shortcutIds: [String], shortcutModels: [ShortcutModel]) -> Bool {
-        if shortcutIds.count == shortcutModels.count {
-            return true
-        }
-
-        update(shortcutModels: shortcutModels)
-
-        return false
+        return shortcutIds.count == shortcutModels.count
     }
 
-    private func update(shortcutModels: [ShortcutModel]) {
+    private func fix(shortcutModels: [ShortcutModel]) {
         let register = ShortcutRegister()
 
         register.update(shortcutIds: shortcutModels.map { $0.shortcutId })

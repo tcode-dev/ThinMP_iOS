@@ -38,6 +38,8 @@ struct PlaylistDetailService {
         })?.artwork
 
         if !validation(playlist: playlist, songIds: songIds, songs: songs) {
+            fix(playlist: playlist, songs: songs)
+
             return createModel(playlist: playlist)
         }
 
@@ -45,16 +47,10 @@ struct PlaylistDetailService {
     }
 
     private func validation(playlist: PlaylistRealmModel, songIds: [SongId], songs: [SongModel]) -> Bool {
-        if songIds.count == songs.count {
-            return true
-        }
-
-        update(playlist: playlist, songs: songs)
-
-        return false
+        return songIds.count == songs.count
     }
 
-    private func update(playlist: PlaylistRealmModel, songs: [SongModel]) {
+    private func fix(playlist: PlaylistRealmModel, songs: [SongModel]) {
         let playlistRegister = PlaylistRegister()
         let songIds = songs.map { $0.songId }
 

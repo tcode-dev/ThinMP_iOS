@@ -13,6 +13,8 @@ struct FavoriteArtistsService {
         let artists = artistRepository.findByIds(artistIds: artistIds)
 
         if !validation(artistIds: artistIds, artists: artists) {
+            fix(artists: artists)
+
             return findAll()
         }
 
@@ -20,16 +22,10 @@ struct FavoriteArtistsService {
     }
 
     private func validation(artistIds: [ArtistId], artists: [ArtistModel]) -> Bool {
-        if artistIds.count == artists.count {
-            return true
-        }
-
-        update(artists: artists)
-
-        return false
+        return artistIds.count == artists.count
     }
 
-    private func update(artists: [ArtistModel]) {
+    private func fix(artists: [ArtistModel]) {
         let favoriteArtistRegister = FavoriteArtistRegister()
         let artistIds = artists.map { $0.artistId }
 
