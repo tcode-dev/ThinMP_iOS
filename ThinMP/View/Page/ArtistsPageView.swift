@@ -33,6 +33,9 @@ struct ArtistsPageView: View {
                                     NavigationLink(destination: ArtistDetailPageView(artistId: vm.artists[index].artistId)) {
                                         PlainRowView(media: vm.artists[index])
                                     }
+                                    .contextMenu {
+                                        FavoriteArtistButtonView(artistId: vm.artists[index].artistId)
+                                    }
                                     Divider()
                                 }
                                 .padding(.leading, StyleConstant.Padding.medium)
