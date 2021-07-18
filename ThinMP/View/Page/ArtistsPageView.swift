@@ -35,6 +35,7 @@ struct ArtistsPageView: View {
                                     }
                                     .contextMenu {
                                         FavoriteArtistButtonView(artistId: vm.artists[index].artistId)
+                                        ShortcutButtonView(itemId: vm.artists[index].id, type: ShortcutType.ARTIST)
                                     }
                                     Divider()
                                 }
