@@ -34,6 +34,9 @@ struct PlaylistsPageView: View {
                                     NavigationLink(destination: PlaylistDetailPageView(playlistId: vm.playlists[index].playlistId)) {
                                         MediaRowView(media: vm.playlists[index])
                                     }
+                                    .contextMenu {
+                                        PlaylistDeleteButtonView(playlistId: vm.playlists[index].playlistId, callback: { vm.load() })
+                                    }
                                     Divider()
                                 }.padding(.leading, StyleConstant.Padding.medium)
                             }

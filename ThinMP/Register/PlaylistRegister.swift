@@ -32,7 +32,7 @@ struct PlaylistRegister {
         repository.update(playlistId: playlistId, name: name, songIds: songIds)
     }
 
-    func delete(playlistIds: [PlaylistId]) {
-        repository.delete(playlistIds: playlistIds)
+    func delete(playlistId: PlaylistId) {
+        repository.delete(playlistId: playlistId)
     }
 }

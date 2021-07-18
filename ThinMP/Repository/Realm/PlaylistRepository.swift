@@ -29,10 +29,12 @@ struct PlaylistRepository {
 
     func create(songId: SongId, name: String) {
         let playlist = PlaylistRealmModel()
+
         playlist.name = name
         playlist.order = incrementOrder()
 
         let song = PlaylistSongRealmModel()
+
         song.songId = String(songId.id)
         song.playlistId = playlist.id
 
@@ -57,7 +59,9 @@ struct PlaylistRepository {
 
     // プレイリスト一覧の更新
     func update(playlistIds: [PlaylistId]) {
-        delete(playlistIds: playlistIds)
+        let deleteIds = getDeleteIds(playlistIds: playlistIds)
+
+        delete(playlistIds: deleteIds)
         sort(playlistIds: playlistIds)
     }
 
@@ -71,6 +75,7 @@ struct PlaylistRepository {
 
         songIds.forEach { songId in
             let song = PlaylistSongRealmModel()
+
             song.songId = String(songId.id)
             song.playlistId = playlist.id
             playlist.songs.append(song)
@@ -81,10 +86,18 @@ struct PlaylistRepository {
         try! realm.commitWrite()
     }
 
-    func delete(playlistIds: [PlaylistId]) {
+    func delete(playlistId: PlaylistId) {
+        delete(playlistIds: [playlistId])
+    }
+
+    private func getDeleteIds(playlistIds: [PlaylistId]) -> [PlaylistId] {
         let currentIds: [String] = realm.objects(PlaylistRealmModel.self).map { $0.id }
-        let deleteIds = currentIds.filter { !playlistIds.map { $0.id }.contains($0) }
-        let playlists = findByIds(playlistIds: deleteIds.map { PlaylistId(id: $0) })
+
+        return currentIds.filter { !playlistIds.map { $0.id }.contains($0) }.map { PlaylistId(id: $0) }
+    }
+
+    private func delete(playlistIds: [PlaylistId]) {
+        let playlists = findByIds(playlistIds: playlistIds)
 
         if playlists.count == 0 {
             return
@@ -100,6 +113,7 @@ struct PlaylistRepository {
         let sorted = playlistIds.map { playlistId in
             playlists.first { $0.id == playlistId.id }
         }
+
         try! realm.write {
             for (index, playlist) in sorted.enumerated() {
                 playlist?.order = index
