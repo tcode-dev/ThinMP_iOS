@@ -42,7 +42,7 @@ struct MainPageView: View {
                             VStack(alignment: .leading) {
                                 SectionTitleView(vm.shortcutMenu.primaryText)
                                     .padding(.leading, StyleConstant.Padding.large)
-                                ShortcutListView(list: vm.shortcuts, width: geometry.size.width)
+                                ShortcutListView(list: vm.shortcuts, width: geometry.size.width, callback: { vm.load() })
                                     .padding(.bottom, StyleConstant.Padding.medium)
                             }
                         }
