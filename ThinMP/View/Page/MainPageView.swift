@@ -50,7 +50,7 @@ struct MainPageView: View {
                             VStack(alignment: .leading) {
                                 SectionTitleView(vm.recentlyMenu.primaryText)
                                     .padding(.leading, StyleConstant.Padding.large)
-                                AlbumListView(list: vm.albums, width: geometry.size.width)
+                                AlbumListView(list: vm.albums, width: geometry.size.width, callback: { vm.load() })
                                     .padding(.bottom, StyleConstant.Padding.medium)
                             }
                         }

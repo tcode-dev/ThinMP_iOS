@@ -12,9 +12,11 @@ struct AlbumListView: View {
     private let list: [AlbumModel]
     private let size: CGFloat
     private let columns: [GridItem]
+    private let callback: () -> Void
 
-    init(list: [AlbumModel], width: CGFloat) {
+    init(list: [AlbumModel], width: CGFloat, callback: @escaping () -> Void = {}) {
         self.list = list
+        self.callback = callback
         size = (width - (StyleConstant.Padding.large * CGFloat(colCount + 1))) / CGFloat(colCount)
         columns = [
             GridItem(.fixed(size), spacing: StyleConstant.Padding.large),
@@ -28,7 +30,7 @@ struct AlbumListView: View {
                 NavigationLink(destination: AlbumDetailPageView(albumId: list[index].albumId)) {
                     AlbumCellView(album: list[index], size: size)
                         .contextMenu {
-                            ShortcutButtonView(itemId: list[index].id, type: ShortcutType.ALBUM)
+                            ShortcutButtonView(itemId: list[index].id, type: ShortcutType.ALBUM, callback: callback)
                         }
                 }
             }

@@ -12,8 +12,15 @@ struct ShortcutButtonView: View {
     @State private var displayed: Bool = false
     @State private var exists: Bool = false
 
-    let itemId: ShortcutItemIdProtocol
-    let type: ShortcutType
+    private let itemId: ShortcutItemIdProtocol
+    private let type: ShortcutType
+    private let callback: () -> Void
+
+    init(itemId: ShortcutItemIdProtocol, type: ShortcutType, callback: @escaping () -> Void = {}) {
+        self.itemId = itemId
+        self.type = type
+        self.callback = callback
+    }
 
     var body: some View {
         if !displayed {
@@ -26,6 +33,7 @@ struct ShortcutButtonView: View {
                     register.add(itemId: itemId, type: type)
                     exists = true
                     displayed.toggle()
+                    callback()
                 }) {
                     Text("AddShortcut")
                 }
@@ -36,6 +44,7 @@ struct ShortcutButtonView: View {
                     register.delete(itemId: itemId, type: type)
                     exists = false
                     displayed.toggle()
+                    callback()
                 }) {
                     Text("RemoveShortcut")
                 }
@@ -47,6 +56,7 @@ struct ShortcutButtonView: View {
 
                     register.add(itemId: itemId, type: type)
                     exists.toggle()
+                    callback()
                 }) {
                     Text("AddShortcut")
                 }
@@ -56,6 +66,7 @@ struct ShortcutButtonView: View {
 
                     register.delete(itemId: itemId, type: type)
                     exists.toggle()
+                    callback()
                 }) {
                     Text("RemoveShortcut")
                 }

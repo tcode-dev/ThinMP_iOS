@@ -12,8 +12,8 @@ struct FavoriteArtistButtonView: View {
     @State private var displayed: Bool = false
     @State private var exists: Bool = false
 
-    let artistId: ArtistId
-    let callback: () -> Void
+    private let artistId: ArtistId
+    private let callback: () -> Void
 
     init(artistId: ArtistId, callback: @escaping () -> Void = {}) {
         self.artistId = artistId
