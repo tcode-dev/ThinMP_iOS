@@ -16,7 +16,7 @@ struct EditButtonView<Content>: View where Content: View {
     var body: some View {
         Menu {
             Button("Edit") {
-                self.isEdit = true
+                isEdit = true
             }
         } label: {
             MenuImageView()

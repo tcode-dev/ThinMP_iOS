@@ -31,7 +31,7 @@ struct SongsPageView: View {
                         }
                         ScrollView {
                             VStack(alignment: .leading) {
-                                ListEmptyHeaderView(headerRect: self.$headerRect, top: geometry.safeAreaInsets.top)
+                                ListEmptyHeaderView(headerRect: $headerRect, top: geometry.safeAreaInsets.top)
                                 LazyVStack(spacing: 0) {
                                     ForEach(vm.songs.indices, id: \.self) { index in
                                         PlayRowView(list: vm.songs, index: index) {

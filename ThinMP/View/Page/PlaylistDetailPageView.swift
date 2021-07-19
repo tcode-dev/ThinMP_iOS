@@ -23,12 +23,12 @@ struct PlaylistDetailPageView: View {
             ZStack(alignment: .top) {
                 VStack(spacing: 0) {
                     ZStack(alignment: .top) {
-                        DetaiNavBarView(primaryText: vm.primaryText, side: geometry.size.width, top: geometry.safeAreaInsets.top, headerRect: self.$headerRect) {
+                        DetaiNavBarView(primaryText: vm.primaryText, side: geometry.size.width, top: geometry.safeAreaInsets.top, headerRect: $headerRect) {
                             VStack {
                                 MenuButtonView {
                                     VStack {
                                         Button("Edit") {
-                                            self.isEdit = true
+                                            isEdit = true
                                         }
                                         ShortcutButtonView(itemId: playlistId.id, type: ShortcutType.PLAYLIST)
                                     }
@@ -64,7 +64,7 @@ struct PlaylistDetailPageView: View {
                     MiniPlayerView(bottom: geometry.safeAreaInsets.bottom)
                 }
                 if showingPopup {
-                    PopupView(showingPopup: self.$showingPopup) {
+                    PopupView(showingPopup: $showingPopup) {
                         PlaylistRegisterView(songId: playlistRegisterSongId, height: geometry.size.height, showingPopup: $showingPopup)
                     }
                 }

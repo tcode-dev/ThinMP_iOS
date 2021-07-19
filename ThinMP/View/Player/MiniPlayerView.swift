@@ -21,7 +21,7 @@ struct MiniPlayerView: View {
             if musicPlayer.isActive {
                 HStack {
                     Button(action: {
-                        self.isFullScreen.toggle()
+                        isFullScreen.toggle()
                     }) {
                         HStack {
                             SquareImageView(artwork: musicPlayer.song?.artwork, size: imageSize)
@@ -31,21 +31,21 @@ struct MiniPlayerView: View {
                     }
                     if musicPlayer.isPlaying {
                         Button(action: {
-                            self.musicPlayer.doPause()
+                            musicPlayer.doPause()
                         }) {
                             Image("PauseButton").renderingMode(.original).resizable().frame(width: imageSize, height: imageSize)
                         }
                         .frame(width: buttonSize, height: buttonSize)
                     } else {
                         Button(action: {
-                            self.musicPlayer.doPlay()
+                            musicPlayer.doPlay()
                         }) {
                             Image("PlayButton").renderingMode(.original).resizable().frame(width: imageSize, height: imageSize)
                         }
                         .frame(width: buttonSize, height: buttonSize)
                     }
                     Button(action: {
-                        self.musicPlayer.doNext()
+                        musicPlayer.doNext()
                     }) {
                         Image("NextButton").renderingMode(.original).resizable().frame(width: imageSize, height: imageSize)
                     }
@@ -61,7 +61,7 @@ struct MiniPlayerView: View {
                 .background(Color(UIColor.secondarySystemBackground))
                 .border(Color(UIColor.systemGray5), width: 1)
                 .sheet(isPresented: $isFullScreen) {
-                    PlayerView().environmentObject(self.musicPlayer)
+                    PlayerView().environmentObject(musicPlayer)
                 }
             } else {
                 EmptyView()

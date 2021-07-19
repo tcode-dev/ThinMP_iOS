@@ -12,7 +12,7 @@ struct BackButtonView: View {
 
     var body: some View {
         Button(action: {
-            self.presentation.wrappedValue.dismiss()
+            presentation.wrappedValue.dismiss()
         }) {
             // サイズを指定しないと反応しない
             Image("BackButton").renderingMode(.original).frame(width: StyleConstant.button, height: StyleConstant.button)

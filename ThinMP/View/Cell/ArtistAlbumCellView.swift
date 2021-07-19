@@ -13,8 +13,8 @@ struct ArtistAlbumCellView: View {
 
     var body: some View {
         VStack {
-            SquareImageView(artwork: self.album.artwork, size: size)
-            PrimaryTextView(self.album.primaryText)
+            SquareImageView(artwork: album.artwork, size: size)
+            PrimaryTextView(album.primaryText)
         }
         .padding(StyleConstant.Padding.medium)
     }

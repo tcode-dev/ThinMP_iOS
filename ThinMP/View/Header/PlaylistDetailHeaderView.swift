@@ -17,28 +17,28 @@ struct PlaylistDetailHeaderView: View {
 
     var body: some View {
         ZStack(alignment: .bottom) {
-            Image(uiImage: self.artwork?.image(at: CGSize(width: self.side, height: self.side)) ?? UIImage(imageLiteralResourceName: "Song"))
+            Image(uiImage: artwork?.image(at: CGSize(width: side, height: side)) ?? UIImage(imageLiteralResourceName: "Song"))
                 .resizable()
                 .scaledToFit()
             LinearGradient(gradient: Gradient(colors: [Color(Color.RGBColorSpace.sRGB, red: 1, green: 1, blue: 1, opacity: 0), Color(UIColor.systemBackground)]), startPoint: .top, endPoint: .bottom)
                 .frame(height: 200)
             GeometryReader { primaryTextGeometry in
-                self.createPrimaryTextView(primaryTextGeometry: primaryTextGeometry)
+                createPrimaryTextView(primaryTextGeometry: primaryTextGeometry)
             }
             .frame(height: StyleConstant.Height.row)
             .offset(y: -40)
-            self.createSecondaryTextView()
+            createSecondaryTextView()
         }
         .frame(width: side, height: side)
     }
 
     private func createPrimaryTextView(primaryTextGeometry: GeometryProxy) -> some View {
         DispatchQueue.main.async {
-            self.headerRect = primaryTextGeometry.frame(in: .global)
+            headerRect = primaryTextGeometry.frame(in: .global)
         }
 
         return VStack {
-            TitleView(self.name).opacity(textOpacity())
+            TitleView(name).opacity(textOpacity())
         }
         .frame(width: abs(side - (StyleConstant.button * 2)), height: StyleConstant.Height.row)
         .padding(.leading, StyleConstant.button)

@@ -21,7 +21,7 @@ struct AlbumDetailPageView: View {
             ZStack(alignment: .top) {
                 VStack(spacing: 0) {
                     ZStack(alignment: .top) {
-                        DetaiNavBarView(primaryText: vm.primaryText, side: geometry.size.width, top: geometry.safeAreaInsets.top, headerRect: self.$headerRect) {
+                        DetaiNavBarView(primaryText: vm.primaryText, side: geometry.size.width, top: geometry.safeAreaInsets.top, headerRect: $headerRect) {
                             MenuButtonView {
                                 VStack {
                                     ShortcutButtonView(itemId: albumId.id, type: ShortcutType.ALBUM)
@@ -30,7 +30,7 @@ struct AlbumDetailPageView: View {
                         }
                         ScrollView(showsIndicators: true) {
                             VStack(alignment: .leading) {
-                                AlbumDetailHeaderView(vm: vm, headerRect: self.$headerRect, side: geometry.size.width, top: geometry.safeAreaInsets.top)
+                                AlbumDetailHeaderView(vm: vm, headerRect: $headerRect, side: geometry.size.width, top: geometry.safeAreaInsets.top)
                                 LazyVStack(spacing: 0) {
                                     ForEach(vm.songs.indices, id: \.self) { index in
                                         PlayRowView(list: vm.songs, index: index) {
@@ -54,8 +54,8 @@ struct AlbumDetailPageView: View {
                     MiniPlayerView(bottom: geometry.safeAreaInsets.bottom)
                 }
                 if showingPopup {
-                    PopupView(showingPopup: self.$showingPopup) {
-                        PlaylistRegisterView(songId: playlistRegisterSongId, height: geometry.size.height, showingPopup: self.$showingPopup)
+                    PopupView(showingPopup: $showingPopup) {
+                        PlaylistRegisterView(songId: playlistRegisterSongId, height: geometry.size.height, showingPopup: $showingPopup)
                     }
                 }
             }

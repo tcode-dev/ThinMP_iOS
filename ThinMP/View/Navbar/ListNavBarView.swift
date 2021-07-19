@@ -14,7 +14,7 @@ struct ListNavBarView<Content>: View where Content: View {
 
     var body: some View {
         ZStack {
-            self.createHeaderView()
+            createHeaderView()
             content()
                 .frame(height: StyleConstant.Height.row)
                 .padding(EdgeInsets(

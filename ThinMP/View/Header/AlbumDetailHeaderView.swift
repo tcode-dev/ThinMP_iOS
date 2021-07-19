@@ -16,28 +16,28 @@ struct AlbumDetailHeaderView: View {
 
     var body: some View {
         ZStack(alignment: .bottom) {
-            Image(uiImage: self.vm.artwork?.image(at: CGSize(width: self.side, height: self.side)) ?? UIImage(imageLiteralResourceName: "Song"))
+            Image(uiImage: vm.artwork?.image(at: CGSize(width: side, height: side)) ?? UIImage(imageLiteralResourceName: "Song"))
                 .resizable()
                 .scaledToFit()
             LinearGradient(gradient: Gradient(colors: [Color(Color.RGBColorSpace.sRGB, red: 1, green: 1, blue: 1, opacity: 0), Color(UIColor.systemBackground)]), startPoint: .top, endPoint: .bottom)
                 .frame(height: 200)
             GeometryReader { primaryTextGeometry in
-                self.createPrimaryTextView(primaryTextGeometry: primaryTextGeometry)
+                createPrimaryTextView(primaryTextGeometry: primaryTextGeometry)
             }
             .frame(height: StyleConstant.Height.row)
             .offset(y: -40)
-            self.createSecondaryTextView()
+            createSecondaryTextView()
         }
         .frame(width: side, height: side)
     }
 
     private func createPrimaryTextView(primaryTextGeometry: GeometryProxy) -> some View {
         DispatchQueue.main.async {
-            self.headerRect = primaryTextGeometry.frame(in: .global)
+            headerRect = primaryTextGeometry.frame(in: .global)
         }
 
         return VStack {
-            TitleView(self.vm.primaryText).opacity(textOpacity())
+            TitleView(vm.primaryText).opacity(textOpacity())
         }
         .frame(width: abs(side - (StyleConstant.button * 2)), height: StyleConstant.Height.row)
         .padding(.leading, StyleConstant.button)
@@ -46,7 +46,7 @@ struct AlbumDetailHeaderView: View {
 
     private func createSecondaryTextView() -> some View {
         return VStack {
-            SecondaryTextView(self.vm.secondaryText).opacity(textOpacity())
+            SecondaryTextView(vm.secondaryText).opacity(textOpacity())
         }
         .frame(width: abs(side - (StyleConstant.button * 2)), height: 25, alignment: .center)
         .offset(y: -30)

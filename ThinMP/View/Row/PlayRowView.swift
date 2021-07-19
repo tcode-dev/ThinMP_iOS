@@ -17,7 +17,7 @@ struct PlayRowView<Content>: View where Content: View {
 
     var body: some View {
         Button(action: {
-            self.musicPlayer.start(list: self.list, currentIndex: self.index)
+            musicPlayer.start(list: list, currentIndex: index)
         }) {
             content()
         }

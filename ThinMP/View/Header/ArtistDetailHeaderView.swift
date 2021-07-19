@@ -42,7 +42,7 @@ struct ArtistDetailHeaderView: View {
         }
 
         return VStack {
-            TitleView(self.vm.primaryText).opacity(textOpacity())
+            TitleView(vm.primaryText).opacity(textOpacity())
         }
         .frame(width: abs(side - (StyleConstant.button * 2)), height: StyleConstant.Height.row)
         .padding(.leading, StyleConstant.button)

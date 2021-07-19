@@ -15,7 +15,7 @@ struct ListEmptyHeaderView: View {
     var body: some View {
         ZStack {
             GeometryReader { gometry in
-                self.createEmptyView(gometry: gometry)
+                createEmptyView(gometry: gometry)
             }
         }
         .frame(height: StyleConstant.Height.row + top)
@@ -23,7 +23,7 @@ struct ListEmptyHeaderView: View {
 
     private func createEmptyView(gometry: GeometryProxy) -> some View {
         DispatchQueue.main.async {
-            self.headerRect = gometry.frame(in: .global)
+            headerRect = gometry.frame(in: .global)
         }
 
         return HStack {
