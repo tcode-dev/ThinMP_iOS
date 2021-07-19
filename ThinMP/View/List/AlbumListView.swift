@@ -29,9 +29,9 @@ struct AlbumListView: View {
             ForEach(list.indices, id: \.self) { index in
                 NavigationLink(destination: AlbumDetailPageView(albumId: list[index].albumId)) {
                     AlbumCellView(album: list[index], size: size)
-                        .contextMenu {
-                            ShortcutButtonView(itemId: list[index].id, type: ShortcutType.ALBUM, callback: callback)
-                        }
+                }
+                .contextMenu {
+                    ShortcutButtonView(itemId: list[index].id, type: ShortcutType.ALBUM, callback: callback)
                 }
             }
         }
