@@ -28,6 +28,7 @@ struct ArtistAlbumListView: View {
                 NavigationLink(destination: AlbumDetailPageView(albumId: list[index].albumId)) {
                     ArtistAlbumCellView(album: list[index], size: size)
                 }
+                .contentShape(RoundedRectangle(cornerRadius: StyleConstant.cornerRadius))
                 .contextMenu {
                     ShortcutButtonView(itemId: list[index].id, type: ShortcutType.ALBUM)
                 }

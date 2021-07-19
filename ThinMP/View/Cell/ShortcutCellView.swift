@@ -21,5 +21,6 @@ struct ShortcutCellView: View {
             PrimaryTextView(shortcut.primaryText)
             SecondaryTextView(shortcut.secondaryText)
         }
+        .padding(StyleConstant.Padding.medium)
     }
 }

@@ -9,6 +9,8 @@ import SwiftUI
 
 enum StyleConstant {
     static let button: CGFloat = 50
+    static let cornerRadius: CGFloat = 4
+
     enum Height {
         static let row: CGFloat = 50
         static let header: CGFloat = 60

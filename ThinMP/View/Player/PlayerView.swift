@@ -31,7 +31,7 @@ struct PlayerView: View {
                         .renderingMode(.original)
                         .resizable()
                         .scaledToFit()
-                        .cornerRadius(4)
+                        .cornerRadius(StyleConstant.cornerRadius)
                         .frame(width: 220, height: 220)
                         .padding(.top, 50)
                         .padding(.bottom, 10)

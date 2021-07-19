@@ -17,5 +17,6 @@ struct AlbumCellView: View {
             PrimaryTextView(self.album.primaryText)
             SecondaryTextView(self.album.secondaryText)
         }
+        .padding(StyleConstant.Padding.medium)
     }
 }

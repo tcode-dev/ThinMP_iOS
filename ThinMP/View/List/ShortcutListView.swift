@@ -14,7 +14,7 @@ struct ShortcutListView: View {
     private let size: CGFloat
     private let columns: [GridItem]
     private let callback: () -> Void
-    
+
     init(list: [ShortcutModel], width: CGFloat, callback: @escaping () -> Void = {}) {
         self.list = list
         self.callback = callback
@@ -24,7 +24,7 @@ struct ShortcutListView: View {
             GridItem(.fixed(size), spacing: 0),
         ]
     }
-    
+
     var body: some View {
         LazyVGrid(columns: columns) {
             ForEach(list.indices, id: \.self) { index in
@@ -33,6 +33,7 @@ struct ShortcutListView: View {
                     NavigationLink(destination: ArtistDetailPageView(artistId: list[index].itemId.artistId)) {
                         ShortcutCellView(shortcut: list[index], size: size)
                     }
+                    .contentShape(RoundedRectangle(cornerRadius: StyleConstant.cornerRadius))
                     .contextMenu {
                         FavoriteArtistButtonView(artistId: list[index].itemId.artistId)
                         ShortcutButtonView(itemId: list[index].itemId.id, type: ShortcutType.ARTIST, callback: callback)
@@ -41,6 +42,7 @@ struct ShortcutListView: View {
                     NavigationLink(destination: AlbumDetailPageView(albumId: list[index].itemId.albumId)) {
                         ShortcutCellView(shortcut: list[index], size: size)
                     }
+                    .contentShape(RoundedRectangle(cornerRadius: StyleConstant.cornerRadius))
                     .contextMenu {
                         ShortcutButtonView(itemId: list[index].itemId.id, type: ShortcutType.ALBUM, callback: callback)
                     }
@@ -48,6 +50,7 @@ struct ShortcutListView: View {
                     NavigationLink(destination: PlaylistDetailPageView(playlistId: list[index].itemId.playlistId)) {
                         ShortcutCellView(shortcut: list[index], size: size)
                     }
+                    .contentShape(RoundedRectangle(cornerRadius: StyleConstant.cornerRadius))
                     .contextMenu {
                         ShortcutButtonView(itemId: list[index].itemId.id, type: ShortcutType.PLAYLIST, callback: callback)
                     }

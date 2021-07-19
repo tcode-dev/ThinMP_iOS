@@ -87,7 +87,7 @@ struct PlaylistRegisterView: View {
         .frame(width: .infinity)
         .padding(.horizontal, StyleConstant.Padding.medium)
         .background(Color(UIColor.systemGray5))
-        .cornerRadius(4)
+        .cornerRadius(StyleConstant.cornerRadius)
         .padding(.horizontal, StyleConstant.Padding.large)
         .onAppear {
             vm.load()
