@@ -37,6 +37,7 @@ struct SongsPageView: View {
                                         PlayRowView(list: vm.songs, index: index) {
                                             MediaRowView(media: vm.songs[index])
                                         }
+                                        .contentShape(RoundedRectangle(cornerRadius: StyleConstant.cornerRadius))
                                         .contextMenu {
                                             FavoriteSongButtonView(songId: vm.songs[index].songId)
                                             Button(action: {
