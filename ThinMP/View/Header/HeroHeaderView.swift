@@ -19,8 +19,8 @@ struct HeroHeaderView<Content>: View where Content: View {
     var body: some View {
         ZStack(alignment: .bottom) {
             content()
-            GeometryReader { primaryTextGeometry in
-                createPrimaryTextView(primaryTextGeometry: primaryTextGeometry)
+            GeometryReader { geometry in
+                createPrimaryTextView(geometry: geometry)
             }
             .frame(height: StyleConstant.Height.row)
             .offset(y: -40)
@@ -36,9 +36,9 @@ struct HeroHeaderView<Content>: View where Content: View {
     /// PrimaryTextのViewを生成する
     /// ScrollViewの現在位置を取得する方法がないため、親が子のgeometryを参照できるようにする
     /// GeometryReader直下で変数を代入すると構文エラーになるので別メソッドにしている
-    private func createPrimaryTextView(primaryTextGeometry: GeometryProxy) -> some View {
+    private func createPrimaryTextView(geometry: GeometryProxy) -> some View {
         DispatchQueue.main.async {
-            headerRect = primaryTextGeometry.frame(in: .global)
+            headerRect = geometry.frame(in: .global)
         }
 
         return VStack {
