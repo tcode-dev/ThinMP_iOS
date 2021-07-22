@@ -38,9 +38,7 @@ class AlbumRepository {
         query.addFilterPredicate(property)
 
         return query.collections!.filter { ids.contains($0.representativeItem?.albumPersistentID ?? 0) }
-            .map {
-                AlbumModel(albumId: AlbumId(id: ($0.representativeItem?.albumPersistentID)!), primaryText: $0.representativeItem?.albumTitle, secondaryText: $0.representativeItem?.artist, artwork: $0.representativeItem?.artwork)
-            }
+            .map { AlbumModel(albumId: AlbumId(id: ($0.representativeItem?.albumPersistentID)!), primaryText: $0.representativeItem?.albumTitle, secondaryText: $0.representativeItem?.artist, artwork: $0.representativeItem?.artwork) }
     }
 
     func findByArtistId(artistId: ArtistId) -> [AlbumModel] {
@@ -50,8 +48,7 @@ class AlbumRepository {
         query.addFilterPredicate(property)
 
         return query.collections!.sorted(by: { String($0.representativeItem?.albumTitle ?? "") < String($1.representativeItem?.albumTitle ?? "") })
-            .map { AlbumModel(albumId: AlbumId(id: $0.representativeItem!.albumPersistentID), primaryText: $0.representativeItem?.albumTitle, secondaryText: $0.representativeItem?.artist, artwork: $0.representativeItem?.artwork)
-            }
+            .map { AlbumModel(albumId: AlbumId(id: $0.representativeItem!.albumPersistentID), primaryText: $0.representativeItem?.albumTitle, secondaryText: $0.representativeItem?.artist, artwork: $0.representativeItem?.artwork) }
     }
 
     func findRecently(count: Int) -> [AlbumModel] {

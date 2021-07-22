@@ -37,7 +37,7 @@ struct PlaylistDetailService {
             song.artwork != nil
         })?.artwork
 
-        if !validation(playlist: playlist, songIds: songIds, songs: songs) {
+        if !validation(songIds: songIds, songs: songs) {
             fix(playlist: playlist, songs: songs)
 
             return createModel(playlist: playlist)
@@ -46,7 +46,7 @@ struct PlaylistDetailService {
         return PlaylistDetailModel(playlistId: PlaylistId(id: playlist.id), primaryText: playlist.name, artwork: artwork, songs: arrayed)
     }
 
-    private func validation(playlist: PlaylistRealmModel, songIds: [SongId], songs: [SongModel]) -> Bool {
+    private func validation(songIds: [SongId], songs: [SongModel]) -> Bool {
         return songIds.count == songs.count
     }
 
