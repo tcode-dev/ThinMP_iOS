@@ -35,7 +35,7 @@ struct FavoriteArtistsEditPageView: View {
                 VStack(alignment: .leading) {
                     List {
                         ForEach(vm.artists) { artist in
-                            MediaRowView(media: artist)
+                            PlainRowView(media: artist)
                         }
                         .onMove(perform: move)
                         .onDelete(perform: delete)
