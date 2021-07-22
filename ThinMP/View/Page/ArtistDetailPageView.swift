@@ -37,7 +37,7 @@ struct ArtistDetailPageView: View {
                             VStack(alignment: .leading) {
                                 SectionTitleView("Albums")
                                     .padding(.leading, StyleConstant.Padding.large)
-                                ArtistAlbumListView(list: vm.albums, width: geometry.size.width)
+                                AlbumListView(list: vm.albums, width: geometry.size.width)
                                     .padding(.bottom, StyleConstant.Padding.large)
                                 SectionTitleView("Songs")
                                     .padding(.leading, StyleConstant.Padding.large)

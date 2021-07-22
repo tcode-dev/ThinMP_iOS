@@ -20,7 +20,6 @@ struct EditNavBarView<Content>: View where Content: View {
                 bottom: 0,
                 trailing: 0
             ))
-
             .frame(height: StyleConstant.Height.row + top, alignment: .bottom)
             .background(Color(UIColor.secondarySystemBackground))
             .border(Color(UIColor.systemGray5), width: 1)
