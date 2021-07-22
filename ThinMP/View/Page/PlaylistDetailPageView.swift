@@ -40,7 +40,9 @@ struct PlaylistDetailPageView: View {
                         }
                         ScrollView(showsIndicators: true) {
                             VStack(alignment: .leading) {
-                                SquareImageHeaderView(headerRect: $headerRect, side: geometry.size.width, top: geometry.safeAreaInsets.top, primaryText: vm.primaryText, secondaryText: "Playlist", artwork: vm.artwork)
+                                HeroHeaderView(headerRect: $headerRect, side: geometry.size.width, top: geometry.safeAreaInsets.top, primaryText: vm.primaryText, secondaryText: "Playlist") {
+                                    HeroSquareImageView(side: geometry.size.width, artwork: vm.artwork)
+                                }
                                 LazyVStack(spacing: 0) {
                                     ForEach(vm.songs.indices, id: \.self) { index in
                                         PlayRowView(list: vm.songs, index: index) {

@@ -1,29 +1,24 @@
 //
-//  SquareImageHeaderView.swift
+//  HeroHeaderView.swift
 //  ThinMP
 //
-//  Created by tk on 2020/01/17.
+//  Created by tk on 2020/01/23.
 //
 
-import MediaPlayer
 import SwiftUI
 
-struct SquareImageHeaderView: View {
+struct HeroHeaderView<Content>: View where Content: View {
     @Binding var headerRect: CGRect
 
     let side: CGFloat
     let top: CGFloat
     let primaryText: String?
     let secondaryText: String?
-    let artwork: MPMediaItemArtwork?
+    let content: () -> Content
 
     var body: some View {
         ZStack(alignment: .bottom) {
-            Image(uiImage: artwork?.image(at: CGSize(width: side, height: side)) ?? UIImage(imageLiteralResourceName: "Song"))
-                .resizable()
-                .scaledToFit()
-            LinearGradient(gradient: Gradient(colors: [Color(Color.RGBColorSpace.sRGB, red: 1, green: 1, blue: 1, opacity: 0), Color(UIColor.systemBackground)]), startPoint: .top, endPoint: .bottom)
-                .frame(height: 200)
+            content()
             GeometryReader { primaryTextGeometry in
                 createPrimaryTextView(primaryTextGeometry: primaryTextGeometry)
             }
@@ -35,9 +30,12 @@ struct SquareImageHeaderView: View {
                 .padding(.leading, StyleConstant.button)
                 .padding(.trailing, StyleConstant.button)
         }
-        .frame(width: side, height: side)
+        .frame(height: side)
     }
 
+    /// PrimaryTextのViewを生成する
+    /// ScrollViewの現在位置を取得する方法がないため、親が子のgeometryを参照できるようにする
+    /// GeometryReader直下で変数を代入すると構文エラーになるので別メソッドにしている
     private func createPrimaryTextView(primaryTextGeometry: GeometryProxy) -> some View {
         DispatchQueue.main.async {
             headerRect = primaryTextGeometry.frame(in: .global)
