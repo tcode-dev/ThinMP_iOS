@@ -1,5 +1,5 @@
 //
-//  DetaiNavBarView.swift
+//  HeroNavBarView.swift
 //  ThinMP
 //
 //  Created by tk on 2020/01/19.
@@ -8,7 +8,7 @@
 import MediaPlayer
 import SwiftUI
 
-struct DetaiNavBarView<Content>: View where Content: View {
+struct HeroNavBarView<Content>: View where Content: View {
     let primaryText: String?
     let side: CGFloat
     let top: CGFloat

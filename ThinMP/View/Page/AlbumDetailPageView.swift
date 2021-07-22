@@ -21,7 +21,7 @@ struct AlbumDetailPageView: View {
             ZStack(alignment: .top) {
                 VStack(spacing: 0) {
                     ZStack(alignment: .top) {
-                        DetaiNavBarView(primaryText: vm.primaryText, side: geometry.size.width, top: geometry.safeAreaInsets.top, headerRect: $headerRect) {
+                        HeroNavBarView(primaryText: vm.primaryText, side: geometry.size.width, top: geometry.safeAreaInsets.top, headerRect: $headerRect) {
                             MenuButtonView {
                                 VStack {
                                     ShortcutButtonView(itemId: albumId.id, type: ShortcutType.ALBUM)
