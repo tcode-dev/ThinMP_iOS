@@ -29,7 +29,11 @@ struct SquareImageHeaderView: View {
             }
             .frame(height: StyleConstant.Height.row)
             .offset(y: -40)
-            createSecondaryTextView()
+            SecondaryTextView(secondaryText)
+                .frame(width: abs(side - (StyleConstant.button * 2)), height: 25, alignment: .center)
+                .offset(y: -30)
+                .padding(.leading, StyleConstant.button)
+                .padding(.trailing, StyleConstant.button)
         }
         .frame(width: side, height: side)
     }
@@ -43,17 +47,6 @@ struct SquareImageHeaderView: View {
             TitleView(primaryText).opacity(textOpacity())
         }
         .frame(width: abs(side - (StyleConstant.button * 2)), height: StyleConstant.Height.row)
-        .padding(.leading, StyleConstant.button)
-        .padding(.trailing, StyleConstant.button)
-    }
-
-    private func createSecondaryTextView() -> some View {
-        return VStack {
-            SecondaryTextView(secondaryText).opacity(textOpacity())
-        }
-        .frame(width: abs(side - (StyleConstant.button * 2)), height: 25, alignment: .center)
-        .offset(y: -30)
-        .animation(.easeInOut)
         .padding(.leading, StyleConstant.button)
         .padding(.trailing, StyleConstant.button)
     }

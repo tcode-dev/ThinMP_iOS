@@ -31,12 +31,16 @@ struct CircleImageHeaderView: View {
             }
             .frame(height: StyleConstant.Height.row)
             .offset(y: -40)
-            createSecondaryTextView()
+            SecondaryTextView(secondaryText)
+                .frame(width: abs(side - (StyleConstant.button * 2)), height: 25, alignment: .center)
+                .offset(y: -30)
+                .padding(.leading, StyleConstant.button)
+                .padding(.trailing, StyleConstant.button)
         }
         .frame(height: side)
     }
 
-    /// アーティスト名のViewを生成する
+    /// PrimaryTextのViewを生成する
     /// ScrollViewの現在位置を取得する方法がないため、親が子のgeometryを参照できるようにする
     /// GeometryReader直下で変数を代入すると構文エラーになるので別メソッドにしている
     private func createPrimaryTextView(primaryTextGeometry: GeometryProxy) -> some View {
@@ -48,17 +52,6 @@ struct CircleImageHeaderView: View {
             TitleView(primaryText).opacity(textOpacity())
         }
         .frame(width: abs(side - (StyleConstant.button * 2)), height: StyleConstant.Height.row)
-        .padding(.leading, StyleConstant.button)
-        .padding(.trailing, StyleConstant.button)
-    }
-
-    private func createSecondaryTextView() -> some View {
-        return VStack {
-            SecondaryTextView(secondaryText).opacity(textOpacity())
-        }
-        .frame(width: abs(side - (StyleConstant.button * 2)), height: 25, alignment: .center)
-        .offset(y: -30)
-        .animation(.easeInOut)
         .padding(.leading, StyleConstant.button)
         .padding(.trailing, StyleConstant.button)
     }
