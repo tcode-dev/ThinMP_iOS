@@ -13,10 +13,11 @@ struct PlaylistsService {
         let playlists = playlistRepository.findAll()
 
         return playlists.map { playlist in
+            let playlistId = PlaylistId(id: playlist.id)
             let playlistDetailService = PlaylistDetailService()
-            let playlistDetailModel = playlistDetailService.findById(playlistId: PlaylistId(id: playlist.id))
+            let playlistDetailModel = playlistDetailService.findById(playlistId: playlistId)
 
-            return PlaylistModel(playlistId: PlaylistId(id: playlist.id), primaryText: playlist.name, artwork: playlistDetailModel.artwork)
+            return PlaylistModel(playlistId: playlistId, primaryText: playlistDetailModel.primaryText, artwork: playlistDetailModel.artwork)
         }
     }
 }
