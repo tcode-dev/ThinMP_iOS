@@ -1,27 +1,31 @@
 //
-//  PlaylistDetailHeaderView.swift
+//  CircleImageHeaderView.swift
 //  ThinMP
 //
-//  Created by tk on 2021/04/11.
+//  Created by tk on 2020/01/23.
 //
 
 import MediaPlayer
 import SwiftUI
 
-struct PlaylistDetailHeaderView: View {
+struct CircleImageHeaderView: View {
     @Binding var headerRect: CGRect
+
     let side: CGFloat
     let top: CGFloat
-    let name: String?
+    let primaryText: String?
+    let secondaryText: String?
     let artwork: MPMediaItemArtwork?
 
     var body: some View {
         ZStack(alignment: .bottom) {
-            Image(uiImage: artwork?.image(at: CGSize(width: side, height: side)) ?? UIImage(imageLiteralResourceName: "Song"))
+            Image(uiImage: artwork?.image(at: CGSize(width: side, height: side)) ?? UIImage())
                 .resizable()
                 .scaledToFit()
-            LinearGradient(gradient: Gradient(colors: [Color(Color.RGBColorSpace.sRGB, red: 1, green: 1, blue: 1, opacity: 0), Color(UIColor.systemBackground)]), startPoint: .top, endPoint: .bottom)
-                .frame(height: 200)
+                .blur(radius: 10.0)
+            LinearGradient(gradient: Gradient(colors: [Color(Color.RGBColorSpace.sRGB, red: 1, green: 1, blue: 1, opacity: 0), Color(UIColor.systemBackground)]), startPoint: .top, endPoint: .bottom).frame(height: 355).offset(y: 25)
+            CircleImageView(artwork: artwork, size: side / 3)
+                .offset(y: -(side / 3))
             GeometryReader { primaryTextGeometry in
                 createPrimaryTextView(primaryTextGeometry: primaryTextGeometry)
             }
@@ -29,16 +33,19 @@ struct PlaylistDetailHeaderView: View {
             .offset(y: -40)
             createSecondaryTextView()
         }
-        .frame(width: side, height: side)
+        .frame(height: side)
     }
 
+    /// アーティスト名のViewを生成する
+    /// ScrollViewの現在位置を取得する方法がないため、親が子のgeometryを参照できるようにする
+    /// GeometryReader直下で変数を代入すると構文エラーになるので別メソッドにしている
     private func createPrimaryTextView(primaryTextGeometry: GeometryProxy) -> some View {
         DispatchQueue.main.async {
             headerRect = primaryTextGeometry.frame(in: .global)
         }
 
         return VStack {
-            TitleView(name).opacity(textOpacity())
+            TitleView(primaryText).opacity(textOpacity())
         }
         .frame(width: abs(side - (StyleConstant.button * 2)), height: StyleConstant.Height.row)
         .padding(.leading, StyleConstant.button)
@@ -47,7 +54,7 @@ struct PlaylistDetailHeaderView: View {
 
     private func createSecondaryTextView() -> some View {
         return VStack {
-            SecondaryTextView("Playlist").opacity(textOpacity())
+            SecondaryTextView(secondaryText).opacity(textOpacity())
         }
         .frame(width: abs(side - (StyleConstant.button * 2)), height: 25, alignment: .center)
         .offset(y: -30)

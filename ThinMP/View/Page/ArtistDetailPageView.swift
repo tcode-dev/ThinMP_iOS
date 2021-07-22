@@ -31,7 +31,7 @@ struct ArtistDetailPageView: View {
                             }
                         }
                         ScrollView {
-                            ArtistDetailHeaderView(vm: vm, headerRect: $headerRect, side: geometry.size.width, top: geometry.safeAreaInsets.top)
+                            CircleImageHeaderView(headerRect: $headerRect, side: geometry.size.width, top: geometry.safeAreaInsets.top, primaryText: vm.primaryText, secondaryText: vm.secondaryText, artwork: vm.artwork)
                             VStack(alignment: .leading) {
                                 SectionTitleView("Albums")
                                     .padding(.leading, StyleConstant.Padding.large)

@@ -1,28 +1,29 @@
 //
-//  ArtistDetailHeaderView.swift
+//  SquareImageHeaderView.swift
 //  ThinMP
 //
-//  Created by tk on 2020/01/23.
+//  Created by tk on 2020/01/17.
 //
 
+import MediaPlayer
 import SwiftUI
 
-struct ArtistDetailHeaderView: View {
-    @ObservedObject var vm: ArtistDetailViewModel
+struct SquareImageHeaderView: View {
     @Binding var headerRect: CGRect
 
     let side: CGFloat
     let top: CGFloat
+    let primaryText: String?
+    let secondaryText: String?
+    let artwork: MPMediaItemArtwork?
 
     var body: some View {
         ZStack(alignment: .bottom) {
-            Image(uiImage: vm.artwork?.image(at: CGSize(width: side, height: side)) ?? UIImage())
+            Image(uiImage: artwork?.image(at: CGSize(width: side, height: side)) ?? UIImage(imageLiteralResourceName: "Song"))
                 .resizable()
                 .scaledToFit()
-                .blur(radius: 10.0)
-            LinearGradient(gradient: Gradient(colors: [Color(Color.RGBColorSpace.sRGB, red: 1, green: 1, blue: 1, opacity: 0), Color(UIColor.systemBackground)]), startPoint: .top, endPoint: .bottom).frame(height: 355).offset(y: 25)
-            CircleImageView(artwork: vm.artwork, size: side / 3)
-                .offset(y: -(side / 3))
+            LinearGradient(gradient: Gradient(colors: [Color(Color.RGBColorSpace.sRGB, red: 1, green: 1, blue: 1, opacity: 0), Color(UIColor.systemBackground)]), startPoint: .top, endPoint: .bottom)
+                .frame(height: 200)
             GeometryReader { primaryTextGeometry in
                 createPrimaryTextView(primaryTextGeometry: primaryTextGeometry)
             }
@@ -30,19 +31,16 @@ struct ArtistDetailHeaderView: View {
             .offset(y: -40)
             createSecondaryTextView()
         }
-        .frame(height: side)
+        .frame(width: side, height: side)
     }
 
-    /// アーティスト名のViewを生成する
-    /// ScrollViewの現在位置を取得する方法がないため、親が子のgeometryを参照できるようにする
-    /// GeometryReader直下で変数を代入すると構文エラーになるので別メソッドにしている
     private func createPrimaryTextView(primaryTextGeometry: GeometryProxy) -> some View {
         DispatchQueue.main.async {
             headerRect = primaryTextGeometry.frame(in: .global)
         }
 
         return VStack {
-            TitleView(vm.primaryText).opacity(textOpacity())
+            TitleView(primaryText).opacity(textOpacity())
         }
         .frame(width: abs(side - (StyleConstant.button * 2)), height: StyleConstant.Height.row)
         .padding(.leading, StyleConstant.button)
@@ -51,7 +49,7 @@ struct ArtistDetailHeaderView: View {
 
     private func createSecondaryTextView() -> some View {
         return VStack {
-            SecondaryTextView(vm.secondaryText).opacity(textOpacity())
+            SecondaryTextView(secondaryText).opacity(textOpacity())
         }
         .frame(width: abs(side - (StyleConstant.button * 2)), height: 25, alignment: .center)
         .offset(y: -30)
