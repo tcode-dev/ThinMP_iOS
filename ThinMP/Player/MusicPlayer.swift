@@ -8,7 +8,7 @@
 import MediaPlayer
 
 class MusicPlayer: ObservableObject {
-    private let SECOND: Double = 3
+    private let PREV_SECOND: Double = 3
 
     @Published var isActive: Bool = false
     @Published var isPlaying: Bool = false
@@ -117,6 +117,7 @@ class MusicPlayer: ObservableObject {
             isRepeatOne = false
             isRepeatOff = true
         }
+
         player.repeatMode = player.repeatMode == .none ? .all
             : player.repeatMode == .all ? .one
             : .none
@@ -154,6 +155,7 @@ class MusicPlayer: ObservableObject {
             } else {
                 register.add(songId: songId)
             }
+
             isFavoriteSong = !isFavoriteSong
         }
     }
@@ -194,7 +196,8 @@ class MusicPlayer: ObservableObject {
 
     private func prev() {
         stop()
-        if currentSecond <= SECOND {
+
+        if currentSecond <= PREV_SECOND {
             player.skipToPreviousItem()
             setSong()
         } else {
@@ -274,6 +277,7 @@ class MusicPlayer: ObservableObject {
         if player.repeatMode == .none, player.indexOfNowPlayingItem == 0, !isFirst {
             isPlaying = false
         }
+
         isFirst = false
     }
 
