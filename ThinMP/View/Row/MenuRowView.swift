@@ -18,6 +18,6 @@ struct MenuRowView: View {
             .frame(height: 34)
             Spacer()
         }
-        .padding(StyleConstant.Padding.small)
+        .padding(StyleConstant.Padding.tiny)
     }
 }

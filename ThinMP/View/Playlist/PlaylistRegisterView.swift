@@ -49,7 +49,7 @@ struct PlaylistRegisterView: View {
                         }
                     }
                 }
-                .padding(.bottom, StyleConstant.Padding.medium)
+                .padding(.bottom, StyleConstant.Padding.small)
                 .frame(height: getHeight())
             } else {
                 VStack(spacing: 0) {
@@ -81,11 +81,11 @@ struct PlaylistRegisterView: View {
                     }
                     .frame(height: StyleConstant.Height.row)
                 }
-                .padding(.horizontal, StyleConstant.Padding.medium)
+                .padding(.horizontal, StyleConstant.Padding.small)
             }
         }
         .frame(width: .infinity)
-        .padding(.horizontal, StyleConstant.Padding.medium)
+        .padding(.horizontal, StyleConstant.Padding.small)
         .background(Color(UIColor.systemGray5))
         .cornerRadius(StyleConstant.cornerRadius)
         .padding(.horizontal, StyleConstant.Padding.large)
@@ -95,7 +95,7 @@ struct PlaylistRegisterView: View {
     }
 
     private func getHeight() -> CGFloat? {
-        let panelHeight = StyleConstant.Height.header + (CGFloat(vm.playlists.count) * (StyleConstant.Height.row + StyleConstant.Height.divider)) + StyleConstant.Padding.medium
+        let panelHeight = StyleConstant.Height.header + (CGFloat(vm.playlists.count) * (StyleConstant.Height.row + StyleConstant.Height.divider)) + StyleConstant.Padding.small
 
         if panelHeight > height {
             return height - (StyleConstant.Padding.large * 2)

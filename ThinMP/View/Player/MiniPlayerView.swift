@@ -54,7 +54,7 @@ struct MiniPlayerView: View {
                 .frame(height: buttonSize)
                 .padding(EdgeInsets(
                     top: 0,
-                    leading: StyleConstant.Padding.medium,
+                    leading: StyleConstant.Padding.large,
                     bottom: bottom,
                     trailing: 0
                 ))

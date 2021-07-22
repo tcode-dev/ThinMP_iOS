@@ -18,8 +18,9 @@ enum StyleConstant {
     }
 
     enum Padding {
-        static let small: CGFloat = 5
-        static let medium: CGFloat = 10
+        static let tiny: CGFloat = 5
+        static let small: CGFloat = 10
+        static let medium: CGFloat = 15
         static let large: CGFloat = 20
     }
 }

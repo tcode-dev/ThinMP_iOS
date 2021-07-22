@@ -16,6 +16,6 @@ struct ArtistAlbumCellView: View {
             SquareImageView(artwork: album.artwork, size: size)
             PrimaryTextView(album.primaryText)
         }
-        .padding(StyleConstant.Padding.medium)
+        .padding(StyleConstant.Padding.small)
     }
 }

@@ -57,14 +57,14 @@ struct PlayerView: View {
                             seeking = changed
                         }
                     })
-                        .padding(.leading, StyleConstant.Padding.medium)
-                        .padding(.trailing, StyleConstant.Padding.medium)
+                        .padding(.leading, StyleConstant.Padding.small)
+                        .padding(.trailing, StyleConstant.Padding.small)
                         .accentColor(Color(.label))
 
                     HStack {
-                        SecondaryTextView("\(convertTime(time: musicPlayer.currentSecond))").frame(width: 50).padding(.leading, StyleConstant.Padding.medium)
+                        SecondaryTextView("\(convertTime(time: musicPlayer.currentSecond))").frame(width: 50).padding(.leading, StyleConstant.Padding.small)
                         Spacer()
-                        SecondaryTextView("\(convertTime(time: musicPlayer.durationSecond))").frame(width: 50).padding(.trailing, StyleConstant.Padding.medium)
+                        SecondaryTextView("\(convertTime(time: musicPlayer.durationSecond))").frame(width: 50).padding(.trailing, StyleConstant.Padding.small)
                     }
 
                     Spacer()

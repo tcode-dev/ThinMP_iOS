@@ -36,14 +36,14 @@ struct MainPageView: View {
                                 }
                             }
                         }
-                        .padding(.leading, StyleConstant.Padding.large)
+                        .padding(.leading, StyleConstant.Padding.medium)
                         .padding(.bottom, StyleConstant.Padding.large)
                         if vm.shortcutMenu.visibility {
                             VStack(alignment: .leading) {
                                 SectionTitleView(vm.shortcutMenu.primaryText)
                                     .padding(.leading, StyleConstant.Padding.large)
                                 ShortcutListView(list: vm.shortcuts, width: geometry.size.width, callback: { vm.load() })
-                                    .padding(.bottom, StyleConstant.Padding.medium)
+                                    .padding(.bottom, StyleConstant.Padding.small)
                             }
                         }
                         if vm.recentlyMenu.visibility {
@@ -51,7 +51,7 @@ struct MainPageView: View {
                                 SectionTitleView(vm.recentlyMenu.primaryText)
                                     .padding(.leading, StyleConstant.Padding.large)
                                 AlbumListView(list: vm.albums, width: geometry.size.width, callback: { vm.load() })
-                                    .padding(.bottom, StyleConstant.Padding.medium)
+                                    .padding(.bottom, StyleConstant.Padding.small)
                             }
                         }
                     }
