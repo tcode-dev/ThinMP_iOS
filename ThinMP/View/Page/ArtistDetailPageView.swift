@@ -55,7 +55,7 @@ struct ArtistDetailPageView: View {
                                             }
                                         }
                                         Divider()
-                                    }.padding(.leading, StyleConstant.Padding.large)
+                                    }.padding(.leading, StyleConstant.Padding.medium)
                                 }
                             }
                         }
