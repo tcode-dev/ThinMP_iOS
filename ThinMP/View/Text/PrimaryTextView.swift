@@ -11,7 +11,11 @@ struct PrimaryTextView: View {
     private let text: String
 
     init(_ text: String?) {
-        self.text = text ?? "unknown"
+        if let text = text {
+            self.text = text.isEmpty ? "unknown" : text
+        } else {
+            self.text = "unknown"
+        }
     }
 
     var body: some View {
