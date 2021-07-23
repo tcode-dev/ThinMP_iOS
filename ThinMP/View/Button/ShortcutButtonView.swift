@@ -9,7 +9,7 @@ import MediaPlayer
 import SwiftUI
 
 struct ShortcutButtonView: View {
-    @State private var displayed: Bool = false
+    @State private var initialDisplay: Bool = true
     @State private var exists: Bool = false
 
     private let itemId: ShortcutItemIdProtocol
@@ -23,54 +23,48 @@ struct ShortcutButtonView: View {
     }
 
     var body: some View {
-        if !displayed {
+        Group {
+            if initialDisplay {
+                let register = ShortcutRegister()
+
+                if !register.exists(itemId: itemId, type: type) {
+                    createAddButton()
+                } else {
+                    createRemoveButton()
+                }
+            } else {
+                if !exists {
+                    createAddButton()
+                } else {
+                    createRemoveButton()
+                }
+            }
+        }
+    }
+
+    private func createAddButton() -> some View {
+        return Button(action: {
             let register = ShortcutRegister()
 
-            if !register.exists(itemId: itemId, type: type) {
-                return Button(action: {
-                    let register = ShortcutRegister()
+            register.add(itemId: itemId, type: type)
+            exists = true
+            initialDisplay = false
+            callback()
+        }) {
+            Text("AddShortcut")
+        }
+    }
 
-                    register.add(itemId: itemId, type: type)
-                    exists = true
-                    displayed.toggle()
-                    callback()
-                }) {
-                    Text("AddShortcut")
-                }
-            } else {
-                return Button(action: {
-                    let register = ShortcutRegister()
+    private func createRemoveButton() -> some View {
+        Button(action: {
+            let register = ShortcutRegister()
 
-                    register.delete(itemId: itemId, type: type)
-                    exists = false
-                    displayed.toggle()
-                    callback()
-                }) {
-                    Text("RemoveShortcut")
-                }
-            }
-        } else {
-            if !exists {
-                return Button(action: {
-                    let register = ShortcutRegister()
-
-                    register.add(itemId: itemId, type: type)
-                    exists.toggle()
-                    callback()
-                }) {
-                    Text("AddShortcut")
-                }
-            } else {
-                return Button(action: {
-                    let register = ShortcutRegister()
-
-                    register.delete(itemId: itemId, type: type)
-                    exists.toggle()
-                    callback()
-                }) {
-                    Text("RemoveShortcut")
-                }
-            }
+            register.delete(itemId: itemId, type: type)
+            exists = false
+            initialDisplay = false
+            callback()
+        }) {
+            Text("RemoveShortcut")
         }
     }
 }
