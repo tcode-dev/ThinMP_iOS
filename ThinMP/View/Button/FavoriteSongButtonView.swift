@@ -8,11 +8,11 @@
 import MediaPlayer
 import SwiftUI
 
-// 登録、削除後にボタンが切り替わらないので初回描画と2回目以降の描画で処理を分ける
+// 登録、削除後にボタンを切り替えるために、初回と2回目以降の処理を分ける
 // スクロールで画面表出した時にinitが呼ばれるのでinitでは処理しない
 // 長押しで表出した時にbodyが呼ばれるのでbodyで処理する
 struct FavoriteSongButtonView: View {
-    @State private var displayed: Bool = false
+    @State private var initialDisplay: Bool = true
     @State private var exists: Bool = false
 
     private let songId: SongId
@@ -24,56 +24,50 @@ struct FavoriteSongButtonView: View {
     }
 
     var body: some View {
-        if !displayed {
-            // 初回描画時
+        Group {
+            if initialDisplay {
+                // 初回描画時
+                let register = FavoriteSongRegister()
+
+                if !register.exists(songId: songId) {
+                    createAddButton()
+                } else {
+                    createRemoveButton()
+                }
+            } else {
+                // 2回目以降
+                if !exists {
+                    createAddButton()
+                } else {
+                    createRemoveButton()
+                }
+            }
+        }
+    }
+
+    private func createAddButton() -> some View {
+        return Button(action: {
             let register = FavoriteSongRegister()
 
-            if !register.exists(songId: songId) {
-                return Button(action: {
-                    let register = FavoriteSongRegister()
+            register.add(songId: songId)
+            exists = true
+            initialDisplay = false
+            callback()
+        }) {
+            Text("AddFavorites")
+        }
+    }
 
-                    register.add(songId: songId)
-                    exists = true
-                    displayed.toggle()
-                    callback()
-                }) {
-                    Text("AddFavorites")
-                }
-            } else {
-                return Button(action: {
-                    let register = FavoriteSongRegister()
+    private func createRemoveButton() -> some View {
+        Button(action: {
+            let register = FavoriteSongRegister()
 
-                    register.delete(songId: songId)
-                    exists = false
-                    displayed.toggle()
-                    callback()
-                }) {
-                    Text("RemoveFavorites")
-                }
-            }
-        } else {
-            // 2回目以降
-            if !exists {
-                return Button(action: {
-                    let register = FavoriteSongRegister()
-
-                    register.add(songId: songId)
-                    exists.toggle()
-                    callback()
-                }) {
-                    Text("AddFavorites")
-                }
-            } else {
-                return Button(action: {
-                    let register = FavoriteSongRegister()
-
-                    register.delete(songId: songId)
-                    exists.toggle()
-                    callback()
-                }) {
-                    Text("RemoveFavorites")
-                }
-            }
+            register.delete(songId: songId)
+            exists = false
+            initialDisplay = false
+            callback()
+        }) {
+            Text("RemoveFavorites")
         }
     }
 }
