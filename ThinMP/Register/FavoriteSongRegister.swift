@@ -7,7 +7,7 @@
 
 import MediaPlayer
 
-struct FavoriteSongRegister {
+struct FavoriteSongRegister: FavoriteSongRegisterProtocol {
     let repository: FavoriteSongRepository
 
     init() {
@@ -18,15 +18,15 @@ struct FavoriteSongRegister {
         repository.add(songId: songId)
     }
 
-    func delete(songId: SongId) {
-        repository.delete(songId: songId)
+    func exists(songId: SongId) -> Bool {
+        return repository.exists(songId: songId)
     }
 
     func update(songIds: [SongId]) {
         repository.update(songIds: songIds)
     }
 
-    func exists(songId: SongId) -> Bool {
-        return repository.exists(songId: songId)
+    func delete(songId: SongId) {
+        repository.delete(songId: songId)
     }
 }

@@ -7,7 +7,7 @@
 
 import MediaPlayer
 
-struct PlaylistRegister {
+struct PlaylistRegister: PlaylistRegisterProtocol {
     let repository: PlaylistRepository
 
     init() {
