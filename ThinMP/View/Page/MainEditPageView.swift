@@ -40,8 +40,8 @@ struct MainEditPageView: View {
                         .onMove(perform: moveMenu)
                         .listRowInsets(.init())
                         MenuEditRowView(menu: vm.shortcutMenu)
-                        ForEach(vm.shortcuts) { media in
-                            MediaRowView(media: media)
+                        ForEach(vm.shortcuts) { shortcut in
+                            ShortcutRowView(shortcut: shortcut)
                         }
                         .onMove(perform: moveShortcut)
                         .onDelete(perform: deleteShortcut)
