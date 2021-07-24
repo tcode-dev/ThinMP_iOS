@@ -8,15 +8,11 @@
 import MediaPlayer
 import RealmSwift
 
-struct ShortcutRepository {
+struct ShortcutRepository: ShortcutRepositoryProtocol {
     let realm: Realm
 
     init() {
         realm = try! Realm()
-    }
-
-    func findAll() -> [ShortcutRealmModel] {
-        return Array(realm.objects(ShortcutRealmModel.self).sorted(byKeyPath: ShortcutRealmModel.ORDER, ascending: false))
     }
 
     func add(itemId: ShortcutItemIdProtocol, type: ShortcutType) {
@@ -27,12 +23,8 @@ struct ShortcutRepository {
         }
     }
 
-    func delete(itemId: ShortcutItemIdProtocol, type: ShortcutType) {
-        switch itemId {
-        case let value as MPMediaEntityPersistentID: delete(itemId: String(value), type: type)
-        case let value as String: delete(itemId: value, type: type)
-        default: break
-        }
+    func findAll() -> [ShortcutRealmModel] {
+        return Array(realm.objects(ShortcutRealmModel.self).sorted(byKeyPath: ShortcutRealmModel.ORDER, ascending: false))
     }
 
     func exists(itemId: ShortcutItemIdProtocol, type: ShortcutType) -> Bool {
@@ -48,17 +40,11 @@ struct ShortcutRepository {
         sort(shortcutIds: shortcutIds)
     }
 
-    private func sort(shortcutIds: [ShortcutId]) {
-        let models = findByIds(shortcutIds: shortcutIds)
-        let sorted = shortcutIds.map { shortcutId in
-            models.first { $0.id == shortcutId.id }
-        }
-        let count = sorted.count
-
-        try! realm.write {
-            for (index, model) in sorted.enumerated() {
-                model?.order = count - index
-            }
+    func delete(itemId: ShortcutItemIdProtocol, type: ShortcutType) {
+        switch itemId {
+        case let value as MPMediaEntityPersistentID: delete(itemId: String(value), type: type)
+        case let value as String: delete(itemId: value, type: type)
+        default: break
         }
     }
 
@@ -76,6 +62,18 @@ struct ShortcutRepository {
         try! realm.write {
             realm.add(shortcut)
         }
+    }
+
+    private func find(itemId: String, type: ShortcutType) -> Results<ShortcutRealmModel> {
+        return realm.objects(ShortcutRealmModel.self).filter("\(ShortcutRealmModel.ITEM_ID) = '\(itemId)' AND \(ShortcutRealmModel.TYPE) = \(type.rawValue)")
+    }
+
+    private func findByIds(shortcutIds: [ShortcutId]) -> Results<ShortcutRealmModel> {
+        return realm.objects(ShortcutRealmModel.self).filter("\(ShortcutRealmModel.ID) IN %@", shortcutIds.map { $0.id })
+    }
+
+    private func exists(itemId: String, type: ShortcutType) -> Bool {
+        return find(itemId: itemId, type: type).count == 1
     }
 
     private func delete(itemId: String, type: ShortcutType) {
@@ -104,19 +102,21 @@ struct ShortcutRepository {
         }
     }
 
-    private func findByIds(shortcutIds: [ShortcutId]) -> Results<ShortcutRealmModel> {
-        return realm.objects(ShortcutRealmModel.self).filter("\(ShortcutRealmModel.ID) IN %@", shortcutIds.map { $0.id })
-    }
-
-    private func exists(itemId: String, type: ShortcutType) -> Bool {
-        return find(itemId: itemId, type: type).count == 1
-    }
-
-    private func find(itemId: String, type: ShortcutType) -> Results<ShortcutRealmModel> {
-        return realm.objects(ShortcutRealmModel.self).filter("\(ShortcutRealmModel.ITEM_ID) = '\(itemId)' AND \(ShortcutRealmModel.TYPE) = \(type.rawValue)")
-    }
-
     private func incrementOrder() -> Int {
         return (realm.objects(ShortcutRealmModel.self).max(ofProperty: ShortcutRealmModel.ORDER) as Int? ?? 0) + 1
+    }
+
+    private func sort(shortcutIds: [ShortcutId]) {
+        let models = findByIds(shortcutIds: shortcutIds)
+        let sorted = shortcutIds.map { shortcutId in
+            models.first { $0.id == shortcutId.id }
+        }
+        let count = sorted.count
+
+        try! realm.write {
+            for (index, model) in sorted.enumerated() {
+                model?.order = count - index
+            }
+        }
     }
 }

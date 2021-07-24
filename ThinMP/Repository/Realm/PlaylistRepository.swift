@@ -8,23 +8,11 @@
 import MediaPlayer
 import RealmSwift
 
-struct PlaylistRepository {
+struct PlaylistRepository: PlaylistRepositoryProtocol {
     let realm: Realm
 
     init() {
         realm = try! Realm()
-    }
-
-    func findAll() -> [PlaylistRealmModel] {
-        return Array(realm.objects(PlaylistRealmModel.self).sorted(byKeyPath: PlaylistRealmModel.ORDER))
-    }
-
-    func findById(playlistId: PlaylistId) -> PlaylistRealmModel {
-        return realm.objects(PlaylistRealmModel.self).filter("\(PlaylistRealmModel.ID) = '\(playlistId.id)'").first!
-    }
-
-    func findByIds(playlistIds: [PlaylistId]) -> Results<PlaylistRealmModel> {
-        return realm.objects(PlaylistRealmModel.self).filter("\(PlaylistRealmModel.ID) IN %@", playlistIds.map { $0.id })
     }
 
     func create(songId: SongId, name: String) {
@@ -55,6 +43,18 @@ struct PlaylistRepository {
         try! realm.write {
             playlist.songs.append(song)
         }
+    }
+
+    func findAll() -> [PlaylistRealmModel] {
+        return Array(realm.objects(PlaylistRealmModel.self).sorted(byKeyPath: PlaylistRealmModel.ORDER))
+    }
+
+    func findById(playlistId: PlaylistId) -> PlaylistRealmModel {
+        return realm.objects(PlaylistRealmModel.self).filter("\(PlaylistRealmModel.ID) = '\(playlistId.id)'").first!
+    }
+
+    func findByIds(playlistIds: [PlaylistId]) -> [PlaylistRealmModel] {
+        return Array(realm.objects(PlaylistRealmModel.self).filter("\(PlaylistRealmModel.ID) IN %@", playlistIds.map { $0.id }))
     }
 
     // プレイリスト一覧の更新
@@ -90,12 +90,6 @@ struct PlaylistRepository {
         delete(playlistIds: [playlistId])
     }
 
-    private func getDeleteIds(playlistIds: [PlaylistId]) -> [PlaylistId] {
-        let currentIds: [String] = realm.objects(PlaylistRealmModel.self).map { $0.id }
-
-        return currentIds.filter { !playlistIds.map { $0.id }.contains($0) }.map { PlaylistId(id: $0) }
-    }
-
     private func delete(playlistIds: [PlaylistId]) {
         let playlists = findByIds(playlistIds: playlistIds)
 
@@ -123,5 +117,11 @@ struct PlaylistRepository {
 
     private func incrementOrder() -> Int {
         return (realm.objects(PlaylistRealmModel.self).max(ofProperty: PlaylistRealmModel.ORDER) as Int? ?? 0) + 1
+    }
+
+    private func getDeleteIds(playlistIds: [PlaylistId]) -> [PlaylistId] {
+        let currentIds: [String] = realm.objects(PlaylistRealmModel.self).map { $0.id }
+
+        return currentIds.filter { !playlistIds.map { $0.id }.contains($0) }.map { PlaylistId(id: $0) }
     }
 }

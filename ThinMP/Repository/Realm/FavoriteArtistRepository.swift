@@ -8,7 +8,7 @@
 import MediaPlayer
 import RealmSwift
 
-struct FavoriteArtistRepository {
+struct FavoriteArtistRepository: FavoriteArtistRepositoryProtocol {
     let realm: Realm
 
     init() {
@@ -16,8 +16,6 @@ struct FavoriteArtistRepository {
     }
 
     func findAll() -> [ArtistId] {
-        let realm = try! Realm()
-
         return realm.objects(FavoriteArtistRealmModel.self)
             .sorted(byKeyPath: FavoriteArtistRealmModel.ORDER)
             .map { ArtistId(id: UInt64($0.artistId)!) }
@@ -42,6 +40,11 @@ struct FavoriteArtistRepository {
         }
     }
 
+    func update(artistIds: [ArtistId]) {
+        truncate()
+        bulkInsert(artistIds: artistIds)
+    }
+
     func delete(artistId: ArtistId) {
         let favoriteArtists = find(artistId: artistId)
 
@@ -51,30 +54,6 @@ struct FavoriteArtistRepository {
 
         try! realm.write {
             realm.delete(favoriteArtists)
-        }
-    }
-
-    func update(artistIds: [ArtistId]) {
-        truncate()
-        bulkInsert(artistIds: artistIds)
-    }
-
-    private func find(artistId: ArtistId) -> Results<FavoriteArtistRealmModel> {
-        return realm.objects(FavoriteArtistRealmModel.self).filter("\(FavoriteArtistRealmModel.ARTIST_ID) = '\(String(artistId.id))'")
-    }
-
-    private func incrementOrder() -> Int {
-        return (realm.objects(FavoriteArtistRealmModel.self).max(ofProperty: FavoriteArtistRealmModel.ORDER) as Int? ?? 0) + 1
-    }
-
-    private func truncate() {
-        let results = realm.objects(FavoriteArtistRealmModel.self)
-        if results.count == 0 {
-            return
-        }
-
-        try! realm.write {
-            realm.delete(results)
         }
     }
 
@@ -89,5 +68,24 @@ struct FavoriteArtistRepository {
         }
 
         try! realm.commitWrite()
+    }
+
+    private func find(artistId: ArtistId) -> Results<FavoriteArtistRealmModel> {
+        return realm.objects(FavoriteArtistRealmModel.self).filter("\(FavoriteArtistRealmModel.ARTIST_ID) = '\(String(artistId.id))'")
+    }
+
+    private func truncate() {
+        let results = realm.objects(FavoriteArtistRealmModel.self)
+        if results.count == 0 {
+            return
+        }
+
+        try! realm.write {
+            realm.delete(results)
+        }
+    }
+
+    private func incrementOrder() -> Int {
+        return (realm.objects(FavoriteArtistRealmModel.self).max(ofProperty: FavoriteArtistRealmModel.ORDER) as Int? ?? 0) + 1
     }
 }

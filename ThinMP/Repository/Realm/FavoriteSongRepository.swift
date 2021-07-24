@@ -8,17 +8,11 @@
 import MediaPlayer
 import RealmSwift
 
-struct FavoriteSongRepository {
+struct FavoriteSongRepository: FavoriteSongRepositoryProtocol {
     let realm: Realm
 
     init() {
         realm = try! Realm()
-    }
-
-    func findAll() -> [SongId] {
-        return realm.objects(FavoriteSongRealmModel.self)
-            .sorted(byKeyPath: FavoriteSongRealmModel.ORDER)
-            .map { SongId(id: UInt64($0.songId)!) }
     }
 
     func add(songId: SongId) {
@@ -38,6 +32,21 @@ struct FavoriteSongRepository {
         }
     }
 
+    func findAll() -> [SongId] {
+        return realm.objects(FavoriteSongRealmModel.self)
+            .sorted(byKeyPath: FavoriteSongRealmModel.ORDER)
+            .map { SongId(id: UInt64($0.songId)!) }
+    }
+
+    func exists(songId: SongId) -> Bool {
+        return find(songId: songId).count == 1
+    }
+
+    func update(songIds: [SongId]) {
+        truncate()
+        bulkInsert(songIds: songIds)
+    }
+
     func delete(songId: SongId) {
         let favoriteSongs = find(songId: songId)
 
@@ -47,26 +56,6 @@ struct FavoriteSongRepository {
 
         try! realm.write {
             realm.delete(favoriteSongs)
-        }
-    }
-
-    func update(songIds: [SongId]) {
-        truncate()
-        bulkInsert(songIds: songIds)
-    }
-
-    func exists(songId: SongId) -> Bool {
-        return find(songId: songId).count == 1
-    }
-
-    private func truncate() {
-        let results = realm.objects(FavoriteSongRealmModel.self)
-        if results.count == 0 {
-            return
-        }
-
-        try! realm.write {
-            realm.delete(results)
         }
     }
 
@@ -86,6 +75,17 @@ struct FavoriteSongRepository {
     private func find(songId: SongId) -> Results<FavoriteSongRealmModel> {
         return realm.objects(FavoriteSongRealmModel.self)
             .filter("\(FavoriteSongRealmModel.SONG_ID) = '\(String(songId.id))'")
+    }
+
+    private func truncate() {
+        let results = realm.objects(FavoriteSongRealmModel.self)
+        if results.count == 0 {
+            return
+        }
+
+        try! realm.write {
+            realm.delete(results)
+        }
     }
 
     private func incrementOrder() -> Int {

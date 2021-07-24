@@ -97,6 +97,10 @@
 		52C3B24426AC6755006C841E /* FavoriteSongRegisterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C3B24326AC6755006C841E /* FavoriteSongRegisterProtocol.swift */; };
 		52C3B24626AC67B8006C841E /* PlaylistRegisterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C3B24526AC67B8006C841E /* PlaylistRegisterProtocol.swift */; };
 		52C3B24826AC6822006C841E /* ShortcutRegisterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C3B24726AC6822006C841E /* ShortcutRegisterProtocol.swift */; };
+		52C3B24A26AC6AD1006C841E /* FavoriteArtistRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C3B24926AC6AD1006C841E /* FavoriteArtistRepositoryProtocol.swift */; };
+		52C3B24C26AC6C23006C841E /* FavoriteSongRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C3B24B26AC6C23006C841E /* FavoriteSongRepositoryProtocol.swift */; };
+		52C3B24E26AC6DBD006C841E /* PlaylistRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C3B24D26AC6DBD006C841E /* PlaylistRepositoryProtocol.swift */; };
+		52C3B25026AC7105006C841E /* ShortcutRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C3B24F26AC7105006C841E /* ShortcutRepositoryProtocol.swift */; };
 		52C5FA41264126F700B6269C /* MediaRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C5FA40264126F700B6269C /* MediaRowView.swift */; };
 		52C5FA43264127AC00B6269C /* MediaProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C5FA42264127AC00B6269C /* MediaProtocol.swift */; };
 		52C5FA49264129D900B6269C /* SongModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C5FA48264129D900B6269C /* SongModel.swift */; };
@@ -230,6 +234,10 @@
 		52C3B24326AC6755006C841E /* FavoriteSongRegisterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteSongRegisterProtocol.swift; sourceTree = "<group>"; };
 		52C3B24526AC67B8006C841E /* PlaylistRegisterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistRegisterProtocol.swift; sourceTree = "<group>"; };
 		52C3B24726AC6822006C841E /* ShortcutRegisterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutRegisterProtocol.swift; sourceTree = "<group>"; };
+		52C3B24926AC6AD1006C841E /* FavoriteArtistRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteArtistRepositoryProtocol.swift; sourceTree = "<group>"; };
+		52C3B24B26AC6C23006C841E /* FavoriteSongRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteSongRepositoryProtocol.swift; sourceTree = "<group>"; };
+		52C3B24D26AC6DBD006C841E /* PlaylistRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistRepositoryProtocol.swift; sourceTree = "<group>"; };
+		52C3B24F26AC7105006C841E /* ShortcutRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutRepositoryProtocol.swift; sourceTree = "<group>"; };
 		52C5FA40264126F700B6269C /* MediaRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaRowView.swift; sourceTree = "<group>"; };
 		52C5FA42264127AC00B6269C /* MediaProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaProtocol.swift; sourceTree = "<group>"; };
 		52C5FA48264129D900B6269C /* SongModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongModel.swift; sourceTree = "<group>"; };
@@ -550,7 +558,11 @@
 		52B03A5B2680DC6400ECA36A /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
+				52C3B24926AC6AD1006C841E /* FavoriteArtistRepositoryProtocol.swift */,
+				52C3B24B26AC6C23006C841E /* FavoriteSongRepositoryProtocol.swift */,
+				52C3B24D26AC6DBD006C841E /* PlaylistRepositoryProtocol.swift */,
 				52DF46ED2647AE9A003A57F0 /* ShortcutItemIdProtocol.swift */,
+				52C3B24F26AC7105006C841E /* ShortcutRepositoryProtocol.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -806,6 +818,7 @@
 				52C5FA4E2641711C00B6269C /* PlaylistDetailEditPageView.swift in Sources */,
 				526A3B372366AC6F0070BE0A /* AlbumModel.swift in Sources */,
 				52217A782598256400921CFD /* FavoriteArtistRealmModel.swift in Sources */,
+				52C3B24C26AC6C23006C841E /* FavoriteSongRepositoryProtocol.swift in Sources */,
 				520B1DC826A9A7DB008770C5 /* HeroCircleImageView.swift in Sources */,
 				5219EA21261539DB00E3A495 /* PlaylistRegisterView.swift in Sources */,
 				5269C8B12699803A00A3E7DE /* PlainRowView.swift in Sources */,
@@ -832,6 +845,7 @@
 				52481CE125EB4273004DFAEB /* PlayRowView.swift in Sources */,
 				527177A62663D5D400390A32 /* AlbumListView.swift in Sources */,
 				52C69DE823CABF48006A0A83 /* AlbumDetailPageView.swift in Sources */,
+				52C3B24A26AC6AD1006C841E /* FavoriteArtistRepositoryProtocol.swift in Sources */,
 				52C3B24826AC6822006C841E /* ShortcutRegisterProtocol.swift in Sources */,
 				52EE4D9323C542A700CFF2A3 /* ArtistDetailViewModel.swift in Sources */,
 				527B87112612992A00CB5BEB /* PlaylistRegister.swift in Sources */,
@@ -849,6 +863,7 @@
 				524A76E325E4EDBF0020443E /* FavoriteSongsPageView.swift in Sources */,
 				52BA93D723DA5A2100CA323F /* BackButtonView.swift in Sources */,
 				527B871426129A2700CB5BEB /* PlaylistRealmModel.swift in Sources */,
+				52C3B24E26AC6DBD006C841E /* PlaylistRepositoryProtocol.swift in Sources */,
 				52481CDE25EB2EEB004DFAEB /* FavoriteSongsEditPageView.swift in Sources */,
 				523DAC61266E4B470036843A /* FavoriteArtistsService.swift in Sources */,
 				52A75C4025A04CCD0073C01B /* FavoriteArtistsViewModel.swift in Sources */,
@@ -867,6 +882,7 @@
 				52CEABF52642EABD000A3958 /* FavoriteArtistRepository.swift in Sources */,
 				527177AD2663E21900390A32 /* ArtistDetailService.swift in Sources */,
 				522366D623D7BADF0001624E /* CircleImageView.swift in Sources */,
+				52C3B25026AC7105006C841E /* ShortcutRepositoryProtocol.swift in Sources */,
 				52A170C123E3AAA400C1ACD2 /* MusicPlayer.swift in Sources */,
 				527177A22663C99400390A32 /* ShortcutCellView.swift in Sources */,
 				52B03A5E2681503900ECA36A /* ShortcutModel.swift in Sources */,
