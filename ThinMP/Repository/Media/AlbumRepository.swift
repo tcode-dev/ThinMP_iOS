@@ -7,7 +7,7 @@
 
 import MediaPlayer
 
-class AlbumRepository {
+class AlbumRepository: AlbumRepositoryProtocol {
     func findAll() -> [AlbumModel] {
         let property = MPMediaPropertyPredicate(value: false, forProperty: MPMediaItemPropertyIsCloudItem)
         let query = MPMediaQuery.albums()
