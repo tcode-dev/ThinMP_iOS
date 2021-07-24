@@ -5,7 +5,7 @@
 //  Created by tk on 2021/06/07.
 //
 
-struct FavoriteArtistsService {
+struct FavoriteArtistsService: FavoriteArtistsServiceProtocol {
     func findAll() -> [ArtistModel] {
         let favoriteArtistRepository = FavoriteArtistRepository()
         let artistIds = favoriteArtistRepository.findAll()

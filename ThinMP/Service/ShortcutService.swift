@@ -5,7 +5,7 @@
 //  Created by tk on 2021/06/24.
 //
 
-struct ShortcutService {
+struct ShortcutService: ShortcutServiceProtocol {
     func findAll() -> [ShortcutModel] {
         let shortcutRepository = ShortcutRepository()
         let shortcutRealmModels = shortcutRepository.findAll()

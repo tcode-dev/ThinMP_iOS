@@ -7,7 +7,7 @@
 
 import MediaPlayer
 
-struct PlaylistsService {
+struct PlaylistsService: PlaylistsServiceProtocol {
     func findAll() -> [PlaylistModel] {
         let playlistRepository = PlaylistRepository()
         let playlists = playlistRepository.findAll()

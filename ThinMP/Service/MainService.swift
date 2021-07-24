@@ -7,7 +7,7 @@
 
 import MediaPlayer
 
-struct MainService {
+struct MainService: MainServiceProtocol {
     private let ALBUM_COUNT = 20
 
     func findRecentlyAlbums() -> [AlbumModel] {

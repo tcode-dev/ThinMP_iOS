@@ -7,7 +7,7 @@
 
 import MediaPlayer
 
-struct ArtistDetailService {
+struct ArtistDetailService: ArtistDetailServiceProtocol {
     func findById(artistId: ArtistId) -> ArtistDetailModel? {
         let artistRepository = ArtistRepository()
         let albumRepository = AlbumRepository()

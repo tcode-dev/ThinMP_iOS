@@ -5,7 +5,7 @@
 //  Created by tk on 2021/06/07.
 //
 
-struct ArtistsService {
+struct ArtistsService: ArtistsServiceProtocol {
     func findAll() -> [ArtistModel] {
         let repository = ArtistRepository()
 
