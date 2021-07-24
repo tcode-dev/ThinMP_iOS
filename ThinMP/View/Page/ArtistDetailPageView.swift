@@ -11,7 +11,6 @@ import SwiftUI
 struct ArtistDetailPageView: View {
     @StateObject private var vm = ArtistDetailViewModel()
     @State private var headerRect = CGRect()
-    @State private var isRegister: Bool = false
     @State private var showingPopup: Bool = false
     @State private var playlistRegisterSongId = SongId(id: 0)
 

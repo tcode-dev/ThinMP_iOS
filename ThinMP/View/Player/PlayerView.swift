@@ -57,9 +57,9 @@ struct PlayerView: View {
                             seeking = changed
                         }
                     })
-                    .padding(.leading, StyleConstant.Padding.small)
-                    .padding(.trailing, StyleConstant.Padding.small)
-                    .accentColor(Color(.label))
+                        .padding(.leading, StyleConstant.Padding.small)
+                        .padding(.trailing, StyleConstant.Padding.small)
+                        .accentColor(Color(.label))
 
                     HStack {
                         SecondaryTextView("\(convertTime(time: musicPlayer.currentSecond))").frame(width: 50).padding(.leading, StyleConstant.Padding.small)
