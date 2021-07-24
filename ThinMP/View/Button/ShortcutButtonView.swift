@@ -51,7 +51,7 @@ struct ShortcutButtonView: View {
             initialDisplay = false
             callback()
         }) {
-            Text("AddShortcut")
+            Text(LocalizedStringKey(LabelConstant.addShortcut))
         }
     }
 
@@ -64,7 +64,7 @@ struct ShortcutButtonView: View {
             initialDisplay = false
             callback()
         }) {
-            Text("RemoveShortcut")
+            Text(LocalizedStringKey(LabelConstant.removeShortcut))
         }
     }
 }

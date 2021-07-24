@@ -23,7 +23,7 @@ struct FavoriteSongsPageView: View {
                             HStack {
                                 BackButtonView()
                                 Spacer()
-                                HeaderTitleView("FavoriteSongs")
+                                HeaderTitleView(LabelConstant.favoriteSongs)
                                 Spacer()
                                 EditButtonView {
                                     FavoriteSongsEditPageView()
@@ -45,7 +45,7 @@ struct FavoriteSongsPageView: View {
                                                 playlistRegisterSongId = vm.songs[index].songId
                                                 showingPopup.toggle()
                                             }) {
-                                                Text("AddPlaylist")
+                                                Text(LocalizedStringKey(LabelConstant.addPlaylist))
                                             }
                                         }
                                         Divider()

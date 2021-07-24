@@ -49,7 +49,7 @@ struct FavoriteArtistButtonView: View {
             initialDisplay = false
             callback()
         }) {
-            Text("AddFavorites")
+            Text(LocalizedStringKey(LabelConstant.addFavorites))
         }
     }
 
@@ -62,7 +62,7 @@ struct FavoriteArtistButtonView: View {
             initialDisplay = false
             callback()
         }) {
-            Text("RemoveFavorites")
+            Text(LocalizedStringKey(LabelConstant.removeFavorites))
         }
     }
 }

@@ -45,7 +45,7 @@ struct AlbumDetailPageView: View {
                                                 playlistRegisterSongId = vm.songs[index].songId
                                                 showingPopup.toggle()
                                             }) {
-                                                Text("AddPlaylist")
+                                                Text(LocalizedStringKey(LabelConstant.addPlaylist))
                                             }
                                         }
                                         Divider()

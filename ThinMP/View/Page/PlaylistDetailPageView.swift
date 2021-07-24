@@ -27,7 +27,7 @@ struct PlaylistDetailPageView: View {
                             VStack {
                                 MenuButtonView {
                                     VStack {
-                                        Button("Edit") {
+                                        Button(LocalizedStringKey(LabelConstant.edit)) {
                                             isEdit = true
                                         }
                                         ShortcutButtonView(itemId: playlistId.id, type: ShortcutType.PLAYLIST)
@@ -40,7 +40,7 @@ struct PlaylistDetailPageView: View {
                         }
                         ScrollView(showsIndicators: true) {
                             VStack(alignment: .leading) {
-                                HeroHeaderView(headerRect: $headerRect, side: geometry.size.width, top: geometry.safeAreaInsets.top, primaryText: vm.primaryText, secondaryText: "Playlist") {
+                                HeroHeaderView(headerRect: $headerRect, side: geometry.size.width, top: geometry.safeAreaInsets.top, primaryText: vm.primaryText, secondaryText: LabelConstant.playlist) {
                                     HeroSquareImageView(side: geometry.size.width, artwork: vm.artwork)
                                 }
                                 LazyVStack(spacing: 0) {
@@ -55,7 +55,7 @@ struct PlaylistDetailPageView: View {
                                                 playlistRegisterSongId = vm.songs[index].songId
                                                 showingPopup.toggle()
                                             }) {
-                                                Text("AddPlaylist")
+                                                Text(LocalizedStringKey(LabelConstant.addPlaylist))
                                             }
                                         }
                                         Divider()

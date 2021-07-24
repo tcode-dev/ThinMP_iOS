@@ -20,14 +20,14 @@ struct FavoriteSongsEditPageView: View {
                         Button(action: {
                             back()
                         }) {
-                            Text("Cancel")
+                            Text(LocalizedStringKey(LabelConstant.cancel))
                         }
                         Spacer()
                         Button(action: {
                             update()
                             back()
                         }) {
-                            Text("Done")
+                            Text(LocalizedStringKey(LabelConstant.done))
                         }
                     }
                     .padding(.horizontal, StyleConstant.Padding.large)

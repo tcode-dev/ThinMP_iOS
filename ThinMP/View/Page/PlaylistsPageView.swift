@@ -19,7 +19,7 @@ struct PlaylistsPageView: View {
                         HStack {
                             BackButtonView()
                             Spacer()
-                            HeaderTitleView("Playlists")
+                            HeaderTitleView(LabelConstant.playlists)
                             Spacer()
                             EditButtonView {
                                 PlaylistsEditPageView()

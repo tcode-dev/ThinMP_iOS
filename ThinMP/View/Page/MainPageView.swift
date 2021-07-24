@@ -18,7 +18,7 @@ struct MainPageView: View {
                         VStack(alignment: .leading) {
                             Spacer()
                             HStack {
-                                MainTitleView("Library")
+                                MainTitleView(LabelConstant.library)
                                 Spacer()
                                 EditButtonView {
                                     MainEditPageView()

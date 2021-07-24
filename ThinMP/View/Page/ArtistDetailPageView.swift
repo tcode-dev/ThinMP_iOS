@@ -34,11 +34,11 @@ struct ArtistDetailPageView: View {
                                 HeroCircleImageView(side: geometry.size.width, artwork: vm.artwork)
                             }
                             VStack(alignment: .leading) {
-                                SectionTitleView("Albums")
+                                SectionTitleView(LabelConstant.albums)
                                     .padding(.leading, StyleConstant.Padding.large)
                                 AlbumListView(albums: vm.albums, width: geometry.size.width)
                                     .padding(.bottom, StyleConstant.Padding.large)
-                                SectionTitleView("Songs")
+                                SectionTitleView(LabelConstant.songs)
                                     .padding(.leading, StyleConstant.Padding.large)
                                 LazyVStack(spacing: 0) {
                                     ForEach(vm.songs.indices, id: \.self) { index in
@@ -52,7 +52,7 @@ struct ArtistDetailPageView: View {
                                                 playlistRegisterSongId = vm.songs[index].songId
                                                 showingPopup.toggle()
                                             }) {
-                                                Text("AddPlaylist")
+                                                Text(LocalizedStringKey(LabelConstant.addPlaylist))
                                             }
                                         }
                                         Divider()

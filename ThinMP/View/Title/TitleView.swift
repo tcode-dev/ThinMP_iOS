@@ -12,9 +12,9 @@ struct TitleView: View {
 
     init(_ text: String?) {
         if let text = text {
-            self.text = text.isEmpty ? "unknown" : text
+            self.text = text.isEmpty ? LabelConstant.unknown : text
         } else {
-            self.text = "unknown"
+            self.text = LabelConstant.unknown
         }
     }
 

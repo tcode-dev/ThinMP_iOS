@@ -19,11 +19,11 @@ class MainSectionConfig {
     }
 
     func getShortcut() -> MenuModel {
-        return MenuModel(primaryText: "Shortcut", visibility: UserDefaults.standard.bool(forKey: SHORTCUT))
+        return MenuModel(primaryText: LabelConstant.shortcut, visibility: UserDefaults.standard.bool(forKey: SHORTCUT))
     }
 
     func getRecently() -> MenuModel {
-        return MenuModel(primaryText: "RecentlyAdded", visibility: UserDefaults.standard.bool(forKey: RECENTLY))
+        return MenuModel(primaryText: LabelConstant.recentlyAdded, visibility: UserDefaults.standard.bool(forKey: RECENTLY))
     }
 
     func setShortcutVisibility(value: Bool) {

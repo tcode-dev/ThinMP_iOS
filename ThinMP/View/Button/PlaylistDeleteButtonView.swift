@@ -24,7 +24,7 @@ struct PlaylistDeleteButtonView: View {
 
             callback()
         }) {
-            Text("RemovePlaylist")
+            Text(LocalizedStringKey(LabelConstant.removePlaylist))
         }
     }
 }

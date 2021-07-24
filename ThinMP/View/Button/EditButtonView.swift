@@ -15,7 +15,7 @@ struct EditButtonView<Content>: View where Content: View {
 
     var body: some View {
         Menu {
-            Button("Edit") {
+            Button(LocalizedStringKey(LabelConstant.edit)) {
                 isEdit = true
             }
         } label: {

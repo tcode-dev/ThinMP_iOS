@@ -25,14 +25,14 @@ struct PlaylistDetailEditPageView: View {
                         Button(action: {
                             presentation.wrappedValue.dismiss()
                         }) {
-                            Text("Cancel")
+                            Text(LocalizedStringKey(LabelConstant.cancel))
                         }
                         Spacer()
                         Button(action: {
                             update()
                             presentation.wrappedValue.dismiss()
                         }) {
-                            Text("Done")
+                            Text(LocalizedStringKey(LabelConstant.done))
                         }
                     }
                     .padding(.horizontal, StyleConstant.Padding.large)

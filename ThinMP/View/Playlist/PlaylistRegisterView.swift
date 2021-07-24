@@ -26,13 +26,13 @@ struct PlaylistRegisterView: View {
                         Button(action: {
                             isCreate.toggle()
                         }) {
-                            Text("NewPlaylist")
+                            Text(LocalizedStringKey(LabelConstant.newPlaylist))
                         }
                         Spacer()
                         Button(action: {
                             showingPopup.toggle()
                         }) {
-                            Text("Cancel")
+                            Text(LocalizedStringKey(LabelConstant.cancel))
                         }
                         Spacer()
                     }
@@ -54,7 +54,7 @@ struct PlaylistRegisterView: View {
                 .frame(height: getHeight())
             } else {
                 VStack(spacing: 0) {
-                    Text("PlaylistName")
+                    Text(LocalizedStringKey(LabelConstant.playlistName))
                         .frame(height: StyleConstant.Height.row)
                     TextField("", text: $name)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -66,7 +66,7 @@ struct PlaylistRegisterView: View {
                             playlistRegister.create(songId: songId, name: name)
                             showingPopup.toggle()
                         }) {
-                            Text("Done")
+                            Text(LocalizedStringKey(LabelConstant.done))
                         }
                         Spacer()
                         Button(action: {
@@ -76,7 +76,7 @@ struct PlaylistRegisterView: View {
                                 showingPopup.toggle()
                             }
                         }) {
-                            Text("Cancel")
+                            Text(LocalizedStringKey(LabelConstant.cancel))
                         }
                         Spacer()
                     }

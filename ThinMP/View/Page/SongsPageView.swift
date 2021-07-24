@@ -23,7 +23,7 @@ struct SongsPageView: View {
                             HStack {
                                 BackButtonView()
                                 Spacer()
-                                HeaderTitleView("Songs")
+                                HeaderTitleView(LabelConstant.songs)
                                 Spacer()
                                 Spacer()
                                     .frame(width: StyleConstant.button)
@@ -44,7 +44,7 @@ struct SongsPageView: View {
                                                 playlistRegisterSongId = vm.songs[index].songId
                                                 showingPopup.toggle()
                                             }) {
-                                                Text("AddPlaylist")
+                                                Text(LocalizedStringKey(LabelConstant.addPlaylist))
                                             }
                                         }
                                         Divider()

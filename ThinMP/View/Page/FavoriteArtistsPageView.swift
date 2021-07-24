@@ -19,7 +19,7 @@ struct FavoriteArtistsPageView: View {
                         HStack {
                             BackButtonView()
                             Spacer()
-                            HeaderTitleView("FavoriteArtists")
+                            HeaderTitleView(LabelConstant.favoriteArtists)
                             Spacer()
                             EditButtonView {
                                 FavoriteArtistsEditPageView()
