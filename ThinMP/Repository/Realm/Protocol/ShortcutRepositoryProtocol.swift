@@ -5,8 +5,6 @@
 //  Created by tk on 2021/07/25.
 //
 
-import Foundation
-
 protocol ShortcutRepositoryProtocol {
     func add(itemId: ShortcutItemIdProtocol, type: ShortcutType)
 

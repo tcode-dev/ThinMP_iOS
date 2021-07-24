@@ -57,7 +57,6 @@ struct PlaylistRepository: PlaylistRepositoryProtocol {
         return Array(realm.objects(PlaylistRealmModel.self).filter("\(PlaylistRealmModel.ID) IN %@", playlistIds.map { $0.id }))
     }
 
-    // プレイリスト一覧の更新
     func update(playlistIds: [PlaylistId]) {
         let deleteIds = getDeleteIds(playlistIds: playlistIds)
 
@@ -65,7 +64,6 @@ struct PlaylistRepository: PlaylistRepositoryProtocol {
         sort(playlistIds: playlistIds)
     }
 
-    // プレイリスト詳細の更新
     func update(playlistId: PlaylistId, name: String, songIds: [SongId]) {
         realm.beginWrite()
 

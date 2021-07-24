@@ -22,12 +22,10 @@ struct PlaylistRegister: PlaylistRegisterProtocol {
         repository.add(playlistId: playlistId, songId: songId)
     }
 
-    // プレイリスト一覧の更新
     func update(playlistIds: [PlaylistId]) {
         repository.update(playlistIds: playlistIds)
     }
 
-    // プレイリスト詳細の更新
     func update(playlistId: PlaylistId, name: String, songIds: [SongId]) {
         repository.update(playlistId: playlistId, name: name, songIds: songIds)
     }
