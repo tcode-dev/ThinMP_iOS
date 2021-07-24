@@ -45,7 +45,7 @@ struct PlaylistRegisterView: View {
                                 }
                                 .frame(height: StyleConstant.Height.row)
                                 Divider()
-                                    .frame(height: StyleConstant.Height.divider)
+                                    .frame(height: StyleConstant.dividerHeight)
                             }
                         }
                     }
@@ -96,7 +96,7 @@ struct PlaylistRegisterView: View {
     }
 
     private func getHeight() -> CGFloat? {
-        let panelHeight = StyleConstant.Height.header + (CGFloat(vm.playlists.count) * (StyleConstant.Height.row + StyleConstant.Height.divider)) + StyleConstant.Padding.small
+        let panelHeight = StyleConstant.Height.header + (CGFloat(vm.playlists.count) * (StyleConstant.Height.row + StyleConstant.dividerHeight)) + StyleConstant.Padding.small
 
         if panelHeight > height {
             return height - (StyleConstant.Padding.large * 2)
