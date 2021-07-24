@@ -8,12 +8,12 @@
 import MediaPlayer
 
 struct MainService {
-    private let COUNT = 20
+    private let ALBUM_COUNT = 20
 
     func findRecentlyAlbums() -> [AlbumModel] {
         let repository = AlbumRepository()
 
-        return repository.findRecently(count: COUNT)
+        return repository.findRecently(count: ALBUM_COUNT)
     }
 
     func findShortcuts() -> [ShortcutModel] {
