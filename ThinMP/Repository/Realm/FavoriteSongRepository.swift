@@ -90,6 +90,6 @@ struct FavoriteSongRepository {
 
     private func incrementOrder() -> Int {
         return (realm.objects(FavoriteSongRealmModel.self)
-            .max(ofProperty: FavoriteSongRealmModel.ORDER) as Int? ?? 0) + 1
+                    .max(ofProperty: FavoriteSongRealmModel.ORDER) as Int? ?? 0) + 1
     }
 }

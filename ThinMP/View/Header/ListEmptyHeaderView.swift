@@ -28,6 +28,7 @@ struct ListEmptyHeaderView: View {
 
         return HStack {
             Text("")
-        }.frame(height: StyleConstant.Height.row + top)
+        }
+        .frame(height: StyleConstant.Height.row + top)
     }
 }

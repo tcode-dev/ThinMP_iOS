@@ -44,7 +44,8 @@ struct PlaylistRegisterView: View {
                                     MediaRowView(media: playlist)
                                 }
                                 .frame(height: StyleConstant.Height.row)
-                                Divider().frame(height: StyleConstant.Height.divider)
+                                Divider()
+                                    .frame(height: StyleConstant.Height.divider)
                             }
                         }
                     }

@@ -42,12 +42,12 @@ struct PlaylistDetailEditPageView: View {
                     TextField("", text: $name, onEditingChanged: { begin in
                         editing = begin
                     })
-                        .autocapitalization(.none)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .padding()
-                        .onAppear {
-                            name = primaryText ?? ""
-                        }
+                    .autocapitalization(.none)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding()
+                    .onAppear {
+                        name = primaryText ?? ""
+                    }
                     ZStack {
                         List {
                             ForEach(vm.songs) { song in

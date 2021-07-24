@@ -40,7 +40,8 @@ struct PlaylistsPageView: View {
                                         ShortcutButtonView(itemId: playlist.id, type: ShortcutType.PLAYLIST)
                                     }
                                     Divider()
-                                }.padding(.leading, StyleConstant.Padding.medium)
+                                }
+                                .padding(.leading, StyleConstant.Padding.medium)
                             }
                         }
                     }

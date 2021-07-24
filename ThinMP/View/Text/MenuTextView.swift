@@ -15,6 +15,9 @@ struct MenuTextView: View {
     }
 
     var body: some View {
-        Text(LocalizedStringKey(text)).font(.body).foregroundColor(.primary).lineLimit(1)
+        Text(LocalizedStringKey(text))
+            .font(.body)
+            .foregroundColor(.primary)
+            .lineLimit(1)
     }
 }

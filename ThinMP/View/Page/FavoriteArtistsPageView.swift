@@ -40,7 +40,8 @@ struct FavoriteArtistsPageView: View {
                                         ShortcutButtonView(itemId: artist.id, type: ShortcutType.ARTIST)
                                     }
                                     Divider()
-                                }.padding(.leading, StyleConstant.Padding.medium)
+                                }
+                                .padding(.leading, StyleConstant.Padding.medium)
                             }
                         }
                     }

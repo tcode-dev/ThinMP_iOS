@@ -15,6 +15,9 @@ struct SectionTitleView: View {
     }
 
     var body: some View {
-        Text(LocalizedStringKey(text)).font(.title).foregroundColor(.primary).lineLimit(1)
+        Text(LocalizedStringKey(text))
+            .font(.title)
+            .foregroundColor(.primary)
+            .lineLimit(1)
     }
 }
