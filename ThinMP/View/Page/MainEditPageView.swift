@@ -59,19 +59,19 @@ struct MainEditPageView: View {
         }
     }
 
-    func moveMenu(source: IndexSet, destination: Int) {
+    private func moveMenu(source: IndexSet, destination: Int) {
         vm.menus.move(fromOffsets: source, toOffset: destination)
     }
 
-    func moveShortcut(source: IndexSet, destination: Int) {
+    private func moveShortcut(source: IndexSet, destination: Int) {
         vm.shortcuts.move(fromOffsets: source, toOffset: destination)
     }
 
-    func deleteShortcut(offsets: IndexSet) {
+    private func deleteShortcut(offsets: IndexSet) {
         vm.shortcuts.remove(atOffsets: offsets)
     }
 
-    func update() {
+    private func update() {
         let mainMenuConfig = MainMenuConfig()
         let menus = vm.menus.map { $0.primaryText }
 
