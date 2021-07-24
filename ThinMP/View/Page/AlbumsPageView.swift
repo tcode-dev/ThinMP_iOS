@@ -28,7 +28,7 @@ struct AlbumsPageView: View {
                     ScrollView(showsIndicators: true) {
                         VStack(alignment: .leading) {
                             ListEmptyHeaderView(headerRect: $headerRect, top: geometry.safeAreaInsets.top)
-                            AlbumListView(list: vm.albums, width: geometry.size.width)
+                            AlbumListView(albums: vm.albums, width: geometry.size.width)
                         }
                     }
                     .frame(alignment: .top)

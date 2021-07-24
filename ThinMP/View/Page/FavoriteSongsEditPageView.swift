@@ -34,8 +34,8 @@ struct FavoriteSongsEditPageView: View {
                 }
                 VStack(alignment: .leading) {
                     List {
-                        ForEach(vm.songs, id: \.id) { media in
-                            MediaRowView(media: media)
+                        ForEach(vm.songs) { song in
+                            MediaRowView(media: song)
                         }
                         .onMove(perform: move)
                         .onDelete(perform: delete)

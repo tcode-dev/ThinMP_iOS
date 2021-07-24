@@ -40,7 +40,7 @@ struct MainEditPageView: View {
                         .onMove(perform: moveMenu)
                         .listRowInsets(.init())
                         MenuEditRowView(menu: vm.shortcutMenu)
-                        ForEach(vm.shortcuts, id: \.id) { media in
+                        ForEach(vm.shortcuts) { media in
                             MediaRowView(media: media)
                         }
                         .onMove(perform: moveShortcut)

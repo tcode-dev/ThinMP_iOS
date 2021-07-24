@@ -34,7 +34,7 @@ struct PlaylistsEditPageView: View {
                 }
                 VStack(alignment: .leading) {
                     List {
-                        ForEach(vm.playlists, id: \.id) { playlist in
+                        ForEach(vm.playlists) { playlist in
                             MediaRowView(media: playlist)
                         }
                         .onMove(perform: move)

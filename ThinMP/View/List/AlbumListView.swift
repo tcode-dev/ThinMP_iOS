@@ -9,13 +9,13 @@ import SwiftUI
 
 struct AlbumListView: View {
     private let colCount = 2
-    private let list: [AlbumModel]
+    private let albums: [AlbumModel]
     private let size: CGFloat
     private let columns: [GridItem]
     private let callback: () -> Void
 
-    init(list: [AlbumModel], width: CGFloat, callback: @escaping () -> Void = {}) {
-        self.list = list
+    init(albums: [AlbumModel], width: CGFloat, callback: @escaping () -> Void = {}) {
+        self.albums = albums
         self.callback = callback
         size = (width - (StyleConstant.Padding.large * CGFloat(colCount + 1))) / CGFloat(colCount)
         columns = [
@@ -26,13 +26,13 @@ struct AlbumListView: View {
 
     var body: some View {
         LazyVGrid(columns: columns) {
-            ForEach(list.indices, id: \.self) { index in
-                NavigationLink(destination: AlbumDetailPageView(albumId: list[index].albumId)) {
-                    AlbumCellView(album: list[index], size: size)
+            ForEach(albums) { album in
+                NavigationLink(destination: AlbumDetailPageView(albumId: album.albumId)) {
+                    AlbumCellView(album: album, size: size)
                 }
                 .contentShape(RoundedRectangle(cornerRadius: StyleConstant.cornerRadius))
                 .contextMenu {
-                    ShortcutButtonView(itemId: list[index].id, type: ShortcutType.ALBUM, callback: callback)
+                    ShortcutButtonView(itemId: album.id, type: ShortcutType.ALBUM, callback: callback)
                 }
             }
         }

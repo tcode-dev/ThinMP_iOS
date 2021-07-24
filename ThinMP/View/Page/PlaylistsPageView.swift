@@ -30,14 +30,14 @@ struct PlaylistsPageView: View {
                         VStack(alignment: .leading) {
                             ListEmptyHeaderView(headerRect: $headerRect, top: geometry.safeAreaInsets.top)
                             LazyVStack(spacing: 0) {
-                                ForEach(vm.playlists.indices, id: \.self) { index in
-                                    NavigationLink(destination: PlaylistDetailPageView(playlistId: vm.playlists[index].playlistId)) {
-                                        MediaRowView(media: vm.playlists[index])
+                                ForEach(vm.playlists) { playlist in
+                                    NavigationLink(destination: PlaylistDetailPageView(playlistId: playlist.playlistId)) {
+                                        MediaRowView(media: playlist)
                                     }
                                     .contentShape(RoundedRectangle(cornerRadius: StyleConstant.cornerRadius))
                                     .contextMenu {
-                                        PlaylistDeleteButtonView(playlistId: vm.playlists[index].playlistId, callback: { vm.load() })
-                                        ShortcutButtonView(itemId: vm.playlists[index].id, type: ShortcutType.PLAYLIST)
+                                        PlaylistDeleteButtonView(playlistId: playlist.playlistId) { vm.load() }
+                                        ShortcutButtonView(itemId: playlist.id, type: ShortcutType.PLAYLIST)
                                     }
                                     Divider()
                                 }.padding(.leading, StyleConstant.Padding.medium)

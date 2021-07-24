@@ -29,9 +29,9 @@ struct MainPageView: View {
                         .padding(.leading, StyleConstant.Padding.large)
                         VStack(spacing: 0) {
                             Divider()
-                            ForEach(vm.menus.indices, id: \.self) { index in
-                                if vm.menus[index].visibility {
-                                    MainMenuButtonView(menu: vm.menus[index])
+                            ForEach(vm.menus) { menu in
+                                if menu.visibility {
+                                    MainMenuButtonView(menu: menu)
                                     Divider()
                                 }
                             }
@@ -42,7 +42,7 @@ struct MainPageView: View {
                             VStack(alignment: .leading) {
                                 SectionTitleView(vm.shortcutMenu.primaryText)
                                     .padding(.leading, StyleConstant.Padding.large)
-                                ShortcutListView(list: vm.shortcuts, width: geometry.size.width, callback: { vm.load() })
+                                ShortcutListView(shortcuts: vm.shortcuts, width: geometry.size.width) { vm.load() }
                                     .padding(.bottom, StyleConstant.Padding.small)
                             }
                         }
@@ -50,7 +50,7 @@ struct MainPageView: View {
                             VStack(alignment: .leading) {
                                 SectionTitleView(vm.recentlyMenu.primaryText)
                                     .padding(.leading, StyleConstant.Padding.large)
-                                AlbumListView(list: vm.albums, width: geometry.size.width, callback: { vm.load() })
+                                AlbumListView(albums: vm.albums, width: geometry.size.width) { vm.load() }
                                     .padding(.bottom, StyleConstant.Padding.small)
                             }
                         }

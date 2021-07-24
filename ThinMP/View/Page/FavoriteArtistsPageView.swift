@@ -30,14 +30,14 @@ struct FavoriteArtistsPageView: View {
                         VStack(alignment: .leading) {
                             ListEmptyHeaderView(headerRect: $headerRect, top: geometry.safeAreaInsets.top)
                             LazyVStack(spacing: 0) {
-                                ForEach(vm.artists.indices, id: \.self) { index in
-                                    NavigationLink(destination: ArtistDetailPageView(artistId: vm.artists[index].artistId)) {
-                                        PlainRowView(media: vm.artists[index])
+                                ForEach(vm.artists) { artist in
+                                    NavigationLink(destination: ArtistDetailPageView(artistId: artist.artistId)) {
+                                        PlainRowView(media: artist)
                                     }
                                     .contentShape(RoundedRectangle(cornerRadius: StyleConstant.cornerRadius))
                                     .contextMenu {
-                                        FavoriteArtistButtonView(artistId: vm.artists[index].artistId, callback: { vm.load() })
-                                        ShortcutButtonView(itemId: vm.artists[index].id, type: ShortcutType.ARTIST)
+                                        FavoriteArtistButtonView(artistId: artist.artistId) { vm.load() }
+                                        ShortcutButtonView(itemId: artist.id, type: ShortcutType.ARTIST)
                                     }
                                     Divider()
                                 }.padding(.leading, StyleConstant.Padding.medium)

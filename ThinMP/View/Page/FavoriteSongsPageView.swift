@@ -40,7 +40,7 @@ struct FavoriteSongsPageView: View {
                                         }
                                         .contentShape(RoundedRectangle(cornerRadius: StyleConstant.cornerRadius))
                                         .contextMenu {
-                                            FavoriteSongButtonView(songId: vm.songs[index].songId, callback: { vm.load() })
+                                            FavoriteSongButtonView(songId: vm.songs[index].songId) { vm.load() }
                                             Button(action: {
                                                 playlistRegisterSongId = vm.songs[index].songId
                                                 showingPopup.toggle()
