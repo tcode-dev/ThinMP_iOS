@@ -1,4 +1,3 @@
-![IMG_0049]()
 # ThinMP_iOS
 
 ## Sample
