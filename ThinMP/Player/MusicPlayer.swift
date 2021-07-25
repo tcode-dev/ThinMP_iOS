@@ -7,7 +7,7 @@
 
 import MediaPlayer
 
-class MusicPlayer: ObservableObject {
+class MusicPlayer: ObservableObject, MediaPlayerProtocol {
     private let PREV_SECOND: Double = 3
 
     @Published var isActive: Bool = false

@@ -115,6 +115,7 @@
 		52C3B26A26AC7709006C841E /* PlaylistsServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C3B26926AC7709006C841E /* PlaylistsServiceProtocol.swift */; };
 		52C3B26C26AC7742006C841E /* ShortcutServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C3B26B26AC7742006C841E /* ShortcutServiceProtocol.swift */; };
 		52C3B26E26AC777B006C841E /* SongsServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C3B26D26AC777B006C841E /* SongsServiceProtocol.swift */; };
+		52C3B27126AD6EDA006C841E /* MediaPlayerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C3B27026AD6EDA006C841E /* MediaPlayerProtocol.swift */; };
 		52C5FA41264126F700B6269C /* MediaRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C5FA40264126F700B6269C /* MediaRowView.swift */; };
 		52C5FA43264127AC00B6269C /* MediaProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C5FA42264127AC00B6269C /* MediaProtocol.swift */; };
 		52C5FA49264129D900B6269C /* SongModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C5FA48264129D900B6269C /* SongModel.swift */; };
@@ -266,6 +267,7 @@
 		52C3B26926AC7709006C841E /* PlaylistsServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistsServiceProtocol.swift; sourceTree = "<group>"; };
 		52C3B26B26AC7742006C841E /* ShortcutServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutServiceProtocol.swift; sourceTree = "<group>"; };
 		52C3B26D26AC777B006C841E /* SongsServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongsServiceProtocol.swift; sourceTree = "<group>"; };
+		52C3B27026AD6EDA006C841E /* MediaPlayerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPlayerProtocol.swift; sourceTree = "<group>"; };
 		52C5FA40264126F700B6269C /* MediaRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaRowView.swift; sourceTree = "<group>"; };
 		52C5FA42264127AC00B6269C /* MediaProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaProtocol.swift; sourceTree = "<group>"; };
 		52C5FA48264129D900B6269C /* SongModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongModel.swift; sourceTree = "<group>"; };
@@ -704,6 +706,14 @@
 			path = Protocol;
 			sourceTree = "<group>";
 		};
+		52C3B26F26AD6E9F006C841E /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				52C3B27026AD6EDA006C841E /* MediaPlayerProtocol.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
 		52C5FA3F264122A700B6269C /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -717,6 +727,7 @@
 			isa = PBXGroup;
 			children = (
 				52A170C023E3AAA400C1ACD2 /* MusicPlayer.swift */,
+				52C3B26F26AD6E9F006C841E /* Protocol */,
 			);
 			path = Player;
 			sourceTree = "<group>";
@@ -983,6 +994,7 @@
 				5242C10D2484684200347320 /* ListNavBarView.swift in Sources */,
 				52D98E7A23CC6B530032971A /* PrimaryTextView.swift in Sources */,
 				5264BDD5267822F1009C7400 /* PlaylistModel.swift in Sources */,
+				52C3B27126AD6EDA006C841E /* MediaPlayerProtocol.swift in Sources */,
 				527177AF2663E2F800390A32 /* ArtistDetailModel.swift in Sources */,
 				522366D423D7B6500001624E /* SquareImageView.swift in Sources */,
 				523DAC63266E4BE10036843A /* FavoriteSongsService.swift in Sources */,
