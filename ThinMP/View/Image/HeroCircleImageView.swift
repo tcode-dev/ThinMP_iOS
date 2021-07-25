@@ -14,10 +14,13 @@ struct HeroCircleImageView: View {
 
     var body: some View {
         Group {
-            Image(uiImage: artwork?.image(at: CGSize(width: side, height: side)) ?? UIImage())
-                .resizable()
-                .scaledToFit()
-                .blur(radius: 10.0)
+            VStack {
+                Image(uiImage: artwork?.image(at: CGSize(width: side, height: side)) ?? UIImage())
+                    .resizable()
+                    .scaledToFit()
+                    .blur(radius: 10.0)
+            }
+            .frame(width: side, height: side)
             LinearGradient(gradient: Gradient(colors: [Color(Color.RGBColorSpace.sRGB, red: 1, green: 1, blue: 1, opacity: 0), Color(UIColor.systemBackground)]), startPoint: .top, endPoint: .bottom)
                 .frame(height: 355)
                 .offset(y: 25)
