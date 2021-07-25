@@ -107,17 +107,6 @@ class MusicPlayer: ObservableObject {
     }
 
     func changeRepeat() {
-        if isRepeatOff {
-            isRepeatOff = false
-            isRepeatAll = true
-        } else if isRepeatAll {
-            isRepeatAll = false
-            isRepeatOne = true
-        } else if isRepeatOne {
-            isRepeatOne = false
-            isRepeatOff = true
-        }
-
         player.repeatMode = player.repeatMode == .none ? .all
             : player.repeatMode == .all ? .one
             : .none
