@@ -11,14 +11,15 @@
 
 * device music play
 * background play
-* favorite songs
 * favorite artists
+* favorite songs
 * playlists
 * shortcuts
 
 ## Environments
 
-* Swift 5
+* Xcode 12.5
+* Swift 5.4
 * SwiftUI
 * iOS 14.5
 * iPhone 7
@@ -29,6 +30,7 @@
 * Realm - https://realm.io/
 * SwiftLint - https://github.com/realm/SwiftLint
 * SwiftFormat - https://github.com/nicklockwood/SwiftFormat
+* Material Icons - https://fonts.google.com/icons?selected=Material+Icons
 
 ## License
 
