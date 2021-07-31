@@ -19,7 +19,6 @@ struct MenuEditRowView: View {
 
     var body: some View {
         VStack {
-            Spacer()
             HStack(alignment: .center) {
                 CheckboxButton().renderingMode(.original)
                 MenuRowView(text: menu.primaryText)
@@ -28,7 +27,6 @@ struct MenuEditRowView: View {
             .onTapGesture {
                 menu.toggleVisibility()
             }
-            Spacer()
         }
     }
 
