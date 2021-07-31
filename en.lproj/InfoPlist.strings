@@ -1,0 +1,9 @@
+/* 
+  InfoPlist.strings
+  ThinMP
+
+  Created by tk on 2021/07/31.
+  
+*/
+
+"NSAppleMusicUsageDescription" = "This app requires Apple Music library access to play music tracks.";

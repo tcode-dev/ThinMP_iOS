@@ -1,0 +1,9 @@
+/* 
+  InfoPlist.strings
+  ThinMP
+
+  Created by tk on 2021/07/31.
+  
+*/
+
+"NSAppleMusicUsageDescription" = "このアプリでは、音楽トラックを再生するためにAppleMusicライブラリにアクセスする必要があります。";
