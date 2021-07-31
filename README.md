@@ -32,6 +32,16 @@
 * SwiftFormat - https://github.com/nicklockwood/SwiftFormat
 * Material Icons - https://fonts.google.com/icons?selected=Material+Icons
 
+## Architecture
+
+### View
+
+`View` → `ViewModel` → `Service` → `Repository` → `Model`
+
+### Register
+
+`View` → `Register` → `Repository`
+
 ## License
 
 [MIT](http://b4b4r07.mit-license.org)
