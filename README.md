@@ -32,6 +32,14 @@
 * SwiftFormat - https://github.com/nicklockwood/SwiftFormat
 * Material Icons - https://fonts.google.com/icons?selected=Material+Icons
 
+## Info.plist
+
+Privacy - Media Library Usage Description
+
+## Background Modes
+
+Audio, AirPlay, and Picture in Picture
+
 ## Architecture
 
 ### View
