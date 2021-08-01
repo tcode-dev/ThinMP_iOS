@@ -185,6 +185,8 @@ struct PlayerView: View {
             if musicPlayer.isPlaying {
                 musicPlayer.startProgress()
             }
+
+            musicPlayer.setFavorite()
         })
         .onDisappear(perform: {
             musicPlayer.stopProgress()

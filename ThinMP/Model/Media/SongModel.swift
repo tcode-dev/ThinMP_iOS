@@ -30,7 +30,11 @@ struct SongModel: MediaProtocol, Identifiable {
         media.representativeItem?.artwork
     }
 
-    var artistPersistentId: MPMediaEntityPersistentID? {
-        media.representativeItem?.artistPersistentID
+    var artistId: ArtistId? {
+        if let artistPersistentID = media.representativeItem?.artistPersistentID {
+            return ArtistId(id: artistPersistentID)
+        }
+
+        return Optional.none
     }
 }

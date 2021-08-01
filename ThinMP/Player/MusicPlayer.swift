@@ -40,16 +40,15 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
 
     func start(list: [SongModel], currentIndex: Int) {
         stop()
-        song = SongModel(media: MPMediaItemCollection(items: [list[currentIndex].media.representativeItem! as MPMediaItem]))
+        song = list[currentIndex]
 
         let items = MPMediaItemCollection(items: list.map { $0.media.representativeItem! as MPMediaItem })
         let descriptor = MPMusicPlayerMediaItemQueueDescriptor(itemCollection: items)
+
         descriptor.startItem = song?.media.representativeItem
         player.setQueue(with: descriptor)
-
         play()
-        setFavoriteArtist()
-        setFavoriteSong()
+        setFavorite()
         addObserver()
         isFirst = true
         isActive = true
@@ -121,8 +120,7 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
     }
 
     func favoriteArtist() {
-        if let artistPersistentId = song?.artistPersistentId {
-            let artistId = ArtistId(id: artistPersistentId)
+        if let artistId = song?.artistId {
             let register = FavoriteArtistRegister()
 
             if register.exists(artistId: artistId) {
@@ -131,22 +129,26 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
                 register.add(artistId: artistId)
             }
 
-            isFavoriteArtist = !isFavoriteArtist
+            isFavoriteArtist.toggle()
         }
     }
 
     func favoriteSong() {
-        if let songId = song?.songId {
-            let register = FavoriteSongRegister()
+        let register = FavoriteSongRegister()
+        let songId = SongId(id: player.nowPlayingItem!.persistentID)
 
-            if register.exists(songId: songId) {
-                register.delete(songId: songId)
-            } else {
-                register.add(songId: songId)
-            }
-
-            isFavoriteSong = !isFavoriteSong
+        if register.exists(songId: songId) {
+            register.delete(songId: songId)
+        } else {
+            register.add(songId: songId)
         }
+
+        isFavoriteSong.toggle()
+    }
+
+    func setFavorite() {
+        setFavoriteArtist()
+        setFavoriteSong()
     }
 
     private func setSong() {
@@ -271,19 +273,18 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
     }
 
     private func setFavoriteArtist() {
-        if let artistPersistentID = song?.artistPersistentId {
+        if let artistId = song?.artistId {
             let favoriteArtistRegister = FavoriteArtistRegister()
 
-            isFavoriteArtist = favoriteArtistRegister.exists(artistId: ArtistId(id: artistPersistentID))
+            isFavoriteArtist = favoriteArtistRegister.exists(artistId: artistId)
         }
     }
 
     private func setFavoriteSong() {
-        if let songId = song?.songId {
-            let register = FavoriteSongRegister()
+        let register = FavoriteSongRegister()
+        let songId = SongId(id: player.nowPlayingItem!.persistentID)
 
-            isFavoriteSong = register.exists(songId: songId)
-        }
+        isFavoriteSong = register.exists(songId: songId)
     }
 
     private func resetTime() {
