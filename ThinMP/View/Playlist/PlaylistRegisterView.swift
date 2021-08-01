@@ -85,7 +85,6 @@ struct PlaylistRegisterView: View {
                 .padding(.horizontal, StyleConstant.Padding.small)
             }
         }
-        .frame(width: .infinity)
         .padding(.horizontal, StyleConstant.Padding.small)
         .background(Color(UIColor.systemGray5))
         .cornerRadius(StyleConstant.cornerRadius)
