@@ -135,7 +135,7 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
 
     func favoriteSong() {
         let register = FavoriteSongRegister()
-        let songId = SongId(id: player.nowPlayingItem!.persistentID)
+        let songId = songId()
 
         if register.exists(songId: songId) {
             register.delete(songId: songId)
@@ -149,6 +149,10 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
     func setFavorite() {
         setFavoriteArtist()
         setFavoriteSong()
+    }
+
+    func songId() -> SongId {
+        return SongId(id: player.nowPlayingItem!.persistentID)
     }
 
     private func setSong() {
@@ -282,9 +286,8 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
 
     private func setFavoriteSong() {
         let register = FavoriteSongRegister()
-        let songId = SongId(id: player.nowPlayingItem!.persistentID)
 
-        isFavoriteSong = register.exists(songId: songId)
+        isFavoriteSong = register.exists(songId: songId())
     }
 
     private func resetTime() {
