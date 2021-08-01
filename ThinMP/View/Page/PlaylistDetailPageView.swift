@@ -65,7 +65,7 @@ struct PlaylistDetailPageView: View {
                             }
                         }
                     }
-                    MiniPlayerView(bottom: geometry.safeAreaInsets.bottom)
+                    MiniPlayerView(bottom: geometry.safeAreaInsets.bottom) { vm.load() }
                 }
                 if showingPopup {
                     PopupView(showingPopup: $showingPopup) {

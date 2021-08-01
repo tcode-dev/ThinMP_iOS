@@ -47,7 +47,7 @@ struct PlaylistsPageView: View {
                     }
                     .frame(alignment: .top)
                 }
-                MiniPlayerView(bottom: geometry.safeAreaInsets.bottom)
+                MiniPlayerView(bottom: geometry.safeAreaInsets.bottom) { vm.load() }
             }
             .navigationBarHidden(true)
             .navigationBarTitle(Text(""))
