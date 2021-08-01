@@ -14,7 +14,13 @@ struct MiniPlayerView: View {
     @Environment(\.scenePhase) private var scenePhase
     @EnvironmentObject var musicPlayer: MusicPlayer
     @State var isFullScreen: Bool = false
-    let bottom: CGFloat
+    private let bottom: CGFloat
+    private let callback: () -> Void
+
+    init(bottom: CGFloat, callback: @escaping () -> Void = {}) {
+        self.bottom = bottom
+        self.callback = callback
+    }
 
     var body: some View {
         VStack {
@@ -61,7 +67,7 @@ struct MiniPlayerView: View {
                 .background(Color(UIColor.secondarySystemBackground))
                 .border(Color(UIColor.systemGray5), width: 1)
                 .sheet(isPresented: $isFullScreen) {
-                    PlayerView().environmentObject(musicPlayer)
+                    PlayerView(callback: callback).environmentObject(musicPlayer)
                 }
             } else {
                 EmptyView()

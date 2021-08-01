@@ -13,6 +13,11 @@ struct PlayerView: View {
 
     @State var seeking: Bool = false
     @State private var showingPopup: Bool = false
+    private let callback: () -> Void
+
+    init(callback: @escaping () -> Void = {}) {
+        self.callback = callback
+    }
 
     var body: some View {
         GeometryReader { geometry in
@@ -190,6 +195,7 @@ struct PlayerView: View {
         })
         .onDisappear(perform: {
             musicPlayer.stopProgress()
+            callback()
         })
         .onChange(of: scenePhase) { phase in
             if phase == .background {
