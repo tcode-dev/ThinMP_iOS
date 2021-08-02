@@ -49,7 +49,3 @@ Audio, AirPlay, and Picture in Picture
 ### Register
 
 `View` → `Register` → `Repository`
-
-## License
-
-[MIT](http://b4b4r07.mit-license.org)
