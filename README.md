@@ -49,3 +49,7 @@ Audio, AirPlay, and Picture in Picture
 ### Register
 
 `View` → `Register` → `Repository`
+
+### App Store
+
+https://apps.apple.com/us/app/thinmp/id1578896579
