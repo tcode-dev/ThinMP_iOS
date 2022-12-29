@@ -18,12 +18,12 @@
 
 ## Environments
 
-* Xcode 12.5
-* Swift 5.4
+* Xcode 14.1
+* Swift 5.7
 * SwiftUI
-* iOS 14.5
-* iPhone 7
+* iOS 16.1
 * iPhone 12 mini
+* iPhone 14 Plus
 
 ## Libraries
 
