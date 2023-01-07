@@ -21,9 +21,10 @@
 * Xcode 14.1
 * Swift 5.7
 * SwiftUI
-* iOS 16.1
-* iPhone 12 mini
-* iPhone 14 Plus
+* iOS Deployment Target 14.5
+* iPhone 7 (iOS 14.7)
+* iPhone 12 mini (iOS 16.1)
+* iPhone 14 Plus (iOS 16.1)
 
 ## Libraries
 
