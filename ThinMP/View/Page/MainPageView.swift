@@ -64,6 +64,7 @@ struct MainPageView: View {
                     vm.load()
                 }
             }
+            .navigationViewStyle(StackNavigationViewStyle())
         }
     }
 }
