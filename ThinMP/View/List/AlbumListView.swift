@@ -8,20 +8,19 @@
 import SwiftUI
 
 struct AlbumListView: View {
-    private let colCount = 2
+    private let colCount: Int
     private let albums: [AlbumModel]
     private let size: CGFloat
-    private let columns: [GridItem]
+    private var columns: [GridItem]
     private let callback: () -> Void
 
     init(albums: [AlbumModel], width: CGFloat, callback: @escaping () -> Void = {}) {
         self.albums = albums
         self.callback = callback
+        self.colCount = max(Int(width) / StyleConstant.Grid.spanBaseSize, StyleConstant.Grid.minSpanCount)
         size = (width - (StyleConstant.Padding.large * CGFloat(colCount + 1))) / CGFloat(colCount)
-        columns = [
-            GridItem(.fixed(size), spacing: StyleConstant.Padding.large),
-            GridItem(.fixed(size), spacing: 0),
-        ]
+        columns = Array<GridItem>(repeating: GridItem(.fixed(size), spacing: StyleConstant.Padding.large), count: Int(colCount) - 1)
+        columns.append((GridItem(.fixed(size), spacing: 0)))
     }
 
     var body: some View {

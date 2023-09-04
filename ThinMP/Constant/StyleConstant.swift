@@ -23,4 +23,9 @@ enum StyleConstant {
         static let medium: CGFloat = 15
         static let large: CGFloat = 20
     }
+
+    enum Grid {
+        static let minSpanCount: Int = 2
+        static let spanBaseSize: Int = 200
+    }
 }
