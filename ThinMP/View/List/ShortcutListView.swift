@@ -9,7 +9,7 @@ import MediaPlayer
 import SwiftUI
 
 struct ShortcutListView: View {
-    private let colCount = 2
+    private let colCount: Int
     private let shortcuts: [ShortcutModel]
     private let size: CGFloat
     private let columns: [GridItem]
@@ -18,11 +18,15 @@ struct ShortcutListView: View {
     init(shortcuts: [ShortcutModel], width: CGFloat, callback: @escaping () -> Void = {}) {
         self.shortcuts = shortcuts
         self.callback = callback
+        self.colCount = max(Int(width) / StyleConstant.Grid.spanBaseSize, StyleConstant.Grid.minSpanCount)
+
         size = (width - (StyleConstant.Padding.large * CGFloat(colCount + 1))) / CGFloat(colCount)
-        columns = [
-            GridItem(.fixed(size), spacing: StyleConstant.Padding.large),
-            GridItem(.fixed(size), spacing: 0),
-        ]
+
+        var columns = Array<GridItem>(repeating: GridItem(.fixed(size), spacing: StyleConstant.Padding.large), count: Int(colCount) - 1)
+
+        columns.append((GridItem(.fixed(size), spacing: 0)))
+
+        self.columns = columns
     }
 
     var body: some View {

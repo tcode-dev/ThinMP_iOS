@@ -11,16 +11,21 @@ struct AlbumListView: View {
     private let colCount: Int
     private let albums: [AlbumModel]
     private let size: CGFloat
-    private var columns: [GridItem]
+    private let columns: [GridItem]
     private let callback: () -> Void
 
     init(albums: [AlbumModel], width: CGFloat, callback: @escaping () -> Void = {}) {
         self.albums = albums
         self.callback = callback
         self.colCount = max(Int(width) / StyleConstant.Grid.spanBaseSize, StyleConstant.Grid.minSpanCount)
+
         size = (width - (StyleConstant.Padding.large * CGFloat(colCount + 1))) / CGFloat(colCount)
-        columns = Array<GridItem>(repeating: GridItem(.fixed(size), spacing: StyleConstant.Padding.large), count: Int(colCount) - 1)
+
+        var columns = Array<GridItem>(repeating: GridItem(.fixed(size), spacing: StyleConstant.Padding.large), count: Int(colCount) - 1)
+
         columns.append((GridItem(.fixed(size), spacing: 0)))
+
+        self.columns = columns
     }
 
     var body: some View {
