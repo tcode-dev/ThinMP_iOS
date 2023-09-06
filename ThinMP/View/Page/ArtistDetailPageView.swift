@@ -21,7 +21,7 @@ struct ArtistDetailPageView: View {
             ZStack(alignment: .top) {
                 VStack(spacing: 0) {
                     ZStack(alignment: .top) {
-                        HeroNavBarView(primaryText: vm.primaryText, side: geometry.size.width, top: geometry.safeAreaInsets.top, headerRect: $headerRect) {
+                        HeroNavBarView(primaryText: vm.primaryText, width: geometry.size.width, top: geometry.safeAreaInsets.top, headerRect: $headerRect) {
                             MenuButtonView {
                                 VStack {
                                     FavoriteArtistButtonView(artistId: artistId)
@@ -30,8 +30,8 @@ struct ArtistDetailPageView: View {
                             }
                         }
                         ScrollView {
-                            HeroHeaderView(headerRect: $headerRect, side: geometry.size.width, top: geometry.safeAreaInsets.top, primaryText: vm.primaryText, secondaryText: vm.secondaryText) {
-                                HeroCircleImageView(side: geometry.size.width, artwork: vm.artwork)
+                            HeroHeaderView(headerRect: $headerRect, width: geometry.size.width, height: geometry.size.height, top: geometry.safeAreaInsets.top, bottom: geometry.safeAreaInsets.bottom, primaryText: vm.primaryText, secondaryText: vm.secondaryText) {
+                                HeroCircleImageView(width: geometry.size.width, height: geometry.size.height, top: geometry.safeAreaInsets.top, bottom: geometry.safeAreaInsets.bottom, artwork: vm.artwork)
                             }
                             VStack(alignment: .leading) {
                                 SectionTitleView(LabelConstant.albums)

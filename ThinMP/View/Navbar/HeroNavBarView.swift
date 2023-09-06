@@ -10,7 +10,7 @@ import SwiftUI
 
 struct HeroNavBarView<Content>: View where Content: View {
     let primaryText: String?
-    let side: CGFloat
+    let width: CGFloat
     let top: CGFloat
     @Binding var headerRect: CGRect
     let content: () -> Content
@@ -40,7 +40,7 @@ struct HeroNavBarView<Content>: View where Content: View {
 
     private func createHeaderView() -> some View {
         return VStack {
-            Rectangle().frame(width: side, height: StyleConstant.Height.row + top)
+            Rectangle().frame(width: width, height: StyleConstant.Height.row + top)
                 .opacity(0.1)
         }
         .background(BlurView(style: .systemThinMaterial))
@@ -52,7 +52,7 @@ struct HeroNavBarView<Content>: View where Content: View {
         return HStack(alignment: .center) {
             TitleView(primaryText)
         }
-        .frame(width: abs(side - (StyleConstant.button * 2)), height: StyleConstant.Height.row)
+        .frame(width: abs(width - (StyleConstant.button * 2)), height: StyleConstant.Height.row)
         .padding(EdgeInsets(
             top: top,
             leading: StyleConstant.button,

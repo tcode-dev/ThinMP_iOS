@@ -10,13 +10,19 @@ import SwiftUI
 struct HeroHeaderView<Content>: View where Content: View {
     @Binding var headerRect: CGRect
 
-    let side: CGFloat
+    let width: CGFloat
+    let height: CGFloat
     let top: CGFloat
+    let bottom: CGFloat
     let primaryText: String?
     let secondaryText: String?
     let content: () -> Content
 
+    let isLandscape = UIDevice.current.orientation.isLandscape
+
     var body: some View {
+        let size = isLandscape ? height + top + bottom : width
+
         ZStack(alignment: .bottom) {
             content()
             GeometryReader { geometry in
@@ -25,12 +31,12 @@ struct HeroHeaderView<Content>: View where Content: View {
             .frame(height: StyleConstant.Height.row)
             .offset(y: -40)
             SecondaryTextView(secondaryText)
-                .frame(width: abs(side - (StyleConstant.button * 2)), height: 25, alignment: .center)
+                .frame(width: abs(width - (StyleConstant.button * 2)), height: 25, alignment: .center)
                 .offset(y: -30)
                 .padding(.leading, StyleConstant.button)
                 .padding(.trailing, StyleConstant.button)
         }
-        .frame(height: side)
+        .frame(height: size)
     }
 
     /// PrimaryTextのViewを生成する
@@ -44,7 +50,7 @@ struct HeroHeaderView<Content>: View where Content: View {
         return VStack {
             TitleView(primaryText).opacity(textOpacity())
         }
-        .frame(width: abs(side - (StyleConstant.button * 2)), height: StyleConstant.Height.row)
+        .frame(width: abs(width - (StyleConstant.button * 2)), height: StyleConstant.Height.row)
         .padding(.leading, StyleConstant.button)
         .padding(.trailing, StyleConstant.button)
     }
