@@ -12,12 +12,11 @@ struct PlainRowView: View {
 
     var body: some View {
         HStack {
-            VStack(alignment: .leading) {
-                PrimaryTextView(media.primaryText)
-            }
-            .frame(height: 34)
+            PrimaryTextView(media.primaryText)
             Spacer()
         }
-        .padding(StyleConstant.Padding.tiny)
+        .frame(height: StyleConstant.Height.row)
+        .padding(.leading, StyleConstant.Padding.tiny)
+        .padding(.trailing, StyleConstant.Padding.tiny)
     }
 }

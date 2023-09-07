@@ -5,7 +5,6 @@
 //  Created by tk on 2021/06/12.
 //
 
-import MediaPlayer
 import SwiftUI
 
 struct MenuEditRowView: View {
@@ -18,15 +17,14 @@ struct MenuEditRowView: View {
     }
 
     var body: some View {
-        VStack {
-            HStack(alignment: .center) {
-                CheckboxButton().renderingMode(.original)
-                MenuRowView(text: menu.primaryText)
-                Spacer()
-            }
-            .onTapGesture {
-                menu.toggleVisibility()
-            }
+        HStack(alignment: .center) {
+            CheckboxButton().renderingMode(.original)
+            MenuRowView(text: menu.primaryText)
+            Spacer()
+        }
+        .padding(.leading, StyleConstant.Padding.large)
+        .onTapGesture {
+            menu.toggleVisibility()
         }
     }
 

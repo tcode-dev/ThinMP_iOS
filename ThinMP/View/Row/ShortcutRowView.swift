@@ -23,9 +23,10 @@ struct ShortcutRowView: View {
                 PrimaryTextView(shortcut.primaryText)
                 SecondaryTextView(shortcut.secondaryText)
             }
-            .frame(height: 34)
             Spacer()
         }
-        .padding(StyleConstant.Padding.tiny)
+        .frame(height: StyleConstant.Height.row)
+        .padding(.leading, StyleConstant.Padding.tiny)
+        .padding(.trailing, StyleConstant.Padding.tiny)
     }
 }

@@ -5,7 +5,6 @@
 //  Created by tk on 2021/05/04.
 //
 
-import MediaPlayer
 import SwiftUI
 
 struct MediaRowView: View {
@@ -22,9 +21,10 @@ struct MediaRowView: View {
                     SecondaryTextView(media.secondaryText)
                 }
             }
-            .frame(height: 34)
             Spacer()
         }
-        .padding(StyleConstant.Padding.tiny)
+        .frame(height: StyleConstant.Height.row)
+        .padding(.leading, StyleConstant.Padding.tiny)
+        .padding(.trailing, StyleConstant.Padding.tiny)
     }
 }
