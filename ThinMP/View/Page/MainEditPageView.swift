@@ -39,14 +39,15 @@ struct MainEditPageView: View {
                         }
                         .onMove(perform: moveMenu)
                         .listRowInsets(.init())
-                        MenuEditRowView(menu: vm.shortcutMenu)
+                        MenuEditRowView(menu: vm.shortcutMenu).listRowInsets(.init())
+                        MenuEditRowView(menu: vm.recentlyMenu).listRowInsets(.init())
+                        SectionTitleView(vm.shortcutMenu.primaryText).padding(StyleConstant.Padding.tiny)
                         ForEach(vm.shortcuts) { shortcut in
                             ShortcutRowView(shortcut: shortcut)
                         }
                         .onMove(perform: moveShortcut)
                         .onDelete(perform: deleteShortcut)
                         .listRowInsets(.init())
-                        MenuEditRowView(menu: vm.recentlyMenu)
                     }
                 }
             }
