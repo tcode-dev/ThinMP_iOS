@@ -38,7 +38,7 @@ struct MainPageView: View {
                         }
                         .padding(.leading, StyleConstant.Padding.medium)
                         .padding(.bottom, StyleConstant.Padding.large)
-                        if vm.shortcutMenu.visibility {
+                        if vm.shortcutMenu.visibility && !vm.shortcuts.isEmpty {
                             VStack(alignment: .leading) {
                                 SectionTitleView(vm.shortcutMenu.primaryText)
                                     .padding(.leading, StyleConstant.Padding.large)
@@ -46,7 +46,7 @@ struct MainPageView: View {
                                     .padding(.bottom, StyleConstant.Padding.small)
                             }
                         }
-                        if vm.recentlyMenu.visibility {
+                        if vm.recentlyMenu.visibility && !vm.albums.isEmpty {
                             VStack(alignment: .leading) {
                                 SectionTitleView(vm.recentlyMenu.primaryText)
                                     .padding(.leading, StyleConstant.Padding.large)

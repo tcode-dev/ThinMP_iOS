@@ -34,30 +34,34 @@ struct ArtistDetailPageView: View {
                                 HeroCircleImageView(width: geometry.size.width, height: geometry.size.height, top: geometry.safeAreaInsets.top, bottom: geometry.safeAreaInsets.bottom, artwork: vm.artwork)
                             }
                             VStack(alignment: .leading) {
-                                SectionTitleView(LabelConstant.albums)
-                                    .padding(.leading, StyleConstant.Padding.large)
-                                AlbumListView(albums: vm.albums, width: geometry.size.width)
-                                    .padding(.bottom, StyleConstant.Padding.large)
-                                SectionTitleView(LabelConstant.songs)
-                                    .padding(.leading, StyleConstant.Padding.large)
-                                LazyVStack(spacing: 0) {
-                                    ForEach(vm.songs.indices, id: \.self) { index in
-                                        PlayRowView(list: vm.songs, index: index) {
-                                            MediaRowView(media: vm.songs[index])
-                                        }
-                                        .contentShape(RoundedRectangle(cornerRadius: StyleConstant.cornerRadius))
-                                        .contextMenu {
-                                            FavoriteSongButtonView(songId: vm.songs[index].songId)
-                                            Button(action: {
-                                                playlistRegisterSongId = vm.songs[index].songId
-                                                showingPopup.toggle()
-                                            }) {
-                                                Text(LocalizedStringKey(LabelConstant.addPlaylist))
+                                if !vm.albums.isEmpty {
+                                    SectionTitleView(LabelConstant.albums)
+                                        .padding(.leading, StyleConstant.Padding.large)
+                                    AlbumListView(albums: vm.albums, width: geometry.size.width)
+                                        .padding(.bottom, StyleConstant.Padding.large)
+                                }
+                                if !vm.songs.isEmpty {
+                                    SectionTitleView(LabelConstant.songs)
+                                        .padding(.leading, StyleConstant.Padding.large)
+                                    LazyVStack(spacing: 0) {
+                                        ForEach(vm.songs.indices, id: \.self) { index in
+                                            PlayRowView(list: vm.songs, index: index) {
+                                                MediaRowView(media: vm.songs[index])
                                             }
+                                            .contentShape(RoundedRectangle(cornerRadius: StyleConstant.cornerRadius))
+                                            .contextMenu {
+                                                FavoriteSongButtonView(songId: vm.songs[index].songId)
+                                                Button(action: {
+                                                    playlistRegisterSongId = vm.songs[index].songId
+                                                    showingPopup.toggle()
+                                                }) {
+                                                    Text(LocalizedStringKey(LabelConstant.addPlaylist))
+                                                }
+                                            }
+                                            Divider()
                                         }
-                                        Divider()
+                                        .padding(.leading, StyleConstant.Padding.medium)
                                     }
-                                    .padding(.leading, StyleConstant.Padding.medium)
                                 }
                             }
                         }
