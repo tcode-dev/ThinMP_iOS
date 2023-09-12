@@ -7,8 +7,10 @@
 
 import SwiftUI
 
-struct PermissionView: View {
+struct PermissionView<Content>: View where Content: View {
+    let content: () -> Content
+
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        content()
     }
 }
