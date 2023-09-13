@@ -54,3 +54,6 @@
 "Edit" = "編集";
 "Done" = "完了";
 "Cancel" = "キャンセル";
+
+// permission
+"Permission" = "設定からAppleMusicライブラリへのアクセスを許可するとこのアプリを使用できるようになります。";

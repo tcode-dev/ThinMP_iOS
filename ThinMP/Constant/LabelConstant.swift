@@ -27,5 +27,6 @@ enum LabelConstant {
     static let removeShortcut: String = "RemoveShortcut"
     static let shortcut: String = "Shortcut"
     static let songs: String = "Songs"
+    static let permission: String = "Permission"
     static let unknown: String = "unknown"
 }

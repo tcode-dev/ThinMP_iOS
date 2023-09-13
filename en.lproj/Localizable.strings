@@ -54,3 +54,6 @@
 "Edit" = "Edit";
 "Done" = "Done";
 "Cancel" = "Cancel";
+
+// permission
+"Permission" = "You can use this app by granting access to your Apple Music library from the settings.";
