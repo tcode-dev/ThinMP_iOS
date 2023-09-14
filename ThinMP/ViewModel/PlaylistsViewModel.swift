@@ -7,10 +7,10 @@
 
 import MediaPlayer
 
-class PlaylistsViewModel: ViewModelProtocol {
+class PlaylistsViewModel: ObservableObject {
     @Published var playlists: [PlaylistModel] = []
 
-    func fetch() {
+    func load() {
         let playlistsService = PlaylistsService()
         let playlists = playlistsService.findAll()
 

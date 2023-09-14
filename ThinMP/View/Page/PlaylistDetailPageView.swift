@@ -65,7 +65,7 @@ struct PlaylistDetailPageView: View {
                             }
                         }
                     }
-                    MiniPlayerView(bottom: geometry.safeAreaInsets.bottom) { vm.load() }
+                    MiniPlayerView(bottom: geometry.safeAreaInsets.bottom) { vm.load(playlistId: playlistId) }
                 }
                 if showingPopup {
                     PopupView(showingPopup: $showingPopup) {

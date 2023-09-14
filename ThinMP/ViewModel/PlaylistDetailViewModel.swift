@@ -7,7 +7,7 @@
 
 import MediaPlayer
 
-class PlaylistDetailViewModel: ViewModelProtocol {
+class PlaylistDetailViewModel: ObservableObject {
     @Published var primaryText: String?
     @Published var artwork: MPMediaItemArtwork?
     @Published var songs: [SongModel] = []
@@ -16,10 +16,6 @@ class PlaylistDetailViewModel: ViewModelProtocol {
 
     func load(playlistId: PlaylistId) {
         self.playlistId = playlistId
-        load()
-    }
-
-    func fetch() {
         let playlistDetailService = PlaylistDetailService()
         let playlistDetailModel = playlistDetailService.findById(playlistId: playlistId)
 

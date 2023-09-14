@@ -7,14 +7,14 @@
 
 import MediaPlayer
 
-class MainEditViewModel: ViewModelProtocol {
+class MainEditViewModel: ObservableObject {
     @Published var menus: [MenuModel] = []
     @Published var shortcutMenu = MenuModel(primaryText: "", visibility: true)
     @Published var recentlyMenu = MenuModel(primaryText: "", visibility: true)
     @Published var shortcuts: [ShortcutModel] = []
     @Published var albums: [AlbumModel] = []
 
-    func fetch() {
+    func load() {
         let mainService = MainService()
         let menus = mainService.getMainMenus()
         let shortcutMenu = mainService.getShortcutMenu()

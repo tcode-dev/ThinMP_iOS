@@ -7,7 +7,7 @@
 
 import MediaPlayer
 
-class AlbumDetailViewModel: ViewModelProtocol {
+class AlbumDetailViewModel: ObservableObject {
     @Published var primaryText: String?
     @Published var secondaryText: String?
     @Published var artwork: MPMediaItemArtwork?
@@ -17,10 +17,6 @@ class AlbumDetailViewModel: ViewModelProtocol {
 
     func load(albumId: AlbumId) {
         self.albumId = albumId
-        load()
-    }
-
-    func fetch() {
         let albumDetailService = AlbumDetailService()
         let albumDetailModel = albumDetailService.findById(albumId: albumId)
 

@@ -7,10 +7,10 @@
 
 import MediaPlayer
 
-class FavoriteArtistsViewModel: ViewModelProtocol {
+class FavoriteArtistsViewModel: ObservableObject {
     @Published var artists: [ArtistModel] = []
 
-    func fetch() {
+    func load() {
         let favoriteArtistsService = FavoriteArtistsService()
         let artists = favoriteArtistsService.findAll()
 
