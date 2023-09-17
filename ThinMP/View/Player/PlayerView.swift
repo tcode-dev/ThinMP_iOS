@@ -173,7 +173,7 @@ struct PlayerView: View {
                         }
                         .frame(width: StyleConstant.button, height: StyleConstant.button)
                     }
-                    .padding(.horizontal, 30)
+                    .padding(.horizontal, 50)
 
                     Spacer()
                 }
