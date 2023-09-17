@@ -116,11 +116,11 @@ struct PlayerView: View {
                             musicPlayer.changeRepeat()
                         }) {
                             if musicPlayer.isRepeatOff {
-                                Image("RepeatButton").renderingMode(.original).resizable().frame(width: 40, height: 40).opacity(0.5)
+                                Image("RepeatButton").renderingMode(.original).resizable().frame(width: 50, height: 50).opacity(0.5)
                             } else if musicPlayer.isRepeatAll {
-                                Image("RepeatButton").renderingMode(.original).resizable().frame(width: 40, height: 40)
+                                Image("RepeatButton").renderingMode(.original).resizable().frame(width: 50, height: 50)
                             } else if musicPlayer.isRepeatOne {
-                                Image("RepeatOneButton").renderingMode(.original).resizable().frame(width: 40, height: 40)
+                                Image("RepeatOneButton").renderingMode(.original).resizable().frame(width: 50, height: 50)
                             }
                         }
                         .frame(width: StyleConstant.button, height: StyleConstant.button)
@@ -131,9 +131,9 @@ struct PlayerView: View {
                             musicPlayer.shuffle()
                         }) {
                             if musicPlayer.shuffleMode {
-                                Image("ShuffleButton").renderingMode(.original).resizable().frame(width: 40, height: 40)
+                                Image("ShuffleButton").renderingMode(.original).resizable().frame(width: 50, height: 50)
                             } else {
-                                Image("ShuffleButton").renderingMode(.original).resizable().frame(width: 40, height: 40).opacity(0.5)
+                                Image("ShuffleButton").renderingMode(.original).resizable().frame(width: 50, height: 50).opacity(0.5)
                             }
                         }
                         .frame(width: StyleConstant.button, height: StyleConstant.button)
@@ -144,9 +144,9 @@ struct PlayerView: View {
                             musicPlayer.favoriteArtist()
                         }) {
                             if musicPlayer.isFavoriteArtist {
-                                Image("FavoriteArtistButton").renderingMode(.original).resizable().frame(width: 40, height: 40)
+                                Image("FavoriteArtistButton").renderingMode(.original).resizable().frame(width: 50, height: 50)
                             } else {
-                                Image("FavoriteArtistButton").renderingMode(.original).resizable().frame(width: 40, height: 40).opacity(0.5)
+                                Image("FavoriteArtistButton").renderingMode(.original).resizable().frame(width: 50, height: 50).opacity(0.5)
                             }
                         }
                         .frame(width: StyleConstant.button, height: StyleConstant.button)
@@ -157,9 +157,9 @@ struct PlayerView: View {
                             musicPlayer.favoriteSong()
                         }) {
                             if musicPlayer.isFavoriteSong {
-                                Image("FavoriteSongButton").renderingMode(.original).resizable().frame(width: 30, height: 30)
+                                Image("FavoriteSongButton").renderingMode(.original).resizable().frame(width: 40, height: 40)
                             } else {
-                                Image("FavoriteSongButton").renderingMode(.original).resizable().frame(width: 30, height: 30).opacity(0.5)
+                                Image("FavoriteSongButton").renderingMode(.original).resizable().frame(width: 40, height: 40).opacity(0.5)
                             }
                         }
                         .frame(width: StyleConstant.button, height: StyleConstant.button)
@@ -169,7 +169,7 @@ struct PlayerView: View {
                         Button(action: {
                             showingPopup.toggle()
                         }) {
-                            Image("PlaylistAddButton").renderingMode(.original).resizable().frame(width: 40, height: 40)
+                            Image("PlaylistAddButton").renderingMode(.original).resizable().frame(width: 50, height: 50)
                         }
                         .frame(width: StyleConstant.button, height: StyleConstant.button)
                     }
