@@ -21,6 +21,8 @@ struct PlayerView: View {
 
     var body: some View {
         GeometryReader { geometry in
+            let size = geometry.size.width
+
             ZStack(alignment: .top) {
                 ZStack {
                     Image(uiImage: musicPlayer.song?.artwork?.image(at: CGSize(width: geometry.size.width, height: geometry.size.width)) ?? UIImage())
@@ -31,23 +33,21 @@ struct PlayerView: View {
                     LinearGradient(gradient: Gradient(colors: [Color(Color.RGBColorSpace.sRGB, red: 1, green: 1, blue: 1, opacity: 0), Color(UIColor.systemBackground)]), startPoint: .top, endPoint: .bottom).frame(height: geometry.size.width).offset(y: 25)
                 }
                 .frame(width: geometry.size.width, height: geometry.size.width)
-                VStack {
-                    Image(uiImage: musicPlayer.song?.artwork?.image(at: CGSize(width: 220, height: 220)) ?? UIImage(imageLiteralResourceName: "Song"))
+                VStack(spacing: 0) {
+                    let imageSize = size / 2
+                    Image(uiImage: musicPlayer.song?.artwork?.image(at: CGSize(width: imageSize, height: imageSize)) ?? UIImage(imageLiteralResourceName: "Song"))
                         .renderingMode(.original)
                         .resizable()
                         .scaledToFit()
                         .cornerRadius(StyleConstant.cornerRadius)
-                        .frame(width: 220, height: 220)
-                        .padding(.top, 50)
-                        .padding(.bottom, 10)
-                    ZStack(alignment: .bottom) {
-                        TitleView(musicPlayer.song?.primaryText).frame(height: 50).offset(y: -10)
-                        SecondaryTextView(musicPlayer.song?.secondaryText).frame(height: 25)
+                        .frame(width: imageSize, height: imageSize)
+                        .padding(.top, size / 8)
+                    VStack(spacing: StyleConstant.Padding.tiny) {
+                        TitleView(musicPlayer.song?.primaryText)
+                        SecondaryTextView(musicPlayer.song?.secondaryText)
                     }
-                    .frame(height: 60)
+                    .frame(height: size / 6)
                     .padding(.horizontal, StyleConstant.Padding.large)
-
-                    Spacer()
 
                     Slider(value: $musicPlayer.currentSecond, in: 0 ... musicPlayer.durationSecond, step: 1, onEditingChanged: { changed in
                         if musicPlayer.isPlaying, !seeking, changed {
@@ -62,14 +62,14 @@ struct PlayerView: View {
                             seeking = changed
                         }
                     })
-                        .padding(.leading, StyleConstant.Padding.small)
-                        .padding(.trailing, StyleConstant.Padding.small)
+                        .padding(.leading, 40)
+                        .padding(.trailing, 40)
                         .accentColor(Color(.label))
 
                     HStack {
-                        SecondaryTextView("\(convertTime(time: musicPlayer.currentSecond))").frame(width: 50).padding(.leading, StyleConstant.Padding.small)
+                        SecondaryTextView("\(convertTime(time: musicPlayer.currentSecond))").frame(width: 50).padding(.leading, 40)
                         Spacer()
-                        SecondaryTextView("\(convertTime(time: musicPlayer.durationSecond))").frame(width: 50).padding(.trailing, StyleConstant.Padding.small)
+                        SecondaryTextView("\(convertTime(time: musicPlayer.durationSecond))").frame(width: 50).padding(.trailing, 40)
                     }
 
                     Spacer()
@@ -79,7 +79,7 @@ struct PlayerView: View {
                         Button(action: {
                             musicPlayer.doPrev()
                         }) {
-                            Image("PrevButton").renderingMode(.original).resizable().frame(width: 72, height: 72)
+                            Image("PrevButton").renderingMode(.original).resizable().frame(width: 88, height: 88)
                         }
 
                         Spacer()
@@ -88,13 +88,13 @@ struct PlayerView: View {
                             Button(action: {
                                 musicPlayer.doPause()
                             }) {
-                                Image("PauseButton").renderingMode(.original).resizable().frame(width: 88, height: 88)
+                                Image("PauseButton").renderingMode(.original).resizable().frame(width: 100, height: 100)
                             }
                         } else {
                             Button(action: {
                                 musicPlayer.doPlay()
                             }) {
-                                Image("PlayButton").renderingMode(.original).resizable().frame(width: 88, height: 88)
+                                Image("PlayButton").renderingMode(.original).resizable().frame(width: 100, height: 100)
                             }
                         }
 
@@ -103,7 +103,7 @@ struct PlayerView: View {
                         Button(action: {
                             musicPlayer.doNext()
                         }) {
-                            Image("NextButton").renderingMode(.original).resizable().frame(width: 72, height: 72)
+                            Image("NextButton").renderingMode(.original).resizable().frame(width: 88, height: 88)
                         }
 
                         Spacer()
