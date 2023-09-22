@@ -25,6 +25,7 @@
 * iPhone 7 (iOS 14.7)
 * iPhone 12 mini (iOS 16.1)
 * iPhone 14 Plus (iOS 16.1)
+* iPad Pro 12.9-inch (6th generation)
 
 ## Libraries
 
