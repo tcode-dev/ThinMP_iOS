@@ -19,20 +19,24 @@ struct HeroHeaderView<Content>: View where Content: View {
     let content: () -> Content
 
     let isLandscape = UIDevice.current.orientation.isLandscape
+    let isPad = UIDevice.current.userInterfaceIdiom == .pad
 
     var body: some View {
         let size = isLandscape ? height + top + bottom : width
+        let rate = isPad ? 0.85 : 0.75
+        let primaryTextOffset = size * rate
+        let secondaryTextOffset = primaryTextOffset + 40
 
-        ZStack(alignment: .bottom) {
+        ZStack(alignment: .top) {
             content()
             GeometryReader { geometry in
                 createPrimaryTextView(geometry: geometry)
             }
             .frame(height: StyleConstant.Height.row)
-            .offset(y: -40)
+            .offset(y: primaryTextOffset)
             SecondaryTextView(secondaryText)
                 .frame(width: abs(width - (StyleConstant.button * 2)), height: 25, alignment: .center)
-                .offset(y: -30)
+                .offset(y: secondaryTextOffset)
                 .padding(.leading, StyleConstant.button)
                 .padding(.trailing, StyleConstant.button)
         }

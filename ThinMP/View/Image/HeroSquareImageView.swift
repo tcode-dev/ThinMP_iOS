@@ -19,7 +19,7 @@ struct HeroSquareImageView: View {
     var body: some View {
         let size = isLandscape ? height + top + bottom : width
 
-        Group {
+        ZStack(alignment: .bottom) {
             VStack {
                 Image(uiImage: artwork?.image(at: CGSize(width: size, height: size)) ?? UIImage(imageLiteralResourceName: "Song"))
                     .resizable()
@@ -27,7 +27,7 @@ struct HeroSquareImageView: View {
             }
             .frame(width: size, height: size)
             LinearGradient(gradient: Gradient(colors: [Color(Color.RGBColorSpace.sRGB, red: 1, green: 1, blue: 1, opacity: 0), Color(UIColor.systemBackground)]), startPoint: .top, endPoint: .bottom)
-                .frame(height: 200)
+                .frame(height: size * 0.3)
         }
     }
 }

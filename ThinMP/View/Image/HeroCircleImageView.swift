@@ -17,23 +17,23 @@ struct HeroCircleImageView: View {
     let isLandscape = UIDevice.current.orientation.isLandscape
 
     var body: some View {
-        let height = isLandscape ? height + top + bottom : width
+        let size = isLandscape ? height + top + bottom : width
 
-        Group {
+        ZStack(alignment: .bottom) {
             VStack {
-                Image(uiImage: artwork?.image(at: CGSize(width: self.width, height: height)) ?? UIImage())
+                Image(uiImage: artwork?.image(at: CGSize(width: self.width, height: size)) ?? UIImage())
                     .resizable()
                     .scaledToFill()
-                    .frame(width: self.width, height: height)
+                    .frame(width: self.width, height: size)
                     .clipped()
                     .blur(radius: 10.0)
             }
-            .frame(width: self.width, height: height)
+            .frame(width: self.width, height: size)
             LinearGradient(gradient: Gradient(colors: [Color(Color.RGBColorSpace.sRGB, red: 1, green: 1, blue: 1, opacity: 0), Color(UIColor.systemBackground)]), startPoint: .top, endPoint: .bottom)
-                .frame(height: 355)
-                .offset(y: 25)
-            CircleImageView(artwork: artwork, size: height / 3)
-                .offset(y: -(height / 3))
+                .frame(height: size / 3)
+                .offset(y: 20)
+            CircleImageView(artwork: artwork, size: size / 3)
+                .offset(y: -(size / 3))
         }
     }
 }
