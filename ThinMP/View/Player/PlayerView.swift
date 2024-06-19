@@ -77,27 +77,27 @@ struct PlayerView: View {
                         HStack {
                             Spacer()
                             Button(action: {
-                                musicPlayer.doPrev()
+                                musicPlayer.prev()
                             }) {
                                 Image("PrevButton").renderingMode(.original).resizable().frame(width: 88, height: 88)
                             }
                             Spacer()
                             if musicPlayer.isPlaying {
                                 Button(action: {
-                                    musicPlayer.doPause()
+                                    musicPlayer.pause()
                                 }) {
                                     Image("PauseButton").renderingMode(.original).resizable().frame(width: 100, height: 100)
                                 }
                             } else {
                                 Button(action: {
-                                    musicPlayer.doPlay()
+                                    musicPlayer.play()
                                 }) {
                                     Image("PlayButton").renderingMode(.original).resizable().frame(width: 100, height: 100)
                                 }
                             }
                             Spacer()
                             Button(action: {
-                                musicPlayer.doNext()
+                                musicPlayer.next()
                             }) {
                                 Image("NextButton").renderingMode(.original).resizable().frame(width: 88, height: 88)
                             }

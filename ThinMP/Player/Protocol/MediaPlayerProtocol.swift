@@ -10,13 +10,13 @@ import Foundation
 protocol MediaPlayerProtocol {
     func start(list: [SongModel], currentIndex: Int)
 
-    func doPlay()
+    func play()
 
-    func doPause()
+    func pause()
 
-    func doPrev()
+    func prev()
 
-    func doNext()
+    func next()
 
     func seek(time: TimeInterval)
 

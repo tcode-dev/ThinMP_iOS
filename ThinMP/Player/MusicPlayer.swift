@@ -47,36 +47,36 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
 
         descriptor.startItem = song?.media.representativeItem
         player.setQueue(with: descriptor)
-        play()
+        doPlay()
         setFavorite()
         addObserver()
         isFirst = true
         isActive = true
     }
 
-    func doPlay() {
-        play()
+    func play() {
+        doPlay()
         startProgress()
     }
 
-    func doPause() {
-        pause()
+    func pause() {
+        doPause()
         stopProgress()
     }
 
-    func doPrev() {
+    func prev() {
         if isPlaying {
             playPrev()
         } else {
-            prev()
+            doPrev()
         }
     }
 
-    func doNext() {
+    func next() {
         if isPlaying {
             playNext()
         } else {
-            next()
+            doNext()
         }
     }
 
@@ -168,14 +168,14 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
         }
     }
 
-    private func play() {
+    private func doPlay() {
         isPlaying = true
 
         player.prepareToPlay()
         player.play()
     }
 
-    private func pause() {
+    private func doPause() {
         isPlaying = false
         player.pause()
     }
@@ -189,7 +189,7 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
         player.stop()
     }
 
-    private func prev() {
+    private func doPrev() {
         stop()
 
         if currentSecond <= PREV_SECOND {
@@ -202,11 +202,11 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
     }
 
     private func playPrev() {
-        prev()
-        play()
+        doPrev()
+        doPlay()
     }
 
-    private func next() {
+    private func doNext() {
         stop()
         player.skipToNextItem()
         setSong()
@@ -214,8 +214,8 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
     }
 
     private func playNext() {
-        next()
-        play()
+        doNext()
+        doPlay()
     }
 
     private func addObserver() {
