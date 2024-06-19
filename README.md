@@ -10,7 +10,7 @@
 
 <img src="https://github.com/tcode-dev/ThinMP_iOS/assets/42083313/4ab3e12e-d171-44d9-960a-ab7f24eb2d7b" width="156"> <img src="https://github.com/tcode-dev/ThinMP_iOS/assets/42083313/54a3c7c6-83fb-4c65-9e00-56a7adce20d9" width="156"> <img src="https://github.com/tcode-dev/ThinMP_iOS/assets/42083313/616595c7-ef74-407f-8e82-268c8ff0c120" width="156"> <img src="https://github.com/tcode-dev/ThinMP_iOS/assets/42083313/918e444c-d0b7-45c0-9059-3b0b98f59926" width="156"> <img src="https://github.com/tcode-dev/ThinMP_iOS/assets/42083313/bf37877e-4cf9-4f4c-9e60-57f95594b9f6" width="156"> 
 
-### iPad Pro 12.9-inch
+### iPad Pro
 
 <img src="https://github.com/tcode-dev/ThinMP_iOS/assets/42083313/a04ebb36-f58a-4817-98d0-710297cae3df" width="200"> <img src="https://github.com/tcode-dev/ThinMP_iOS/assets/42083313/77951470-3975-4983-8666-a394353c9125" width="200"> <img src="https://github.com/tcode-dev/ThinMP_iOS/assets/42083313/1d4b439a-bfcb-4811-a365-9e01a28304d0" width="200"> <img src="https://github.com/tcode-dev/ThinMP_iOS/assets/42083313/64f39eca-fb39-4ecd-ae9a-d6ec2afe365e" width="200">
 
@@ -27,13 +27,13 @@
 
 ## Environments
 
-* Xcode 15.0
+* Xcode 15.4
 * Swift
 * SwiftUI
 * iOS Deployment Target 15
 * iPhone 12 mini (iOS 16)
 * iPhone 14 Plus (iOS 17)
-* iPad Pro (6th generation, IPadOS 17)
+* iPad Pro (6th generation, IPadOS 17, 12.9-inch)
 
 ## Libraries
 
