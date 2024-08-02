@@ -27,6 +27,9 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
     private var timer: Timer?
     private var isBackground = false
     private var isFirst = false
+    private var nowPlayingItemDidChangeDebounceTimer: Timer?
+    private var playbackStateDidChangeDebounceTimer: Timer?
+    private let debounceTimeInterval = 0.1
 
     init() {
         playerConfig = PlayerConfig()
@@ -35,6 +38,7 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
         player.shuffleMode = playerConfig.getShuffle()
         setRepeat()
         setShuffle()
+        addObserver()
         player.beginGeneratingPlaybackNotifications()
     }
 
@@ -49,7 +53,6 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
         player.setQueue(with: descriptor)
         doPlay()
         setFavorite()
-        addObserver()
         isFirst = true
         isActive = true
     }
@@ -155,6 +158,10 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
         return SongId(id: player.nowPlayingItem!.persistentID)
     }
 
+    func getCurrentSong() -> SongModel? {
+        return song
+    }
+
     private func setSong() {
         if player.nowPlayingItem != nil {
             song = SongModel(media: MPMediaItemCollection(items: [player.nowPlayingItem! as MPMediaItem]))
@@ -224,7 +231,7 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
             object: player,
             queue: OperationQueue.main
         ) { _ in
-            self.MPMusicPlayerControllerNowPlayingItemDidChangeCallback()
+            self.nowPlayingItemDidChangeCallback()
         }
 
         NotificationCenter.default.addObserver(
@@ -232,11 +239,35 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
             object: player,
             queue: OperationQueue.main
         ) { _ in
-            self.MPMusicPlayerControllerPlaybackStateDidChangeCallback()
+            self.playbackStateDidChangeCallback()
         }
     }
 
-    private func MPMusicPlayerControllerPlaybackStateDidChangeCallback() {
+    private func removeObserver() {
+        NotificationCenter.default.removeObserver(
+            self,
+            name: NSNotification.Name.MPMusicPlayerControllerNowPlayingItemDidChange,
+            object: player
+        )
+
+        NotificationCenter.default.removeObserver(
+            self,
+            name: NSNotification.Name.MPMusicPlayerControllerPlaybackStateDidChange,
+            object: player
+        )
+    }
+
+    private func nowPlayingItemDidChangeCallback() {
+        setSong()
+
+        if player.repeatMode == .none, player.indexOfNowPlayingItem == 0, !isFirst {
+            isPlaying = false
+        }
+
+        isFirst = false
+    }
+
+    private func playbackStateDidChangeCallback() {
         if isPlaying, !isBackground {
             return
         }
@@ -264,16 +295,6 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
 
             break
         }
-    }
-
-    private func MPMusicPlayerControllerNowPlayingItemDidChangeCallback() {
-        setSong()
-
-        if player.repeatMode == .none, player.indexOfNowPlayingItem == 0, !isFirst {
-            isPlaying = false
-        }
-
-        isFirst = false
     }
 
     private func setFavoriteArtist() {
@@ -309,4 +330,26 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
     private func setShuffle() {
         shuffleMode = player.shuffleMode == .songs
     }
+
+    // 再生開始時にMPMusicPlayerControllerNowPlayingItemDidChangeが20回くらい呼ばれる
+    // debounceを使用して一定時間内に複数回発生した通知を1回にまとめる
+    private func nowPlayingItemDidChangeDebounce(action: @escaping () -> Void) {
+        nowPlayingItemDidChangeDebounceTimer?.invalidate()
+        nowPlayingItemDidChangeDebounceTimer = Timer.scheduledTimer(withTimeInterval: debounceTimeInterval, repeats: false) { _ in
+            action()
+        }
+    }
+
+    private func playbackStateDidChangeDebounce(action: @escaping () -> Void) {
+        playbackStateDidChangeDebounceTimer?.invalidate()
+        playbackStateDidChangeDebounceTimer = Timer.scheduledTimer(withTimeInterval: debounceTimeInterval, repeats: false) { _ in
+            action()
+        }
+    }
+
+    deinit {
+        removeObserver()
+
+        player.endGeneratingPlaybackNotifications()
+     }
 }
