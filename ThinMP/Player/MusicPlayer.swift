@@ -165,7 +165,6 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
     private func setSong() {
         if player.nowPlayingItem != nil {
             song = SongModel(media: MPMediaItemCollection(items: [player.nowPlayingItem! as MPMediaItem]))
-            player.skipToBeginning()
             resetTime()
             isActive = true
         } else {
