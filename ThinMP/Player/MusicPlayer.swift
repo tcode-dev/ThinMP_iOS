@@ -231,7 +231,9 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
             object: player,
             queue: OperationQueue.main
         ) { _ in
-            self.nowPlayingItemDidChangeCallback()
+            self.nowPlayingItemDidChangeDebounce {
+                self.nowPlayingItemDidChangeCallback()
+            }
         }
 
         NotificationCenter.default.addObserver(
@@ -239,7 +241,9 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
             object: player,
             queue: OperationQueue.main
         ) { _ in
-            self.playbackStateDidChangeCallback()
+            self.playbackStateDidChangeDebounce {
+                self.playbackStateDidChangeCallback()
+            }
         }
     }
 
@@ -331,7 +335,7 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
         shuffleMode = player.shuffleMode == .songs
     }
 
-    // 再生開始時にMPMusicPlayerControllerNowPlayingItemDidChangeが20回くらい呼ばれる
+    // ios17以降MPMusicPlayerControllerNowPlayingItemDidChangeが複数回呼ばれる
     // debounceを使用して一定時間内に複数回発生した通知を1回にまとめる
     private func nowPlayingItemDidChangeDebounce(action: @escaping () -> Void) {
         nowPlayingItemDidChangeDebounceTimer?.invalidate()
