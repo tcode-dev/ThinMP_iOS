@@ -26,8 +26,6 @@ protocol MediaPlayerProtocol {
 
     func stopProgress()
 
-    func setBackground(background: Bool)
-
     func changeRepeat()
 
     func shuffle()

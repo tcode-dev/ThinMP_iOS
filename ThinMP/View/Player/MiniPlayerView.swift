@@ -73,12 +73,5 @@ struct MiniPlayerView: View {
                 EmptyView()
             }
         }
-        .onChange(of: scenePhase) { phase in
-            if phase == .background {
-                musicPlayer.setBackground(background: true)
-            } else if phase == .active {
-                musicPlayer.setBackground(background: false)
-            }
-        }
     }
 }

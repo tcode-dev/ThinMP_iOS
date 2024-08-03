@@ -25,7 +25,6 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
     private let playerConfig: PlayerConfig
     private let player: MPMusicPlayerController
     private var timer: Timer?
-    private var isBackground = false
     private var nowPlayingItemDidChangeDebounceTimer: Timer?
     private var playbackStateDidChangeDebounceTimer: Timer?
     private let debounceTimeInterval = 0.1
@@ -93,10 +92,6 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
 
     func stopProgress() {
         timer?.invalidate()
-    }
-
-    func setBackground(background: Bool) {
-        isBackground = background
     }
 
     func changeRepeat() {
