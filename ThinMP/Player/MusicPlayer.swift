@@ -59,12 +59,10 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
 
     func play() {
         doPlay()
-        startProgress()
     }
 
     func pause() {
         doPause()
-        stopProgress()
     }
 
     func prev() {

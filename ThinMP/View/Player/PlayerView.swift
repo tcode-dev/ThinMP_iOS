@@ -85,12 +85,14 @@ struct PlayerView: View {
                             if musicPlayer.isPlaying {
                                 Button(action: {
                                     musicPlayer.pause()
+                                    musicPlayer.stopProgress()
                                 }) {
                                     Image("PauseButton").renderingMode(.original).resizable().frame(width: 100, height: 100)
                                 }
                             } else {
                                 Button(action: {
                                     musicPlayer.play()
+                                    musicPlayer.startProgress()
                                 }) {
                                     Image("PlayButton").renderingMode(.original).resizable().frame(width: 100, height: 100)
                                 }
