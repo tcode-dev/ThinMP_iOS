@@ -26,7 +26,6 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
     private let player: MPMusicPlayerController
     private var timer: Timer?
     private var isBackground = false
-    private var isFirst = false
     private var nowPlayingItemDidChangeDebounceTimer: Timer?
     private var playbackStateDidChangeDebounceTimer: Timer?
     private let debounceTimeInterval = 0.1
@@ -56,7 +55,6 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
         player.setQueue(with: descriptor)
         play()
         setFavorite()
-        isFirst = true
         isActive = true
     }
 
@@ -155,10 +153,6 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
         return SongId(id: player.nowPlayingItem!.persistentID)
     }
 
-    func getCurrentSong() -> SongModel? {
-        return song
-    }
-
     private func setSong() {
         if player.nowPlayingItem != nil {
             song = SongModel(media: MPMediaItemCollection(items: [player.nowPlayingItem! as MPMediaItem]))
@@ -209,12 +203,6 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
 
     private func nowPlayingItemDidChangeCallback() {
         setSong()
-
-        if player.repeatMode == .none, player.indexOfNowPlayingItem == 0, !isFirst {
-            isPlaying = false
-        }
-
-        isFirst = false
     }
 
     private func playbackStateDidChangeCallback() {
@@ -225,9 +213,11 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
         case MPMusicPlaybackState.playing:
             isPlaying = true
 
+            break
         case MPMusicPlaybackState.paused:
             isPlaying = false
 
+            break
         case MPMusicPlaybackState.interrupted:
 
             break
