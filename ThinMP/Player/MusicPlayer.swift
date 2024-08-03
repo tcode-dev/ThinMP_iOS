@@ -46,12 +46,10 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
             player.stop()
         }
 
-        song = list[currentIndex]
-
         let items = MPMediaItemCollection(items: list.map { $0.media.representativeItem! as MPMediaItem })
         let descriptor = MPMusicPlayerMediaItemQueueDescriptor(itemCollection: items)
 
-        descriptor.startItem = song?.media.representativeItem
+        descriptor.startItem = list[currentIndex].media.representativeItem
         player.setQueue(with: descriptor)
         play()
     }
