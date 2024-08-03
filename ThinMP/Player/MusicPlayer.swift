@@ -43,7 +43,10 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
     }
 
     func start(list: [SongModel], currentIndex: Int) {
-        stop()
+        if (player.playbackState == MPMusicPlaybackState.playing) {
+            player.stop()
+        }
+
         song = list[currentIndex]
 
         let items = MPMediaItemCollection(items: list.map { $0.media.representativeItem! as MPMediaItem })
@@ -51,34 +54,30 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
 
         descriptor.startItem = song?.media.representativeItem
         player.setQueue(with: descriptor)
-        doPlay()
+        play()
         setFavorite()
         isFirst = true
         isActive = true
     }
 
     func play() {
-        doPlay()
+        player.play()
     }
 
     func pause() {
-        doPause()
+        player.pause()
     }
 
     func prev() {
-        if isPlaying {
-            playPrev()
+        if currentSecond <= PREV_SECOND {
+            player.skipToPreviousItem()
         } else {
-            doPrev()
+            player.skipToBeginning()
         }
     }
 
     func next() {
-        if isPlaying {
-            playNext()
-        } else {
-            doNext()
-        }
+        player.skipToNextItem()
     }
 
     func seek(time: TimeInterval) {
@@ -172,56 +171,6 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
         }
     }
 
-    private func doPlay() {
-        isPlaying = true
-
-        player.prepareToPlay()
-        player.play()
-    }
-
-    private func doPause() {
-        isPlaying = false
-        player.pause()
-    }
-
-    private func stop() {
-        if !isPlaying {
-            return
-        }
-
-        isPlaying = false
-        player.stop()
-    }
-
-    private func doPrev() {
-        stop()
-
-        if currentSecond <= PREV_SECOND {
-            player.skipToPreviousItem()
-            setSong()
-        } else {
-            player.skipToBeginning()
-            resetTime()
-        }
-    }
-
-    private func playPrev() {
-        doPrev()
-        doPlay()
-    }
-
-    private func doNext() {
-        stop()
-        player.skipToNextItem()
-        setSong()
-        resetTime()
-    }
-
-    private func playNext() {
-        doNext()
-        doPlay()
-    }
-
     private func addObserver() {
         NotificationCenter.default.addObserver(
             forName: NSNotification.Name.MPMusicPlayerControllerNowPlayingItemDidChange,
@@ -269,10 +218,6 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
     }
 
     private func playbackStateDidChangeCallback() {
-        if isPlaying, !isBackground {
-            return
-        }
-
         switch player.playbackState {
         case MPMusicPlaybackState.stopped:
 
