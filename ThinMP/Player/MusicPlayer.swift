@@ -54,8 +54,6 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
         descriptor.startItem = song?.media.representativeItem
         player.setQueue(with: descriptor)
         play()
-        setFavorite()
-        isActive = true
     }
 
     func play() {
@@ -157,6 +155,7 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
         if player.nowPlayingItem != nil {
             song = SongModel(media: MPMediaItemCollection(items: [player.nowPlayingItem! as MPMediaItem]))
             resetTime()
+            setFavorite()
             isActive = true
         } else {
             currentSecond = 0
