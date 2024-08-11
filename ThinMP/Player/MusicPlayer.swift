@@ -25,9 +25,6 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
     private let playerConfig: PlayerConfig
     private let player: MPMusicPlayerController
     private var timer: Timer?
-    private var nowPlayingItemDidChangeDebounceTimer: Timer?
-    private var playbackStateDidChangeDebounceTimer: Timer?
-    private let debounceTimeInterval = 0.1
 
     init() {
         playerConfig = PlayerConfig()
@@ -163,9 +160,7 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
             object: player,
             queue: OperationQueue.main
         ) { _ in
-            self.nowPlayingItemDidChangeDebounce {
-                self.nowPlayingItemDidChangeCallback()
-            }
+            self.nowPlayingItemDidChangeCallback()
         }
 
         NotificationCenter.default.addObserver(
@@ -173,9 +168,7 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
             object: player,
             queue: OperationQueue.main
         ) { _ in
-            self.playbackStateDidChangeDebounce {
-                self.playbackStateDidChangeCallback()
-            }
+            self.playbackStateDidChangeCallback()
         }
     }
 
@@ -257,22 +250,6 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
 
     private func setShuffle() {
         shuffleMode = player.shuffleMode == .songs
-    }
-
-    // ios17以降MPMusicPlayerControllerNowPlayingItemDidChangeが複数回呼ばれる
-    // debounceを使用して一定時間内に複数回発生した通知を1回にまとめる
-    private func nowPlayingItemDidChangeDebounce(action: @escaping () -> Void) {
-        nowPlayingItemDidChangeDebounceTimer?.invalidate()
-        nowPlayingItemDidChangeDebounceTimer = Timer.scheduledTimer(withTimeInterval: debounceTimeInterval, repeats: false) { _ in
-            action()
-        }
-    }
-
-    private func playbackStateDidChangeDebounce(action: @escaping () -> Void) {
-        playbackStateDidChangeDebounceTimer?.invalidate()
-        playbackStateDidChangeDebounceTimer = Timer.scheduledTimer(withTimeInterval: debounceTimeInterval, repeats: false) { _ in
-            action()
-        }
     }
 
     deinit {
