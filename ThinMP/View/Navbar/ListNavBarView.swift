@@ -37,7 +37,7 @@ struct ListNavBarView<Content>: View where Content: View {
         .background(Color(UIColor.secondarySystemBackground))
         .border(Color(UIColor.systemGray5), width: 1)
         .opacity(opacity())
-        .animation(.easeInOut)
+        .animation(.easeInOut, value: opacity())
     }
 
     private func opacity() -> Double {

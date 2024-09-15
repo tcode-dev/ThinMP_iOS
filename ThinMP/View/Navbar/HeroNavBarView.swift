@@ -45,7 +45,7 @@ struct HeroNavBarView<Content>: View where Content: View {
         }
         .background(BlurView(style: .systemThinMaterial))
         .opacity(opacity())
-        .animation(.easeInOut)
+        .animation(.easeInOut, value: opacity())
     }
 
     private func createTitleView() -> some View {
