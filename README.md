@@ -30,10 +30,10 @@
 * Xcode 15.4
 * Swift
 * SwiftUI
-* iOS Deployment Target 15
+* iOS Deployment Target 16
 * iPhone 12 mini (iOS 16)
-* iPhone 14 Plus (iOS 17)
-* iPad Pro (6th generation, IPadOS 17, 12.9-inch)
+* iPhone 14 Plus (iOS 18)
+* iPad Pro (6th generation, iPadOS 18, 12.9-inch)
 
 ## Libraries
 

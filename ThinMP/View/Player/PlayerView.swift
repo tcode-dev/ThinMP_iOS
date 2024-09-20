@@ -37,7 +37,7 @@ struct PlayerView: View {
                 .frame(width: geometry.size.width, height: geometry.size.width)
                 VStack(spacing: 0) {
                     VStack(spacing: 0) {
-                        let imageSize = isPad ? size * 0.5 : size * 0.6
+                        let imageSize = height * 0.3
                         Spacer()
                         Image(uiImage: musicPlayer.song?.artwork?.image(at: CGSize(width: imageSize, height: imageSize)) ?? UIImage(imageLiteralResourceName: "Song"))
                             .renderingMode(.original)
@@ -47,14 +47,16 @@ struct PlayerView: View {
                             .frame(width: imageSize, height: imageSize)
                             .padding(.top, size * 0.1)
                         Spacer()
+                    }
+                    .frame(height: height * 0.4)
+                    VStack(spacing: 0) {
                         VStack(spacing: StyleConstant.Padding.tiny) {
                             TitleView(musicPlayer.song?.primaryText)
                             SecondaryTextView(musicPlayer.song?.secondaryText)
                         }
+                        .frame(height: 50)
                         .padding(.horizontal, StyleConstant.Padding.large)
                         Spacer()
-                    }.frame(height: height * 0.55)
-                    VStack(spacing: 0) {
                         Slider(value: $musicPlayer.currentSecond, in: 0 ... musicPlayer.durationSecond, step: 1, onEditingChanged: { changed in
                             if musicPlayer.isPlaying, !seeking, changed {
                                 musicPlayer.stopProgress()
@@ -66,12 +68,13 @@ struct PlayerView: View {
                                 seeking = changed
                             }
                         })
+                        .frame(height: StyleConstant.button)
                         .padding(.horizontal, isPad ? 40 : 30)
                         .accentColor(Color(.label))
                         HStack {
-                            SecondaryTextView("\(convertTime(time: musicPlayer.currentSecond))").frame(width: 50).padding(.leading, 40)
+                            SecondaryTextView("\(convertTime(time: musicPlayer.currentSecond))").frame(width: 50, height: 20).padding(.leading, 40)
                             Spacer()
-                            SecondaryTextView("\(convertTime(time: musicPlayer.durationSecond))").frame(width: 50).padding(.trailing, 40)
+                            SecondaryTextView("\(convertTime(time: musicPlayer.durationSecond))").frame(width: 50, height: 20).padding(.trailing, 40)
                         }
                         Spacer()
                         HStack {
@@ -162,7 +165,8 @@ struct PlayerView: View {
                         }
                         .padding(.horizontal, isPad ? 50 : 30)
                         Spacer()
-                    }.frame(height: height * 0.45)
+                    }
+                    .frame(height: height * 0.6)
                 }
                 if showingPopup {
                     PopupView(showingPopup: $showingPopup) {
