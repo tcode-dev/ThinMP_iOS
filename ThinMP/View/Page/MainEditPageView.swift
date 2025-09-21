@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct MainEditPageView: View {
-    @Environment(\.editMode) var editMode
     @Environment(\.presentationMode) var presentation
     @StateObject private var vm = MainEditViewModel()
 
@@ -54,6 +53,7 @@ struct MainEditPageView: View {
             .navigationBarHidden(true)
             .navigationBarTitle(Text(""))
             .edgesIgnoringSafeArea(.all)
+            .environment(\.editMode, .constant(.active))
             .onAppear {
                 vm.load()
             }

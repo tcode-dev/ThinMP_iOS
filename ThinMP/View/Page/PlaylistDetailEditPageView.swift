@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct PlaylistDetailEditPageView: View {
-    @Environment(\.editMode) var editMode
     @Environment(\.presentationMode) var presentation
     @StateObject private var vm = PlaylistDetailViewModel()
     @State private var name: String = ""
@@ -69,6 +68,7 @@ struct PlaylistDetailEditPageView: View {
             .navigationBarHidden(true)
             .navigationBarTitle(Text(""))
             .edgesIgnoringSafeArea(.all)
+            .environment(\.editMode, .constant(.active))
             .onAppear {
                 vm.load(playlistId: playlistId)
             }

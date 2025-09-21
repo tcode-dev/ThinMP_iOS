@@ -23,7 +23,7 @@ struct EditButtonView<Content>: View where Content: View {
         }
         .frame(width: StyleConstant.button, height: StyleConstant.button)
         .background(
-            NavigationLink(destination: content().environment(\.editMode, $editMode), isActive: $isEdit) {
+            NavigationLink(destination: content(), isActive: $isEdit) {
                 EmptyView()
             })
     }

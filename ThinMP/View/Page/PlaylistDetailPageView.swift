@@ -33,7 +33,7 @@ struct PlaylistDetailPageView: View {
                                         ShortcutButtonView(itemId: playlistId.id, type: ShortcutType.PLAYLIST)
                                     }
                                 }
-                                NavigationLink(destination: PlaylistDetailEditPageView(playlistId: playlistId, primaryText: vm.primaryText).environment(\.editMode, $editMode), isActive: $isEdit) {
+                                NavigationLink(destination: PlaylistDetailEditPageView(playlistId: playlistId, primaryText: vm.primaryText), isActive: $isEdit) {
                                     EmptyView()
                                 }
                             }
