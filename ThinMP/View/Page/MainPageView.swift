@@ -12,7 +12,7 @@ struct MainPageView: View {
 
     var body: some View {
         GeometryReader { geometry in
-            NavigationView {
+            NavigationStack {
                 VStack(spacing: 0) {
                     ScrollView {
                         VStack(alignment: .leading) {

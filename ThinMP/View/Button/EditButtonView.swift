@@ -9,22 +9,15 @@ import SwiftUI
 
 struct EditButtonView<Content>: View where Content: View {
     let content: () -> Content
-
-    @State var isEdit: Bool = false
-    @State var editMode: EditMode = .active
-
+    
     var body: some View {
         Menu {
-            Button(LocalizedStringKey(LabelConstant.edit)) {
-                isEdit = true
+            NavigationLink(destination: content()) {
+                MenuRowView(text: LabelConstant.edit)
             }
         } label: {
             MenuImageView()
         }
         .frame(width: StyleConstant.button, height: StyleConstant.button)
-        .background(
-            NavigationLink(destination: content(), isActive: $isEdit) {
-                EmptyView()
-            })
     }
 }

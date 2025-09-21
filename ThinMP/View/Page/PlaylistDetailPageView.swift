@@ -27,14 +27,11 @@ struct PlaylistDetailPageView: View {
                             VStack {
                                 MenuButtonView {
                                     VStack {
-                                        Button(LocalizedStringKey(LabelConstant.edit)) {
-                                            isEdit = true
+                                        NavigationLink(destination: PlaylistDetailEditPageView(playlistId: playlistId, primaryText: vm.primaryText)) {
+                                            MenuRowView(text: LabelConstant.edit)
                                         }
                                         ShortcutButtonView(itemId: playlistId.id, type: ShortcutType.PLAYLIST)
                                     }
-                                }
-                                NavigationLink(destination: PlaylistDetailEditPageView(playlistId: playlistId, primaryText: vm.primaryText), isActive: $isEdit) {
-                                    EmptyView()
                                 }
                             }
                         }
