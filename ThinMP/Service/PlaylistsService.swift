@@ -20,12 +20,11 @@ struct PlaylistsService: PlaylistsServiceProtocol {
     }
 
     func findAll() -> [PlaylistModel] {
-        let playlists = playlistRepository.findAll()
+        let playlistIds = playlistRepository.findAll().map { $0.playlistId }
 
-        return playlists.map { playlist in
-            let playlistDetailModel = playlistDetailService.findById(playlistId: playlist.playlistId)
-
-            return PlaylistModel(playlistId: playlist.playlistId, primaryText: playlistDetailModel.primaryText, artwork: playlistDetailModel.artwork, songIds: playlist.songIds)
+        // プレイリストごとに findById を呼ぶとライブラリ全件取得がその回数だけ走るので、まとめて 1 回で解決する
+        return playlistDetailService.findByIds(playlistIds: playlistIds).map { playlist in
+            PlaylistModel(playlistId: playlist.playlistId, primaryText: playlist.primaryText, artwork: playlist.artwork, songIds: playlist.songs.map { $0.songId })
         }
     }
 }

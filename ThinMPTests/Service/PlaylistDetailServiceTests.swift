@@ -79,4 +79,29 @@ struct PlaylistDetailServiceTests {
         #expect(models.map { $0.primaryText } == ["One", "Two"])
         #expect(models.map { $0.songs.count } == [1, 1])
     }
+
+    /// SongRepository.findByIds はライブラリ全件を舐めるので、プレイリスト数に関係なく 1 回で済ませる
+    @Test
+    func findByIdsQueriesSongRepositoryOnceForAllPlaylists() {
+        let playlistRepository = PlaylistRepositoryMock(playlists: [
+            PlaylistEntity(playlistId: PlaylistId(id: "p1"), name: "One", songIds: [SongId(id: 1), SongId(id: 2)]),
+            PlaylistEntity(playlistId: PlaylistId(id: "p2"), name: "Two", songIds: [SongId(id: 2), SongId(id: 3)]),
+            PlaylistEntity(playlistId: PlaylistId(id: "p3"), name: "Three", songIds: [SongId(id: 9)]),
+        ])
+        let songRepository = SongRepositoryMock(songs: [.fake(id: 1), .fake(id: 2), .fake(id: 3)])
+        let service = PlaylistDetailService(
+            playlistRepository: playlistRepository,
+            songRepository: songRepository,
+            playlistRegister: PlaylistRegister(repository: playlistRepository)
+        )
+
+        let models = service.findByIds(playlistIds: [PlaylistId(id: "p1"), PlaylistId(id: "p2"), PlaylistId(id: "p3")])
+
+        #expect(songRepository.findByIdsCalls.count == 1)
+        #expect(songRepository.findByIdsCalls[0].map { $0.id } == [1, 2, 3, 9])
+        #expect(models.map { $0.songs.map { $0.songId.id } } == [[1, 2], [2, 3], []])
+        // 端末に無い曲 9 は p3 からだけ取り除かれる
+        #expect(playlistRepository.updateCalls.map { $0.playlistId.id } == ["p3"])
+        #expect(playlistRepository.updateCalls[0].songIds.isEmpty)
+    }
 }

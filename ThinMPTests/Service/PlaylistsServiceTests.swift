@@ -15,7 +15,7 @@ struct PlaylistsServiceTests {
             PlaylistEntity(playlistId: PlaylistId(id: "p2"), name: "B", songIds: [SongId(id: 3)]),
             PlaylistEntity(playlistId: PlaylistId(id: "p3"), name: "C", songIds: [SongId(id: 2)]),
         ]
-        let details = playlists.map { PlaylistDetailModel(playlistId: $0.playlistId, primaryText: $0.name, songs: []) }
+        let details = playlists.map { PlaylistDetailModel(playlistId: $0.playlistId, primaryText: $0.name, songs: $0.songIds.map { .fake(id: $0.id) }) }
 
         return PlaylistsService(
             playlistRepository: PlaylistRepositoryMock(playlists: playlists),

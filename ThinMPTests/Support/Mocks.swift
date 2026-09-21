@@ -156,6 +156,8 @@ final class ShortcutRepositoryMock: ShortcutRepositoryProtocol {
 /// 端末のライブラリの代わり。findByIds は実装と同じく songIds の順序で返す
 final class SongRepositoryMock: SongRepositoryProtocol {
     let songs: [SongModel]
+    /// findByIds に渡された songIds の履歴。ライブラリ全件取得の回数を数えるのに使う
+    private(set) var findByIdsCalls: [[SongId]] = []
 
     init(songs: [SongModel]) {
         self.songs = songs
@@ -166,6 +168,8 @@ final class SongRepositoryMock: SongRepositoryProtocol {
     }
 
     func findByIds(songIds: [SongId]) -> [SongModel] {
+        findByIdsCalls.append(songIds)
+
         return songIds.compactMap { songId in songs.first { $0.songId.equals(songId) } }
     }
 

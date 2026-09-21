@@ -17,19 +17,27 @@ class SongRepository: SongRepositoryProtocol {
         return query.collections!.map { SongModel(media: $0) }
     }
 
+    /// MPMediaQuery には IN 述語が無いので、ライブラリを 1 回取得して Set で絞る
+    /// 結果は songIds の順で、ライブラリに無い曲は落ちる
     func findByIds(songIds: [SongId]) -> [SongModel] {
+        if songIds.isEmpty {
+            return []
+        }
+
         let property = MPMediaPropertyPredicate(value: false, forProperty: MPMediaItemPropertyIsCloudItem)
         let query = MPMediaQuery.songs()
-        let ids = songIds.map { $0.id }
+        let ids = Set(songIds.map { $0.id })
 
         query.addFilterPredicate(property)
 
-        let filtered = query.collections!.filter { ids.contains($0.representativeItem?.persistentID ?? 0) }
+        let songs = Dictionary(
+            query.collections!
+                .filter { ids.contains($0.persistentID) }
+                .map { ($0.persistentID, SongModel(media: $0)) },
+            uniquingKeysWith: { first, _ in first }
+        )
 
-        return songIds
-            .filter { songId in filtered.contains(where: { $0.representativeItem?.persistentID == songId.id }) }
-            .map { songId in filtered.first { $0.representativeItem?.persistentID == songId.id }! }
-            .map { SongModel(media: $0) }
+        return songIds.compactMap { songs[$0.id] }
     }
 
     func findByAlbumId(albumId: AlbumId) -> [SongModel] {
