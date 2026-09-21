@@ -7,6 +7,7 @@
 
 import MediaPlayer
 
+@MainActor
 class PlaylistDetailViewModel: ObservableObject {
     @Published var primaryText: String?
     @Published var artwork: MPMediaItemArtwork?
@@ -14,15 +15,17 @@ class PlaylistDetailViewModel: ObservableObject {
 
     var playlistId: PlaylistId!
 
+    // SwiftData の ModelContext はスレッドセーフではなく、全 Repository が同じ context を共有しているので
+    // メインアクター上で実行する(Task.detached でバックグラウンドに逃がさない)
     func load(playlistId: PlaylistId) {
         self.playlistId = playlistId
-        let playlistDetailService = PlaylistDetailService()
-        let playlistDetailModel = playlistDetailService.findById(playlistId: playlistId)
 
-        DispatchQueue.main.async {
-            self.primaryText = playlistDetailModel.primaryText
-            self.artwork = playlistDetailModel.artwork
-            self.songs = playlistDetailModel.songs
+        Task {
+            let playlistDetailModel = PlaylistDetailService().findById(playlistId: playlistId)
+
+            primaryText = playlistDetailModel.primaryText
+            artwork = playlistDetailModel.artwork
+            songs = playlistDetailModel.songs
         }
     }
 }

@@ -7,15 +7,15 @@
 
 import MediaPlayer
 
+@MainActor
 class FavoriteSongsViewModel: ObservableObject {
     @Published var songs: [SongModel] = []
 
+    // SwiftData の ModelContext はスレッドセーフではなく、全 Repository が同じ context を共有しているので
+    // メインアクター上で実行する(Task.detached でバックグラウンドに逃がさない)
     func load() {
-        let favoriteSongsService = FavoriteSongsService()
-        let songs = favoriteSongsService.findAll()
-
-        DispatchQueue.main.async {
-            self.songs = songs
+        Task {
+            songs = FavoriteSongsService().findAll()
         }
     }
 }

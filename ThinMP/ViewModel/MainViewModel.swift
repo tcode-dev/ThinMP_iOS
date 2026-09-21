@@ -7,6 +7,7 @@
 
 import MediaPlayer
 
+@MainActor
 class MainViewModel: ObservableObject {
     @Published var menus: [MenuModel] = []
     @Published var shortcutMenu = MenuModel(primaryText: "", visibility: false)
@@ -14,20 +15,19 @@ class MainViewModel: ObservableObject {
     @Published var shortcuts: [ShortcutModel] = []
     @Published var albums: [AlbumModel] = []
 
+    // SwiftData の ModelContext はスレッドセーフではなく、全 Repository が同じ context を共有しているので
+    // メインアクター上で実行する(Task.detached でバックグラウンドに逃がさない)
     func load() {
-        let mainService = MainService()
-        let menus = mainService.getMainMenus()
-        let shortcutMenu = mainService.getShortcutMenu()
-        let recentlyMenu = mainService.getRecentlyMenu()
-        let shortcuts = shortcutMenu.visibility ? mainService.findShortcuts() : []
-        let albums = recentlyMenu.visibility ? mainService.findRecentlyAlbums() : []
+        Task {
+            let mainService = MainService()
+            let shortcutMenu = mainService.getShortcutMenu()
+            let recentlyMenu = mainService.getRecentlyMenu()
 
-        DispatchQueue.main.async {
-            self.menus = menus
+            menus = mainService.getMainMenus()
             self.shortcutMenu = shortcutMenu
             self.recentlyMenu = recentlyMenu
-            self.shortcuts = shortcuts
-            self.albums = albums
+            shortcuts = shortcutMenu.visibility ? mainService.findShortcuts() : []
+            albums = recentlyMenu.visibility ? mainService.findRecentlyAlbums() : []
         }
     }
 }
