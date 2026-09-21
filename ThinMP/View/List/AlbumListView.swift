@@ -21,7 +21,7 @@ struct AlbumListView: View {
 
         size = (width - (StyleConstant.Padding.large * CGFloat(colCount + 1))) / CGFloat(colCount)
 
-        var columns = Array<GridItem>(repeating: GridItem(.fixed(size), spacing: StyleConstant.Padding.large), count: Int(colCount) - 1)
+        var columns = [GridItem](repeating: GridItem(.fixed(size), spacing: StyleConstant.Padding.large), count: Int(colCount) - 1)
 
         columns.append((GridItem(.fixed(size), spacing: 0)))
 

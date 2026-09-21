@@ -72,8 +72,14 @@ final class FavoriteArtistRepositoryMock: FavoriteArtistRepositoryProtocol {
 }
 
 final class PlaylistRepositoryMock: PlaylistRepositoryProtocol {
+    struct UpdateCall {
+        let playlistId: PlaylistId
+        let name: String
+        let songIds: [SongId]
+    }
+
     var playlists: [PlaylistEntity]
-    private(set) var updateCalls: [(playlistId: PlaylistId, name: String, songIds: [SongId])] = []
+    private(set) var updateCalls: [UpdateCall] = []
 
     init(playlists: [PlaylistEntity] = []) {
         self.playlists = playlists
@@ -108,7 +114,7 @@ final class PlaylistRepositoryMock: PlaylistRepositoryProtocol {
     }
 
     func update(playlistId: PlaylistId, name: String, songIds: [SongId]) {
-        updateCalls.append((playlistId, name, songIds))
+        updateCalls.append(UpdateCall(playlistId: playlistId, name: name, songIds: songIds))
 
         guard let index = playlists.firstIndex(where: { $0.playlistId.id == playlistId.id }) else { return }
 

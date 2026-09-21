@@ -42,8 +42,7 @@ class MainMenuConfig {
 
     func getList() -> [MenuModel] {
         return getSort()
-            .enumerated()
-            .map { MenuModel(primaryText: $0.element, visibility: getVisibility(key: $0.element)) }
+            .map { MenuModel(primaryText: $0, visibility: getVisibility(key: $0)) }
     }
 
     private func getSort() -> [String] {
