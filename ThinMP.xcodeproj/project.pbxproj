@@ -54,7 +54,6 @@
 		526648F625AB23690034D912 /* FavoriteArtistsEditPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526648F525AB23690034D912 /* FavoriteArtistsEditPageView.swift */; };
 		5269C8B12699803A00A3E7DE /* PlainRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5269C8B02699803A00A3E7DE /* PlainRowView.swift */; };
 		526A3B372366AC6F0070BE0A /* AlbumModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526A3B362366AC6F0070BE0A /* AlbumModel.swift */; };
-		526B8CE0269B30AC00A39770 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 526B8CDF269B30AC00A39770 /* .swiftlint.yml */; };
 		527177A22663C99400390A32 /* ShortcutCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527177A12663C99400390A32 /* ShortcutCellView.swift */; };
 		527177A42663CA4A00390A32 /* ShortcutListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527177A32663CA4A00390A32 /* ShortcutListView.swift */; };
 		527177A62663D5D400390A32 /* AlbumListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527177A52663D5D400390A32 /* AlbumListView.swift */; };
@@ -964,11 +963,11 @@
 				52C34D5A230ED7BE00EA76DA /* Sources */,
 				52C34D5B230ED7BE00EA76DA /* Frameworks */,
 				52C34D5C230ED7BE00EA76DA /* Resources */,
-				526B8CDE269B300100A39770 /* ShellScript */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				52A7F1042B9C4D0100C51A04 /* PBXTargetDependency */,
 			);
 			name = ThinMP;
 			packageProductDependencies = (
@@ -991,6 +990,7 @@
 			);
 			dependencies = (
 				BCA510D64BDB5B7E9D9C4A05 /* PBXTargetDependency */,
+				52A7F1052B9C4D0100C51A05 /* PBXTargetDependency */,
 			);
 			name = ThinMPTests;
 			productName = ThinMPTests;
@@ -1034,6 +1034,7 @@
 			mainGroup = 52C34D55230ED7BE00EA76DA;
 			packageReferences = (
 				523C4C57259409DE00D7D32C /* XCRemoteSwiftPackageReference "realm-cocoa" */,
+				52A7F1012B9C4D0100C51A01 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */,
 			);
 			productRefGroup = 52C34D5F230ED7BE00EA76DA /* Products */;
 			projectDirPath = "";
@@ -1050,7 +1051,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				526B8CE0269B30AC00A39770 /* .swiftlint.yml in Resources */,
 				525443A526B5835400720EFD /* InfoPlist.strings in Resources */,
 				52C34D69230ED7C000EA76DA /* Assets.xcassets in Resources */,
 				528AF180267E251100B7C620 /* Localizable.strings in Resources */,
@@ -1066,26 +1066,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		526B8CDE269B300100A39770 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		52C34D5A230ED7BE00EA76DA /* Sources */ = {
@@ -1276,6 +1256,14 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		52A7F1042B9C4D0100C51A04 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 52A7F1022B9C4D0100C51A02 /* SwiftLintBuildToolPlugin */;
+		};
+		52A7F1052B9C4D0100C51A05 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 52A7F1032B9C4D0100C51A03 /* SwiftLintBuildToolPlugin */;
+		};
 		BCA510D64BDB5B7E9D9C4A05 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 52C34D5D230ED7BE00EA76DA /* ThinMP */;
@@ -1583,6 +1571,14 @@
 				minimumVersion = 10.5.0;
 			};
 		};
+		52A7F1012B9C4D0100C51A01 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SimplyDanny/SwiftLintPlugins";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.65.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1595,6 +1591,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 523C4C57259409DE00D7D32C /* XCRemoteSwiftPackageReference "realm-cocoa" */;
 			productName = RealmSwift;
+		};
+		52A7F1022B9C4D0100C51A02 /* SwiftLintBuildToolPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 52A7F1012B9C4D0100C51A01 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */;
+			productName = "plugin:SwiftLintBuildToolPlugin";
+		};
+		52A7F1032B9C4D0100C51A03 /* SwiftLintBuildToolPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 52A7F1012B9C4D0100C51A01 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */;
+			productName = "plugin:SwiftLintBuildToolPlugin";
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

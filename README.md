@@ -38,9 +38,27 @@
 ## Libraries
 
 * Realm - https://realm.io/ (legacy store; kept only to migrate existing data to SwiftData, see [#11](https://github.com/tcode-dev/ThinMP_iOS/issues/11))
-* SwiftLint - https://github.com/realm/SwiftLint
+* SwiftLint - https://github.com/realm/SwiftLint (run as an SPM build tool plugin via https://github.com/SimplyDanny/SwiftLintPlugins, so no local installation is required)
 * SwiftFormat - https://github.com/nicklockwood/SwiftFormat
 * Material Icons - https://fonts.google.com/icons?selected=Material+Icons
+
+## SwiftLint
+
+SwiftLint runs on every build of `ThinMP` and `ThinMPTests` through the `SwiftLintBuildToolPlugin` build tool plugin, using `.swiftlint.yml` in the repository root. The plugin ships its own `swiftlint` binary, so nothing needs to be installed locally.
+
+Xcode asks you to trust the plugin the first time it is used on a machine. The build fails with:
+
+```
+Plugin “SwiftLintBuildToolPlugin” from package “SwiftLintPlugins” must be enabled before it can be used
+```
+
+To enable it, open the Issue Navigator (⌘5), click that error, choose **Trust & Enable** in the dialog, and build again. The choice is stored in Xcode's user settings, so it is needed once per machine and nothing is committed.
+
+`xcodebuild` has no dialog, so pass `-skipPackagePluginValidation` on the command line and in CI, or set it once for the machine:
+
+```
+defaults write com.apple.dt.Xcode IDESkipPackagePluginFingerprintValidatation -bool YES
+```
 
 ## Info.plist
 
@@ -81,7 +99,7 @@ Realm and the migration code are scheduled for removal in the 2027 release; see 
 `ThinMPTests` uses Swift Testing.
 
 ```
-xcodebuild -project ThinMP.xcodeproj -scheme ThinMP -destination 'platform=iOS Simulator,name=iPhone 17' test
+xcodebuild -project ThinMP.xcodeproj -scheme ThinMP -destination 'platform=iOS Simulator,name=iPhone 17' -skipPackagePluginValidation test
 ```
 
 * `ThinMPTests/Repository` — contract tests for the `Repository` protocols. They run against every case of `RepositoryBackend`, so a new persistence store only needs a new case there.
