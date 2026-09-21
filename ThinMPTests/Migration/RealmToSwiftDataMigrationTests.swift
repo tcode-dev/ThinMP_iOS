@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RealmSwift
 import Testing
 @testable import ThinMP
 
@@ -55,6 +56,36 @@ struct RealmToSwiftDataMigrationTests {
         LegacyRealmFixture.verify(swiftData)
         // PlaylistId は引き継がれる
         #expect(swiftData.playlist.findAll().map { $0.playlistId.id } == realm.playlist.findAll().map { $0.playlistId.id })
+    }
+
+    /// Realm 時代は同じ曲を重複して登録できたので、移行時に最初の 1 回だけ残す
+    @Test
+    func migrateDropsDuplicateSongsInPlaylist() {
+        let realmStore = RealmStore.inMemory()
+        let swiftDataStore = SwiftDataStore.inMemory()
+        let realmRepositories = TestRepositories(backend: .realm, realmStore: realmStore)
+
+        realmRepositories.playlist.create(songId: SongId(id: 1), name: "Dup")
+
+        // 現在の Realm Repository は重複を弾くので、旧バージョンが作ったデータを Realm に直接書く
+        let realm = realmStore.realm()
+        let playlist = realm.objects(PlaylistRealmModel.self).first!
+
+        try! realm.write {
+            for songId in ["2", "1", "2", "3"] {
+                let song = PlaylistSongRealmModel()
+
+                song.songId = songId
+                song.playlistId = playlist.id
+                playlist.songs.append(song)
+            }
+        }
+
+        #expect(realmRepositories.playlist.findAll()[0].songIds.map { $0.id } == [1, 2, 1, 2, 3])
+
+        RealmToSwiftDataMigration(realmStore: realmStore, swiftDataStore: swiftDataStore, userDefaults: .standard).migrate()
+
+        #expect(PlaylistRepository(store: swiftDataStore).findAll()[0].songIds.map { $0.id } == [1, 2, 3])
     }
 
     @Test

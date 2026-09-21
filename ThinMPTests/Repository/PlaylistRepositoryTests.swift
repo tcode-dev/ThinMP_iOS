@@ -5,6 +5,8 @@
 //  Created by tk on 2026/09/21.
 //
 
+import Foundation
+import SwiftData
 import Testing
 @testable import ThinMP
 
@@ -92,6 +94,45 @@ struct PlaylistRepositoryTests {
 
         #expect(playlist.name == "Z")
         #expect(playlist.songIds.map { $0.id } == [3, 1])
+    }
+
+    @Test(arguments: RepositoryBackend.allCases)
+    func updateKeepsOnlyFirstOccurrenceOfDuplicateSongs(backend: RepositoryBackend) {
+        let repository = TestRepositories(backend: backend).playlist
+
+        repository.create(songId: SongId(id: 1), name: "A")
+
+        let playlistId = repository.findAll()[0].playlistId
+
+        repository.update(playlistId: playlistId, name: "A", songIds: [SongId(id: 2), SongId(id: 1), SongId(id: 2), SongId(id: 3), SongId(id: 1)])
+
+        #expect(repository.findById(playlistId: playlistId).songIds.map { $0.id } == [2, 1, 3])
+    }
+
+    /// SwiftData ストア自体の制約。Repository を経由せずに重複を insert しても 1 行にまとまる
+    @Test
+    func swiftDataStoreRejectsDuplicateSongInSamePlaylist() {
+        let store = SwiftDataStore.inMemory()
+        let repository = PlaylistRepository(store: store)
+
+        repository.create(songId: SongId(id: 1), name: "A")
+        repository.create(songId: SongId(id: 1), name: "B")
+
+        let playlistId = repository.findAll()[0].playlistId
+        let id = playlistId.id
+        let playlist = try! store.context.fetch(FetchDescriptor<PlaylistDataModel>(predicate: #Predicate { $0.id == id })).first!
+        let duplicate = PlaylistSongDataModel(playlistId: playlist.id, songId: "1", order: 1)
+
+        store.context.insert(duplicate)
+        playlist.songs.append(duplicate)
+        store.save()
+
+        let songs = try! store.context.fetch(FetchDescriptor<PlaylistSongDataModel>(predicate: #Predicate { $0.playlistId == id }))
+
+        #expect(songs.count == 1)
+        #expect(repository.findById(playlistId: playlistId).songIds.map { $0.id } == [1])
+        // 別のプレイリストの同じ曲には影響しない
+        #expect(repository.findAll()[1].songIds.map { $0.id } == [1])
     }
 
     @Test(arguments: RepositoryBackend.allCases)
