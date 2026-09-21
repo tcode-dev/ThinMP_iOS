@@ -34,15 +34,15 @@ struct AlbumDetailPageView: View {
                                     HeroSquareImageView(width: geometry.size.width, height: geometry.size.height, top: geometry.safeAreaInsets.top, bottom: geometry.safeAreaInsets.bottom, artwork: vm.artwork)
                                 }
                                 LazyVStack(spacing: 0) {
-                                    ForEach(vm.songs.indices, id: \.self) { index in
+                                    ForEach(Array(vm.songs.enumerated()), id: \.element.id) { index, song in
                                         PlayRowView(list: vm.songs, index: index) {
-                                            MediaRowView(media: vm.songs[index])
+                                            MediaRowView(media: song)
                                         }
                                         .contentShape(RoundedRectangle(cornerRadius: StyleConstant.cornerRadius))
                                         .contextMenu {
-                                            FavoriteSongButtonView(songId: vm.songs[index].songId)
+                                            FavoriteSongButtonView(songId: song.songId)
                                             Button(action: {
-                                                playlistRegisterSongId = vm.songs[index].songId
+                                                playlistRegisterSongId = song.songId
                                                 showingPopup.toggle()
                                             }) {
                                                 Text(LocalizedStringKey(LabelConstant.addPlaylist))

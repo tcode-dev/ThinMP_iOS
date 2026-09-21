@@ -34,15 +34,15 @@ struct FavoriteSongsPageView: View {
                             VStack(alignment: .leading) {
                                 ListEmptyHeaderView(headerRect: $headerRect, top: geometry.safeAreaInsets.top)
                                 LazyVStack(spacing: 0) {
-                                    ForEach(vm.songs.indices, id: \.self) { index in
+                                    ForEach(Array(vm.songs.enumerated()), id: \.element.id) { index, song in
                                         PlayRowView(list: vm.songs, index: index) {
-                                            MediaRowView(media: vm.songs[index])
+                                            MediaRowView(media: song)
                                         }
                                         .contentShape(RoundedRectangle(cornerRadius: StyleConstant.cornerRadius))
                                         .contextMenu {
-                                            FavoriteSongButtonView(songId: vm.songs[index].songId) { vm.load() }
+                                            FavoriteSongButtonView(songId: song.songId) { vm.load() }
                                             Button(action: {
-                                                playlistRegisterSongId = vm.songs[index].songId
+                                                playlistRegisterSongId = song.songId
                                                 showingPopup.toggle()
                                             }) {
                                                 Text(LocalizedStringKey(LabelConstant.addPlaylist))
