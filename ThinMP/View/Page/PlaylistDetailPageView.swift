@@ -35,7 +35,7 @@ struct PlaylistDetailPageView: View {
                                 }
                             }
                         }
-                        ScrollView(showsIndicators: true) {
+                        ScrollView {
                             VStack(alignment: .leading) {
                                 HeroHeaderView(headerRect: $headerRect, width: geometry.size.width, height: geometry.size.height, top: geometry.safeAreaInsets.top, bottom: geometry.safeAreaInsets.bottom, primaryText: vm.primaryText, secondaryText: LabelConstant.playlist) {
                                     HeroSquareImageView(width: geometry.size.width, height: geometry.size.height, top: geometry.safeAreaInsets.top, bottom: geometry.safeAreaInsets.bottom, artwork: vm.artwork)

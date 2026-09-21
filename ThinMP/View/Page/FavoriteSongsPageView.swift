@@ -30,7 +30,7 @@ struct FavoriteSongsPageView: View {
                                 }
                             }
                         }
-                        ScrollView(showsIndicators: true) {
+                        ScrollView {
                             VStack(alignment: .leading) {
                                 ListEmptyHeaderView(headerRect: $headerRect, top: geometry.safeAreaInsets.top)
                                 LazyVStack(spacing: 0) {
