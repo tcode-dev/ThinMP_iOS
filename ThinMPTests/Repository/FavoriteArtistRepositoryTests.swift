@@ -9,6 +9,7 @@ import Testing
 @testable import ThinMP
 
 /// FavoriteArtistRepositoryProtocol の契約
+@MainActor
 struct FavoriteArtistRepositoryTests {
     @Test(arguments: RepositoryBackend.allCases)
     func findAllReturnsArtistsInInsertionOrder(backend: RepositoryBackend) {

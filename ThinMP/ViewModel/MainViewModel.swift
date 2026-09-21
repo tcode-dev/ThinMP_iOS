@@ -21,8 +21,6 @@ class MainViewModel: ObservableObject {
         self.mainService = mainService
     }
 
-    // SwiftData の ModelContext はスレッドセーフではなく、全 Repository が同じ context を共有しているので
-    // メインアクター上で実行する(Task.detached でバックグラウンドに逃がさない)
     @discardableResult
     func load() -> Task<Void, Never> {
         Task {

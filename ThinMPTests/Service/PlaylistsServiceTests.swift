@@ -8,6 +8,7 @@
 import Testing
 @testable import ThinMP
 
+@MainActor
 struct PlaylistsServiceTests {
     private func makeService() -> PlaylistsService {
         let playlists = [

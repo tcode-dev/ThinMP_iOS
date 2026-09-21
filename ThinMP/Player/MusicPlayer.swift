@@ -7,6 +7,9 @@
 
 import MediaPlayer
 
+// 通知は OperationQueue.main、Timer はメインの RunLoop で届き、@Published は View から読まれるので
+// 全体をメインアクターに隔離する。Register(SwiftData)もここから触る
+@MainActor
 class MusicPlayer: ObservableObject, MediaPlayerProtocol {
     private let PREV_SECOND: Double = 3
 
@@ -25,6 +28,7 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
     private let playerConfig: PlayerConfig
     private let player: MPMusicPlayerController
     private var timer: Timer?
+    private var observers: [NSObjectProtocol] = []
 
     init() {
         playerConfig = PlayerConfig()
@@ -76,14 +80,18 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
 
     func immediateUpdateTime() {
         Timer.scheduledTimer(withTimeInterval: 0, repeats: false, block: { _ in
-            self.updateTime()
+            MainActor.assumeIsolated {
+                self.updateTime()
+            }
         })
     }
 
     func startProgress() {
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { _ in
-            self.updateTime()
+            MainActor.assumeIsolated {
+                self.updateTime()
+            }
         })
     }
 
@@ -155,35 +163,25 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
     }
 
     private func addObserver() {
-        NotificationCenter.default.addObserver(
+        observers.append(NotificationCenter.default.addObserver(
             forName: NSNotification.Name.MPMusicPlayerControllerNowPlayingItemDidChange,
             object: player,
             queue: OperationQueue.main
         ) { _ in
-            self.nowPlayingItemDidChangeCallback()
-        }
+            MainActor.assumeIsolated {
+                self.nowPlayingItemDidChangeCallback()
+            }
+        })
 
-        NotificationCenter.default.addObserver(
+        observers.append(NotificationCenter.default.addObserver(
             forName: NSNotification.Name.MPMusicPlayerControllerPlaybackStateDidChange,
             object: player,
             queue: OperationQueue.main
         ) { _ in
-            self.playbackStateDidChangeCallback()
-        }
-    }
-
-    private func removeObserver() {
-        NotificationCenter.default.removeObserver(
-            self,
-            name: NSNotification.Name.MPMusicPlayerControllerNowPlayingItemDidChange,
-            object: player
-        )
-
-        NotificationCenter.default.removeObserver(
-            self,
-            name: NSNotification.Name.MPMusicPlayerControllerPlaybackStateDidChange,
-            object: player
-        )
+            MainActor.assumeIsolated {
+                self.playbackStateDidChangeCallback()
+            }
+        })
     }
 
     private func nowPlayingItemDidChangeCallback() {
@@ -236,7 +234,8 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
     }
 
     deinit {
-        removeObserver()
+        // ブロック形式の observer は removeObserver(self, ...) では外れないので token で外す
+        observers.forEach { NotificationCenter.default.removeObserver($0) }
 
         player.endGeneratingPlaybackNotifications()
      }

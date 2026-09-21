@@ -8,6 +8,7 @@
 import Testing
 @testable import ThinMP
 
+@MainActor
 struct PlaylistDetailServiceTests {
     private let playlistId = PlaylistId(id: "p1")
 

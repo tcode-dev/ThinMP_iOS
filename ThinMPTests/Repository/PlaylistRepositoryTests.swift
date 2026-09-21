@@ -11,6 +11,7 @@ import Testing
 @testable import ThinMP
 
 /// PlaylistRepositoryProtocol の契約
+@MainActor
 struct PlaylistRepositoryTests {
     @Test(arguments: RepositoryBackend.allCases)
     func createStoresNameAndFirstSong(backend: RepositoryBackend) {

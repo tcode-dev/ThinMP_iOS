@@ -8,6 +8,7 @@
 import Testing
 @testable import ThinMP
 
+@MainActor
 struct ShortcutServiceTests {
     private let artistShortcut = ShortcutEntity(shortcutId: ShortcutId(id: "s1"), itemId: ItemId(id: "10"), type: .ARTIST)
     private let albumShortcut = ShortcutEntity(shortcutId: ShortcutId(id: "s2"), itemId: ItemId(id: "20"), type: .ALBUM)

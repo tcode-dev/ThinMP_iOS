@@ -8,6 +8,7 @@
 import Testing
 @testable import ThinMP
 
+@MainActor
 struct FavoriteArtistsServiceTests {
     @Test
     func returnsArtistsInFavoriteOrder() {

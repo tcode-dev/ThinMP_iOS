@@ -12,6 +12,7 @@ import Testing
 
 private final class TestBundleToken {}
 
+@MainActor
 struct RealmToSwiftDataMigrationTests {
     /// テストごとに独立した一時ディレクトリと UserDefaults
     private struct Sandbox {
