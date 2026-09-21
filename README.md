@@ -38,7 +38,7 @@
 ## Libraries
 
 * Realm - https://realm.io/ (legacy store; kept only to migrate existing data to SwiftData, see [#11](https://github.com/tcode-dev/ThinMP_iOS/issues/11))
-* SwiftLint - https://github.com/realm/SwiftLint
+* SwiftLint - https://github.com/realm/SwiftLint (run as an SPM build tool plugin via https://github.com/SimplyDanny/SwiftLintPlugins, so no local installation is required)
 * SwiftFormat - https://github.com/nicklockwood/SwiftFormat
 * Material Icons - https://fonts.google.com/icons?selected=Material+Icons
 
