@@ -11,8 +11,8 @@ import SwiftUI
 struct AlbumDetailPageView: View {
     @StateObject private var vm = AlbumDetailViewModel()
     @State private var headerRect = CGRect.zero
-    @State private var showingPopup: Bool = false
-    @State private var playlistRegisterSongId = SongId(id: 0)
+    /// プレイリスト登録ポップアップを出している曲。nil ならポップアップは閉じている
+    @State private var playlistRegisterSongId: SongId?
 
     let albumId: AlbumId
 
@@ -43,7 +43,6 @@ struct AlbumDetailPageView: View {
                                             FavoriteSongButtonView(songId: song.songId)
                                             Button(action: {
                                                 playlistRegisterSongId = song.songId
-                                                showingPopup.toggle()
                                             }) {
                                                 Text(LocalizedStringKey(LabelConstant.addPlaylist))
                                             }
@@ -57,9 +56,9 @@ struct AlbumDetailPageView: View {
                     }
                     MiniPlayerView(bottom: geometry.safeAreaInsets.bottom)
                 }
-                if showingPopup {
-                    PopupView(showingPopup: $showingPopup) {
-                        PlaylistRegisterView(songId: playlistRegisterSongId, height: geometry.size.height, showingPopup: $showingPopup)
+                if let songId = playlistRegisterSongId {
+                    PopupView {
+                        PlaylistRegisterView(songId: songId, height: geometry.size.height) { playlistRegisterSongId = nil }
                     }
                 }
             }

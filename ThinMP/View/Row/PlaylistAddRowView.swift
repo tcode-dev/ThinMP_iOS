@@ -12,7 +12,8 @@ struct PlaylistAddRowView<Content>: View where Content: View {
     let songId: SongId
     /// すでにこの曲が入っているプレイリストはグレーアウトしてタップ不可にする
     let isRegistered: Bool
-    @Binding var showingPopup: Bool
+    /// 登録が終わったらポップアップを閉じる
+    let dismiss: () -> Void
     let content: () -> Content
 
     var body: some View {
@@ -21,7 +22,7 @@ struct PlaylistAddRowView<Content>: View where Content: View {
 
             playlistRegister.add(playlistId: playlistId, songId: songId)
 
-            showingPopup.toggle()
+            dismiss()
         }) {
             HStack {
                 content()

@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct PopupView<Content>: View where Content: View {
-    @Binding var showingPopup: Bool
     let content: () -> Content
 
     var body: some View {

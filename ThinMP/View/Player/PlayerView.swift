@@ -169,8 +169,8 @@ struct PlayerView: View {
                     .frame(height: height * 0.6)
                 }
                 if showingPopup {
-                    PopupView(showingPopup: $showingPopup) {
-                        PlaylistRegisterView(songId: musicPlayer.songId(), height: geometry.size.height, showingPopup: $showingPopup)
+                    PopupView {
+                        PlaylistRegisterView(songId: musicPlayer.songId(), height: geometry.size.height) { showingPopup = false }
                     }
                 }
             }
