@@ -1,5 +1,5 @@
 //
-//  ShortcutRepository.swift
+//  ShortcutRealmRepository.swift
 //  ThinMP
 //
 //  Created by tk on 2021/05/08.
@@ -8,7 +8,7 @@
 import MediaPlayer
 import RealmSwift
 
-struct ShortcutRepository: ShortcutRepositoryProtocol {
+struct ShortcutRealmRepository: ShortcutRepositoryProtocol {
     private let realm: Realm
 
     init(store: RealmStore = .default) {

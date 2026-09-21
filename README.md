@@ -30,13 +30,14 @@
 * Xcode 27.0
 * Swift
 * SwiftUI
+* SwiftData
 * iOS Deployment Target 18
 * iPhone 14 Plus (iOS 27)
 * iPad Pro (6th generation, iPadOS 27, 12.9-inch)
 
 ## Libraries
 
-* Realm - https://realm.io/
+* Realm - https://realm.io/ (legacy store; kept only to migrate existing data to SwiftData, to be removed in the 2027 release)
 * SwiftLint - https://github.com/realm/SwiftLint
 * SwiftFormat - https://github.com/nicklockwood/SwiftFormat
 * Material Icons - https://fonts.google.com/icons?selected=Material+Icons
@@ -61,7 +62,11 @@ Audio, AirPlay, and Picture in Picture
 
 ### Persistence boundary
 
-`Repository` is the only layer that touches Realm. It exposes plain structs (`Model/Entity`) and value objects so that `Service` and `Register` never depend on Realm types. `Service` and `Register` receive their dependencies through initializer parameters with default values, so they can be constructed with test doubles.
+`Repository` is the only layer that touches the persistence store. It exposes plain structs (`Model/Entity`) and value objects so that `Service` and `Register` never depend on store types. `Service` and `Register` receive their dependencies through initializer parameters with default values, so they can be constructed with test doubles.
+
+* `Repository/SwiftData` (`*Repository`) — the current store, backed by `Model/SwiftData` and `SwiftDataStore`.
+* `Repository/Realm` (`*RealmRepository`) — the previous store, backed by `Model/Realm` and `RealmStore`. Kept only so existing data can be migrated; scheduled for removal in the 2027 release.
+* `Repository/Protocol` — the contracts both implementations satisfy. `ThinMPTests/Repository` runs the same tests against both.
 
 ## Test
 
