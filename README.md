@@ -37,7 +37,7 @@
 
 ## Libraries
 
-* Realm - https://realm.io/ (legacy store; kept only to migrate existing data to SwiftData, to be removed in the 2027 release)
+* Realm - https://realm.io/ (legacy store; kept only to migrate existing data to SwiftData, see [#11](https://github.com/tcode-dev/ThinMP_iOS/issues/11))
 * SwiftLint - https://github.com/realm/SwiftLint
 * SwiftFormat - https://github.com/nicklockwood/SwiftFormat
 * Material Icons - https://fonts.google.com/icons?selected=Material+Icons
@@ -65,8 +65,16 @@ Audio, AirPlay, and Picture in Picture
 `Repository` is the only layer that touches the persistence store. It exposes plain structs (`Model/Entity`) and value objects so that `Service` and `Register` never depend on store types. `Service` and `Register` receive their dependencies through initializer parameters with default values, so they can be constructed with test doubles.
 
 * `Repository/SwiftData` (`*Repository`) — the current store, backed by `Model/SwiftData` and `SwiftDataStore`.
-* `Repository/Realm` (`*RealmRepository`) — the previous store, backed by `Model/Realm` and `RealmStore`. Kept only so existing data can be migrated; scheduled for removal in the 2027 release.
+* `Repository/Realm` (`*RealmRepository`) — the previous store, backed by `Model/Realm` and `RealmStore`. Kept only so existing data can be migrated ([#11](https://github.com/tcode-dev/ThinMP_iOS/issues/11)).
 * `Repository/Protocol` — the contracts both implementations satisfy. `ThinMPTests/Repository` runs the same tests against both.
+
+## Migration (Realm → SwiftData)
+
+`ThinMP/Migration/RealmToSwiftDataMigration.swift` runs once from `ThinMP.init()`. On the first launch after the 2026 release it copies favorites, playlists and shortcuts from the Realm file into SwiftData (playlist ids are preserved because shortcuts reference them), marks `realmToSwiftDataMigrated` in `UserDefaults`, and deletes the Realm file. A fresh install is marked as migrated without touching Realm.
+
+`ThinMPTests/Fixtures/legacy.realm` is a Realm file written by the current Realm models with the data described in `LegacyRealmFixture`; `RealmToSwiftDataMigrationTests` migrates it and checks the result through the Repository protocols. Regenerate it with the disabled `generateLegacyRealmFixture` test if the fixture spec changes.
+
+Realm and the migration code are scheduled for removal in the 2027 release; see [#11](https://github.com/tcode-dev/ThinMP_iOS/issues/11).
 
 ## Test
 
@@ -78,6 +86,7 @@ xcodebuild -project ThinMP.xcodeproj -scheme ThinMP -destination 'platform=iOS S
 
 * `ThinMPTests/Repository` — contract tests for the `Repository` protocols. They run against every case of `RepositoryBackend`, so a new persistence store only needs a new case there.
 * `ThinMPTests/Service` — tests for the self-healing logic in `Service` (favorites, playlists and shortcuts that reference media no longer in the library), using mock repositories.
+* `ThinMPTests/Migration` — the Realm → SwiftData migration, run against an in-memory Realm and against `Fixtures/legacy.realm`.
 * `ThinMPTests/Support` — `RepositoryBackend`, mocks, and `FakeMediaItem` for building `SongModel` without the device library.
 
 ## App Store

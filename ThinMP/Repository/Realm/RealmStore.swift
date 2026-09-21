@@ -20,6 +20,11 @@ struct RealmStore {
         return RealmStore(configuration: Realm.Configuration(inMemoryIdentifier: identifier))
     }
 
+    /// 指定したファイルの Realm。移行処理のテストでフィクスチャを開くために使う
+    static func file(url: URL) -> RealmStore {
+        return RealmStore(configuration: Realm.Configuration(fileURL: url))
+    }
+
     func realm() -> Realm {
         return try! Realm(configuration: configuration)
     }
