@@ -48,9 +48,9 @@ struct ArtistsPageView: View {
                 }
                 MiniPlayerView(bottom: geometry.safeAreaInsets.bottom)
             }
-            .navigationBarHidden(true)
-            .navigationBarTitle(Text(""))
-            .edgesIgnoringSafeArea(.all)
+            .toolbar(.hidden, for: .navigationBar)
+            .navigationTitle("")
+            .ignoresSafeArea(.container)
             .onAppear {
                 vm.load()
             }

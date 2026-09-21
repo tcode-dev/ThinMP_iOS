@@ -64,9 +64,9 @@ struct FavoriteSongsPageView: View {
                     }
                 }
             }
-            .navigationBarHidden(true)
-            .navigationBarTitle(Text(""))
-            .edgesIgnoringSafeArea(.all)
+            .toolbar(.hidden, for: .navigationBar)
+            .navigationTitle("")
+            .ignoresSafeArea(.container)
             .onAppear {
                 vm.load()
             }
