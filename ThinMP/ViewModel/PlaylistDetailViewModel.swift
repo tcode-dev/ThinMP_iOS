@@ -26,7 +26,7 @@ class PlaylistDetailViewModel: ObservableObject {
         self.playlistId = playlistId
 
         return Task {
-            let playlistDetailModel = playlistDetailService.findById(playlistId: playlistId)
+            let playlistDetailModel = await playlistDetailService.findById(playlistId: playlistId)
 
             primaryText = playlistDetailModel.primaryText
             artwork = playlistDetailModel.artwork

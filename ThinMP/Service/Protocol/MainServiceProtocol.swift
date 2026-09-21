@@ -7,9 +7,9 @@
 
 @MainActor
 protocol MainServiceProtocol {
-    func findRecentlyAlbums() -> [AlbumModel]
+    func findRecentlyAlbums() async -> [AlbumModel]
 
-    func findShortcuts() -> [ShortcutModel]
+    func findShortcuts() async -> [ShortcutModel]
 
     func getMainMenus() -> [MenuModel]
 

@@ -20,7 +20,7 @@ class FavoriteArtistsViewModel: ObservableObject {
     @discardableResult
     func load() -> Task<Void, Never> {
         Task {
-            artists = favoriteArtistsService.findAll()
+            artists = await favoriteArtistsService.findAll()
         }
     }
 }

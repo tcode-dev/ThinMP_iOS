@@ -20,15 +20,18 @@ struct FavoriteArtistsService: FavoriteArtistsServiceProtocol {
         self.favoriteArtistRegister = favoriteArtistRegister
     }
 
-    func findAll() -> [ArtistModel] {
+    func findAll() async -> [ArtistModel] {
         let artistIds = favoriteArtistRepository.findAll()
-        let artists = artistRepository.findByIds(artistIds: artistIds)
+        // ライブラリ全件を舐めるので、SwiftData の読み書きだけメインアクターに残してスキャンはバックグラウンドで行う
+        let artists = await Task.detached(priority: .userInitiated) { [artistRepository] in
+            artistRepository.findByIds(artistIds: artistIds)
+        }.value
 
         // 端末から削除されたアーティストがお気に入りに残っている場合は取り除いて読み直す
         if !validation(artistIds: artistIds, artists: artists) {
             fix(artists: artists)
 
-            return findAll()
+            return await findAll()
         }
 
         return artists

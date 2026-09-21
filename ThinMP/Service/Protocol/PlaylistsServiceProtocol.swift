@@ -7,5 +7,5 @@
 
 @MainActor
 protocol PlaylistsServiceProtocol {
-    func findAll() -> [PlaylistModel]
+    func findAll() async -> [PlaylistModel]
 }

@@ -30,8 +30,8 @@ class MainViewModel: ObservableObject {
             menus = mainService.getMainMenus()
             self.shortcutMenu = shortcutMenu
             self.recentlyMenu = recentlyMenu
-            shortcuts = shortcutMenu.visibility ? mainService.findShortcuts() : []
-            albums = recentlyMenu.visibility ? mainService.findRecentlyAlbums() : []
+            shortcuts = shortcutMenu.visibility ? await mainService.findShortcuts() : []
+            albums = recentlyMenu.visibility ? await mainService.findRecentlyAlbums() : []
         }
     }
 }

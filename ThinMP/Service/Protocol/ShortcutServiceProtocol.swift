@@ -7,5 +7,5 @@
 
 @MainActor
 protocol ShortcutServiceProtocol {
-    func findAll() -> [ShortcutModel]
+    func findAll() async -> [ShortcutModel]
 }

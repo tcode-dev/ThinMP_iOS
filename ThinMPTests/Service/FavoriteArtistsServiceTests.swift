@@ -11,7 +11,7 @@ import Testing
 @MainActor
 struct FavoriteArtistsServiceTests {
     @Test
-    func returnsArtistsInFavoriteOrder() {
+    func returnsArtistsInFavoriteOrder() async {
         let favoriteArtistRepository = FavoriteArtistRepositoryMock(artistIds: [ArtistId(id: 3), ArtistId(id: 1)])
         let artistRepository = ArtistRepositoryMock(artists: [
             ArtistModel(artistId: ArtistId(id: 1), primaryText: "A"),
@@ -24,14 +24,14 @@ struct FavoriteArtistsServiceTests {
             favoriteArtistRegister: FavoriteArtistRegister(repository: favoriteArtistRepository)
         )
 
-        let artists = service.findAll()
+        let artists = await service.findAll()
 
         #expect(artists.map { $0.primaryText } == ["C", "A"])
         #expect(favoriteArtistRepository.updateCalls.isEmpty)
     }
 
     @Test
-    func removesArtistsMissingFromLibrary() {
+    func removesArtistsMissingFromLibrary() async {
         let favoriteArtistRepository = FavoriteArtistRepositoryMock(artistIds: [ArtistId(id: 1), ArtistId(id: 2), ArtistId(id: 3)])
         let artistRepository = ArtistRepositoryMock(artists: [
             ArtistModel(artistId: ArtistId(id: 1), primaryText: "A"),
@@ -43,7 +43,7 @@ struct FavoriteArtistsServiceTests {
             favoriteArtistRegister: FavoriteArtistRegister(repository: favoriteArtistRepository)
         )
 
-        let artists = service.findAll()
+        let artists = await service.findAll()
 
         #expect(artists.map { $0.artistId.id } == [1, 3])
         #expect(favoriteArtistRepository.updateCalls.count == 1)

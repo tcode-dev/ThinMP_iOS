@@ -27,10 +27,10 @@ struct PlaylistDetailServiceTests {
     }
 
     @Test
-    func findByIdReturnsSongsInPlaylistOrder() {
+    func findByIdReturnsSongsInPlaylistOrder() async {
         let (service, playlistRepository) = makeService(playlistSongIds: [3, 1, 2], librarySongIds: [1, 2, 3])
 
-        let model = service.findById(playlistId: playlistId)
+        let model = await service.findById(playlistId: playlistId)
 
         #expect(model.playlistId.id == "p1")
         #expect(model.primaryText == "My Playlist")
@@ -39,10 +39,10 @@ struct PlaylistDetailServiceTests {
     }
 
     @Test
-    func findByIdRemovesSongsMissingFromLibrary() {
+    func findByIdRemovesSongsMissingFromLibrary() async {
         let (service, playlistRepository) = makeService(playlistSongIds: [1, 2, 3], librarySongIds: [1, 3])
 
-        let model = service.findById(playlistId: playlistId)
+        let model = await service.findById(playlistId: playlistId)
 
         #expect(model.songs.map { $0.songId.id } == [1, 3])
         #expect(playlistRepository.updateCalls.count == 1)
@@ -53,10 +53,10 @@ struct PlaylistDetailServiceTests {
     }
 
     @Test
-    func findByIdWithAllSongsMissingReturnsEmpty() {
+    func findByIdWithAllSongsMissingReturnsEmpty() async {
         let (service, playlistRepository) = makeService(playlistSongIds: [1, 2], librarySongIds: [])
 
-        let model = service.findById(playlistId: playlistId)
+        let model = await service.findById(playlistId: playlistId)
 
         #expect(model.songs.isEmpty)
         #expect(playlistRepository.updateCalls.count == 1)
@@ -64,7 +64,7 @@ struct PlaylistDetailServiceTests {
     }
 
     @Test
-    func findByIdsMapsEachPlaylist() {
+    func findByIdsMapsEachPlaylist() async {
         let playlistRepository = PlaylistRepositoryMock(playlists: [
             PlaylistEntity(playlistId: PlaylistId(id: "p1"), name: "One", songIds: [SongId(id: 1)]),
             PlaylistEntity(playlistId: PlaylistId(id: "p2"), name: "Two", songIds: [SongId(id: 2)]),
@@ -75,7 +75,7 @@ struct PlaylistDetailServiceTests {
             playlistRegister: PlaylistRegister(repository: playlistRepository)
         )
 
-        let models = service.findByIds(playlistIds: [PlaylistId(id: "p2"), PlaylistId(id: "p1")])
+        let models = await service.findByIds(playlistIds: [PlaylistId(id: "p2"), PlaylistId(id: "p1")])
 
         #expect(models.map { $0.primaryText } == ["One", "Two"])
         #expect(models.map { $0.songs.count } == [1, 1])
@@ -83,7 +83,7 @@ struct PlaylistDetailServiceTests {
 
     /// SongRepository.findByIds はライブラリ全件を舐めるので、プレイリスト数に関係なく 1 回で済ませる
     @Test
-    func findByIdsQueriesSongRepositoryOnceForAllPlaylists() {
+    func findByIdsQueriesSongRepositoryOnceForAllPlaylists() async {
         let playlistRepository = PlaylistRepositoryMock(playlists: [
             PlaylistEntity(playlistId: PlaylistId(id: "p1"), name: "One", songIds: [SongId(id: 1), SongId(id: 2)]),
             PlaylistEntity(playlistId: PlaylistId(id: "p2"), name: "Two", songIds: [SongId(id: 2), SongId(id: 3)]),
@@ -96,7 +96,7 @@ struct PlaylistDetailServiceTests {
             playlistRegister: PlaylistRegister(repository: playlistRepository)
         )
 
-        let models = service.findByIds(playlistIds: [PlaylistId(id: "p1"), PlaylistId(id: "p2"), PlaylistId(id: "p3")])
+        let models = await service.findByIds(playlistIds: [PlaylistId(id: "p1"), PlaylistId(id: "p2"), PlaylistId(id: "p3")])
 
         #expect(songRepository.findByIdsCalls.count == 1)
         #expect(songRepository.findByIdsCalls[0].map { $0.id } == [1, 2, 3, 9])

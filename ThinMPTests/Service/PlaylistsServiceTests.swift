@@ -25,8 +25,8 @@ struct PlaylistsServiceTests {
     }
 
     @Test
-    func findAllCarriesSongIdsInPlaylistOrder() {
-        let playlists = makeService().findAll()
+    func findAllCarriesSongIdsInPlaylistOrder() async {
+        let playlists = await makeService().findAll()
 
         #expect(playlists.map { $0.id } == ["p1", "p2", "p3"])
         #expect(playlists.map { $0.primaryText } == ["A", "B", "C"])
@@ -34,8 +34,8 @@ struct PlaylistsServiceTests {
     }
 
     @Test
-    func containsSongIdTellsWhichPlaylistsAlreadyHaveTheSong() {
-        let playlists = makeService().findAll()
+    func containsSongIdTellsWhichPlaylistsAlreadyHaveTheSong() async {
+        let playlists = await makeService().findAll()
 
         #expect(playlists.filter { $0.contains(songId: SongId(id: 2)) }.map { $0.id } == ["p1", "p3"])
         #expect(playlists.filter { $0.contains(songId: SongId(id: 99)) }.isEmpty)

@@ -7,5 +7,5 @@
 
 @MainActor
 protocol FavoriteArtistsServiceProtocol {
-    func findAll() -> [ArtistModel]
+    func findAll() async -> [ArtistModel]
 }

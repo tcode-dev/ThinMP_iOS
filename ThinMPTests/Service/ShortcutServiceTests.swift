@@ -39,10 +39,10 @@ struct ShortcutServiceTests {
     }
 
     @Test
-    func resolvesEachTypeInRepositoryOrder() {
+    func resolvesEachTypeInRepositoryOrder() async {
         let (service, shortcutRepository) = makeService(shortcuts: [playlistShortcut, artistShortcut, albumShortcut])
 
-        let models = service.findAll()
+        let models = await service.findAll()
 
         #expect(models.map { $0.shortcutId.id } == ["s3", "s1", "s2"])
         #expect(models.map { $0.type } == [ShortcutType.PLAYLIST.rawValue, ShortcutType.ARTIST.rawValue, ShortcutType.ALBUM.rawValue])
@@ -52,10 +52,10 @@ struct ShortcutServiceTests {
     }
 
     @Test
-    func removesShortcutsWhoseItemNoLongerExists() {
+    func removesShortcutsWhoseItemNoLongerExists() async {
         let (service, shortcutRepository) = makeService(shortcuts: [artistShortcut, albumShortcut, playlistShortcut], albumIds: [])
 
-        let models = service.findAll()
+        let models = await service.findAll()
 
         #expect(models.map { $0.shortcutId.id } == ["s1", "s3"])
         #expect(shortcutRepository.updateCalls.count == 1)
@@ -63,10 +63,10 @@ struct ShortcutServiceTests {
     }
 
     @Test
-    func returnsEmptyWhenNoShortcuts() {
+    func returnsEmptyWhenNoShortcuts() async {
         let (service, shortcutRepository) = makeService(shortcuts: [])
 
-        #expect(service.findAll().isEmpty)
+        #expect(await service.findAll().isEmpty)
         #expect(shortcutRepository.updateCalls.isEmpty)
     }
 }

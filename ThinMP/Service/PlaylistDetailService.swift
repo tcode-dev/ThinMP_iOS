@@ -22,24 +22,28 @@ struct PlaylistDetailService: PlaylistDetailServiceProtocol {
         self.playlistRegister = playlistRegister
     }
 
-    func findById(playlistId: PlaylistId) -> PlaylistDetailModel {
+    func findById(playlistId: PlaylistId) async -> PlaylistDetailModel {
         let playlist = playlistRepository.findById(playlistId: playlistId)
 
-        return createModels(playlists: [playlist])[0]
+        return await createModels(playlists: [playlist])[0]
     }
 
-    func findByIds(playlistIds: [PlaylistId]) -> [PlaylistDetailModel] {
+    func findByIds(playlistIds: [PlaylistId]) async -> [PlaylistDetailModel] {
         let playlists = playlistRepository.findByIds(playlistIds: playlistIds)
 
-        return createModels(playlists: playlists)
+        return await createModels(playlists: playlists)
     }
 
     /// 全プレイリストの曲をまとめて 1 回で取り、プレイリストごとに振り分ける
     /// SongRepository.findByIds はライブラリ全件を舐めるので、プレイリストごとに呼ばない
-    private func createModels(playlists: [PlaylistEntity]) -> [PlaylistDetailModel] {
+    /// スキャンはバックグラウンドで行い、SwiftData の読み書きだけメインアクターに残す
+    private func createModels(playlists: [PlaylistEntity]) async -> [PlaylistDetailModel] {
         let songIds = playlists.flatMap { $0.songIds }.uniqued()
+        let found = await Task.detached(priority: .userInitiated) { [songRepository] in
+            songRepository.findByIds(songIds: songIds)
+        }.value
         let songs = Dictionary(
-            songRepository.findByIds(songIds: songIds).map { ($0.songId.id, $0) },
+            found.map { ($0.songId.id, $0) },
             uniquingKeysWith: { first, _ in first }
         )
 

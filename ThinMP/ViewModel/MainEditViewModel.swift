@@ -27,8 +27,8 @@ class MainEditViewModel: ObservableObject {
             menus = mainService.getMainMenus()
             shortcutMenu = mainService.getShortcutMenu()
             recentlyMenu = mainService.getRecentlyMenu()
-            shortcuts = mainService.findShortcuts()
-            albums = mainService.findRecentlyAlbums()
+            shortcuts = await mainService.findShortcuts()
+            albums = await mainService.findRecentlyAlbums()
         }
     }
 }

@@ -22,7 +22,7 @@ class PlaylistsViewModel: ObservableObject {
     @discardableResult
     func load() -> Task<Void, Never> {
         Task {
-            playlists = playlistsService.findAll()
+            playlists = await playlistsService.findAll()
         }
     }
 
@@ -30,7 +30,7 @@ class PlaylistsViewModel: ObservableObject {
     @discardableResult
     func load(songId: SongId) -> Task<Void, Never> {
         Task {
-            playlists = playlistsService.findAll()
+            playlists = await playlistsService.findAll()
             registeredPlaylistIds = Set(playlists.filter { $0.contains(songId: songId) }.map { $0.id })
         }
     }
