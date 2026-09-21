@@ -1,5 +1,5 @@
 //
-//  PlaylistRepository.swift
+//  PlaylistRealmRepository.swift
 //  ThinMP
 //
 //  Created by tk on 2021/05/06.
@@ -8,7 +8,7 @@
 import MediaPlayer
 import RealmSwift
 
-struct PlaylistRepository: PlaylistRepositoryProtocol {
+struct PlaylistRealmRepository: PlaylistRepositoryProtocol {
     private let realm: Realm
 
     init(store: RealmStore = .default) {

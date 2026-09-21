@@ -1,5 +1,5 @@
 //
-//  FavoriteSongRepository.swift
+//  FavoriteSongRealmRepository.swift
 //  ThinMP
 //
 //  Created by tk on 2021/05/06.
@@ -8,7 +8,7 @@
 import MediaPlayer
 import RealmSwift
 
-struct FavoriteSongRepository: FavoriteSongRepositoryProtocol {
+struct FavoriteSongRealmRepository: FavoriteSongRepositoryProtocol {
     private let realm: Realm
 
     init(store: RealmStore = .default) {

@@ -12,6 +12,7 @@
 /// 永続化ストアを追加するときはここに case を追加するだけで同じ契約テストが走る
 enum RepositoryBackend: CaseIterable, Sendable {
     case realm
+    case swiftData
 }
 
 /// テスト 1 件分の Repository 一式
@@ -26,6 +27,13 @@ struct TestRepositories {
         switch backend {
         case .realm:
             let store = RealmStore.inMemory()
+
+            favoriteSong = FavoriteSongRealmRepository(store: store)
+            favoriteArtist = FavoriteArtistRealmRepository(store: store)
+            playlist = PlaylistRealmRepository(store: store)
+            shortcut = ShortcutRealmRepository(store: store)
+        case .swiftData:
+            let store = SwiftDataStore.inMemory()
 
             favoriteSong = FavoriteSongRepository(store: store)
             favoriteArtist = FavoriteArtistRepository(store: store)
