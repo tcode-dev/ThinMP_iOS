@@ -25,14 +25,7 @@ struct PlaylistsService: PlaylistsServiceProtocol {
         return playlists.map { playlist in
             let playlistDetailModel = playlistDetailService.findById(playlistId: playlist.playlistId)
 
-            return PlaylistModel(playlistId: playlist.playlistId, primaryText: playlistDetailModel.primaryText, artwork: playlistDetailModel.artwork)
+            return PlaylistModel(playlistId: playlist.playlistId, primaryText: playlistDetailModel.primaryText, artwork: playlistDetailModel.artwork, songIds: playlist.songIds)
         }
-    }
-
-    /// songId がすでに登録されているプレイリストの id
-    func findRegisteredIds(songId: SongId) -> [PlaylistId] {
-        return playlistRepository.findAll()
-            .filter { playlist in playlist.songIds.contains { $0.equals(songId) } }
-            .map { $0.playlistId }
     }
 }

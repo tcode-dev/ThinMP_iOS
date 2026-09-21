@@ -21,13 +21,11 @@ class PlaylistsViewModel: ObservableObject {
         }
     }
 
-    /// 一覧に加えて songId がすでに登録されているプレイリストも読み込む(登録モーダル用)
+    /// 登録モーダル用。一覧を 1 回読み、そこから songId がすでに登録されているプレイリストを求める
     func load(songId: SongId) {
         Task {
-            let service = PlaylistsService()
-
-            playlists = service.findAll()
-            registeredPlaylistIds = Set(service.findRegisteredIds(songId: songId).map { $0.id })
+            playlists = PlaylistsService().findAll()
+            registeredPlaylistIds = Set(playlists.filter { $0.contains(songId: songId) }.map { $0.id })
         }
     }
 

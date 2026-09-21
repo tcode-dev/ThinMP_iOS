@@ -24,16 +24,19 @@ struct PlaylistsServiceTests {
     }
 
     @Test
-    func findRegisteredIdsReturnsPlaylistsContainingSong() {
-        let service = makeService()
+    func findAllCarriesSongIdsInPlaylistOrder() {
+        let playlists = makeService().findAll()
 
-        #expect(service.findRegisteredIds(songId: SongId(id: 2)).map { $0.id } == ["p1", "p3"])
+        #expect(playlists.map { $0.id } == ["p1", "p2", "p3"])
+        #expect(playlists.map { $0.primaryText } == ["A", "B", "C"])
+        #expect(playlists.map { $0.songIds.map { $0.id } } == [[1, 2], [3], [2]])
     }
 
     @Test
-    func findRegisteredIdsReturnsEmptyWhenSongIsNotInAnyPlaylist() {
-        let service = makeService()
+    func containsSongIdTellsWhichPlaylistsAlreadyHaveTheSong() {
+        let playlists = makeService().findAll()
 
-        #expect(service.findRegisteredIds(songId: SongId(id: 99)).isEmpty)
+        #expect(playlists.filter { $0.contains(songId: SongId(id: 2)) }.map { $0.id } == ["p1", "p3"])
+        #expect(playlists.filter { $0.contains(songId: SongId(id: 99)) }.isEmpty)
     }
 }
