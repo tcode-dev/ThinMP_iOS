@@ -7,15 +7,15 @@
 
 import MediaPlayer
 
+@MainActor
 class PlaylistsViewModel: ObservableObject {
     @Published var playlists: [PlaylistModel] = []
 
+    // SwiftData の ModelContext はスレッドセーフではなく、全 Repository が同じ context を共有しているので
+    // メインアクター上で実行する(Task.detached でバックグラウンドに逃がさない)
     func load() {
-        let playlistsService = PlaylistsService()
-        let playlists = playlistsService.findAll()
-
-        DispatchQueue.main.async {
-            self.playlists = playlists
+        Task {
+            playlists = PlaylistsService().findAll()
         }
     }
 }

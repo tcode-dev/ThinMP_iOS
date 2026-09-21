@@ -7,6 +7,7 @@
 
 import MediaPlayer
 
+@MainActor
 class AlbumDetailViewModel: ObservableObject {
     @Published var primaryText: String?
     @Published var secondaryText: String?
@@ -17,16 +18,18 @@ class AlbumDetailViewModel: ObservableObject {
 
     func load(albumId: AlbumId) {
         self.albumId = albumId
-        let albumDetailService = AlbumDetailService()
-        let albumDetailModel = albumDetailService.findById(albumId: albumId)
 
-        DispatchQueue.main.async {
-            if let albumDetailModel = albumDetailModel {
-                self.primaryText = albumDetailModel.primaryText
-                self.secondaryText = albumDetailModel.secondaryText
-                self.artwork = albumDetailModel.artwork
-                self.songs = albumDetailModel.songs
-            }
+        Task {
+            let albumDetailModel = await Task.detached(priority: .userInitiated) {
+                AlbumDetailService().findById(albumId: albumId)
+            }.value
+
+            guard let albumDetailModel = albumDetailModel else { return }
+
+            primaryText = albumDetailModel.primaryText
+            secondaryText = albumDetailModel.secondaryText
+            artwork = albumDetailModel.artwork
+            songs = albumDetailModel.songs
         }
     }
 }

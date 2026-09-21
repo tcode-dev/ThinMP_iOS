@@ -7,15 +7,15 @@
 
 import MediaPlayer
 
+@MainActor
 class SongsViewModel: ObservableObject {
     @Published var songs: [SongModel] = []
 
     func load() {
-        let songsService = SongsService()
-        let songs = songsService.findAll()
-
-        DispatchQueue.main.async {
-            self.songs = songs
+        Task {
+            songs = await Task.detached(priority: .userInitiated) {
+                SongsService().findAll()
+            }.value
         }
     }
 }
