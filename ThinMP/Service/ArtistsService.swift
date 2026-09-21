@@ -6,9 +6,13 @@
 //
 
 struct ArtistsService: ArtistsServiceProtocol {
-    func findAll() -> [ArtistModel] {
-        let repository = ArtistRepository()
+    private let repository: ArtistRepositoryProtocol
 
+    init(repository: ArtistRepositoryProtocol = ArtistRepository()) {
+        self.repository = repository
+    }
+
+    func findAll() -> [ArtistModel] {
         return repository.findAll()
     }
 }

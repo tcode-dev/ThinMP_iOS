@@ -34,7 +34,7 @@ struct PlaylistRepository: PlaylistRepositoryProtocol {
     }
 
     func add(playlistId: PlaylistId, songId: SongId) {
-        let playlist = realm.objects(PlaylistRealmModel.self).filter("\(PlaylistRealmModel.ID) = '\(playlistId.id)'").first!
+        let playlist = findModel(playlistId: playlistId)
         let song = PlaylistSongRealmModel()
 
         song.songId = String(songId.id)
@@ -45,16 +45,18 @@ struct PlaylistRepository: PlaylistRepositoryProtocol {
         }
     }
 
-    func findAll() -> [PlaylistRealmModel] {
-        return Array(realm.objects(PlaylistRealmModel.self).sorted(byKeyPath: PlaylistRealmModel.ORDER))
+    func findAll() -> [PlaylistEntity] {
+        return realm.objects(PlaylistRealmModel.self)
+            .sorted(byKeyPath: PlaylistRealmModel.ORDER)
+            .map { toEntity(model: $0) }
     }
 
-    func findById(playlistId: PlaylistId) -> PlaylistRealmModel {
-        return realm.objects(PlaylistRealmModel.self).filter("\(PlaylistRealmModel.ID) = '\(playlistId.id)'").first!
+    func findById(playlistId: PlaylistId) -> PlaylistEntity {
+        return toEntity(model: findModel(playlistId: playlistId))
     }
 
-    func findByIds(playlistIds: [PlaylistId]) -> [PlaylistRealmModel] {
-        return Array(realm.objects(PlaylistRealmModel.self).filter("\(PlaylistRealmModel.ID) IN %@", playlistIds.map { $0.id }))
+    func findByIds(playlistIds: [PlaylistId]) -> [PlaylistEntity] {
+        return findModels(playlistIds: playlistIds).map { toEntity(model: $0) }
     }
 
     func update(playlistIds: [PlaylistId]) {
@@ -67,7 +69,7 @@ struct PlaylistRepository: PlaylistRepositoryProtocol {
     func update(playlistId: PlaylistId, name: String, songIds: [SongId]) {
         realm.beginWrite()
 
-        let playlist = realm.objects(PlaylistRealmModel.self).filter("\(PlaylistRealmModel.ID) = '\(playlistId.id)'").first!
+        let playlist = findModel(playlistId: playlistId)
 
         realm.delete(playlist.songs)
 
@@ -88,8 +90,26 @@ struct PlaylistRepository: PlaylistRepositoryProtocol {
         delete(playlistIds: [playlistId])
     }
 
+    private func findModel(playlistId: PlaylistId) -> PlaylistRealmModel {
+        return realm.objects(PlaylistRealmModel.self).filter("\(PlaylistRealmModel.ID) = '\(playlistId.id)'").first!
+    }
+
+    private func findModels(playlistIds: [PlaylistId]) -> Results<PlaylistRealmModel> {
+        return realm.objects(PlaylistRealmModel.self).filter("\(PlaylistRealmModel.ID) IN %@", playlistIds.map { $0.id })
+    }
+
+    private func toEntity(model: PlaylistRealmModel) -> PlaylistEntity {
+        let songIds = Array(
+            model.songs
+                .sorted(byKeyPath: PlaylistSongRealmModel.ORDER)
+                .map { SongId(id: UInt64($0.songId)!) }
+        )
+
+        return PlaylistEntity(playlistId: PlaylistId(id: model.id), name: model.name, songIds: songIds)
+    }
+
     private func delete(playlistIds: [PlaylistId]) {
-        let playlists = findByIds(playlistIds: playlistIds)
+        let playlists = findModels(playlistIds: playlistIds)
 
         if playlists.count == 0 {
             return
@@ -101,7 +121,7 @@ struct PlaylistRepository: PlaylistRepositoryProtocol {
     }
 
     private func sort(playlistIds: [PlaylistId]) {
-        let playlists = findByIds(playlistIds: playlistIds)
+        let playlists = findModels(playlistIds: playlistIds)
         let sorted = playlistIds.map { playlistId in
             playlists.first { $0.id == playlistId.id }
         }

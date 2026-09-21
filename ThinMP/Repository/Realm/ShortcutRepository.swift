@@ -23,8 +23,10 @@ struct ShortcutRepository: ShortcutRepositoryProtocol {
         }
     }
 
-    func findAll() -> [ShortcutRealmModel] {
-        return Array(realm.objects(ShortcutRealmModel.self).sorted(byKeyPath: ShortcutRealmModel.ORDER, ascending: false))
+    func findAll() -> [ShortcutEntity] {
+        return realm.objects(ShortcutRealmModel.self)
+            .sorted(byKeyPath: ShortcutRealmModel.ORDER, ascending: false)
+            .compactMap { toEntity(model: $0) }
     }
 
     func exists(itemId: ShortcutItemIdProtocol, type: ShortcutType) -> Bool {
@@ -70,6 +72,14 @@ struct ShortcutRepository: ShortcutRepositoryProtocol {
 
     private func findByIds(shortcutIds: [ShortcutId]) -> Results<ShortcutRealmModel> {
         return realm.objects(ShortcutRealmModel.self).filter("\(ShortcutRealmModel.ID) IN %@", shortcutIds.map { $0.id })
+    }
+
+    private func toEntity(model: ShortcutRealmModel) -> ShortcutEntity? {
+        guard let type = ShortcutType(rawValue: model.type) else {
+            return nil
+        }
+
+        return ShortcutEntity(shortcutId: ShortcutId(id: model.id), itemId: ItemId(id: model.itemId), type: type)
     }
 
     private func exists(itemId: String, type: ShortcutType) -> Bool {

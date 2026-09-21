@@ -8,16 +8,24 @@
 import MediaPlayer
 
 struct PlaylistsService: PlaylistsServiceProtocol {
+    private let playlistRepository: PlaylistRepositoryProtocol
+    private let playlistDetailService: PlaylistDetailServiceProtocol
+
+    init(
+        playlistRepository: PlaylistRepositoryProtocol = PlaylistRepository(),
+        playlistDetailService: PlaylistDetailServiceProtocol = PlaylistDetailService()
+    ) {
+        self.playlistRepository = playlistRepository
+        self.playlistDetailService = playlistDetailService
+    }
+
     func findAll() -> [PlaylistModel] {
-        let playlistRepository = PlaylistRepository()
         let playlists = playlistRepository.findAll()
 
         return playlists.map { playlist in
-            let playlistId = PlaylistId(id: playlist.id)
-            let playlistDetailService = PlaylistDetailService()
-            let playlistDetailModel = playlistDetailService.findById(playlistId: playlistId)
+            let playlistDetailModel = playlistDetailService.findById(playlistId: playlist.playlistId)
 
-            return PlaylistModel(playlistId: playlistId, primaryText: playlistDetailModel.primaryText, artwork: playlistDetailModel.artwork)
+            return PlaylistModel(playlistId: playlist.playlistId, primaryText: playlistDetailModel.primaryText, artwork: playlistDetailModel.artwork)
         }
     }
 }

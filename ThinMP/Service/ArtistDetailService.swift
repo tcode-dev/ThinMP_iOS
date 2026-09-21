@@ -8,10 +8,21 @@
 import MediaPlayer
 
 struct ArtistDetailService: ArtistDetailServiceProtocol {
+    private let artistRepository: ArtistRepositoryProtocol
+    private let albumRepository: AlbumRepositoryProtocol
+    private let songRepository: SongRepositoryProtocol
+
+    init(
+        artistRepository: ArtistRepositoryProtocol = ArtistRepository(),
+        albumRepository: AlbumRepositoryProtocol = AlbumRepository(),
+        songRepository: SongRepositoryProtocol = SongRepository()
+    ) {
+        self.artistRepository = artistRepository
+        self.albumRepository = albumRepository
+        self.songRepository = songRepository
+    }
+
     func findById(artistId: ArtistId) -> ArtistDetailModel? {
-        let artistRepository = ArtistRepository()
-        let albumRepository = AlbumRepository()
-        let songRepository = SongRepository()
         let artist = artistRepository.findById(artistId: artistId)
         let primaryText = artist?.primaryText
         let albums = albumRepository.findByArtistId(artistId: artistId)
@@ -30,8 +41,6 @@ struct ArtistDetailService: ArtistDetailServiceProtocol {
     }
 
     func findByIds(artistIds: [ArtistId]) -> [ArtistDetailModel] {
-        let artistRepository = ArtistRepository()
-        let albumRepository = AlbumRepository()
         let artists = artistRepository.findByIds(artistIds: artistIds)
 
         return artists.map { artist in

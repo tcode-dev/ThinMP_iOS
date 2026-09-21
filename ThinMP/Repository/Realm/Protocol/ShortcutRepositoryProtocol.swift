@@ -8,7 +8,7 @@
 protocol ShortcutRepositoryProtocol {
     func add(itemId: ShortcutItemIdProtocol, type: ShortcutType)
 
-    func findAll() -> [ShortcutRealmModel]
+    func findAll() -> [ShortcutEntity]
 
     func exists(itemId: ShortcutItemIdProtocol, type: ShortcutType) -> Bool
 

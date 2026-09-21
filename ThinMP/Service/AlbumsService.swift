@@ -6,9 +6,13 @@
 //
 
 struct AlbumsService: AlbumsServiceProtocol {
-    func findAll() -> [AlbumModel] {
-        let repository = AlbumRepository()
+    private let repository: AlbumRepositoryProtocol
 
+    init(repository: AlbumRepositoryProtocol = AlbumRepository()) {
+        self.repository = repository
+    }
+
+    func findAll() -> [AlbumModel] {
         return repository.findAll()
     }
 }

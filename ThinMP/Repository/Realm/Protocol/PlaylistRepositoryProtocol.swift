@@ -10,11 +10,11 @@ protocol PlaylistRepositoryProtocol {
 
     func add(playlistId: PlaylistId, songId: SongId)
 
-    func findAll() -> [PlaylistRealmModel]
+    func findAll() -> [PlaylistEntity]
 
-    func findById(playlistId: PlaylistId) -> PlaylistRealmModel
+    func findById(playlistId: PlaylistId) -> PlaylistEntity
 
-    func findByIds(playlistIds: [PlaylistId]) -> [PlaylistRealmModel]
+    func findByIds(playlistIds: [PlaylistId]) -> [PlaylistEntity]
 
     func update(playlistIds: [PlaylistId])
 

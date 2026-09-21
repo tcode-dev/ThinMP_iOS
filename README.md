@@ -59,6 +59,10 @@ Audio, AirPlay, and Picture in Picture
 
 `View` → `Register` → `Repository`
 
+### Persistence boundary
+
+`Repository` is the only layer that touches Realm. It exposes plain structs (`Model/Entity`) and value objects so that `Service` and `Register` never depend on Realm types. `Service` and `Register` receive their dependencies through initializer parameters with default values, so they can be constructed with test doubles.
+
 ## App Store
 
 https://apps.apple.com/us/app/thinmp/id1578896579

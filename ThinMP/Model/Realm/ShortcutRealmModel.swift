@@ -9,12 +9,6 @@ import Foundation
 import MediaPlayer
 import RealmSwift
 
-enum ShortcutType: Int {
-    case ARTIST = 1
-    case ALBUM = 2
-    case PLAYLIST = 3
-}
-
 class ShortcutRealmModel: Object {
     static let ID: String = "id"
     static let ITEM_ID: String = "itemId"
