@@ -9,10 +9,10 @@ import MediaPlayer
 import RealmSwift
 
 struct FavoriteSongRepository: FavoriteSongRepositoryProtocol {
-    let realm: Realm
+    private let realm: Realm
 
-    init() {
-        realm = try! Realm()
+    init(store: RealmStore = .default) {
+        realm = store.realm()
     }
 
     func add(songId: SongId) {

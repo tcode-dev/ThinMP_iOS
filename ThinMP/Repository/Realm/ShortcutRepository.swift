@@ -9,10 +9,10 @@ import MediaPlayer
 import RealmSwift
 
 struct ShortcutRepository: ShortcutRepositoryProtocol {
-    let realm: Realm
+    private let realm: Realm
 
-    init() {
-        realm = try! Realm()
+    init(store: RealmStore = .default) {
+        realm = store.realm()
     }
 
     func add(itemId: ShortcutItemIdProtocol, type: ShortcutType) {
