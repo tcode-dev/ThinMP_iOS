@@ -37,7 +37,7 @@
 
 ## Libraries
 
-* Realm - https://realm.io/ (legacy store; kept only to migrate existing data to SwiftData, to be removed in the 2027 release)
+* Realm - https://realm.io/ (legacy store; kept only to migrate existing data to SwiftData, see [#11](https://github.com/tcode-dev/ThinMP_iOS/issues/11))
 * SwiftLint - https://github.com/realm/SwiftLint
 * SwiftFormat - https://github.com/nicklockwood/SwiftFormat
 * Material Icons - https://fonts.google.com/icons?selected=Material+Icons
@@ -65,7 +65,7 @@ Audio, AirPlay, and Picture in Picture
 `Repository` is the only layer that touches the persistence store. It exposes plain structs (`Model/Entity`) and value objects so that `Service` and `Register` never depend on store types. `Service` and `Register` receive their dependencies through initializer parameters with default values, so they can be constructed with test doubles.
 
 * `Repository/SwiftData` (`*Repository`) — the current store, backed by `Model/SwiftData` and `SwiftDataStore`.
-* `Repository/Realm` (`*RealmRepository`) — the previous store, backed by `Model/Realm` and `RealmStore`. Kept only so existing data can be migrated; scheduled for removal in the 2027 release.
+* `Repository/Realm` (`*RealmRepository`) — the previous store, backed by `Model/Realm` and `RealmStore`. Kept only so existing data can be migrated ([#11](https://github.com/tcode-dev/ThinMP_iOS/issues/11)).
 * `Repository/Protocol` — the contracts both implementations satisfy. `ThinMPTests/Repository` runs the same tests against both.
 
 ## Migration (Realm → SwiftData)
@@ -74,15 +74,7 @@ Audio, AirPlay, and Picture in Picture
 
 `ThinMPTests/Fixtures/legacy.realm` is a Realm file written by the current Realm models with the data described in `LegacyRealmFixture`; `RealmToSwiftDataMigrationTests` migrates it and checks the result through the Repository protocols. Regenerate it with the disabled `generateLegacyRealmFixture` test if the fixture spec changes.
 
-### Removal checklist for the 2027 release
-
-1. Delete `ThinMP/Migration/`, `ThinMP/Repository/Realm/`, `ThinMP/Model/Realm/`.
-2. Delete `ThinMPTests/Migration/`, `ThinMPTests/Fixtures/`, and the `realm` case of `RepositoryBackend`.
-3. Remove the `RealmToSwiftDataMigration().migrateIfNeeded()` call from `ThinMP.swift`.
-4. Remove the `realm-cocoa` package from the project.
-5. Drop the Realm entries from this README.
-
-Users who skip the 2026 release entirely will not get their Realm data migrated.
+Realm and the migration code are scheduled for removal in the 2027 release; see [#11](https://github.com/tcode-dev/ThinMP_iOS/issues/11).
 
 ## Test
 
