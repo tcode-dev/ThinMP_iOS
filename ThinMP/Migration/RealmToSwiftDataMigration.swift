@@ -70,8 +70,9 @@ struct RealmToSwiftDataMigration {
 
                 context.insert(model)
 
-                for (songIndex, songId) in playlist.songIds.enumerated() {
-                    let song = PlaylistSongDataModel(songId: String(songId.id), order: songIndex)
+                // Realm 時代は同じ曲を重複して登録できたので、最初の 1 回だけ残して移行する
+                for (songIndex, songId) in playlist.songIds.uniqued().enumerated() {
+                    let song = PlaylistSongDataModel(playlistId: model.id, songId: String(songId.id), order: songIndex)
 
                     context.insert(song)
                     model.songs.append(song)

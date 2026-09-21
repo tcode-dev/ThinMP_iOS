@@ -10,6 +10,8 @@ import SwiftUI
 struct PlaylistAddRowView<Content>: View where Content: View {
     let playlistId: PlaylistId
     let songId: SongId
+    /// すでにこの曲が入っているプレイリストはグレーアウトしてタップ不可にする
+    let isRegistered: Bool
     @Binding var showingPopup: Bool
     let content: () -> Content
 
@@ -21,7 +23,17 @@ struct PlaylistAddRowView<Content>: View where Content: View {
 
             showingPopup.toggle()
         }) {
-            content()
+            HStack {
+                content()
+                if isRegistered {
+                    Text(LocalizedStringKey(LabelConstant.registered))
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                        .padding(.trailing, StyleConstant.Padding.tiny)
+                }
+            }
         }
+        .disabled(isRegistered)
+        .opacity(isRegistered ? 0.4 : 1)
     }
 }

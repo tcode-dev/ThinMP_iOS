@@ -35,6 +35,12 @@ struct PlaylistRealmRepository: PlaylistRepositoryProtocol {
 
     func add(playlistId: PlaylistId, songId: SongId) {
         let playlist = findModel(playlistId: playlistId)
+
+        // 同じ曲は 1 つのプレイリストに 1 回しか登録しない
+        if playlist.songs.contains(where: { $0.songId == String(songId.id) }) {
+            return
+        }
+
         let song = PlaylistSongRealmModel()
 
         song.songId = String(songId.id)
@@ -73,7 +79,8 @@ struct PlaylistRealmRepository: PlaylistRepositoryProtocol {
 
         realm.delete(playlist.songs)
 
-        songIds.forEach { songId in
+        // 同じ曲は最初の 1 回だけ残す
+        songIds.uniqued().forEach { songId in
             let song = PlaylistSongRealmModel()
 
             song.songId = String(songId.id)

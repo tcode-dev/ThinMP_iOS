@@ -12,11 +12,17 @@ struct PlaylistModel: MediaProtocol, Identifiable {
     var primaryText: String?
     var secondaryText: String?
     var artwork: MPMediaItemArtwork?
+    /// order 順。登録モーダルで「登録済み」を判定するのに使う
+    var songIds: [SongId] = []
     var id: String {
         return playlistId.id
     }
 
     var shortcutId: String {
         return id
+    }
+
+    func contains(songId: SongId) -> Bool {
+        return songIds.contains { $0.equals(songId) }
     }
 }

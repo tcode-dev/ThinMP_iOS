@@ -17,7 +17,7 @@ struct PlaylistRepository: PlaylistRepositoryProtocol {
 
     func create(songId: SongId, name: String) {
         let playlist = PlaylistDataModel(name: name, order: incrementOrder())
-        let song = PlaylistSongDataModel(songId: String(songId.id), order: 0)
+        let song = PlaylistSongDataModel(playlistId: playlist.id, songId: String(songId.id), order: 0)
 
         store.context.insert(playlist)
         store.context.insert(song)
@@ -27,8 +27,14 @@ struct PlaylistRepository: PlaylistRepositoryProtocol {
 
     func add(playlistId: PlaylistId, songId: SongId) {
         let playlist = findModel(playlistId: playlistId)
+
+        // 同じ曲は 1 つのプレイリストに 1 回しか登録しない
+        if playlist.songs.contains(where: { $0.songId == String(songId.id) }) {
+            return
+        }
+
         let order = (playlist.songs.map { $0.order }.max() ?? -1) + 1
-        let song = PlaylistSongDataModel(songId: String(songId.id), order: order)
+        let song = PlaylistSongDataModel(playlistId: playlist.id, songId: String(songId.id), order: order)
 
         store.context.insert(song)
         playlist.songs.append(song)
@@ -61,8 +67,9 @@ struct PlaylistRepository: PlaylistRepositoryProtocol {
 
         playlist.songs.forEach { store.context.delete($0) }
 
-        for (index, songId) in songIds.enumerated() {
-            let song = PlaylistSongDataModel(songId: String(songId.id), order: index)
+        // 同じ曲は最初の 1 回だけ残す(#Unique の upsert に任せると並び順が崩れるので先に弾く)
+        for (index, songId) in songIds.uniqued().enumerated() {
+            let song = PlaylistSongDataModel(playlistId: playlist.id, songId: String(songId.id), order: index)
 
             store.context.insert(song)
             playlist.songs.append(song)

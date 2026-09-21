@@ -25,44 +25,35 @@ struct PlaylistDetailService: PlaylistDetailServiceProtocol {
     func findById(playlistId: PlaylistId) -> PlaylistDetailModel {
         let playlist = playlistRepository.findById(playlistId: playlistId)
 
-        return createModel(playlist: playlist)
+        return createModels(playlists: [playlist])[0]
     }
 
     func findByIds(playlistIds: [PlaylistId]) -> [PlaylistDetailModel] {
         let playlists = playlistRepository.findByIds(playlistIds: playlistIds)
 
+        return createModels(playlists: playlists)
+    }
+
+    /// 全プレイリストの曲をまとめて 1 回で取り、プレイリストごとに振り分ける
+    /// SongRepository.findByIds はライブラリ全件を舐めるので、プレイリストごとに呼ばない
+    private func createModels(playlists: [PlaylistEntity]) -> [PlaylistDetailModel] {
+        let songIds = playlists.flatMap { $0.songIds }.uniqued()
+        let songs = Dictionary(
+            songRepository.findByIds(songIds: songIds).map { ($0.songId.id, $0) },
+            uniquingKeysWith: { first, _ in first }
+        )
+
         return playlists.map { playlist in
-            createModel(playlist: playlist)
+            let found = playlist.songIds.compactMap { songs[$0.id] }
+
+            // 端末から削除された曲がプレイリストに残っている場合は取り除いて保存する
+            if found.count != playlist.songIds.count {
+                playlistRegister.update(playlistId: playlist.playlistId, name: playlist.name, songIds: found.map { $0.songId })
+            }
+
+            let artwork = found.first { $0.artwork != nil }?.artwork
+
+            return PlaylistDetailModel(playlistId: playlist.playlistId, primaryText: playlist.name, artwork: artwork, songs: found)
         }
-    }
-
-    private func createModel(playlist: PlaylistEntity) -> PlaylistDetailModel {
-        let songIds = playlist.songIds
-        let songs = songRepository.findByIds(songIds: songIds)
-        let sorted = songIds
-            .filter { songId in songs.contains(where: { $0.songId.equals(songId) }) }
-            .map { songId in songs.first { songId.equals($0.songId) }! }
-        let artwork = sorted.first(where: { song -> Bool in
-            song.artwork != nil
-        })?.artwork
-
-        // 端末から削除された曲がプレイリストに残っている場合は取り除いて読み直す
-        if !validation(songIds: songIds, songs: songs) {
-            fix(playlist: playlist, songs: songs)
-
-            return createModel(playlist: playlistRepository.findById(playlistId: playlist.playlistId))
-        }
-
-        return PlaylistDetailModel(playlistId: playlist.playlistId, primaryText: playlist.name, artwork: artwork, songs: sorted)
-    }
-
-    private func validation(songIds: [SongId], songs: [SongModel]) -> Bool {
-        return songIds.count == songs.count
-    }
-
-    private func fix(playlist: PlaylistEntity, songs: [SongModel]) {
-        let songIds = songs.map { $0.songId }
-
-        playlistRegister.update(playlistId: playlist.playlistId, name: playlist.name, songIds: songIds)
     }
 }
