@@ -45,6 +45,7 @@
 "NewPlaylist" = "プレイリストを作成";
 "PlaylistName" = "プレイリスト名";
 "RemovePlaylist" = "プレイリストを削除";
+"Registered" = "登録済み";
 
 // shortcut
 "AddShortcut" = "ショートカットに追加";

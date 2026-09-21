@@ -45,6 +45,7 @@
 "NewPlaylist" = "New playlist";
 "PlaylistName" = "Playlist name";
 "RemovePlaylist" = "Remove playlist";
+"Registered" = "Added";
 
 // shortcut
 "AddShortcut" = "Add to a shortcut";

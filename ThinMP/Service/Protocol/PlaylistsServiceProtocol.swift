@@ -7,4 +7,6 @@
 
 protocol PlaylistsServiceProtocol {
     func findAll() -> [PlaylistModel]
+
+    func findRegisteredIds(songId: SongId) -> [PlaylistId]
 }

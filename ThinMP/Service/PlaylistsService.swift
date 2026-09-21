@@ -28,4 +28,11 @@ struct PlaylistsService: PlaylistsServiceProtocol {
             return PlaylistModel(playlistId: playlist.playlistId, primaryText: playlistDetailModel.primaryText, artwork: playlistDetailModel.artwork)
         }
     }
+
+    /// songId がすでに登録されているプレイリストの id
+    func findRegisteredIds(songId: SongId) -> [PlaylistId] {
+        return playlistRepository.findAll()
+            .filter { playlist in playlist.songIds.contains { $0.equals(songId) } }
+            .map { $0.playlistId }
+    }
 }

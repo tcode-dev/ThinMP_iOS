@@ -49,6 +49,21 @@ struct PlaylistRepositoryTests {
     }
 
     @Test(arguments: RepositoryBackend.allCases)
+    func addIgnoresSongAlreadyInPlaylist(backend: RepositoryBackend) {
+        let repository = TestRepositories(backend: backend).playlist
+
+        repository.create(songId: SongId(id: 1), name: "A")
+
+        let playlistId = repository.findAll()[0].playlistId
+
+        repository.add(playlistId: playlistId, songId: SongId(id: 2))
+        repository.add(playlistId: playlistId, songId: SongId(id: 1))
+        repository.add(playlistId: playlistId, songId: SongId(id: 2))
+
+        #expect(repository.findById(playlistId: playlistId).songIds.map { $0.id } == [1, 2])
+    }
+
+    @Test(arguments: RepositoryBackend.allCases)
     func findByIdsReturnsOnlyMatching(backend: RepositoryBackend) {
         let repository = TestRepositories(backend: backend).playlist
 
