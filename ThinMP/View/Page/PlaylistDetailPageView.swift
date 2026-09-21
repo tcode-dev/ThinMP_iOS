@@ -41,15 +41,15 @@ struct PlaylistDetailPageView: View {
                                     HeroSquareImageView(width: geometry.size.width, height: geometry.size.height, top: geometry.safeAreaInsets.top, bottom: geometry.safeAreaInsets.bottom, artwork: vm.artwork)
                                 }
                                 LazyVStack(spacing: 0) {
-                                    ForEach(rows, id: \.id) { row in
-                                        PlayRowView(list: vm.songs, index: row.index) {
-                                            MediaRowView(media: row.song)
+                                    ForEach(Array(vm.songs.enumerated()), id: \.element.id) { index, song in
+                                        PlayRowView(list: vm.songs, index: index) {
+                                            MediaRowView(media: song)
                                         }
                                         .contentShape(RoundedRectangle(cornerRadius: StyleConstant.cornerRadius))
                                         .contextMenu {
-                                            FavoriteSongButtonView(songId: row.song.songId)
+                                            FavoriteSongButtonView(songId: song.songId)
                                             Button(action: {
-                                                playlistRegisterSongId = row.song.songId
+                                                playlistRegisterSongId = song.songId
                                                 showingPopup.toggle()
                                             }) {
                                                 Text(LocalizedStringKey(LabelConstant.addPlaylist))
@@ -77,11 +77,5 @@ struct PlaylistDetailPageView: View {
                 vm.load(playlistId: playlistId)
             }
         }
-    }
-
-    // プレイリストは同じ曲を重複して登録できるので、songId 単独では ForEach の ID が衝突する
-    // index と組み合わせて一意にする
-    private var rows: [(id: String, index: Int, song: SongModel)] {
-        vm.songs.enumerated().map { (id: "\($0.offset)-\($0.element.id)", index: $0.offset, song: $0.element) }
     }
 }
