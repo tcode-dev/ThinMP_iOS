@@ -68,6 +68,22 @@ Audio, AirPlay, and Picture in Picture
 * `Repository/Realm` (`*RealmRepository`) — the previous store, backed by `Model/Realm` and `RealmStore`. Kept only so existing data can be migrated; scheduled for removal in the 2027 release.
 * `Repository/Protocol` — the contracts both implementations satisfy. `ThinMPTests/Repository` runs the same tests against both.
 
+## Migration (Realm → SwiftData)
+
+`ThinMP/Migration/RealmToSwiftDataMigration.swift` runs once from `ThinMP.init()`. On the first launch after the 2026 release it copies favorites, playlists and shortcuts from the Realm file into SwiftData (playlist ids are preserved because shortcuts reference them), marks `realmToSwiftDataMigrated` in `UserDefaults`, and deletes the Realm file. A fresh install is marked as migrated without touching Realm.
+
+`ThinMPTests/Fixtures/legacy.realm` is a Realm file written by the current Realm models with the data described in `LegacyRealmFixture`; `RealmToSwiftDataMigrationTests` migrates it and checks the result through the Repository protocols. Regenerate it with the disabled `generateLegacyRealmFixture` test if the fixture spec changes.
+
+### Removal checklist for the 2027 release
+
+1. Delete `ThinMP/Migration/`, `ThinMP/Repository/Realm/`, `ThinMP/Model/Realm/`.
+2. Delete `ThinMPTests/Migration/`, `ThinMPTests/Fixtures/`, and the `realm` case of `RepositoryBackend`.
+3. Remove the `RealmToSwiftDataMigration().migrateIfNeeded()` call from `ThinMP.swift`.
+4. Remove the `realm-cocoa` package from the project.
+5. Drop the Realm entries from this README.
+
+Users who skip the 2026 release entirely will not get their Realm data migrated.
+
 ## Test
 
 `ThinMPTests` uses Swift Testing.
@@ -78,6 +94,7 @@ xcodebuild -project ThinMP.xcodeproj -scheme ThinMP -destination 'platform=iOS S
 
 * `ThinMPTests/Repository` — contract tests for the `Repository` protocols. They run against every case of `RepositoryBackend`, so a new persistence store only needs a new case there.
 * `ThinMPTests/Service` — tests for the self-healing logic in `Service` (favorites, playlists and shortcuts that reference media no longer in the library), using mock repositories.
+* `ThinMPTests/Migration` — the Realm → SwiftData migration, run against an in-memory Realm and against `Fixtures/legacy.realm`.
 * `ThinMPTests/Support` — `RepositoryBackend`, mocks, and `FakeMediaItem` for building `SongModel` without the device library.
 
 ## App Store

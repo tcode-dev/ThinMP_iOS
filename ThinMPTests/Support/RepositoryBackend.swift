@@ -23,17 +23,17 @@ struct TestRepositories {
     let playlist: PlaylistRepositoryProtocol
     let shortcut: ShortcutRepositoryProtocol
 
-    init(backend: RepositoryBackend) {
+    init(backend: RepositoryBackend, realmStore: RealmStore? = nil, swiftDataStore: SwiftDataStore? = nil) {
         switch backend {
         case .realm:
-            let store = RealmStore.inMemory()
+            let store = realmStore ?? .inMemory()
 
             favoriteSong = FavoriteSongRealmRepository(store: store)
             favoriteArtist = FavoriteArtistRealmRepository(store: store)
             playlist = PlaylistRealmRepository(store: store)
             shortcut = ShortcutRealmRepository(store: store)
         case .swiftData:
-            let store = SwiftDataStore.inMemory()
+            let store = swiftDataStore ?? .inMemory()
 
             favoriteSong = FavoriteSongRepository(store: store)
             favoriteArtist = FavoriteArtistRepository(store: store)

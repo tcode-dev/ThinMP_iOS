@@ -181,6 +181,10 @@
 		69B958413192A549B677410E /* FavoriteArtistRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FADB4D768EA7F7799DF0C4 /* FavoriteArtistRepository.swift */; };
 		80CEEA23BA4529CF3F243B67 /* PlaylistRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86F0329480ED812C727F3C4 /* PlaylistRepository.swift */; };
 		05B81A7395086EB58EF9DA3E /* ShortcutRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1639B069C3EDA5048DE3783E /* ShortcutRepository.swift */; };
+		0EB287BCB4D7D465E298A545 /* RealmToSwiftDataMigration.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3FC7A55FFA2C0B66408514 /* RealmToSwiftDataMigration.swift */; };
+		B069B92D53A55B69DEB4A770 /* LegacyRealmFixture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548CDB6261F83B361D451253 /* LegacyRealmFixture.swift */; };
+		8C4C3166E978C4031316F5E9 /* RealmToSwiftDataMigrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B3754B87F079B4B287A7F86 /* RealmToSwiftDataMigrationTests.swift */; };
+		ED601713974855BE4FAA22EB /* legacy.realm in Resources */ = {isa = PBXBuildFile; fileRef = 1806AE995750776E431BB6E9 /* legacy.realm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -371,6 +375,10 @@
 		09FADB4D768EA7F7799DF0C4 /* FavoriteArtistRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteArtistRepository.swift; sourceTree = "<group>"; };
 		A86F0329480ED812C727F3C4 /* PlaylistRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistRepository.swift; sourceTree = "<group>"; };
 		1639B069C3EDA5048DE3783E /* ShortcutRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutRepository.swift; sourceTree = "<group>"; };
+		FA3FC7A55FFA2C0B66408514 /* RealmToSwiftDataMigration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmToSwiftDataMigration.swift; sourceTree = "<group>"; };
+		548CDB6261F83B361D451253 /* LegacyRealmFixture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyRealmFixture.swift; sourceTree = "<group>"; };
+		5B3754B87F079B4B287A7F86 /* RealmToSwiftDataMigrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmToSwiftDataMigrationTests.swift; sourceTree = "<group>"; };
+		1806AE995750776E431BB6E9 /* legacy.realm */ = {isa = PBXFileReference; lastKnownFileType = file; path = legacy.realm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -737,8 +745,17 @@
 				527177A72663DBF200390A32 /* Service */,
 				5208A24423CB379200AA4433 /* View */,
 				528C3D1423C6A1AA005CCA8E /* ViewModel */,
+				A9B530363DCF67033A618368 /* Migration */,
 			);
 			path = ThinMP;
+			sourceTree = "<group>";
+		};
+		A9B530363DCF67033A618368 /* Migration */ = {
+			isa = PBXGroup;
+			children = (
+				FA3FC7A55FFA2C0B66408514 /* RealmToSwiftDataMigration.swift */,
+			);
+			path = Migration;
 			sourceTree = "<group>";
 		};
 		52C3B24026AC6253006C841E /* Protocol */ = {
@@ -882,8 +899,19 @@
 				F926279EC00C29E179F994E6 /* Support */,
 				10636A1BEE2BF05306CB11C9 /* Repository */,
 				C4AC5067731C45C1AD45BC23 /* Service */,
+				525A71C89BFE5B004E332A0C /* Migration */,
+				8F476CCCC0C7EC22020D3BC6 /* Fixtures */,
 			);
 			path = ThinMPTests;
+			sourceTree = "<group>";
+		};
+		525A71C89BFE5B004E332A0C /* Migration */ = {
+			isa = PBXGroup;
+			children = (
+				548CDB6261F83B361D451253 /* LegacyRealmFixture.swift */,
+				5B3754B87F079B4B287A7F86 /* RealmToSwiftDataMigrationTests.swift */,
+			);
+			path = Migration;
 			sourceTree = "<group>";
 		};
 		C4AC5067731C45C1AD45BC23 /* Service */ = {
@@ -916,6 +944,14 @@
 				4C4773D30118320B29E49C8A /* Mocks.swift */,
 			);
 			path = Support;
+			sourceTree = "<group>";
+		};
+		8F476CCCC0C7EC22020D3BC6 /* Fixtures */ = {
+			isa = PBXGroup;
+			children = (
+				1806AE995750776E431BB6E9 /* legacy.realm */,
+			);
+			path = Fixtures;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1025,6 +1061,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED601713974855BE4FAA22EB /* legacy.realm in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1212,6 +1249,7 @@
 				69B958413192A549B677410E /* FavoriteArtistRepository.swift in Sources */,
 				80CEEA23BA4529CF3F243B67 /* PlaylistRepository.swift in Sources */,
 				05B81A7395086EB58EF9DA3E /* ShortcutRepository.swift in Sources */,
+				0EB287BCB4D7D465E298A545 /* RealmToSwiftDataMigration.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1230,6 +1268,8 @@
 				2F18702D84026CE522E15F50 /* FavoriteArtistsServiceTests.swift in Sources */,
 				4BD41020D22DF6D30122312C /* PlaylistDetailServiceTests.swift in Sources */,
 				F93AAE6A142DC92A501A7BD8 /* ShortcutServiceTests.swift in Sources */,
+				B069B92D53A55B69DEB4A770 /* LegacyRealmFixture.swift in Sources */,
+				8C4C3166E978C4031316F5E9 /* RealmToSwiftDataMigrationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
