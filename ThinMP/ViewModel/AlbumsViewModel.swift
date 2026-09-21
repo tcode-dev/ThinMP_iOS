@@ -11,10 +11,17 @@ import MediaPlayer
 class AlbumsViewModel: ObservableObject {
     @Published var albums: [AlbumModel] = []
 
-    func load() {
+    private let albumsService: AlbumsServiceProtocol
+
+    init(albumsService: AlbumsServiceProtocol = AlbumsService()) {
+        self.albumsService = albumsService
+    }
+
+    @discardableResult
+    func load() -> Task<Void, Never> {
         Task {
-            albums = await Task.detached(priority: .userInitiated) {
-                AlbumsService().findAll()
+            albums = await Task.detached(priority: .userInitiated) { [albumsService] in
+                albumsService.findAll()
             }.value
         }
     }

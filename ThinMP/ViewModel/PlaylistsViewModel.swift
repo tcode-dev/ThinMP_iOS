@@ -13,18 +13,26 @@ class PlaylistsViewModel: ObservableObject {
     /// 登録モーダルで対象の曲がすでに入っているプレイリストの id
     @Published var registeredPlaylistIds: Set<String> = []
 
+    private let playlistsService: PlaylistsServiceProtocol
+
+    init(playlistsService: PlaylistsServiceProtocol = PlaylistsService()) {
+        self.playlistsService = playlistsService
+    }
+
     // SwiftData の ModelContext はスレッドセーフではなく、全 Repository が同じ context を共有しているので
     // メインアクター上で実行する(Task.detached でバックグラウンドに逃がさない)
-    func load() {
+    @discardableResult
+    func load() -> Task<Void, Never> {
         Task {
-            playlists = PlaylistsService().findAll()
+            playlists = playlistsService.findAll()
         }
     }
 
     /// 登録モーダル用。一覧を 1 回読み、そこから songId がすでに登録されているプレイリストを求める
-    func load(songId: SongId) {
+    @discardableResult
+    func load(songId: SongId) -> Task<Void, Never> {
         Task {
-            playlists = PlaylistsService().findAll()
+            playlists = playlistsService.findAll()
             registeredPlaylistIds = Set(playlists.filter { $0.contains(songId: songId) }.map { $0.id })
         }
     }

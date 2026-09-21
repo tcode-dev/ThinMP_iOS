@@ -16,13 +16,19 @@ class ArtistDetailViewModel: ObservableObject {
     @Published var songs: [SongModel] = []
 
     private var artistId: ArtistId!
+    private let artistDetailService: ArtistDetailServiceProtocol
 
-    func load(artistId: ArtistId) {
+    init(artistDetailService: ArtistDetailServiceProtocol = ArtistDetailService()) {
+        self.artistDetailService = artistDetailService
+    }
+
+    @discardableResult
+    func load(artistId: ArtistId) -> Task<Void, Never> {
         self.artistId = artistId
 
-        Task {
-            let artistDetailModel = await Task.detached(priority: .userInitiated) {
-                ArtistDetailService().findById(artistId: artistId)
+        return Task {
+            let artistDetailModel = await Task.detached(priority: .userInitiated) { [artistDetailService] in
+                artistDetailService.findById(artistId: artistId)
             }.value
 
             guard let artistDetailModel = artistDetailModel else { return }

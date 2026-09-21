@@ -249,3 +249,35 @@ final class PlaylistDetailServiceMock: PlaylistDetailServiceProtocol {
         return playlistIds.compactMap { playlistId in playlists.first { $0.playlistId.id == playlistId.id } }
     }
 }
+
+// ViewModel のテストで Service を差し替えるためのモック
+
+final class SongsServiceMock: SongsServiceProtocol {
+    let songs: [SongModel]
+    private(set) var findAllCalls = 0
+
+    init(songs: [SongModel]) {
+        self.songs = songs
+    }
+
+    func findAll() -> [SongModel] {
+        findAllCalls += 1
+
+        return songs
+    }
+}
+
+final class PlaylistsServiceMock: PlaylistsServiceProtocol {
+    let playlists: [PlaylistModel]
+    private(set) var findAllCalls = 0
+
+    init(playlists: [PlaylistModel]) {
+        self.playlists = playlists
+    }
+
+    func findAll() -> [PlaylistModel] {
+        findAllCalls += 1
+
+        return playlists
+    }
+}

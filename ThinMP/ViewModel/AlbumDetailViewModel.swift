@@ -15,13 +15,19 @@ class AlbumDetailViewModel: ObservableObject {
     @Published var songs: [SongModel] = []
 
     private var albumId: AlbumId!
+    private let albumDetailService: AlbumDetailServiceProtocol
 
-    func load(albumId: AlbumId) {
+    init(albumDetailService: AlbumDetailServiceProtocol = AlbumDetailService()) {
+        self.albumDetailService = albumDetailService
+    }
+
+    @discardableResult
+    func load(albumId: AlbumId) -> Task<Void, Never> {
         self.albumId = albumId
 
-        Task {
-            let albumDetailModel = await Task.detached(priority: .userInitiated) {
-                AlbumDetailService().findById(albumId: albumId)
+        return Task {
+            let albumDetailModel = await Task.detached(priority: .userInitiated) { [albumDetailService] in
+                albumDetailService.findById(albumId: albumId)
             }.value
 
             guard let albumDetailModel = albumDetailModel else { return }
