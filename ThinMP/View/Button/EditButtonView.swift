@@ -9,7 +9,7 @@ import SwiftUI
 
 struct EditButtonView<Content>: View where Content: View {
     let content: () -> Content
-    
+
     var body: some View {
         Menu {
             NavigationLink(destination: content()) {

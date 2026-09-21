@@ -38,7 +38,7 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
     }
 
     func start(list: [SongModel], currentIndex: Int) {
-        if (player.playbackState == MPMusicPlaybackState.playing) {
+        if player.playbackState == MPMusicPlaybackState.playing {
             player.stop()
         }
 
@@ -192,28 +192,11 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
 
     private func playbackStateDidChangeCallback() {
         switch player.playbackState {
-        case MPMusicPlaybackState.stopped:
-
-            break
         case MPMusicPlaybackState.playing:
             isPlaying = true
-
-            break
         case MPMusicPlaybackState.paused:
             isPlaying = false
-
-            break
-        case MPMusicPlaybackState.interrupted:
-
-            break
-        case MPMusicPlaybackState.seekingForward:
-
-            break
-        case MPMusicPlaybackState.seekingBackward:
-
-            break
         default:
-
             break
         }
     }
