@@ -63,6 +63,18 @@ Audio, AirPlay, and Picture in Picture
 
 `Repository` is the only layer that touches Realm. It exposes plain structs (`Model/Entity`) and value objects so that `Service` and `Register` never depend on Realm types. `Service` and `Register` receive their dependencies through initializer parameters with default values, so they can be constructed with test doubles.
 
+## Test
+
+`ThinMPTests` uses Swift Testing.
+
+```
+xcodebuild -project ThinMP.xcodeproj -scheme ThinMP -destination 'platform=iOS Simulator,name=iPhone 17' test
+```
+
+* `ThinMPTests/Repository` — contract tests for the `Repository` protocols. They run against every case of `RepositoryBackend`, so a new persistence store only needs a new case there.
+* `ThinMPTests/Service` — tests for the self-healing logic in `Service` (favorites, playlists and shortcuts that reference media no longer in the library), using mock repositories.
+* `ThinMPTests/Support` — `RepositoryBackend`, mocks, and `FakeMediaItem` for building `SongModel` without the device library.
+
 ## App Store
 
 https://apps.apple.com/us/app/thinmp/id1578896579
