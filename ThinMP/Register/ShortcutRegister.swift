@@ -8,10 +8,10 @@
 import MediaPlayer
 
 struct ShortcutRegister: ShortcutRegisterProtocol {
-    let repository: ShortcutRepository
+    private let repository: ShortcutRepositoryProtocol
 
-    init() {
-        repository = ShortcutRepository()
+    init(repository: ShortcutRepositoryProtocol = ShortcutRepository()) {
+        self.repository = repository
     }
 
     func add(itemId: ShortcutItemIdProtocol, type: ShortcutType) {

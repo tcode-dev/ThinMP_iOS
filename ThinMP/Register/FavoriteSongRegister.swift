@@ -8,10 +8,10 @@
 import MediaPlayer
 
 struct FavoriteSongRegister: FavoriteSongRegisterProtocol {
-    let repository: FavoriteSongRepository
+    private let repository: FavoriteSongRepositoryProtocol
 
-    init() {
-        repository = FavoriteSongRepository()
+    init(repository: FavoriteSongRepositoryProtocol = FavoriteSongRepository()) {
+        self.repository = repository
     }
 
     func add(songId: SongId) {

@@ -156,6 +156,9 @@
 		52F979C625EBBCA80085F306 /* EditButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F979C525EBBCA80085F306 /* EditButtonView.swift */; };
 		52F979CE25EBC3AC0085F306 /* FavoriteArtistButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F979CD25EBC3AC0085F306 /* FavoriteArtistButtonView.swift */; };
 		52F979D225EBC5730085F306 /* FavoriteSongButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F979D125EBC5730085F306 /* FavoriteSongButtonView.swift */; };
+		A787D58301E0F90D570BA2B2 /* ShortcutType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B214260B9AC61AFCCD9AEF7 /* ShortcutType.swift */; };
+		5813BEF15C0698843A7EB0C4 /* PlaylistEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B7693967CD10B154DF8057 /* PlaylistEntity.swift */; };
+		450B0C2D299DC4F1399B4BED /* ShortcutEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46755FB66089E5069A790B6E /* ShortcutEntity.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -310,6 +313,9 @@
 		52F979C525EBBCA80085F306 /* EditButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditButtonView.swift; sourceTree = "<group>"; };
 		52F979CD25EBC3AC0085F306 /* FavoriteArtistButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteArtistButtonView.swift; sourceTree = "<group>"; };
 		52F979D125EBC5730085F306 /* FavoriteSongButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteSongButtonView.swift; sourceTree = "<group>"; };
+		5B214260B9AC61AFCCD9AEF7 /* ShortcutType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutType.swift; sourceTree = "<group>"; };
+		87B7693967CD10B154DF8057 /* PlaylistEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistEntity.swift; sourceTree = "<group>"; };
+		46755FB66089E5069A790B6E /* ShortcutEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutEntity.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -723,8 +729,19 @@
 			children = (
 				528CA16023CAB8F9003E162F /* Media */,
 				523C4C5D2594114100D7D32C /* Realm */,
+				4AC3495A541D61E0DD2A0448 /* Entity */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		4AC3495A541D61E0DD2A0448 /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				5B214260B9AC61AFCCD9AEF7 /* ShortcutType.swift */,
+				87B7693967CD10B154DF8057 /* PlaylistEntity.swift */,
+				46755FB66089E5069A790B6E /* ShortcutEntity.swift */,
+			);
+			path = Entity;
 			sourceTree = "<group>";
 		};
 		52CC2D0923E24E5C009FB57F /* Player */ = {
@@ -1018,6 +1035,9 @@
 				5211ADCC25CE99E400604D45 /* TitleView.swift in Sources */,
 				52A46DCF23E54B0F00BAC9AA /* PlayerView.swift in Sources */,
 				52AAAA3E267F6F4B000880E0 /* ArtistId.swift in Sources */,
+				A787D58301E0F90D570BA2B2 /* ShortcutType.swift in Sources */,
+				5813BEF15C0698843A7EB0C4 /* PlaylistEntity.swift in Sources */,
+				450B0C2D299DC4F1399B4BED /* ShortcutEntity.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -6,12 +6,25 @@
 //
 
 struct FavoriteSongsService: FavoriteSongsServiceProtocol {
+    private let favoriteSongRepository: FavoriteSongRepositoryProtocol
+    private let songRepository: SongRepositoryProtocol
+    private let favoriteSongRegister: FavoriteSongRegisterProtocol
+
+    init(
+        favoriteSongRepository: FavoriteSongRepositoryProtocol = FavoriteSongRepository(),
+        songRepository: SongRepositoryProtocol = SongRepository(),
+        favoriteSongRegister: FavoriteSongRegisterProtocol = FavoriteSongRegister()
+    ) {
+        self.favoriteSongRepository = favoriteSongRepository
+        self.songRepository = songRepository
+        self.favoriteSongRegister = favoriteSongRegister
+    }
+
     func findAll() -> [SongModel] {
-        let favoriteSongRepository = FavoriteSongRepository()
         let songIds = favoriteSongRepository.findAll()
-        let songRepository = SongRepository()
         let songs = songRepository.findByIds(songIds: songIds)
 
+        // 端末から削除された曲がお気に入りに残っている場合は取り除いて読み直す
         if !validation(songIds: songIds, songs: songs) {
             fix(songs: songs)
 
@@ -26,9 +39,8 @@ struct FavoriteSongsService: FavoriteSongsServiceProtocol {
     }
 
     private func fix(songs: [SongModel]) {
-        let register = FavoriteSongRegister()
         let songIds = songs.map { $0.songId }
 
-        register.update(songIds: songIds)
+        favoriteSongRegister.update(songIds: songIds)
     }
 }

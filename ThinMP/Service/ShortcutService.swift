@@ -6,48 +6,55 @@
 //
 
 struct ShortcutService: ShortcutServiceProtocol {
+    private let shortcutRepository: ShortcutRepositoryProtocol
+    private let shortcutRegister: ShortcutRegisterProtocol
+    private let artistDetailService: ArtistDetailServiceProtocol
+    private let albumDetailService: AlbumDetailServiceProtocol
+    private let playlistDetailService: PlaylistDetailServiceProtocol
+
+    init(
+        shortcutRepository: ShortcutRepositoryProtocol = ShortcutRepository(),
+        shortcutRegister: ShortcutRegisterProtocol = ShortcutRegister(),
+        artistDetailService: ArtistDetailServiceProtocol = ArtistDetailService(),
+        albumDetailService: AlbumDetailServiceProtocol = AlbumDetailService(),
+        playlistDetailService: PlaylistDetailServiceProtocol = PlaylistDetailService()
+    ) {
+        self.shortcutRepository = shortcutRepository
+        self.shortcutRegister = shortcutRegister
+        self.artistDetailService = artistDetailService
+        self.albumDetailService = albumDetailService
+        self.playlistDetailService = playlistDetailService
+    }
+
     func findAll() -> [ShortcutModel] {
-        let shortcutRepository = ShortcutRepository()
-        let shortcutRealmModels = shortcutRepository.findAll()
-        let grouping = Dictionary(grouping: shortcutRealmModels) { shortcutModel -> Int in
-            switch shortcutModel.type {
-            case ShortcutType.ARTIST.rawValue: return ShortcutType.ARTIST.rawValue
-            case ShortcutType.ALBUM.rawValue: return ShortcutType.ALBUM.rawValue
-            case ShortcutType.PLAYLIST.rawValue: return ShortcutType.PLAYLIST.rawValue
-            default: return 0
-            }
-        }
-        .reduce(into: [Int: [String]]()) { $0[$1.key] = $1.value.map { $0.itemId }}
+        let shortcuts = shortcutRepository.findAll()
+        let grouping = Dictionary(grouping: shortcuts) { $0.type }
+            .mapValues { $0.map { $0.itemId } }
 
-        var shortcutDictionary: [Int: [DetailProtocol]] = [ShortcutType.ARTIST.rawValue: [], ShortcutType.ALBUM.rawValue: [], ShortcutType.PLAYLIST.rawValue: []]
+        var shortcutDictionary: [ShortcutType: [DetailProtocol]] = [.ARTIST: [], .ALBUM: [], .PLAYLIST: []]
 
-        if let artistIds = grouping[ShortcutType.ARTIST.rawValue] {
-            let artistDetailService = ArtistDetailService()
-
-            shortcutDictionary[ShortcutType.ARTIST.rawValue] = artistDetailService.findByIds(artistIds: artistIds.map { ArtistId(id: UInt64($0)!) })
+        if let artistIds = grouping[.ARTIST] {
+            shortcutDictionary[.ARTIST] = artistDetailService.findByIds(artistIds: artistIds.map { $0.artistId })
         }
 
-        if let albumIds = grouping[ShortcutType.ALBUM.rawValue] {
-            let albumDetailService = AlbumDetailService()
-
-            shortcutDictionary[ShortcutType.ALBUM.rawValue] = albumDetailService.findByIds(albumIds: albumIds.map { AlbumId(id: UInt64($0)!) })
+        if let albumIds = grouping[.ALBUM] {
+            shortcutDictionary[.ALBUM] = albumDetailService.findByIds(albumIds: albumIds.map { $0.albumId })
         }
 
-        if let playlistIds = grouping[ShortcutType.PLAYLIST.rawValue] {
-            let playlistDetailService = PlaylistDetailService()
-
-            shortcutDictionary[ShortcutType.PLAYLIST.rawValue] = playlistDetailService.findByIds(playlistIds: playlistIds.map { PlaylistId(id: $0) })
+        if let playlistIds = grouping[.PLAYLIST] {
+            shortcutDictionary[.PLAYLIST] = playlistDetailService.findByIds(playlistIds: playlistIds.map { $0.playlistId })
         }
 
-        let shortcutModels = shortcutRealmModels
-            .filter { shortcutRealmModel in shortcutDictionary[shortcutRealmModel.type]!.contains(where: { $0.shortcutId == shortcutRealmModel.itemId }) }
-            .map { shortcutRealmModel -> ShortcutModel in
-                let itemModel = shortcutDictionary[shortcutRealmModel.type]!.first { $0.shortcutId == shortcutRealmModel.itemId }!
+        let shortcutModels = shortcuts
+            .filter { shortcut in shortcutDictionary[shortcut.type]!.contains(where: { $0.shortcutId == shortcut.itemId.id }) }
+            .map { shortcut -> ShortcutModel in
+                let itemModel = shortcutDictionary[shortcut.type]!.first { $0.shortcutId == shortcut.itemId.id }!
 
-                return ShortcutModel(shortcutId: ShortcutId(id: shortcutRealmModel.id), itemId: ItemId(id: shortcutRealmModel.itemId), type: shortcutRealmModel.type, primaryText: itemModel.primaryText, artwork: itemModel.artwork)
+                return ShortcutModel(shortcutId: shortcut.shortcutId, itemId: shortcut.itemId, type: shortcut.type.rawValue, primaryText: itemModel.primaryText, artwork: itemModel.artwork)
             }
 
-        if !validation(shortcutIds: shortcutRealmModels.map { $0.id }, shortcutModels: shortcutModels) {
+        // 端末から削除されたアーティスト、アルバム、プレイリストのショートカットは取り除いて読み直す
+        if !validation(shortcuts: shortcuts, shortcutModels: shortcutModels) {
             fix(shortcutModels: shortcutModels)
 
             return findAll()
@@ -56,13 +63,11 @@ struct ShortcutService: ShortcutServiceProtocol {
         return shortcutModels
     }
 
-    private func validation(shortcutIds: [String], shortcutModels: [ShortcutModel]) -> Bool {
-        return shortcutIds.count == shortcutModels.count
+    private func validation(shortcuts: [ShortcutEntity], shortcutModels: [ShortcutModel]) -> Bool {
+        return shortcuts.count == shortcutModels.count
     }
 
     private func fix(shortcutModels: [ShortcutModel]) {
-        let register = ShortcutRegister()
-
-        register.update(shortcutIds: shortcutModels.map { $0.shortcutId })
+        shortcutRegister.update(shortcutIds: shortcutModels.map { $0.shortcutId })
     }
 }

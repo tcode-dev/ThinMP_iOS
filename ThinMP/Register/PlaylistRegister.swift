@@ -8,10 +8,10 @@
 import MediaPlayer
 
 struct PlaylistRegister: PlaylistRegisterProtocol {
-    let repository: PlaylistRepository
+    private let repository: PlaylistRepositoryProtocol
 
-    init() {
-        repository = PlaylistRepository()
+    init(repository: PlaylistRepositoryProtocol = PlaylistRepository()) {
+        self.repository = repository
     }
 
     func create(songId: SongId, name: String) {

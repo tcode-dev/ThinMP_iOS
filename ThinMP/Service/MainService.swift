@@ -9,17 +9,23 @@ import MediaPlayer
 
 struct MainService: MainServiceProtocol {
     private let ALBUM_COUNT = 20
+    private let albumRepository: AlbumRepositoryProtocol
+    private let shortcutService: ShortcutServiceProtocol
+
+    init(
+        albumRepository: AlbumRepositoryProtocol = AlbumRepository(),
+        shortcutService: ShortcutServiceProtocol = ShortcutService()
+    ) {
+        self.albumRepository = albumRepository
+        self.shortcutService = shortcutService
+    }
 
     func findRecentlyAlbums() -> [AlbumModel] {
-        let repository = AlbumRepository()
-
-        return repository.findRecently(count: ALBUM_COUNT)
+        return albumRepository.findRecently(count: ALBUM_COUNT)
     }
 
     func findShortcuts() -> [ShortcutModel] {
-        let service = ShortcutService()
-
-        return service.findAll()
+        return shortcutService.findAll()
     }
 
     func getMainMenus() -> [MenuModel] {
