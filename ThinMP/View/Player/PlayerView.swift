@@ -188,7 +188,7 @@ struct PlayerView: View {
             musicPlayer.stopProgress()
             callback()
         })
-        .onChange(of: scenePhase) { phase in
+        .onChange(of: scenePhase) { _, phase in
             if phase == .background {
                 musicPlayer.stopProgress()
             } else if phase == .active {

@@ -27,13 +27,12 @@
 
 ## Environments
 
-* Xcode 26.0
+* Xcode 27.0
 * Swift
 * SwiftUI
-* iOS Deployment Target 16
-* iPhone 12 mini (iOS 16)
-* iPhone 14 Plus (iOS 26)
-* iPad Pro (6th generation, iPadOS 26, 12.9-inch)
+* iOS Deployment Target 18
+* iPhone 14 Plus (iOS 27)
+* iPad Pro (6th generation, iPadOS 27, 12.9-inch)
 
 ## Libraries
 
