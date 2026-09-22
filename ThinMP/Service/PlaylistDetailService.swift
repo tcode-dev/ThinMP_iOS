@@ -37,22 +37,22 @@ struct PlaylistDetailService: PlaylistDetailServiceProtocol {
     /// スキャンはバックグラウンドで行い、SwiftData の読み書きだけメインアクターに残す
     private func createModels(playlists: [PlaylistEntity]) async -> [PlaylistDetailModel] {
         let songIds = playlists.flatMap { $0.songIds }.uniqued()
-        let found = await Task.detached(priority: .userInitiated) { [songRepository] in
+        let librarySongs = await Task.detached(priority: .userInitiated) { [songRepository] in
             songRepository.findByIds(songIds: songIds)
         }.value
-        let songs = found.keyed { $0.songId }
+        let songById = librarySongs.keyed { $0.songId }
 
         return playlists.map { playlist in
-            let found = playlist.songIds.compactMap { songs[$0] }
+            let songs = playlist.songIds.compactMap { songById[$0] }
 
             // 端末から削除された曲がプレイリストに残っている場合は取り除いて保存する
-            if found.count != playlist.songIds.count {
-                playlistRepository.update(playlistId: playlist.playlistId, name: playlist.name, songIds: found.map { $0.songId })
+            if songs.count != playlist.songIds.count {
+                playlistRepository.update(playlistId: playlist.playlistId, name: playlist.name, songIds: songs.map { $0.songId })
             }
 
-            let artwork = found.first { $0.artwork != nil }?.artwork
+            let artwork = songs.first { $0.artwork != nil }?.artwork
 
-            return PlaylistDetailModel(playlistId: playlist.playlistId, primaryText: playlist.name, artwork: artwork, songs: found)
+            return PlaylistDetailModel(playlistId: playlist.playlistId, primaryText: playlist.name, artwork: artwork, songs: songs)
         }
     }
 }
