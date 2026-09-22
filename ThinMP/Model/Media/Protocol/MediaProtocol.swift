@@ -14,14 +14,6 @@ protocol MediaProtocol {
 }
 
 extension MediaProtocol {
-    var id: String? {
-        return nil
-    }
-
-    var primaryText: String? {
-        return primaryText
-    }
-
     var secondaryText: String? {
         return nil
     }
