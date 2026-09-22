@@ -31,4 +31,35 @@ struct FavoriteSongsViewModelTests {
         await second.value
         #expect(vm.songs.map { $0.songId.id } == [2])
     }
+
+    @Test
+    func saveWritesEditedOrder() async {
+        let service = FavoriteSongsServiceMock(songs: [.fake(id: 1), .fake(id: 2), .fake(id: 3)])
+        let vm = FavoriteSongsViewModel(favoriteSongsService: service)
+
+        await vm.load().value
+        vm.songs.remove(atOffsets: [1])
+        vm.songs.move(fromOffsets: [1], toOffset: 0)
+        vm.save()
+
+        #expect(service.updateCalls.map { $0.map { $0.id } } == [[3, 1]])
+    }
+}
+
+@MainActor
+struct FavoriteArtistsViewModelTests {
+    @Test
+    func saveWritesEditedOrder() async {
+        let service = FavoriteArtistsServiceMock(artists: [
+            ArtistModel(artistId: ArtistId(id: 1), primaryText: "A"),
+            ArtistModel(artistId: ArtistId(id: 2), primaryText: "B"),
+        ])
+        let vm = FavoriteArtistsViewModel(favoriteArtistsService: service)
+
+        await vm.load().value
+        vm.artists.move(fromOffsets: [1], toOffset: 0)
+        vm.save()
+
+        #expect(service.updateCalls.map { $0.map { $0.id } } == [[2, 1]])
+    }
 }
