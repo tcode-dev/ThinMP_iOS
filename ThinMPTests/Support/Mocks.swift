@@ -281,3 +281,20 @@ final class PlaylistsServiceMock: PlaylistsServiceProtocol {
         return playlists
     }
 }
+
+/// findAll を呼び出し側が resume するまで待たせる FavoriteSongsService
+/// 2 回目の load が 1 回目を打ち切ることを確認するのに使う
+final class BlockingFavoriteSongsServiceMock: FavoriteSongsServiceProtocol {
+    private var continuations: [CheckedContinuation<[SongModel], Never>] = []
+
+    var pendingCount: Int { continuations.count }
+
+    func findAll() async -> [SongModel] {
+        return await withCheckedContinuation { continuations.append($0) }
+    }
+
+    /// 最も古い保留中の findAll を songs で完了させる
+    func resume(with songs: [SongModel]) {
+        continuations.removeFirst().resume(returning: songs)
+    }
+}

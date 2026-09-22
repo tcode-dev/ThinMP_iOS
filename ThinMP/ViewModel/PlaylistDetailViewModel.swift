@@ -16,6 +16,8 @@ class PlaylistDetailViewModel: ObservableObject {
     var playlistId: PlaylistId!
 
     private let playlistDetailService: PlaylistDetailServiceProtocol
+    /// 直前の load を打ち切るために保持する。古い結果が新しい結果を上書きしないようにする
+    private var loadTask: Task<Void, Never>?
 
     init(playlistDetailService: PlaylistDetailServiceProtocol = PlaylistDetailService()) {
         self.playlistDetailService = playlistDetailService
@@ -24,13 +26,20 @@ class PlaylistDetailViewModel: ObservableObject {
     @discardableResult
     func load(playlistId: PlaylistId) -> Task<Void, Never> {
         self.playlistId = playlistId
+        loadTask?.cancel()
 
-        return Task {
+        let task = Task {
             let playlistDetailModel = await playlistDetailService.findById(playlistId: playlistId)
+
+            if Task.isCancelled { return }
 
             primaryText = playlistDetailModel.primaryText
             artwork = playlistDetailModel.artwork
             songs = playlistDetailModel.songs
         }
+
+        loadTask = task
+
+        return task
     }
 }
