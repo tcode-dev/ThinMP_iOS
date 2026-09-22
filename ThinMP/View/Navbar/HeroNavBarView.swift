@@ -53,14 +53,6 @@ struct HeroNavBarView<Content: View>: View {
     }
 
     private func opacity() -> Double {
-        // ページ遷移直後は位置を取得できていない
-        if headerRect == CGRect.zero {
-            return 0
-        }
-        if headerRect.origin.y - top > 0 {
-            return 0
-        }
-
-        return 1
+        return headerRect.isScrolledUnder(top: top) ? 1 : 0
     }
 }
