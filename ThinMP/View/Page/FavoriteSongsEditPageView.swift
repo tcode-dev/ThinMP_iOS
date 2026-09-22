@@ -8,30 +8,21 @@
 import SwiftUI
 
 struct FavoriteSongsEditPageView: View {
-    @Environment(\.dismiss) private var dismiss
     @StateObject private var vm = FavoriteSongsViewModel()
 
     var body: some View {
-        GeometryReader { geometry in
-            VStack(spacing: 0) {
-                EditNavBarView(top: geometry.safeAreaInsets.top, onCancel: { dismiss() }) {
-                    update()
-                    dismiss()
+        EditPageLayout(onDone: update) {
+            List {
+                ForEach(vm.songs) { song in
+                    MediaRowView(media: song)
                 }
-                List {
-                    ForEach(vm.songs) { song in
-                        MediaRowView(media: song)
-                    }
-                    .onMove(perform: move)
-                    .onDelete(perform: delete)
-                    .listRowInsets(.init())
-                }
+                .onMove(perform: move)
+                .onDelete(perform: delete)
+                .listRowInsets(.init())
             }
-            .modifier(PageModifier())
-            .environment(\.editMode, .constant(.active))
-            .task {
-                await vm.load().value
-            }
+        }
+        .task {
+            await vm.load().value
         }
     }
 

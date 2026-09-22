@@ -11,7 +11,8 @@ struct PlayerView: View {
     @Environment(\.scenePhase) private var scenePhase
     @EnvironmentObject var musicPlayer: MusicPlayer
 
-    @State private var showingPopup: Bool = false
+    /// プレイリスト登録ポップアップを出している曲。nil ならポップアップは閉じている
+    @State private var playlistRegisterSongId: SongId?
     private let callback: () -> Void
     private let isPad = UIDevice.current.userInterfaceIdiom == .pad
 
@@ -134,7 +135,7 @@ struct PlayerView: View {
                             .frame(width: StyleConstant.button, height: StyleConstant.button)
                             Spacer()
                             Button(action: {
-                                showingPopup.toggle()
+                                playlistRegisterSongId = musicPlayer.song?.songId
                             }) {
                                 ButtonImageView(name: "PlaylistAddButton", size: 50)
                             }
@@ -145,12 +146,8 @@ struct PlayerView: View {
                     }
                     .frame(height: height * 0.6)
                 }
-                if showingPopup, let song = musicPlayer.song {
-                    PopupView {
-                        PlaylistRegisterView(songId: song.songId, height: geometry.size.height) { showingPopup = false }
-                    }
-                }
             }
+            .playlistRegisterPopup(songId: $playlistRegisterSongId, height: geometry.size.height)
         }
         .onAppear {
             musicPlayer.startProgress()

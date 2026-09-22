@@ -14,34 +14,18 @@ struct FavoriteSongsPageView: View {
     @State private var playlistRegisterSongId: SongId?
 
     var body: some View {
-        GeometryReader { geometry in
-            ZStack(alignment: .top) {
-                VStack(spacing: 0) {
-                    ZStack(alignment: .top) {
-                        ListNavBarView(title: LabelConstant.favoriteSongs, top: geometry.safeAreaInsets.top, headerRect: $headerRect) {
-                            EditButtonView {
-                                FavoriteSongsEditPageView()
-                            }
-                        }
-                        ScrollView {
-                            VStack(alignment: .leading) {
-                                ListEmptyHeaderView(headerRect: $headerRect, top: geometry.safeAreaInsets.top)
-                                SongListView(songs: vm.songs, onFavoriteChange: { vm.load() }) { playlistRegisterSongId = $0 }
-                            }
-                        }
-                    }
-                    MiniPlayerView(bottom: geometry.safeAreaInsets.bottom) { vm.load() }
-                }
-                if let songId = playlistRegisterSongId {
-                    PopupView {
-                        PlaylistRegisterView(songId: songId, height: geometry.size.height) { playlistRegisterSongId = nil }
-                    }
+        ScrollPageLayout(playlistRegisterSongId: $playlistRegisterSongId, onPlayerDismiss: { vm.load() }) { geometry in
+            ListNavBarView(title: LabelConstant.favoriteSongs, top: geometry.safeAreaInsets.top, headerRect: $headerRect) {
+                EditButtonView {
+                    FavoriteSongsEditPageView()
                 }
             }
-            .modifier(PageModifier())
-            .task {
-                await vm.load().value
-            }
+        } content: { geometry in
+            ListEmptyHeaderView(headerRect: $headerRect, top: geometry.safeAreaInsets.top)
+            SongListView(songs: vm.songs, onFavoriteChange: { vm.load() }) { playlistRegisterSongId = $0 }
+        }
+        .task {
+            await vm.load().value
         }
     }
 }

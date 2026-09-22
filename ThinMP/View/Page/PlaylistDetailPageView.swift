@@ -16,41 +16,25 @@ struct PlaylistDetailPageView: View {
     let playlistId: PlaylistId
 
     var body: some View {
-        GeometryReader { geometry in
-            ZStack(alignment: .top) {
-                VStack(spacing: 0) {
-                    ZStack(alignment: .top) {
-                        HeroNavBarView(primaryText: vm.primaryText, width: geometry.size.width, top: geometry.safeAreaInsets.top, headerRect: $headerRect) {
-                            MenuButtonView {
-                                VStack {
-                                    NavigationLink(destination: PlaylistDetailEditPageView(playlistId: playlistId, primaryText: vm.primaryText)) {
-                                        MenuRowView(text: LabelConstant.edit)
-                                    }
-                                    ShortcutButtonView(itemId: playlistId.id, type: .playlist)
-                                }
-                            }
+        ScrollPageLayout(playlistRegisterSongId: $playlistRegisterSongId, onPlayerDismiss: { vm.load(playlistId: playlistId) }) { geometry in
+            HeroNavBarView(primaryText: vm.primaryText, width: geometry.size.width, top: geometry.safeAreaInsets.top, headerRect: $headerRect) {
+                MenuButtonView {
+                    VStack {
+                        NavigationLink(destination: PlaylistDetailEditPageView(playlistId: playlistId, primaryText: vm.primaryText)) {
+                            MenuRowView(text: LabelConstant.edit)
                         }
-                        ScrollView {
-                            VStack(alignment: .leading) {
-                                HeroHeaderView(headerRect: $headerRect, width: geometry.size.width, size: geometry.heroSize, top: geometry.safeAreaInsets.top, primaryText: vm.primaryText, secondaryText: NSLocalizedString(LabelConstant.playlist, comment: "")) {
-                                    HeroSquareImageView(size: geometry.heroSize, artwork: vm.artwork)
-                                }
-                                SongListView(songs: vm.songs) { playlistRegisterSongId = $0 }
-                            }
-                        }
-                    }
-                    MiniPlayerView(bottom: geometry.safeAreaInsets.bottom) { vm.load(playlistId: playlistId) }
-                }
-                if let songId = playlistRegisterSongId {
-                    PopupView {
-                        PlaylistRegisterView(songId: songId, height: geometry.size.height) { playlistRegisterSongId = nil }
+                        ShortcutButtonView(itemId: playlistId.id, type: .playlist)
                     }
                 }
             }
-            .modifier(PageModifier())
-            .task {
-                await vm.load(playlistId: playlistId).value
+        } content: { geometry in
+            HeroHeaderView(headerRect: $headerRect, width: geometry.size.width, size: geometry.heroSize, top: geometry.safeAreaInsets.top, primaryText: vm.primaryText, secondaryText: NSLocalizedString(LabelConstant.playlist, comment: "")) {
+                HeroSquareImageView(size: geometry.heroSize, artwork: vm.artwork)
             }
+            SongListView(songs: vm.songs) { playlistRegisterSongId = $0 }
+        }
+        .task {
+            await vm.load(playlistId: playlistId).value
         }
     }
 }

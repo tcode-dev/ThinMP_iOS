@@ -12,23 +12,14 @@ struct AlbumsPageView: View {
     @State private var headerRect = CGRect.zero
 
     var body: some View {
-        GeometryReader { geometry in
-            VStack(spacing: 0) {
-                ZStack(alignment: .top) {
-                    ListNavBarView(title: LabelConstant.albums, top: geometry.safeAreaInsets.top, headerRect: $headerRect)
-                    ScrollView {
-                        VStack(alignment: .leading) {
-                            ListEmptyHeaderView(headerRect: $headerRect, top: geometry.safeAreaInsets.top)
-                            AlbumListView(albums: vm.albums, width: geometry.size.width)
-                        }
-                    }
-                }
-                MiniPlayerView(bottom: geometry.safeAreaInsets.bottom)
-            }
-            .modifier(PageModifier())
-            .task {
-                await vm.load().value
-            }
+        ScrollPageLayout { geometry in
+            ListNavBarView(title: LabelConstant.albums, top: geometry.safeAreaInsets.top, headerRect: $headerRect)
+        } content: { geometry in
+            ListEmptyHeaderView(headerRect: $headerRect, top: geometry.safeAreaInsets.top)
+            AlbumListView(albums: vm.albums, width: geometry.size.width)
+        }
+        .task {
+            await vm.load().value
         }
     }
 }

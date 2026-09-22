@@ -16,49 +16,33 @@ struct ArtistDetailPageView: View {
     let artistId: ArtistId
 
     var body: some View {
-        GeometryReader { geometry in
-            ZStack(alignment: .top) {
-                VStack(spacing: 0) {
-                    ZStack(alignment: .top) {
-                        HeroNavBarView(primaryText: vm.primaryText, width: geometry.size.width, top: geometry.safeAreaInsets.top, headerRect: $headerRect) {
-                            MenuButtonView {
-                                VStack {
-                                    FavoriteArtistButtonView(artistId: artistId)
-                                    ShortcutButtonView(itemId: String(artistId.id), type: .artist)
-                                }
-                            }
-                        }
-                        ScrollView {
-                            VStack(alignment: .leading) {
-                                HeroHeaderView(headerRect: $headerRect, width: geometry.size.width, size: geometry.heroSize, top: geometry.safeAreaInsets.top, primaryText: vm.primaryText, secondaryText: vm.secondaryText) {
-                                    HeroCircleImageView(width: geometry.size.width, size: geometry.heroSize, artwork: vm.artwork)
-                                }
-                                if !vm.albums.isEmpty {
-                                    SectionTitleView(LabelConstant.albums)
-                                        .padding(.leading, StyleConstant.Padding.large)
-                                    AlbumListView(albums: vm.albums, width: geometry.size.width)
-                                        .padding(.bottom, StyleConstant.Padding.large)
-                                }
-                                if !vm.songs.isEmpty {
-                                    SectionTitleView(LabelConstant.songs)
-                                        .padding(.leading, StyleConstant.Padding.large)
-                                    SongListView(songs: vm.songs) { playlistRegisterSongId = $0 }
-                                }
-                            }
-                        }
-                    }
-                    MiniPlayerView(bottom: geometry.safeAreaInsets.bottom)
-                }
-                if let songId = playlistRegisterSongId {
-                    PopupView {
-                        PlaylistRegisterView(songId: songId, height: geometry.size.height) { playlistRegisterSongId = nil }
+        ScrollPageLayout(playlistRegisterSongId: $playlistRegisterSongId) { geometry in
+            HeroNavBarView(primaryText: vm.primaryText, width: geometry.size.width, top: geometry.safeAreaInsets.top, headerRect: $headerRect) {
+                MenuButtonView {
+                    VStack {
+                        FavoriteArtistButtonView(artistId: artistId)
+                        ShortcutButtonView(itemId: String(artistId.id), type: .artist)
                     }
                 }
             }
-            .modifier(PageModifier())
-            .task {
-                await vm.load(artistId: artistId).value
+        } content: { geometry in
+            HeroHeaderView(headerRect: $headerRect, width: geometry.size.width, size: geometry.heroSize, top: geometry.safeAreaInsets.top, primaryText: vm.primaryText, secondaryText: vm.secondaryText) {
+                HeroCircleImageView(width: geometry.size.width, size: geometry.heroSize, artwork: vm.artwork)
             }
+            if !vm.albums.isEmpty {
+                SectionTitleView(LabelConstant.albums)
+                    .padding(.leading, StyleConstant.Padding.large)
+                AlbumListView(albums: vm.albums, width: geometry.size.width)
+                    .padding(.bottom, StyleConstant.Padding.large)
+            }
+            if !vm.songs.isEmpty {
+                SectionTitleView(LabelConstant.songs)
+                    .padding(.leading, StyleConstant.Padding.large)
+                SongListView(songs: vm.songs) { playlistRegisterSongId = $0 }
+            }
+        }
+        .task {
+            await vm.load(artistId: artistId).value
         }
     }
 }
