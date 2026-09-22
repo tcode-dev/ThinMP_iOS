@@ -8,16 +8,13 @@
 struct PlaylistDetailService: PlaylistDetailServiceProtocol {
     private let playlistRepository: PlaylistRepositoryProtocol
     private let songRepository: SongRepositoryProtocol
-    private let playlistRegister: PlaylistRegisterProtocol
 
     init(
         playlistRepository: PlaylistRepositoryProtocol = PlaylistRepository(),
-        songRepository: SongRepositoryProtocol = SongRepository(),
-        playlistRegister: PlaylistRegisterProtocol = PlaylistRegister()
+        songRepository: SongRepositoryProtocol = SongRepository()
     ) {
         self.playlistRepository = playlistRepository
         self.songRepository = songRepository
-        self.playlistRegister = playlistRegister
     }
 
     /// 削除済みのプレイリストなら nil
@@ -36,7 +33,7 @@ struct PlaylistDetailService: PlaylistDetailServiceProtocol {
     }
 
     func update(playlistId: PlaylistId, name: String, songIds: [SongId]) {
-        playlistRegister.update(playlistId: playlistId, name: name, songIds: songIds)
+        playlistRepository.update(playlistId: playlistId, name: name, songIds: songIds)
     }
 
     /// 全プレイリストの曲をまとめて 1 回で取り、プレイリストごとに振り分ける
@@ -57,7 +54,7 @@ struct PlaylistDetailService: PlaylistDetailServiceProtocol {
 
             // 端末から削除された曲がプレイリストに残っている場合は取り除いて保存する
             if found.count != playlist.songIds.count {
-                playlistRegister.update(playlistId: playlist.playlistId, name: playlist.name, songIds: found.map { $0.songId })
+                playlistRepository.update(playlistId: playlist.playlistId, name: playlist.name, songIds: found.map { $0.songId })
             }
 
             let artwork = found.first { $0.artwork != nil }?.artwork

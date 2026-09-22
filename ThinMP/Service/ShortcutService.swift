@@ -7,20 +7,17 @@
 
 struct ShortcutService: ShortcutServiceProtocol {
     private let shortcutRepository: ShortcutRepositoryProtocol
-    private let shortcutRegister: ShortcutRegisterProtocol
     private let artistDetailService: ArtistDetailServiceProtocol
     private let albumDetailService: AlbumDetailServiceProtocol
     private let playlistDetailService: PlaylistDetailServiceProtocol
 
     init(
         shortcutRepository: ShortcutRepositoryProtocol = ShortcutRepository(),
-        shortcutRegister: ShortcutRegisterProtocol = ShortcutRegister(),
         artistDetailService: ArtistDetailServiceProtocol = ArtistDetailService(),
         albumDetailService: AlbumDetailServiceProtocol = AlbumDetailService(),
         playlistDetailService: PlaylistDetailServiceProtocol = PlaylistDetailService()
     ) {
         self.shortcutRepository = shortcutRepository
-        self.shortcutRegister = shortcutRegister
         self.artistDetailService = artistDetailService
         self.albumDetailService = albumDetailService
         self.playlistDetailService = playlistDetailService
@@ -62,9 +59,25 @@ struct ShortcutService: ShortcutServiceProtocol {
 
         // 端末から削除されたアーティスト、アルバム、プレイリストのショートカットは取り除いて保存する
         if shortcutModels.count != shortcuts.count {
-            shortcutRegister.update(shortcutIds: shortcutModels.map { $0.shortcutId })
+            shortcutRepository.update(shortcutIds: shortcutModels.map { $0.shortcutId })
         }
 
         return shortcutModels
+    }
+
+    func exists(itemId: ItemId, type: ShortcutType) -> Bool {
+        return shortcutRepository.exists(itemId: itemId, type: type)
+    }
+
+    func add(itemId: ItemId, type: ShortcutType) {
+        shortcutRepository.add(itemId: itemId, type: type)
+    }
+
+    func delete(itemId: ItemId, type: ShortcutType) {
+        shortcutRepository.delete(itemId: itemId, type: type)
+    }
+
+    func update(shortcutIds: [ShortcutId]) {
+        shortcutRepository.update(shortcutIds: shortcutIds)
     }
 }

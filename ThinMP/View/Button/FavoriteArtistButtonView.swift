@@ -10,15 +10,15 @@ import SwiftUI
 struct FavoriteArtistButtonView: View {
     let artistId: ArtistId
     var callback: () -> Void = {}
-    var register: FavoriteArtistRegisterProtocol = FavoriteArtistRegister()
+    var service: FavoriteArtistsServiceProtocol = FavoriteArtistsService()
 
     var body: some View {
         RegisterToggleButtonView(
             addLabel: LabelConstant.addFavorites,
             removeLabel: LabelConstant.removeFavorites,
-            exists: { register.exists(artistId: artistId) },
-            add: { register.add(artistId: artistId) },
-            remove: { register.delete(artistId: artistId) },
+            exists: { service.exists(artistId: artistId) },
+            add: { service.add(artistId: artistId) },
+            remove: { service.delete(artistId: artistId) },
             callback: callback
         )
     }
