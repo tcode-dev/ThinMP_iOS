@@ -45,8 +45,8 @@ class MusicPlayer: ObservableObject {
         player = MPMusicPlayerController.applicationMusicPlayer
         player.repeatMode = playerConfig.repeatMode
         player.shuffleMode = playerConfig.shuffleMode
-        syncRepeatMode()
-        syncShuffle()
+        setRepeat()
+        setShuffle()
         addObserver()
         player.beginGeneratingPlaybackNotifications()
     }
@@ -116,13 +116,13 @@ class MusicPlayer: ObservableObject {
         default: player.repeatMode = .none
         }
 
-        syncRepeatMode()
+        setRepeat()
         playerConfig.repeatMode = player.repeatMode
     }
 
     func shuffle() {
         player.shuffleMode = player.shuffleMode == .off ? .songs : .off
-        syncShuffle()
+        setShuffle()
         playerConfig.shuffleMode = player.shuffleMode
     }
 
@@ -145,17 +145,16 @@ class MusicPlayer: ObservableObject {
     }
 
     /// お気に入りの状態をストアから読み直す。他の画面で登録 / 解除されたあとに呼ぶ
-    func syncFavorite() {
+    func setFavorite() {
         isFavoriteArtist = (song?.artistId).map { favoriteArtistRepository.exists(artistId: $0) } ?? false
         isFavoriteSong = (song?.songId).map { favoriteSongRepository.exists(songId: $0) } ?? false
     }
 
-    /// 再生中の曲を player から読み直す
-    private func syncSong() {
+    private func setSong() {
         if let item = player.nowPlayingItem {
             song = SongModel(item: item)
             resetTime()
-            syncFavorite()
+            setFavorite()
             isActive = true
         } else {
             currentSecond = 0
@@ -171,7 +170,7 @@ class MusicPlayer: ObservableObject {
             queue: OperationQueue.main
         ) { _ in
             MainActor.assumeIsolated {
-                self.syncSong()
+                self.setSong()
             }
         })
 
@@ -230,12 +229,11 @@ class MusicPlayer: ObservableObject {
         })
     }
 
-    /// リピート / シャッフルの状態を player から読み直す
-    private func syncRepeatMode() {
+    private func setRepeat() {
         repeatMode = player.repeatMode
     }
 
-    private func syncShuffle() {
+    private func setShuffle() {
         isShuffle = player.shuffleMode == .songs
     }
 
