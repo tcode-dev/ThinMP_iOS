@@ -35,6 +35,6 @@ struct SongModel: MediaProtocol, Identifiable {
             return ArtistId(id: artistPersistentID)
         }
 
-        return Optional.none
+        return nil
     }
 }

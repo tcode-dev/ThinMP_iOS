@@ -48,7 +48,7 @@ struct PlaylistRepositoryTests {
         repository.add(playlistId: playlistId, songId: SongId(id: 3))
         repository.add(playlistId: playlistId, songId: SongId(id: 2))
 
-        #expect(repository.findById(playlistId: playlistId).songIds.map { $0.id } == [1, 3, 2])
+        #expect(repository.findById(playlistId: playlistId)?.songIds.map { $0.id } == [1, 3, 2])
     }
 
     @Test(arguments: RepositoryBackend.allCases)
@@ -63,7 +63,7 @@ struct PlaylistRepositoryTests {
         repository.add(playlistId: playlistId, songId: SongId(id: 1))
         repository.add(playlistId: playlistId, songId: SongId(id: 2))
 
-        #expect(repository.findById(playlistId: playlistId).songIds.map { $0.id } == [1, 2])
+        #expect(repository.findById(playlistId: playlistId)?.songIds.map { $0.id } == [1, 2])
     }
 
     @Test(arguments: RepositoryBackend.allCases)
@@ -81,7 +81,7 @@ struct PlaylistRepositoryTests {
     }
 
     @Test(arguments: RepositoryBackend.allCases)
-    func updateReplacesNameAndSongs(backend: RepositoryBackend) {
+    func updateReplacesNameAndSongs(backend: RepositoryBackend) throws {
         let repository = TestRepositories(backend: backend).playlist
 
         repository.create(songId: SongId(id: 1), name: "A")
@@ -91,7 +91,7 @@ struct PlaylistRepositoryTests {
         repository.add(playlistId: playlistId, songId: SongId(id: 2))
         repository.update(playlistId: playlistId, name: "Z", songIds: [SongId(id: 3), SongId(id: 1)])
 
-        let playlist = repository.findById(playlistId: playlistId)
+        let playlist = try #require(repository.findById(playlistId: playlistId))
 
         #expect(playlist.name == "Z")
         #expect(playlist.songIds.map { $0.id } == [3, 1])
@@ -107,7 +107,7 @@ struct PlaylistRepositoryTests {
 
         repository.update(playlistId: playlistId, name: "A", songIds: [SongId(id: 2), SongId(id: 1), SongId(id: 2), SongId(id: 3), SongId(id: 1)])
 
-        #expect(repository.findById(playlistId: playlistId).songIds.map { $0.id } == [2, 1, 3])
+        #expect(repository.findById(playlistId: playlistId)?.songIds.map { $0.id } == [2, 1, 3])
     }
 
     /// SwiftData ストア自体の制約。Repository を経由せずに重複を insert しても 1 行にまとまる
@@ -131,7 +131,7 @@ struct PlaylistRepositoryTests {
         let songs = try! store.context.fetch(FetchDescriptor<PlaylistSongDataModel>(predicate: #Predicate { $0.playlistId == id }))
 
         #expect(songs.count == 1)
-        #expect(repository.findById(playlistId: playlistId).songIds.map { $0.id } == [1])
+        #expect(repository.findById(playlistId: playlistId)?.songIds.map { $0.id } == [1])
         // 別のプレイリストの同じ曲には影響しない
         #expect(repository.findAll()[1].songIds.map { $0.id } == [1])
     }
@@ -146,7 +146,7 @@ struct PlaylistRepositoryTests {
 
         repository.update(playlistId: playlistId, name: "A", songIds: [])
 
-        #expect(repository.findById(playlistId: playlistId).songIds.isEmpty)
+        #expect(repository.findById(playlistId: playlistId)?.songIds == [])
         #expect(repository.findAll().count == 1)
     }
 
@@ -167,6 +167,15 @@ struct PlaylistRepositoryTests {
 
         #expect(repository.findAll().map { $0.name } == ["C", "A"])
         #expect(repository.findByIds(playlistIds: [b]).isEmpty)
+    }
+
+    @Test(arguments: RepositoryBackend.allCases)
+    func findByIdReturnsNilForUnknownPlaylist(backend: RepositoryBackend) {
+        let repository = TestRepositories(backend: backend).playlist
+
+        repository.create(songId: SongId(id: 1), name: "A")
+
+        #expect(repository.findById(playlistId: PlaylistId(id: "missing")) == nil)
     }
 
     @Test(arguments: RepositoryBackend.allCases)

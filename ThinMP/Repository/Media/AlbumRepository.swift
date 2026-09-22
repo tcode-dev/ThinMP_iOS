@@ -9,58 +9,64 @@ import MediaPlayer
 
 class AlbumRepository: AlbumRepositoryProtocol {
     func findAll() -> [AlbumModel] {
-        let property = MPMediaPropertyPredicate(value: false, forProperty: MPMediaItemPropertyIsCloudItem)
-        let query = MPMediaQuery.albums()
-
-        query.addFilterPredicate(property)
-
-        return query.collections!.map {
-            return AlbumModel(albumId: AlbumId(id: $0.representativeItem!.albumPersistentID), primaryText: $0.representativeItem?.albumTitle, secondaryText: $0.representativeItem?.artist, artwork: $0.representativeItem?.artwork)
-        }
+        return albums(localAlbumsQuery())
     }
 
     func findById(albumId: AlbumId) -> AlbumModel? {
-        let property = MPMediaPropertyPredicate(value: albumId.id, forProperty: MPMediaItemPropertyAlbumPersistentID)
         let query = MPMediaQuery.albums()
 
-        query.addFilterPredicate(property)
+        query.addFilterPredicate(MPMediaPropertyPredicate(value: albumId.id, forProperty: MPMediaItemPropertyAlbumPersistentID))
 
-        return query.collections!.map {
-            return AlbumModel(albumId: AlbumId(id: $0.representativeItem!.albumPersistentID), primaryText: $0.representativeItem?.albumTitle, secondaryText: $0.representativeItem?.artist, artwork: $0.representativeItem?.artwork)
-        }.first
+        return albums(query).first
     }
 
+    /// MPMediaQuery には IN 述語が無いので、ライブラリを 1 回取得して Set で絞る
+    /// 結果は albumIds の順で、ライブラリに無いアルバムは落ちる
     func findByIds(albumIds: [AlbumId]) -> [AlbumModel] {
-        let property = MPMediaPropertyPredicate(value: false, forProperty: MPMediaItemPropertyIsCloudItem)
-        let query = MPMediaQuery.albums()
-        let ids = albumIds.map { $0.id }
+        if albumIds.isEmpty {
+            return []
+        }
 
-        query.addFilterPredicate(property)
+        let ids = Set(albumIds)
+        let albums = Dictionary(
+            albums(localAlbumsQuery())
+                .filter { ids.contains($0.albumId) }
+                .map { ($0.albumId, $0) },
+            uniquingKeysWith: { first, _ in first }
+        )
 
-        return query.collections!.filter { ids.contains($0.representativeItem?.albumPersistentID ?? 0) }
-            .map { AlbumModel(albumId: AlbumId(id: ($0.representativeItem?.albumPersistentID)!), primaryText: $0.representativeItem?.albumTitle, secondaryText: $0.representativeItem?.artist, artwork: $0.representativeItem?.artwork) }
+        return albumIds.compactMap { albums[$0] }
     }
 
     func findByArtistId(artistId: ArtistId) -> [AlbumModel] {
-        let property = MPMediaPropertyPredicate(value: artistId.id, forProperty: MPMediaItemPropertyArtistPersistentID)
         let query = MPMediaQuery.albums()
 
-        query.addFilterPredicate(property)
+        query.addFilterPredicate(MPMediaPropertyPredicate(value: artistId.id, forProperty: MPMediaItemPropertyArtistPersistentID))
 
-        return query.collections!.sorted(by: { String($0.representativeItem?.albumTitle ?? "") < String($1.representativeItem?.albumTitle ?? "") })
-            .map { AlbumModel(albumId: AlbumId(id: $0.representativeItem!.albumPersistentID), primaryText: $0.representativeItem?.albumTitle, secondaryText: $0.representativeItem?.artist, artwork: $0.representativeItem?.artwork) }
+        return albums(query).sorted { ($0.primaryText ?? "") < ($1.primaryText ?? "") }
     }
 
     func findRecently(count: Int) -> [AlbumModel] {
-        let property = MPMediaPropertyPredicate(value: false, forProperty: MPMediaItemPropertyIsCloudItem)
+        return collections(localAlbumsQuery())
+            .sorted { ($0.representativeItem?.dateAdded ?? .distantPast) > ($1.representativeItem?.dateAdded ?? .distantPast) }
+            .prefix(count)
+            .compactMap { AlbumModel(collection: $0) }
+    }
+
+    /// クラウドにしか無い項目を除いた全アルバム
+    private func localAlbumsQuery() -> MPMediaQuery {
         let query = MPMediaQuery.albums()
 
-        query.addFilterPredicate(property)
+        query.addFilterPredicate(MPMediaPropertyPredicate(value: false, forProperty: MPMediaItemPropertyIsCloudItem))
 
-        return query.collections!.sorted(by: { left, right in
-            left.representativeItem!.dateAdded > right.representativeItem!.dateAdded
-        })
-            .prefix(count)
-            .map { AlbumModel(albumId: AlbumId(id: $0.representativeItem!.albumPersistentID), primaryText: $0.representativeItem?.albumTitle, secondaryText: $0.representativeItem?.artist, artwork: $0.representativeItem?.artwork) }
+        return query
+    }
+
+    private func collections(_ query: MPMediaQuery) -> [MPMediaItemCollection] {
+        return query.collections ?? []
+    }
+
+    private func albums(_ query: MPMediaQuery) -> [AlbumModel] {
+        return collections(query).compactMap { AlbumModel(collection: $0) }
     }
 }

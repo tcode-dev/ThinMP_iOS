@@ -16,6 +16,7 @@
 // Album
 "Album" = "アルバム";
 "Albums" = "アルバム";
+"AlbumsAndSongsCount" = "%d枚のアルバム、%d曲";
 
 // Songs
 "Songs" = "曲";

@@ -29,6 +29,7 @@ class PlaylistDetailViewModel: ObservableObject {
             let playlistDetailModel = await playlistDetailService.findById(playlistId: playlistId)
 
             if Task.isCancelled { return }
+            guard let playlistDetailModel = playlistDetailModel else { return }
 
             primaryText = playlistDetailModel.primaryText
             artwork = playlistDetailModel.artwork

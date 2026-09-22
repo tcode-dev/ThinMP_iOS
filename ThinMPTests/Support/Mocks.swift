@@ -99,8 +99,8 @@ final class PlaylistRepositoryMock: PlaylistRepositoryProtocol {
         return playlists
     }
 
-    func findById(playlistId: PlaylistId) -> PlaylistEntity {
-        return playlists.first { $0.playlistId == playlistId }!
+    func findById(playlistId: PlaylistId) -> PlaylistEntity? {
+        return playlists.first { $0.playlistId == playlistId }
     }
 
     func findByIds(playlistIds: [PlaylistId]) -> [PlaylistEntity] {
@@ -241,8 +241,8 @@ final class PlaylistDetailServiceMock: PlaylistDetailServiceProtocol {
         self.playlists = playlists
     }
 
-    func findById(playlistId: PlaylistId) -> PlaylistDetailModel {
-        return playlists.first { $0.playlistId == playlistId }!
+    func findById(playlistId: PlaylistId) -> PlaylistDetailModel? {
+        return playlists.first { $0.playlistId == playlistId }
     }
 
     func findByIds(playlistIds: [PlaylistId]) -> [PlaylistDetailModel] {

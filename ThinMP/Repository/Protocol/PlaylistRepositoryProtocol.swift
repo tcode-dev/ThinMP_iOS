@@ -13,7 +13,7 @@ protocol PlaylistRepositoryProtocol {
 
     func findAll() -> [PlaylistEntity]
 
-    func findById(playlistId: PlaylistId) -> PlaylistEntity
+    func findById(playlistId: PlaylistId) -> PlaylistEntity?
 
     func findByIds(playlistIds: [PlaylistId]) -> [PlaylistEntity]
 

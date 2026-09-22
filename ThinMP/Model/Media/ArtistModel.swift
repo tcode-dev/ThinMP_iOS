@@ -14,3 +14,14 @@ struct ArtistModel: MediaProtocol, Identifiable {
         return String(artistId.id)
     }
 }
+
+extension ArtistModel {
+    /// MPMediaQuery.artists() のコレクションから作る。代表アイテムが無いコレクションは nil
+    init?(collection: MPMediaItemCollection) {
+        guard let item = collection.representativeItem else {
+            return nil
+        }
+
+        self.init(artistId: ArtistId(id: item.artistPersistentID), primaryText: item.artist)
+    }
+}

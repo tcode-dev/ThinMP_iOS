@@ -7,7 +7,7 @@
 
 @MainActor
 protocol PlaylistDetailServiceProtocol {
-    func findById(playlistId: PlaylistId) async -> PlaylistDetailModel
+    func findById(playlistId: PlaylistId) async -> PlaylistDetailModel?
 
     func findByIds(playlistIds: [PlaylistId]) async -> [PlaylistDetailModel]
 }

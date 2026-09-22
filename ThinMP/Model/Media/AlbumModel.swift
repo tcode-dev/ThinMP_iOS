@@ -16,3 +16,14 @@ struct AlbumModel: MediaProtocol, Identifiable {
         return String(albumId.id)
     }
 }
+
+extension AlbumModel {
+    /// MPMediaQuery.albums() のコレクションから作る。代表アイテムが無いコレクションは nil
+    init?(collection: MPMediaItemCollection) {
+        guard let item = collection.representativeItem else {
+            return nil
+        }
+
+        self.init(albumId: AlbumId(id: item.albumPersistentID), primaryText: item.albumTitle, secondaryText: item.artist, artwork: item.artwork)
+    }
+}

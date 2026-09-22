@@ -27,10 +27,10 @@ struct PlaylistDetailServiceTests {
     }
 
     @Test
-    func findByIdReturnsSongsInPlaylistOrder() async {
+    func findByIdReturnsSongsInPlaylistOrder() async throws {
         let (service, playlistRepository) = makeService(playlistSongIds: [3, 1, 2], librarySongIds: [1, 2, 3])
 
-        let model = await service.findById(playlistId: playlistId)
+        let model = try #require(await service.findById(playlistId: playlistId))
 
         #expect(model.playlistId.id == "p1")
         #expect(model.primaryText == "My Playlist")
@@ -39,24 +39,24 @@ struct PlaylistDetailServiceTests {
     }
 
     @Test
-    func findByIdRemovesSongsMissingFromLibrary() async {
+    func findByIdRemovesSongsMissingFromLibrary() async throws {
         let (service, playlistRepository) = makeService(playlistSongIds: [1, 2, 3], librarySongIds: [1, 3])
 
-        let model = await service.findById(playlistId: playlistId)
+        let model = try #require(await service.findById(playlistId: playlistId))
 
         #expect(model.songs.map { $0.songId.id } == [1, 3])
         #expect(playlistRepository.updateCalls.count == 1)
         #expect(playlistRepository.updateCalls[0].playlistId.id == "p1")
         #expect(playlistRepository.updateCalls[0].name == "My Playlist")
         #expect(playlistRepository.updateCalls[0].songIds.map { $0.id } == [1, 3])
-        #expect(playlistRepository.findById(playlistId: playlistId).songIds.map { $0.id } == [1, 3])
+        #expect(playlistRepository.findById(playlistId: playlistId)?.songIds.map { $0.id } == [1, 3])
     }
 
     @Test
-    func findByIdWithAllSongsMissingReturnsEmpty() async {
+    func findByIdWithAllSongsMissingReturnsEmpty() async throws {
         let (service, playlistRepository) = makeService(playlistSongIds: [1, 2], librarySongIds: [])
 
-        let model = await service.findById(playlistId: playlistId)
+        let model = try #require(await service.findById(playlistId: playlistId))
 
         #expect(model.songs.isEmpty)
         #expect(playlistRepository.updateCalls.count == 1)
@@ -104,5 +104,15 @@ struct PlaylistDetailServiceTests {
         // 端末に無い曲 9 は p3 からだけ取り除かれる
         #expect(playlistRepository.updateCalls.map { $0.playlistId.id } == ["p3"])
         #expect(playlistRepository.updateCalls[0].songIds.isEmpty)
+    }
+
+    @Test
+    func findByIdReturnsNilWhenPlaylistIsMissing() async {
+        let (service, playlistRepository) = makeService(playlistSongIds: [1], librarySongIds: [1])
+
+        let model = await service.findById(playlistId: PlaylistId(id: "missing"))
+
+        #expect(model == nil)
+        #expect(playlistRepository.updateCalls.isEmpty)
     }
 }

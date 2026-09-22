@@ -34,7 +34,9 @@ struct PlaylistRealmRepository: PlaylistRepositoryProtocol {
     }
 
     func add(playlistId: PlaylistId, songId: SongId) {
-        let playlist = findModel(playlistId: playlistId)
+        guard let playlist = findModel(playlistId: playlistId) else {
+            return
+        }
 
         // 同じ曲は 1 つのプレイリストに 1 回しか登録しない
         if playlist.songs.contains(where: { $0.songId == String(songId.id) }) {
@@ -57,8 +59,8 @@ struct PlaylistRealmRepository: PlaylistRepositoryProtocol {
             .map { toEntity(model: $0) }
     }
 
-    func findById(playlistId: PlaylistId) -> PlaylistEntity {
-        return toEntity(model: findModel(playlistId: playlistId))
+    func findById(playlistId: PlaylistId) -> PlaylistEntity? {
+        return findModel(playlistId: playlistId).map { toEntity(model: $0) }
     }
 
     func findByIds(playlistIds: [PlaylistId]) -> [PlaylistEntity] {
@@ -73,10 +75,11 @@ struct PlaylistRealmRepository: PlaylistRepositoryProtocol {
     }
 
     func update(playlistId: PlaylistId, name: String, songIds: [SongId]) {
+        guard let playlist = findModel(playlistId: playlistId) else {
+            return
+        }
+
         realm.beginWrite()
-
-        let playlist = findModel(playlistId: playlistId)
-
         realm.delete(playlist.songs)
 
         // 同じ曲は最初の 1 回だけ残す
@@ -97,8 +100,8 @@ struct PlaylistRealmRepository: PlaylistRepositoryProtocol {
         delete(playlistIds: [playlistId])
     }
 
-    private func findModel(playlistId: PlaylistId) -> PlaylistRealmModel {
-        return realm.objects(PlaylistRealmModel.self).filter("\(PlaylistRealmModel.ID) = '\(playlistId.id)'").first!
+    private func findModel(playlistId: PlaylistId) -> PlaylistRealmModel? {
+        return realm.objects(PlaylistRealmModel.self).filter("\(PlaylistRealmModel.ID) = '\(playlistId.id)'").first
     }
 
     private func findModels(playlistIds: [PlaylistId]) -> Results<PlaylistRealmModel> {
