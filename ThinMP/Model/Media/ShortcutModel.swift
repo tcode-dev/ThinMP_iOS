@@ -17,11 +17,8 @@ struct ShortcutModel: MediaProtocol, Identifiable {
         return shortcutId.id
     }
 
+    /// 種別の表示名。SecondaryTextView はローカライズしないのでここで解決する
     var secondaryText: String? {
-        switch type {
-        case .artist: return "Artist"
-        case .album: return "Album"
-        case .playlist: return "Playlist"
-        }
+        return NSLocalizedString(type.label, comment: "")
     }
 }

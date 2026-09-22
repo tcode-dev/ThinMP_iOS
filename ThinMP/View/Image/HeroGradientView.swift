@@ -8,10 +8,11 @@
 import SwiftUI
 
 /// ヒーロー画像の下端を背景色に溶かすグラデーション
+/// 透明側も背景色にしておかないと、ダークモードで中間が白く霞む
 struct HeroGradientView: View {
     var body: some View {
         LinearGradient(
-            gradient: Gradient(colors: [Color(Color.RGBColorSpace.sRGB, red: 1, green: 1, blue: 1, opacity: 0), Color(UIColor.systemBackground)]),
+            gradient: Gradient(colors: [Color(UIColor.systemBackground).opacity(0), Color(UIColor.systemBackground)]),
             startPoint: .top,
             endPoint: .bottom
         )
