@@ -17,7 +17,7 @@ import SwiftData
 final class SwiftDataStore {
     static let `default` = SwiftDataStore(isStoredInMemoryOnly: false)
 
-    static let schema = Schema([
+    private static let schema = Schema([
         FavoriteSongDataModel.self,
         FavoriteArtistDataModel.self,
         PlaylistDataModel.self,
@@ -25,7 +25,8 @@ final class SwiftDataStore {
         ShortcutDataModel.self,
     ])
 
-    let container: ModelContainer
+    /// context が保持しているが、この store がストアへの接続を持っていることを表すために置いている
+    private let container: ModelContainer
     let context: ModelContext
 
     private init(isStoredInMemoryOnly: Bool) {
