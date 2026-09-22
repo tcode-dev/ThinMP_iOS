@@ -30,7 +30,7 @@ struct AlbumDetailService: AlbumDetailServiceProtocol {
         }.value
     }
 
-    /// ショートカット用。ライブラリ全件を舐めるのでバックグラウンドで行う
+    /// ショートカット用。ライブラリ全件を走査するのでバックグラウンドで行う
     func findByIds(albumIds: [AlbumId]) async -> [AlbumDetailModel] {
         return await Task.detached(priority: .userInitiated) { [albumRepository] in
             albumRepository.findByIds(albumIds: albumIds).map { album in

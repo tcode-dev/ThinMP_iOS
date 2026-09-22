@@ -33,7 +33,7 @@ struct PlaylistDetailService: PlaylistDetailServiceProtocol {
     }
 
     /// 全プレイリストの曲をまとめて 1 回で取り、プレイリストごとに振り分ける
-    /// SongRepository.findByIds はライブラリ全件を舐めるので、プレイリストごとに呼ばない
+    /// SongRepository.findByIds はライブラリ全件を走査するので、プレイリストごとに呼ばない
     /// スキャンはバックグラウンドで行い、SwiftData の読み書きだけメインアクターに残す
     private func createModels(playlists: [PlaylistEntity]) async -> [PlaylistDetailModel] {
         let songIds = playlists.flatMap { $0.songIds }.uniqued()

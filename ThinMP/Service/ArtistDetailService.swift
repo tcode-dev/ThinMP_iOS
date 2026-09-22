@@ -39,7 +39,7 @@ struct ArtistDetailService: ArtistDetailServiceProtocol {
     }
 
     /// ショートカット用。アートワークのためにアルバムは引くが、albums / songs は空のまま
-    /// ライブラリ全件を舐めるのでバックグラウンドで行う
+    /// ライブラリ全件を走査するのでバックグラウンドで行う
     func findByIds(artistIds: [ArtistId]) async -> [ArtistDetailModel] {
         return await Task.detached(priority: .userInitiated) { [artistRepository, albumRepository] in
             artistRepository.findByIds(artistIds: artistIds).map { artist in

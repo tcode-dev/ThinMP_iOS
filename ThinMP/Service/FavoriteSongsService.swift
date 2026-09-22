@@ -19,7 +19,7 @@ struct FavoriteSongsService: FavoriteSongsServiceProtocol {
 
     func findAll() async -> [SongModel] {
         let songIds = favoriteSongRepository.findAll()
-        // ライブラリ全件を舐めるので、SwiftData の読み書きだけメインアクターに残してスキャンはバックグラウンドで行う
+        // ライブラリ全件を走査するので、SwiftData の読み書きだけメインアクターに残してスキャンはバックグラウンドで行う
         let songs = await Task.detached(priority: .userInitiated) { [songRepository] in
             songRepository.findByIds(songIds: songIds)
         }.value
