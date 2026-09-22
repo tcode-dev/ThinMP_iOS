@@ -14,9 +14,10 @@ extension View {
     func playlistRegisterPopup(songId: Binding<SongId?>?, height: CGFloat) -> some View {
         return overlay(alignment: .top) {
             if let songId, let id = songId.wrappedValue {
-                PopupView {
-                    PlaylistRegisterView(songId: id, height: height) { songId.wrappedValue = nil }
-                }
+                PlaylistRegisterView(songId: id, height: height) { songId.wrappedValue = nil }
+                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+                    .background(.ultraThinMaterial)
+                    .ignoresSafeArea(.container)
             }
         }
     }

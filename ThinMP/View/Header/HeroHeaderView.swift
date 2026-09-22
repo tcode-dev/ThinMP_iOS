@@ -27,7 +27,7 @@ struct HeroHeaderView<Content: View, SecondaryText: View>: View {
 
         ZStack(alignment: .top) {
             content()
-            createPrimaryTextView()
+            primaryTextView
                 .frame(height: StyleConstant.Height.row)
                 // offset の内側で測ることで、ずらした後の位置(GeometryReader を子に置いた場合と同じ)が取れる
                 .onGeometryChange(for: CGRect.self) { proxy in
@@ -37,27 +37,25 @@ struct HeroHeaderView<Content: View, SecondaryText: View>: View {
                 }
                 .offset(y: primaryTextOffset)
             secondaryText()
-                .frame(width: abs(width - (StyleConstant.button * 2)), height: 25, alignment: .center)
+                .frame(width: max(0, width - StyleConstant.button * 2), height: 25, alignment: .center)
                 .offset(y: secondaryTextOffset)
-                .padding(.leading, StyleConstant.button)
-                .padding(.trailing, StyleConstant.button)
+                .padding(.horizontal, StyleConstant.button)
         }
         .frame(height: size)
     }
 
-    /// PrimaryTextのViewを生成する
+    /// ヒーローの中に重ねるタイトル
     /// 位置はこの View の onGeometryChange で親に渡し、ナビゲーションバーのタイトル表示の切り替えに使う
-    private func createPrimaryTextView() -> some View {
+    private var primaryTextView: some View {
         return VStack {
-            TitleView(primaryText).opacity(textOpacity())
+            TitleView(primaryText).opacity(textOpacity)
         }
-        .frame(width: abs(width - (StyleConstant.button * 2)), height: StyleConstant.Height.row)
-        .padding(.leading, StyleConstant.button)
-        .padding(.trailing, StyleConstant.button)
+        .frame(width: max(0, width - StyleConstant.button * 2), height: StyleConstant.Height.row)
+        .padding(.horizontal, StyleConstant.button)
     }
 
     /// ナビゲーションバーのタイトルと入れ替わるので、潜り込んだら消す
-    private func textOpacity() -> Double {
+    private var textOpacity: Double {
         return headerRect.isScrolledUnder(top: top) ? 0 : 1
     }
 }

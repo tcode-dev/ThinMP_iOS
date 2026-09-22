@@ -30,7 +30,7 @@ class MainEditViewModel: ObservableObject {
     @discardableResult
     func load() -> Task<Void, Never> {
         return loadTask.run { [mainService] in
-            await (mainService.getSettings(), mainService.findShortcuts())
+            await (mainService.loadSettings(), mainService.findShortcuts())
         } apply: { [weak self] settings, shortcuts in
             self?.settings = settings
             self?.shortcuts = shortcuts

@@ -8,13 +8,11 @@
 import SwiftUI
 
 struct MediaRowView: View {
-    private let size: CGFloat = 40
-
     let media: MediaProtocol
 
     var body: some View {
         HStack {
-            SquareImageView(artwork: media.artwork, size: size)
+            SquareImageView(artwork: media.artwork, size: StyleConstant.thumbnail)
             VStack(alignment: .leading) {
                 PrimaryTextView(media.primaryText)
                 if let secondaryText = media.secondaryText {
@@ -23,8 +21,6 @@ struct MediaRowView: View {
             }
             Spacer()
         }
-        .frame(height: StyleConstant.Height.row)
-        .padding(.leading, StyleConstant.Padding.tiny)
-        .padding(.trailing, StyleConstant.Padding.tiny)
+        .modifier(RowModifier())
     }
 }

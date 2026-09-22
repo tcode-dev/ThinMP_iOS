@@ -24,7 +24,7 @@ class MainViewModel: ObservableObject {
     @discardableResult
     func load() -> Task<Void, Never> {
         return loadTask.run { [mainService] in
-            let settings = mainService.getSettings()
+            let settings = mainService.loadSettings()
             let shortcuts = settings.isShortcutVisible ? await mainService.findShortcuts() : []
             let albums = settings.isRecentlyVisible ? await mainService.findRecentlyAlbums() : []
 

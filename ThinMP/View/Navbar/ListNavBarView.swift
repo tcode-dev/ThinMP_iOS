@@ -14,18 +14,11 @@ struct ListNavBarView<Trailing: View>: View {
     /// 一覧側の `ListEmptyHeaderView` の位置。ここが上端より上に行ったら背景を出す
     @Binding var headerRect: CGRect
     /// 右端に置くボタン。戻るボタンと同じ幅に揃えてタイトルを中央に保つ
-    let trailing: () -> Trailing
-
-    init(title: String, top: CGFloat, headerRect: Binding<CGRect>, @ViewBuilder trailing: @escaping () -> Trailing) {
-        self.title = title
-        self.top = top
-        _headerRect = headerRect
-        self.trailing = trailing
-    }
+    @ViewBuilder let trailing: () -> Trailing
 
     var body: some View {
         ZStack {
-            createHeaderView()
+            headerView
             HStack {
                 BackButtonView()
                 Spacer()
@@ -41,7 +34,8 @@ struct ListNavBarView<Trailing: View>: View {
         .zIndex(1)
     }
 
-    private func createHeaderView() -> some View {
+    /// 一覧が潜り込んだときだけ出るナビゲーションバーの背景
+    private var headerView: some View {
         return HStack(alignment: .center) {
             Spacer()
         }
@@ -49,11 +43,11 @@ struct ListNavBarView<Trailing: View>: View {
         .padding(.top, top)
         .background(Color(UIColor.secondarySystemBackground))
         .border(Color(UIColor.systemGray5), width: 1)
-        .opacity(opacity())
-        .animation(.easeInOut, value: opacity())
+        .opacity(opacity)
+        .animation(.easeInOut, value: opacity)
     }
 
-    private func opacity() -> Double {
+    private var opacity: Double {
         // ListEmptyHeaderView の高さがセーフエリアの分を含んでいるので、基準は画面の上端
         return headerRect.isScrolledUnder(top: 0) ? 1 : 0
     }

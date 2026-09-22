@@ -15,8 +15,6 @@ struct MenuRowView: View {
             MenuTextView(text)
             Spacer()
         }
-        .frame(height: StyleConstant.Height.row)
-        .padding(.leading, StyleConstant.Padding.tiny)
-        .padding(.trailing, StyleConstant.Padding.tiny)
+        .modifier(RowModifier())
     }
 }
