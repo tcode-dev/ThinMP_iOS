@@ -7,17 +7,13 @@
 
 import MediaPlayer
 
-struct ShortcutModel: MediaProtocol, Identifiable {
+/// 種別の表示名は target.type.label(Localizable.strings のキー)で、View が翻訳する
+struct ShortcutModel: Identifiable {
     var shortcutId: ShortcutId
     var target: ShortcutTarget
     var primaryText: String?
     var artwork: MPMediaItemArtwork?
     var id: String {
         return shortcutId.id
-    }
-
-    /// 種別の表示名。SecondaryTextView はローカライズしないのでここで解決する
-    var secondaryText: String? {
-        return NSLocalizedString(target.type.label, comment: "")
     }
 }

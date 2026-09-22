@@ -24,13 +24,13 @@ struct ShortcutServiceTests {
         let service = ShortcutService(
             shortcutRepository: shortcutRepository,
             artistDetailService: ArtistDetailServiceMock(artists: artistIds.map {
-                ArtistDetailModel(artistId: ArtistId(id: $0), primaryText: "Artist \($0)", secondaryText: nil, artwork: nil, albums: [], songs: [])
+                ArtistDetailModel(artistId: ArtistId(id: $0), primaryText: "Artist \($0)", artwork: nil, albums: [], songs: [])
             }),
             albumDetailService: AlbumDetailServiceMock(albums: albumIds.map {
                 AlbumDetailModel(albumId: AlbumId(id: $0), primaryText: "Album \($0)", secondaryText: nil, artwork: nil, songs: [])
             }),
             playlistDetailService: PlaylistDetailServiceMock(playlists: playlistIds.map {
-                PlaylistDetailModel(playlistId: PlaylistId(id: $0), primaryText: "Playlist \($0)", secondaryText: nil, artwork: nil, songs: [])
+                PlaylistDetailModel(playlistId: PlaylistId(id: $0), primaryText: "Playlist \($0)", artwork: nil, songs: [])
             })
         )
 

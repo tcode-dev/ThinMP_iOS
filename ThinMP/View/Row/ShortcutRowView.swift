@@ -21,7 +21,7 @@ struct ShortcutRowView: View {
             }
             VStack(alignment: .leading) {
                 PrimaryTextView(shortcut.primaryText)
-                SecondaryTextView(shortcut.secondaryText)
+                SecondaryTextView(key: shortcut.target.type.label)
             }
             Spacer()
         }

@@ -26,8 +26,12 @@ struct ArtistDetailPageView: View {
                 }
             }
         } content: { geometry in
-            HeroHeaderView(headerRect: $headerRect, width: geometry.size.width, size: geometry.heroSize, top: geometry.safeAreaInsets.top, primaryText: vm.artist?.primaryText, secondaryText: vm.artist?.secondaryText) {
+            HeroHeaderView(headerRect: $headerRect, width: geometry.size.width, size: geometry.heroSize, top: geometry.safeAreaInsets.top, primaryText: vm.artist?.primaryText) {
                 HeroCircleImageView(width: geometry.size.width, size: geometry.heroSize, artwork: vm.artist?.artwork)
+            } secondaryText: {
+                if let artist = vm.artist {
+                    SecondaryTextView(key: LabelConstant.albumsAndSongsCount, artist.albums.count, artist.songs.count)
+                }
             }
             if let artist = vm.artist {
                 if !artist.albums.isEmpty {

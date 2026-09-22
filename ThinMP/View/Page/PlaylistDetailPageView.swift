@@ -28,8 +28,10 @@ struct PlaylistDetailPageView: View {
                 }
             }
         } content: { geometry in
-            HeroHeaderView(headerRect: $headerRect, width: geometry.size.width, size: geometry.heroSize, top: geometry.safeAreaInsets.top, primaryText: vm.playlist?.primaryText, secondaryText: NSLocalizedString(LabelConstant.playlist, comment: "")) {
+            HeroHeaderView(headerRect: $headerRect, width: geometry.size.width, size: geometry.heroSize, top: geometry.safeAreaInsets.top, primaryText: vm.playlist?.primaryText) {
                 HeroSquareImageView(size: geometry.heroSize, artwork: vm.playlist?.artwork)
+            } secondaryText: {
+                SecondaryTextView(key: LabelConstant.playlist)
             }
             SongListView(songs: vm.playlist?.songs ?? []) { playlistRegisterSongId = $0 }
         }

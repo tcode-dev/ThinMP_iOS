@@ -25,8 +25,10 @@ struct AlbumDetailPageView: View {
                 }
             }
         } content: { geometry in
-            HeroHeaderView(headerRect: $headerRect, width: geometry.size.width, size: geometry.heroSize, top: geometry.safeAreaInsets.top, primaryText: vm.album?.primaryText, secondaryText: vm.album?.secondaryText) {
+            HeroHeaderView(headerRect: $headerRect, width: geometry.size.width, size: geometry.heroSize, top: geometry.safeAreaInsets.top, primaryText: vm.album?.primaryText) {
                 HeroSquareImageView(size: geometry.heroSize, artwork: vm.album?.artwork)
+            } secondaryText: {
+                SecondaryTextView(vm.album?.secondaryText)
             }
             SongListView(songs: vm.album?.songs ?? []) { playlistRegisterSongId = $0 }
         }

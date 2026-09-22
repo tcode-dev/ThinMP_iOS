@@ -19,7 +19,7 @@ struct ShortcutCellView: View {
                 SquareImageView(artwork: shortcut.artwork, size: size)
             }
             PrimaryTextView(shortcut.primaryText)
-            SecondaryTextView(shortcut.secondaryText)
+            SecondaryTextView(key: shortcut.target.type.label)
         }
         .padding(StyleConstant.Padding.small)
     }
