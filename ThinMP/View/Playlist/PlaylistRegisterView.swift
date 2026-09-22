@@ -14,8 +14,8 @@ struct PlaylistRegisterView: View {
 
     let songId: SongId
     let height: CGFloat
-    /// キャンセル、または登録が終わったときにポップアップを閉じる
-    let dismiss: () -> Void
+    /// キャンセル、または登録が終わったときに呼ばれる(ポップアップを閉じる)
+    let onClose: () -> Void
 
     var body: some View {
         VStack(spacing: 0) {
@@ -30,7 +30,7 @@ struct PlaylistRegisterView: View {
                         }
                         Spacer()
                         Button(action: {
-                            dismiss()
+                            onClose()
                         }) {
                             Text(LocalizedStringKey(LabelConstant.cancel))
                         }
@@ -42,7 +42,7 @@ struct PlaylistRegisterView: View {
                             ForEach(vm.playlists) { playlist in
                                 PlaylistAddRowView(isRegistered: vm.isRegistered(playlistId: playlist.playlistId), action: {
                                     vm.add(playlistId: playlist.playlistId, songId: songId)
-                                    dismiss()
+                                    onClose()
                                 }) {
                                     MediaRowView(media: playlist)
                                 }
@@ -65,7 +65,7 @@ struct PlaylistRegisterView: View {
                         Spacer()
                         Button(action: {
                             vm.create(songId: songId, name: name)
-                            dismiss()
+                            onClose()
                         }) {
                             Text(LocalizedStringKey(LabelConstant.done))
                         }
@@ -75,7 +75,7 @@ struct PlaylistRegisterView: View {
                             if !vm.playlists.isEmpty {
                                 isCreate.toggle()
                             } else {
-                                dismiss()
+                                onClose()
                             }
                         }) {
                             Text(LocalizedStringKey(LabelConstant.cancel))
