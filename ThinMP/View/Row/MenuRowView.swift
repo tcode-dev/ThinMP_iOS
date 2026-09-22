@@ -12,7 +12,7 @@ struct MenuRowView: View {
 
     var body: some View {
         HStack {
-            MenuTextView(text)
+            PrimaryTextView(key: text)
             Spacer()
         }
         .modifier(RowModifier())
