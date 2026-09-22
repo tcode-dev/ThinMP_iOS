@@ -37,7 +37,7 @@ struct HeroHeaderView<Content: View, SecondaryText: View>: View {
                 }
                 .offset(y: primaryTextOffset)
             secondaryText()
-                .frame(width: abs(width - (StyleConstant.button * 2)), height: 25, alignment: .center)
+                .frame(width: max(0, width - StyleConstant.button * 2), height: 25, alignment: .center)
                 .offset(y: secondaryTextOffset)
                 .padding(.horizontal, StyleConstant.button)
         }
@@ -50,7 +50,7 @@ struct HeroHeaderView<Content: View, SecondaryText: View>: View {
         return VStack {
             TitleView(primaryText).opacity(textOpacity)
         }
-        .frame(width: abs(width - (StyleConstant.button * 2)), height: StyleConstant.Height.row)
+        .frame(width: max(0, width - StyleConstant.button * 2), height: StyleConstant.Height.row)
         .padding(.horizontal, StyleConstant.button)
     }
 

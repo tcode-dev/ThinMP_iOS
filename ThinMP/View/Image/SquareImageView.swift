@@ -18,6 +18,6 @@ struct SquareImageView: View {
             .resizable()
             .scaledToFit()
             .cornerRadius(StyleConstant.cornerRadius)
-            .frame(width: abs(size), height: abs(size))
+            .frame(width: max(0, size), height: max(0, size))
     }
 }

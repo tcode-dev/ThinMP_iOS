@@ -48,7 +48,7 @@ struct HeroNavBarView<Content: View>: View {
         return HStack(alignment: .center) {
             TitleView(primaryText)
         }
-        .frame(width: abs(width - (StyleConstant.button * 2)), height: StyleConstant.Height.row)
+        .frame(width: max(0, width - StyleConstant.button * 2), height: StyleConstant.Height.row)
         .padding(.top, top)
         .padding(.horizontal, StyleConstant.button)
         .opacity(opacity)
