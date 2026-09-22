@@ -19,7 +19,9 @@ final class LoadTask {
         let task = Task {
             let value = await fetch()
 
-            if Task.isCancelled { return }
+            if Task.isCancelled {
+                return
+            }
 
             apply(value)
         }

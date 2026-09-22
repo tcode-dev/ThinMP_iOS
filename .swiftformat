@@ -1,0 +1,13 @@
+# SwiftFormat の設定。`swiftformat --lint .` で確認、`swiftformat .` で整形する
+--swiftversion 5.10
+
+# 単一式でも return を書く
+--disable redundantReturn
+# map { $0.x } を map(\.x) にしない
+--disable preferKeyPath
+# case .artist(let id) の形にする
+--patternlet inline
+# 1 行のプロパティはそのまま
+--disable wrapPropertyBodies
+# テストでは ! と try! を使う(SwiftLint の force_try も切っている)
+--disable noForceUnwrapInTests,noForceTryInTests

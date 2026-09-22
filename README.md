@@ -39,7 +39,7 @@
 
 * Realm - https://realm.io/ (legacy store; kept only to migrate existing data to SwiftData, see [#11](https://github.com/tcode-dev/ThinMP_iOS/issues/11))
 * SwiftLint - https://github.com/realm/SwiftLint (run as an SPM build tool plugin via https://github.com/SimplyDanny/SwiftLintPlugins, so no local installation is required)
-* SwiftFormat - https://github.com/nicklockwood/SwiftFormat
+* SwiftFormat - https://github.com/nicklockwood/SwiftFormat (run by hand, see below)
 * Material Icons - https://fonts.google.com/icons?selected=Material+Icons
 
 ## SwiftLint
@@ -59,6 +59,22 @@ To enable it, open the Issue Navigator (⌘5), click that error, choose **Trust 
 ```
 defaults write com.apple.dt.Xcode IDESkipPackagePluginFingerprintValidatation -bool YES
 ```
+
+## SwiftFormat
+
+SwiftFormat is not part of the build. Install it with `brew install swiftformat` and run it from the repository root; `.swiftformat` there holds the project's settings, and the Xcode extension (`brew install --cask swiftformat-for-xcode`) reads the same file.
+
+```
+swiftformat --lint .
+```
+
+lists what would change without touching any file, and
+
+```
+swiftformat .
+```
+
+formats the sources in place.
 
 ## Info.plist
 

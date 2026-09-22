@@ -82,7 +82,7 @@ struct PlaylistRealmRepository: PlaylistRepositoryProtocol {
         realm.delete(playlist.songs)
 
         // 同じ曲は最初の 1 回だけ残す
-        songIds.uniqued().forEach { songId in
+        for songId in songIds.uniqued() {
             let song = PlaylistSongRealmModel()
 
             song.songId = String(songId.id)

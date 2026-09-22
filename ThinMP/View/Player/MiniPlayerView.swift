@@ -50,8 +50,6 @@ struct MiniPlayerView: View {
                 .sheet(isPresented: $isFullScreen) {
                     PlayerView(onDismiss: onPlayerDismiss).environmentObject(musicPlayer)
                 }
-            } else {
-                EmptyView()
             }
         }
     }

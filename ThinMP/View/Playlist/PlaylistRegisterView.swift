@@ -19,7 +19,7 @@ struct PlaylistRegisterView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            if !vm.playlists.isEmpty && !isCreate {
+            if !vm.playlists.isEmpty, !isCreate {
                 VStack(spacing: 0) {
                     HStack {
                         Spacer()

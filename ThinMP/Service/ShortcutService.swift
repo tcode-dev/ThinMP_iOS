@@ -48,12 +48,10 @@ struct ShortcutService: ShortcutServiceProtocol {
 
         // 端末に存在しないものは落とす(下で数が減ったことを検出する)
         let shortcutModels = shortcuts.compactMap { shortcut -> ShortcutModel? in
-            let item: MediaProtocol?
-
-            switch shortcut.target {
-            case .artist(let artistId): item = artistById[artistId]
-            case .album(let albumId): item = albumById[albumId]
-            case .playlist(let playlistId): item = playlistById[playlistId]
+            let item: MediaProtocol? = switch shortcut.target {
+            case .artist(let artistId): artistById[artistId]
+            case .album(let albumId): albumById[albumId]
+            case .playlist(let playlistId): playlistById[playlistId]
             }
 
             guard let item else {
