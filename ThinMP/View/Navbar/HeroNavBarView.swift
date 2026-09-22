@@ -24,35 +24,37 @@ struct HeroNavBarView<Content: View>: View {
             .frame(height: StyleConstant.Height.row)
             .padding(.top, top)
             .zIndex(3)
-            createHeaderView()
-            createTitleView()
+            headerView
+            titleView
                 .zIndex(2)
         }
         .frame(height: StyleConstant.Height.row + top)
         .zIndex(1)
     }
 
-    private func createHeaderView() -> some View {
+    /// 潜り込んだときだけ出るナビゲーションバーの背景
+    private var headerView: some View {
         return VStack {
             Rectangle().frame(width: width, height: StyleConstant.Height.row + top)
                 .opacity(0.1)
         }
         .background(.thinMaterial)
-        .opacity(opacity())
-        .animation(.easeInOut, value: opacity())
+        .opacity(opacity)
+        .animation(.easeInOut, value: opacity)
     }
 
-    private func createTitleView() -> some View {
+    /// 潜り込んだときだけ出るナビゲーションバーのタイトル
+    private var titleView: some View {
         return HStack(alignment: .center) {
             TitleView(primaryText)
         }
         .frame(width: abs(width - (StyleConstant.button * 2)), height: StyleConstant.Height.row)
         .padding(.top, top)
         .padding(.horizontal, StyleConstant.button)
-        .opacity(opacity())
+        .opacity(opacity)
     }
 
-    private func opacity() -> Double {
+    private var opacity: Double {
         return headerRect.isScrolledUnder(top: top) ? 1 : 0
     }
 }

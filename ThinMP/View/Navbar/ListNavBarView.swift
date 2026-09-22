@@ -25,7 +25,7 @@ struct ListNavBarView<Trailing: View>: View {
 
     var body: some View {
         ZStack {
-            createHeaderView()
+            headerView
             HStack {
                 BackButtonView()
                 Spacer()
@@ -41,7 +41,8 @@ struct ListNavBarView<Trailing: View>: View {
         .zIndex(1)
     }
 
-    private func createHeaderView() -> some View {
+    /// 一覧が潜り込んだときだけ出るナビゲーションバーの背景
+    private var headerView: some View {
         return HStack(alignment: .center) {
             Spacer()
         }
@@ -49,11 +50,11 @@ struct ListNavBarView<Trailing: View>: View {
         .padding(.top, top)
         .background(Color(UIColor.secondarySystemBackground))
         .border(Color(UIColor.systemGray5), width: 1)
-        .opacity(opacity())
-        .animation(.easeInOut, value: opacity())
+        .opacity(opacity)
+        .animation(.easeInOut, value: opacity)
     }
 
-    private func opacity() -> Double {
+    private var opacity: Double {
         // ListEmptyHeaderView の高さがセーフエリアの分を含んでいるので、基準は画面の上端
         return headerRect.isScrolledUnder(top: 0) ? 1 : 0
     }
