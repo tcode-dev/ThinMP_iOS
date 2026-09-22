@@ -7,32 +7,20 @@
 
 import SwiftUI
 
+/// アルバムのグリッド。セルをタップで詳細へ、長押しでショートカットのメニューを出す
 struct AlbumListView: View {
-    private let colCount: Int
-    private let albums: [AlbumModel]
-    private let size: CGFloat
-    private let columns: [GridItem]
-    private let callback: () -> Void
-
-    init(albums: [AlbumModel], width: CGFloat, callback: @escaping () -> Void = {}) {
-        self.albums = albums
-        self.callback = callback
-        self.colCount = max(Int(width) / StyleConstant.Grid.spanBaseSize, StyleConstant.Grid.minSpanCount)
-
-        size = (width - (StyleConstant.Padding.large * CGFloat(colCount + 1))) / CGFloat(colCount)
-
-        var columns = [GridItem](repeating: GridItem(.fixed(size), spacing: StyleConstant.Padding.large), count: Int(colCount) - 1)
-
-        columns.append((GridItem(.fixed(size), spacing: 0)))
-
-        self.columns = columns
-    }
+    let albums: [AlbumModel]
+    let width: CGFloat
+    /// ショートカットの登録・解除後に呼ばれる(一覧の再読み込みなど)
+    var callback: () -> Void = {}
 
     var body: some View {
-        LazyVGrid(columns: columns) {
+        let layout = GridLayout(width: width)
+
+        LazyVGrid(columns: layout.columns) {
             ForEach(albums) { album in
                 NavigationLink(destination: AlbumDetailPageView(albumId: album.albumId)) {
-                    AlbumCellView(album: album, size: size)
+                    AlbumCellView(album: album, size: layout.cellSize)
                 }
                 .contentShape(RoundedRectangle(cornerRadius: StyleConstant.cornerRadius))
                 .contextMenu {
