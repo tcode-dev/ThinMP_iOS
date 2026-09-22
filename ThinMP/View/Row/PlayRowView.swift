@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-struct PlayRowView<Content>: View where Content: View {
+struct PlayRowView<Content: View>: View {
     @EnvironmentObject var musicPlayer: MusicPlayer
 
     let list: [SongModel]
     let index: Int
-    let content: () -> Content
+    @ViewBuilder let content: () -> Content
 
     var body: some View {
         Button(action: {

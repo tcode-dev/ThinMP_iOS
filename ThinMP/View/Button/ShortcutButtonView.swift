@@ -10,7 +10,8 @@ import SwiftUI
 /// コンテキストメニューに置く、ショートカットの登録 / 解除ボタン
 struct ShortcutButtonView: View {
     let target: ShortcutTarget
-    var callback: () -> Void = {}
+    /// 登録 / 解除のあとに呼ばれる(一覧の再読み込みなど)
+    var onToggle: () -> Void = {}
     var repository: ShortcutRepositoryProtocol = ShortcutRepository()
 
     var body: some View {
@@ -18,9 +19,8 @@ struct ShortcutButtonView: View {
             addLabel: LabelConstant.addShortcut,
             removeLabel: LabelConstant.removeShortcut,
             exists: { repository.exists(target: target) },
-            add: { repository.add(target: target) },
-            remove: { repository.delete(target: target) },
-            callback: callback
+            toggle: { repository.toggle(target: target) },
+            onToggle: onToggle
         )
     }
 }

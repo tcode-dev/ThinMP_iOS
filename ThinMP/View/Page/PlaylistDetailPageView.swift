@@ -19,12 +19,10 @@ struct PlaylistDetailPageView: View {
         ScrollPageLayout(playlistRegisterSongId: $playlistRegisterSongId, onPlayerDismiss: { vm.load(playlistId: playlistId) }) { geometry in
             HeroNavBarView(primaryText: vm.playlist?.primaryText, width: geometry.size.width, top: geometry.safeAreaInsets.top, headerRect: $headerRect) {
                 MenuButtonView {
-                    VStack {
-                        NavigationLink(destination: PlaylistDetailEditPageView(playlistId: playlistId, primaryText: vm.playlist?.primaryText)) {
-                            MenuRowView(text: LabelConstant.edit)
-                        }
-                        ShortcutButtonView(target: .playlist(playlistId))
+                    NavigationLink(destination: PlaylistDetailEditPageView(playlistId: playlistId, primaryText: vm.playlist?.primaryText)) {
+                        MenuRowView(text: LabelConstant.edit)
                     }
+                    ShortcutButtonView(target: .playlist(playlistId))
                 }
             }
         } content: { geometry in

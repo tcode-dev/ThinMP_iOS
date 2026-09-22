@@ -19,10 +19,8 @@ struct ArtistDetailPageView: View {
         ScrollPageLayout(playlistRegisterSongId: $playlistRegisterSongId) { geometry in
             HeroNavBarView(primaryText: vm.artist?.primaryText, width: geometry.size.width, top: geometry.safeAreaInsets.top, headerRect: $headerRect) {
                 MenuButtonView {
-                    VStack {
-                        FavoriteArtistButtonView(artistId: artistId)
-                        ShortcutButtonView(target: .artist(artistId))
-                    }
+                    FavoriteArtistButtonView(artistId: artistId)
+                    ShortcutButtonView(target: .artist(artistId))
                 }
             }
         } content: { geometry in

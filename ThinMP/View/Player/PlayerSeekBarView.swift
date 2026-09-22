@@ -11,8 +11,6 @@ import SwiftUI
 struct PlayerSeekBarView: View {
     @EnvironmentObject var musicPlayer: MusicPlayer
 
-    private let isPad = UIDevice.current.userInterfaceIdiom == .pad
-
     var body: some View {
         Slider(value: $musicPlayer.currentSecond, in: 0 ... musicPlayer.durationSecond, step: 1, onEditingChanged: { editing in
             if editing {
@@ -22,7 +20,7 @@ struct PlayerSeekBarView: View {
             }
         })
         .frame(height: StyleConstant.button)
-        .padding(.horizontal, isPad ? 40 : 30)
+        .padding(.horizontal, StyleConstant.isPad ? 40 : 30)
         .accentColor(Color(.label))
         HStack {
             SecondaryTextView(Self.format(musicPlayer.currentSecond)).frame(width: 50, height: 20).padding(.leading, 40)

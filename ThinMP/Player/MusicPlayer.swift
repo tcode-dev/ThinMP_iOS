@@ -132,13 +132,7 @@ class MusicPlayer: ObservableObject {
             return
         }
 
-        if favoriteArtistRepository.exists(artistId: artistId) {
-            favoriteArtistRepository.delete(artistId: artistId)
-        } else {
-            favoriteArtistRepository.add(artistId: artistId)
-        }
-
-        isFavoriteArtist.toggle()
+        isFavoriteArtist = favoriteArtistRepository.toggle(artistId: artistId)
     }
 
     /// 再生中の曲をお気に入りに入れる / 外す
@@ -147,19 +141,13 @@ class MusicPlayer: ObservableObject {
             return
         }
 
-        if favoriteSongRepository.exists(songId: songId) {
-            favoriteSongRepository.delete(songId: songId)
-        } else {
-            favoriteSongRepository.add(songId: songId)
-        }
-
-        isFavoriteSong.toggle()
+        isFavoriteSong = favoriteSongRepository.toggle(songId: songId)
     }
 
     /// お気に入りの状態をストアから読み直す。他の画面で登録 / 解除されたあとに呼ぶ
     func setFavorite() {
-        setFavoriteArtist()
-        setFavoriteSong()
+        isFavoriteArtist = (song?.artistId).map { favoriteArtistRepository.exists(artistId: $0) } ?? false
+        isFavoriteSong = (song?.songId).map { favoriteSongRepository.exists(songId: $0) } ?? false
     }
 
     private func setSong() {
@@ -182,7 +170,7 @@ class MusicPlayer: ObservableObject {
             queue: OperationQueue.main
         ) { _ in
             MainActor.assumeIsolated {
-                self.nowPlayingItemDidChangeCallback()
+                self.setSong()
             }
         })
 
@@ -197,10 +185,6 @@ class MusicPlayer: ObservableObject {
         })
     }
 
-    private func nowPlayingItemDidChangeCallback() {
-        setSong()
-    }
-
     /// Control Center やイヤホンからの操作もここに届くので、timer の開始 / 停止はここで決める
     private func playbackStateDidChangeCallback() {
         switch player.playbackState {
@@ -213,14 +197,6 @@ class MusicPlayer: ObservableObject {
         }
 
         updateTimer()
-    }
-
-    private func setFavoriteArtist() {
-        isFavoriteArtist = (song?.artistId).map { favoriteArtistRepository.exists(artistId: $0) } ?? false
-    }
-
-    private func setFavoriteSong() {
-        isFavoriteSong = (song?.songId).map { favoriteSongRepository.exists(songId: $0) } ?? false
     }
 
     private func resetTime() {

@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-struct HeroNavBarView<Content>: View where Content: View {
+struct HeroNavBarView<Content: View>: View {
     let primaryText: String?
     let width: CGFloat
     let top: CGFloat
     @Binding var headerRect: CGRect
-    let content: () -> Content
+    @ViewBuilder let content: () -> Content
 
     var body: some View {
         ZStack {

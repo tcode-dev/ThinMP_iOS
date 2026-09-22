@@ -13,13 +13,10 @@ struct MiniPlayerView: View {
 
     @EnvironmentObject var musicPlayer: MusicPlayer
     @State private var isFullScreen: Bool = false
-    private let bottom: CGFloat
-    private let callback: () -> Void
 
-    init(bottom: CGFloat, callback: @escaping () -> Void = {}) {
-        self.bottom = bottom
-        self.callback = callback
-    }
+    let bottom: CGFloat
+    /// 再生画面を閉じたときに呼ばれる(一覧の再読み込みなど)
+    var onPlayerDismiss: () -> Void = {}
 
     var body: some View {
         VStack {
@@ -51,7 +48,7 @@ struct MiniPlayerView: View {
                 .background(Color(UIColor.secondarySystemBackground))
                 .border(Color(UIColor.systemGray5), width: 1)
                 .sheet(isPresented: $isFullScreen) {
-                    PlayerView(callback: callback).environmentObject(musicPlayer)
+                    PlayerView(onDismiss: onPlayerDismiss).environmentObject(musicPlayer)
                 }
             } else {
                 EmptyView()

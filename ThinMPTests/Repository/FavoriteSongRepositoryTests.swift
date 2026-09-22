@@ -124,4 +124,15 @@ struct FavoriteSongRepositoryTests {
         #expect(!repository.exists(songId: SongId(id: 1)))
         #expect(repository.findAll().isEmpty)
     }
+
+    @Test(arguments: RepositoryBackend.allCases)
+    func toggleAddsThenRemoves(backend: RepositoryBackend) {
+        let repository = TestRepositories(backend: backend).favoriteSong
+
+        #expect(repository.toggle(songId: SongId(id: 1)))
+        #expect(repository.exists(songId: SongId(id: 1)))
+
+        #expect(!repository.toggle(songId: SongId(id: 1)))
+        #expect(!repository.exists(songId: SongId(id: 1)))
+    }
 }

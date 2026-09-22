@@ -7,15 +7,13 @@
 
 import SwiftUI
 
-struct PopupView<Content>: View where Content: View {
-    let content: () -> Content
+struct PopupView<Content: View>: View {
+    @ViewBuilder let content: () -> Content
 
     var body: some View {
-        VStack {
-            content()
-        }
-        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-        .background(.ultraThinMaterial)
-        .ignoresSafeArea(.container)
+        content()
+            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+            .background(.ultraThinMaterial)
+            .ignoresSafeArea(.container)
     }
 }

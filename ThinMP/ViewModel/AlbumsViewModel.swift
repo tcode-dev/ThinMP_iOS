@@ -21,7 +21,7 @@ class AlbumsViewModel: ObservableObject {
     @discardableResult
     func load() -> Task<Void, Never> {
         return loadTask.run { [albumsService] in
-            await Task.detached(priority: .userInitiated) { albumsService.findAll() }.value
+            await albumsService.findAll()
         } apply: { [weak self] albums in
             self?.albums = albums
         }

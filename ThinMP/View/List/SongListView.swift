@@ -23,7 +23,7 @@ struct SongListView: View {
                 }
                 .contentShape(RoundedRectangle(cornerRadius: StyleConstant.cornerRadius))
                 .contextMenu {
-                    FavoriteSongButtonView(songId: song.songId, callback: onFavoriteChange)
+                    FavoriteSongButtonView(songId: song.songId, onToggle: onFavoriteChange)
                     Button(action: {
                         onAddPlaylist(song.songId)
                     }) {

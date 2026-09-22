@@ -79,7 +79,7 @@ struct PlaylistDetailServiceTests {
         #expect(models.map { $0.songs.count } == [1, 1])
     }
 
-    /// SongRepository.findByIds はライブラリ全件を舐めるので、プレイリスト数に関係なく 1 回で済ませる
+    /// SongRepository.findByIds はライブラリ全件を走査するので、プレイリスト数に関係なく 1 回で済ませる
     @Test
     func findByIdsQueriesSongRepositoryOnceForAllPlaylists() async {
         let playlistRepository = PlaylistRepositoryMock(playlists: [

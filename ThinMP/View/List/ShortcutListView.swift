@@ -12,7 +12,7 @@ struct ShortcutListView: View {
     let shortcuts: [ShortcutModel]
     let width: CGFloat
     /// ショートカットの登録・解除後に呼ばれる(一覧の再読み込みなど)
-    var callback: () -> Void = {}
+    var onShortcutChange: () -> Void = {}
 
     var body: some View {
         let layout = GridLayout(width: width)
@@ -27,7 +27,7 @@ struct ShortcutListView: View {
                     if case .artist(let artistId) = shortcut.target {
                         FavoriteArtistButtonView(artistId: artistId)
                     }
-                    ShortcutButtonView(target: shortcut.target, callback: callback)
+                    ShortcutButtonView(target: shortcut.target, onToggle: onShortcutChange)
                 }
             }
         }

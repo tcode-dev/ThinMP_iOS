@@ -6,5 +6,5 @@
 //
 
 protocol SongsServiceProtocol {
-    func findAll() -> [SongModel]
+    func findAll() async -> [SongModel]
 }

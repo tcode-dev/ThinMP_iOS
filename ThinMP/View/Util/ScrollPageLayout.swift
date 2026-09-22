@@ -29,7 +29,7 @@ struct ScrollPageLayout<NavBar: View, Content: View>: View {
                         }
                     }
                 }
-                MiniPlayerView(bottom: geometry.safeAreaInsets.bottom, callback: onPlayerDismiss)
+                MiniPlayerView(bottom: geometry.safeAreaInsets.bottom, onPlayerDismiss: onPlayerDismiss)
             }
             .playlistRegisterPopup(songId: playlistRegisterSongId, height: geometry.size.height)
             .modifier(PageModifier())

@@ -14,8 +14,6 @@ struct PlayerOptionsView: View {
     /// プレイリストに追加を押したときに呼ばれる
     let onAddPlaylist: () -> Void
 
-    private let isPad = UIDevice.current.userInterfaceIdiom == .pad
-
     var body: some View {
         HStack {
             Button(action: musicPlayer.changeRepeat) {
@@ -50,6 +48,6 @@ struct PlayerOptionsView: View {
             }
             .frame(width: StyleConstant.button, height: StyleConstant.button)
         }
-        .padding(.horizontal, isPad ? 50 : 30)
+        .padding(.horizontal, StyleConstant.isPad ? 50 : 30)
     }
 }

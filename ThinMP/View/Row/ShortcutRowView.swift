@@ -14,11 +14,7 @@ struct ShortcutRowView: View {
 
     var body: some View {
         HStack {
-            if case .artist = shortcut.target {
-                CircleImageView(artwork: shortcut.artwork, size: size)
-            } else {
-                SquareImageView(artwork: shortcut.artwork, size: size)
-            }
+            ShortcutImageView(shortcut: shortcut, size: size)
             VStack(alignment: .leading) {
                 PrimaryTextView(shortcut.primaryText)
                 SecondaryTextView(key: shortcut.target.type.label)

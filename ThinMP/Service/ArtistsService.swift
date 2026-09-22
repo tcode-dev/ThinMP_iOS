@@ -12,7 +12,10 @@ struct ArtistsService: ArtistsServiceProtocol {
         self.repository = repository
     }
 
-    func findAll() -> [ArtistModel] {
-        return repository.findAll()
+    /// ライブラリ全件を取るのでバックグラウンドで行う
+    func findAll() async -> [ArtistModel] {
+        return await Task.detached(priority: .userInitiated) { [repository] in
+            repository.findAll()
+        }.value
     }
 }

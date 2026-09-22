@@ -37,14 +37,9 @@ struct ShortcutService: ShortcutServiceProtocol {
             }
         }
 
-        // 種別ごとにまとめて 1 回で解決する
-        // アーティスト / アルバムはライブラリを舐めるのでバックグラウンドで、プレイリストは PlaylistDetailService 側で同じことをしている
-        let artists = artistIds.isEmpty ? [] : await Task.detached(priority: .userInitiated) { [artistDetailService] in
-            artistDetailService.findByIds(artistIds: artistIds)
-        }.value
-        let albums = albumIds.isEmpty ? [] : await Task.detached(priority: .userInitiated) { [albumDetailService] in
-            albumDetailService.findByIds(albumIds: albumIds)
-        }.value
+        // 種別ごとにまとめて 1 回で解決する。ライブラリのスキャンは各 Service がバックグラウンドで行う
+        let artists = artistIds.isEmpty ? [] : await artistDetailService.findByIds(artistIds: artistIds)
+        let albums = albumIds.isEmpty ? [] : await albumDetailService.findByIds(albumIds: albumIds)
         let playlists = playlistIds.isEmpty ? [] : await playlistDetailService.findByIds(playlistIds: playlistIds)
 
         let artistById = Dictionary(artists.map { ($0.artistId, $0) }, uniquingKeysWith: { first, _ in first })

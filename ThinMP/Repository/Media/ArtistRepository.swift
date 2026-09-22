@@ -7,7 +7,7 @@
 
 import MediaPlayer
 
-class ArtistRepository: ArtistRepositoryProtocol {
+struct ArtistRepository: ArtistRepositoryProtocol {
     func findAll() -> [ArtistModel] {
         return artists(localArtistsQuery())
     }

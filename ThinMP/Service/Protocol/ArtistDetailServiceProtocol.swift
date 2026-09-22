@@ -6,7 +6,7 @@
 //
 
 protocol ArtistDetailServiceProtocol {
-    func findById(artistId: ArtistId) -> ArtistDetailModel?
+    func findById(artistId: ArtistId) async -> ArtistDetailModel?
 
-    func findByIds(artistIds: [ArtistId]) -> [ArtistDetailModel]
+    func findByIds(artistIds: [ArtistId]) async -> [ArtistDetailModel]
 }
