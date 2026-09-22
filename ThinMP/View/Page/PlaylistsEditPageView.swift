@@ -11,7 +11,7 @@ struct PlaylistsEditPageView: View {
     @StateObject private var vm = PlaylistsViewModel()
 
     var body: some View {
-        EditPageLayout(onDone: update) {
+        EditPageLayout(onDone: vm.save) {
             List {
                 ForEach(vm.playlists) { playlist in
                     MediaRowView(media: playlist)
@@ -32,11 +32,5 @@ struct PlaylistsEditPageView: View {
 
     private func delete(offsets: IndexSet) {
         vm.playlists.remove(atOffsets: offsets)
-    }
-
-    private func update() {
-        let playlistRegister = PlaylistRegister()
-
-        playlistRegister.update(playlistIds: vm.playlists.map { $0.playlistId })
     }
 }

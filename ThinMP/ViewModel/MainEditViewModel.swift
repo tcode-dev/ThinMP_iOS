@@ -40,7 +40,9 @@ class MainEditViewModel: ObservableObject {
         return task
     }
 
+    /// 表示設定とショートカットの並び順 / 削除を保存する
     func save() {
         mainService.save(settings: settings)
+        mainService.update(shortcutIds: shortcuts.map { $0.shortcutId })
     }
 }

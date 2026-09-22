@@ -11,7 +11,7 @@ struct MainEditPageView: View {
     @StateObject private var vm = MainEditViewModel()
 
     var body: some View {
-        EditPageLayout(onDone: update) {
+        EditPageLayout(onDone: vm.save) {
             List {
                 ForEach($vm.settings.menus) { $setting in
                     MenuEditRowView(text: setting.menu.label, visibility: $setting.visibility)
@@ -44,10 +44,5 @@ struct MainEditPageView: View {
 
     private func deleteShortcut(offsets: IndexSet) {
         vm.shortcuts.remove(atOffsets: offsets)
-    }
-
-    private func update() {
-        vm.save()
-        ShortcutRegister().update(shortcutIds: vm.shortcuts.map { $0.shortcutId })
     }
 }

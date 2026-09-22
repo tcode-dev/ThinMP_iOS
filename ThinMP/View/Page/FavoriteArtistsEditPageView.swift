@@ -11,7 +11,7 @@ struct FavoriteArtistsEditPageView: View {
     @StateObject private var vm = FavoriteArtistsViewModel()
 
     var body: some View {
-        EditPageLayout(onDone: update) {
+        EditPageLayout(onDone: vm.save) {
             List {
                 ForEach(vm.artists) { artist in
                     PlainRowView(media: artist)
@@ -32,11 +32,5 @@ struct FavoriteArtistsEditPageView: View {
 
     private func delete(offsets: IndexSet) {
         vm.artists.remove(atOffsets: offsets)
-    }
-
-    private func update() {
-        let favoriteArtistRegister = FavoriteArtistRegister()
-
-        favoriteArtistRegister.update(artistIds: vm.artists.map { $0.artistId })
     }
 }

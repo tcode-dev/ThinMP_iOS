@@ -20,7 +20,7 @@ struct PlaylistDetailEditPageView: View {
     }
 
     var body: some View {
-        EditPageLayout(isDoneEnabled: !name.isEmpty, onNavBarTap: { isNameFocused = false }, onDone: update) {
+        EditPageLayout(isDoneEnabled: !name.isEmpty, onNavBarTap: { isNameFocused = false }, onDone: { vm.save(playlistId: playlistId, name: name) }) {
             VStack(alignment: .leading) {
                 TextField("", text: $name)
                     .focused($isNameFocused)
@@ -55,11 +55,5 @@ struct PlaylistDetailEditPageView: View {
 
     private func delete(offsets: IndexSet) {
         vm.songs.remove(atOffsets: offsets)
-    }
-
-    private func update() {
-        let playlistRegister = PlaylistRegister()
-
-        playlistRegister.update(playlistId: playlistId, name: name, songIds: vm.songs.map { $0.songId })
     }
 }

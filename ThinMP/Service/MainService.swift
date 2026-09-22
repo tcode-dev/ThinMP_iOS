@@ -9,17 +9,20 @@ struct MainService: MainServiceProtocol {
     private let ALBUM_COUNT = 20
     private let albumRepository: AlbumRepositoryProtocol
     private let shortcutService: ShortcutServiceProtocol
+    private let shortcutRegister: ShortcutRegisterProtocol
     private let mainMenuConfig: MainMenuConfig
     private let mainSectionConfig: MainSectionConfig
 
     init(
         albumRepository: AlbumRepositoryProtocol = AlbumRepository(),
         shortcutService: ShortcutServiceProtocol = ShortcutService(),
+        shortcutRegister: ShortcutRegisterProtocol = ShortcutRegister(),
         mainMenuConfig: MainMenuConfig = MainMenuConfig(),
         mainSectionConfig: MainSectionConfig = MainSectionConfig()
     ) {
         self.albumRepository = albumRepository
         self.shortcutService = shortcutService
+        self.shortcutRegister = shortcutRegister
         self.mainMenuConfig = mainMenuConfig
         self.mainSectionConfig = mainSectionConfig
     }
@@ -46,5 +49,9 @@ struct MainService: MainServiceProtocol {
         mainMenuConfig.save(settings.menus)
         mainSectionConfig.isShortcutVisible = settings.isShortcutVisible
         mainSectionConfig.isRecentlyVisible = settings.isRecentlyVisible
+    }
+
+    func update(shortcutIds: [ShortcutId]) {
+        shortcutRegister.update(shortcutIds: shortcutIds)
     }
 }

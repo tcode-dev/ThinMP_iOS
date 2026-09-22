@@ -11,7 +11,7 @@ struct FavoriteSongsEditPageView: View {
     @StateObject private var vm = FavoriteSongsViewModel()
 
     var body: some View {
-        EditPageLayout(onDone: update) {
+        EditPageLayout(onDone: vm.save) {
             List {
                 ForEach(vm.songs) { song in
                     MediaRowView(media: song)
@@ -32,11 +32,5 @@ struct FavoriteSongsEditPageView: View {
 
     private func delete(offsets: IndexSet) {
         vm.songs.remove(atOffsets: offsets)
-    }
-
-    private func update() {
-        let favoriteSongRegister = FavoriteSongRegister()
-
-        favoriteSongRegister.update(songIds: vm.songs.map { $0.songId })
     }
 }

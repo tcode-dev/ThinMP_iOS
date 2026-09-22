@@ -35,4 +35,9 @@ class FavoriteSongsViewModel: ObservableObject {
 
         return task
     }
+
+    /// 編集ページの並び順と削除を保存する
+    func save() {
+        favoriteSongsService.update(songIds: songs.map { $0.songId })
+    }
 }

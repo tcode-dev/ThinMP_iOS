@@ -27,7 +27,7 @@ struct PlaylistsPageView: View {
                     }
                     .contentShape(RoundedRectangle(cornerRadius: StyleConstant.cornerRadius))
                     .contextMenu {
-                        PlaylistDeleteButtonView(playlistId: playlist.playlistId) { vm.load() }
+                        PlaylistDeleteButtonView { vm.delete(playlistId: playlist.playlistId) }
                         ShortcutButtonView(playlistId: playlist.playlistId)
                     }
                     Divider()

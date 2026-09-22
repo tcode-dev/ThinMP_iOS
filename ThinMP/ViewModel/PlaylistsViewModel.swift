@@ -60,4 +60,25 @@ class PlaylistsViewModel: ObservableObject {
     func isRegistered(playlistId: PlaylistId) -> Bool {
         return registeredPlaylistIds.contains(playlistId)
     }
+
+    /// 編集ページの並び順と削除を保存する
+    func save() {
+        playlistsService.update(playlistIds: playlists.map { $0.playlistId })
+    }
+
+    /// 登録モーダルで曲 1 つを入れた新しいプレイリストを作る
+    func create(songId: SongId, name: String) {
+        playlistsService.create(songId: songId, name: name)
+    }
+
+    /// 登録モーダルで既存のプレイリストに曲を入れる
+    func add(playlistId: PlaylistId, songId: SongId) {
+        playlistsService.add(playlistId: playlistId, songId: songId)
+    }
+
+    /// 一覧のコンテキストメニューから削除して読み直す
+    func delete(playlistId: PlaylistId) {
+        playlistsService.delete(playlistId: playlistId)
+        load()
+    }
 }

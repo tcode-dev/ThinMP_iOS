@@ -235,7 +235,14 @@ final class AlbumDetailServiceMock: AlbumDetailServiceProtocol {
 }
 
 final class PlaylistDetailServiceMock: PlaylistDetailServiceProtocol {
+    struct UpdateCall {
+        let playlistId: PlaylistId
+        let name: String
+        let songIds: [SongId]
+    }
+
     let playlists: [PlaylistDetailModel]
+    private(set) var updateCalls: [UpdateCall] = []
 
     init(playlists: [PlaylistDetailModel]) {
         self.playlists = playlists
@@ -247,6 +254,10 @@ final class PlaylistDetailServiceMock: PlaylistDetailServiceProtocol {
 
     func findByIds(playlistIds: [PlaylistId]) -> [PlaylistDetailModel] {
         return playlistIds.compactMap { playlistId in playlists.first { $0.playlistId == playlistId } }
+    }
+
+    func update(playlistId: PlaylistId, name: String, songIds: [SongId]) {
+        updateCalls.append(UpdateCall(playlistId: playlistId, name: name, songIds: songIds))
     }
 }
 
@@ -270,6 +281,10 @@ final class SongsServiceMock: SongsServiceProtocol {
 final class PlaylistsServiceMock: PlaylistsServiceProtocol {
     let playlists: [PlaylistModel]
     private(set) var findAllCalls = 0
+    private(set) var updateCalls: [[PlaylistId]] = []
+    private(set) var createCalls: [(songId: SongId, name: String)] = []
+    private(set) var addCalls: [(playlistId: PlaylistId, songId: SongId)] = []
+    private(set) var deleteCalls: [PlaylistId] = []
 
     init(playlists: [PlaylistModel]) {
         self.playlists = playlists
@@ -279,6 +294,22 @@ final class PlaylistsServiceMock: PlaylistsServiceProtocol {
         findAllCalls += 1
 
         return playlists
+    }
+
+    func create(songId: SongId, name: String) {
+        createCalls.append((songId, name))
+    }
+
+    func add(playlistId: PlaylistId, songId: SongId) {
+        addCalls.append((playlistId, songId))
+    }
+
+    func update(playlistIds: [PlaylistId]) {
+        updateCalls.append(playlistIds)
+    }
+
+    func delete(playlistId: PlaylistId) {
+        deleteCalls.append(playlistId)
     }
 }
 
@@ -297,4 +328,6 @@ final class BlockingFavoriteSongsServiceMock: FavoriteSongsServiceProtocol {
     func resume(with songs: [SongModel]) {
         continuations.removeFirst().resume(returning: songs)
     }
+
+    func update(songIds: [SongId]) {}
 }

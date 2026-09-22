@@ -8,10 +8,9 @@
 import SwiftUI
 
 struct FavoriteSongButtonView: View {
-    private let register = FavoriteSongRegister()
-
     let songId: SongId
     var callback: () -> Void = {}
+    var register: FavoriteSongRegisterProtocol = FavoriteSongRegister()
 
     var body: some View {
         RegisterToggleButtonView(

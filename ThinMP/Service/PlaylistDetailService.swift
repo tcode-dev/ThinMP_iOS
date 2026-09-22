@@ -35,6 +35,10 @@ struct PlaylistDetailService: PlaylistDetailServiceProtocol {
         return await createModels(playlists: playlists)
     }
 
+    func update(playlistId: PlaylistId, name: String, songIds: [SongId]) {
+        playlistRegister.update(playlistId: playlistId, name: name, songIds: songIds)
+    }
+
     /// 全プレイリストの曲をまとめて 1 回で取り、プレイリストごとに振り分ける
     /// SongRepository.findByIds はライブラリ全件を舐めるので、プレイリストごとに呼ばない
     /// スキャンはバックグラウンドで行い、SwiftData の読み書きだけメインアクターに残す

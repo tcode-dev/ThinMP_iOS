@@ -34,4 +34,8 @@ struct FavoriteSongsService: FavoriteSongsServiceProtocol {
 
         return songs
     }
+
+    func update(songIds: [SongId]) {
+        favoriteSongRegister.update(songIds: songIds)
+    }
 }

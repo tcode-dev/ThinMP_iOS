@@ -40,4 +40,9 @@ class PlaylistDetailViewModel: ObservableObject {
 
         return task
     }
+
+    /// 編集ページの名前、並び順、削除を保存する
+    func save(playlistId: PlaylistId, name: String) {
+        playlistDetailService.update(playlistId: playlistId, name: name, songIds: songs.map { $0.songId })
+    }
 }
