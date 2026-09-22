@@ -18,16 +18,7 @@ struct SongsPageView: View {
             ZStack(alignment: .top) {
                 VStack(spacing: 0) {
                     ZStack(alignment: .top) {
-                        ListNavBarView(top: geometry.safeAreaInsets.top, rect: $headerRect) {
-                            HStack {
-                                BackButtonView()
-                                Spacer()
-                                HeaderTitleView(LabelConstant.songs)
-                                Spacer()
-                                Spacer()
-                                    .frame(width: StyleConstant.button)
-                            }
-                        }
+                        ListNavBarView(title: LabelConstant.songs, top: geometry.safeAreaInsets.top, headerRect: $headerRect)
                         ScrollView {
                             VStack(alignment: .leading) {
                                 ListEmptyHeaderView(headerRect: $headerRect, top: geometry.safeAreaInsets.top)
@@ -43,9 +34,7 @@ struct SongsPageView: View {
                     }
                 }
             }
-            .toolbar(.hidden, for: .navigationBar)
-            .navigationTitle("")
-            .ignoresSafeArea(.container)
+            .modifier(PageModifier())
             .task {
                 await vm.load().value
             }

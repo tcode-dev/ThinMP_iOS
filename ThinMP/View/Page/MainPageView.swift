@@ -57,9 +57,7 @@ struct MainPageView: View {
                     }
                     MiniPlayerView(bottom: geometry.safeAreaInsets.bottom)
                 }
-                .toolbar(.hidden, for: .navigationBar)
-                .navigationTitle("")
-                .ignoresSafeArea(.container)
+                .modifier(PageModifier())
                 .task {
                     await vm.load().value
                 }

@@ -47,9 +47,7 @@ struct PlaylistDetailPageView: View {
                     }
                 }
             }
-            .toolbar(.hidden, for: .navigationBar)
-            .navigationTitle("")
-            .ignoresSafeArea(.container)
+            .modifier(PageModifier())
             .task {
                 await vm.load(playlistId: playlistId).value
             }

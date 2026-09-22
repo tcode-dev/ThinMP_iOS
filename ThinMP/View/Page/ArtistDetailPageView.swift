@@ -55,9 +55,7 @@ struct ArtistDetailPageView: View {
                     }
                 }
             }
-            .toolbar(.hidden, for: .navigationBar)
-            .navigationTitle("")
-            .ignoresSafeArea(.container)
+            .modifier(PageModifier())
             .task {
                 await vm.load(artistId: artistId).value
             }

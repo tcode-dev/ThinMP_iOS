@@ -7,28 +7,19 @@
 
 import SwiftUI
 
+/// 一覧の先頭に置くナビゲーションバー分の空き。自分の位置を親に渡し、ナビゲーションバーの背景表示に使う
 struct ListEmptyHeaderView: View {
     @Binding var headerRect: CGRect
 
     let top: CGFloat
 
     var body: some View {
-        ZStack {
-            GeometryReader { gometry in
-                createEmptyView(gometry: gometry)
+        Color.clear
+            .frame(height: StyleConstant.Height.row + top)
+            .onGeometryChange(for: CGRect.self) { proxy in
+                proxy.frame(in: .global)
+            } action: { rect in
+                headerRect = rect
             }
-        }
-        .frame(height: StyleConstant.Height.row + top)
-    }
-
-    private func createEmptyView(gometry: GeometryProxy) -> some View {
-        DispatchQueue.main.async {
-            headerRect = gometry.frame(in: .global)
-        }
-
-        return HStack {
-            Text("")
-        }
-        .frame(height: StyleConstant.Height.row + top)
     }
 }

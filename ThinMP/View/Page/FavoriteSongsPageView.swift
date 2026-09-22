@@ -18,15 +18,9 @@ struct FavoriteSongsPageView: View {
             ZStack(alignment: .top) {
                 VStack(spacing: 0) {
                     ZStack(alignment: .top) {
-                        ListNavBarView(top: geometry.safeAreaInsets.top, rect: $headerRect) {
-                            HStack {
-                                BackButtonView()
-                                Spacer()
-                                HeaderTitleView(LabelConstant.favoriteSongs)
-                                Spacer()
-                                EditButtonView {
-                                    FavoriteSongsEditPageView()
-                                }
+                        ListNavBarView(title: LabelConstant.favoriteSongs, top: geometry.safeAreaInsets.top, headerRect: $headerRect) {
+                            EditButtonView {
+                                FavoriteSongsEditPageView()
                             }
                         }
                         ScrollView {
@@ -44,9 +38,7 @@ struct FavoriteSongsPageView: View {
                     }
                 }
             }
-            .toolbar(.hidden, for: .navigationBar)
-            .navigationTitle("")
-            .ignoresSafeArea(.container)
+            .modifier(PageModifier())
             .task {
                 await vm.load().value
             }

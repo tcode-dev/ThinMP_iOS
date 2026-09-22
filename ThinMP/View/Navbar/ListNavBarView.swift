@@ -7,22 +7,40 @@
 
 import SwiftUI
 
-struct ListNavBarView<Content>: View where Content: View {
+/// 一覧ページのナビゲーションバー。戻るボタンとタイトルを持ち、一覧がスクロールで潜り込んだら背景を出す
+struct ListNavBarView<Trailing: View>: View {
+    let title: String
     let top: CGFloat
-    @Binding var rect: CGRect
-    let content: () -> Content
+    /// 一覧側の `ListEmptyHeaderView` の位置。ここが上端より上に行ったら背景を出す
+    @Binding var headerRect: CGRect
+    /// 右端に置くボタン。戻るボタンと同じ幅に揃えてタイトルを中央に保つ
+    let trailing: () -> Trailing
+
+    init(title: String, top: CGFloat, headerRect: Binding<CGRect>, @ViewBuilder trailing: @escaping () -> Trailing) {
+        self.title = title
+        self.top = top
+        _headerRect = headerRect
+        self.trailing = trailing
+    }
 
     var body: some View {
         ZStack {
             createHeaderView()
-            content()
-                .frame(height: StyleConstant.Height.row)
-                .padding(EdgeInsets(
-                    top: top,
-                    leading: 0,
-                    bottom: 0,
-                    trailing: 0
-                ))
+            HStack {
+                BackButtonView()
+                Spacer()
+                HeaderTitleView(title)
+                Spacer()
+                trailing()
+                    .frame(width: StyleConstant.button, height: StyleConstant.button)
+            }
+            .frame(height: StyleConstant.Height.row)
+            .padding(EdgeInsets(
+                top: top,
+                leading: 0,
+                bottom: 0,
+                trailing: 0
+            ))
         }
         .frame(height: StyleConstant.Height.row + top, alignment: .bottom)
         .zIndex(1)
@@ -41,10 +59,17 @@ struct ListNavBarView<Content>: View where Content: View {
     }
 
     private func opacity() -> Double {
-        if rect.origin.y >= 0 {
+        if headerRect.origin.y >= 0 {
             return 0
         }
 
         return 1
+    }
+}
+
+extension ListNavBarView where Trailing == Color {
+    /// 右端に置くものがないページ用。戻るボタン分の空きだけ確保する
+    init(title: String, top: CGFloat, headerRect: Binding<CGRect>) {
+        self.init(title: title, top: top, headerRect: headerRect) { Color.clear }
     }
 }
