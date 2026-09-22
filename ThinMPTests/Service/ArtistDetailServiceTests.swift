@@ -5,8 +5,6 @@
 //  Created by tk on 2026/09/22.
 //
 
-import Foundation
-import MediaPlayer
 import Testing
 @testable import ThinMP
 
@@ -24,7 +22,7 @@ struct ArtistDetailServiceTests {
     }
 
     @Test
-    func findByIdComposesAlbumsSongsAndCounts() throws {
+    func findByIdComposesAlbumsAndSongs() throws {
         let service = makeService(
             artists: [ArtistModel(artistId: artistId, primaryText: "Artist")],
             albums: [album1, album2],
@@ -37,7 +35,6 @@ struct ArtistDetailServiceTests {
         #expect(artist.albums.map { $0.albumId.id } == [1, 2])
         // 曲はアルバムの順に並ぶ
         #expect(artist.songs.map { $0.songId.id } == [11, 12, 21])
-        #expect(artist.secondaryText == String(format: NSLocalizedString(LabelConstant.albumsAndSongsCount, comment: ""), 2, 3))
     }
 
     @Test
@@ -60,6 +57,6 @@ struct ArtistDetailServiceTests {
 
         #expect(artists.map { $0.artistId.id } == [20, 10])
         #expect(artists.map { $0.primaryText } == ["B", "A"])
-        #expect(artists.allSatisfy { $0.albums.isEmpty && $0.songs.isEmpty && $0.secondaryText == nil })
+        #expect(artists.allSatisfy { $0.albums.isEmpty && $0.songs.isEmpty })
     }
 }

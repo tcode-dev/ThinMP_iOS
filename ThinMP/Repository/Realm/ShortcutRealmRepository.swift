@@ -14,15 +14,15 @@ struct ShortcutRealmRepository: ShortcutRepositoryProtocol {
         realm = store.realm()
     }
 
-    func add(itemId: ItemId, type: ShortcutType) {
-        if exists(itemId: itemId, type: type) {
+    func add(target: ShortcutTarget) {
+        if exists(target: target) {
             return
         }
 
         let shortcut = ShortcutRealmModel()
 
-        shortcut.itemId = itemId.id
-        shortcut.type = type.rawValue
+        shortcut.itemId = target.itemId
+        shortcut.type = target.type.rawValue
         shortcut.order = incrementOrder()
 
         try! realm.write {
@@ -36,8 +36,8 @@ struct ShortcutRealmRepository: ShortcutRepositoryProtocol {
             .compactMap { toEntity(model: $0) }
     }
 
-    func exists(itemId: ItemId, type: ShortcutType) -> Bool {
-        return !find(itemId: itemId, type: type).isEmpty
+    func exists(target: ShortcutTarget) -> Bool {
+        return !find(target: target).isEmpty
     }
 
     func update(shortcutIds: [ShortcutId]) {
@@ -45,8 +45,8 @@ struct ShortcutRealmRepository: ShortcutRepositoryProtocol {
         sort(shortcutIds: shortcutIds)
     }
 
-    func delete(itemId: ItemId, type: ShortcutType) {
-        let model = find(itemId: itemId, type: type)
+    func delete(target: ShortcutTarget) {
+        let model = find(target: target)
 
         if model.isEmpty {
             return
@@ -57,16 +57,17 @@ struct ShortcutRealmRepository: ShortcutRepositoryProtocol {
         }
     }
 
-    private func find(itemId: ItemId, type: ShortcutType) -> Results<ShortcutRealmModel> {
-        return realm.objects(ShortcutRealmModel.self).filter("\(ShortcutRealmModel.ITEM_ID) = '\(itemId.id)' AND \(ShortcutRealmModel.TYPE) = \(type.rawValue)")
+    private func find(target: ShortcutTarget) -> Results<ShortcutRealmModel> {
+        return realm.objects(ShortcutRealmModel.self).filter("\(ShortcutRealmModel.ITEM_ID) = '\(target.itemId)' AND \(ShortcutRealmModel.TYPE) = \(target.type.rawValue)")
     }
 
     private func findByIds(shortcutIds: [ShortcutId]) -> Results<ShortcutRealmModel> {
         return realm.objects(ShortcutRealmModel.self).filter("\(ShortcutRealmModel.ID) IN %@", shortcutIds.map { $0.id })
     }
 
+    /// 指す先が読めない行は nil
     private func toEntity(model: ShortcutRealmModel) -> ShortcutEntity? {
-        return ShortcutEntity(id: model.id, itemId: model.itemId, type: model.type)
+        return ShortcutTarget(itemId: model.itemId, type: model.type).map { ShortcutEntity(shortcutId: ShortcutId(id: model.id), target: $0) }
     }
 
     /// 渡した id 以外を消す。編集ページで消されたものを反映する

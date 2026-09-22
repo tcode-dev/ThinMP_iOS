@@ -135,21 +135,21 @@ final class ShortcutRepositoryMock: ShortcutRepositoryProtocol {
         self.shortcuts = shortcuts
     }
 
-    func add(itemId: ItemId, type: ShortcutType) {
-        if exists(itemId: itemId, type: type) {
+    func add(target: ShortcutTarget) {
+        if exists(target: target) {
             return
         }
 
         // 実装と同じく新しいものが先頭
-        shortcuts.insert(ShortcutEntity(shortcutId: ShortcutId(id: UUID().uuidString), itemId: itemId, type: type), at: 0)
+        shortcuts.insert(ShortcutEntity(shortcutId: ShortcutId(id: UUID().uuidString), target: target), at: 0)
     }
 
     func findAll() -> [ShortcutEntity] {
         return shortcuts
     }
 
-    func exists(itemId: ItemId, type: ShortcutType) -> Bool {
-        return shortcuts.contains { $0.itemId == itemId && $0.type == type }
+    func exists(target: ShortcutTarget) -> Bool {
+        return shortcuts.contains { $0.target == target }
     }
 
     func update(shortcutIds: [ShortcutId]) {
@@ -157,8 +157,8 @@ final class ShortcutRepositoryMock: ShortcutRepositoryProtocol {
         shortcuts = shortcutIds.compactMap { shortcutId in shortcuts.first { $0.shortcutId == shortcutId } }
     }
 
-    func delete(itemId: ItemId, type: ShortcutType) {
-        shortcuts.removeAll { $0.itemId == itemId && $0.type == type }
+    func delete(target: ShortcutTarget) {
+        shortcuts.removeAll { $0.target == target }
     }
 }
 

@@ -7,14 +7,11 @@
 
 import MediaPlayer
 
-struct ArtistDetailModel: DetailProtocol {
+/// 説明("%d albums, %d songs")は albums / songs の数から View が組み立てる
+struct ArtistDetailModel: MediaProtocol {
     var artistId: ArtistId
     var primaryText: String?
-    var secondaryText: String?
     var artwork: MPMediaItemArtwork?
     var albums: [AlbumModel]
     var songs: [SongModel]
-    var id: String {
-        return String(artistId.id)
-    }
 }

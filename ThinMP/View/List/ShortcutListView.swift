@@ -19,34 +19,26 @@ struct ShortcutListView: View {
 
         LazyVGrid(columns: layout.columns) {
             ForEach(shortcuts) { shortcut in
-                NavigationLink(destination: destination(shortcut)) {
+                NavigationLink(destination: destination(shortcut.target)) {
                     ShortcutCellView(shortcut: shortcut, size: layout.cellSize)
                 }
                 .contentShape(RoundedRectangle(cornerRadius: StyleConstant.cornerRadius))
                 .contextMenu {
-                    if shortcut.type == .artist {
-                        FavoriteArtistButtonView(artistId: shortcut.itemId.artistId)
+                    if case .artist(let artistId) = shortcut.target {
+                        FavoriteArtistButtonView(artistId: artistId)
                     }
-                    shortcutButton(shortcut)
+                    ShortcutButtonView(target: shortcut.target, callback: callback)
                 }
             }
         }
     }
 
     @ViewBuilder
-    private func destination(_ shortcut: ShortcutModel) -> some View {
-        switch shortcut.type {
-        case .artist: ArtistDetailPageView(artistId: shortcut.itemId.artistId)
-        case .album: AlbumDetailPageView(albumId: shortcut.itemId.albumId)
-        case .playlist: PlaylistDetailPageView(playlistId: shortcut.itemId.playlistId)
-        }
-    }
-
-    private func shortcutButton(_ shortcut: ShortcutModel) -> ShortcutButtonView {
-        switch shortcut.type {
-        case .artist: return ShortcutButtonView(artistId: shortcut.itemId.artistId, callback: callback)
-        case .album: return ShortcutButtonView(albumId: shortcut.itemId.albumId, callback: callback)
-        case .playlist: return ShortcutButtonView(playlistId: shortcut.itemId.playlistId, callback: callback)
+    private func destination(_ target: ShortcutTarget) -> some View {
+        switch target {
+        case .artist(let artistId): ArtistDetailPageView(artistId: artistId)
+        case .album(let albumId): AlbumDetailPageView(albumId: albumId)
+        case .playlist(let playlistId): PlaylistDetailPageView(playlistId: playlistId)
         }
     }
 }

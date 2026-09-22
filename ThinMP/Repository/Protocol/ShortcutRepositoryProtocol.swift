@@ -7,13 +7,13 @@
 
 @MainActor
 protocol ShortcutRepositoryProtocol {
-    func add(itemId: ItemId, type: ShortcutType)
+    func add(target: ShortcutTarget)
 
     func findAll() -> [ShortcutEntity]
 
-    func exists(itemId: ItemId, type: ShortcutType) -> Bool
+    func exists(target: ShortcutTarget) -> Bool
 
     func update(shortcutIds: [ShortcutId])
 
-    func delete(itemId: ItemId, type: ShortcutType)
+    func delete(target: ShortcutTarget)
 }

@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-/// 詳細ページ先頭のヒーロー。content(画像)の上にタイトルと説明を重ねる
-struct HeroHeaderView<Content>: View where Content: View {
+/// 詳細ページ先頭のヒーロー。content(画像)の上にタイトルと説明(secondaryText)を重ねる
+struct HeroHeaderView<Content: View, SecondaryText: View>: View {
     @Binding var headerRect: CGRect
 
     let width: CGFloat
@@ -16,8 +16,9 @@ struct HeroHeaderView<Content>: View where Content: View {
     let size: CGFloat
     let top: CGFloat
     let primaryText: String?
-    let secondaryText: String?
-    let content: () -> Content
+    @ViewBuilder let content: () -> Content
+    /// 説明の行。ページごとにライブラリの文字列かラベルかが違うので、SecondaryTextView を作って渡す
+    @ViewBuilder let secondaryText: () -> SecondaryText
 
     let isPad = UIDevice.current.userInterfaceIdiom == .pad
 
@@ -37,7 +38,7 @@ struct HeroHeaderView<Content>: View where Content: View {
                     headerRect = rect
                 }
                 .offset(y: primaryTextOffset)
-            SecondaryTextView(secondaryText)
+            secondaryText()
                 .frame(width: abs(width - (StyleConstant.button * 2)), height: 25, alignment: .center)
                 .offset(y: secondaryTextOffset)
                 .padding(.leading, StyleConstant.button)

@@ -75,7 +75,7 @@ struct MainServiceTests {
 
     @Test
     func findShortcutsDelegatesToShortcutService() async {
-        let shortcut = ShortcutModel(shortcutId: ShortcutId(id: "s1"), itemId: ItemId(id: "10"), type: .artist, primaryText: "Artist")
+        let shortcut = ShortcutModel(shortcutId: ShortcutId(id: "s1"), target: .artist(ArtistId(id: 10)), primaryText: "Artist")
         let shortcutService = ShortcutServiceMock(shortcuts: [shortcut])
         let service = makeService(userDefaults: makeUserDefaults(), shortcutService: shortcutService)
 

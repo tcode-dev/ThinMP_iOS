@@ -7,13 +7,10 @@
 
 import MediaPlayer
 
-struct PlaylistDetailModel: DetailProtocol {
+/// 説明は「プレイリスト」のラベル固定なので持たず、View が出す
+struct PlaylistDetailModel: MediaProtocol {
     var playlistId: PlaylistId
     var primaryText: String?
-    var secondaryText: String?
     var artwork: MPMediaItemArtwork?
     var songs: [SongModel] = []
-    var id: String {
-        return playlistId.id
-    }
 }

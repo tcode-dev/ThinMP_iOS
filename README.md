@@ -74,7 +74,7 @@ Audio, AirPlay, and Picture in Picture
 
 `View` → `ViewModel` → `Service` → `Repository` → `Model`
 
-`Service` exists only where there is composition: it combines several repositories, or a repository with the device library (for example, favorite ids → library scan → drop what is no longer in the library, and save that back). A method that would only delegate to a `Repository` does not belong in a `Service`.
+Every read goes through a `Service`, so the `ViewModel` has a single kind of dependency for reading. Where there is composition the `Service` does it: it combines several repositories, or a repository with the device library (for example, favorite ids → library scan → drop what is no longer in the library, and save that back). Where there is none (`AlbumsService`, `ArtistsService`, `SongsService`) it simply delegates to the `Repository`.
 
 ### Write
 

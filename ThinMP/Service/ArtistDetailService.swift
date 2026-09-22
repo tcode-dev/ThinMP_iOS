@@ -29,9 +29,8 @@ struct ArtistDetailService: ArtistDetailServiceProtocol {
 
         let albums = albumRepository.findByArtistId(artistId: artistId)
         let songs = songRepository.findByAlbumIds(albumIds: albums.map { $0.albumId })
-        let secondaryText = String(format: NSLocalizedString(LabelConstant.albumsAndSongsCount, comment: ""), albums.count, songs.count)
 
-        return ArtistDetailModel(artistId: artist.artistId, primaryText: artist.primaryText, secondaryText: secondaryText, artwork: artwork(albums: albums), albums: albums, songs: songs)
+        return ArtistDetailModel(artistId: artist.artistId, primaryText: artist.primaryText, artwork: artwork(albums: albums), albums: albums, songs: songs)
     }
 
     /// ショートカット用。アートワークのためにアルバムは引くが、albums / songs は空のまま
@@ -39,7 +38,7 @@ struct ArtistDetailService: ArtistDetailServiceProtocol {
         return artistRepository.findByIds(artistIds: artistIds).map { artist in
             let albums = albumRepository.findByArtistId(artistId: artist.artistId)
 
-            return ArtistDetailModel(artistId: artist.artistId, primaryText: artist.primaryText, secondaryText: nil, artwork: artwork(albums: albums), albums: [], songs: [])
+            return ArtistDetailModel(artistId: artist.artistId, primaryText: artist.primaryText, artwork: artwork(albums: albums), albums: [], songs: [])
         }
     }
 

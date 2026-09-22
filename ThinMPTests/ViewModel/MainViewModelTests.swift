@@ -10,7 +10,7 @@ import Testing
 
 @MainActor
 struct MainViewModelTests {
-    private let shortcut = ShortcutModel(shortcutId: ShortcutId(id: "s1"), itemId: ItemId(id: "10"), type: .artist, primaryText: "Artist")
+    private let shortcut = ShortcutModel(shortcutId: ShortcutId(id: "s1"), target: .artist(ArtistId(id: 10)), primaryText: "Artist")
     private let album = AlbumModel(albumId: AlbumId(id: 1), primaryText: "Album")
 
     private func makeSettings(isShortcutVisible: Bool, isRecentlyVisible: Bool) -> MainSettings {
@@ -47,8 +47,8 @@ struct MainViewModelTests {
 @MainActor
 struct MainEditViewModelTests {
     private let shortcuts = [
-        ShortcutModel(shortcutId: ShortcutId(id: "s1"), itemId: ItemId(id: "10"), type: .artist, primaryText: "A"),
-        ShortcutModel(shortcutId: ShortcutId(id: "s2"), itemId: ItemId(id: "20"), type: .album, primaryText: "B"),
+        ShortcutModel(shortcutId: ShortcutId(id: "s1"), target: .artist(ArtistId(id: 10)), primaryText: "A"),
+        ShortcutModel(shortcutId: ShortcutId(id: "s2"), target: .album(AlbumId(id: 20)), primaryText: "B"),
     ]
 
     private func makeSettings() -> MainSettings {
@@ -74,7 +74,7 @@ struct MainEditViewModelTests {
     @Test
     func saveWritesEditedSettingsAndShortcutOrder() async {
         let service = MainServiceMock(settings: makeSettings(), shortcuts: shortcuts)
-        let shortcutRepository = ShortcutRepositoryMock(shortcuts: shortcuts.map { ShortcutEntity(shortcutId: $0.shortcutId, itemId: $0.itemId, type: $0.type) })
+        let shortcutRepository = ShortcutRepositoryMock(shortcuts: shortcuts.map { ShortcutEntity(shortcutId: $0.shortcutId, target: $0.target) })
         let vm = MainEditViewModel(mainService: service, shortcutRepository: shortcutRepository)
 
         await vm.load().value
