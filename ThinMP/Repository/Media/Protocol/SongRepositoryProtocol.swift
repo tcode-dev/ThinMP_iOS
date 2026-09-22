@@ -12,5 +12,5 @@ protocol SongRepositoryProtocol {
 
     func findByAlbumId(albumId: AlbumId) -> [SongModel]
 
-    func findByAlbumIds(albumIds: [AlbumId]) -> [SongModel]
+    func findByArtistId(artistId: ArtistId) -> [SongModel]
 }

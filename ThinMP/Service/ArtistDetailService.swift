@@ -28,7 +28,9 @@ struct ArtistDetailService: ArtistDetailServiceProtocol {
         }
 
         let albums = albumRepository.findByArtistId(artistId: artistId)
-        let songs = songRepository.findByAlbumIds(albumIds: albums.map { $0.albumId })
+        // 曲は 1 回のクエリで引き、アルバムの並び順に揃える(アルバムごとに引くとアルバム数分クエリが走る)
+        let songsByAlbum = Dictionary(grouping: songRepository.findByArtistId(artistId: artistId)) { $0.albumId }
+        let songs = albums.flatMap { songsByAlbum[$0.albumId] ?? [] }
 
         return ArtistDetailModel(artistId: artist.artistId, primaryText: artist.primaryText, artwork: artwork(albums: albums), albums: albums, songs: songs)
     }
