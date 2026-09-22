@@ -14,14 +14,7 @@ struct ListNavBarView<Trailing: View>: View {
     /// 一覧側の `ListEmptyHeaderView` の位置。ここが上端より上に行ったら背景を出す
     @Binding var headerRect: CGRect
     /// 右端に置くボタン。戻るボタンと同じ幅に揃えてタイトルを中央に保つ
-    let trailing: () -> Trailing
-
-    init(title: String, top: CGFloat, headerRect: Binding<CGRect>, @ViewBuilder trailing: @escaping () -> Trailing) {
-        self.title = title
-        self.top = top
-        _headerRect = headerRect
-        self.trailing = trailing
-    }
+    @ViewBuilder let trailing: () -> Trailing
 
     var body: some View {
         ZStack {
