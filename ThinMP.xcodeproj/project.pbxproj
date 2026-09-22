@@ -203,6 +203,10 @@
 		52BF725186C711FB7266521D /* EditPageLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B28E520F6C368EE60E2778 /* EditPageLayout.swift */; };
 		52B9992A840B28F71F5AD8D5 /* Sequence+Reordered.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B528490FC042568C1AA15E /* Sequence+Reordered.swift */; };
 		52B76EDBFFA46E975B7E5441 /* LoadTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BDE437A6348D1B5DC1162E /* LoadTask.swift */; };
+		52B1D0D1908F0691A23B4F5A /* PlayPauseButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B45E44ABFC41FCF30E2EDE /* PlayPauseButtonView.swift */; };
+		52B81927018AD3D30646257A /* PlayerSeekBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BE7EA7F854B79754817781 /* PlayerSeekBarView.swift */; };
+		52BCC84F9A8446DD0F2C9FAA /* PlayerControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B973881F0BF65C2EE2142B /* PlayerControlsView.swift */; };
+		52BDEC23CD695B8DC04CC472 /* PlayerOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B116A09B7B158A4CC2576F /* PlayerOptionsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -416,6 +420,10 @@
 		52B28E520F6C368EE60E2778 /* EditPageLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPageLayout.swift; sourceTree = "<group>"; };
 		52B528490FC042568C1AA15E /* Sequence+Reordered.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sequence+Reordered.swift"; sourceTree = "<group>"; };
 		52BDE437A6348D1B5DC1162E /* LoadTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadTask.swift; sourceTree = "<group>"; };
+		52B45E44ABFC41FCF30E2EDE /* PlayPauseButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayPauseButtonView.swift; sourceTree = "<group>"; };
+		52BE7EA7F854B79754817781 /* PlayerSeekBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerSeekBarView.swift; sourceTree = "<group>"; };
+		52B973881F0BF65C2EE2142B /* PlayerControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerControlsView.swift; sourceTree = "<group>"; };
+		52B116A09B7B158A4CC2576F /* PlayerOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerOptionsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -764,6 +772,9 @@
 		52B5BC8323DD45DB000C7820 /* Player */ = {
 			isa = PBXGroup;
 			children = (
+				52B116A09B7B158A4CC2576F /* PlayerOptionsView.swift */,
+				52B973881F0BF65C2EE2142B /* PlayerControlsView.swift */,
+				52BE7EA7F854B79754817781 /* PlayerSeekBarView.swift */,
 				52B5BC8423DD45FA000C7820 /* MiniPlayerView.swift */,
 				52A46DCE23E54B0F00BAC9AA /* PlayerView.swift */,
 			);
@@ -773,6 +784,7 @@
 		52BA93D523DA5A0000CA323F /* Button */ = {
 			isa = PBXGroup;
 			children = (
+				52B45E44ABFC41FCF30E2EDE /* PlayPauseButtonView.swift */,
 				52BA93D623DA5A2100CA323F /* BackButtonView.swift */,
 				52F979C525EBBCA80085F306 /* EditButtonView.swift */,
 				52F979CD25EBC3AC0085F306 /* FavoriteArtistButtonView.swift */,
@@ -1145,6 +1157,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52BDEC23CD695B8DC04CC472 /* PlayerOptionsView.swift in Sources */,
+				52BCC84F9A8446DD0F2C9FAA /* PlayerControlsView.swift in Sources */,
+				52B81927018AD3D30646257A /* PlayerSeekBarView.swift in Sources */,
+				52B1D0D1908F0691A23B4F5A /* PlayPauseButtonView.swift in Sources */,
 				52B76EDBFFA46E975B7E5441 /* LoadTask.swift in Sources */,
 				52B9992A840B28F71F5AD8D5 /* Sequence+Reordered.swift in Sources */,
 				52BF725186C711FB7266521D /* EditPageLayout.swift in Sources */,
