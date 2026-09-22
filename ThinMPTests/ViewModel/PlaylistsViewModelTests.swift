@@ -60,6 +60,18 @@ struct PlaylistsViewModelTests {
         #expect(repository.findAll().map { $0.playlistId } == [PlaylistId(id: "b"), PlaylistId(id: "a")])
     }
 
+    /// 読み込みが終わる前に完了を押しても、空の playlists でプレイリストを消さない
+    @Test
+    func saveBeforeLoadDoesNotTouchRepository() {
+        let repository = makeRepository()
+        let vm = PlaylistsViewModel(playlistsService: makeService(), playlistRepository: repository)
+
+        #expect(!vm.isLoaded)
+        vm.save()
+
+        #expect(repository.findAll().map { $0.playlistId } == [PlaylistId(id: "a"), PlaylistId(id: "b")])
+    }
+
     @Test
     func createAndAddWriteToRepository() {
         let repository = makeRepository()

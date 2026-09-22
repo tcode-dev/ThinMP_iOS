@@ -11,7 +11,7 @@ struct MainEditPageView: View {
     @StateObject private var vm = MainEditViewModel()
 
     var body: some View {
-        EditPageLayout(onDone: vm.save) {
+        EditPageLayout(isDoneEnabled: vm.isLoaded, onDone: vm.save) {
             List {
                 ForEach($vm.settings.menus) { $setting in
                     MenuEditRowView(text: setting.menu.label, visibility: $setting.visibility)

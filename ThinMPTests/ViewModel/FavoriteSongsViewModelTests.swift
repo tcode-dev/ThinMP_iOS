@@ -46,6 +46,28 @@ struct FavoriteSongsViewModelTests {
         #expect(repository.updateCalls.map { $0.map { $0.id } } == [[3, 1]])
         #expect(repository.findAll().map { $0.id } == [3, 1])
     }
+
+    /// 読み込みが終わる前に完了を押しても、空の songs でお気に入りを上書きしない
+    @Test
+    func saveBeforeLoadDoesNotTouchRepository() async {
+        let repository = FavoriteSongRepositoryMock(songIds: [SongId(id: 1), SongId(id: 2)])
+        let service = BlockingFavoriteSongsServiceMock()
+        let vm = FavoriteSongsViewModel(favoriteSongsService: service, favoriteSongRepository: repository)
+
+        let task = vm.load()
+        await Task.yield()
+        #expect(!vm.isLoaded)
+
+        vm.save()
+
+        #expect(repository.updateCalls.isEmpty)
+        #expect(repository.findAll().map { $0.id } == [1, 2])
+
+        service.resume(with: [.fake(id: 1), .fake(id: 2)])
+        await task.value
+
+        #expect(vm.isLoaded)
+    }
 }
 
 @MainActor
@@ -65,5 +87,18 @@ struct FavoriteArtistsViewModelTests {
 
         #expect(repository.updateCalls.map { $0.map { $0.id } } == [[2, 1]])
         #expect(repository.findAll().map { $0.id } == [2, 1])
+    }
+
+    /// 読み込みが終わる前に完了を押しても、空の artists でお気に入りを上書きしない
+    @Test
+    func saveBeforeLoadDoesNotTouchRepository() {
+        let repository = FavoriteArtistRepositoryMock(artistIds: [ArtistId(id: 1), ArtistId(id: 2)])
+        let vm = FavoriteArtistsViewModel(favoriteArtistsService: FavoriteArtistsServiceMock(artists: []), favoriteArtistRepository: repository)
+
+        #expect(!vm.isLoaded)
+        vm.save()
+
+        #expect(repository.updateCalls.isEmpty)
+        #expect(repository.findAll().map { $0.id } == [1, 2])
     }
 }

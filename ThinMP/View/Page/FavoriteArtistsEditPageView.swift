@@ -11,7 +11,7 @@ struct FavoriteArtistsEditPageView: View {
     @StateObject private var vm = FavoriteArtistsViewModel()
 
     var body: some View {
-        EditPageLayout(onDone: vm.save) {
+        EditPageLayout(isDoneEnabled: vm.isLoaded, onDone: vm.save) {
             List {
                 ForEach(vm.artists) { artist in
                     PlainRowView(media: artist)

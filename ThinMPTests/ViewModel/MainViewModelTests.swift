@@ -89,4 +89,19 @@ struct MainEditViewModelTests {
         #expect(shortcutRepository.updateCalls == [[ShortcutId(id: "s2")]])
         #expect(shortcutRepository.findAll().map { $0.shortcutId } == [ShortcutId(id: "s2")])
     }
+
+    /// 読み込みが終わる前に完了を押しても、MainSettings.empty と空のショートカットで上書きしない
+    @Test
+    func saveBeforeLoadDoesNotTouchSettingsOrShortcuts() {
+        let service = MainServiceMock(settings: makeSettings(), shortcuts: shortcuts)
+        let shortcutRepository = ShortcutRepositoryMock(shortcuts: shortcuts.map { ShortcutEntity(shortcutId: $0.shortcutId, target: $0.target) })
+        let vm = MainEditViewModel(mainService: service, shortcutRepository: shortcutRepository)
+
+        #expect(!vm.isLoaded)
+        vm.save()
+
+        #expect(service.savedSettings.isEmpty)
+        #expect(shortcutRepository.updateCalls.isEmpty)
+        #expect(shortcutRepository.findAll().map { $0.shortcutId.id } == ["s1", "s2"])
+    }
 }
