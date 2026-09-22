@@ -28,7 +28,7 @@ final class FavoriteSongRepositoryMock: FavoriteSongRepositoryProtocol {
     }
 
     func exists(songId: SongId) -> Bool {
-        return songIds.contains { $0.equals(songId) }
+        return songIds.contains(songId)
     }
 
     func update(songIds: [SongId]) {
@@ -37,7 +37,7 @@ final class FavoriteSongRepositoryMock: FavoriteSongRepositoryProtocol {
     }
 
     func delete(songId: SongId) {
-        songIds.removeAll { $0.equals(songId) }
+        songIds.removeAll { $0 == songId }
     }
 }
 
@@ -54,7 +54,7 @@ final class FavoriteArtistRepositoryMock: FavoriteArtistRepositoryProtocol {
     }
 
     func exists(artistId: ArtistId) -> Bool {
-        return artistIds.contains { $0.id == artistId.id }
+        return artistIds.contains(artistId)
     }
 
     func add(artistId: ArtistId) {
@@ -67,7 +67,7 @@ final class FavoriteArtistRepositoryMock: FavoriteArtistRepositoryProtocol {
     }
 
     func delete(artistId: ArtistId) {
-        artistIds.removeAll { $0.id == artistId.id }
+        artistIds.removeAll { $0 == artistId }
     }
 }
 
@@ -90,7 +90,7 @@ final class PlaylistRepositoryMock: PlaylistRepositoryProtocol {
     }
 
     func add(playlistId: PlaylistId, songId: SongId) {
-        guard let index = playlists.firstIndex(where: { $0.playlistId.id == playlistId.id }) else { return }
+        guard let index = playlists.firstIndex(where: { $0.playlistId == playlistId }) else { return }
 
         playlists[index].songIds.append(songId)
     }
@@ -100,30 +100,30 @@ final class PlaylistRepositoryMock: PlaylistRepositoryProtocol {
     }
 
     func findById(playlistId: PlaylistId) -> PlaylistEntity {
-        return playlists.first { $0.playlistId.id == playlistId.id }!
+        return playlists.first { $0.playlistId == playlistId }!
     }
 
     func findByIds(playlistIds: [PlaylistId]) -> [PlaylistEntity] {
-        let ids = playlistIds.map { $0.id }
+        let ids = Set(playlistIds)
 
-        return playlists.filter { ids.contains($0.playlistId.id) }
+        return playlists.filter { ids.contains($0.playlistId) }
     }
 
     func update(playlistIds: [PlaylistId]) {
-        playlists = playlistIds.compactMap { playlistId in playlists.first { $0.playlistId.id == playlistId.id } }
+        playlists = playlistIds.compactMap { playlistId in playlists.first { $0.playlistId == playlistId } }
     }
 
     func update(playlistId: PlaylistId, name: String, songIds: [SongId]) {
         updateCalls.append(UpdateCall(playlistId: playlistId, name: name, songIds: songIds))
 
-        guard let index = playlists.firstIndex(where: { $0.playlistId.id == playlistId.id }) else { return }
+        guard let index = playlists.firstIndex(where: { $0.playlistId == playlistId }) else { return }
 
         playlists[index].name = name
         playlists[index].songIds = songIds
     }
 
     func delete(playlistId: PlaylistId) {
-        playlists.removeAll { $0.playlistId.id == playlistId.id }
+        playlists.removeAll { $0.playlistId == playlistId }
     }
 }
 
@@ -135,13 +135,13 @@ final class ShortcutRepositoryMock: ShortcutRepositoryProtocol {
         self.shortcuts = shortcuts
     }
 
-    func add(itemId: ShortcutItemIdProtocol, type: ShortcutType) {}
+    func add(itemId: ItemId, type: ShortcutType) {}
 
     func findAll() -> [ShortcutEntity] {
         return shortcuts
     }
 
-    func exists(itemId: ShortcutItemIdProtocol, type: ShortcutType) -> Bool {
+    func exists(itemId: ItemId, type: ShortcutType) -> Bool {
         return false
     }
 
@@ -150,7 +150,7 @@ final class ShortcutRepositoryMock: ShortcutRepositoryProtocol {
         shortcuts = shortcutIds.compactMap { shortcutId in shortcuts.first { $0.shortcutId == shortcutId } }
     }
 
-    func delete(itemId: ShortcutItemIdProtocol, type: ShortcutType) {}
+    func delete(itemId: ItemId, type: ShortcutType) {}
 }
 
 /// 端末のライブラリの代わり。findByIds は実装と同じく songIds の順序で返す
@@ -170,7 +170,7 @@ final class SongRepositoryMock: SongRepositoryProtocol {
     func findByIds(songIds: [SongId]) -> [SongModel] {
         findByIdsCalls.append(songIds)
 
-        return songIds.compactMap { songId in songs.first { $0.songId.equals(songId) } }
+        return songIds.compactMap { songId in songs.first { $0.songId == songId } }
     }
 
     func findByAlbumId(albumId: AlbumId) -> [SongModel] {
@@ -194,11 +194,11 @@ final class ArtistRepositoryMock: ArtistRepositoryProtocol {
     }
 
     func findById(artistId: ArtistId) -> ArtistModel? {
-        return artists.first { $0.artistId.id == artistId.id }
+        return artists.first { $0.artistId == artistId }
     }
 
     func findByIds(artistIds: [ArtistId]) -> [ArtistModel] {
-        return artistIds.compactMap { artistId in artists.first { $0.artistId.id == artistId.id } }
+        return artistIds.compactMap { artistId in artists.first { $0.artistId == artistId } }
     }
 }
 
@@ -210,11 +210,11 @@ final class ArtistDetailServiceMock: ArtistDetailServiceProtocol {
     }
 
     func findById(artistId: ArtistId) -> ArtistDetailModel? {
-        return artists.first { $0.artistId.id == artistId.id }
+        return artists.first { $0.artistId == artistId }
     }
 
     func findByIds(artistIds: [ArtistId]) -> [ArtistDetailModel] {
-        return artistIds.compactMap { artistId in artists.first { $0.artistId.id == artistId.id } }
+        return artistIds.compactMap { artistId in artists.first { $0.artistId == artistId } }
     }
 }
 
@@ -226,11 +226,11 @@ final class AlbumDetailServiceMock: AlbumDetailServiceProtocol {
     }
 
     func findById(albumId: AlbumId) -> AlbumDetailModel? {
-        return albums.first { $0.albumId.id == albumId.id }
+        return albums.first { $0.albumId == albumId }
     }
 
     func findByIds(albumIds: [AlbumId]) -> [AlbumDetailModel] {
-        return albumIds.compactMap { albumId in albums.first { $0.albumId.id == albumId.id } }
+        return albumIds.compactMap { albumId in albums.first { $0.albumId == albumId } }
     }
 }
 
@@ -242,11 +242,11 @@ final class PlaylistDetailServiceMock: PlaylistDetailServiceProtocol {
     }
 
     func findById(playlistId: PlaylistId) -> PlaylistDetailModel {
-        return playlists.first { $0.playlistId.id == playlistId.id }!
+        return playlists.first { $0.playlistId == playlistId }!
     }
 
     func findByIds(playlistIds: [PlaylistId]) -> [PlaylistDetailModel] {
-        return playlistIds.compactMap { playlistId in playlists.first { $0.playlistId.id == playlistId.id } }
+        return playlistIds.compactMap { playlistId in playlists.first { $0.playlistId == playlistId } }
     }
 }
 

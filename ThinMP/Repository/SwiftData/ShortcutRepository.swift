@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import MediaPlayer
 import SwiftData
 
 struct ShortcutRepository: ShortcutRepositoryProtocol {
@@ -16,12 +15,13 @@ struct ShortcutRepository: ShortcutRepositoryProtocol {
         self.store = store
     }
 
-    func add(itemId: ShortcutItemIdProtocol, type: ShortcutType) {
-        switch itemId {
-        case let value as MPMediaEntityPersistentID: add(itemId: String(value), type: type)
-        case let value as String: add(itemId: value, type: type)
-        default: break
+    func add(itemId: ItemId, type: ShortcutType) {
+        if exists(itemId: itemId, type: type) {
+            return
         }
+
+        store.context.insert(ShortcutDataModel(itemId: itemId.id, type: type, order: incrementOrder()))
+        store.save()
     }
 
     func findAll() -> [ShortcutEntity] {
@@ -30,12 +30,8 @@ struct ShortcutRepository: ShortcutRepositoryProtocol {
         return try! store.context.fetch(descriptor).compactMap { toEntity(model: $0) }
     }
 
-    func exists(itemId: ShortcutItemIdProtocol, type: ShortcutType) -> Bool {
-        switch itemId {
-        case let value as MPMediaEntityPersistentID: return exists(itemId: String(value), type: type)
-        case let value as String: return exists(itemId: value, type: type)
-        default: return false
-        }
+    func exists(itemId: ItemId, type: ShortcutType) -> Bool {
+        return find(itemId: itemId, type: type).count == 1
     }
 
     func update(shortcutIds: [ShortcutId]) {
@@ -43,26 +39,21 @@ struct ShortcutRepository: ShortcutRepositoryProtocol {
         sort(shortcutIds: shortcutIds)
     }
 
-    func delete(itemId: ShortcutItemIdProtocol, type: ShortcutType) {
-        switch itemId {
-        case let value as MPMediaEntityPersistentID: delete(itemId: String(value), type: type)
-        case let value as String: delete(itemId: value, type: type)
-        default: break
-        }
-    }
+    func delete(itemId: ItemId, type: ShortcutType) {
+        let models = find(itemId: itemId, type: type)
 
-    private func add(itemId: String, type: ShortcutType) {
-        if exists(itemId: itemId, type: type) {
+        if models.count == 0 {
             return
         }
 
-        store.context.insert(ShortcutDataModel(itemId: itemId, type: type, order: incrementOrder()))
+        models.forEach { store.context.delete($0) }
         store.save()
     }
 
-    private func find(itemId: String, type: ShortcutType) -> [ShortcutDataModel] {
+    private func find(itemId: ItemId, type: ShortcutType) -> [ShortcutDataModel] {
+        let id = itemId.id
         let typeValue = type.rawValue
-        let descriptor = FetchDescriptor<ShortcutDataModel>(predicate: #Predicate { $0.itemId == itemId && $0.type == typeValue })
+        let descriptor = FetchDescriptor<ShortcutDataModel>(predicate: #Predicate { $0.itemId == id && $0.type == typeValue })
 
         return try! store.context.fetch(descriptor)
     }
@@ -80,21 +71,6 @@ struct ShortcutRepository: ShortcutRepositoryProtocol {
         }
 
         return ShortcutEntity(shortcutId: ShortcutId(id: model.id), itemId: ItemId(id: model.itemId), type: type)
-    }
-
-    private func exists(itemId: String, type: ShortcutType) -> Bool {
-        return find(itemId: itemId, type: type).count == 1
-    }
-
-    private func delete(itemId: String, type: ShortcutType) {
-        let models = find(itemId: itemId, type: type)
-
-        if models.count == 0 {
-            return
-        }
-
-        models.forEach { store.context.delete($0) }
-        store.save()
     }
 
     private func delete(shortcutIds: [ShortcutId]) {

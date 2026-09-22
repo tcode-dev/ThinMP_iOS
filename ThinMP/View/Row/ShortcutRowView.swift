@@ -14,7 +14,7 @@ struct ShortcutRowView: View {
 
     var body: some View {
         HStack {
-            if shortcut.type == ShortcutType.ARTIST.rawValue {
+            if shortcut.type == .artist {
                 CircleImageView(artwork: shortcut.artwork, size: size)
             } else {
                 SquareImageView(artwork: shortcut.artwork, size: size)

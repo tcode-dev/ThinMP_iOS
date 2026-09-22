@@ -26,7 +26,7 @@ struct PlaylistDetailPageView: View {
                                     NavigationLink(destination: PlaylistDetailEditPageView(playlistId: playlistId, primaryText: vm.primaryText)) {
                                         MenuRowView(text: LabelConstant.edit)
                                     }
-                                    ShortcutButtonView(itemId: playlistId.id, type: ShortcutType.PLAYLIST)
+                                    ShortcutButtonView(itemId: playlistId.id, type: .playlist)
                                 }
                             }
                         }

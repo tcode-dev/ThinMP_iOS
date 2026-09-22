@@ -5,19 +5,19 @@
 //  Created by tk on 2021/05/08.
 //
 
-import MediaPlayer
 import SwiftUI
 
 struct ShortcutButtonView: View {
     @State private var initialDisplay: Bool = true
     @State private var exists: Bool = false
 
-    private let itemId: ShortcutItemIdProtocol
+    private let itemId: ItemId
     private let type: ShortcutType
     private let callback: () -> Void
 
-    init(itemId: ShortcutItemIdProtocol, type: ShortcutType, callback: @escaping () -> Void = {}) {
-        self.itemId = itemId
+    /// itemId はアーティスト / アルバム / プレイリストの id 文字列(各 Model の `id`)
+    init(itemId: String, type: ShortcutType, callback: @escaping () -> Void = {}) {
+        self.itemId = ItemId(id: itemId)
         self.type = type
         self.callback = callback
     }

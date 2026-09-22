@@ -5,7 +5,6 @@
 //  Created by tk on 2021/05/30.
 //
 
-import MediaPlayer
 import SwiftUI
 
 struct ShortcutListView: View {
@@ -33,33 +32,31 @@ struct ShortcutListView: View {
         LazyVGrid(columns: columns) {
             ForEach(shortcuts) { shortcut in
                 switch shortcut.type {
-                case ShortcutType.ARTIST.rawValue:
+                case .artist:
                     NavigationLink(destination: ArtistDetailPageView(artistId: shortcut.itemId.artistId)) {
                         ShortcutCellView(shortcut: shortcut, size: size)
                     }
                     .contentShape(RoundedRectangle(cornerRadius: StyleConstant.cornerRadius))
                     .contextMenu {
                         FavoriteArtistButtonView(artistId: shortcut.itemId.artistId)
-                        ShortcutButtonView(itemId: shortcut.itemId.id, type: ShortcutType.ARTIST, callback: callback)
+                        ShortcutButtonView(itemId: shortcut.itemId.id, type: .artist, callback: callback)
                     }
-                case ShortcutType.ALBUM.rawValue:
+                case .album:
                     NavigationLink(destination: AlbumDetailPageView(albumId: shortcut.itemId.albumId)) {
                         ShortcutCellView(shortcut: shortcut, size: size)
                     }
                     .contentShape(RoundedRectangle(cornerRadius: StyleConstant.cornerRadius))
                     .contextMenu {
-                        ShortcutButtonView(itemId: shortcut.itemId.id, type: ShortcutType.ALBUM, callback: callback)
+                        ShortcutButtonView(itemId: shortcut.itemId.id, type: .album, callback: callback)
                     }
-                case ShortcutType.PLAYLIST.rawValue:
+                case .playlist:
                     NavigationLink(destination: PlaylistDetailPageView(playlistId: shortcut.itemId.playlistId)) {
                         ShortcutCellView(shortcut: shortcut, size: size)
                     }
                     .contentShape(RoundedRectangle(cornerRadius: StyleConstant.cornerRadius))
                     .contextMenu {
-                        ShortcutButtonView(itemId: shortcut.itemId.id, type: ShortcutType.PLAYLIST, callback: callback)
+                        ShortcutButtonView(itemId: shortcut.itemId.id, type: .playlist, callback: callback)
                     }
-                default:
-                    EmptyView()
                 }
             }
         }

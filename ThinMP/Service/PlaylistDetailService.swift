@@ -43,12 +43,12 @@ struct PlaylistDetailService: PlaylistDetailServiceProtocol {
             songRepository.findByIds(songIds: songIds)
         }.value
         let songs = Dictionary(
-            found.map { ($0.songId.id, $0) },
+            found.map { ($0.songId, $0) },
             uniquingKeysWith: { first, _ in first }
         )
 
         return playlists.map { playlist in
-            let found = playlist.songIds.compactMap { songs[$0.id] }
+            let found = playlist.songIds.compactMap { songs[$0] }
 
             // 端末から削除された曲がプレイリストに残っている場合は取り除いて保存する
             if found.count != playlist.songIds.count {

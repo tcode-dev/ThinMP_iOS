@@ -31,33 +31,34 @@ struct ShortcutService: ShortcutServiceProtocol {
         let grouping = Dictionary(grouping: shortcuts) { $0.type }
             .mapValues { $0.map { $0.itemId } }
 
-        var shortcutDictionary: [ShortcutType: [DetailProtocol]] = [.ARTIST: [], .ALBUM: [], .PLAYLIST: []]
+        var shortcutDictionary: [ShortcutType: [DetailProtocol]] = [.artist: [], .album: [], .playlist: []]
 
         // アーティスト / アルバムはライブラリを舐めるのでバックグラウンドで解決する
         // プレイリストは PlaylistDetailService 側で同じことをしている
-        if let artistIds = grouping[.ARTIST] {
-            shortcutDictionary[.ARTIST] = await Task.detached(priority: .userInitiated) { [artistDetailService] in
+        if let artistIds = grouping[.artist] {
+            shortcutDictionary[.artist] = await Task.detached(priority: .userInitiated) { [artistDetailService] in
                 artistDetailService.findByIds(artistIds: artistIds.map { $0.artistId })
             }.value
         }
 
-        if let albumIds = grouping[.ALBUM] {
-            shortcutDictionary[.ALBUM] = await Task.detached(priority: .userInitiated) { [albumDetailService] in
+        if let albumIds = grouping[.album] {
+            shortcutDictionary[.album] = await Task.detached(priority: .userInitiated) { [albumDetailService] in
                 albumDetailService.findByIds(albumIds: albumIds.map { $0.albumId })
             }.value
         }
 
-        if let playlistIds = grouping[.PLAYLIST] {
-            shortcutDictionary[.PLAYLIST] = await playlistDetailService.findByIds(playlistIds: playlistIds.map { $0.playlistId })
+        if let playlistIds = grouping[.playlist] {
+            shortcutDictionary[.playlist] = await playlistDetailService.findByIds(playlistIds: playlistIds.map { $0.playlistId })
         }
 
-        let shortcutModels = shortcuts
-            .filter { shortcut in shortcutDictionary[shortcut.type]!.contains(where: { $0.shortcutId == shortcut.itemId.id }) }
-            .map { shortcut -> ShortcutModel in
-                let itemModel = shortcutDictionary[shortcut.type]!.first { $0.shortcutId == shortcut.itemId.id }!
-
-                return ShortcutModel(shortcutId: shortcut.shortcutId, itemId: shortcut.itemId, type: shortcut.type.rawValue, primaryText: itemModel.primaryText, artwork: itemModel.artwork)
+        // 端末に存在しないものは落とす(下の validation で数が減ったことを検出する)
+        let shortcutModels = shortcuts.compactMap { shortcut -> ShortcutModel? in
+            guard let item = shortcutDictionary[shortcut.type]?.first(where: { $0.id == shortcut.itemId.id }) else {
+                return nil
             }
+
+            return ShortcutModel(shortcutId: shortcut.shortcutId, itemId: shortcut.itemId, type: shortcut.type, primaryText: item.primaryText, artwork: item.artwork)
+        }
 
         // 端末から削除されたアーティスト、アルバム、プレイリストのショートカットは取り除いて読み直す
         if !validation(shortcuts: shortcuts, shortcutModels: shortcutModels) {

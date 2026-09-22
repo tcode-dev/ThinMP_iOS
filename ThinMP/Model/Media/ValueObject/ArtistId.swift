@@ -7,6 +7,6 @@
 
 import MediaPlayer
 
-struct ArtistId {
+struct ArtistId: Hashable {
     var id: MPMediaEntityPersistentID
 }

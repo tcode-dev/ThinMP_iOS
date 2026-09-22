@@ -13,7 +13,7 @@ struct ShortcutCellView: View {
 
     var body: some View {
         VStack {
-            if shortcut.type == ShortcutType.ARTIST.rawValue {
+            if shortcut.type == .artist {
                 CircleImageView(artwork: shortcut.artwork, size: size)
             } else {
                 SquareImageView(artwork: shortcut.artwork, size: size)

@@ -5,7 +5,6 @@
 //  Created by tk on 2021/05/08.
 //
 
-import MediaPlayer
 import RealmSwift
 
 struct ShortcutRealmRepository: ShortcutRepositoryProtocol {
@@ -15,11 +14,19 @@ struct ShortcutRealmRepository: ShortcutRepositoryProtocol {
         realm = store.realm()
     }
 
-    func add(itemId: ShortcutItemIdProtocol, type: ShortcutType) {
-        switch itemId {
-        case let value as MPMediaEntityPersistentID: add(itemId: String(value), type: type)
-        case let value as String: add(itemId: value, type: type)
-        default: break
+    func add(itemId: ItemId, type: ShortcutType) {
+        if exists(itemId: itemId, type: type) {
+            return
+        }
+
+        let shortcut = ShortcutRealmModel()
+
+        shortcut.itemId = itemId.id
+        shortcut.type = type.rawValue
+        shortcut.order = incrementOrder()
+
+        try! realm.write {
+            realm.add(shortcut)
         }
     }
 
@@ -29,12 +36,8 @@ struct ShortcutRealmRepository: ShortcutRepositoryProtocol {
             .compactMap { toEntity(model: $0) }
     }
 
-    func exists(itemId: ShortcutItemIdProtocol, type: ShortcutType) -> Bool {
-        switch itemId {
-        case let value as MPMediaEntityPersistentID: return exists(itemId: String(value), type: type)
-        case let value as String: return exists(itemId: value, type: type)
-        default: return false
-        }
+    func exists(itemId: ItemId, type: ShortcutType) -> Bool {
+        return find(itemId: itemId, type: type).count == 1
     }
 
     func update(shortcutIds: [ShortcutId]) {
@@ -42,32 +45,20 @@ struct ShortcutRealmRepository: ShortcutRepositoryProtocol {
         sort(shortcutIds: shortcutIds)
     }
 
-    func delete(itemId: ShortcutItemIdProtocol, type: ShortcutType) {
-        switch itemId {
-        case let value as MPMediaEntityPersistentID: delete(itemId: String(value), type: type)
-        case let value as String: delete(itemId: value, type: type)
-        default: break
-        }
-    }
+    func delete(itemId: ItemId, type: ShortcutType) {
+        let model = find(itemId: itemId, type: type)
 
-    private func add(itemId: String, type: ShortcutType) {
-        if exists(itemId: itemId, type: type) {
+        if model.count == 0 {
             return
         }
 
-        let shortcut = ShortcutRealmModel()
-
-        shortcut.itemId = itemId
-        shortcut.type = type.rawValue
-        shortcut.order = incrementOrder()
-
         try! realm.write {
-            realm.add(shortcut)
+            realm.delete(model)
         }
     }
 
-    private func find(itemId: String, type: ShortcutType) -> Results<ShortcutRealmModel> {
-        return realm.objects(ShortcutRealmModel.self).filter("\(ShortcutRealmModel.ITEM_ID) = '\(itemId)' AND \(ShortcutRealmModel.TYPE) = \(type.rawValue)")
+    private func find(itemId: ItemId, type: ShortcutType) -> Results<ShortcutRealmModel> {
+        return realm.objects(ShortcutRealmModel.self).filter("\(ShortcutRealmModel.ITEM_ID) = '\(itemId.id)' AND \(ShortcutRealmModel.TYPE) = \(type.rawValue)")
     }
 
     private func findByIds(shortcutIds: [ShortcutId]) -> Results<ShortcutRealmModel> {
@@ -80,22 +71,6 @@ struct ShortcutRealmRepository: ShortcutRepositoryProtocol {
         }
 
         return ShortcutEntity(shortcutId: ShortcutId(id: model.id), itemId: ItemId(id: model.itemId), type: type)
-    }
-
-    private func exists(itemId: String, type: ShortcutType) -> Bool {
-        return find(itemId: itemId, type: type).count == 1
-    }
-
-    private func delete(itemId: String, type: ShortcutType) {
-        let model = find(itemId: itemId, type: type)
-
-        if model.count == 0 {
-            return
-        }
-
-        try! realm.write {
-            realm.delete(model)
-        }
     }
 
     private func delete(shortcutIds: [ShortcutId]) {
