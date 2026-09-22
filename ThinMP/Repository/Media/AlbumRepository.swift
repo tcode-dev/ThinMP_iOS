@@ -7,7 +7,7 @@
 
 import MediaPlayer
 
-class AlbumRepository: AlbumRepositoryProtocol {
+struct AlbumRepository: AlbumRepositoryProtocol {
     func findAll() -> [AlbumModel] {
         return albums(localAlbumsQuery())
     }
