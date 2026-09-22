@@ -23,14 +23,14 @@ struct ArtistDetailServiceTests {
 
     /// 曲はライブラリの順ではなく、アルバムの順にまとめ直す
     @Test
-    func findByIdComposesAlbumsAndSongsInAlbumOrder() throws {
+    func findByIdComposesAlbumsAndSongsInAlbumOrder() async throws {
         let service = makeService(
             artists: [ArtistModel(artistId: artistId, primaryText: "Artist")],
             albums: [album1, album2],
             songs: [.fake(id: 21, artistId: 10, albumId: 2), .fake(id: 11, artistId: 10, albumId: 1), .fake(id: 12, artistId: 10, albumId: 1)]
         )
 
-        let artist = try #require(service.findById(artistId: artistId))
+        let artist = try #require(await service.findById(artistId: artistId))
 
         #expect(artist.primaryText == "Artist")
         #expect(artist.albums.map { $0.albumId.id } == [1, 2])
@@ -38,14 +38,14 @@ struct ArtistDetailServiceTests {
     }
 
     @Test
-    func findByIdReturnsNilWhenArtistIsMissing() {
+    func findByIdReturnsNilWhenArtistIsMissing() async {
         let service = makeService(artists: [], albums: [album1])
 
-        #expect(service.findById(artistId: artistId) == nil)
+        #expect(await service.findById(artistId: artistId) == nil)
     }
 
     @Test
-    func findByIdsKeepsOrderAndLeavesAlbumsAndSongsEmpty() {
+    func findByIdsKeepsOrderAndLeavesAlbumsAndSongsEmpty() async {
         let other = ArtistId(id: 20)
         let service = ArtistDetailService(
             artistRepository: ArtistRepositoryMock(artists: [ArtistModel(artistId: artistId, primaryText: "A"), ArtistModel(artistId: other, primaryText: "B")]),
@@ -53,7 +53,7 @@ struct ArtistDetailServiceTests {
             songRepository: SongRepositoryMock(songs: [])
         )
 
-        let artists = service.findByIds(artistIds: [other, ArtistId(id: 99), artistId])
+        let artists = await service.findByIds(artistIds: [other, ArtistId(id: 99), artistId])
 
         #expect(artists.map { $0.artistId.id } == [20, 10])
         #expect(artists.map { $0.primaryText } == ["B", "A"])

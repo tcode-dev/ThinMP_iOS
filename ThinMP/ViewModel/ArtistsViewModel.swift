@@ -21,7 +21,7 @@ class ArtistsViewModel: ObservableObject {
     @discardableResult
     func load() -> Task<Void, Never> {
         return loadTask.run { [artistsService] in
-            await Task.detached(priority: .userInitiated) { artistsService.findAll() }.value
+            await artistsService.findAll()
         } apply: { [weak self] artists in
             self?.artists = artists
         }

@@ -22,7 +22,7 @@ class AlbumDetailViewModel: ObservableObject {
     @discardableResult
     func load(albumId: AlbumId) -> Task<Void, Never> {
         return loadTask.run { [albumDetailService] in
-            await Task.detached(priority: .userInitiated) { albumDetailService.findById(albumId: albumId) }.value
+            await albumDetailService.findById(albumId: albumId)
         } apply: { [weak self] album in
             if let album {
                 self?.album = album

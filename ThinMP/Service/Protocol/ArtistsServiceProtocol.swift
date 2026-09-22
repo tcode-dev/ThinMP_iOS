@@ -6,5 +6,5 @@
 //
 
 protocol ArtistsServiceProtocol {
-    func findAll() -> [ArtistModel]
+    func findAll() async -> [ArtistModel]
 }

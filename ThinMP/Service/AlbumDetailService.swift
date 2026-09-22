@@ -17,19 +17,25 @@ struct AlbumDetailService: AlbumDetailServiceProtocol {
         self.songRepository = songRepository
     }
 
-    func findById(albumId: AlbumId) -> AlbumDetailModel? {
-        guard let album = albumRepository.findById(albumId: albumId) else {
-            return nil
-        }
+    /// ライブラリを引くのでバックグラウンドで行う
+    func findById(albumId: AlbumId) async -> AlbumDetailModel? {
+        return await Task.detached(priority: .userInitiated) { [albumRepository, songRepository] in
+            guard let album = albumRepository.findById(albumId: albumId) else {
+                return nil
+            }
 
-        let songs = songRepository.findByAlbumId(albumId: albumId)
+            let songs = songRepository.findByAlbumId(albumId: albumId)
 
-        return AlbumDetailModel(albumId: album.albumId, primaryText: album.primaryText, secondaryText: album.secondaryText, artwork: album.artwork, songs: songs)
+            return AlbumDetailModel(albumId: album.albumId, primaryText: album.primaryText, secondaryText: album.secondaryText, artwork: album.artwork, songs: songs)
+        }.value
     }
 
-    func findByIds(albumIds: [AlbumId]) -> [AlbumDetailModel] {
-        return albumRepository.findByIds(albumIds: albumIds).map { album in
-            AlbumDetailModel(albumId: album.albumId, primaryText: album.primaryText, secondaryText: album.secondaryText, artwork: album.artwork, songs: [])
-        }
+    /// ショートカット用。ライブラリ全件を舐めるのでバックグラウンドで行う
+    func findByIds(albumIds: [AlbumId]) async -> [AlbumDetailModel] {
+        return await Task.detached(priority: .userInitiated) { [albumRepository] in
+            albumRepository.findByIds(albumIds: albumIds).map { album in
+                AlbumDetailModel(albumId: album.albumId, primaryText: album.primaryText, secondaryText: album.secondaryText, artwork: album.artwork, songs: [])
+            }
+        }.value
     }
 }
