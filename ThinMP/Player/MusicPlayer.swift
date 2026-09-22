@@ -158,6 +158,7 @@ class MusicPlayer: ObservableObject {
             setFavorite()
             isActive = true
         } else {
+            song = nil
             currentSecond = 0
             durationSecond = 1
             isActive = false
