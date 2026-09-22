@@ -69,8 +69,8 @@ struct PlaylistDetailEditPageView: View {
             .navigationTitle("")
             .ignoresSafeArea(.container)
             .environment(\.editMode, .constant(.active))
-            .onAppear {
-                vm.load(playlistId: playlistId)
+            .task {
+                await vm.load(playlistId: playlistId).value
             }
         }
     }

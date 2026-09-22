@@ -5,7 +5,6 @@
 //  Created by tk on 2021/02/23.
 //
 
-import MediaPlayer
 import SwiftUI
 
 struct FavoriteSongsPageView: View {
@@ -33,27 +32,9 @@ struct FavoriteSongsPageView: View {
                         ScrollView {
                             VStack(alignment: .leading) {
                                 ListEmptyHeaderView(headerRect: $headerRect, top: geometry.safeAreaInsets.top)
-                                LazyVStack(spacing: 0) {
-                                    ForEach(Array(vm.songs.enumerated()), id: \.element.id) { index, song in
-                                        PlayRowView(list: vm.songs, index: index) {
-                                            MediaRowView(media: song)
-                                        }
-                                        .contentShape(RoundedRectangle(cornerRadius: StyleConstant.cornerRadius))
-                                        .contextMenu {
-                                            FavoriteSongButtonView(songId: song.songId) { vm.load() }
-                                            Button(action: {
-                                                playlistRegisterSongId = song.songId
-                                            }) {
-                                                Text(LocalizedStringKey(LabelConstant.addPlaylist))
-                                            }
-                                        }
-                                        Divider()
-                                    }
-                                    .padding(.leading, StyleConstant.Padding.medium)
-                                }
+                                SongListView(songs: vm.songs, onFavoriteChange: { vm.load() }) { playlistRegisterSongId = $0 }
                             }
                         }
-                        .frame(alignment: .top)
                     }
                     MiniPlayerView(bottom: geometry.safeAreaInsets.bottom) { vm.load() }
                 }
@@ -66,8 +47,8 @@ struct FavoriteSongsPageView: View {
             .toolbar(.hidden, for: .navigationBar)
             .navigationTitle("")
             .ignoresSafeArea(.container)
-            .onAppear {
-                vm.load()
+            .task {
+                await vm.load().value
             }
         }
     }

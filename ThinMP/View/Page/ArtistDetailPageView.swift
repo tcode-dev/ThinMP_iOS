@@ -5,7 +5,6 @@
 //  Created by tk on 2020/01/07.
 //
 
-import MediaPlayer
 import SwiftUI
 
 struct ArtistDetailPageView: View {
@@ -43,24 +42,7 @@ struct ArtistDetailPageView: View {
                                 if !vm.songs.isEmpty {
                                     SectionTitleView(LabelConstant.songs)
                                         .padding(.leading, StyleConstant.Padding.large)
-                                    LazyVStack(spacing: 0) {
-                                        ForEach(Array(vm.songs.enumerated()), id: \.element.id) { index, song in
-                                            PlayRowView(list: vm.songs, index: index) {
-                                                MediaRowView(media: song)
-                                            }
-                                            .contentShape(RoundedRectangle(cornerRadius: StyleConstant.cornerRadius))
-                                            .contextMenu {
-                                                FavoriteSongButtonView(songId: song.songId)
-                                                Button(action: {
-                                                    playlistRegisterSongId = song.songId
-                                                }) {
-                                                    Text(LocalizedStringKey(LabelConstant.addPlaylist))
-                                                }
-                                            }
-                                            Divider()
-                                        }
-                                        .padding(.leading, StyleConstant.Padding.medium)
-                                    }
+                                    SongListView(songs: vm.songs) { playlistRegisterSongId = $0 }
                                 }
                             }
                         }
@@ -76,8 +58,8 @@ struct ArtistDetailPageView: View {
             .toolbar(.hidden, for: .navigationBar)
             .navigationTitle("")
             .ignoresSafeArea(.container)
-            .onAppear {
-                vm.load(artistId: artistId)
+            .task {
+                await vm.load(artistId: artistId).value
             }
         }
     }

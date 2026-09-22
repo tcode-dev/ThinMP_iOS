@@ -5,7 +5,6 @@
 //  Created by tk on 2021/03/30.
 //
 
-import MediaPlayer
 import SwiftUI
 
 struct PlaylistDetailPageView: View {
@@ -40,24 +39,7 @@ struct PlaylistDetailPageView: View {
                                 HeroHeaderView(headerRect: $headerRect, width: geometry.size.width, height: geometry.size.height, top: geometry.safeAreaInsets.top, bottom: geometry.safeAreaInsets.bottom, primaryText: vm.primaryText, secondaryText: LabelConstant.playlist) {
                                     HeroSquareImageView(width: geometry.size.width, height: geometry.size.height, top: geometry.safeAreaInsets.top, bottom: geometry.safeAreaInsets.bottom, artwork: vm.artwork)
                                 }
-                                LazyVStack(spacing: 0) {
-                                    ForEach(Array(vm.songs.enumerated()), id: \.element.id) { index, song in
-                                        PlayRowView(list: vm.songs, index: index) {
-                                            MediaRowView(media: song)
-                                        }
-                                        .contentShape(RoundedRectangle(cornerRadius: StyleConstant.cornerRadius))
-                                        .contextMenu {
-                                            FavoriteSongButtonView(songId: song.songId)
-                                            Button(action: {
-                                                playlistRegisterSongId = song.songId
-                                            }) {
-                                                Text(LocalizedStringKey(LabelConstant.addPlaylist))
-                                            }
-                                        }
-                                        Divider()
-                                    }
-                                    .padding(.leading, StyleConstant.Padding.medium)
-                                }
+                                SongListView(songs: vm.songs) { playlistRegisterSongId = $0 }
                             }
                         }
                     }
@@ -72,8 +54,8 @@ struct PlaylistDetailPageView: View {
             .toolbar(.hidden, for: .navigationBar)
             .navigationTitle("")
             .ignoresSafeArea(.container)
-            .onAppear {
-                vm.load(playlistId: playlistId)
+            .task {
+                await vm.load(playlistId: playlistId).value
             }
         }
     }
