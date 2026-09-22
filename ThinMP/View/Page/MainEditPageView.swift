@@ -21,12 +21,9 @@ struct MainEditPageView: View {
                 MenuEditRowView(text: LabelConstant.shortcut, visibility: $vm.settings.isShortcutVisible).listRowInsets(.init())
                 MenuEditRowView(text: LabelConstant.recentlyAdded, visibility: $vm.settings.isRecentlyVisible).listRowInsets(.init())
                 SectionTitleView(LabelConstant.shortcut).padding(StyleConstant.Padding.tiny)
-                ForEach(vm.shortcuts) { shortcut in
+                ReorderableListView(items: $vm.shortcuts) { shortcut in
                     ShortcutRowView(shortcut: shortcut)
                 }
-                .onMove(perform: moveShortcut)
-                .onDelete(perform: deleteShortcut)
-                .listRowInsets(.init())
             }
         }
         .task {
@@ -36,13 +33,5 @@ struct MainEditPageView: View {
 
     private func moveMenu(source: IndexSet, destination: Int) {
         vm.settings.menus.move(fromOffsets: source, toOffset: destination)
-    }
-
-    private func moveShortcut(source: IndexSet, destination: Int) {
-        vm.shortcuts.move(fromOffsets: source, toOffset: destination)
-    }
-
-    private func deleteShortcut(offsets: IndexSet) {
-        vm.shortcuts.remove(atOffsets: offsets)
     }
 }
