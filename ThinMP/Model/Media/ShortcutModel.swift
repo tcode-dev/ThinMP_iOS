@@ -10,7 +10,7 @@ import MediaPlayer
 struct ShortcutModel: MediaProtocol, Identifiable {
     var shortcutId: ShortcutId
     var itemId: ItemId
-    var type: Int
+    var type: ShortcutType
     var primaryText: String?
     var artwork: MPMediaItemArtwork?
     var id: String {
@@ -18,14 +18,10 @@ struct ShortcutModel: MediaProtocol, Identifiable {
     }
 
     var secondaryText: String? {
-        if type == ShortcutType.ARTIST.rawValue {
-            return "Artist"
-        } else if type == ShortcutType.ALBUM.rawValue {
-            return "Album"
-        } else if type == ShortcutType.PLAYLIST.rawValue {
-            return "Playlist"
-        } else {
-            return ""
+        switch type {
+        case .artist: return "Artist"
+        case .album: return "Album"
+        case .playlist: return "Playlist"
         }
     }
 }

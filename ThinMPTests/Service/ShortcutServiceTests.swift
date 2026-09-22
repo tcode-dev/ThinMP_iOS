@@ -10,9 +10,9 @@ import Testing
 
 @MainActor
 struct ShortcutServiceTests {
-    private let artistShortcut = ShortcutEntity(shortcutId: ShortcutId(id: "s1"), itemId: ItemId(id: "10"), type: .ARTIST)
-    private let albumShortcut = ShortcutEntity(shortcutId: ShortcutId(id: "s2"), itemId: ItemId(id: "20"), type: .ALBUM)
-    private let playlistShortcut = ShortcutEntity(shortcutId: ShortcutId(id: "s3"), itemId: ItemId(id: "p1"), type: .PLAYLIST)
+    private let artistShortcut = ShortcutEntity(shortcutId: ShortcutId(id: "s1"), itemId: ItemId(id: "10"), type: .artist)
+    private let albumShortcut = ShortcutEntity(shortcutId: ShortcutId(id: "s2"), itemId: ItemId(id: "20"), type: .album)
+    private let playlistShortcut = ShortcutEntity(shortcutId: ShortcutId(id: "s3"), itemId: ItemId(id: "p1"), type: .playlist)
 
     private func makeService(
         shortcuts: [ShortcutEntity],
@@ -45,7 +45,7 @@ struct ShortcutServiceTests {
         let models = await service.findAll()
 
         #expect(models.map { $0.shortcutId.id } == ["s3", "s1", "s2"])
-        #expect(models.map { $0.type } == [ShortcutType.PLAYLIST.rawValue, ShortcutType.ARTIST.rawValue, ShortcutType.ALBUM.rawValue])
+        #expect(models.map { $0.type } == [.playlist, .artist, .album])
         #expect(models.map { $0.primaryText } == ["Playlist p1", "Artist 10", "Album 20"])
         #expect(models.map { $0.itemId.id } == ["p1", "10", "20"])
         #expect(shortcutRepository.updateCalls.isEmpty)

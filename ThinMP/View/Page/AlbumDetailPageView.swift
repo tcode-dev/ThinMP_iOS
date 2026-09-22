@@ -23,7 +23,7 @@ struct AlbumDetailPageView: View {
                         HeroNavBarView(primaryText: vm.primaryText, width: geometry.size.width, top: geometry.safeAreaInsets.top, headerRect: $headerRect) {
                             MenuButtonView {
                                 VStack {
-                                    ShortcutButtonView(itemId: albumId.id, type: ShortcutType.ALBUM)
+                                    ShortcutButtonView(itemId: String(albumId.id), type: .album)
                                 }
                             }
                         }

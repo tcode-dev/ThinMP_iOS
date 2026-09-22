@@ -34,7 +34,7 @@ struct PlaylistsViewModelTests {
 
         await vm.load(songId: SongId(id: 2)).value
 
-        #expect(vm.registeredPlaylistIds == ["a"])
+        #expect(vm.registeredPlaylistIds == [PlaylistId(id: "a")])
         #expect(vm.isRegistered(playlistId: PlaylistId(id: "a")))
         #expect(!vm.isRegistered(playlistId: PlaylistId(id: "b")))
         #expect(service.findAllCalls == 1)

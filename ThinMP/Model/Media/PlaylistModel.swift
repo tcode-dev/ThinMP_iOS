@@ -18,11 +18,7 @@ struct PlaylistModel: MediaProtocol, Identifiable {
         return playlistId.id
     }
 
-    var shortcutId: String {
-        return id
-    }
-
     func contains(songId: SongId) -> Bool {
-        return songIds.contains { $0.equals(songId) }
+        return songIds.contains(songId)
     }
 }

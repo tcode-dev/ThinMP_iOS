@@ -22,12 +22,4 @@ class PlaylistRealmModel: Object {
     override static func primaryKey() -> String? {
         return "id"
     }
-
-    var primaryText: String? {
-        name
-    }
-
-    var shortcutId: String {
-        return id
-    }
 }

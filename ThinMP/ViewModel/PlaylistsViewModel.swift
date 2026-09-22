@@ -11,7 +11,7 @@ import Combine
 class PlaylistsViewModel: ObservableObject {
     @Published var playlists: [PlaylistModel] = []
     /// 登録モーダルで対象の曲がすでに入っているプレイリストの id
-    @Published var registeredPlaylistIds: Set<String> = []
+    @Published var registeredPlaylistIds: Set<PlaylistId> = []
 
     private let playlistsService: PlaylistsServiceProtocol
     /// 直前の load を打ち切るために保持する。古い結果が新しい結果を上書きしないようにする
@@ -49,7 +49,7 @@ class PlaylistsViewModel: ObservableObject {
             if Task.isCancelled { return }
 
             self.playlists = playlists
-            registeredPlaylistIds = Set(playlists.filter { $0.contains(songId: songId) }.map { $0.id })
+            registeredPlaylistIds = Set(playlists.filter { $0.contains(songId: songId) }.map { $0.playlistId })
         }
 
         loadTask = task
@@ -58,6 +58,6 @@ class PlaylistsViewModel: ObservableObject {
     }
 
     func isRegistered(playlistId: PlaylistId) -> Bool {
-        return registeredPlaylistIds.contains(playlistId.id)
+        return registeredPlaylistIds.contains(playlistId)
     }
 }

@@ -160,7 +160,6 @@
 		52DF46E426463860003A57F0 /* ShortcutRegister.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DF46E326463860003A57F0 /* ShortcutRegister.swift */; };
 		52DF46E6264639B3003A57F0 /* ShortcutRealmRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DF46E5264639B3003A57F0 /* ShortcutRealmRepository.swift */; };
 		52DF46E826464A67003A57F0 /* ShortcutButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DF46E726464A67003A57F0 /* ShortcutButtonView.swift */; };
-		52DF46EE2647AE9A003A57F0 /* ShortcutItemIdProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52DF46ED2647AE9A003A57F0 /* ShortcutItemIdProtocol.swift */; };
 		52E0459C2674C0F900ACD0AB /* MenuEditRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E0459B2674C0F900ACD0AB /* MenuEditRowView.swift */; };
 		52E0459E2674DD2100ACD0AB /* MainSectionConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E0459D2674DD2100ACD0AB /* MainSectionConfig.swift */; };
 		52E21A6C26340DF000C40464 /* PlaylistsEditPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E21A6B26340DF000C40464 /* PlaylistsEditPageView.swift */; };
@@ -367,7 +366,6 @@
 		52DF46E326463860003A57F0 /* ShortcutRegister.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutRegister.swift; sourceTree = "<group>"; };
 		52DF46E5264639B3003A57F0 /* ShortcutRealmRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutRealmRepository.swift; sourceTree = "<group>"; };
 		52DF46E726464A67003A57F0 /* ShortcutButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutButtonView.swift; sourceTree = "<group>"; };
-		52DF46ED2647AE9A003A57F0 /* ShortcutItemIdProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutItemIdProtocol.swift; sourceTree = "<group>"; };
 		52E0459B2674C0F900ACD0AB /* MenuEditRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuEditRowView.swift; sourceTree = "<group>"; };
 		52E0459D2674DD2100ACD0AB /* MainSectionConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSectionConfig.swift; sourceTree = "<group>"; };
 		52E21A6B26340DF000C40464 /* PlaylistsEditPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistsEditPageView.swift; sourceTree = "<group>"; };
@@ -733,7 +731,6 @@
 				52C3B24926AC6AD1006C841E /* FavoriteArtistRepositoryProtocol.swift */,
 				52C3B24B26AC6C23006C841E /* FavoriteSongRepositoryProtocol.swift */,
 				52C3B24D26AC6DBD006C841E /* PlaylistRepositoryProtocol.swift */,
-				52DF46ED2647AE9A003A57F0 /* ShortcutItemIdProtocol.swift */,
 				52C3B24F26AC7105006C841E /* ShortcutRepositoryProtocol.swift */,
 			);
 			path = Protocol;
@@ -1177,7 +1174,6 @@
 				52C3B26C26AC7742006C841E /* ShortcutServiceProtocol.swift in Sources */,
 				52DF46E6264639B3003A57F0 /* ShortcutRealmRepository.swift in Sources */,
 				52CEABF22642E6DE000A3958 /* ArtistRepository.swift in Sources */,
-				52DF46EE2647AE9A003A57F0 /* ShortcutItemIdProtocol.swift in Sources */,
 				521CDDE3268FF1B100997F5E /* StyleConstant.swift in Sources */,
 				52AC942A2621376300D41477 /* PlaylistsPageView.swift in Sources */,
 				52217A732598208F00921CFD /* FavoriteArtistRegister.swift in Sources */,

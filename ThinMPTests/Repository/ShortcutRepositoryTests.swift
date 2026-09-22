@@ -5,7 +5,6 @@
 //  Created by tk on 2026/09/21.
 //
 
-import MediaPlayer
 import Testing
 @testable import ThinMP
 
@@ -13,40 +12,26 @@ import Testing
 @MainActor
 struct ShortcutRepositoryTests {
     @Test(arguments: RepositoryBackend.allCases)
-    func addWithPersistentId(backend: RepositoryBackend) {
+    func addStoresItemIdAndType(backend: RepositoryBackend) {
         let repository = TestRepositories(backend: backend).shortcut
-        let artistId: MPMediaEntityPersistentID = 10
+        let itemId = ItemId(id: "playlist-1")
 
-        repository.add(itemId: artistId, type: .ARTIST)
+        repository.add(itemId: itemId, type: .playlist)
 
         let shortcuts = repository.findAll()
 
-        #expect(repository.exists(itemId: artistId, type: .ARTIST))
+        #expect(repository.exists(itemId: itemId, type: .playlist))
         #expect(shortcuts.count == 1)
-        #expect(shortcuts[0].itemId.id == "10")
-        #expect(shortcuts[0].type == .ARTIST)
-    }
-
-    @Test(arguments: RepositoryBackend.allCases)
-    func addWithStringId(backend: RepositoryBackend) {
-        let repository = TestRepositories(backend: backend).shortcut
-
-        repository.add(itemId: "playlist-1", type: .PLAYLIST)
-
-        let shortcuts = repository.findAll()
-
-        #expect(repository.exists(itemId: "playlist-1", type: .PLAYLIST))
-        #expect(shortcuts.count == 1)
-        #expect(shortcuts[0].itemId.id == "playlist-1")
-        #expect(shortcuts[0].type == .PLAYLIST)
+        #expect(shortcuts[0].itemId == itemId)
+        #expect(shortcuts[0].type == .playlist)
     }
 
     @Test(arguments: RepositoryBackend.allCases)
     func addIgnoresDuplicate(backend: RepositoryBackend) {
         let repository = TestRepositories(backend: backend).shortcut
 
-        repository.add(itemId: "1", type: .ALBUM)
-        repository.add(itemId: "1", type: .ALBUM)
+        repository.add(itemId: ItemId(id: "1"), type: .album)
+        repository.add(itemId: ItemId(id: "1"), type: .album)
 
         #expect(repository.findAll().count == 1)
     }
@@ -55,22 +40,22 @@ struct ShortcutRepositoryTests {
     func sameItemIdWithDifferentTypeIsDistinct(backend: RepositoryBackend) {
         let repository = TestRepositories(backend: backend).shortcut
 
-        repository.add(itemId: "1", type: .ARTIST)
-        repository.add(itemId: "1", type: .ALBUM)
+        repository.add(itemId: ItemId(id: "1"), type: .artist)
+        repository.add(itemId: ItemId(id: "1"), type: .album)
 
         #expect(repository.findAll().count == 2)
-        #expect(repository.exists(itemId: "1", type: .ARTIST))
-        #expect(repository.exists(itemId: "1", type: .ALBUM))
-        #expect(!repository.exists(itemId: "1", type: .PLAYLIST))
+        #expect(repository.exists(itemId: ItemId(id: "1"), type: .artist))
+        #expect(repository.exists(itemId: ItemId(id: "1"), type: .album))
+        #expect(!repository.exists(itemId: ItemId(id: "1"), type: .playlist))
     }
 
     @Test(arguments: RepositoryBackend.allCases)
     func findAllReturnsNewestFirst(backend: RepositoryBackend) {
         let repository = TestRepositories(backend: backend).shortcut
 
-        repository.add(itemId: "1", type: .ARTIST)
-        repository.add(itemId: "2", type: .ARTIST)
-        repository.add(itemId: "3", type: .ARTIST)
+        repository.add(itemId: ItemId(id: "1"), type: .artist)
+        repository.add(itemId: ItemId(id: "2"), type: .artist)
+        repository.add(itemId: ItemId(id: "3"), type: .artist)
 
         #expect(repository.findAll().map { $0.itemId.id } == ["3", "2", "1"])
     }
@@ -79,21 +64,21 @@ struct ShortcutRepositoryTests {
     func deleteByItemIdAndType(backend: RepositoryBackend) {
         let repository = TestRepositories(backend: backend).shortcut
 
-        repository.add(itemId: "1", type: .ARTIST)
-        repository.add(itemId: "1", type: .ALBUM)
+        repository.add(itemId: ItemId(id: "1"), type: .artist)
+        repository.add(itemId: ItemId(id: "1"), type: .album)
 
-        repository.delete(itemId: "1", type: .ARTIST)
+        repository.delete(itemId: ItemId(id: "1"), type: .artist)
 
-        #expect(!repository.exists(itemId: "1", type: .ARTIST))
-        #expect(repository.exists(itemId: "1", type: .ALBUM))
+        #expect(!repository.exists(itemId: ItemId(id: "1"), type: .artist))
+        #expect(repository.exists(itemId: ItemId(id: "1"), type: .album))
     }
 
     @Test(arguments: RepositoryBackend.allCases)
     func deleteUnknownIsNoop(backend: RepositoryBackend) {
         let repository = TestRepositories(backend: backend).shortcut
 
-        repository.add(itemId: "1", type: .ARTIST)
-        repository.delete(itemId: "99", type: .ARTIST)
+        repository.add(itemId: ItemId(id: "1"), type: .artist)
+        repository.delete(itemId: ItemId(id: "99"), type: .artist)
 
         #expect(repository.findAll().count == 1)
     }
@@ -102,29 +87,29 @@ struct ShortcutRepositoryTests {
     func updateDeletesMissingAndReorders(backend: RepositoryBackend) {
         let repository = TestRepositories(backend: backend).shortcut
 
-        repository.add(itemId: "1", type: .ARTIST)
-        repository.add(itemId: "2", type: .ARTIST)
-        repository.add(itemId: "3", type: .ARTIST)
+        repository.add(itemId: ItemId(id: "1"), type: .artist)
+        repository.add(itemId: ItemId(id: "2"), type: .artist)
+        repository.add(itemId: ItemId(id: "3"), type: .artist)
 
         let byItemId = Dictionary(uniqueKeysWithValues: repository.findAll().map { ($0.itemId.id, $0.shortcutId) })
 
         repository.update(shortcutIds: [byItemId["1"]!, byItemId["3"]!])
 
         #expect(repository.findAll().map { $0.itemId.id } == ["1", "3"])
-        #expect(!repository.exists(itemId: "2", type: .ARTIST))
+        #expect(!repository.exists(itemId: ItemId(id: "2"), type: .artist))
     }
 
     @Test(arguments: RepositoryBackend.allCases)
     func addAfterUpdateBecomesNewest(backend: RepositoryBackend) {
         let repository = TestRepositories(backend: backend).shortcut
 
-        repository.add(itemId: "1", type: .ARTIST)
-        repository.add(itemId: "2", type: .ARTIST)
+        repository.add(itemId: ItemId(id: "1"), type: .artist)
+        repository.add(itemId: ItemId(id: "2"), type: .artist)
 
         let byItemId = Dictionary(uniqueKeysWithValues: repository.findAll().map { ($0.itemId.id, $0.shortcutId) })
 
         repository.update(shortcutIds: [byItemId["1"]!, byItemId["2"]!])
-        repository.add(itemId: "3", type: .ARTIST)
+        repository.add(itemId: ItemId(id: "3"), type: .artist)
 
         #expect(repository.findAll().map { $0.itemId.id } == ["3", "1", "2"])
     }

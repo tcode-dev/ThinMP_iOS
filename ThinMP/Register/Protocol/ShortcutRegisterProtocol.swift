@@ -7,11 +7,11 @@
 
 @MainActor
 protocol ShortcutRegisterProtocol {
-    func add(itemId: ShortcutItemIdProtocol, type: ShortcutType)
+    func add(itemId: ItemId, type: ShortcutType)
 
-    func exists(itemId: ShortcutItemIdProtocol, type: ShortcutType) -> Bool
+    func exists(itemId: ItemId, type: ShortcutType) -> Bool
 
     func update(shortcutIds: [ShortcutId])
 
-    func delete(itemId: ShortcutItemIdProtocol, type: ShortcutType)
+    func delete(itemId: ItemId, type: ShortcutType)
 }

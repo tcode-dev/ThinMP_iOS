@@ -16,8 +16,4 @@ struct PlaylistDetailModel: DetailProtocol {
     var id: String {
         return playlistId.id
     }
-
-    var shortcutId: String {
-        return playlistId.id
-    }
 }

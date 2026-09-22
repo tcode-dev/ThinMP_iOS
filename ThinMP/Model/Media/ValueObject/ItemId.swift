@@ -7,7 +7,7 @@
 
 import MediaPlayer
 
-struct ItemId {
+struct ItemId: Hashable {
     var id: String
     var artistId: ArtistId {
         return ArtistId(id: UInt64(id)!)

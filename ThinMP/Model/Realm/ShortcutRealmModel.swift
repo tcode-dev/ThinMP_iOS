@@ -17,7 +17,7 @@ class ShortcutRealmModel: Object {
 
     @objc dynamic var id: String = UUID().uuidString
     @objc dynamic var itemId: String = ""
-    @objc dynamic var type: Int = ShortcutType.ARTIST.rawValue
+    @objc dynamic var type: Int = ShortcutType.artist.rawValue
     @objc dynamic var order: Int = 1
 
     override static func primaryKey() -> String? {
