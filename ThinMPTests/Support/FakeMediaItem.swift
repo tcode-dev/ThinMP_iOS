@@ -45,33 +45,8 @@ final class FakeMediaItem: MPMediaItem {
     }
 }
 
-/// MPMediaItemCollection.persistentID は代表アイテムのオーバーライドを見ないので、コレクション側も差し替える
-final class FakeMediaItemCollection: MPMediaItemCollection {
-    private let fakeItems: [MPMediaItem]
-
-    init(fakeItems: [MPMediaItem]) {
-        self.fakeItems = fakeItems
-        super.init(items: fakeItems)
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    override var items: [MPMediaItem] { fakeItems }
-    override var count: Int { fakeItems.count }
-    override var representativeItem: MPMediaItem? { fakeItems.first }
-    override var persistentID: MPMediaEntityPersistentID { fakeItems.first?.persistentID ?? 0 }
-
-    override func value(forProperty property: String) -> Any? {
-        return fakeItems.first?.value(forProperty: property)
-    }
-}
-
 extension SongModel {
     static func fake(id: MPMediaEntityPersistentID, title: String = "", artistId: MPMediaEntityPersistentID = 0) -> SongModel {
-        let item = FakeMediaItem(persistentID: id, title: title, artist: "", artistPersistentID: artistId)
-
-        return SongModel(media: FakeMediaItemCollection(fakeItems: [item]))
+        return SongModel(item: FakeMediaItem(persistentID: id, title: title, artist: "", artistPersistentID: artistId))
     }
 }
