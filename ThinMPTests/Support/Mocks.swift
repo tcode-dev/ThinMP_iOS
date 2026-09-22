@@ -135,14 +135,21 @@ final class ShortcutRepositoryMock: ShortcutRepositoryProtocol {
         self.shortcuts = shortcuts
     }
 
-    func add(itemId: ItemId, type: ShortcutType) {}
+    func add(itemId: ItemId, type: ShortcutType) {
+        if exists(itemId: itemId, type: type) {
+            return
+        }
+
+        // 実装と同じく新しいものが先頭
+        shortcuts.insert(ShortcutEntity(shortcutId: ShortcutId(id: UUID().uuidString), itemId: itemId, type: type), at: 0)
+    }
 
     func findAll() -> [ShortcutEntity] {
         return shortcuts
     }
 
     func exists(itemId: ItemId, type: ShortcutType) -> Bool {
-        return false
+        return shortcuts.contains { $0.itemId == itemId && $0.type == type }
     }
 
     func update(shortcutIds: [ShortcutId]) {
@@ -150,7 +157,9 @@ final class ShortcutRepositoryMock: ShortcutRepositoryProtocol {
         shortcuts = shortcutIds.compactMap { shortcutId in shortcuts.first { $0.shortcutId == shortcutId } }
     }
 
-    func delete(itemId: ItemId, type: ShortcutType) {}
+    func delete(itemId: ItemId, type: ShortcutType) {
+        shortcuts.removeAll { $0.itemId == itemId && $0.type == type }
+    }
 }
 
 /// 端末のライブラリの代わり。findByIds は実装と同じく songIds の順序で返す
@@ -304,6 +313,7 @@ final class PlaylistDetailServiceMock: PlaylistDetailServiceProtocol {
 final class ShortcutServiceMock: ShortcutServiceProtocol {
     let shortcuts: [ShortcutModel]
     private(set) var findAllCalls = 0
+    private(set) var updateCalls: [[ShortcutId]] = []
 
     init(shortcuts: [ShortcutModel] = []) {
         self.shortcuts = shortcuts
@@ -313,6 +323,18 @@ final class ShortcutServiceMock: ShortcutServiceProtocol {
         findAllCalls += 1
 
         return shortcuts
+    }
+
+    func exists(itemId: ItemId, type: ShortcutType) -> Bool {
+        return false
+    }
+
+    func add(itemId: ItemId, type: ShortcutType) {}
+
+    func delete(itemId: ItemId, type: ShortcutType) {}
+
+    func update(shortcutIds: [ShortcutId]) {
+        updateCalls.append(shortcutIds)
     }
 }
 
@@ -371,6 +393,14 @@ final class FavoriteSongsServiceMock: FavoriteSongsServiceProtocol {
         return songs
     }
 
+    func exists(songId: SongId) -> Bool {
+        return songs.contains { $0.songId == songId }
+    }
+
+    func add(songId: SongId) {}
+
+    func delete(songId: SongId) {}
+
     func update(songIds: [SongId]) {
         updateCalls.append(songIds)
     }
@@ -387,6 +417,14 @@ final class FavoriteArtistsServiceMock: FavoriteArtistsServiceProtocol {
     func findAll() -> [ArtistModel] {
         return artists
     }
+
+    func exists(artistId: ArtistId) -> Bool {
+        return artists.contains { $0.artistId == artistId }
+    }
+
+    func add(artistId: ArtistId) {}
+
+    func delete(artistId: ArtistId) {}
 
     func update(artistIds: [ArtistId]) {
         updateCalls.append(artistIds)
@@ -458,6 +496,14 @@ final class BlockingFavoriteSongsServiceMock: FavoriteSongsServiceProtocol {
     func resume(with songs: [SongModel]) {
         continuations.removeFirst().resume(returning: songs)
     }
+
+    func exists(songId: SongId) -> Bool {
+        return false
+    }
+
+    func add(songId: SongId) {}
+
+    func delete(songId: SongId) {}
 
     func update(songIds: [SongId]) {}
 }

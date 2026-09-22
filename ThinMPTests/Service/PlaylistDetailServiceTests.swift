@@ -19,8 +19,7 @@ struct PlaylistDetailServiceTests {
         let songRepository = SongRepositoryMock(songs: librarySongIds.map { .fake(id: $0, title: "Song \($0)") })
         let service = PlaylistDetailService(
             playlistRepository: playlistRepository,
-            songRepository: songRepository,
-            playlistRegister: PlaylistRegister(repository: playlistRepository)
+            songRepository: songRepository
         )
 
         return (service, playlistRepository)
@@ -71,8 +70,7 @@ struct PlaylistDetailServiceTests {
         ])
         let service = PlaylistDetailService(
             playlistRepository: playlistRepository,
-            songRepository: SongRepositoryMock(songs: [.fake(id: 1), .fake(id: 2)]),
-            playlistRegister: PlaylistRegister(repository: playlistRepository)
+            songRepository: SongRepositoryMock(songs: [.fake(id: 1), .fake(id: 2)])
         )
 
         let models = await service.findByIds(playlistIds: [PlaylistId(id: "p2"), PlaylistId(id: "p1")])
@@ -92,8 +90,7 @@ struct PlaylistDetailServiceTests {
         let songRepository = SongRepositoryMock(songs: [.fake(id: 1), .fake(id: 2), .fake(id: 3)])
         let service = PlaylistDetailService(
             playlistRepository: playlistRepository,
-            songRepository: songRepository,
-            playlistRegister: PlaylistRegister(repository: playlistRepository)
+            songRepository: songRepository
         )
 
         let models = await service.findByIds(playlistIds: [PlaylistId(id: "p1"), PlaylistId(id: "p2"), PlaylistId(id: "p3")])
