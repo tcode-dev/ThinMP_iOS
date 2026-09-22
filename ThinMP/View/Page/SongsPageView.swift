@@ -5,7 +5,6 @@
 //  Created by tk on 2020/01/13.
 //
 
-import MediaPlayer
 import SwiftUI
 
 struct SongsPageView: View {
@@ -32,27 +31,9 @@ struct SongsPageView: View {
                         ScrollView {
                             VStack(alignment: .leading) {
                                 ListEmptyHeaderView(headerRect: $headerRect, top: geometry.safeAreaInsets.top)
-                                LazyVStack(spacing: 0) {
-                                    ForEach(Array(vm.songs.enumerated()), id: \.element.id) { index, song in
-                                        PlayRowView(list: vm.songs, index: index) {
-                                            MediaRowView(media: song)
-                                        }
-                                        .contentShape(RoundedRectangle(cornerRadius: StyleConstant.cornerRadius))
-                                        .contextMenu {
-                                            FavoriteSongButtonView(songId: song.songId)
-                                            Button(action: {
-                                                playlistRegisterSongId = song.songId
-                                            }) {
-                                                Text(LocalizedStringKey(LabelConstant.addPlaylist))
-                                            }
-                                        }
-                                        Divider()
-                                    }
-                                    .padding(.leading, StyleConstant.Padding.medium)
-                                }
+                                SongListView(songs: vm.songs) { playlistRegisterSongId = $0 }
                             }
                         }
-                        .frame(alignment: .top)
                     }
                     MiniPlayerView(bottom: geometry.safeAreaInsets.bottom)
                 }
@@ -65,8 +46,8 @@ struct SongsPageView: View {
             .toolbar(.hidden, for: .navigationBar)
             .navigationTitle("")
             .ignoresSafeArea(.container)
-            .onAppear {
-                vm.load()
+            .task {
+                await vm.load().value
             }
         }
     }
