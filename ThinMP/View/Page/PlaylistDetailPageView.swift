@@ -32,8 +32,8 @@ struct PlaylistDetailPageView: View {
                         }
                         ScrollView {
                             VStack(alignment: .leading) {
-                                HeroHeaderView(headerRect: $headerRect, width: geometry.size.width, height: geometry.size.height, top: geometry.safeAreaInsets.top, bottom: geometry.safeAreaInsets.bottom, primaryText: vm.primaryText, secondaryText: LabelConstant.playlist) {
-                                    HeroSquareImageView(width: geometry.size.width, height: geometry.size.height, top: geometry.safeAreaInsets.top, bottom: geometry.safeAreaInsets.bottom, artwork: vm.artwork)
+                                HeroHeaderView(headerRect: $headerRect, width: geometry.size.width, size: geometry.heroSize, top: geometry.safeAreaInsets.top, primaryText: vm.primaryText, secondaryText: LabelConstant.playlist) {
+                                    HeroSquareImageView(size: geometry.heroSize, artwork: vm.artwork)
                                 }
                                 SongListView(songs: vm.songs) { playlistRegisterSongId = $0 }
                             }

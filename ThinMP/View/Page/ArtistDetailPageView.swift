@@ -30,8 +30,8 @@ struct ArtistDetailPageView: View {
                         }
                         ScrollView {
                             VStack(alignment: .leading) {
-                                HeroHeaderView(headerRect: $headerRect, width: geometry.size.width, height: geometry.size.height, top: geometry.safeAreaInsets.top, bottom: geometry.safeAreaInsets.bottom, primaryText: vm.primaryText, secondaryText: vm.secondaryText) {
-                                    HeroCircleImageView(width: geometry.size.width, height: geometry.size.height, top: geometry.safeAreaInsets.top, bottom: geometry.safeAreaInsets.bottom, artwork: vm.artwork)
+                                HeroHeaderView(headerRect: $headerRect, width: geometry.size.width, size: geometry.heroSize, top: geometry.safeAreaInsets.top, primaryText: vm.primaryText, secondaryText: vm.secondaryText) {
+                                    HeroCircleImageView(width: geometry.size.width, size: geometry.heroSize, artwork: vm.artwork)
                                 }
                                 if !vm.albums.isEmpty {
                                     SectionTitleView(LabelConstant.albums)
