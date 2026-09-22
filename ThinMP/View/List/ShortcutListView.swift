@@ -7,34 +7,22 @@
 
 import SwiftUI
 
+/// ショートカットのグリッド。セルをタップで対象の詳細へ、長押しで解除(アーティストはお気に入りも)のメニューを出す
 struct ShortcutListView: View {
-    private let colCount: Int
-    private let shortcuts: [ShortcutModel]
-    private let size: CGFloat
-    private let columns: [GridItem]
-    private let callback: () -> Void
-
-    init(shortcuts: [ShortcutModel], width: CGFloat, callback: @escaping () -> Void = {}) {
-        self.shortcuts = shortcuts
-        self.callback = callback
-        self.colCount = max(Int(width) / StyleConstant.Grid.spanBaseSize, StyleConstant.Grid.minSpanCount)
-
-        size = (width - (StyleConstant.Padding.large * CGFloat(colCount + 1))) / CGFloat(colCount)
-
-        var columns = [GridItem](repeating: GridItem(.fixed(size), spacing: StyleConstant.Padding.large), count: Int(colCount) - 1)
-
-        columns.append((GridItem(.fixed(size), spacing: 0)))
-
-        self.columns = columns
-    }
+    let shortcuts: [ShortcutModel]
+    let width: CGFloat
+    /// ショートカットの登録・解除後に呼ばれる(一覧の再読み込みなど)
+    var callback: () -> Void = {}
 
     var body: some View {
-        LazyVGrid(columns: columns) {
+        let layout = GridLayout(width: width)
+
+        LazyVGrid(columns: layout.columns) {
             ForEach(shortcuts) { shortcut in
                 switch shortcut.type {
                 case .artist:
                     NavigationLink(destination: ArtistDetailPageView(artistId: shortcut.itemId.artistId)) {
-                        ShortcutCellView(shortcut: shortcut, size: size)
+                        ShortcutCellView(shortcut: shortcut, size: layout.cellSize)
                     }
                     .contentShape(RoundedRectangle(cornerRadius: StyleConstant.cornerRadius))
                     .contextMenu {
@@ -43,7 +31,7 @@ struct ShortcutListView: View {
                     }
                 case .album:
                     NavigationLink(destination: AlbumDetailPageView(albumId: shortcut.itemId.albumId)) {
-                        ShortcutCellView(shortcut: shortcut, size: size)
+                        ShortcutCellView(shortcut: shortcut, size: layout.cellSize)
                     }
                     .contentShape(RoundedRectangle(cornerRadius: StyleConstant.cornerRadius))
                     .contextMenu {
@@ -51,7 +39,7 @@ struct ShortcutListView: View {
                     }
                 case .playlist:
                     NavigationLink(destination: PlaylistDetailPageView(playlistId: shortcut.itemId.playlistId)) {
-                        ShortcutCellView(shortcut: shortcut, size: size)
+                        ShortcutCellView(shortcut: shortcut, size: layout.cellSize)
                     }
                     .contentShape(RoundedRectangle(cornerRadius: StyleConstant.cornerRadius))
                     .contextMenu {
