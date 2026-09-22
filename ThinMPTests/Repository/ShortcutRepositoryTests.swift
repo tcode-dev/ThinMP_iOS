@@ -166,4 +166,16 @@ struct ShortcutRepositoryTests {
 
         #expect(repository.findAll().map { $0.target } == [.playlist(PlaylistId(id: "not-a-number")), .artist(ArtistId(id: 1))])
     }
+
+    @Test(arguments: RepositoryBackend.allCases)
+    func toggleAddsThenRemoves(backend: RepositoryBackend) {
+        let repository = TestRepositories(backend: backend).shortcut
+        let target = ShortcutTarget.album(AlbumId(id: 1))
+
+        #expect(repository.toggle(target: target))
+        #expect(repository.exists(target: target))
+
+        #expect(!repository.toggle(target: target))
+        #expect(!repository.exists(target: target))
+    }
 }

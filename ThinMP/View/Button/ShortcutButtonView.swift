@@ -19,8 +19,7 @@ struct ShortcutButtonView: View {
             addLabel: LabelConstant.addShortcut,
             removeLabel: LabelConstant.removeShortcut,
             exists: { repository.exists(target: target) },
-            add: { repository.add(target: target) },
-            remove: { repository.delete(target: target) },
+            toggle: { repository.toggle(target: target) },
             onToggle: onToggle
         )
     }

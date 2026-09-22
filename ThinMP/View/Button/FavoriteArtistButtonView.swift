@@ -18,8 +18,7 @@ struct FavoriteArtistButtonView: View {
             addLabel: LabelConstant.addFavorites,
             removeLabel: LabelConstant.removeFavorites,
             exists: { repository.exists(artistId: artistId) },
-            add: { repository.add(artistId: artistId) },
-            remove: { repository.delete(artistId: artistId) },
+            toggle: { repository.toggle(artistId: artistId) },
             onToggle: onToggle
         )
     }

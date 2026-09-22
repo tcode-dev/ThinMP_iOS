@@ -45,8 +45,8 @@ class MusicPlayer: ObservableObject {
         player = MPMusicPlayerController.applicationMusicPlayer
         player.repeatMode = playerConfig.repeatMode
         player.shuffleMode = playerConfig.shuffleMode
-        setRepeat()
-        setShuffle()
+        syncRepeatMode()
+        syncShuffle()
         addObserver()
         player.beginGeneratingPlaybackNotifications()
     }
@@ -116,13 +116,13 @@ class MusicPlayer: ObservableObject {
         default: player.repeatMode = .none
         }
 
-        setRepeat()
+        syncRepeatMode()
         playerConfig.repeatMode = player.repeatMode
     }
 
     func shuffle() {
         player.shuffleMode = player.shuffleMode == .off ? .songs : .off
-        setShuffle()
+        syncShuffle()
         playerConfig.shuffleMode = player.shuffleMode
     }
 
@@ -132,13 +132,7 @@ class MusicPlayer: ObservableObject {
             return
         }
 
-        if favoriteArtistRepository.exists(artistId: artistId) {
-            favoriteArtistRepository.delete(artistId: artistId)
-        } else {
-            favoriteArtistRepository.add(artistId: artistId)
-        }
-
-        isFavoriteArtist.toggle()
+        isFavoriteArtist = favoriteArtistRepository.toggle(artistId: artistId)
     }
 
     /// 再生中の曲をお気に入りに入れる / 外す
@@ -147,26 +141,21 @@ class MusicPlayer: ObservableObject {
             return
         }
 
-        if favoriteSongRepository.exists(songId: songId) {
-            favoriteSongRepository.delete(songId: songId)
-        } else {
-            favoriteSongRepository.add(songId: songId)
-        }
-
-        isFavoriteSong.toggle()
+        isFavoriteSong = favoriteSongRepository.toggle(songId: songId)
     }
 
     /// お気に入りの状態をストアから読み直す。他の画面で登録 / 解除されたあとに呼ぶ
-    func setFavorite() {
-        setFavoriteArtist()
-        setFavoriteSong()
+    func syncFavorite() {
+        isFavoriteArtist = (song?.artistId).map { favoriteArtistRepository.exists(artistId: $0) } ?? false
+        isFavoriteSong = (song?.songId).map { favoriteSongRepository.exists(songId: $0) } ?? false
     }
 
-    private func setSong() {
+    /// 再生中の曲を player から読み直す
+    private func syncSong() {
         if let item = player.nowPlayingItem {
             song = SongModel(item: item)
             resetTime()
-            setFavorite()
+            syncFavorite()
             isActive = true
         } else {
             currentSecond = 0
@@ -182,7 +171,7 @@ class MusicPlayer: ObservableObject {
             queue: OperationQueue.main
         ) { _ in
             MainActor.assumeIsolated {
-                self.nowPlayingItemDidChangeCallback()
+                self.syncSong()
             }
         })
 
@@ -197,10 +186,6 @@ class MusicPlayer: ObservableObject {
         })
     }
 
-    private func nowPlayingItemDidChangeCallback() {
-        setSong()
-    }
-
     /// Control Center やイヤホンからの操作もここに届くので、timer の開始 / 停止はここで決める
     private func playbackStateDidChangeCallback() {
         switch player.playbackState {
@@ -213,14 +198,6 @@ class MusicPlayer: ObservableObject {
         }
 
         updateTimer()
-    }
-
-    private func setFavoriteArtist() {
-        isFavoriteArtist = (song?.artistId).map { favoriteArtistRepository.exists(artistId: $0) } ?? false
-    }
-
-    private func setFavoriteSong() {
-        isFavoriteSong = (song?.songId).map { favoriteSongRepository.exists(songId: $0) } ?? false
     }
 
     private func resetTime() {
@@ -253,11 +230,12 @@ class MusicPlayer: ObservableObject {
         })
     }
 
-    private func setRepeat() {
+    /// リピート / シャッフルの状態を player から読み直す
+    private func syncRepeatMode() {
         repeatMode = player.repeatMode
     }
 
-    private func setShuffle() {
+    private func syncShuffle() {
         isShuffle = player.shuffleMode == .songs
     }
 
