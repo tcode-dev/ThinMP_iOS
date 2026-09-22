@@ -43,6 +43,6 @@ class SongRepository: SongRepositoryProtocol {
     }
 
     private func songs(_ query: MPMediaQuery) -> [SongModel] {
-        return (query.collections ?? []).map { SongModel(media: $0) }
+        return (query.items ?? []).map { SongModel(item: $0) }
     }
 }

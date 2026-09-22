@@ -7,34 +7,31 @@
 
 import MediaPlayer
 
+/// ライブラリの曲 1 件。再生キューに入れるので MPMediaItem をそのまま持つ
 struct SongModel: MediaProtocol, Identifiable {
-    let media: MPMediaItemCollection
+    let item: MPMediaItem
 
     var id: String {
         return String(songId.id)
     }
 
     var songId: SongId {
-        SongId(id: media.persistentID)
+        return SongId(id: item.persistentID)
+    }
+
+    var artistId: ArtistId {
+        return ArtistId(id: item.artistPersistentID)
     }
 
     var primaryText: String? {
-        media.representativeItem?.title
+        return item.title
     }
 
     var secondaryText: String? {
-        media.representativeItem?.artist
+        return item.artist
     }
 
     var artwork: MPMediaItemArtwork? {
-        media.representativeItem?.artwork
-    }
-
-    var artistId: ArtistId? {
-        if let artistPersistentID = media.representativeItem?.artistPersistentID {
-            return ArtistId(id: artistPersistentID)
-        }
-
-        return nil
+        return item.artwork
     }
 }

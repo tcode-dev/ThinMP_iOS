@@ -56,10 +56,10 @@ class MusicPlayer: ObservableObject {
             player.stop()
         }
 
-        let items = MPMediaItemCollection(items: list.map { $0.media.representativeItem! as MPMediaItem })
+        let items = MPMediaItemCollection(items: list.map { $0.item })
         let descriptor = MPMusicPlayerMediaItemQueueDescriptor(itemCollection: items)
 
-        descriptor.startItem = list[currentIndex].media.representativeItem
+        descriptor.startItem = list[currentIndex].item
         player.setQueue(with: descriptor)
         play()
     }
@@ -164,7 +164,7 @@ class MusicPlayer: ObservableObject {
 
     private func setSong() {
         if let item = player.nowPlayingItem {
-            song = SongModel(media: MPMediaItemCollection(items: [item]))
+            song = SongModel(item: item)
             resetTime()
             setFavorite()
             isActive = true
