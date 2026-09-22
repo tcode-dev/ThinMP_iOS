@@ -15,15 +15,9 @@ struct FavoriteArtistsPageView: View {
         GeometryReader { geometry in
             VStack(spacing: 0) {
                 ZStack(alignment: .top) {
-                    ListNavBarView(top: geometry.safeAreaInsets.top, rect: $headerRect) {
-                        HStack {
-                            BackButtonView()
-                            Spacer()
-                            HeaderTitleView(LabelConstant.favoriteArtists)
-                            Spacer()
-                            EditButtonView {
-                                FavoriteArtistsEditPageView()
-                            }
+                    ListNavBarView(title: LabelConstant.favoriteArtists, top: geometry.safeAreaInsets.top, headerRect: $headerRect) {
+                        EditButtonView {
+                            FavoriteArtistsEditPageView()
                         }
                     }
                     ScrollView {
@@ -35,9 +29,7 @@ struct FavoriteArtistsPageView: View {
                 }
                 MiniPlayerView(bottom: geometry.safeAreaInsets.bottom) { vm.load() }
             }
-            .toolbar(.hidden, for: .navigationBar)
-            .navigationTitle("")
-            .ignoresSafeArea(.container)
+            .modifier(PageModifier())
             .task {
                 await vm.load().value
             }

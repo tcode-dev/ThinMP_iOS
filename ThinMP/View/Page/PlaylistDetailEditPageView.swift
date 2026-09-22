@@ -50,9 +50,7 @@ struct PlaylistDetailEditPageView: View {
                     }
                 }
             }
-            .toolbar(.hidden, for: .navigationBar)
-            .navigationTitle("")
-            .ignoresSafeArea(.container)
+            .modifier(PageModifier())
             .environment(\.editMode, .constant(.active))
             .task {
                 await vm.load(playlistId: playlistId).value

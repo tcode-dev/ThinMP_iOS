@@ -29,11 +29,15 @@ struct HeroHeaderView<Content>: View where Content: View {
 
         ZStack(alignment: .top) {
             content()
-            GeometryReader { geometry in
-                createPrimaryTextView(geometry: geometry)
-            }
-            .frame(height: StyleConstant.Height.row)
-            .offset(y: primaryTextOffset)
+            createPrimaryTextView()
+                .frame(height: StyleConstant.Height.row)
+                // offset の内側で測ることで、ずらした後の位置(GeometryReader を子に置いた場合と同じ)が取れる
+                .onGeometryChange(for: CGRect.self) { proxy in
+                    proxy.frame(in: .global)
+                } action: { rect in
+                    headerRect = rect
+                }
+                .offset(y: primaryTextOffset)
             SecondaryTextView(secondaryText)
                 .frame(width: abs(width - (StyleConstant.button * 2)), height: 25, alignment: .center)
                 .offset(y: secondaryTextOffset)
@@ -44,13 +48,8 @@ struct HeroHeaderView<Content>: View where Content: View {
     }
 
     /// PrimaryTextのViewを生成する
-    /// ScrollViewの現在位置を取得する方法がないため、親が子のgeometryを参照できるようにする
-    /// GeometryReader直下で変数を代入すると構文エラーになるので別メソッドにしている
-    private func createPrimaryTextView(geometry: GeometryProxy) -> some View {
-        DispatchQueue.main.async {
-            headerRect = geometry.frame(in: .global)
-        }
-
+    /// 位置はこの View の onGeometryChange で親に渡し、ナビゲーションバーのタイトル表示の切り替えに使う
+    private func createPrimaryTextView() -> some View {
         return VStack {
             TitleView(primaryText).opacity(textOpacity())
         }

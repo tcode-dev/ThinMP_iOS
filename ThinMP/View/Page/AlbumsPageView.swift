@@ -15,16 +15,7 @@ struct AlbumsPageView: View {
         GeometryReader { geometry in
             VStack(spacing: 0) {
                 ZStack(alignment: .top) {
-                    ListNavBarView(top: geometry.safeAreaInsets.top, rect: $headerRect) {
-                        HStack {
-                            BackButtonView()
-                            Spacer()
-                            HeaderTitleView(LabelConstant.albums)
-                            Spacer()
-                            Spacer()
-                                .frame(width: StyleConstant.button)
-                        }
-                    }
+                    ListNavBarView(title: LabelConstant.albums, top: geometry.safeAreaInsets.top, headerRect: $headerRect)
                     ScrollView {
                         VStack(alignment: .leading) {
                             ListEmptyHeaderView(headerRect: $headerRect, top: geometry.safeAreaInsets.top)
@@ -34,9 +25,7 @@ struct AlbumsPageView: View {
                 }
                 MiniPlayerView(bottom: geometry.safeAreaInsets.bottom)
             }
-            .toolbar(.hidden, for: .navigationBar)
-            .navigationTitle("")
-            .ignoresSafeArea(.container)
+            .modifier(PageModifier())
             .task {
                 await vm.load().value
             }
