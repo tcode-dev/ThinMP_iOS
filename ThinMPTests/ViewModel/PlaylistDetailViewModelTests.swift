@@ -52,4 +52,17 @@ struct PlaylistDetailViewModelTests {
         #expect(repository.updateCalls[0].name == "Renamed")
         #expect(repository.updateCalls[0].songIds.map { $0.id } == [3, 1])
     }
+
+    /// 読み込みが終わる前に完了を押しても、空の songs でプレイリストの曲を消さない
+    @Test
+    func saveBeforeLoadDoesNotTouchRepository() {
+        let repository = PlaylistRepositoryMock(playlists: [PlaylistEntity(playlistId: playlistId, name: "P", songIds: [SongId(id: 1), SongId(id: 2)])])
+        let vm = PlaylistDetailViewModel(playlistDetailService: makeService(), playlistRepository: repository)
+
+        #expect(!vm.isLoaded)
+        vm.save(playlistId: playlistId, name: "Renamed")
+
+        #expect(repository.updateCalls.isEmpty)
+        #expect(repository.findById(playlistId: playlistId)?.songIds == [SongId(id: 1), SongId(id: 2)])
+    }
 }

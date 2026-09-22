@@ -11,7 +11,7 @@ struct PlaylistsEditPageView: View {
     @StateObject private var vm = PlaylistsViewModel()
 
     var body: some View {
-        EditPageLayout(onDone: vm.save) {
+        EditPageLayout(isDoneEnabled: vm.isLoaded, onDone: vm.save) {
             List {
                 ForEach(vm.playlists) { playlist in
                     MediaRowView(media: playlist)

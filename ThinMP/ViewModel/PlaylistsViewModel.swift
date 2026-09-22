@@ -12,6 +12,8 @@ class PlaylistsViewModel: ObservableObject {
     @Published var playlists: [PlaylistModel] = []
     /// 登録モーダルで対象の曲がすでに入っているプレイリストの id
     @Published var registeredPlaylistIds: Set<PlaylistId> = []
+    /// 1 回目の読み込みが終わったか。終わるまでは編集ページの保存を受け付けない
+    @Published private(set) var isLoaded = false
 
     private let playlistsService: PlaylistsServiceProtocol
     private let playlistRepository: PlaylistRepositoryProtocol
@@ -33,6 +35,7 @@ class PlaylistsViewModel: ObservableObject {
         } apply: { [weak self] playlists in
             self?.playlists = playlists
             self?.registeredPlaylistIds = songId.map { songId in Set(playlists.filter { $0.contains(songId: songId) }.map { $0.playlistId }) } ?? []
+            self?.isLoaded = true
         }
     }
 
@@ -41,7 +44,12 @@ class PlaylistsViewModel: ObservableObject {
     }
 
     /// 編集ページの並び順と削除を保存する
+    /// 読み込み前に呼ばれたら何もしない(空の playlists で上書きするとプレイリストが全部消える)
     func save() {
+        guard isLoaded else {
+            return
+        }
+
         playlistRepository.update(playlistIds: playlists.map { $0.playlistId })
     }
 
