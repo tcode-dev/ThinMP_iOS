@@ -14,6 +14,8 @@ struct PlaylistDetailEditPageView: View {
 
     let playlistId: PlaylistId
 
+    /// primaryText は詳細ページが読み込んだ名前。すぐ入力欄に出せるように受け取るが、
+    /// 詳細ページ自身がまだ読み込めていないと nil で渡ってくるので、そのときは読み込んだ名前で埋める
     init(playlistId: PlaylistId, primaryText: String?) {
         self.playlistId = playlistId
         _name = State(initialValue: primaryText ?? "")
@@ -43,6 +45,10 @@ struct PlaylistDetailEditPageView: View {
         }
         .task {
             await vm.load(playlistId: playlistId).value
+
+            if name.isEmpty {
+                name = vm.playlist?.primaryText ?? ""
+            }
         }
     }
 
