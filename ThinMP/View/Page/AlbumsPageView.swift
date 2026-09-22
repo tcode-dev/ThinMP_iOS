@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AlbumsPageView: View {
     @StateObject private var vm = AlbumsViewModel()
-    @State private var headerRect = CGRect()
+    @State private var headerRect = CGRect.zero
 
     var body: some View {
         GeometryReader { geometry in

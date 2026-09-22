@@ -5,7 +5,7 @@
 //  Created by tk on 2021/01/02.
 //
 
-import MediaPlayer
+import Combine
 
 @MainActor
 class FavoriteArtistsViewModel: ObservableObject {

@@ -14,32 +14,17 @@ struct FavoriteSongsEditPageView: View {
     var body: some View {
         GeometryReader { geometry in
             VStack(spacing: 0) {
-                EditNavBarView(top: geometry.safeAreaInsets.top) {
-                    HStack {
-                        Button(action: {
-                            back()
-                        }) {
-                            Text(LocalizedStringKey(LabelConstant.cancel))
-                        }
-                        Spacer()
-                        Button(action: {
-                            update()
-                            back()
-                        }) {
-                            Text(LocalizedStringKey(LabelConstant.done))
-                        }
-                    }
-                    .padding(.horizontal, StyleConstant.Padding.large)
+                EditNavBarView(top: geometry.safeAreaInsets.top, onCancel: { dismiss() }) {
+                    update()
+                    dismiss()
                 }
-                VStack(alignment: .leading) {
-                    List {
-                        ForEach(vm.songs) { song in
-                            MediaRowView(media: song)
-                        }
-                        .onMove(perform: move)
-                        .onDelete(perform: delete)
-                        .listRowInsets(.init())
+                List {
+                    ForEach(vm.songs) { song in
+                        MediaRowView(media: song)
                     }
+                    .onMove(perform: move)
+                    .onDelete(perform: delete)
+                    .listRowInsets(.init())
                 }
             }
             .toolbar(.hidden, for: .navigationBar)
@@ -64,9 +49,5 @@ struct FavoriteSongsEditPageView: View {
         let favoriteSongRegister = FavoriteSongRegister()
 
         favoriteSongRegister.update(songIds: vm.songs.map { $0.songId })
-    }
-
-    private func back() {
-        dismiss()
     }
 }

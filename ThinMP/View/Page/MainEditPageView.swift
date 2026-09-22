@@ -14,40 +14,25 @@ struct MainEditPageView: View {
     var body: some View {
         GeometryReader { geometry in
             VStack(spacing: 0) {
-                EditNavBarView(top: geometry.safeAreaInsets.top) {
-                    HStack {
-                        Button(action: {
-                            back()
-                        }) {
-                            Text(LocalizedStringKey(LabelConstant.cancel))
-                        }
-                        Spacer()
-                        Button(action: {
-                            update()
-                            back()
-                        }) {
-                            Text(LocalizedStringKey(LabelConstant.done))
-                        }
-                    }
-                    .padding(.horizontal, StyleConstant.Padding.large)
+                EditNavBarView(top: geometry.safeAreaInsets.top, onCancel: { dismiss() }) {
+                    update()
+                    dismiss()
                 }
-                VStack(alignment: .leading) {
-                    List {
-                        ForEach(vm.menus) { menu in
-                            MenuEditRowView(menu: menu)
-                        }
-                        .onMove(perform: moveMenu)
-                        .listRowInsets(.init())
-                        MenuEditRowView(menu: vm.shortcutMenu).listRowInsets(.init())
-                        MenuEditRowView(menu: vm.recentlyMenu).listRowInsets(.init())
-                        SectionTitleView(vm.shortcutMenu.primaryText).padding(StyleConstant.Padding.tiny)
-                        ForEach(vm.shortcuts) { shortcut in
-                            ShortcutRowView(shortcut: shortcut)
-                        }
-                        .onMove(perform: moveShortcut)
-                        .onDelete(perform: deleteShortcut)
-                        .listRowInsets(.init())
+                List {
+                    ForEach(vm.menus) { menu in
+                        MenuEditRowView(menu: menu)
                     }
+                    .onMove(perform: moveMenu)
+                    .listRowInsets(.init())
+                    MenuEditRowView(menu: vm.shortcutMenu).listRowInsets(.init())
+                    MenuEditRowView(menu: vm.recentlyMenu).listRowInsets(.init())
+                    SectionTitleView(vm.shortcutMenu.primaryText).padding(StyleConstant.Padding.tiny)
+                    ForEach(vm.shortcuts) { shortcut in
+                        ShortcutRowView(shortcut: shortcut)
+                    }
+                    .onMove(perform: moveShortcut)
+                    .onDelete(perform: deleteShortcut)
+                    .listRowInsets(.init())
                 }
             }
             .toolbar(.hidden, for: .navigationBar)
@@ -91,9 +76,5 @@ struct MainEditPageView: View {
         let shortcutIds = vm.shortcuts.map { $0.shortcutId }
 
         shortcutRegister.update(shortcutIds: shortcutIds)
-    }
-
-    private func back() {
-        dismiss()
     }
 }
