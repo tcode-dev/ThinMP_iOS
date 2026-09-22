@@ -8,6 +8,11 @@
 import SwiftUI
 
 enum StyleConstant {
+    /// iPad は余白と比率を少し変える
+    static var isPad: Bool {
+        return UIDevice.current.userInterfaceIdiom == .pad
+    }
+
     static let button: CGFloat = 50
     static let cornerRadius: CGFloat = 4
     static let dividerHeight: CGFloat = 0.5

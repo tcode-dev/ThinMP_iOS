@@ -20,10 +20,8 @@ struct HeroHeaderView<Content: View, SecondaryText: View>: View {
     /// 説明の行。ページごとにライブラリの文字列かラベルかが違うので、SecondaryTextView を作って渡す
     @ViewBuilder let secondaryText: () -> SecondaryText
 
-    let isPad = UIDevice.current.userInterfaceIdiom == .pad
-
     var body: some View {
-        let rate = isPad ? 0.85 : 0.75
+        let rate = StyleConstant.isPad ? 0.85 : 0.75
         let primaryTextOffset = size * rate
         let secondaryTextOffset = primaryTextOffset + 40
 
