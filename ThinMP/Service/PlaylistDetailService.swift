@@ -40,10 +40,7 @@ struct PlaylistDetailService: PlaylistDetailServiceProtocol {
         let found = await Task.detached(priority: .userInitiated) { [songRepository] in
             songRepository.findByIds(songIds: songIds)
         }.value
-        let songs = Dictionary(
-            found.map { ($0.songId, $0) },
-            uniquingKeysWith: { first, _ in first }
-        )
+        let songs = found.keyed { $0.songId }
 
         return playlists.map { playlist in
             let found = playlist.songIds.compactMap { songs[$0] }

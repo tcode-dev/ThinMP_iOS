@@ -56,11 +56,8 @@ struct HeroHeaderView<Content: View, SecondaryText: View>: View {
         .padding(.trailing, StyleConstant.button)
     }
 
+    /// ナビゲーションバーのタイトルと入れ替わるので、潜り込んだら消す
     private func textOpacity() -> Double {
-        if headerRect.origin.y - top > 0 {
-            return 1
-        }
-
-        return 0
+        return headerRect.isScrolledUnder(top: top) ? 0 : 1
     }
 }

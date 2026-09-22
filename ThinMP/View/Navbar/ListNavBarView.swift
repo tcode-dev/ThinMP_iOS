@@ -54,11 +54,8 @@ struct ListNavBarView<Trailing: View>: View {
     }
 
     private func opacity() -> Double {
-        if headerRect.origin.y >= 0 {
-            return 0
-        }
-
-        return 1
+        // ListEmptyHeaderView の高さがセーフエリアの分を含んでいるので、基準は画面の上端
+        return headerRect.isScrolledUnder(top: 0) ? 1 : 0
     }
 }
 

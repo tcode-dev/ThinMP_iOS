@@ -42,9 +42,9 @@ struct ShortcutService: ShortcutServiceProtocol {
         let albums = albumIds.isEmpty ? [] : await albumDetailService.findByIds(albumIds: albumIds)
         let playlists = playlistIds.isEmpty ? [] : await playlistDetailService.findByIds(playlistIds: playlistIds)
 
-        let artistById = Dictionary(artists.map { ($0.artistId, $0) }, uniquingKeysWith: { first, _ in first })
-        let albumById = Dictionary(albums.map { ($0.albumId, $0) }, uniquingKeysWith: { first, _ in first })
-        let playlistById = Dictionary(playlists.map { ($0.playlistId, $0) }, uniquingKeysWith: { first, _ in first })
+        let artistById = artists.keyed { $0.artistId }
+        let albumById = albums.keyed { $0.albumId }
+        let playlistById = playlists.keyed { $0.playlistId }
 
         // 端末に存在しないものは落とす(下で数が減ったことを検出する)
         let shortcutModels = shortcuts.compactMap { shortcut -> ShortcutModel? in

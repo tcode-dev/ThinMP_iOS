@@ -84,6 +84,7 @@
 		52A1F3D32E8100060000A001 /* MainSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A1F3D22E8100060000A001 /* MainSettings.swift */; };
 		52A1F3D52E8100070000A001 /* MainMenuConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A1F3D42E8100070000A001 /* MainMenuConfigTests.swift */; };
 		52A1F3D92E8100080000A001 /* GeometryProxy+HeroSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A1F3D82E8100080000A001 /* GeometryProxy+HeroSize.swift */; };
+		42589C6CB45499622C7699B3 /* CGRect+ScrolledUnder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45DBACE677D9B154AAE9455 /* CGRect+ScrolledUnder.swift */; };
 		52A1F3DB2E8100080000A001 /* HeroGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A1F3DA2E8100080000A001 /* HeroGradientView.swift */; };
 		52A1F3DD2E8100090000A001 /* ButtonImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A1F3DC2E8100090000A001 /* ButtonImageView.swift */; };
 		52A1F3DF2E8100090000A001 /* Optional+OrUnknown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A1F3DE2E8100090000A001 /* Optional+OrUnknown.swift */; };
@@ -200,6 +201,7 @@
 		52BF725186C711FB7266521D /* EditPageLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B28E520F6C368EE60E2778 /* EditPageLayout.swift */; };
 		52B9992A840B28F71F5AD8D5 /* Sequence+Reordered.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B528490FC042568C1AA15E /* Sequence+Reordered.swift */; };
 		7E7F8515057DA1344B8C9922 /* Sequence+Uniqued.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357CC7D9C31A7AACDFEF5215 /* Sequence+Uniqued.swift */; };
+		A5F797AAD4D5621CAF8AD8DB /* Sequence+Keyed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D079305A25492C90AEFC7C3 /* Sequence+Keyed.swift */; };
 		52B76EDBFFA46E975B7E5441 /* LoadTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BDE437A6348D1B5DC1162E /* LoadTask.swift */; };
 		52B1D0D1908F0691A23B4F5A /* PlayPauseButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B45E44ABFC41FCF30E2EDE /* PlayPauseButtonView.swift */; };
 		52B81927018AD3D30646257A /* PlayerSeekBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BE7EA7F854B79754817781 /* PlayerSeekBarView.swift */; };
@@ -306,6 +308,7 @@
 		52A1F3D22E8100060000A001 /* MainSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSettings.swift; sourceTree = "<group>"; };
 		52A1F3D42E8100070000A001 /* MainMenuConfigTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuConfigTests.swift; sourceTree = "<group>"; };
 		52A1F3D82E8100080000A001 /* GeometryProxy+HeroSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GeometryProxy+HeroSize.swift"; sourceTree = "<group>"; };
+		C45DBACE677D9B154AAE9455 /* CGRect+ScrolledUnder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGRect+ScrolledUnder.swift"; sourceTree = "<group>"; };
 		52A1F3DA2E8100080000A001 /* HeroGradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroGradientView.swift; sourceTree = "<group>"; };
 		52A1F3DC2E8100090000A001 /* ButtonImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonImageView.swift; sourceTree = "<group>"; };
 		52A1F3DE2E8100090000A001 /* Optional+OrUnknown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Optional+OrUnknown.swift"; sourceTree = "<group>"; };
@@ -421,6 +424,7 @@
 		52B28E520F6C368EE60E2778 /* EditPageLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPageLayout.swift; sourceTree = "<group>"; };
 		52B528490FC042568C1AA15E /* Sequence+Reordered.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sequence+Reordered.swift"; sourceTree = "<group>"; };
 		357CC7D9C31A7AACDFEF5215 /* Sequence+Uniqued.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sequence+Uniqued.swift"; sourceTree = "<group>"; };
+		0D079305A25492C90AEFC7C3 /* Sequence+Keyed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sequence+Keyed.swift"; sourceTree = "<group>"; };
 		52BDE437A6348D1B5DC1162E /* LoadTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadTask.swift; sourceTree = "<group>"; };
 		52B45E44ABFC41FCF30E2EDE /* PlayPauseButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayPauseButtonView.swift; sourceTree = "<group>"; };
 		52BE7EA7F854B79754817781 /* PlayerSeekBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerSeekBarView.swift; sourceTree = "<group>"; };
@@ -515,6 +519,7 @@
 				52A1F3C82E8100030000A001 /* PageModifier.swift */,
 				52A1F3CC2E8100050000A001 /* GridLayout.swift */,
 				52A1F3D82E8100080000A001 /* GeometryProxy+HeroSize.swift */,
+				C45DBACE677D9B154AAE9455 /* CGRect+ScrolledUnder.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -1037,6 +1042,7 @@
 			isa = PBXGroup;
 			children = (
 				357CC7D9C31A7AACDFEF5215 /* Sequence+Uniqued.swift */,
+				0D079305A25492C90AEFC7C3 /* Sequence+Keyed.swift */,
 				52B528490FC042568C1AA15E /* Sequence+Reordered.swift */,
 			);
 			path = Extension;
@@ -1184,6 +1190,7 @@
 				52B76EDBFFA46E975B7E5441 /* LoadTask.swift in Sources */,
 				52B9992A840B28F71F5AD8D5 /* Sequence+Reordered.swift in Sources */,
 				7E7F8515057DA1344B8C9922 /* Sequence+Uniqued.swift in Sources */,
+				A5F797AAD4D5621CAF8AD8DB /* Sequence+Keyed.swift in Sources */,
 				52BF725186C711FB7266521D /* EditPageLayout.swift in Sources */,
 				52B49B937EEB15084069E37B /* ScrollPageLayout.swift in Sources */,
 				52B0116F54D0078B3504549D /* View+PlaylistRegisterPopup.swift in Sources */,
@@ -1235,6 +1242,7 @@
 				52A1F3CB2E8100040000A001 /* RegisterToggleButtonView.swift in Sources */,
 				52A1F3CD2E8100050000A001 /* GridLayout.swift in Sources */,
 				52A1F3D92E8100080000A001 /* GeometryProxy+HeroSize.swift in Sources */,
+				42589C6CB45499622C7699B3 /* CGRect+ScrolledUnder.swift in Sources */,
 				52A1F3DB2E8100080000A001 /* HeroGradientView.swift in Sources */,
 				52A1F3DD2E8100090000A001 /* ButtonImageView.swift in Sources */,
 				52A1F3DF2E8100090000A001 /* Optional+OrUnknown.swift in Sources */,
