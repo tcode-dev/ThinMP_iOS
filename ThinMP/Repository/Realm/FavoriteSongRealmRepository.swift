@@ -39,7 +39,7 @@ struct FavoriteSongRealmRepository: FavoriteSongRepositoryProtocol {
     }
 
     func exists(songId: SongId) -> Bool {
-        return find(songId: songId).count == 1
+        return !find(songId: songId).isEmpty
     }
 
     func update(songIds: [SongId]) {
@@ -50,7 +50,7 @@ struct FavoriteSongRealmRepository: FavoriteSongRepositoryProtocol {
     func delete(songId: SongId) {
         let favoriteSongs = find(songId: songId)
 
-        if favoriteSongs.count != 1 {
+        if favoriteSongs.isEmpty {
             return
         }
 

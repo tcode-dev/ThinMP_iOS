@@ -5,6 +5,8 @@
 //  Created by tk on 2026/09/21.
 //
 
+import RealmSwift
+import SwiftData
 @testable import ThinMP
 
 /// Repository の実装を切り替えるための識別子
@@ -24,11 +26,16 @@ struct TestRepositories {
     let playlist: PlaylistRepositoryProtocol
     let shortcut: ShortcutRepositoryProtocol
 
+    private let realmStore: RealmStore?
+    private let swiftDataStore: SwiftDataStore?
+
     init(backend: RepositoryBackend, realmStore: RealmStore? = nil, swiftDataStore: SwiftDataStore? = nil) {
         switch backend {
         case .realm:
             let store = realmStore ?? .inMemory()
 
+            self.realmStore = store
+            self.swiftDataStore = nil
             favoriteSong = FavoriteSongRealmRepository(store: store)
             favoriteArtist = FavoriteArtistRealmRepository(store: store)
             playlist = PlaylistRealmRepository(store: store)
@@ -36,10 +43,30 @@ struct TestRepositories {
         case .swiftData:
             let store = swiftDataStore ?? .inMemory()
 
+            self.realmStore = nil
+            self.swiftDataStore = store
             favoriteSong = FavoriteSongRepository(store: store)
             favoriteArtist = FavoriteArtistRepository(store: store)
             playlist = PlaylistRepository(store: store)
             shortcut = ShortcutRepository(store: store)
+        }
+    }
+
+    /// Repository を通さずにストアへ直接書く
+    /// Repository 側で弾いている状態(同じ id の重複行など)を作って、その状態でも Repository が壊れないことを確かめるのに使う
+    /// バックエンドに応じてどちらか一方だけが呼ばれる
+    func writeDirectly(realm writeRealm: (Realm) -> Void, swiftData writeSwiftData: (ModelContext) -> Void) {
+        if let realmStore {
+            let realm = realmStore.realm()
+
+            try! realm.write {
+                writeRealm(realm)
+            }
+        }
+
+        if let swiftDataStore {
+            writeSwiftData(swiftDataStore.context)
+            swiftDataStore.save()
         }
     }
 }

@@ -5,6 +5,8 @@
 //  Created by tk on 2026/09/21.
 //
 
+import RealmSwift
+import SwiftData
 import Testing
 @testable import ThinMP
 
@@ -112,5 +114,35 @@ struct ShortcutRepositoryTests {
         repository.add(itemId: ItemId(id: "3"), type: .artist)
 
         #expect(repository.findAll().map { $0.itemId.id } == ["3", "1", "2"])
+    }
+
+    /// ストアに同じショートカットが 2 行残っていても(Repository は防いでいるが)、exists は true、delete は全部消す
+    @Test(arguments: RepositoryBackend.allCases)
+    func existsAndDeleteToleratesDuplicateRows(backend: RepositoryBackend) {
+        let repositories = TestRepositories(backend: backend)
+        let repository = repositories.shortcut
+        let itemId = ItemId(id: "1")
+
+        repositories.writeDirectly(realm: { realm in
+            for order in 1 ... 2 {
+                let model = ShortcutRealmModel()
+
+                model.itemId = itemId.id
+                model.type = ShortcutType.artist.rawValue
+                model.order = order
+                realm.add(model)
+            }
+        }, swiftData: { context in
+            for order in 1 ... 2 {
+                context.insert(ShortcutDataModel(itemId: itemId.id, type: .artist, order: order))
+            }
+        })
+
+        #expect(repository.exists(itemId: itemId, type: .artist))
+
+        repository.delete(itemId: itemId, type: .artist)
+
+        #expect(!repository.exists(itemId: itemId, type: .artist))
+        #expect(repository.findAll().isEmpty)
     }
 }
