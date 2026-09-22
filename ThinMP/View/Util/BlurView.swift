@@ -9,7 +9,6 @@
 import SwiftUI
 
 struct BlurView: UIViewRepresentable {
-    typealias UIViewType = UIView
     var style: UIBlurEffect.Style
 
     func makeUIView(context _: UIViewRepresentableContext<BlurView>) -> UIView {

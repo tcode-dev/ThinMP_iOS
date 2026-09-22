@@ -8,7 +8,7 @@
 import Foundation
 
 /// メインページのショートカット / 最近追加セクションの表示 / 非表示
-class MainSectionConfig {
+struct MainSectionConfig {
     private let SHORTCUT = "shortcut"
     private let RECENTLY = "recently"
     private let userDefaults: UserDefaults
@@ -23,11 +23,11 @@ class MainSectionConfig {
 
     var isShortcutVisible: Bool {
         get { userDefaults.bool(forKey: SHORTCUT) }
-        set { userDefaults.set(newValue, forKey: SHORTCUT) }
+        nonmutating set { userDefaults.set(newValue, forKey: SHORTCUT) }
     }
 
     var isRecentlyVisible: Bool {
         get { userDefaults.bool(forKey: RECENTLY) }
-        set { userDefaults.set(newValue, forKey: RECENTLY) }
+        nonmutating set { userDefaults.set(newValue, forKey: RECENTLY) }
     }
 }

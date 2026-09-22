@@ -5,8 +5,6 @@
 //  Created by tk on 2021/06/07.
 //
 
-import MediaPlayer
-
 struct PlaylistsService: PlaylistsServiceProtocol {
     private let playlistRepository: PlaylistRepositoryProtocol
     private let playlistDetailService: PlaylistDetailServiceProtocol

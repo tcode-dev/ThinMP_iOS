@@ -8,7 +8,7 @@
 import Foundation
 import MediaPlayer
 
-class PlayerConfig {
+struct PlayerConfig {
     private let REPEAT = "repeat"
     private let SHUFFLE = "shuffle"
 

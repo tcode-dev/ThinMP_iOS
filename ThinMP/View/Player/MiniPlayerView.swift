@@ -11,9 +11,8 @@ struct MiniPlayerView: View {
     private let imageSize: CGFloat = 40
     private let buttonSize: CGFloat = 60
 
-    @Environment(\.scenePhase) private var scenePhase
     @EnvironmentObject var musicPlayer: MusicPlayer
-    @State var isFullScreen: Bool = false
+    @State private var isFullScreen: Bool = false
     private let bottom: CGFloat
     private let callback: () -> Void
 
@@ -39,21 +38,21 @@ struct MiniPlayerView: View {
                         Button(action: {
                             musicPlayer.pause()
                         }) {
-                            Image("PauseButton").renderingMode(.original).resizable().frame(width: imageSize, height: imageSize)
+                            ButtonImageView(name: "PauseButton", size: imageSize)
                         }
                         .frame(width: buttonSize, height: buttonSize)
                     } else {
                         Button(action: {
                             musicPlayer.play()
                         }) {
-                            Image("PlayButton").renderingMode(.original).resizable().frame(width: imageSize, height: imageSize)
+                            ButtonImageView(name: "PlayButton", size: imageSize)
                         }
                         .frame(width: buttonSize, height: buttonSize)
                     }
                     Button(action: {
                         musicPlayer.next()
                     }) {
-                        Image("NextButton").renderingMode(.original).resizable().frame(width: imageSize, height: imageSize)
+                        ButtonImageView(name: "NextButton", size: imageSize)
                     }
                     .frame(width: buttonSize, height: buttonSize)
                 }

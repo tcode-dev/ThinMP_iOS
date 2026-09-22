@@ -5,13 +5,13 @@
 //  Created by tk on 2023/09/11.
 //
 
-import SwiftUI
 import MediaPlayer
+import SwiftUI
 
 struct PermissionView<Content>: View where Content: View {
     let content: () -> Content
-    @State var isAllowed: Bool = false
-    @State var isRequested: Bool = false
+    @State private var isAllowed: Bool = false
+    @State private var isRequested: Bool = false
 
     init(content: @escaping () -> Content) {
         self.content = content
@@ -31,9 +31,9 @@ struct PermissionView<Content>: View where Content: View {
             }.onAppear {
                 MPMediaLibrary.requestAuthorization { status in
                     if status == .authorized {
-                        isAllowed.toggle()
+                        isAllowed = true
                     } else {
-                        isRequested.toggle()
+                        isRequested = true
                     }
                 }
             }

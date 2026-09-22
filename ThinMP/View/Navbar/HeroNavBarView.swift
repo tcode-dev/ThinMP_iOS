@@ -5,7 +5,6 @@
 //  Created by tk on 2020/01/19.
 //
 
-import MediaPlayer
 import SwiftUI
 
 struct HeroNavBarView<Content>: View where Content: View {
@@ -23,12 +22,7 @@ struct HeroNavBarView<Content>: View where Content: View {
                 content()
             }
             .frame(height: StyleConstant.Height.row)
-            .padding(EdgeInsets(
-                top: top,
-                leading: 0,
-                bottom: 0,
-                trailing: 0
-            ))
+            .padding(.top, top)
             .zIndex(3)
             createHeaderView()
             createTitleView()
@@ -53,12 +47,8 @@ struct HeroNavBarView<Content>: View where Content: View {
             TitleView(primaryText)
         }
         .frame(width: abs(width - (StyleConstant.button * 2)), height: StyleConstant.Height.row)
-        .padding(EdgeInsets(
-            top: top,
-            leading: StyleConstant.button,
-            bottom: 0,
-            trailing: StyleConstant.button
-        ))
+        .padding(.top, top)
+        .padding(.horizontal, StyleConstant.button)
         .opacity(opacity())
     }
 

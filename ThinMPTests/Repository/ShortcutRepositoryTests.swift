@@ -145,4 +145,26 @@ struct ShortcutRepositoryTests {
         #expect(!repository.exists(itemId: itemId, type: .artist))
         #expect(repository.findAll().isEmpty)
     }
+
+    /// アーティスト / アルバムの itemId が persistentID として読めない行は findAll から落ちる(ItemId.artistId で落ちないように)
+    @Test(arguments: RepositoryBackend.allCases)
+    func findAllSkipsRowsWhoseItemIdIsNotAPersistentId(backend: RepositoryBackend) {
+        let repositories = TestRepositories(backend: backend)
+        let repository = repositories.shortcut
+
+        repository.add(itemId: ItemId(id: "1"), type: .artist)
+        repository.add(itemId: ItemId(id: "not-a-number"), type: .playlist)
+        repositories.writeDirectly(realm: { realm in
+            let model = ShortcutRealmModel()
+
+            model.itemId = "broken"
+            model.type = ShortcutType.album.rawValue
+            model.order = 99
+            realm.add(model)
+        }, swiftData: { context in
+            context.insert(ShortcutDataModel(itemId: "broken", type: .album, order: 99))
+        })
+
+        #expect(repository.findAll().map { $0.itemId.id } == ["not-a-number", "1"])
+    }
 }

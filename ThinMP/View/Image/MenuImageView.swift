@@ -1,5 +1,5 @@
 //
-//  BackImageView.swift
+//  MenuImageView.swift
 //  ThinMP
 //
 //  Created by tk on 2020/06/05.

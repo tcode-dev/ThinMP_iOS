@@ -57,5 +57,8 @@
 "Done" = "完了";
 "Cancel" = "キャンセル";
 
+// unknown title / artist
+"Unknown" = "不明";
+
 // permission
 "Permission" = "設定からAppleMusicライブラリへのアクセスを許可するとこのアプリを使用できるようになります。";

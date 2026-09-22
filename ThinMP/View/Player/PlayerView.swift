@@ -11,7 +11,7 @@ struct PlayerView: View {
     @Environment(\.scenePhase) private var scenePhase
     @EnvironmentObject var musicPlayer: MusicPlayer
 
-    @State var seeking: Bool = false
+    @State private var seeking: Bool = false
     @State private var showingPopup: Bool = false
     private let callback: () -> Void
     private let isPad = UIDevice.current.userInterfaceIdiom == .pad
@@ -39,12 +39,7 @@ struct PlayerView: View {
                     VStack(spacing: 0) {
                         let imageSize = height * 0.3
                         Spacer()
-                        Image(uiImage: musicPlayer.song?.artwork?.image(at: CGSize(width: imageSize, height: imageSize)) ?? UIImage(imageLiteralResourceName: "Song"))
-                            .renderingMode(.original)
-                            .resizable()
-                            .scaledToFit()
-                            .cornerRadius(StyleConstant.cornerRadius)
-                            .frame(width: imageSize, height: imageSize)
+                        SquareImageView(artwork: musicPlayer.song?.artwork, size: imageSize)
                             .padding(.top, size * 0.1)
                         Spacer()
                     }
@@ -82,7 +77,7 @@ struct PlayerView: View {
                             Button(action: {
                                 musicPlayer.prev()
                             }) {
-                                Image("PrevButton").renderingMode(.original).resizable().frame(width: 88, height: 88)
+                                ButtonImageView(name: "PrevButton", size: 88)
                             }
                             Spacer()
                             if musicPlayer.isPlaying {
@@ -90,21 +85,21 @@ struct PlayerView: View {
                                     musicPlayer.pause()
                                     musicPlayer.stopProgress()
                                 }) {
-                                    Image("PauseButton").renderingMode(.original).resizable().frame(width: 100, height: 100)
+                                    ButtonImageView(name: "PauseButton", size: 100)
                                 }
                             } else {
                                 Button(action: {
                                     musicPlayer.play()
                                     musicPlayer.startProgress()
                                 }) {
-                                    Image("PlayButton").renderingMode(.original).resizable().frame(width: 100, height: 100)
+                                    ButtonImageView(name: "PlayButton", size: 100)
                                 }
                             }
                             Spacer()
                             Button(action: {
                                 musicPlayer.next()
                             }) {
-                                Image("NextButton").renderingMode(.original).resizable().frame(width: 88, height: 88)
+                                ButtonImageView(name: "NextButton", size: 88)
                             }
                             Spacer()
                         }
@@ -115,11 +110,11 @@ struct PlayerView: View {
                             }) {
                                 switch musicPlayer.repeatMode {
                                 case .all:
-                                    Image("RepeatButton").renderingMode(.original).resizable().frame(width: 50, height: 50)
+                                    ButtonImageView(name: "RepeatButton", size: 50)
                                 case .one:
-                                    Image("RepeatOneButton").renderingMode(.original).resizable().frame(width: 50, height: 50)
+                                    ButtonImageView(name: "RepeatOneButton", size: 50)
                                 default:
-                                    Image("RepeatButton").renderingMode(.original).resizable().frame(width: 50, height: 50).opacity(0.5)
+                                    ButtonImageView(name: "RepeatButton", size: 50, dimmed: true)
                                 }
                             }
                             .frame(width: StyleConstant.button, height: StyleConstant.button)
@@ -127,40 +122,28 @@ struct PlayerView: View {
                             Button(action: {
                                 musicPlayer.shuffle()
                             }) {
-                                if musicPlayer.isShuffle {
-                                    Image("ShuffleButton").renderingMode(.original).resizable().frame(width: 50, height: 50)
-                                } else {
-                                    Image("ShuffleButton").renderingMode(.original).resizable().frame(width: 50, height: 50).opacity(0.5)
-                                }
+                                ButtonImageView(name: "ShuffleButton", size: 50, dimmed: !musicPlayer.isShuffle)
                             }
                             .frame(width: StyleConstant.button, height: StyleConstant.button)
                             Spacer()
                             Button(action: {
                                 musicPlayer.favoriteArtist()
                             }) {
-                                if musicPlayer.isFavoriteArtist {
-                                    Image("FavoriteArtistButton").renderingMode(.original).resizable().frame(width: 50, height: 50)
-                                } else {
-                                    Image("FavoriteArtistButton").renderingMode(.original).resizable().frame(width: 50, height: 50).opacity(0.5)
-                                }
+                                ButtonImageView(name: "FavoriteArtistButton", size: 50, dimmed: !musicPlayer.isFavoriteArtist)
                             }
                             .frame(width: StyleConstant.button, height: StyleConstant.button)
                             Spacer()
                             Button(action: {
                                 musicPlayer.favoriteSong()
                             }) {
-                                if musicPlayer.isFavoriteSong {
-                                    Image("FavoriteSongButton").renderingMode(.original).resizable().frame(width: 40, height: 40)
-                                } else {
-                                    Image("FavoriteSongButton").renderingMode(.original).resizable().frame(width: 40, height: 40).opacity(0.5)
-                                }
+                                ButtonImageView(name: "FavoriteSongButton", size: 40, dimmed: !musicPlayer.isFavoriteSong)
                             }
                             .frame(width: StyleConstant.button, height: StyleConstant.button)
                             Spacer()
                             Button(action: {
                                 showingPopup.toggle()
                             }) {
-                                Image("PlaylistAddButton").renderingMode(.original).resizable().frame(width: 50, height: 50)
+                                ButtonImageView(name: "PlaylistAddButton", size: 50)
                             }
                             .frame(width: StyleConstant.button, height: StyleConstant.button)
                         }
@@ -202,16 +185,22 @@ struct PlayerView: View {
         }
     }
 
+    /// 毎秒呼ばれるので formatter は使い回す
+    private static let timeFormatter: DateComponentsFormatter = {
+        let formatter = DateComponentsFormatter()
+
+        formatter.unitsStyle = .positional
+        formatter.allowedUnits = [.minute, .second]
+        formatter.zeroFormattingBehavior = [.pad]
+
+        return formatter
+    }()
+
     private func convertTime(time: TimeInterval) -> String {
         if time < 1 {
             return "00:00"
         }
 
-        let formatter = DateComponentsFormatter()
-        formatter.unitsStyle = .positional
-        formatter.allowedUnits = [.minute, .second]
-        formatter.zeroFormattingBehavior = [.pad]
-
-        return formatter.string(from: time) ?? "00:00"
+        return Self.timeFormatter.string(from: time) ?? "00:00"
     }
 }

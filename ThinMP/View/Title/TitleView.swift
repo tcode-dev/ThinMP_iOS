@@ -11,11 +11,7 @@ struct TitleView: View {
     private let text: String
 
     init(_ text: String?) {
-        if let text = text {
-            self.text = text.isEmpty ? LabelConstant.unknown : text
-        } else {
-            self.text = LabelConstant.unknown
-        }
+        self.text = text.orUnknown
     }
 
     var body: some View {
