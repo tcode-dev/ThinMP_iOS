@@ -7,39 +7,25 @@
 
 import SwiftUI
 
+/// メインページのライブラリメニュー 1 行。タップで対応する一覧ページへ
 struct MainMenuButtonView: View {
-    let menu: MenuModel
+    let menu: MainMenu
 
     var body: some View {
-        Group {
-            switch menu.primaryText {
-            case LabelConstant.artists:
-                NavigationLink(destination: ArtistsPageView()) {
-                    MenuRowView(text: menu.primaryText)
-                }
-            case LabelConstant.albums:
-                NavigationLink(destination: AlbumsPageView()) {
-                    MenuRowView(text: menu.primaryText)
-                }
-            case LabelConstant.songs:
-                NavigationLink(destination: SongsPageView()) {
-                    MenuRowView(text: menu.primaryText)
-                }
-            case LabelConstant.favoriteArtists:
-                NavigationLink(destination: FavoriteArtistsPageView()) {
-                    MenuRowView(text: menu.primaryText)
-                }
-            case LabelConstant.favoriteSongs:
-                NavigationLink(destination: FavoriteSongsPageView()) {
-                    MenuRowView(text: menu.primaryText)
-                }
-            case LabelConstant.playlists:
-                NavigationLink(destination: PlaylistsPageView()) {
-                    MenuRowView(text: menu.primaryText)
-                }
-            default:
-                EmptyView()
-            }
+        NavigationLink(destination: destination) {
+            MenuRowView(text: menu.label)
+        }
+    }
+
+    @ViewBuilder
+    private var destination: some View {
+        switch menu {
+        case .artists: ArtistsPageView()
+        case .albums: AlbumsPageView()
+        case .songs: SongsPageView()
+        case .favoriteArtists: FavoriteArtistsPageView()
+        case .favoriteSongs: FavoriteSongsPageView()
+        case .playlists: PlaylistsPageView()
         }
     }
 }

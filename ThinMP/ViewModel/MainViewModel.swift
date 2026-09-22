@@ -9,9 +9,7 @@ import Combine
 
 @MainActor
 class MainViewModel: ObservableObject {
-    @Published var menus: [MenuModel] = []
-    @Published var shortcutMenu = MenuModel(primaryText: "", visibility: false)
-    @Published var recentlyMenu = MenuModel(primaryText: "", visibility: false)
+    @Published var settings = MainSettings(menus: [], isShortcutVisible: false, isRecentlyVisible: false)
     @Published var shortcuts: [ShortcutModel] = []
     @Published var albums: [AlbumModel] = []
 
@@ -28,17 +26,13 @@ class MainViewModel: ObservableObject {
         loadTask?.cancel()
 
         let task = Task {
-            let menus = mainService.getMainMenus()
-            let shortcutMenu = mainService.getShortcutMenu()
-            let recentlyMenu = mainService.getRecentlyMenu()
-            let shortcuts = shortcutMenu.visibility ? await mainService.findShortcuts() : []
-            let albums = recentlyMenu.visibility ? await mainService.findRecentlyAlbums() : []
+            let settings = mainService.getSettings()
+            let shortcuts = settings.isShortcutVisible ? await mainService.findShortcuts() : []
+            let albums = settings.isRecentlyVisible ? await mainService.findRecentlyAlbums() : []
 
             if Task.isCancelled { return }
 
-            self.menus = menus
-            self.shortcutMenu = shortcutMenu
-            self.recentlyMenu = recentlyMenu
+            self.settings = settings
             self.shortcuts = shortcuts
             self.albums = albums
         }

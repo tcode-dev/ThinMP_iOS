@@ -29,26 +29,26 @@ struct MainPageView: View {
                         .padding(.leading, StyleConstant.Padding.large)
                         VStack(spacing: 0) {
                             Divider()
-                            ForEach(vm.menus) { menu in
-                                if menu.visibility {
-                                    MainMenuButtonView(menu: menu)
+                            ForEach(vm.settings.menus) { setting in
+                                if setting.visibility {
+                                    MainMenuButtonView(menu: setting.menu)
                                     Divider()
                                 }
                             }
                         }
                         .padding(.leading, StyleConstant.Padding.medium)
                         .padding(.bottom, StyleConstant.Padding.large)
-                        if vm.shortcutMenu.visibility && !vm.shortcuts.isEmpty {
+                        if vm.settings.isShortcutVisible && !vm.shortcuts.isEmpty {
                             VStack(alignment: .leading) {
-                                SectionTitleView(vm.shortcutMenu.primaryText)
+                                SectionTitleView(LabelConstant.shortcut)
                                     .padding(.leading, StyleConstant.Padding.large)
                                 ShortcutListView(shortcuts: vm.shortcuts, width: geometry.size.width) { vm.load() }
                                     .padding(.bottom, StyleConstant.Padding.small)
                             }
                         }
-                        if vm.recentlyMenu.visibility && !vm.albums.isEmpty {
+                        if vm.settings.isRecentlyVisible && !vm.albums.isEmpty {
                             VStack(alignment: .leading) {
-                                SectionTitleView(vm.recentlyMenu.primaryText)
+                                SectionTitleView(LabelConstant.recentlyAdded)
                                     .padding(.leading, StyleConstant.Padding.large)
                                 AlbumListView(albums: vm.albums, width: geometry.size.width) { vm.load() }
                                     .padding(.bottom, StyleConstant.Padding.small)

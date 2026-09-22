@@ -7,30 +7,27 @@
 
 import Foundation
 
+/// メインページのショートカット / 最近追加セクションの表示 / 非表示
 class MainSectionConfig {
     private let SHORTCUT = "shortcut"
     private let RECENTLY = "recently"
+    private let userDefaults: UserDefaults
 
-    init() {
-        UserDefaults.standard.register(defaults: [
+    init(userDefaults: UserDefaults = .standard) {
+        self.userDefaults = userDefaults
+        userDefaults.register(defaults: [
             SHORTCUT: true,
             RECENTLY: true,
         ])
     }
 
-    func getShortcut() -> MenuModel {
-        return MenuModel(primaryText: LabelConstant.shortcut, visibility: UserDefaults.standard.bool(forKey: SHORTCUT))
+    var isShortcutVisible: Bool {
+        get { userDefaults.bool(forKey: SHORTCUT) }
+        set { userDefaults.set(newValue, forKey: SHORTCUT) }
     }
 
-    func getRecently() -> MenuModel {
-        return MenuModel(primaryText: LabelConstant.recentlyAdded, visibility: UserDefaults.standard.bool(forKey: RECENTLY))
-    }
-
-    func setShortcutVisibility(value: Bool) {
-        UserDefaults.standard.set(value, forKey: SHORTCUT)
-    }
-
-    func setRecentlyVisibility(value: Bool) {
-        UserDefaults.standard.set(value, forKey: RECENTLY)
+    var isRecentlyVisible: Bool {
+        get { userDefaults.bool(forKey: RECENTLY) }
+        set { userDefaults.set(newValue, forKey: RECENTLY) }
     }
 }

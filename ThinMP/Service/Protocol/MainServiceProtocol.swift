@@ -11,9 +11,7 @@ protocol MainServiceProtocol {
 
     func findShortcuts() async -> [ShortcutModel]
 
-    func getMainMenus() -> [MenuModel]
+    func getSettings() -> MainSettings
 
-    func getShortcutMenu() -> MenuModel
-
-    func getRecentlyMenu() -> MenuModel
+    func save(settings: MainSettings)
 }
