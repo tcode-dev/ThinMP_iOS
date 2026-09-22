@@ -12,8 +12,7 @@ class FavoriteSongsViewModel: ObservableObject {
     @Published var songs: [SongModel] = []
 
     private let favoriteSongsService: FavoriteSongsServiceProtocol
-    /// 直前の load を打ち切るために保持する。古い結果が新しい結果を上書きしないようにする
-    private var loadTask: Task<Void, Never>?
+    private let loadTask = LoadTask()
 
     init(favoriteSongsService: FavoriteSongsServiceProtocol = FavoriteSongsService()) {
         self.favoriteSongsService = favoriteSongsService
@@ -21,19 +20,11 @@ class FavoriteSongsViewModel: ObservableObject {
 
     @discardableResult
     func load() -> Task<Void, Never> {
-        loadTask?.cancel()
-
-        let task = Task {
-            let songs = await favoriteSongsService.findAll()
-
-            if Task.isCancelled { return }
-
-            self.songs = songs
+        return loadTask.run { [favoriteSongsService] in
+            await favoriteSongsService.findAll()
+        } apply: { [weak self] songs in
+            self?.songs = songs
         }
-
-        loadTask = task
-
-        return task
     }
 
     /// 編集ページの並び順と削除を保存する

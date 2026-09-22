@@ -29,7 +29,7 @@ struct PlaylistDetailEditPageView: View {
                     .padding()
                 ZStack {
                     List {
-                        ForEach(vm.songs) { song in
+                        ForEach(vm.playlist?.songs ?? []) { song in
                             MediaRowView(media: song)
                         }
                         .onMove(perform: move)
@@ -50,10 +50,10 @@ struct PlaylistDetailEditPageView: View {
     }
 
     private func move(source: IndexSet, destination: Int) {
-        vm.songs.move(fromOffsets: source, toOffset: destination)
+        vm.playlist?.songs.move(fromOffsets: source, toOffset: destination)
     }
 
     private func delete(offsets: IndexSet) {
-        vm.songs.remove(atOffsets: offsets)
+        vm.playlist?.songs.remove(atOffsets: offsets)
     }
 }

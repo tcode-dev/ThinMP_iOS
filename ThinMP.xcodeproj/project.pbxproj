@@ -202,6 +202,7 @@
 		52B49B937EEB15084069E37B /* ScrollPageLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B6F3ABFEE35301566DE541 /* ScrollPageLayout.swift */; };
 		52BF725186C711FB7266521D /* EditPageLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B28E520F6C368EE60E2778 /* EditPageLayout.swift */; };
 		52B9992A840B28F71F5AD8D5 /* Sequence+Reordered.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B528490FC042568C1AA15E /* Sequence+Reordered.swift */; };
+		52B76EDBFFA46E975B7E5441 /* LoadTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BDE437A6348D1B5DC1162E /* LoadTask.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -414,6 +415,7 @@
 		52B6F3ABFEE35301566DE541 /* ScrollPageLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollPageLayout.swift; sourceTree = "<group>"; };
 		52B28E520F6C368EE60E2778 /* EditPageLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPageLayout.swift; sourceTree = "<group>"; };
 		52B528490FC042568C1AA15E /* Sequence+Reordered.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sequence+Reordered.swift"; sourceTree = "<group>"; };
+		52BDE437A6348D1B5DC1162E /* LoadTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadTask.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -693,6 +695,7 @@
 		528C3D1423C6A1AA005CCA8E /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				52BDE437A6348D1B5DC1162E /* LoadTask.swift */,
 				52D98E7D23CC6F600032971A /* AlbumDetailViewModel.swift */,
 				52F63FF323C7FA2500449934 /* AlbumsViewModel.swift */,
 				52EE4D9223C542A700CFF2A3 /* ArtistDetailViewModel.swift */,
@@ -1142,6 +1145,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52B76EDBFFA46E975B7E5441 /* LoadTask.swift in Sources */,
 				52B9992A840B28F71F5AD8D5 /* Sequence+Reordered.swift in Sources */,
 				52BF725186C711FB7266521D /* EditPageLayout.swift in Sources */,
 				52B49B937EEB15084069E37B /* ScrollPageLayout.swift in Sources */,

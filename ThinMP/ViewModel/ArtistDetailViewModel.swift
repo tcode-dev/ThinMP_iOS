@@ -5,19 +5,15 @@
 //  Created by tk on 2020/01/08.
 //
 
-import MediaPlayer
+import Combine
 
 @MainActor
 class ArtistDetailViewModel: ObservableObject {
-    @Published var primaryText: String?
-    @Published var secondaryText: String?
-    @Published var artwork: MPMediaItemArtwork?
-    @Published var albums: [AlbumModel] = []
-    @Published var songs: [SongModel] = []
+    /// 読み込む前、または見つからなかったときは nil のまま
+    @Published var artist: ArtistDetailModel?
 
     private let artistDetailService: ArtistDetailServiceProtocol
-    /// 直前の load を打ち切るために保持する。古い結果が新しい結果を上書きしないようにする
-    private var loadTask: Task<Void, Never>?
+    private let loadTask = LoadTask()
 
     init(artistDetailService: ArtistDetailServiceProtocol = ArtistDetailService()) {
         self.artistDetailService = artistDetailService
@@ -25,25 +21,12 @@ class ArtistDetailViewModel: ObservableObject {
 
     @discardableResult
     func load(artistId: ArtistId) -> Task<Void, Never> {
-        loadTask?.cancel()
-
-        let task = Task {
-            let artistDetailModel = await Task.detached(priority: .userInitiated) { [artistDetailService] in
-                artistDetailService.findById(artistId: artistId)
-            }.value
-
-            if Task.isCancelled { return }
-            guard let artistDetailModel = artistDetailModel else { return }
-
-            primaryText = artistDetailModel.primaryText
-            secondaryText = artistDetailModel.secondaryText
-            artwork = artistDetailModel.artwork
-            albums = artistDetailModel.albums
-            songs = artistDetailModel.songs
+        return loadTask.run { [artistDetailService] in
+            await Task.detached(priority: .userInitiated) { artistDetailService.findById(artistId: artistId) }.value
+        } apply: { [weak self] artist in
+            if let artist {
+                self?.artist = artist
+            }
         }
-
-        loadTask = task
-
-        return task
     }
 }

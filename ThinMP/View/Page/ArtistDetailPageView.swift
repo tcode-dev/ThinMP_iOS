@@ -17,7 +17,7 @@ struct ArtistDetailPageView: View {
 
     var body: some View {
         ScrollPageLayout(playlistRegisterSongId: $playlistRegisterSongId) { geometry in
-            HeroNavBarView(primaryText: vm.primaryText, width: geometry.size.width, top: geometry.safeAreaInsets.top, headerRect: $headerRect) {
+            HeroNavBarView(primaryText: vm.artist?.primaryText, width: geometry.size.width, top: geometry.safeAreaInsets.top, headerRect: $headerRect) {
                 MenuButtonView {
                     VStack {
                         FavoriteArtistButtonView(artistId: artistId)
@@ -26,19 +26,21 @@ struct ArtistDetailPageView: View {
                 }
             }
         } content: { geometry in
-            HeroHeaderView(headerRect: $headerRect, width: geometry.size.width, size: geometry.heroSize, top: geometry.safeAreaInsets.top, primaryText: vm.primaryText, secondaryText: vm.secondaryText) {
-                HeroCircleImageView(width: geometry.size.width, size: geometry.heroSize, artwork: vm.artwork)
+            HeroHeaderView(headerRect: $headerRect, width: geometry.size.width, size: geometry.heroSize, top: geometry.safeAreaInsets.top, primaryText: vm.artist?.primaryText, secondaryText: vm.artist?.secondaryText) {
+                HeroCircleImageView(width: geometry.size.width, size: geometry.heroSize, artwork: vm.artist?.artwork)
             }
-            if !vm.albums.isEmpty {
-                SectionTitleView(LabelConstant.albums)
-                    .padding(.leading, StyleConstant.Padding.large)
-                AlbumListView(albums: vm.albums, width: geometry.size.width)
-                    .padding(.bottom, StyleConstant.Padding.large)
-            }
-            if !vm.songs.isEmpty {
-                SectionTitleView(LabelConstant.songs)
-                    .padding(.leading, StyleConstant.Padding.large)
-                SongListView(songs: vm.songs) { playlistRegisterSongId = $0 }
+            if let artist = vm.artist {
+                if !artist.albums.isEmpty {
+                    SectionTitleView(LabelConstant.albums)
+                        .padding(.leading, StyleConstant.Padding.large)
+                    AlbumListView(albums: artist.albums, width: geometry.size.width)
+                        .padding(.bottom, StyleConstant.Padding.large)
+                }
+                if !artist.songs.isEmpty {
+                    SectionTitleView(LabelConstant.songs)
+                        .padding(.leading, StyleConstant.Padding.large)
+                    SongListView(songs: artist.songs) { playlistRegisterSongId = $0 }
+                }
             }
         }
         .task {

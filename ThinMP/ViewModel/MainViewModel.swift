@@ -14,31 +14,25 @@ class MainViewModel: ObservableObject {
     @Published var albums: [AlbumModel] = []
 
     private let mainService: MainServiceProtocol
-    /// 直前の load を打ち切るために保持する。古い結果が新しい結果を上書きしないようにする
-    private var loadTask: Task<Void, Never>?
+    private let loadTask = LoadTask()
 
     init(mainService: MainServiceProtocol = MainService()) {
         self.mainService = mainService
     }
 
+    /// 非表示にしているセクションは読まない
     @discardableResult
     func load() -> Task<Void, Never> {
-        loadTask?.cancel()
-
-        let task = Task {
+        return loadTask.run { [mainService] in
             let settings = mainService.getSettings()
             let shortcuts = settings.isShortcutVisible ? await mainService.findShortcuts() : []
             let albums = settings.isRecentlyVisible ? await mainService.findRecentlyAlbums() : []
 
-            if Task.isCancelled { return }
-
-            self.settings = settings
-            self.shortcuts = shortcuts
-            self.albums = albums
+            return (settings, shortcuts, albums)
+        } apply: { [weak self] settings, shortcuts, albums in
+            self?.settings = settings
+            self?.shortcuts = shortcuts
+            self?.albums = albums
         }
-
-        loadTask = task
-
-        return task
     }
 }

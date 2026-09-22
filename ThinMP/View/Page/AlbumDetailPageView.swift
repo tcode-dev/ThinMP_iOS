@@ -17,7 +17,7 @@ struct AlbumDetailPageView: View {
 
     var body: some View {
         ScrollPageLayout(playlistRegisterSongId: $playlistRegisterSongId) { geometry in
-            HeroNavBarView(primaryText: vm.primaryText, width: geometry.size.width, top: geometry.safeAreaInsets.top, headerRect: $headerRect) {
+            HeroNavBarView(primaryText: vm.album?.primaryText, width: geometry.size.width, top: geometry.safeAreaInsets.top, headerRect: $headerRect) {
                 MenuButtonView {
                     VStack {
                         ShortcutButtonView(albumId: albumId)
@@ -25,10 +25,10 @@ struct AlbumDetailPageView: View {
                 }
             }
         } content: { geometry in
-            HeroHeaderView(headerRect: $headerRect, width: geometry.size.width, size: geometry.heroSize, top: geometry.safeAreaInsets.top, primaryText: vm.primaryText, secondaryText: vm.secondaryText) {
-                HeroSquareImageView(size: geometry.heroSize, artwork: vm.artwork)
+            HeroHeaderView(headerRect: $headerRect, width: geometry.size.width, size: geometry.heroSize, top: geometry.safeAreaInsets.top, primaryText: vm.album?.primaryText, secondaryText: vm.album?.secondaryText) {
+                HeroSquareImageView(size: geometry.heroSize, artwork: vm.album?.artwork)
             }
-            SongListView(songs: vm.songs) { playlistRegisterSongId = $0 }
+            SongListView(songs: vm.album?.songs ?? []) { playlistRegisterSongId = $0 }
         }
         .task {
             await vm.load(albumId: albumId).value

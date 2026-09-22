@@ -12,8 +12,7 @@ class ArtistsViewModel: ObservableObject {
     @Published var artists: [ArtistModel] = []
 
     private let artistsService: ArtistsServiceProtocol
-    /// 直前の load を打ち切るために保持する。古い結果が新しい結果を上書きしないようにする
-    private var loadTask: Task<Void, Never>?
+    private let loadTask = LoadTask()
 
     init(artistsService: ArtistsServiceProtocol = ArtistsService()) {
         self.artistsService = artistsService
@@ -21,20 +20,10 @@ class ArtistsViewModel: ObservableObject {
 
     @discardableResult
     func load() -> Task<Void, Never> {
-        loadTask?.cancel()
-
-        let task = Task {
-            let artists = await Task.detached(priority: .userInitiated) { [artistsService] in
-                artistsService.findAll()
-            }.value
-
-            if Task.isCancelled { return }
-
-            self.artists = artists
+        return loadTask.run { [artistsService] in
+            await Task.detached(priority: .userInitiated) { artistsService.findAll() }.value
+        } apply: { [weak self] artists in
+            self?.artists = artists
         }
-
-        loadTask = task
-
-        return task
     }
 }

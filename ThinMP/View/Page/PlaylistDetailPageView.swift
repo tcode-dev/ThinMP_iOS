@@ -17,10 +17,10 @@ struct PlaylistDetailPageView: View {
 
     var body: some View {
         ScrollPageLayout(playlistRegisterSongId: $playlistRegisterSongId, onPlayerDismiss: { vm.load(playlistId: playlistId) }) { geometry in
-            HeroNavBarView(primaryText: vm.primaryText, width: geometry.size.width, top: geometry.safeAreaInsets.top, headerRect: $headerRect) {
+            HeroNavBarView(primaryText: vm.playlist?.primaryText, width: geometry.size.width, top: geometry.safeAreaInsets.top, headerRect: $headerRect) {
                 MenuButtonView {
                     VStack {
-                        NavigationLink(destination: PlaylistDetailEditPageView(playlistId: playlistId, primaryText: vm.primaryText)) {
+                        NavigationLink(destination: PlaylistDetailEditPageView(playlistId: playlistId, primaryText: vm.playlist?.primaryText)) {
                             MenuRowView(text: LabelConstant.edit)
                         }
                         ShortcutButtonView(playlistId: playlistId)
@@ -28,10 +28,10 @@ struct PlaylistDetailPageView: View {
                 }
             }
         } content: { geometry in
-            HeroHeaderView(headerRect: $headerRect, width: geometry.size.width, size: geometry.heroSize, top: geometry.safeAreaInsets.top, primaryText: vm.primaryText, secondaryText: NSLocalizedString(LabelConstant.playlist, comment: "")) {
-                HeroSquareImageView(size: geometry.heroSize, artwork: vm.artwork)
+            HeroHeaderView(headerRect: $headerRect, width: geometry.size.width, size: geometry.heroSize, top: geometry.safeAreaInsets.top, primaryText: vm.playlist?.primaryText, secondaryText: NSLocalizedString(LabelConstant.playlist, comment: "")) {
+                HeroSquareImageView(size: geometry.heroSize, artwork: vm.playlist?.artwork)
             }
-            SongListView(songs: vm.songs) { playlistRegisterSongId = $0 }
+            SongListView(songs: vm.playlist?.songs ?? []) { playlistRegisterSongId = $0 }
         }
         .task {
             await vm.load(playlistId: playlistId).value

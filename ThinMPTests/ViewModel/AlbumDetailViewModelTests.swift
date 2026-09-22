@@ -17,9 +17,9 @@ struct AlbumDetailViewModelTests {
 
         await vm.load(albumId: AlbumId(id: 10)).value
 
-        #expect(vm.primaryText == "Album")
-        #expect(vm.secondaryText == "Artist")
-        #expect(vm.songs.map { $0.songId.id } == [1])
+        #expect(vm.album?.primaryText == "Album")
+        #expect(vm.album?.secondaryText == "Artist")
+        #expect(vm.album?.songs.map { $0.songId.id } == [1])
     }
 
     @Test
@@ -28,7 +28,6 @@ struct AlbumDetailViewModelTests {
 
         await vm.load(albumId: AlbumId(id: 99)).value
 
-        #expect(vm.primaryText == nil)
-        #expect(vm.songs.isEmpty)
+        #expect(vm.album == nil)
     }
 }
