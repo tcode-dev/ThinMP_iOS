@@ -10,11 +10,15 @@ import SwiftUI
 struct PlaylistDetailEditPageView: View {
     @Environment(\.dismiss) private var dismiss
     @StateObject private var vm = PlaylistDetailViewModel()
-    @State private var name = ""
+    @State private var name: String
     @State private var editing = false
 
     let playlistId: PlaylistId
-    let primaryText: String?
+
+    init(playlistId: PlaylistId, primaryText: String?) {
+        self.playlistId = playlistId
+        _name = State(initialValue: primaryText ?? "")
+    }
 
     var body: some View {
         GeometryReader { geometry in
@@ -31,9 +35,6 @@ struct PlaylistDetailEditPageView: View {
                         .textInputAutocapitalization(.never)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .padding()
-                        .onAppear {
-                            name = primaryText ?? ""
-                        }
                     ZStack {
                         List {
                             ForEach(vm.songs) { song in
@@ -43,8 +44,9 @@ struct PlaylistDetailEditPageView: View {
                             .onDelete(perform: delete)
                             .listRowInsets(.init())
                         }
+                        // 入力中は一覧を薄くして、タップでキーボードを閉じる
                         if editing {
-                            Rectangle().fill(Color.white.opacity(0.5))
+                            Rectangle().fill(Color(UIColor.systemBackground).opacity(0.5))
                                 .onTapGesture { UIApplication.shared.endEditing() }
                         }
                     }

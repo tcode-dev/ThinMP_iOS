@@ -66,11 +66,7 @@ struct ShortcutRealmRepository: ShortcutRepositoryProtocol {
     }
 
     private func toEntity(model: ShortcutRealmModel) -> ShortcutEntity? {
-        guard let type = ShortcutType(rawValue: model.type) else {
-            return nil
-        }
-
-        return ShortcutEntity(shortcutId: ShortcutId(id: model.id), itemId: ItemId(id: model.itemId), type: type)
+        return ShortcutEntity(id: model.id, itemId: model.itemId, type: model.type)
     }
 
     private func delete(shortcutIds: [ShortcutId]) {

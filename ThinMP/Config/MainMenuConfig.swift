@@ -9,7 +9,7 @@ import Foundation
 
 /// ライブラリメニューの並び順と表示 / 非表示
 /// 並び順は MainMenu.rawValue の配列、表示 / 非表示は rawValue をキーにした Bool で保存している
-class MainMenuConfig {
+struct MainMenuConfig {
     private let SORT = "sort"
     private let userDefaults: UserDefaults
 

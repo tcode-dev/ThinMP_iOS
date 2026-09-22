@@ -35,12 +35,7 @@ struct ListNavBarView<Trailing: View>: View {
                     .frame(width: StyleConstant.button, height: StyleConstant.button)
             }
             .frame(height: StyleConstant.Height.row)
-            .padding(EdgeInsets(
-                top: top,
-                leading: 0,
-                bottom: 0,
-                trailing: 0
-            ))
+            .padding(.top, top)
         }
         .frame(height: StyleConstant.Height.row + top, alignment: .bottom)
         .zIndex(1)

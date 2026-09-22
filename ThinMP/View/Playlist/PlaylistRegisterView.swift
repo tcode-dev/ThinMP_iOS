@@ -5,11 +5,10 @@
 //  Created by tk on 2021/04/01.
 //
 
-import MediaPlayer
 import SwiftUI
 
 struct PlaylistRegisterView: View {
-    @StateObject var vm = PlaylistsViewModel()
+    @StateObject private var vm = PlaylistsViewModel()
     @State private var isCreate: Bool = false
     @State private var name: String = ""
 
@@ -95,7 +94,7 @@ struct PlaylistRegisterView: View {
         }
     }
 
-    private func getHeight() -> CGFloat? {
+    private func getHeight() -> CGFloat {
         let panelHeight = StyleConstant.Height.header + (CGFloat(vm.playlists.count) * (StyleConstant.Height.row + StyleConstant.dividerHeight)) + StyleConstant.Padding.small
 
         if panelHeight > height {

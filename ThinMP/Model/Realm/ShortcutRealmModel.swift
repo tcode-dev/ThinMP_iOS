@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import MediaPlayer
 import RealmSwift
 
 class ShortcutRealmModel: Object {

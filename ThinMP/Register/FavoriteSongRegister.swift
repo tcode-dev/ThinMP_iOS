@@ -5,8 +5,6 @@
 //  Created by tk on 2021/02/20.
 //
 
-import MediaPlayer
-
 struct FavoriteSongRegister: FavoriteSongRegisterProtocol {
     private let repository: FavoriteSongRepositoryProtocol
 

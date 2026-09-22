@@ -25,12 +25,7 @@ struct EditNavBarView: View {
         }
         .padding(.horizontal, StyleConstant.Padding.large)
         .frame(height: StyleConstant.Height.row)
-        .padding(EdgeInsets(
-            top: top,
-            leading: 0,
-            bottom: 0,
-            trailing: 0
-        ))
+        .padding(.top, top)
         .frame(height: StyleConstant.Height.row + top, alignment: .bottom)
         .background(Color(UIColor.secondarySystemBackground))
         .border(Color(UIColor.systemGray5), width: 1)
