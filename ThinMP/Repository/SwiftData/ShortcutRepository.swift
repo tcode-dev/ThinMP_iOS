@@ -20,7 +20,7 @@ struct ShortcutRepository: ShortcutRepositoryProtocol {
             return
         }
 
-        store.context.insert(ShortcutDataModel(itemId: target.itemId, type: target.type, order: incrementOrder()))
+        store.context.insert(ShortcutDataModel(itemId: target.itemId, type: target.type, order: store.nextOrder(ShortcutDataModel.self, by: \.order)))
         store.save()
     }
 
@@ -81,14 +81,6 @@ struct ShortcutRepository: ShortcutRepositoryProtocol {
 
         models.forEach { store.context.delete($0) }
         store.save()
-    }
-
-    private func incrementOrder() -> Int {
-        var descriptor = FetchDescriptor<ShortcutDataModel>(sortBy: [SortDescriptor(\.order, order: .reverse)])
-
-        descriptor.fetchLimit = 1
-
-        return (try! store.context.fetch(descriptor).first?.order ?? 0) + 1
     }
 
     private func sort(shortcutIds: [ShortcutId]) {

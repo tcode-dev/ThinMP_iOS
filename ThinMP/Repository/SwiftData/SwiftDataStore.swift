@@ -5,6 +5,7 @@
 //  Created by tk on 2026/09/21.
 //
 
+import Foundation
 import SwiftData
 
 /// SwiftData の接続
@@ -41,5 +42,14 @@ final class SwiftDataStore {
 
     func save() {
         try! context.save()
+    }
+
+    /// 末尾に足すための order。今ある最大 + 1 で、行が無ければ 1
+    func nextOrder<Model: PersistentModel>(_: Model.Type, by order: KeyPath<Model, Int>) -> Int {
+        var descriptor = FetchDescriptor<Model>(sortBy: [SortDescriptor(order, order: .reverse)])
+
+        descriptor.fetchLimit = 1
+
+        return (try! context.fetch(descriptor).first?[keyPath: order] ?? 0) + 1
     }
 }

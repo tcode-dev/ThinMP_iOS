@@ -10,6 +10,7 @@
 		0436B13DCEEBB0EBA46FC9C7 /* PlaylistSongDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD511D0F3E93AC7919DF65E6 /* PlaylistSongDataModel.swift */; };
 		05B81A7395086EB58EF9DA3E /* ShortcutRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1639B069C3EDA5048DE3783E /* ShortcutRepository.swift */; };
 		08D4EC227CA1A18215907F89 /* FavoriteArtistDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1EE02942F12F4AD5EA8C976 /* FavoriteArtistDataModel.swift */; };
+		0B3F710263201263D0EFA579 /* FavoriteDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20260AF9C5C7EF17E211E35B /* FavoriteDataModel.swift */; };
 		0A33A408E73D8EA0729C24D9 /* PlaylistDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00386E2CE1C44485D6001705 /* PlaylistDataModel.swift */; };
 		0EB287BCB4D7D465E298A545 /* RealmToSwiftDataMigration.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3FC7A55FFA2C0B66408514 /* RealmToSwiftDataMigration.swift */; };
 		99C29F465A21CA9236FD8948 /* GridLayoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01E4D6380642875B4A969681 /* GridLayoutTests.swift */; };
@@ -179,6 +180,7 @@
 		5813BEF15C0698843A7EB0C4 /* PlaylistEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B7693967CD10B154DF8057 /* PlaylistEntity.swift */; };
 		65EF774DCB4935632EF972FC /* FavoriteSongRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D01030652672384614767BE /* FavoriteSongRepository.swift */; };
 		69B958413192A549B677410E /* FavoriteArtistRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FADB4D768EA7F7799DF0C4 /* FavoriteArtistRepository.swift */; };
+		BE895EC6E582BB0B1A3ECC65 /* FavoriteRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ADBF82FFA798604A680338 /* FavoriteRepository.swift */; };
 		7037301AFCD76B45E4CE5568 /* ShortcutRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE6AFFF6A188145A83408F1 /* ShortcutRepositoryTests.swift */; };
 		778BE2A5B536B3B71801762A /* SwiftDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B25F3E5D1A50AB540878DD8 /* SwiftDataStore.swift */; };
 		80CEEA23BA4529CF3F243B67 /* PlaylistRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86F0329480ED812C727F3C4 /* PlaylistRepository.swift */; };
@@ -228,6 +230,7 @@
 /* Begin PBXFileReference section */
 		00386E2CE1C44485D6001705 /* PlaylistDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistDataModel.swift; sourceTree = "<group>"; };
 		09FADB4D768EA7F7799DF0C4 /* FavoriteArtistRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteArtistRepository.swift; sourceTree = "<group>"; };
+		E7ADBF82FFA798604A680338 /* FavoriteRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FavoriteRepository.swift"; sourceTree = "<group>"; };
 		0D01030652672384614767BE /* FavoriteSongRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteSongRepository.swift; sourceTree = "<group>"; };
 		15371E65134553ACA71FD3B9 /* RealmStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmStore.swift; sourceTree = "<group>"; };
 		1639B069C3EDA5048DE3783E /* ShortcutRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutRepository.swift; sourceTree = "<group>"; };
@@ -417,6 +420,7 @@
 		A86F0329480ED812C727F3C4 /* PlaylistRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistRepository.swift; sourceTree = "<group>"; };
 		BD511D0F3E93AC7919DF65E6 /* PlaylistSongDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistSongDataModel.swift; sourceTree = "<group>"; };
 		C1EE02942F12F4AD5EA8C976 /* FavoriteArtistDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteArtistDataModel.swift; sourceTree = "<group>"; };
+		20260AF9C5C7EF17E211E35B /* FavoriteDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FavoriteDataModel.swift"; sourceTree = "<group>"; };
 		FA3FC7A55FFA2C0B66408514 /* RealmToSwiftDataMigration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmToSwiftDataMigration.swift; sourceTree = "<group>"; };
 		52B9CF9B3F3EB7C69C2236B5 /* View+PlaylistRegisterPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+PlaylistRegisterPopup.swift"; sourceTree = "<group>"; };
 		52B6F3ABFEE35301566DE541 /* ScrollPageLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollPageLayout.swift; sourceTree = "<group>"; };
@@ -1007,6 +1011,7 @@
 				1B25F3E5D1A50AB540878DD8 /* SwiftDataStore.swift */,
 				0D01030652672384614767BE /* FavoriteSongRepository.swift */,
 				09FADB4D768EA7F7799DF0C4 /* FavoriteArtistRepository.swift */,
+				E7ADBF82FFA798604A680338 /* FavoriteRepository.swift */,
 				A86F0329480ED812C727F3C4 /* PlaylistRepository.swift */,
 				1639B069C3EDA5048DE3783E /* ShortcutRepository.swift */,
 			);
@@ -1030,6 +1035,7 @@
 			children = (
 				6123D3B62E29F4C77910037C /* FavoriteSongDataModel.swift */,
 				C1EE02942F12F4AD5EA8C976 /* FavoriteArtistDataModel.swift */,
+				20260AF9C5C7EF17E211E35B /* FavoriteDataModel.swift */,
 				00386E2CE1C44485D6001705 /* PlaylistDataModel.swift */,
 				BD511D0F3E93AC7919DF65E6 /* PlaylistSongDataModel.swift */,
 				1E3E882FD3F5FD8FE8EF7463 /* ShortcutDataModel.swift */,
@@ -1345,12 +1351,14 @@
 				DB670C1ABB44444C13DA94AE /* RealmStore.swift in Sources */,
 				4C05EA4407ABD6FD6A0CE41A /* FavoriteSongDataModel.swift in Sources */,
 				08D4EC227CA1A18215907F89 /* FavoriteArtistDataModel.swift in Sources */,
+				0B3F710263201263D0EFA579 /* FavoriteDataModel.swift in Sources */,
 				0A33A408E73D8EA0729C24D9 /* PlaylistDataModel.swift in Sources */,
 				0436B13DCEEBB0EBA46FC9C7 /* PlaylistSongDataModel.swift in Sources */,
 				52C78EDE4AD3A5A5829352E1 /* ShortcutDataModel.swift in Sources */,
 				778BE2A5B536B3B71801762A /* SwiftDataStore.swift in Sources */,
 				65EF774DCB4935632EF972FC /* FavoriteSongRepository.swift in Sources */,
 				69B958413192A549B677410E /* FavoriteArtistRepository.swift in Sources */,
+				BE895EC6E582BB0B1A3ECC65 /* FavoriteRepository.swift in Sources */,
 				80CEEA23BA4529CF3F243B67 /* PlaylistRepository.swift in Sources */,
 				05B81A7395086EB58EF9DA3E /* ShortcutRepository.swift in Sources */,
 				0EB287BCB4D7D465E298A545 /* RealmToSwiftDataMigration.swift in Sources */,

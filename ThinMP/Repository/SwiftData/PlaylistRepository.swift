@@ -16,7 +16,7 @@ struct PlaylistRepository: PlaylistRepositoryProtocol {
     }
 
     func create(songId: SongId, name: String) {
-        let playlist = PlaylistDataModel(name: name, order: incrementOrder())
+        let playlist = PlaylistDataModel(name: name, order: store.nextOrder(PlaylistDataModel.self, by: \.order))
         let song = PlaylistSongDataModel(playlistId: playlist.id, songId: String(songId.id), order: 0)
 
         store.context.insert(playlist)
@@ -126,14 +126,6 @@ struct PlaylistRepository: PlaylistRepositoryProtocol {
         }
 
         store.save()
-    }
-
-    private func incrementOrder() -> Int {
-        var descriptor = FetchDescriptor<PlaylistDataModel>(sortBy: [SortDescriptor(\.order, order: .reverse)])
-
-        descriptor.fetchLimit = 1
-
-        return (try! store.context.fetch(descriptor).first?.order ?? 0) + 1
     }
 
     /// 残すもの以外の id。編集ページで消されたものを求めるのに使う
