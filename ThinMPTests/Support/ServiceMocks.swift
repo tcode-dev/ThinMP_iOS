@@ -134,6 +134,36 @@ final class FavoriteArtistsServiceMock: FavoriteArtistsServiceProtocol {
     }
 }
 
+final class AlbumsServiceMock: AlbumsServiceProtocol {
+    let albums: [AlbumModel]
+    private(set) var findAllCalls = 0
+
+    init(albums: [AlbumModel]) {
+        self.albums = albums
+    }
+
+    func findAll() -> [AlbumModel] {
+        findAllCalls += 1
+
+        return albums
+    }
+}
+
+final class ArtistsServiceMock: ArtistsServiceProtocol {
+    let artists: [ArtistModel]
+    private(set) var findAllCalls = 0
+
+    init(artists: [ArtistModel]) {
+        self.artists = artists
+    }
+
+    func findAll() -> [ArtistModel] {
+        findAllCalls += 1
+
+        return artists
+    }
+}
+
 final class SongsServiceMock: SongsServiceProtocol {
     let songs: [SongModel]
     private(set) var findAllCalls = 0
