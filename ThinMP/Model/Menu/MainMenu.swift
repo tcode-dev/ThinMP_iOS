@@ -16,8 +16,16 @@ enum MainMenu: String, CaseIterable {
     case favoriteSongs = "FavoriteSongs"
     case playlists = "Playlists"
 
-    /// 表示名。Localizable.strings のキーで、LabelConstant の同名の値と同じ
+    /// 表示名。Localizable.strings のキー
+    /// rawValue と同じ文字列だが、あちらはストアのキーなので LabelConstant を単一の出どころにする
     var label: String {
-        return rawValue
+        switch self {
+        case .artists: return LabelConstant.artists
+        case .albums: return LabelConstant.albums
+        case .songs: return LabelConstant.songs
+        case .favoriteArtists: return LabelConstant.favoriteArtists
+        case .favoriteSongs: return LabelConstant.favoriteSongs
+        case .playlists: return LabelConstant.playlists
+        }
     }
 }
