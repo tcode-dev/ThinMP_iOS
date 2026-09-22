@@ -8,15 +8,12 @@
 import MediaPlayer
 import SwiftUI
 
+/// ライブラリへのアクセスが許可されていれば content を、まだなら許可を求めて、拒否されたら設定への案内を出す
 struct PermissionView<Content>: View where Content: View {
-    let content: () -> Content
-    @State private var isAllowed: Bool = false
-    @State private var isRequested: Bool = false
+    @State private var isAllowed = MPMediaLibrary.authorizationStatus() == .authorized
+    @State private var isRequested = false
 
-    init(content: @escaping () -> Content) {
-        self.content = content
-        _isAllowed = State(initialValue: MPMediaLibrary.authorizationStatus() == .authorized)
-    }
+    let content: () -> Content
 
     var body: some View {
         if isAllowed {
@@ -25,17 +22,14 @@ struct PermissionView<Content>: View where Content: View {
             VStack {
                 if isRequested {
                     Text(LocalizedStringKey(LabelConstant.permission))
-                        .padding(.leading, StyleConstant.Padding.large)
-                        .padding(.trailing, StyleConstant.Padding.large)
+                        .padding(.horizontal, StyleConstant.Padding.large)
                 }
-            }.onAppear {
-                MPMediaLibrary.requestAuthorization { status in
-                    if status == .authorized {
-                        isAllowed = true
-                    } else {
-                        isRequested = true
-                    }
-                }
+            }
+            .task {
+                let status = await MPMediaLibrary.requestAuthorization()
+
+                isAllowed = status == .authorized
+                isRequested = true
             }
         }
     }

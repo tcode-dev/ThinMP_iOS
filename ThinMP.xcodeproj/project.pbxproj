@@ -29,7 +29,6 @@
 		521022222AAF1AC900A7A9E3 /* PermissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521022212AAF1AC900A7A9E3 /* PermissionView.swift */; };
 		5210DE0C26232EC1005829BA /* PlaylistDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5210DE0B26232EC1005829BA /* PlaylistDetailViewModel.swift */; };
 		5211ADCC25CE99E400604D45 /* TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5211ADCB25CE99E400604D45 /* TitleView.swift */; };
-		5211ADD525CEBCEC00604D45 /* BlurView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5211ADD425CEBCEC00604D45 /* BlurView.swift */; };
 		5219EA1C26152F3700E3A495 /* PlaylistSongRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5219EA1B26152F3700E3A495 /* PlaylistSongRealmModel.swift */; };
 		5219EA21261539DB00E3A495 /* PlaylistRegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5219EA20261539DB00E3A495 /* PlaylistRegisterView.swift */; };
 		521C43202592B7D6009194FF /* ThinMP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521C431F2592B7D6009194FF /* ThinMP.swift */; };
@@ -73,8 +72,6 @@
 		527177A42663CA4A00390A32 /* ShortcutListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527177A32663CA4A00390A32 /* ShortcutListView.swift */; };
 		527177A62663D5D400390A32 /* AlbumListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527177A52663D5D400390A32 /* AlbumListView.swift */; };
 		52A1F3C12E8100010000A001 /* SongListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A1F3C02E8100010000A001 /* SongListView.swift */; };
-		52A1F3C72E8100020000A001 /* UIApplication+EndEditing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A1F3C62E8100020000A001 /* UIApplication+EndEditing.swift */; };
-		52A1F3C52E8100020000A001 /* EditModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A1F3C42E8100020000A001 /* EditModifier.swift */; };
 		52A1F3C92E8100030000A001 /* PageModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A1F3C82E8100030000A001 /* PageModifier.swift */; };
 		52A1F3CB2E8100040000A001 /* RegisterToggleButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A1F3CA2E8100040000A001 /* RegisterToggleButtonView.swift */; };
 		52A1F3CD2E8100050000A001 /* GridLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A1F3CC2E8100050000A001 /* GridLayout.swift */; };
@@ -241,7 +238,6 @@
 		521022212AAF1AC900A7A9E3 /* PermissionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionView.swift; sourceTree = "<group>"; };
 		5210DE0B26232EC1005829BA /* PlaylistDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistDetailViewModel.swift; sourceTree = "<group>"; };
 		5211ADCB25CE99E400604D45 /* TitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleView.swift; sourceTree = "<group>"; };
-		5211ADD425CEBCEC00604D45 /* BlurView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurView.swift; sourceTree = "<group>"; };
 		5219EA1B26152F3700E3A495 /* PlaylistSongRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistSongRealmModel.swift; sourceTree = "<group>"; };
 		5219EA20261539DB00E3A495 /* PlaylistRegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistRegisterView.swift; sourceTree = "<group>"; };
 		521C431F2592B7D6009194FF /* ThinMP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThinMP.swift; sourceTree = "<group>"; };
@@ -285,8 +281,6 @@
 		527177A32663CA4A00390A32 /* ShortcutListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutListView.swift; sourceTree = "<group>"; };
 		527177A52663D5D400390A32 /* AlbumListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumListView.swift; sourceTree = "<group>"; };
 		52A1F3C02E8100010000A001 /* SongListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongListView.swift; sourceTree = "<group>"; };
-		52A1F3C62E8100020000A001 /* UIApplication+EndEditing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+EndEditing.swift"; sourceTree = "<group>"; };
-		52A1F3C42E8100020000A001 /* EditModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditModifier.swift; sourceTree = "<group>"; };
 		52A1F3C82E8100030000A001 /* PageModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageModifier.swift; sourceTree = "<group>"; };
 		52A1F3CA2E8100040000A001 /* RegisterToggleButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterToggleButtonView.swift; sourceTree = "<group>"; };
 		52A1F3CC2E8100050000A001 /* GridLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridLayout.swift; sourceTree = "<group>"; };
@@ -488,9 +482,6 @@
 			isa = PBXGroup;
 			children = (
 				525BD0D4261950F600459563 /* PopupView.swift */,
-				5211ADD425CEBCEC00604D45 /* BlurView.swift */,
-				52A1F3C62E8100020000A001 /* UIApplication+EndEditing.swift */,
-				52A1F3C42E8100020000A001 /* EditModifier.swift */,
 				52A1F3C82E8100030000A001 /* PageModifier.swift */,
 				52A1F3CC2E8100050000A001 /* GridLayout.swift */,
 				52A1F3D82E8100080000A001 /* GeometryProxy+HeroSize.swift */,
@@ -1177,7 +1168,6 @@
 				52DF46E22646358D003A57F0 /* ShortcutRealmModel.swift in Sources */,
 				52C5FA49264129D900B6269C /* SongModel.swift in Sources */,
 				52D98E7223CC5D9D0032971A /* SongsPageView.swift in Sources */,
-				5211ADD525CEBCEC00604D45 /* BlurView.swift in Sources */,
 				52AAAA40267F799B000880E0 /* AlbumId.swift in Sources */,
 				527FCE09262431A50073E4F8 /* PlaylistAddRowView.swift in Sources */,
 				52735EFC264441F600056222 /* MainViewModel.swift in Sources */,
@@ -1187,8 +1177,6 @@
 				52481CE125EB4273004DFAEB /* PlayRowView.swift in Sources */,
 				527177A62663D5D400390A32 /* AlbumListView.swift in Sources */,
 				52A1F3C12E8100010000A001 /* SongListView.swift in Sources */,
-				52A1F3C72E8100020000A001 /* UIApplication+EndEditing.swift in Sources */,
-				52A1F3C52E8100020000A001 /* EditModifier.swift in Sources */,
 				52A1F3C92E8100030000A001 /* PageModifier.swift in Sources */,
 				52A1F3CB2E8100040000A001 /* RegisterToggleButtonView.swift in Sources */,
 				52A1F3CD2E8100050000A001 /* GridLayout.swift in Sources */,

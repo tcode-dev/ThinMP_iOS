@@ -11,7 +11,7 @@ struct PlaylistDetailEditPageView: View {
     @Environment(\.dismiss) private var dismiss
     @StateObject private var vm = PlaylistDetailViewModel()
     @State private var name: String
-    @State private var editing = false
+    @FocusState private var isNameFocused: Bool
 
     let playlistId: PlaylistId
 
@@ -27,11 +27,11 @@ struct PlaylistDetailEditPageView: View {
                     update()
                     dismiss()
                 }
-                .modifier(EditModifier(editing: editing))
+                // ボタン以外の場所をタップしたらキーボードを閉じる(ボタンのタップは子が先に受ける)
+                .onTapGesture { isNameFocused = false }
                 VStack(alignment: .leading) {
-                    TextField("", text: $name, onEditingChanged: { begin in
-                        editing = begin
-                    })
+                    TextField("", text: $name)
+                        .focused($isNameFocused)
                         .textInputAutocapitalization(.never)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .padding()
@@ -45,9 +45,9 @@ struct PlaylistDetailEditPageView: View {
                             .listRowInsets(.init())
                         }
                         // 入力中は一覧を薄くして、タップでキーボードを閉じる
-                        if editing {
+                        if isNameFocused {
                             Rectangle().fill(Color(UIColor.systemBackground).opacity(0.5))
-                                .onTapGesture { UIApplication.shared.endEditing() }
+                                .onTapGesture { isNameFocused = false }
                         }
                     }
                 }

@@ -15,7 +15,7 @@ struct PopupView<Content>: View where Content: View {
             content()
         }
         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-        .background(BlurView(style: .systemUltraThinMaterialLight))
+        .background(.ultraThinMaterial)
         .ignoresSafeArea(.container)
     }
 }
