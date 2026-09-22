@@ -84,7 +84,7 @@ struct RealmToSwiftDataMigration {
             let count = shortcuts.count
 
             for (index, shortcut) in shortcuts.enumerated() {
-                context.insert(ShortcutDataModel(id: shortcut.shortcutId.id, itemId: shortcut.itemId.id, type: shortcut.type, order: count - index))
+                context.insert(ShortcutDataModel(id: shortcut.shortcutId.id, itemId: shortcut.target.itemId, type: shortcut.target.type, order: count - index))
             }
 
             swiftDataStore.save()

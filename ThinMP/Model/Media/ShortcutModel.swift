@@ -9,8 +9,7 @@ import MediaPlayer
 
 struct ShortcutModel: MediaProtocol, Identifiable {
     var shortcutId: ShortcutId
-    var itemId: ItemId
-    var type: ShortcutType
+    var target: ShortcutTarget
     var primaryText: String?
     var artwork: MPMediaItemArtwork?
     var id: String {
@@ -19,6 +18,6 @@ struct ShortcutModel: MediaProtocol, Identifiable {
 
     /// 種別の表示名。SecondaryTextView はローカライズしないのでここで解決する
     var secondaryText: String? {
-        return NSLocalizedString(type.label, comment: "")
+        return NSLocalizedString(target.type.label, comment: "")
     }
 }

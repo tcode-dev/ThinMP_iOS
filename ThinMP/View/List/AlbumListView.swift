@@ -24,7 +24,7 @@ struct AlbumListView: View {
                 }
                 .contentShape(RoundedRectangle(cornerRadius: StyleConstant.cornerRadius))
                 .contextMenu {
-                    ShortcutButtonView(albumId: album.albumId, callback: callback)
+                    ShortcutButtonView(target: .album(album.albumId), callback: callback)
                 }
             }
         }

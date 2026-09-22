@@ -48,9 +48,9 @@ enum LegacyRealmFixture {
         repositories.playlist.update(playlistIds: [night, morning, empty])
 
         // ショートカット: 追加順は artist, album, playlist。findAll は新しい順
-        repositories.shortcut.add(itemId: ItemId(id: String(shortcutArtistId)), type: .artist)
-        repositories.shortcut.add(itemId: ItemId(id: String(shortcutAlbumId)), type: .album)
-        repositories.shortcut.add(itemId: ItemId(id: morning.id), type: .playlist)
+        repositories.shortcut.add(target: .artist(ArtistId(id: shortcutArtistId)))
+        repositories.shortcut.add(target: .album(AlbumId(id: shortcutAlbumId)))
+        repositories.shortcut.add(target: .playlist(morning))
     }
 
     @MainActor
@@ -64,9 +64,8 @@ enum LegacyRealmFixture {
         #expect(playlists.map { $0.songIds.map { $0.id } } == self.playlists.map { $0.songIds })
 
         let shortcuts = repositories.shortcut.findAll()
-        let morningId = playlists.first { $0.name == shortcutPlaylistName }?.playlistId.id
+        let morning = playlists.first { $0.name == shortcutPlaylistName }?.playlistId
 
-        #expect(shortcuts.map { $0.type } == [.playlist, .album, .artist])
-        #expect(shortcuts.map { $0.itemId.id } == [morningId, String(shortcutAlbumId), String(shortcutArtistId)])
+        #expect(shortcuts.map { $0.target } == [morning.map { .playlist($0) }, .album(AlbumId(id: shortcutAlbumId)), .artist(ArtistId(id: shortcutArtistId))])
     }
 }

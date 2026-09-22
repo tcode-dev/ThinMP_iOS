@@ -7,13 +7,10 @@
 
 import MediaPlayer
 
-struct AlbumDetailModel: DetailProtocol {
+struct AlbumDetailModel: MediaProtocol {
     var albumId: AlbumId
     var primaryText: String?
     var secondaryText: String?
     var artwork: MPMediaItemArtwork?
     var songs: [SongModel]
-    var id: String {
-        return String(albumId.id)
-    }
 }

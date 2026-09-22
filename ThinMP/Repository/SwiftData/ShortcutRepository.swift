@@ -15,12 +15,12 @@ struct ShortcutRepository: ShortcutRepositoryProtocol {
         self.store = store
     }
 
-    func add(itemId: ItemId, type: ShortcutType) {
-        if exists(itemId: itemId, type: type) {
+    func add(target: ShortcutTarget) {
+        if exists(target: target) {
             return
         }
 
-        store.context.insert(ShortcutDataModel(itemId: itemId.id, type: type, order: incrementOrder()))
+        store.context.insert(ShortcutDataModel(itemId: target.itemId, type: target.type, order: incrementOrder()))
         store.save()
     }
 
@@ -30,8 +30,8 @@ struct ShortcutRepository: ShortcutRepositoryProtocol {
         return try! store.context.fetch(descriptor).compactMap { toEntity(model: $0) }
     }
 
-    func exists(itemId: ItemId, type: ShortcutType) -> Bool {
-        return !find(itemId: itemId, type: type).isEmpty
+    func exists(target: ShortcutTarget) -> Bool {
+        return !find(target: target).isEmpty
     }
 
     func update(shortcutIds: [ShortcutId]) {
@@ -39,8 +39,8 @@ struct ShortcutRepository: ShortcutRepositoryProtocol {
         sort(shortcutIds: shortcutIds)
     }
 
-    func delete(itemId: ItemId, type: ShortcutType) {
-        let models = find(itemId: itemId, type: type)
+    func delete(target: ShortcutTarget) {
+        let models = find(target: target)
 
         if models.isEmpty {
             return
@@ -50,9 +50,9 @@ struct ShortcutRepository: ShortcutRepositoryProtocol {
         store.save()
     }
 
-    private func find(itemId: ItemId, type: ShortcutType) -> [ShortcutDataModel] {
-        let id = itemId.id
-        let typeValue = type.rawValue
+    private func find(target: ShortcutTarget) -> [ShortcutDataModel] {
+        let id = target.itemId
+        let typeValue = target.type.rawValue
         let descriptor = FetchDescriptor<ShortcutDataModel>(predicate: #Predicate { $0.itemId == id && $0.type == typeValue })
 
         return try! store.context.fetch(descriptor)
@@ -65,8 +65,9 @@ struct ShortcutRepository: ShortcutRepositoryProtocol {
         return try! store.context.fetch(descriptor)
     }
 
+    /// 指す先が読めない行は nil
     private func toEntity(model: ShortcutDataModel) -> ShortcutEntity? {
-        return ShortcutEntity(id: model.id, itemId: model.itemId, type: model.type)
+        return ShortcutTarget(itemId: model.itemId, type: model.type).map { ShortcutEntity(shortcutId: ShortcutId(id: model.id), target: $0) }
     }
 
     /// 渡した id 以外を消す。編集ページで消されたものを反映する

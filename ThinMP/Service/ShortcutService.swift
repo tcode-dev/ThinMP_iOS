@@ -25,36 +25,47 @@ struct ShortcutService: ShortcutServiceProtocol {
 
     func findAll() async -> [ShortcutModel] {
         let shortcuts = shortcutRepository.findAll()
-        let grouping = Dictionary(grouping: shortcuts) { $0.type }
-            .mapValues { $0.map { $0.itemId } }
+        var artistIds: [ArtistId] = []
+        var albumIds: [AlbumId] = []
+        var playlistIds: [PlaylistId] = []
 
-        var shortcutDictionary: [ShortcutType: [DetailProtocol]] = [.artist: [], .album: [], .playlist: []]
-
-        // アーティスト / アルバムはライブラリを舐めるのでバックグラウンドで解決する
-        // プレイリストは PlaylistDetailService 側で同じことをしている
-        if let artistIds = grouping[.artist] {
-            shortcutDictionary[.artist] = await Task.detached(priority: .userInitiated) { [artistDetailService] in
-                artistDetailService.findByIds(artistIds: artistIds.map { $0.artistId })
-            }.value
+        for shortcut in shortcuts {
+            switch shortcut.target {
+            case .artist(let artistId): artistIds.append(artistId)
+            case .album(let albumId): albumIds.append(albumId)
+            case .playlist(let playlistId): playlistIds.append(playlistId)
+            }
         }
 
-        if let albumIds = grouping[.album] {
-            shortcutDictionary[.album] = await Task.detached(priority: .userInitiated) { [albumDetailService] in
-                albumDetailService.findByIds(albumIds: albumIds.map { $0.albumId })
-            }.value
-        }
+        // 種別ごとにまとめて 1 回で解決する
+        // アーティスト / アルバムはライブラリを舐めるのでバックグラウンドで、プレイリストは PlaylistDetailService 側で同じことをしている
+        let artists = artistIds.isEmpty ? [] : await Task.detached(priority: .userInitiated) { [artistDetailService] in
+            artistDetailService.findByIds(artistIds: artistIds)
+        }.value
+        let albums = albumIds.isEmpty ? [] : await Task.detached(priority: .userInitiated) { [albumDetailService] in
+            albumDetailService.findByIds(albumIds: albumIds)
+        }.value
+        let playlists = playlistIds.isEmpty ? [] : await playlistDetailService.findByIds(playlistIds: playlistIds)
 
-        if let playlistIds = grouping[.playlist] {
-            shortcutDictionary[.playlist] = await playlistDetailService.findByIds(playlistIds: playlistIds.map { $0.playlistId })
-        }
+        let artistById = Dictionary(artists.map { ($0.artistId, $0) }, uniquingKeysWith: { first, _ in first })
+        let albumById = Dictionary(albums.map { ($0.albumId, $0) }, uniquingKeysWith: { first, _ in first })
+        let playlistById = Dictionary(playlists.map { ($0.playlistId, $0) }, uniquingKeysWith: { first, _ in first })
 
         // 端末に存在しないものは落とす(下で数が減ったことを検出する)
         let shortcutModels = shortcuts.compactMap { shortcut -> ShortcutModel? in
-            guard let item = shortcutDictionary[shortcut.type]?.first(where: { $0.id == shortcut.itemId.id }) else {
+            let item: MediaProtocol?
+
+            switch shortcut.target {
+            case .artist(let artistId): item = artistById[artistId]
+            case .album(let albumId): item = albumById[albumId]
+            case .playlist(let playlistId): item = playlistById[playlistId]
+            }
+
+            guard let item else {
                 return nil
             }
 
-            return ShortcutModel(shortcutId: shortcut.shortcutId, itemId: shortcut.itemId, type: shortcut.type, primaryText: item.primaryText, artwork: item.artwork)
+            return ShortcutModel(shortcutId: shortcut.shortcutId, target: shortcut.target, primaryText: item.primaryText, artwork: item.artwork)
         }
 
         // 端末から削除されたアーティスト、アルバム、プレイリストのショートカットは取り除いて保存する
