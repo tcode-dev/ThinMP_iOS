@@ -8,18 +8,15 @@
 import SwiftUI
 
 /// ミニプレイヤーから開く全画面の再生画面
-/// 表示中だけ MusicPlayer に再生位置の更新を頼み、閉じるときに callback を呼ぶ
+/// 表示中だけ MusicPlayer に再生位置の更新を頼み、閉じるときに onDismiss を呼ぶ
 struct PlayerView: View {
     @Environment(\.scenePhase) private var scenePhase
     @EnvironmentObject var musicPlayer: MusicPlayer
 
     /// プレイリスト登録ポップアップを出している曲。nil ならポップアップは閉じている
     @State private var playlistRegisterSongId: SongId?
-    private let callback: () -> Void
 
-    init(callback: @escaping () -> Void = {}) {
-        self.callback = callback
-    }
+    var onDismiss: () -> Void = {}
 
     var body: some View {
         GeometryReader { geometry in
@@ -70,7 +67,7 @@ struct PlayerView: View {
         }
         .onDisappear {
             musicPlayer.stopProgress()
-            callback()
+            onDismiss()
         }
         .onChange(of: scenePhase) { _, phase in
             if phase == .background {

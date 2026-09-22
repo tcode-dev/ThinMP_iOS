@@ -23,7 +23,7 @@ struct RegisterToggleButtonView: View {
     let add: @MainActor () -> Void
     let remove: @MainActor () -> Void
     /// 登録 / 解除のあとに呼ばれる(一覧の再読み込みなど)
-    var callback: () -> Void = {}
+    var onToggle: () -> Void = {}
 
     var body: some View {
         let registered = isRegistered ?? exists()
@@ -36,7 +36,7 @@ struct RegisterToggleButtonView: View {
             }
 
             isRegistered = !registered
-            callback()
+            onToggle()
         }) {
             Text(LocalizedStringKey(registered ? removeLabel : addLabel))
         }

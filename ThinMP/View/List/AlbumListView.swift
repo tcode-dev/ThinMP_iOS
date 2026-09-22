@@ -12,7 +12,7 @@ struct AlbumListView: View {
     let albums: [AlbumModel]
     let width: CGFloat
     /// ショートカットの登録・解除後に呼ばれる(一覧の再読み込みなど)
-    var callback: () -> Void = {}
+    var onShortcutChange: () -> Void = {}
 
     var body: some View {
         let layout = GridLayout(width: width)
@@ -24,7 +24,7 @@ struct AlbumListView: View {
                 }
                 .contentShape(RoundedRectangle(cornerRadius: StyleConstant.cornerRadius))
                 .contextMenu {
-                    ShortcutButtonView(target: .album(album.albumId), callback: callback)
+                    ShortcutButtonView(target: .album(album.albumId), onToggle: onShortcutChange)
                 }
             }
         }

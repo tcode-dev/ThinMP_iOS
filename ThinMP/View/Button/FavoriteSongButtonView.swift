@@ -9,7 +9,8 @@ import SwiftUI
 
 struct FavoriteSongButtonView: View {
     let songId: SongId
-    var callback: () -> Void = {}
+    /// 登録 / 解除のあとに呼ばれる(一覧の再読み込みなど)
+    var onToggle: () -> Void = {}
     var repository: FavoriteSongRepositoryProtocol = FavoriteSongRepository()
 
     var body: some View {
@@ -19,7 +20,7 @@ struct FavoriteSongButtonView: View {
             exists: { repository.exists(songId: songId) },
             add: { repository.add(songId: songId) },
             remove: { repository.delete(songId: songId) },
-            callback: callback
+            onToggle: onToggle
         )
     }
 }
