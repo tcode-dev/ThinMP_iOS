@@ -19,9 +19,7 @@ struct AlbumDetailPageView: View {
         ScrollPageLayout(playlistRegisterSongId: $playlistRegisterSongId) { geometry in
             HeroNavBarView(primaryText: vm.album?.primaryText, width: geometry.size.width, top: geometry.safeAreaInsets.top, headerRect: $headerRect) {
                 MenuButtonView {
-                    VStack {
-                        ShortcutButtonView(target: .album(albumId))
-                    }
+                    ShortcutButtonView(target: .album(albumId))
                 }
             }
         } content: { geometry in

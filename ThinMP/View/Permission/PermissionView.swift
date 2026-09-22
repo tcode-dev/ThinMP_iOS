@@ -9,11 +9,11 @@ import MediaPlayer
 import SwiftUI
 
 /// ライブラリへのアクセスが許可されていれば content を、まだなら許可を求めて、拒否されたら設定への案内を出す
-struct PermissionView<Content>: View where Content: View {
+struct PermissionView<Content: View>: View {
     @State private var isAllowed = MPMediaLibrary.authorizationStatus() == .authorized
     @State private var isRequested = false
 
-    let content: () -> Content
+    @ViewBuilder let content: () -> Content
 
     var body: some View {
         if isAllowed {

@@ -8,11 +8,11 @@
 import SwiftUI
 
 /// 登録モーダルのプレイリスト 1 行。タップで action を呼ぶ
-struct PlaylistAddRowView<Content>: View where Content: View {
+struct PlaylistAddRowView<Content: View>: View {
     /// すでにこの曲が入っているプレイリストはグレーアウトしてタップ不可にする
     let isRegistered: Bool
     let action: () -> Void
-    let content: () -> Content
+    @ViewBuilder let content: () -> Content
 
     var body: some View {
         Button(action: action) {
