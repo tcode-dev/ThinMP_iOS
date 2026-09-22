@@ -186,13 +186,15 @@ class MusicPlayer: ObservableObject {
     }
 
     /// Control Center やイヤホンからの操作もここに届くので、timer の開始 / 停止はここで決める
+    /// キューの終端(stopped)と電話などの割り込み(interrupted)でも止まったことにしないと、
+    /// 一時停止アイコンのまま押しても効かなくなる。seeking は長押し早送り中で、音は進んでいる
     private func playbackStateDidChangeCallback() {
         switch player.playbackState {
-        case MPMusicPlaybackState.playing:
+        case .playing, .seekingForward, .seekingBackward:
             isPlaying = true
-        case MPMusicPlaybackState.paused:
+        case .paused, .stopped, .interrupted:
             isPlaying = false
-        default:
+        @unknown default:
             break
         }
 
