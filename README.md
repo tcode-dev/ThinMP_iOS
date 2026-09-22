@@ -70,17 +70,21 @@ Audio, AirPlay, and Picture in Picture
 
 ## Architecture
 
-### View
+### Read
 
 `View` → `ViewModel` → `Service` → `Repository` → `Model`
 
-### Register
+`Service` exists only where there is composition: it combines several repositories, or a repository with the device library (for example, favorite ids → library scan → drop what is no longer in the library, and save that back). A method that would only delegate to a `Repository` does not belong in a `Service`.
 
-`View` → `Register` → `Repository`
+### Write
+
+`View` / `ViewModel` → `Repository`
+
+Writes have no composition, so callers use the `Repository` directly. Pages with their own state write from the `ViewModel` (`save()` on the edit pages, `create` / `add` / `delete` on `PlaylistsViewModel`). Page-independent shared components — the favorite / shortcut toggle buttons in the context menus, and `MusicPlayer` — hold a `Repository` themselves, so pages never wire persistence into them.
 
 ### Persistence boundary
 
-`Repository` is the only layer that touches the persistence store. It exposes plain structs (`Model/Entity`) and value objects so that `Service` and `Register` never depend on store types. `Service` and `Register` receive their dependencies through initializer parameters with default values, so they can be constructed with test doubles.
+`Repository` is the only layer that touches the persistence store. It exposes plain structs (`Model/Entity`) and value objects so that its callers never depend on store types. `Service`, `ViewModel`, the toggle buttons and `MusicPlayer` receive their `Service` / `Repository` dependencies through initializer parameters with default values, so they can be constructed with test doubles.
 
 * `Repository/SwiftData` (`*Repository`) — the current store, backed by `Model/SwiftData` and `SwiftDataStore`.
 * `Repository/Realm` (`*RealmRepository`) — the previous store, backed by `Model/Realm` and `RealmStore`. Kept only so existing data can be migrated ([#11](https://github.com/tcode-dev/ThinMP_iOS/issues/11)).
@@ -104,6 +108,8 @@ xcodebuild -project ThinMP.xcodeproj -scheme ThinMP -destination 'platform=iOS S
 
 * `ThinMPTests/Repository` — contract tests for the `Repository` protocols. They run against every case of `RepositoryBackend`, so a new persistence store only needs a new case there.
 * `ThinMPTests/Service` — tests for the self-healing logic in `Service` (favorites, playlists and shortcuts that reference media no longer in the library), using mock repositories.
+* `ThinMPTests/ViewModel` — load / cancel behavior and the writes the edit pages make through the `Repository`, using mock services and repositories.
+* `ThinMPTests/Config` — the `UserDefaults`-backed settings.
 * `ThinMPTests/Migration` — the Realm → SwiftData migration, run against an in-memory Realm and against `Fixtures/legacy.realm`.
 * `ThinMPTests/Support` — `RepositoryBackend`, mocks, and `FakeMediaItem` for building `SongModel` without the device library.
 
