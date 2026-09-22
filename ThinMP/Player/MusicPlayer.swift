@@ -10,7 +10,7 @@ import MediaPlayer
 // 通知は OperationQueue.main、Timer はメインの RunLoop で届き、@Published は View から読まれるので
 // 全体をメインアクターに隔離する。Register(SwiftData)もここから触る
 @MainActor
-class MusicPlayer: ObservableObject, MediaPlayerProtocol {
+class MusicPlayer: ObservableObject {
     private let PREV_SECOND: Double = 3
 
     @Published var isActive: Bool = false
@@ -18,20 +18,26 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
     @Published var song: SongModel?
     @Published var currentSecond: Double = 0
     @Published var durationSecond: Double = 1
-    @Published var isRepeatOff: Bool = true
-    @Published var isRepeatOne: Bool = false
-    @Published var isRepeatAll: Bool = false
-    @Published var shuffleMode: Bool = false
+    @Published var repeatMode: MPMusicRepeatMode = .none
+    @Published var isShuffle: Bool = false
     @Published var isFavoriteArtist: Bool = false
     @Published var isFavoriteSong: Bool = false
 
     private let playerConfig: PlayerConfig
+    private let favoriteArtistRegister: FavoriteArtistRegisterProtocol
+    private let favoriteSongRegister: FavoriteSongRegisterProtocol
     private let player: MPMusicPlayerController
     private var timer: Timer?
     private var observers: [NSObjectProtocol] = []
 
-    init() {
-        playerConfig = PlayerConfig()
+    init(
+        playerConfig: PlayerConfig = PlayerConfig(),
+        favoriteArtistRegister: FavoriteArtistRegisterProtocol = FavoriteArtistRegister(),
+        favoriteSongRegister: FavoriteSongRegisterProtocol = FavoriteSongRegister()
+    ) {
+        self.playerConfig = playerConfig
+        self.favoriteArtistRegister = favoriteArtistRegister
+        self.favoriteSongRegister = favoriteSongRegister
         player = MPMusicPlayerController.applicationMusicPlayer
         player.repeatMode = playerConfig.getRepeat()
         player.shuffleMode = playerConfig.getShuffle()
@@ -99,10 +105,14 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
         timer?.invalidate()
     }
 
+    /// なし → 全曲 → 1 曲 → なし の順で切り替える
     func changeRepeat() {
-        player.repeatMode = player.repeatMode == .none ? .all
-            : player.repeatMode == .all ? .one
-            : .none
+        switch player.repeatMode {
+        case .none: player.repeatMode = .all
+        case .all: player.repeatMode = .one
+        default: player.repeatMode = .none
+        }
+
         setRepeat()
         playerConfig.setRepeat(value: player.repeatMode)
     }
@@ -113,45 +123,45 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
         playerConfig.setShuffle(value: player.shuffleMode)
     }
 
+    /// 再生中の曲のアーティストをお気に入りに入れる / 外す
     func favoriteArtist() {
-        if let artistId = song?.artistId {
-            let register = FavoriteArtistRegister()
-
-            if register.exists(artistId: artistId) {
-                register.delete(artistId: artistId)
-            } else {
-                register.add(artistId: artistId)
-            }
-
-            isFavoriteArtist.toggle()
+        guard let artistId = song?.artistId else {
+            return
         }
+
+        if favoriteArtistRegister.exists(artistId: artistId) {
+            favoriteArtistRegister.delete(artistId: artistId)
+        } else {
+            favoriteArtistRegister.add(artistId: artistId)
+        }
+
+        isFavoriteArtist.toggle()
     }
 
+    /// 再生中の曲をお気に入りに入れる / 外す
     func favoriteSong() {
-        let register = FavoriteSongRegister()
-        let songId = songId()
+        guard let songId = song?.songId else {
+            return
+        }
 
-        if register.exists(songId: songId) {
-            register.delete(songId: songId)
+        if favoriteSongRegister.exists(songId: songId) {
+            favoriteSongRegister.delete(songId: songId)
         } else {
-            register.add(songId: songId)
+            favoriteSongRegister.add(songId: songId)
         }
 
         isFavoriteSong.toggle()
     }
 
+    /// お気に入りの状態をストアから読み直す。他の画面で登録 / 解除されたあとに呼ぶ
     func setFavorite() {
         setFavoriteArtist()
         setFavoriteSong()
     }
 
-    func songId() -> SongId {
-        return SongId(id: player.nowPlayingItem!.persistentID)
-    }
-
     private func setSong() {
-        if player.nowPlayingItem != nil {
-            song = SongModel(media: MPMediaItemCollection(items: [player.nowPlayingItem! as MPMediaItem]))
+        if let item = player.nowPlayingItem {
+            song = SongModel(media: MPMediaItemCollection(items: [item]))
             resetTime()
             setFavorite()
             isActive = true
@@ -200,17 +210,11 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
     }
 
     private func setFavoriteArtist() {
-        if let artistId = song?.artistId {
-            let favoriteArtistRegister = FavoriteArtistRegister()
-
-            isFavoriteArtist = favoriteArtistRegister.exists(artistId: artistId)
-        }
+        isFavoriteArtist = (song?.artistId).map { favoriteArtistRegister.exists(artistId: $0) } ?? false
     }
 
     private func setFavoriteSong() {
-        let register = FavoriteSongRegister()
-
-        isFavoriteSong = register.exists(songId: songId())
+        isFavoriteSong = (song?.songId).map { favoriteSongRegister.exists(songId: $0) } ?? false
     }
 
     private func resetTime() {
@@ -224,13 +228,11 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
     }
 
     private func setRepeat() {
-        isRepeatOff = player.repeatMode == .none
-        isRepeatOne = player.repeatMode == .one
-        isRepeatAll = player.repeatMode == .all
+        repeatMode = player.repeatMode
     }
 
     private func setShuffle() {
-        shuffleMode = player.shuffleMode == .songs
+        isShuffle = player.shuffleMode == .songs
     }
 
     deinit {
@@ -238,5 +240,5 @@ class MusicPlayer: ObservableObject, MediaPlayerProtocol {
         observers.forEach { NotificationCenter.default.removeObserver($0) }
 
         player.endGeneratingPlaybackNotifications()
-     }
+    }
 }

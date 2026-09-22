@@ -7,22 +7,21 @@
 
 import SwiftUI
 
+/// 詳細ページ先頭のヒーロー。content(画像)の上にタイトルと説明を重ねる
 struct HeroHeaderView<Content>: View where Content: View {
     @Binding var headerRect: CGRect
 
     let width: CGFloat
-    let height: CGFloat
+    /// ヒーロー画像の 1 辺(GeometryProxy.heroSize)
+    let size: CGFloat
     let top: CGFloat
-    let bottom: CGFloat
     let primaryText: String?
     let secondaryText: String?
     let content: () -> Content
 
-    let isLandscape = UIDevice.current.orientation.isLandscape
     let isPad = UIDevice.current.userInterfaceIdiom == .pad
 
     var body: some View {
-        let size = isLandscape ? height + top + bottom : width
         let rate = isPad ? 0.85 : 0.75
         let primaryTextOffset = size * rate
         let secondaryTextOffset = primaryTextOffset + 40

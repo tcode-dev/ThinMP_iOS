@@ -8,17 +8,12 @@
 import MediaPlayer
 import SwiftUI
 
+/// アルバム / プレイリスト詳細のヒーロー画像。size 四方のアートワークの下端を背景に溶かす
 struct HeroSquareImageView: View {
-    let width: CGFloat
-    let height: CGFloat
-    let top: CGFloat
-    let bottom: CGFloat
+    let size: CGFloat
     let artwork: MPMediaItemArtwork?
-    let isLandscape = UIDevice.current.orientation.isLandscape
 
     var body: some View {
-        let size = isLandscape ? height + top + bottom : width
-
         ZStack(alignment: .bottom) {
             VStack {
                 Image(uiImage: artwork?.image(at: CGSize(width: size, height: size)) ?? UIImage(imageLiteralResourceName: "Song"))
@@ -26,7 +21,7 @@ struct HeroSquareImageView: View {
                     .scaledToFit()
             }
             .frame(width: size, height: size)
-            LinearGradient(gradient: Gradient(colors: [Color(Color.RGBColorSpace.sRGB, red: 1, green: 1, blue: 1, opacity: 0), Color(UIColor.systemBackground)]), startPoint: .top, endPoint: .bottom)
+            HeroGradientView()
                 .frame(height: size * 0.3)
         }
     }

@@ -32,7 +32,7 @@ struct PlayerView: View {
                         .scaledToFit()
                         .blur(radius: 10.0)
 
-                    LinearGradient(gradient: Gradient(colors: [Color(Color.RGBColorSpace.sRGB, red: 1, green: 1, blue: 1, opacity: 0), Color(UIColor.systemBackground)]), startPoint: .top, endPoint: .bottom).frame(height: geometry.size.width).offset(y: 25)
+                    HeroGradientView().frame(height: geometry.size.width).offset(y: 25)
                 }
                 .frame(width: geometry.size.width, height: geometry.size.width)
                 VStack(spacing: 0) {
@@ -113,12 +113,13 @@ struct PlayerView: View {
                             Button(action: {
                                 musicPlayer.changeRepeat()
                             }) {
-                                if musicPlayer.isRepeatOff {
-                                    Image("RepeatButton").renderingMode(.original).resizable().frame(width: 50, height: 50).opacity(0.5)
-                                } else if musicPlayer.isRepeatAll {
+                                switch musicPlayer.repeatMode {
+                                case .all:
                                     Image("RepeatButton").renderingMode(.original).resizable().frame(width: 50, height: 50)
-                                } else if musicPlayer.isRepeatOne {
+                                case .one:
                                     Image("RepeatOneButton").renderingMode(.original).resizable().frame(width: 50, height: 50)
+                                default:
+                                    Image("RepeatButton").renderingMode(.original).resizable().frame(width: 50, height: 50).opacity(0.5)
                                 }
                             }
                             .frame(width: StyleConstant.button, height: StyleConstant.button)
@@ -126,7 +127,7 @@ struct PlayerView: View {
                             Button(action: {
                                 musicPlayer.shuffle()
                             }) {
-                                if musicPlayer.shuffleMode {
+                                if musicPlayer.isShuffle {
                                     Image("ShuffleButton").renderingMode(.original).resizable().frame(width: 50, height: 50)
                                 } else {
                                     Image("ShuffleButton").renderingMode(.original).resizable().frame(width: 50, height: 50).opacity(0.5)
@@ -168,9 +169,9 @@ struct PlayerView: View {
                     }
                     .frame(height: height * 0.6)
                 }
-                if showingPopup {
+                if showingPopup, let song = musicPlayer.song {
                     PopupView {
-                        PlaylistRegisterView(songId: musicPlayer.songId(), height: geometry.size.height) { showingPopup = false }
+                        PlaylistRegisterView(songId: song.songId, height: geometry.size.height) { showingPopup = false }
                     }
                 }
             }
