@@ -58,10 +58,9 @@ struct PlaylistRepository: PlaylistRepositoryProtocol {
     }
 
     func update(playlistIds: [PlaylistId]) {
-        let removed = deleteIds(keeping: playlistIds)
-
-        delete(playlistIds: removed)
+        delete(playlistIds: deleteIds(keeping: playlistIds))
         sort(playlistIds: playlistIds)
+        store.save()
     }
 
     func update(playlistId: PlaylistId, name: String, songIds: [SongId]) {
@@ -85,6 +84,7 @@ struct PlaylistRepository: PlaylistRepositoryProtocol {
 
     func delete(playlistId: PlaylistId) {
         delete(playlistIds: [playlistId])
+        store.save()
     }
 
     private func findModel(playlistId: PlaylistId) -> PlaylistDataModel? {
@@ -108,14 +108,7 @@ struct PlaylistRepository: PlaylistRepositoryProtocol {
     }
 
     private func delete(playlistIds: [PlaylistId]) {
-        let playlists = findModels(playlistIds: playlistIds)
-
-        if playlists.isEmpty {
-            return
-        }
-
-        playlists.forEach { store.context.delete($0) }
-        store.save()
+        findModels(playlistIds: playlistIds).forEach { store.context.delete($0) }
     }
 
     private func sort(playlistIds: [PlaylistId]) {
@@ -124,8 +117,6 @@ struct PlaylistRepository: PlaylistRepositoryProtocol {
         for (index, playlistId) in playlistIds.enumerated() {
             playlists.first { $0.id == playlistId.id }?.order = index
         }
-
-        store.save()
     }
 
     /// 残すもの以外の id。編集ページで消されたものを求めるのに使う

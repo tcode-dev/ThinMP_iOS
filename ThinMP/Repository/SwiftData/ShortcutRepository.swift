@@ -40,6 +40,7 @@ struct ShortcutRepository: ShortcutRepositoryProtocol {
     func update(shortcutIds: [ShortcutId]) {
         deleteExcept(shortcutIds: shortcutIds)
         sort(shortcutIds: shortcutIds)
+        store.save()
     }
 
     func delete(target: ShortcutTarget) {
@@ -78,12 +79,7 @@ struct ShortcutRepository: ShortcutRepositoryProtocol {
         let keepIds = Set(shortcutIds.map { $0.id })
         let models = try! store.context.fetch(FetchDescriptor<ShortcutDataModel>()).filter { !keepIds.contains($0.id) }
 
-        if models.isEmpty {
-            return
-        }
-
         models.forEach { store.context.delete($0) }
-        store.save()
     }
 
     /// 渡された順に並べ替える。先頭ほど order が大きいので、新しく add したものが先頭にくる
@@ -94,7 +90,5 @@ struct ShortcutRepository: ShortcutRepositoryProtocol {
         for (index, shortcutId) in shortcutIds.enumerated() {
             models.first { $0.id == shortcutId.id }?.order = count - index
         }
-
-        store.save()
     }
 }
