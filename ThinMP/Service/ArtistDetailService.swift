@@ -40,6 +40,10 @@ struct ArtistDetailService: ArtistDetailServiceProtocol {
 
     /// ショートカット用。アートワークのためにアルバムは引くが、albums / songs は空のまま
     /// ライブラリ全件を走査するのでバックグラウンドで行う
+    ///
+    /// findById と違ってアーティストごとにクエリを投げる。ライブラリを 1 回舐めて
+    /// 代表アイテムの artistPersistentID で振り分けると、findByArtistId が拾うコンピレーション盤が漏れて
+    /// ショートカットの画像が変わってしまうため。件数はショートカットの数までで、述語付きのクエリは索引が効く
     func findByIds(artistIds: [ArtistId]) async -> [ArtistDetailModel] {
         return await Task.detached(priority: .userInitiated) { [artistRepository, albumRepository] in
             artistRepository.findByIds(artistIds: artistIds).map { artist in

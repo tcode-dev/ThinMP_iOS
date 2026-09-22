@@ -29,6 +29,7 @@ struct AlbumRepository: AlbumRepositoryProtocol {
         return albums(localAlbumsQuery()).reordered(by: albumIds) { $0.albumId }
     }
 
+    /// アーティストの曲を含むアルバム。コンピレーション盤も入る(AlbumRepositoryProtocol を参照)
     func findByArtistId(artistId: ArtistId) -> [AlbumModel] {
         let query = MPMediaQuery.albums()
 
