@@ -27,23 +27,11 @@ struct FavoriteSongsService: FavoriteSongsServiceProtocol {
             songRepository.findByIds(songIds: songIds)
         }.value
 
-        // 端末から削除された曲がお気に入りに残っている場合は取り除いて読み直す
-        if !validation(songIds: songIds, songs: songs) {
-            fix(songs: songs)
-
-            return await findAll()
+        // 端末から削除された曲がお気に入りに残っている場合は取り除いて保存する
+        if songs.count != songIds.count {
+            favoriteSongRegister.update(songIds: songs.map { $0.songId })
         }
 
         return songs
-    }
-
-    private func validation(songIds: [SongId], songs: [SongModel]) -> Bool {
-        return songIds.count == songs.count
-    }
-
-    private func fix(songs: [SongModel]) {
-        let songIds = songs.map { $0.songId }
-
-        favoriteSongRegister.update(songIds: songIds)
     }
 }

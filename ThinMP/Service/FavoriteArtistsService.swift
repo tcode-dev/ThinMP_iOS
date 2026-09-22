@@ -27,23 +27,11 @@ struct FavoriteArtistsService: FavoriteArtistsServiceProtocol {
             artistRepository.findByIds(artistIds: artistIds)
         }.value
 
-        // 端末から削除されたアーティストがお気に入りに残っている場合は取り除いて読み直す
-        if !validation(artistIds: artistIds, artists: artists) {
-            fix(artists: artists)
-
-            return await findAll()
+        // 端末から削除されたアーティストがお気に入りに残っている場合は取り除いて保存する
+        if artists.count != artistIds.count {
+            favoriteArtistRegister.update(artistIds: artists.map { $0.artistId })
         }
 
         return artists
-    }
-
-    private func validation(artistIds: [ArtistId], artists: [ArtistModel]) -> Bool {
-        return artistIds.count == artists.count
-    }
-
-    private func fix(artists: [ArtistModel]) {
-        let artistIds = artists.map { $0.artistId }
-
-        favoriteArtistRegister.update(artistIds: artistIds)
     }
 }

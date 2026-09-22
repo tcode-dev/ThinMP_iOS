@@ -9,12 +9,7 @@ import MediaPlayer
 
 class SongRepository: SongRepositoryProtocol {
     func findAll() -> [SongModel] {
-        let property = MPMediaPropertyPredicate(value: false, forProperty: MPMediaItemPropertyIsCloudItem)
-        let query = MPMediaQuery.songs()
-
-        query.addFilterPredicate(property)
-
-        return query.collections!.map { SongModel(media: $0) }
+        return songs(localSongsQuery())
     }
 
     /// MPMediaQuery には IN 述語が無いので、ライブラリを 1 回取得して Set で絞る
@@ -24,36 +19,39 @@ class SongRepository: SongRepositoryProtocol {
             return []
         }
 
-        let property = MPMediaPropertyPredicate(value: false, forProperty: MPMediaItemPropertyIsCloudItem)
-        let query = MPMediaQuery.songs()
-        let ids = Set(songIds.map { $0.id })
-
-        query.addFilterPredicate(property)
-
+        let ids = Set(songIds)
         let songs = Dictionary(
-            query.collections!
-                .filter { ids.contains($0.persistentID) }
-                .map { ($0.persistentID, SongModel(media: $0)) },
+            songs(localSongsQuery())
+                .filter { ids.contains($0.songId) }
+                .map { ($0.songId, $0) },
             uniquingKeysWith: { first, _ in first }
         )
 
-        return songIds.compactMap { songs[$0.id] }
+        return songIds.compactMap { songs[$0] }
     }
 
     func findByAlbumId(albumId: AlbumId) -> [SongModel] {
-        let property = MPMediaPropertyPredicate(value: albumId.id, forProperty: MPMediaItemPropertyAlbumPersistentID)
         let query = MPMediaQuery.songs()
 
-        query.addFilterPredicate(property)
+        query.addFilterPredicate(MPMediaPropertyPredicate(value: albumId.id, forProperty: MPMediaItemPropertyAlbumPersistentID))
 
-        return query.collections!.map { SongModel(media: $0) }
+        return songs(query)
     }
 
     func findByAlbumIds(albumIds: [AlbumId]) -> [SongModel] {
-        return Array(
-            albumIds
-                .map { findByAlbumId(albumId: $0) }
-                .joined()
-        )
+        return albumIds.flatMap { findByAlbumId(albumId: $0) }
+    }
+
+    /// クラウドにしか無い項目を除いた全曲
+    private func localSongsQuery() -> MPMediaQuery {
+        let query = MPMediaQuery.songs()
+
+        query.addFilterPredicate(MPMediaPropertyPredicate(value: false, forProperty: MPMediaItemPropertyIsCloudItem))
+
+        return query
+    }
+
+    private func songs(_ query: MPMediaQuery) -> [SongModel] {
+        return (query.collections ?? []).map { SongModel(media: $0) }
     }
 }

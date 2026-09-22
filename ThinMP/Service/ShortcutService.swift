@@ -51,7 +51,7 @@ struct ShortcutService: ShortcutServiceProtocol {
             shortcutDictionary[.playlist] = await playlistDetailService.findByIds(playlistIds: playlistIds.map { $0.playlistId })
         }
 
-        // 端末に存在しないものは落とす(下の validation で数が減ったことを検出する)
+        // 端末に存在しないものは落とす(下で数が減ったことを検出する)
         let shortcutModels = shortcuts.compactMap { shortcut -> ShortcutModel? in
             guard let item = shortcutDictionary[shortcut.type]?.first(where: { $0.id == shortcut.itemId.id }) else {
                 return nil
@@ -60,21 +60,11 @@ struct ShortcutService: ShortcutServiceProtocol {
             return ShortcutModel(shortcutId: shortcut.shortcutId, itemId: shortcut.itemId, type: shortcut.type, primaryText: item.primaryText, artwork: item.artwork)
         }
 
-        // 端末から削除されたアーティスト、アルバム、プレイリストのショートカットは取り除いて読み直す
-        if !validation(shortcuts: shortcuts, shortcutModels: shortcutModels) {
-            fix(shortcutModels: shortcutModels)
-
-            return await findAll()
+        // 端末から削除されたアーティスト、アルバム、プレイリストのショートカットは取り除いて保存する
+        if shortcutModels.count != shortcuts.count {
+            shortcutRegister.update(shortcutIds: shortcutModels.map { $0.shortcutId })
         }
 
         return shortcutModels
-    }
-
-    private func validation(shortcuts: [ShortcutEntity], shortcutModels: [ShortcutModel]) -> Bool {
-        return shortcuts.count == shortcutModels.count
-    }
-
-    private func fix(shortcutModels: [ShortcutModel]) {
-        shortcutRegister.update(shortcutIds: shortcutModels.map { $0.shortcutId })
     }
 }

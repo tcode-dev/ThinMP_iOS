@@ -11,7 +11,6 @@ struct PlayerView: View {
     @Environment(\.scenePhase) private var scenePhase
     @EnvironmentObject var musicPlayer: MusicPlayer
 
-    @State private var seeking: Bool = false
     @State private var showingPopup: Bool = false
     private let callback: () -> Void
     private let isPad = UIDevice.current.userInterfaceIdiom == .pad
@@ -52,15 +51,11 @@ struct PlayerView: View {
                         .frame(height: 50)
                         .padding(.horizontal, StyleConstant.Padding.large)
                         Spacer()
-                        Slider(value: $musicPlayer.currentSecond, in: 0 ... musicPlayer.durationSecond, step: 1, onEditingChanged: { changed in
-                            if musicPlayer.isPlaying, !seeking, changed {
-                                musicPlayer.stopProgress()
-                                seeking = changed
-                            }
-                            musicPlayer.seek(time: musicPlayer.currentSecond)
-                            if musicPlayer.isPlaying, seeking, !changed {
-                                musicPlayer.startProgress()
-                                seeking = changed
+                        Slider(value: $musicPlayer.currentSecond, in: 0 ... musicPlayer.durationSecond, step: 1, onEditingChanged: { editing in
+                            if editing {
+                                musicPlayer.beginSeek()
+                            } else {
+                                musicPlayer.endSeek()
                             }
                         })
                         .frame(height: StyleConstant.button)
@@ -83,14 +78,12 @@ struct PlayerView: View {
                             if musicPlayer.isPlaying {
                                 Button(action: {
                                     musicPlayer.pause()
-                                    musicPlayer.stopProgress()
                                 }) {
                                     ButtonImageView(name: "PauseButton", size: 100)
                                 }
                             } else {
                                 Button(action: {
                                     musicPlayer.play()
-                                    musicPlayer.startProgress()
                                 }) {
                                     ButtonImageView(name: "PlayButton", size: 100)
                                 }
@@ -159,28 +152,19 @@ struct PlayerView: View {
                 }
             }
         }
-        .onAppear(perform: {
-            musicPlayer.immediateUpdateTime()
-
-            if musicPlayer.isPlaying {
-                musicPlayer.startProgress()
-            }
-
+        .onAppear {
+            musicPlayer.startProgress()
             musicPlayer.setFavorite()
-        })
-        .onDisappear(perform: {
+        }
+        .onDisappear {
             musicPlayer.stopProgress()
             callback()
-        })
+        }
         .onChange(of: scenePhase) { _, phase in
             if phase == .background {
                 musicPlayer.stopProgress()
             } else if phase == .active {
-                musicPlayer.immediateUpdateTime()
-
-                if musicPlayer.isPlaying {
-                    musicPlayer.startProgress()
-                }
+                musicPlayer.startProgress()
             }
         }
     }

@@ -68,6 +68,7 @@ struct PlaylistRegisterView: View {
                         }) {
                             Text(LocalizedStringKey(LabelConstant.done))
                         }
+                        .disabled(name.isEmpty)
                         Spacer()
                         Button(action: {
                             if vm.playlists.count > 0 {

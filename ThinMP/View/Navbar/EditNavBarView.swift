@@ -10,6 +10,8 @@ import SwiftUI
 /// 編集ページ共通のナビゲーションバー。左にキャンセル、右に完了を置く
 struct EditNavBarView: View {
     let top: CGFloat
+    /// false のあいだは完了を押せない(プレイリスト名が空のときなど)
+    var isDoneEnabled: Bool = true
     let onCancel: () -> Void
     let onDone: () -> Void
 
@@ -22,6 +24,7 @@ struct EditNavBarView: View {
             Button(action: onDone) {
                 Text(LocalizedStringKey(LabelConstant.done))
             }
+            .disabled(!isDoneEnabled)
         }
         .padding(.horizontal, StyleConstant.Padding.large)
         .frame(height: StyleConstant.Height.row)

@@ -28,6 +28,10 @@ class MusicPlayer: ObservableObject {
     private let favoriteSongRegister: FavoriteSongRegisterProtocol
     private let player: MPMusicPlayerController
     private var timer: Timer?
+    /// 再生画面が表示されている間だけ true。true かつ再生中のときだけ timer を回す
+    private var isProgressActive = false
+    /// スライダーを掴んでいる間は true。timer が currentSecond を上書きしないようにする
+    private var isSeeking = false
     private var observers: [NSObjectProtocol] = []
 
     init(
@@ -80,29 +84,28 @@ class MusicPlayer: ObservableObject {
         player.skipToNextItem()
     }
 
-    func seek(time: TimeInterval) {
-        player.currentPlaybackTime = time
+    /// スライダーを掴んだときに呼ぶ。離すまで currentSecond はスライダーが持つ
+    func beginSeek() {
+        isSeeking = true
     }
 
-    func immediateUpdateTime() {
-        Timer.scheduledTimer(withTimeInterval: 0, repeats: false, block: { _ in
-            MainActor.assumeIsolated {
-                self.updateTime()
-            }
-        })
+    /// スライダーを離したときに呼ぶ。スライダーの位置(currentSecond)まで飛ぶ
+    func endSeek() {
+        isSeeking = false
+        player.currentPlaybackTime = currentSecond
     }
 
+    /// 再生画面を表示したときに呼ぶ。以降は再生 / 一時停止に合わせて timer を回したり止めたりする
     func startProgress() {
-        timer?.invalidate()
-        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { _ in
-            MainActor.assumeIsolated {
-                self.updateTime()
-            }
-        })
+        isProgressActive = true
+        updateTime()
+        updateTimer()
     }
 
+    /// 再生画面を閉じた、またはバックグラウンドに入ったときに呼ぶ
     func stopProgress() {
-        timer?.invalidate()
+        isProgressActive = false
+        updateTimer()
     }
 
     /// なし → 全曲 → 1 曲 → なし の順で切り替える
@@ -198,6 +201,7 @@ class MusicPlayer: ObservableObject {
         setSong()
     }
 
+    /// Control Center やイヤホンからの操作もここに届くので、timer の開始 / 停止はここで決める
     private func playbackStateDidChangeCallback() {
         switch player.playbackState {
         case MPMusicPlaybackState.playing:
@@ -207,6 +211,8 @@ class MusicPlayer: ObservableObject {
         default:
             break
         }
+
+        updateTimer()
     }
 
     private func setFavoriteArtist() {
@@ -224,7 +230,27 @@ class MusicPlayer: ObservableObject {
     }
 
     private func updateTime() {
+        if isSeeking {
+            return
+        }
+
         currentSecond = Double(player.currentPlaybackTime)
+    }
+
+    /// 再生画面が表示中かつ再生中のときだけ 1 秒ごとに currentSecond を更新する
+    private func updateTimer() {
+        timer?.invalidate()
+        timer = nil
+
+        guard isProgressActive, isPlaying else {
+            return
+        }
+
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { _ in
+            MainActor.assumeIsolated {
+                self.updateTime()
+            }
+        })
     }
 
     private func setRepeat() {

@@ -23,7 +23,7 @@ struct PlaylistDetailEditPageView: View {
     var body: some View {
         GeometryReader { geometry in
             VStack(spacing: 0) {
-                EditNavBarView(top: geometry.safeAreaInsets.top, onCancel: { dismiss() }) {
+                EditNavBarView(top: geometry.safeAreaInsets.top, isDoneEnabled: !name.isEmpty, onCancel: { dismiss() }) {
                     update()
                     dismiss()
                 }
