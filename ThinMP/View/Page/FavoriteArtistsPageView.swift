@@ -45,15 +45,14 @@ struct FavoriteArtistsPageView: View {
                             }
                         }
                     }
-                    .frame(alignment: .top)
                 }
                 MiniPlayerView(bottom: geometry.safeAreaInsets.bottom) { vm.load() }
             }
             .toolbar(.hidden, for: .navigationBar)
             .navigationTitle("")
             .ignoresSafeArea(.container)
-            .onAppear {
-                vm.load()
+            .task {
+                await vm.load().value
             }
         }
     }

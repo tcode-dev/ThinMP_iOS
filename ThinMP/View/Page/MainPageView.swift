@@ -60,8 +60,8 @@ struct MainPageView: View {
                 .toolbar(.hidden, for: .navigationBar)
                 .navigationTitle("")
                 .ignoresSafeArea(.container)
-                .onAppear {
-                    vm.load()
+                .task {
+                    await vm.load().value
                 }
             }
         }

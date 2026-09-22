@@ -54,8 +54,8 @@ struct MainEditPageView: View {
             .navigationTitle("")
             .ignoresSafeArea(.container)
             .environment(\.editMode, .constant(.active))
-            .onAppear {
-                vm.load()
+            .task {
+                await vm.load().value
             }
         }
     }

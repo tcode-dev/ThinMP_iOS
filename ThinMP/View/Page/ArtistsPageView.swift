@@ -44,15 +44,14 @@ struct ArtistsPageView: View {
                             }
                         }
                     }
-                    .frame(alignment: .top)
                 }
                 MiniPlayerView(bottom: geometry.safeAreaInsets.bottom)
             }
             .toolbar(.hidden, for: .navigationBar)
             .navigationTitle("")
             .ignoresSafeArea(.container)
-            .onAppear {
-                vm.load()
+            .task {
+                await vm.load().value
             }
         }
     }
