@@ -9,7 +9,8 @@ import Combine
 
 @MainActor
 class PlaylistDetailViewModel: ObservableObject {
-    /// 読み込む前、または削除済みだったときは nil のまま。編集ページは songs を直接並べ替える
+    /// 読み込む前は nil。編集ページは songs を直接並べ替える
+    /// 読み直して削除済みだったときは前の値を残す。画面が一瞬空になるのを避けるため
     @Published var playlist: PlaylistDetailModel?
     /// 1 回目の読み込みが終わったか。終わるまでは編集ページの保存を受け付けない
     @Published private(set) var isLoaded = false
