@@ -5,7 +5,7 @@
 //  Created by tk on 2021/05/07.
 //
 
-import MediaPlayer
+import Combine
 
 @MainActor
 class MainViewModel: ObservableObject {

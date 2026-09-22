@@ -9,7 +9,7 @@ import SwiftUI
 
 struct FavoriteArtistsPageView: View {
     @StateObject private var vm = FavoriteArtistsViewModel()
-    @State private var headerRect = CGRect()
+    @State private var headerRect = CGRect.zero
 
     var body: some View {
         GeometryReader { geometry in
@@ -29,20 +29,7 @@ struct FavoriteArtistsPageView: View {
                     ScrollView {
                         VStack(alignment: .leading) {
                             ListEmptyHeaderView(headerRect: $headerRect, top: geometry.safeAreaInsets.top)
-                            LazyVStack(spacing: 0) {
-                                ForEach(vm.artists) { artist in
-                                    NavigationLink(destination: ArtistDetailPageView(artistId: artist.artistId)) {
-                                        PlainRowView(media: artist)
-                                    }
-                                    .contentShape(RoundedRectangle(cornerRadius: StyleConstant.cornerRadius))
-                                    .contextMenu {
-                                        FavoriteArtistButtonView(artistId: artist.artistId) { vm.load() }
-                                        ShortcutButtonView(itemId: artist.id, type: ShortcutType.ARTIST)
-                                    }
-                                    Divider()
-                                }
-                                .padding(.leading, StyleConstant.Padding.medium)
-                            }
+                            ArtistListView(artists: vm.artists) { vm.load() }
                         }
                     }
                 }

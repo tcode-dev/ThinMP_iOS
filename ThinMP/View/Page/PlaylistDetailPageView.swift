@@ -12,8 +12,6 @@ struct PlaylistDetailPageView: View {
     @State private var headerRect = CGRect.zero
     /// プレイリスト登録ポップアップを出している曲。nil ならポップアップは閉じている
     @State private var playlistRegisterSongId: SongId?
-    @State var isEdit: Bool = false
-    @State var editMode: EditMode = .active
 
     let playlistId: PlaylistId
 
@@ -23,14 +21,12 @@ struct PlaylistDetailPageView: View {
                 VStack(spacing: 0) {
                     ZStack(alignment: .top) {
                         HeroNavBarView(primaryText: vm.primaryText, width: geometry.size.width, top: geometry.safeAreaInsets.top, headerRect: $headerRect) {
-                            VStack {
-                                MenuButtonView {
-                                    VStack {
-                                        NavigationLink(destination: PlaylistDetailEditPageView(playlistId: playlistId, primaryText: vm.primaryText)) {
-                                            MenuRowView(text: LabelConstant.edit)
-                                        }
-                                        ShortcutButtonView(itemId: playlistId.id, type: ShortcutType.PLAYLIST)
+                            MenuButtonView {
+                                VStack {
+                                    NavigationLink(destination: PlaylistDetailEditPageView(playlistId: playlistId, primaryText: vm.primaryText)) {
+                                        MenuRowView(text: LabelConstant.edit)
                                     }
+                                    ShortcutButtonView(itemId: playlistId.id, type: ShortcutType.PLAYLIST)
                                 }
                             }
                         }

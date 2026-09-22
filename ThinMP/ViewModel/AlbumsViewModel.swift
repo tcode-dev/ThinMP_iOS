@@ -5,7 +5,7 @@
 //  Created by tk on 2020/01/10.
 //
 
-import MediaPlayer
+import Combine
 
 @MainActor
 class AlbumsViewModel: ObservableObject {

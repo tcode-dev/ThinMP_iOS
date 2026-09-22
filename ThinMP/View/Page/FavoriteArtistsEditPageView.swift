@@ -14,32 +14,17 @@ struct FavoriteArtistsEditPageView: View {
     var body: some View {
         GeometryReader { geometry in
             VStack(spacing: 0) {
-                EditNavBarView(top: geometry.safeAreaInsets.top) {
-                    HStack {
-                        Button(action: {
-                            dismiss()
-                        }) {
-                            Text(LocalizedStringKey(LabelConstant.cancel))
-                        }
-                        Spacer()
-                        Button(action: {
-                            update()
-                            dismiss()
-                        }) {
-                            Text(LocalizedStringKey(LabelConstant.done))
-                        }
-                    }
-                    .padding(.horizontal, StyleConstant.Padding.large)
+                EditNavBarView(top: geometry.safeAreaInsets.top, onCancel: { dismiss() }) {
+                    update()
+                    dismiss()
                 }
-                VStack(alignment: .leading) {
-                    List {
-                        ForEach(vm.artists) { artist in
-                            PlainRowView(media: artist)
-                        }
-                        .onMove(perform: move)
-                        .onDelete(perform: delete)
-                        .listRowInsets(.init())
+                List {
+                    ForEach(vm.artists) { artist in
+                        PlainRowView(media: artist)
                     }
+                    .onMove(perform: move)
+                    .onDelete(perform: delete)
+                    .listRowInsets(.init())
                 }
             }
             .toolbar(.hidden, for: .navigationBar)

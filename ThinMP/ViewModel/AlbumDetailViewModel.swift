@@ -14,7 +14,6 @@ class AlbumDetailViewModel: ObservableObject {
     @Published var artwork: MPMediaItemArtwork?
     @Published var songs: [SongModel] = []
 
-    private var albumId: AlbumId!
     private let albumDetailService: AlbumDetailServiceProtocol
     /// 直前の load を打ち切るために保持する。古い結果が新しい結果を上書きしないようにする
     private var loadTask: Task<Void, Never>?
@@ -25,7 +24,6 @@ class AlbumDetailViewModel: ObservableObject {
 
     @discardableResult
     func load(albumId: AlbumId) -> Task<Void, Never> {
-        self.albumId = albumId
         loadTask?.cancel()
 
         let task = Task {

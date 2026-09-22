@@ -9,7 +9,7 @@ import SwiftUI
 
 struct FavoriteSongsPageView: View {
     @StateObject private var vm = FavoriteSongsViewModel()
-    @State private var headerRect = CGRect()
+    @State private var headerRect = CGRect.zero
     /// プレイリスト登録ポップアップを出している曲。nil ならポップアップは閉じている
     @State private var playlistRegisterSongId: SongId?
 

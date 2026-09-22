@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ArtistDetailPageView: View {
     @StateObject private var vm = ArtistDetailViewModel()
-    @State private var headerRect = CGRect()
+    @State private var headerRect = CGRect.zero
     /// プレイリスト登録ポップアップを出している曲。nil ならポップアップは閉じている
     @State private var playlistRegisterSongId: SongId?
 
@@ -29,10 +29,10 @@ struct ArtistDetailPageView: View {
                             }
                         }
                         ScrollView {
-                            HeroHeaderView(headerRect: $headerRect, width: geometry.size.width, height: geometry.size.height, top: geometry.safeAreaInsets.top, bottom: geometry.safeAreaInsets.bottom, primaryText: vm.primaryText, secondaryText: vm.secondaryText) {
-                                HeroCircleImageView(width: geometry.size.width, height: geometry.size.height, top: geometry.safeAreaInsets.top, bottom: geometry.safeAreaInsets.bottom, artwork: vm.artwork)
-                            }
                             VStack(alignment: .leading) {
+                                HeroHeaderView(headerRect: $headerRect, width: geometry.size.width, height: geometry.size.height, top: geometry.safeAreaInsets.top, bottom: geometry.safeAreaInsets.bottom, primaryText: vm.primaryText, secondaryText: vm.secondaryText) {
+                                    HeroCircleImageView(width: geometry.size.width, height: geometry.size.height, top: geometry.safeAreaInsets.top, bottom: geometry.safeAreaInsets.bottom, artwork: vm.artwork)
+                                }
                                 if !vm.albums.isEmpty {
                                     SectionTitleView(LabelConstant.albums)
                                         .padding(.leading, StyleConstant.Padding.large)

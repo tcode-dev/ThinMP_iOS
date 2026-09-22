@@ -10,8 +10,8 @@ import SwiftUI
 struct PlaylistDetailEditPageView: View {
     @Environment(\.dismiss) private var dismiss
     @StateObject private var vm = PlaylistDetailViewModel()
-    @State private var name: String = ""
-    @State private var editing: Bool = false
+    @State private var name = ""
+    @State private var editing = false
 
     let playlistId: PlaylistId
     let primaryText: String?
@@ -19,29 +19,16 @@ struct PlaylistDetailEditPageView: View {
     var body: some View {
         GeometryReader { geometry in
             VStack(spacing: 0) {
-                EditNavBarView(top: geometry.safeAreaInsets.top) {
-                    HStack {
-                        Button(action: {
-                            dismiss()
-                        }) {
-                            Text(LocalizedStringKey(LabelConstant.cancel))
-                        }
-                        Spacer()
-                        Button(action: {
-                            update()
-                            dismiss()
-                        }) {
-                            Text(LocalizedStringKey(LabelConstant.done))
-                        }
-                    }
-                    .padding(.horizontal, StyleConstant.Padding.large)
+                EditNavBarView(top: geometry.safeAreaInsets.top, onCancel: { dismiss() }) {
+                    update()
+                    dismiss()
                 }
                 .modifier(EditModifier(editing: editing))
                 VStack(alignment: .leading) {
                     TextField("", text: $name, onEditingChanged: { begin in
                         editing = begin
                     })
-                        .autocapitalization(.none)
+                        .textInputAutocapitalization(.never)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .padding()
                         .onAppear {
@@ -57,10 +44,8 @@ struct PlaylistDetailEditPageView: View {
                             .listRowInsets(.init())
                         }
                         if editing {
-                            VStack {
-                                Rectangle().fill(Color.white.opacity(0.5))
-                            }
-                            .onTapGesture { UIApplication.shared.endEditing() }
+                            Rectangle().fill(Color.white.opacity(0.5))
+                                .onTapGesture { UIApplication.shared.endEditing() }
                         }
                     }
                 }
@@ -86,26 +71,6 @@ struct PlaylistDetailEditPageView: View {
     private func update() {
         let playlistRegister = PlaylistRegister()
 
-        playlistRegister.update(playlistId: vm.playlistId, name: name, songIds: vm.songs.map { $0.songId })
-
-        vm.primaryText = name
-    }
-}
-
-extension UIApplication {
-    func endEditing() {
-        sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-    }
-}
-
-struct EditModifier: ViewModifier {
-    let editing: Bool
-
-    func body(content: Content) -> some View {
-        if editing {
-            content.onTapGesture { UIApplication.shared.endEditing() }
-        } else {
-            content
-        }
+        playlistRegister.update(playlistId: playlistId, name: name, songIds: vm.songs.map { $0.songId })
     }
 }

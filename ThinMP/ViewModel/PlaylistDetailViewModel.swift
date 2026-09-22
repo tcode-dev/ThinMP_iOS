@@ -13,8 +13,6 @@ class PlaylistDetailViewModel: ObservableObject {
     @Published var artwork: MPMediaItemArtwork?
     @Published var songs: [SongModel] = []
 
-    var playlistId: PlaylistId!
-
     private let playlistDetailService: PlaylistDetailServiceProtocol
     /// 直前の load を打ち切るために保持する。古い結果が新しい結果を上書きしないようにする
     private var loadTask: Task<Void, Never>?
@@ -25,7 +23,6 @@ class PlaylistDetailViewModel: ObservableObject {
 
     @discardableResult
     func load(playlistId: PlaylistId) -> Task<Void, Never> {
-        self.playlistId = playlistId
         loadTask?.cancel()
 
         let task = Task {

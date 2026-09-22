@@ -5,7 +5,7 @@
 //  Created by tk on 2021/06/19.
 //
 
-import MediaPlayer
+import Combine
 
 @MainActor
 class MainEditViewModel: ObservableObject {
@@ -13,7 +13,6 @@ class MainEditViewModel: ObservableObject {
     @Published var shortcutMenu = MenuModel(primaryText: "", visibility: true)
     @Published var recentlyMenu = MenuModel(primaryText: "", visibility: true)
     @Published var shortcuts: [ShortcutModel] = []
-    @Published var albums: [AlbumModel] = []
 
     private let mainService: MainServiceProtocol
     /// 直前の load を打ち切るために保持する。古い結果が新しい結果を上書きしないようにする
@@ -32,7 +31,6 @@ class MainEditViewModel: ObservableObject {
             let shortcutMenu = mainService.getShortcutMenu()
             let recentlyMenu = mainService.getRecentlyMenu()
             let shortcuts = await mainService.findShortcuts()
-            let albums = await mainService.findRecentlyAlbums()
 
             if Task.isCancelled { return }
 
@@ -40,7 +38,6 @@ class MainEditViewModel: ObservableObject {
             self.shortcutMenu = shortcutMenu
             self.recentlyMenu = recentlyMenu
             self.shortcuts = shortcuts
-            self.albums = albums
         }
 
         loadTask = task
