@@ -100,7 +100,7 @@ final class MainServiceMock: MainServiceProtocol {
         return shortcuts
     }
 
-    func getSettings() -> MainSettings {
+    func loadSettings() -> MainSettings {
         return settings
     }
 

@@ -54,7 +54,7 @@ struct PlaylistRegisterView: View {
                     }
                 }
                 .padding(.bottom, StyleConstant.Padding.small)
-                .frame(height: getHeight())
+                .frame(height: contentHeight)
             } else {
                 VStack(spacing: 0) {
                     Text(LocalizedStringKey(LabelConstant.playlistName))
@@ -96,7 +96,8 @@ struct PlaylistRegisterView: View {
         }
     }
 
-    private func getHeight() -> CGFloat {
+    /// 一覧がポップアップに収まらないときは画面の高さいっぱいまでにする
+    private var contentHeight: CGFloat {
         let panelHeight = StyleConstant.Height.header + (CGFloat(vm.playlists.count) * (StyleConstant.Height.row + StyleConstant.dividerHeight)) + StyleConstant.Padding.small
 
         if panelHeight > height {

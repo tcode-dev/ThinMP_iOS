@@ -58,9 +58,9 @@ struct PlaylistRepository: PlaylistRepositoryProtocol {
     }
 
     func update(playlistIds: [PlaylistId]) {
-        let deleteIds = getDeleteIds(playlistIds: playlistIds)
+        let removed = deleteIds(keeping: playlistIds)
 
-        delete(playlistIds: deleteIds)
+        delete(playlistIds: removed)
         sort(playlistIds: playlistIds)
     }
 
@@ -136,7 +136,8 @@ struct PlaylistRepository: PlaylistRepositoryProtocol {
         return (try! store.context.fetch(descriptor).first?.order ?? 0) + 1
     }
 
-    private func getDeleteIds(playlistIds: [PlaylistId]) -> [PlaylistId] {
+    /// 残すもの以外の id。編集ページで消されたものを求めるのに使う
+    private func deleteIds(keeping playlistIds: [PlaylistId]) -> [PlaylistId] {
         let currentIds = try! store.context.fetch(FetchDescriptor<PlaylistDataModel>()).map { $0.id }
         let keepIds = playlistIds.map { $0.id }
 

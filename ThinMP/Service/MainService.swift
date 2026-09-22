@@ -34,7 +34,7 @@ struct MainService: MainServiceProtocol {
         return await shortcutService.findAll()
     }
 
-    func getSettings() -> MainSettings {
+    func loadSettings() -> MainSettings {
         return MainSettings(
             menus: mainMenuConfig.load(),
             isShortcutVisible: mainSectionConfig.isShortcutVisible,

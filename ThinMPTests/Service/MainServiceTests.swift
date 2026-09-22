@@ -28,7 +28,7 @@ struct MainServiceTests {
     func settingsDefaultToEverythingVisible() {
         let service = makeService(userDefaults: UserDefaults.empty())
 
-        let settings = service.getSettings()
+        let settings = service.loadSettings()
 
         #expect(settings.menus == MainMenu.allCases.map { MainMenuSetting(menu: $0, visibility: true) })
         #expect(settings.isShortcutVisible)
@@ -47,7 +47,7 @@ struct MainServiceTests {
 
         makeService(userDefaults: userDefaults).save(settings: settings)
 
-        #expect(makeService(userDefaults: userDefaults).getSettings() == settings)
+        #expect(makeService(userDefaults: userDefaults).loadSettings() == settings)
     }
 
     @Test

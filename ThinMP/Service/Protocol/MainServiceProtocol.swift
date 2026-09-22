@@ -11,7 +11,7 @@ protocol MainServiceProtocol {
 
     func findShortcuts() async -> [ShortcutModel]
 
-    func getSettings() -> MainSettings
+    func loadSettings() -> MainSettings
 
     func save(settings: MainSettings)
 }
