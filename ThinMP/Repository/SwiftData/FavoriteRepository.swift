@@ -1,0 +1,75 @@
+//
+//  FavoriteRepository.swift
+//  ThinMP
+//
+//  Created by tk on 2026/09/23.
+//
+
+import Foundation
+import SwiftData
+
+/// お気に入り(アーティスト、曲)の読み書き
+/// 扱うのは mediaId(MPMediaEntityPersistentID を文字列にしたもの)だけで、
+/// ArtistId / SongId との変換はこれを持つ FavoriteArtistRepository / FavoriteSongRepository が行う
+@MainActor
+struct FavoriteRepository<Model: FavoriteDataModel> {
+    private let store: SwiftDataStore
+
+    init(store: SwiftDataStore) {
+        self.store = store
+    }
+
+    /// 登録した順
+    func findAll() -> [String] {
+        let descriptor = FetchDescriptor<Model>(sortBy: [SortDescriptor(Model.orderKey)])
+
+        return try! store.context.fetch(descriptor).map { $0.mediaId }
+    }
+
+    func exists(mediaId: String) -> Bool {
+        return !find(mediaId: mediaId).isEmpty
+    }
+
+    func add(mediaId: String) {
+        if exists(mediaId: mediaId) {
+            return
+        }
+
+        store.context.insert(Model(mediaId: mediaId, order: store.nextOrder(Model.self, by: Model.orderKey)))
+        store.save()
+    }
+
+    /// 渡したものだけを渡した順で残す。編集ページの並び替えと削除を反映する
+    func update(mediaIds: [String]) {
+        truncate()
+
+        for (index, mediaId) in mediaIds.enumerated() {
+            store.context.insert(Model(mediaId: mediaId, order: index))
+        }
+
+        store.save()
+    }
+
+    func delete(mediaId: String) {
+        let models = find(mediaId: mediaId)
+
+        if models.isEmpty {
+            return
+        }
+
+        models.forEach { store.context.delete($0) }
+        store.save()
+    }
+
+    private func find(mediaId: String) -> [Model] {
+        let descriptor = FetchDescriptor<Model>(predicate: Model.predicate(mediaId: mediaId))
+
+        return try! store.context.fetch(descriptor)
+    }
+
+    private func truncate() {
+        let models = try! store.context.fetch(FetchDescriptor<Model>())
+
+        models.forEach { store.context.delete($0) }
+    }
+}

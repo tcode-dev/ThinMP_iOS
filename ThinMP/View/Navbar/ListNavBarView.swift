@@ -22,7 +22,7 @@ struct ListNavBarView<Trailing: View>: View {
             HStack {
                 BackButtonView()
                 Spacer()
-                HeaderTitleView(title)
+                TitleView(key: title)
                 Spacer()
                 trailing()
                     .frame(width: StyleConstant.button, height: StyleConstant.button)

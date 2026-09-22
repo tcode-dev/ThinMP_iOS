@@ -8,14 +8,20 @@
 import SwiftUI
 
 struct PrimaryTextView: View {
-    private let text: String
+    private let text: Text
 
+    /// ライブラリの文字列(曲名など)。nil か空なら「不明」
     init(_ text: String?) {
-        self.text = text.orUnknown
+        self.text = Text(text.orUnknown)
+    }
+
+    /// Localizable.strings のキー。Model / Service は翻訳しないので、ラベルの翻訳はここで行う
+    init(key: String) {
+        text = Text(LocalizedStringKey(key))
     }
 
     var body: some View {
-        Text(text)
+        text
             .font(.body)
             .foregroundColor(.primary)
             .lineLimit(1)

@@ -5,74 +5,30 @@
 //  Created by tk on 2026/09/21.
 //
 
-import Foundation
-import SwiftData
-
 struct FavoriteSongRepository: FavoriteSongRepositoryProtocol {
-    private let store: SwiftDataStore
+    private let favorites: FavoriteRepository<FavoriteSongDataModel>
 
     init(store: SwiftDataStore = .default) {
-        self.store = store
+        favorites = FavoriteRepository(store: store)
     }
 
     func add(songId: SongId) {
-        if exists(songId: songId) {
-            return
-        }
-
-        store.context.insert(FavoriteSongDataModel(songId: String(songId.id), order: incrementOrder()))
-        store.save()
+        favorites.add(mediaId: String(songId.id))
     }
 
     func findAll() -> [SongId] {
-        let descriptor = FetchDescriptor<FavoriteSongDataModel>(sortBy: [SortDescriptor(\.order)])
-
-        return try! store.context.fetch(descriptor).map { SongId(id: UInt64($0.songId)!) }
+        return favorites.findAll().map { SongId(id: UInt64($0)!) }
     }
 
     func exists(songId: SongId) -> Bool {
-        return !find(songId: songId).isEmpty
+        return favorites.exists(mediaId: String(songId.id))
     }
 
     func update(songIds: [SongId]) {
-        truncate()
-
-        for (index, songId) in songIds.enumerated() {
-            store.context.insert(FavoriteSongDataModel(songId: String(songId.id), order: index))
-        }
-
-        store.save()
+        favorites.update(mediaIds: songIds.map { String($0.id) })
     }
 
     func delete(songId: SongId) {
-        let favoriteSongs = find(songId: songId)
-
-        if favoriteSongs.isEmpty {
-            return
-        }
-
-        favoriteSongs.forEach { store.context.delete($0) }
-        store.save()
-    }
-
-    private func find(songId: SongId) -> [FavoriteSongDataModel] {
-        let id = String(songId.id)
-        let descriptor = FetchDescriptor<FavoriteSongDataModel>(predicate: #Predicate { $0.songId == id })
-
-        return try! store.context.fetch(descriptor)
-    }
-
-    private func truncate() {
-        let models = try! store.context.fetch(FetchDescriptor<FavoriteSongDataModel>())
-
-        models.forEach { store.context.delete($0) }
-    }
-
-    private func incrementOrder() -> Int {
-        var descriptor = FetchDescriptor<FavoriteSongDataModel>(sortBy: [SortDescriptor(\.order, order: .reverse)])
-
-        descriptor.fetchLimit = 1
-
-        return (try! store.context.fetch(descriptor).first?.order ?? 0) + 1
+        favorites.delete(mediaId: String(songId.id))
     }
 }

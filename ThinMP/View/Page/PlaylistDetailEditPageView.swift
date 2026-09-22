@@ -29,12 +29,9 @@ struct PlaylistDetailEditPageView: View {
                     .padding()
                 ZStack {
                     List {
-                        ForEach(vm.playlist?.songs ?? []) { song in
+                        ReorderableListView(items: songs) { song in
                             MediaRowView(media: song)
                         }
-                        .onMove(perform: move)
-                        .onDelete(perform: delete)
-                        .listRowInsets(.init())
                     }
                     // 入力中は一覧を薄くして、タップでキーボードを閉じる
                     if isNameFocused {
@@ -49,11 +46,8 @@ struct PlaylistDetailEditPageView: View {
         }
     }
 
-    private func move(source: IndexSet, destination: Int) {
-        vm.playlist?.songs.move(fromOffsets: source, toOffset: destination)
-    }
-
-    private func delete(offsets: IndexSet) {
-        vm.playlist?.songs.remove(atOffsets: offsets)
+    /// 読み込む前は playlist が nil。並び替えと削除は読み込めたときだけ playlist に書き戻す
+    private var songs: Binding<[SongModel]> {
+        return Binding(get: { vm.playlist?.songs ?? [] }, set: { vm.playlist?.songs = $0 })
     }
 }
