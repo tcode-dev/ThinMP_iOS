@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MiniPlayerView: View {
-    private let imageSize: CGFloat = 40
+    private let buttonImageSize: CGFloat = 40
     private let buttonSize: CGFloat = 60
 
     @EnvironmentObject var musicPlayer: MusicPlayer
@@ -26,15 +26,15 @@ struct MiniPlayerView: View {
                         isFullScreen.toggle()
                     }) {
                         HStack {
-                            SquareImageView(artwork: musicPlayer.song?.artwork, size: imageSize)
+                            SquareImageView(artwork: musicPlayer.song?.artwork, size: StyleConstant.thumbnail)
                             PrimaryTextView(musicPlayer.song?.primaryText)
                             Spacer()
                         }
                     }
-                    PlayPauseButtonView(size: imageSize)
+                    PlayPauseButtonView(size: buttonImageSize)
                         .frame(width: buttonSize, height: buttonSize)
                     Button(action: musicPlayer.next) {
-                        ButtonImageView(name: "NextButton", size: imageSize)
+                        ButtonImageView(name: "NextButton", size: buttonImageSize)
                     }
                     .frame(width: buttonSize, height: buttonSize)
                 }

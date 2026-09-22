@@ -9,6 +9,10 @@ import SwiftUI
 
 /// 再生位置のスライダーと、その下の経過 / 全体の時間
 struct PlayerSeekBarView: View {
+    private let timeWidth: CGFloat = 50
+    private let timeHeight: CGFloat = 20
+    private let timePadding: CGFloat = 40
+
     @EnvironmentObject var musicPlayer: MusicPlayer
 
     var body: some View {
@@ -24,9 +28,9 @@ struct PlayerSeekBarView: View {
             .padding(.horizontal, StyleConstant.isPad ? 40 : 30)
             .accentColor(Color(.label))
             HStack {
-                SecondaryTextView(Self.format(musicPlayer.currentSecond)).frame(width: 50, height: 20).padding(.leading, 40)
+                SecondaryTextView(Self.format(musicPlayer.currentSecond)).frame(width: timeWidth, height: timeHeight).padding(.leading, timePadding)
                 Spacer()
-                SecondaryTextView(Self.format(musicPlayer.durationSecond)).frame(width: 50, height: 20).padding(.trailing, 40)
+                SecondaryTextView(Self.format(musicPlayer.durationSecond)).frame(width: timeWidth, height: timeHeight).padding(.trailing, timePadding)
             }
         }
     }

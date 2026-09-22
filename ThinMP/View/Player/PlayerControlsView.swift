@@ -9,19 +9,22 @@ import SwiftUI
 
 /// 前の曲 / 再生・一時停止 / 次の曲
 struct PlayerControlsView: View {
+    private let sideButtonSize: CGFloat = 88
+    private let playPauseButtonSize: CGFloat = 100
+
     @EnvironmentObject var musicPlayer: MusicPlayer
 
     var body: some View {
         HStack {
             Spacer()
             Button(action: musicPlayer.prev) {
-                ButtonImageView(name: "PrevButton", size: 88)
+                ButtonImageView(name: "PrevButton", size: sideButtonSize)
             }
             Spacer()
-            PlayPauseButtonView(size: 100)
+            PlayPauseButtonView(size: playPauseButtonSize)
             Spacer()
             Button(action: musicPlayer.next) {
-                ButtonImageView(name: "NextButton", size: 88)
+                ButtonImageView(name: "NextButton", size: sideButtonSize)
             }
             Spacer()
         }

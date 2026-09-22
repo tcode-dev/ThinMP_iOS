@@ -14,6 +14,8 @@ enum StyleConstant {
     }
 
     static let button: CGFloat = 50
+    /// 行とミニプレイヤーに並べるアートワークの 1 辺
+    static let thumbnail: CGFloat = 40
     static let cornerRadius: CGFloat = 4
     static let dividerHeight: CGFloat = 0.5
 

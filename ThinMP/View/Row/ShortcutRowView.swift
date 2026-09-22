@@ -8,13 +8,11 @@
 import SwiftUI
 
 struct ShortcutRowView: View {
-    private let size: CGFloat = 40
-
     let shortcut: ShortcutModel
 
     var body: some View {
         HStack {
-            ShortcutImageView(shortcut: shortcut, size: size)
+            ShortcutImageView(shortcut: shortcut, size: StyleConstant.thumbnail)
             VStack(alignment: .leading) {
                 PrimaryTextView(shortcut.primaryText)
                 SecondaryTextView(key: shortcut.target.type.label)

@@ -9,6 +9,10 @@ import SwiftUI
 
 /// リピート / シャッフル / お気に入り(アーティスト、曲)/ プレイリストに追加
 struct PlayerOptionsView: View {
+    private let imageSize: CGFloat = 50
+    /// お気に入り曲のアイコンだけ余白の取り方が違うので一回り小さくする
+    private let favoriteSongImageSize: CGFloat = 40
+
     @EnvironmentObject var musicPlayer: MusicPlayer
 
     /// プレイリストに追加を押したときに呼ばれる
@@ -19,32 +23,32 @@ struct PlayerOptionsView: View {
             Button(action: musicPlayer.changeRepeat) {
                 switch musicPlayer.repeatMode {
                 case .all:
-                    ButtonImageView(name: "RepeatButton", size: 50)
+                    ButtonImageView(name: "RepeatButton", size: imageSize)
                 case .one:
-                    ButtonImageView(name: "RepeatOneButton", size: 50)
+                    ButtonImageView(name: "RepeatOneButton", size: imageSize)
                 default:
-                    ButtonImageView(name: "RepeatButton", size: 50, dimmed: true)
+                    ButtonImageView(name: "RepeatButton", size: imageSize, dimmed: true)
                 }
             }
             .frame(width: StyleConstant.button, height: StyleConstant.button)
             Spacer()
             Button(action: musicPlayer.shuffle) {
-                ButtonImageView(name: "ShuffleButton", size: 50, dimmed: !musicPlayer.isShuffle)
+                ButtonImageView(name: "ShuffleButton", size: imageSize, dimmed: !musicPlayer.isShuffle)
             }
             .frame(width: StyleConstant.button, height: StyleConstant.button)
             Spacer()
             Button(action: musicPlayer.favoriteArtist) {
-                ButtonImageView(name: "FavoriteArtistButton", size: 50, dimmed: !musicPlayer.isFavoriteArtist)
+                ButtonImageView(name: "FavoriteArtistButton", size: imageSize, dimmed: !musicPlayer.isFavoriteArtist)
             }
             .frame(width: StyleConstant.button, height: StyleConstant.button)
             Spacer()
             Button(action: musicPlayer.favoriteSong) {
-                ButtonImageView(name: "FavoriteSongButton", size: 40, dimmed: !musicPlayer.isFavoriteSong)
+                ButtonImageView(name: "FavoriteSongButton", size: favoriteSongImageSize, dimmed: !musicPlayer.isFavoriteSong)
             }
             .frame(width: StyleConstant.button, height: StyleConstant.button)
             Spacer()
             Button(action: onAddPlaylist) {
-                ButtonImageView(name: "PlaylistAddButton", size: 50)
+                ButtonImageView(name: "PlaylistAddButton", size: imageSize)
             }
             .frame(width: StyleConstant.button, height: StyleConstant.button)
         }
