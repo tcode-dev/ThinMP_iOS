@@ -19,7 +19,7 @@ struct PlaylistRegisterView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            if vm.playlists.count != 0 && !isCreate {
+            if !vm.playlists.isEmpty && !isCreate {
                 VStack(spacing: 0) {
                     HStack {
                         Spacer()
@@ -71,7 +71,7 @@ struct PlaylistRegisterView: View {
                         .disabled(name.isEmpty)
                         Spacer()
                         Button(action: {
-                            if vm.playlists.count > 0 {
+                            if !vm.playlists.isEmpty {
                                 isCreate.toggle()
                             } else {
                                 dismiss()
@@ -90,8 +90,8 @@ struct PlaylistRegisterView: View {
         .background(Color(UIColor.systemGray5))
         .cornerRadius(StyleConstant.cornerRadius)
         .padding(.horizontal, StyleConstant.Padding.large)
-        .onAppear {
-            vm.load(songId: songId)
+        .task {
+            await vm.load(songId: songId).value
         }
     }
 

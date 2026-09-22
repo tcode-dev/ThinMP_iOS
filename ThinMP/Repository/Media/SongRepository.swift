@@ -12,22 +12,13 @@ class SongRepository: SongRepositoryProtocol {
         return songs(localSongsQuery())
     }
 
-    /// MPMediaQuery には IN 述語が無いので、ライブラリを 1 回取得して Set で絞る
     /// 結果は songIds の順で、ライブラリに無い曲は落ちる
     func findByIds(songIds: [SongId]) -> [SongModel] {
         if songIds.isEmpty {
             return []
         }
 
-        let ids = Set(songIds)
-        let songs = Dictionary(
-            songs(localSongsQuery())
-                .filter { ids.contains($0.songId) }
-                .map { ($0.songId, $0) },
-            uniquingKeysWith: { first, _ in first }
-        )
-
-        return songIds.compactMap { songs[$0] }
+        return songs(localSongsQuery()).reordered(by: songIds) { $0.songId }
     }
 
     func findByAlbumId(albumId: AlbumId) -> [SongModel] {

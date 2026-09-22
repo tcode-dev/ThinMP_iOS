@@ -21,7 +21,7 @@ struct ArtistDetailPageView: View {
                 MenuButtonView {
                     VStack {
                         FavoriteArtistButtonView(artistId: artistId)
-                        ShortcutButtonView(itemId: String(artistId.id), type: .artist)
+                        ShortcutButtonView(artistId: artistId)
                     }
                 }
             }

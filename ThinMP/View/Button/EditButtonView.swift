@@ -7,17 +7,15 @@
 
 import SwiftUI
 
+/// 編集ページへの遷移だけを持つメニューボタン
 struct EditButtonView<Content>: View where Content: View {
     let content: () -> Content
 
     var body: some View {
-        Menu {
+        MenuButtonView {
             NavigationLink(destination: content()) {
                 MenuRowView(text: LabelConstant.edit)
             }
-        } label: {
-            MenuImageView()
         }
-        .frame(width: StyleConstant.button, height: StyleConstant.button)
     }
 }

@@ -201,6 +201,7 @@
 		52B0116F54D0078B3504549D /* View+PlaylistRegisterPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B9CF9B3F3EB7C69C2236B5 /* View+PlaylistRegisterPopup.swift */; };
 		52B49B937EEB15084069E37B /* ScrollPageLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B6F3ABFEE35301566DE541 /* ScrollPageLayout.swift */; };
 		52BF725186C711FB7266521D /* EditPageLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B28E520F6C368EE60E2778 /* EditPageLayout.swift */; };
+		52B9992A840B28F71F5AD8D5 /* Sequence+Reordered.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B528490FC042568C1AA15E /* Sequence+Reordered.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -412,6 +413,7 @@
 		52B9CF9B3F3EB7C69C2236B5 /* View+PlaylistRegisterPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+PlaylistRegisterPopup.swift"; sourceTree = "<group>"; };
 		52B6F3ABFEE35301566DE541 /* ScrollPageLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollPageLayout.swift; sourceTree = "<group>"; };
 		52B28E520F6C368EE60E2778 /* EditPageLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPageLayout.swift; sourceTree = "<group>"; };
+		52B528490FC042568C1AA15E /* Sequence+Reordered.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sequence+Reordered.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -905,6 +907,7 @@
 		52CEABEC2642E488000A3958 /* Media */ = {
 			isa = PBXGroup;
 			children = (
+				52B528490FC042568C1AA15E /* Sequence+Reordered.swift */,
 				52CEABEF2642E5C9000A3958 /* AlbumRepository.swift */,
 				52CEABF12642E6DE000A3958 /* ArtistRepository.swift */,
 				52CEABED2642E4C4000A3958 /* SongRepository.swift */,
@@ -1139,6 +1142,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52B9992A840B28F71F5AD8D5 /* Sequence+Reordered.swift in Sources */,
 				52BF725186C711FB7266521D /* EditPageLayout.swift in Sources */,
 				52B49B937EEB15084069E37B /* ScrollPageLayout.swift in Sources */,
 				52B0116F54D0078B3504549D /* View+PlaylistRegisterPopup.swift in Sources */,

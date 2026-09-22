@@ -20,22 +20,13 @@ class ArtistRepository: ArtistRepositoryProtocol {
         return artists(query).first
     }
 
-    /// MPMediaQuery には IN 述語が無いので、ライブラリを 1 回取得して Set で絞る
     /// 結果は artistIds の順で、ライブラリに無いアーティストは落ちる
     func findByIds(artistIds: [ArtistId]) -> [ArtistModel] {
         if artistIds.isEmpty {
             return []
         }
 
-        let ids = Set(artistIds)
-        let artists = Dictionary(
-            artists(localArtistsQuery())
-                .filter { ids.contains($0.artistId) }
-                .map { ($0.artistId, $0) },
-            uniquingKeysWith: { first, _ in first }
-        )
-
-        return artistIds.compactMap { artists[$0] }
+        return artists(localArtistsQuery()).reordered(by: artistIds) { $0.artistId }
     }
 
     /// クラウドにしか無い項目を除いた全アーティスト

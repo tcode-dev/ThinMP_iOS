@@ -43,8 +43,8 @@ class MusicPlayer: ObservableObject {
         self.favoriteArtistRegister = favoriteArtistRegister
         self.favoriteSongRegister = favoriteSongRegister
         player = MPMusicPlayerController.applicationMusicPlayer
-        player.repeatMode = playerConfig.getRepeat()
-        player.shuffleMode = playerConfig.getShuffle()
+        player.repeatMode = playerConfig.repeatMode
+        player.shuffleMode = playerConfig.shuffleMode
         setRepeat()
         setShuffle()
         addObserver()
@@ -117,13 +117,13 @@ class MusicPlayer: ObservableObject {
         }
 
         setRepeat()
-        playerConfig.setRepeat(value: player.repeatMode)
+        playerConfig.repeatMode = player.repeatMode
     }
 
     func shuffle() {
         player.shuffleMode = player.shuffleMode == .off ? .songs : .off
         setShuffle()
-        playerConfig.setShuffle(value: player.shuffleMode)
+        playerConfig.shuffleMode = player.shuffleMode
     }
 
     /// 再生中の曲のアーティストをお気に入りに入れる / 外す
