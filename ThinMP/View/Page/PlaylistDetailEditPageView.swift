@@ -8,10 +8,9 @@
 import SwiftUI
 
 struct PlaylistDetailEditPageView: View {
-    @Environment(\.dismiss) private var dismiss
     @StateObject private var vm = PlaylistDetailViewModel()
     @State private var name: String
-    @State private var editing = false
+    @FocusState private var isNameFocused: Bool
 
     let playlistId: PlaylistId
 
@@ -21,56 +20,40 @@ struct PlaylistDetailEditPageView: View {
     }
 
     var body: some View {
-        GeometryReader { geometry in
-            VStack(spacing: 0) {
-                EditNavBarView(top: geometry.safeAreaInsets.top, isDoneEnabled: !name.isEmpty, onCancel: { dismiss() }) {
-                    update()
-                    dismiss()
-                }
-                .modifier(EditModifier(editing: editing))
-                VStack(alignment: .leading) {
-                    TextField("", text: $name, onEditingChanged: { begin in
-                        editing = begin
-                    })
-                        .textInputAutocapitalization(.never)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .padding()
-                    ZStack {
-                        List {
-                            ForEach(vm.songs) { song in
-                                MediaRowView(media: song)
-                            }
-                            .onMove(perform: move)
-                            .onDelete(perform: delete)
-                            .listRowInsets(.init())
+        EditPageLayout(isDoneEnabled: !name.isEmpty, onNavBarTap: { isNameFocused = false }, onDone: { vm.save(playlistId: playlistId, name: name) }) {
+            VStack(alignment: .leading) {
+                TextField("", text: $name)
+                    .focused($isNameFocused)
+                    .textInputAutocapitalization(.never)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding()
+                ZStack {
+                    List {
+                        ForEach(vm.playlist?.songs ?? []) { song in
+                            MediaRowView(media: song)
                         }
-                        // 入力中は一覧を薄くして、タップでキーボードを閉じる
-                        if editing {
-                            Rectangle().fill(Color(UIColor.systemBackground).opacity(0.5))
-                                .onTapGesture { UIApplication.shared.endEditing() }
-                        }
+                        .onMove(perform: move)
+                        .onDelete(perform: delete)
+                        .listRowInsets(.init())
+                    }
+                    // 入力中は一覧を薄くして、タップでキーボードを閉じる
+                    if isNameFocused {
+                        Rectangle().fill(Color(UIColor.systemBackground).opacity(0.5))
+                            .onTapGesture { isNameFocused = false }
                     }
                 }
             }
-            .modifier(PageModifier())
-            .environment(\.editMode, .constant(.active))
-            .task {
-                await vm.load(playlistId: playlistId).value
-            }
+        }
+        .task {
+            await vm.load(playlistId: playlistId).value
         }
     }
 
     private func move(source: IndexSet, destination: Int) {
-        vm.songs.move(fromOffsets: source, toOffset: destination)
+        vm.playlist?.songs.move(fromOffsets: source, toOffset: destination)
     }
 
     private func delete(offsets: IndexSet) {
-        vm.songs.remove(atOffsets: offsets)
-    }
-
-    private func update() {
-        let playlistRegister = PlaylistRegister()
-
-        playlistRegister.update(playlistId: playlistId, name: name, songIds: vm.songs.map { $0.songId })
+        vm.playlist?.songs.remove(atOffsets: offsets)
     }
 }

@@ -21,3 +21,17 @@ struct ItemId: Hashable {
         return PlaylistId(id: id)
     }
 }
+
+extension ItemId {
+    init(artistId: ArtistId) {
+        self.init(id: String(artistId.id))
+    }
+
+    init(albumId: AlbumId) {
+        self.init(id: String(albumId.id))
+    }
+
+    init(playlistId: PlaylistId) {
+        self.init(id: playlistId.id)
+    }
+}

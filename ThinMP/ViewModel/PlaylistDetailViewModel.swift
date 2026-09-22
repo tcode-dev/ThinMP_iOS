@@ -5,17 +5,15 @@
 //  Created by tk on 2021/04/11.
 //
 
-import MediaPlayer
+import Combine
 
 @MainActor
 class PlaylistDetailViewModel: ObservableObject {
-    @Published var primaryText: String?
-    @Published var artwork: MPMediaItemArtwork?
-    @Published var songs: [SongModel] = []
+    /// 読み込む前、または削除済みだったときは nil のまま。編集ページは songs を直接並べ替える
+    @Published var playlist: PlaylistDetailModel?
 
     private let playlistDetailService: PlaylistDetailServiceProtocol
-    /// 直前の load を打ち切るために保持する。古い結果が新しい結果を上書きしないようにする
-    private var loadTask: Task<Void, Never>?
+    private let loadTask = LoadTask()
 
     init(playlistDetailService: PlaylistDetailServiceProtocol = PlaylistDetailService()) {
         self.playlistDetailService = playlistDetailService
@@ -23,21 +21,17 @@ class PlaylistDetailViewModel: ObservableObject {
 
     @discardableResult
     func load(playlistId: PlaylistId) -> Task<Void, Never> {
-        loadTask?.cancel()
-
-        let task = Task {
-            let playlistDetailModel = await playlistDetailService.findById(playlistId: playlistId)
-
-            if Task.isCancelled { return }
-            guard let playlistDetailModel = playlistDetailModel else { return }
-
-            primaryText = playlistDetailModel.primaryText
-            artwork = playlistDetailModel.artwork
-            songs = playlistDetailModel.songs
+        return loadTask.run { [playlistDetailService] in
+            await playlistDetailService.findById(playlistId: playlistId)
+        } apply: { [weak self] playlist in
+            if let playlist {
+                self?.playlist = playlist
+            }
         }
+    }
 
-        loadTask = task
-
-        return task
+    /// 編集ページの名前、並び順、削除を保存する
+    func save(playlistId: PlaylistId, name: String) {
+        playlistDetailService.update(playlistId: playlistId, name: name, songIds: (playlist?.songs ?? []).map { $0.songId })
     }
 }

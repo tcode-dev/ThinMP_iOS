@@ -35,7 +35,7 @@ struct ShortcutRepository: ShortcutRepositoryProtocol {
     }
 
     func update(shortcutIds: [ShortcutId]) {
-        delete(shortcutIds: shortcutIds)
+        deleteExcept(shortcutIds: shortcutIds)
         sort(shortcutIds: shortcutIds)
     }
 
@@ -69,7 +69,8 @@ struct ShortcutRepository: ShortcutRepositoryProtocol {
         return ShortcutEntity(id: model.id, itemId: model.itemId, type: model.type)
     }
 
-    private func delete(shortcutIds: [ShortcutId]) {
+    /// 渡した id 以外を消す。編集ページで消されたものを反映する
+    private func deleteExcept(shortcutIds: [ShortcutId]) {
         let currentIds = try! store.context.fetch(FetchDescriptor<ShortcutDataModel>()).map { ShortcutId(id: $0.id) }
         let deleteIds = currentIds.filter { !shortcutIds.contains($0) }
         let models = findByIds(shortcutIds: deleteIds)

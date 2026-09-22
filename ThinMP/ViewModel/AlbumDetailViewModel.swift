@@ -5,18 +5,15 @@
 //  Created by tk on 2020/01/13.
 //
 
-import MediaPlayer
+import Combine
 
 @MainActor
 class AlbumDetailViewModel: ObservableObject {
-    @Published var primaryText: String?
-    @Published var secondaryText: String?
-    @Published var artwork: MPMediaItemArtwork?
-    @Published var songs: [SongModel] = []
+    /// 読み込む前、または見つからなかったときは nil のまま
+    @Published var album: AlbumDetailModel?
 
     private let albumDetailService: AlbumDetailServiceProtocol
-    /// 直前の load を打ち切るために保持する。古い結果が新しい結果を上書きしないようにする
-    private var loadTask: Task<Void, Never>?
+    private let loadTask = LoadTask()
 
     init(albumDetailService: AlbumDetailServiceProtocol = AlbumDetailService()) {
         self.albumDetailService = albumDetailService
@@ -24,24 +21,12 @@ class AlbumDetailViewModel: ObservableObject {
 
     @discardableResult
     func load(albumId: AlbumId) -> Task<Void, Never> {
-        loadTask?.cancel()
-
-        let task = Task {
-            let albumDetailModel = await Task.detached(priority: .userInitiated) { [albumDetailService] in
-                albumDetailService.findById(albumId: albumId)
-            }.value
-
-            if Task.isCancelled { return }
-            guard let albumDetailModel = albumDetailModel else { return }
-
-            primaryText = albumDetailModel.primaryText
-            secondaryText = albumDetailModel.secondaryText
-            artwork = albumDetailModel.artwork
-            songs = albumDetailModel.songs
+        return loadTask.run { [albumDetailService] in
+            await Task.detached(priority: .userInitiated) { albumDetailService.findById(albumId: albumId) }.value
+        } apply: { [weak self] album in
+            if let album {
+                self?.album = album
+            }
         }
-
-        loadTask = task
-
-        return task
     }
 }

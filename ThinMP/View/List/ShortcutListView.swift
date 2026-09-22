@@ -19,34 +19,34 @@ struct ShortcutListView: View {
 
         LazyVGrid(columns: layout.columns) {
             ForEach(shortcuts) { shortcut in
-                switch shortcut.type {
-                case .artist:
-                    NavigationLink(destination: ArtistDetailPageView(artistId: shortcut.itemId.artistId)) {
-                        ShortcutCellView(shortcut: shortcut, size: layout.cellSize)
-                    }
-                    .contentShape(RoundedRectangle(cornerRadius: StyleConstant.cornerRadius))
-                    .contextMenu {
+                NavigationLink(destination: destination(shortcut)) {
+                    ShortcutCellView(shortcut: shortcut, size: layout.cellSize)
+                }
+                .contentShape(RoundedRectangle(cornerRadius: StyleConstant.cornerRadius))
+                .contextMenu {
+                    if shortcut.type == .artist {
                         FavoriteArtistButtonView(artistId: shortcut.itemId.artistId)
-                        ShortcutButtonView(itemId: shortcut.itemId.id, type: .artist, callback: callback)
                     }
-                case .album:
-                    NavigationLink(destination: AlbumDetailPageView(albumId: shortcut.itemId.albumId)) {
-                        ShortcutCellView(shortcut: shortcut, size: layout.cellSize)
-                    }
-                    .contentShape(RoundedRectangle(cornerRadius: StyleConstant.cornerRadius))
-                    .contextMenu {
-                        ShortcutButtonView(itemId: shortcut.itemId.id, type: .album, callback: callback)
-                    }
-                case .playlist:
-                    NavigationLink(destination: PlaylistDetailPageView(playlistId: shortcut.itemId.playlistId)) {
-                        ShortcutCellView(shortcut: shortcut, size: layout.cellSize)
-                    }
-                    .contentShape(RoundedRectangle(cornerRadius: StyleConstant.cornerRadius))
-                    .contextMenu {
-                        ShortcutButtonView(itemId: shortcut.itemId.id, type: .playlist, callback: callback)
-                    }
+                    shortcutButton(shortcut)
                 }
             }
+        }
+    }
+
+    @ViewBuilder
+    private func destination(_ shortcut: ShortcutModel) -> some View {
+        switch shortcut.type {
+        case .artist: ArtistDetailPageView(artistId: shortcut.itemId.artistId)
+        case .album: AlbumDetailPageView(albumId: shortcut.itemId.albumId)
+        case .playlist: PlaylistDetailPageView(playlistId: shortcut.itemId.playlistId)
+        }
+    }
+
+    private func shortcutButton(_ shortcut: ShortcutModel) -> ShortcutButtonView {
+        switch shortcut.type {
+        case .artist: return ShortcutButtonView(artistId: shortcut.itemId.artistId, callback: callback)
+        case .album: return ShortcutButtonView(albumId: shortcut.itemId.albumId, callback: callback)
+        case .playlist: return ShortcutButtonView(playlistId: shortcut.itemId.playlistId, callback: callback)
         }
     }
 }

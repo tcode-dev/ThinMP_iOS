@@ -8,38 +8,29 @@
 import SwiftUI
 
 struct MainEditPageView: View {
-    @Environment(\.dismiss) private var dismiss
     @StateObject private var vm = MainEditViewModel()
 
     var body: some View {
-        GeometryReader { geometry in
-            VStack(spacing: 0) {
-                EditNavBarView(top: geometry.safeAreaInsets.top, onCancel: { dismiss() }) {
-                    update()
-                    dismiss()
+        EditPageLayout(onDone: vm.save) {
+            List {
+                ForEach($vm.settings.menus) { $setting in
+                    MenuEditRowView(text: setting.menu.label, visibility: $setting.visibility)
                 }
-                List {
-                    ForEach($vm.settings.menus) { $setting in
-                        MenuEditRowView(text: setting.menu.label, visibility: $setting.visibility)
-                    }
-                    .onMove(perform: moveMenu)
-                    .listRowInsets(.init())
-                    MenuEditRowView(text: LabelConstant.shortcut, visibility: $vm.settings.isShortcutVisible).listRowInsets(.init())
-                    MenuEditRowView(text: LabelConstant.recentlyAdded, visibility: $vm.settings.isRecentlyVisible).listRowInsets(.init())
-                    SectionTitleView(LabelConstant.shortcut).padding(StyleConstant.Padding.tiny)
-                    ForEach(vm.shortcuts) { shortcut in
-                        ShortcutRowView(shortcut: shortcut)
-                    }
-                    .onMove(perform: moveShortcut)
-                    .onDelete(perform: deleteShortcut)
-                    .listRowInsets(.init())
+                .onMove(perform: moveMenu)
+                .listRowInsets(.init())
+                MenuEditRowView(text: LabelConstant.shortcut, visibility: $vm.settings.isShortcutVisible).listRowInsets(.init())
+                MenuEditRowView(text: LabelConstant.recentlyAdded, visibility: $vm.settings.isRecentlyVisible).listRowInsets(.init())
+                SectionTitleView(LabelConstant.shortcut).padding(StyleConstant.Padding.tiny)
+                ForEach(vm.shortcuts) { shortcut in
+                    ShortcutRowView(shortcut: shortcut)
                 }
+                .onMove(perform: moveShortcut)
+                .onDelete(perform: deleteShortcut)
+                .listRowInsets(.init())
             }
-            .modifier(PageModifier())
-            .environment(\.editMode, .constant(.active))
-            .task {
-                await vm.load().value
-            }
+        }
+        .task {
+            await vm.load().value
         }
     }
 
@@ -53,10 +44,5 @@ struct MainEditPageView: View {
 
     private func deleteShortcut(offsets: IndexSet) {
         vm.shortcuts.remove(atOffsets: offsets)
-    }
-
-    private func update() {
-        vm.save()
-        ShortcutRegister().update(shortcutIds: vm.shortcuts.map { $0.shortcutId })
     }
 }

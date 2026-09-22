@@ -7,23 +7,12 @@
 
 import SwiftUI
 
+/// コンテキストメニューに置く、プレイリストの削除ボタン
 struct PlaylistDeleteButtonView: View {
-    private let playlistId: PlaylistId
-    private let callback: () -> Void
-
-    init(playlistId: PlaylistId, callback: @escaping () -> Void = {}) {
-        self.playlistId = playlistId
-        self.callback = callback
-    }
+    let action: () -> Void
 
     var body: some View {
-        Button(action: {
-            let register = PlaylistRegister()
-
-            register.delete(playlistId: playlistId)
-
-            callback()
-        }) {
+        Button(action: action) {
             Text(LocalizedStringKey(LabelConstant.removePlaylist))
         }
     }

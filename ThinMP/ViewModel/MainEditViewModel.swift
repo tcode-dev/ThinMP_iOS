@@ -14,8 +14,7 @@ class MainEditViewModel: ObservableObject {
     @Published var shortcuts: [ShortcutModel] = []
 
     private let mainService: MainServiceProtocol
-    /// 直前の load を打ち切るために保持する。古い結果が新しい結果を上書きしないようにする
-    private var loadTask: Task<Void, Never>?
+    private let loadTask = LoadTask()
 
     init(mainService: MainServiceProtocol = MainService()) {
         self.mainService = mainService
@@ -23,24 +22,17 @@ class MainEditViewModel: ObservableObject {
 
     @discardableResult
     func load() -> Task<Void, Never> {
-        loadTask?.cancel()
-
-        let task = Task {
-            let settings = mainService.getSettings()
-            let shortcuts = await mainService.findShortcuts()
-
-            if Task.isCancelled { return }
-
-            self.settings = settings
-            self.shortcuts = shortcuts
+        return loadTask.run { [mainService] in
+            (mainService.getSettings(), await mainService.findShortcuts())
+        } apply: { [weak self] settings, shortcuts in
+            self?.settings = settings
+            self?.shortcuts = shortcuts
         }
-
-        loadTask = task
-
-        return task
     }
 
+    /// 表示設定とショートカットの並び順 / 削除を保存する
     func save() {
         mainService.save(settings: settings)
+        mainService.update(shortcutIds: shortcuts.map { $0.shortcutId })
     }
 }

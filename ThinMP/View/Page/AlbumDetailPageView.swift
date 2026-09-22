@@ -16,38 +16,22 @@ struct AlbumDetailPageView: View {
     let albumId: AlbumId
 
     var body: some View {
-        GeometryReader { geometry in
-            ZStack(alignment: .top) {
-                VStack(spacing: 0) {
-                    ZStack(alignment: .top) {
-                        HeroNavBarView(primaryText: vm.primaryText, width: geometry.size.width, top: geometry.safeAreaInsets.top, headerRect: $headerRect) {
-                            MenuButtonView {
-                                VStack {
-                                    ShortcutButtonView(itemId: String(albumId.id), type: .album)
-                                }
-                            }
-                        }
-                        ScrollView {
-                            VStack(alignment: .leading) {
-                                HeroHeaderView(headerRect: $headerRect, width: geometry.size.width, size: geometry.heroSize, top: geometry.safeAreaInsets.top, primaryText: vm.primaryText, secondaryText: vm.secondaryText) {
-                                    HeroSquareImageView(size: geometry.heroSize, artwork: vm.artwork)
-                                }
-                                SongListView(songs: vm.songs) { playlistRegisterSongId = $0 }
-                            }
-                        }
-                    }
-                    MiniPlayerView(bottom: geometry.safeAreaInsets.bottom)
-                }
-                if let songId = playlistRegisterSongId {
-                    PopupView {
-                        PlaylistRegisterView(songId: songId, height: geometry.size.height) { playlistRegisterSongId = nil }
+        ScrollPageLayout(playlistRegisterSongId: $playlistRegisterSongId) { geometry in
+            HeroNavBarView(primaryText: vm.album?.primaryText, width: geometry.size.width, top: geometry.safeAreaInsets.top, headerRect: $headerRect) {
+                MenuButtonView {
+                    VStack {
+                        ShortcutButtonView(albumId: albumId)
                     }
                 }
             }
-            .modifier(PageModifier())
-            .task {
-                await vm.load(albumId: albumId).value
+        } content: { geometry in
+            HeroHeaderView(headerRect: $headerRect, width: geometry.size.width, size: geometry.heroSize, top: geometry.safeAreaInsets.top, primaryText: vm.album?.primaryText, secondaryText: vm.album?.secondaryText) {
+                HeroSquareImageView(size: geometry.heroSize, artwork: vm.album?.artwork)
             }
+            SongListView(songs: vm.album?.songs ?? []) { playlistRegisterSongId = $0 }
+        }
+        .task {
+            await vm.load(albumId: albumId).value
         }
     }
 }

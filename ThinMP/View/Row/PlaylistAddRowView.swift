@@ -7,23 +7,15 @@
 
 import SwiftUI
 
+/// 登録モーダルのプレイリスト 1 行。タップで action を呼ぶ
 struct PlaylistAddRowView<Content>: View where Content: View {
-    let playlistId: PlaylistId
-    let songId: SongId
     /// すでにこの曲が入っているプレイリストはグレーアウトしてタップ不可にする
     let isRegistered: Bool
-    /// 登録が終わったらポップアップを閉じる
-    let dismiss: () -> Void
+    let action: () -> Void
     let content: () -> Content
 
     var body: some View {
-        Button(action: {
-            let playlistRegister = PlaylistRegister()
-
-            playlistRegister.add(playlistId: playlistId, songId: songId)
-
-            dismiss()
-        }) {
+        Button(action: action) {
             HStack {
                 content()
                 if isRegistered {

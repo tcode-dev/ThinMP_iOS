@@ -20,22 +20,13 @@ class AlbumRepository: AlbumRepositoryProtocol {
         return albums(query).first
     }
 
-    /// MPMediaQuery には IN 述語が無いので、ライブラリを 1 回取得して Set で絞る
     /// 結果は albumIds の順で、ライブラリに無いアルバムは落ちる
     func findByIds(albumIds: [AlbumId]) -> [AlbumModel] {
         if albumIds.isEmpty {
             return []
         }
 
-        let ids = Set(albumIds)
-        let albums = Dictionary(
-            albums(localAlbumsQuery())
-                .filter { ids.contains($0.albumId) }
-                .map { ($0.albumId, $0) },
-            uniquingKeysWith: { first, _ in first }
-        )
-
-        return albumIds.compactMap { albums[$0] }
+        return albums(localAlbumsQuery()).reordered(by: albumIds) { $0.albumId }
     }
 
     func findByArtistId(artistId: ArtistId) -> [AlbumModel] {

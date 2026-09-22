@@ -34,24 +34,9 @@ struct MiniPlayerView: View {
                             Spacer()
                         }
                     }
-                    if musicPlayer.isPlaying {
-                        Button(action: {
-                            musicPlayer.pause()
-                        }) {
-                            ButtonImageView(name: "PauseButton", size: imageSize)
-                        }
+                    PlayPauseButtonView(size: imageSize)
                         .frame(width: buttonSize, height: buttonSize)
-                    } else {
-                        Button(action: {
-                            musicPlayer.play()
-                        }) {
-                            ButtonImageView(name: "PlayButton", size: imageSize)
-                        }
-                        .frame(width: buttonSize, height: buttonSize)
-                    }
-                    Button(action: {
-                        musicPlayer.next()
-                    }) {
+                    Button(action: musicPlayer.next) {
                         ButtonImageView(name: "NextButton", size: imageSize)
                     }
                     .frame(width: buttonSize, height: buttonSize)

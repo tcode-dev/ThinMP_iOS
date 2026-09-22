@@ -19,7 +19,7 @@ struct PlaylistRegisterView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            if vm.playlists.count != 0 && !isCreate {
+            if !vm.playlists.isEmpty && !isCreate {
                 VStack(spacing: 0) {
                     HStack {
                         Spacer()
@@ -40,7 +40,10 @@ struct PlaylistRegisterView: View {
                     ScrollView {
                         LazyVStack(spacing: 0) {
                             ForEach(vm.playlists) { playlist in
-                                PlaylistAddRowView(playlistId: playlist.playlistId, songId: songId, isRegistered: vm.isRegistered(playlistId: playlist.playlistId), dismiss: dismiss) {
+                                PlaylistAddRowView(isRegistered: vm.isRegistered(playlistId: playlist.playlistId), action: {
+                                    vm.add(playlistId: playlist.playlistId, songId: songId)
+                                    dismiss()
+                                }) {
                                     MediaRowView(media: playlist)
                                 }
                                 .frame(height: StyleConstant.Height.row)
@@ -61,9 +64,7 @@ struct PlaylistRegisterView: View {
                     HStack {
                         Spacer()
                         Button(action: {
-                            let playlistRegister = PlaylistRegister()
-
-                            playlistRegister.create(songId: songId, name: name)
+                            vm.create(songId: songId, name: name)
                             dismiss()
                         }) {
                             Text(LocalizedStringKey(LabelConstant.done))
@@ -71,7 +72,7 @@ struct PlaylistRegisterView: View {
                         .disabled(name.isEmpty)
                         Spacer()
                         Button(action: {
-                            if vm.playlists.count > 0 {
+                            if !vm.playlists.isEmpty {
                                 isCreate.toggle()
                             } else {
                                 dismiss()
@@ -90,8 +91,8 @@ struct PlaylistRegisterView: View {
         .background(Color(UIColor.systemGray5))
         .cornerRadius(StyleConstant.cornerRadius)
         .padding(.horizontal, StyleConstant.Padding.large)
-        .onAppear {
-            vm.load(songId: songId)
+        .task {
+            await vm.load(songId: songId).value
         }
     }
 

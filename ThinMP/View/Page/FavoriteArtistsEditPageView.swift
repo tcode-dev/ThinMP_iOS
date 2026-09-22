@@ -8,30 +8,21 @@
 import SwiftUI
 
 struct FavoriteArtistsEditPageView: View {
-    @Environment(\.dismiss) private var dismiss
     @StateObject private var vm = FavoriteArtistsViewModel()
 
     var body: some View {
-        GeometryReader { geometry in
-            VStack(spacing: 0) {
-                EditNavBarView(top: geometry.safeAreaInsets.top, onCancel: { dismiss() }) {
-                    update()
-                    dismiss()
+        EditPageLayout(onDone: vm.save) {
+            List {
+                ForEach(vm.artists) { artist in
+                    PlainRowView(media: artist)
                 }
-                List {
-                    ForEach(vm.artists) { artist in
-                        PlainRowView(media: artist)
-                    }
-                    .onMove(perform: move)
-                    .onDelete(perform: delete)
-                    .listRowInsets(.init())
-                }
+                .onMove(perform: move)
+                .onDelete(perform: delete)
+                .listRowInsets(.init())
             }
-            .modifier(PageModifier())
-            .environment(\.editMode, .constant(.active))
-            .task {
-                await vm.load().value
-            }
+        }
+        .task {
+            await vm.load().value
         }
     }
 
@@ -41,11 +32,5 @@ struct FavoriteArtistsEditPageView: View {
 
     private func delete(offsets: IndexSet) {
         vm.artists.remove(atOffsets: offsets)
-    }
-
-    private func update() {
-        let favoriteArtistRegister = FavoriteArtistRegister()
-
-        favoriteArtistRegister.update(artistIds: vm.artists.map { $0.artistId })
     }
 }

@@ -12,27 +12,18 @@ struct FavoriteArtistsPageView: View {
     @State private var headerRect = CGRect.zero
 
     var body: some View {
-        GeometryReader { geometry in
-            VStack(spacing: 0) {
-                ZStack(alignment: .top) {
-                    ListNavBarView(title: LabelConstant.favoriteArtists, top: geometry.safeAreaInsets.top, headerRect: $headerRect) {
-                        EditButtonView {
-                            FavoriteArtistsEditPageView()
-                        }
-                    }
-                    ScrollView {
-                        VStack(alignment: .leading) {
-                            ListEmptyHeaderView(headerRect: $headerRect, top: geometry.safeAreaInsets.top)
-                            ArtistListView(artists: vm.artists) { vm.load() }
-                        }
-                    }
+        ScrollPageLayout(onPlayerDismiss: { vm.load() }) { geometry in
+            ListNavBarView(title: LabelConstant.favoriteArtists, top: geometry.safeAreaInsets.top, headerRect: $headerRect) {
+                EditButtonView {
+                    FavoriteArtistsEditPageView()
                 }
-                MiniPlayerView(bottom: geometry.safeAreaInsets.bottom) { vm.load() }
             }
-            .modifier(PageModifier())
-            .task {
-                await vm.load().value
-            }
+        } content: { geometry in
+            ListEmptyHeaderView(headerRect: $headerRect, top: geometry.safeAreaInsets.top)
+            ArtistListView(artists: vm.artists) { vm.load() }
+        }
+        .task {
+            await vm.load().value
         }
     }
 }

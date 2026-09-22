@@ -37,7 +37,7 @@ struct HeroNavBarView<Content>: View where Content: View {
             Rectangle().frame(width: width, height: StyleConstant.Height.row + top)
                 .opacity(0.1)
         }
-        .background(BlurView(style: .systemThinMaterial))
+        .background(.thinMaterial)
         .opacity(opacity())
         .animation(.easeInOut, value: opacity())
     }

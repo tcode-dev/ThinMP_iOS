@@ -8,28 +8,27 @@
 import Foundation
 import MediaPlayer
 
+/// リピートとシャッフルの設定。アプリを再起動しても引き継ぐ
 struct PlayerConfig {
     private let REPEAT = "repeat"
     private let SHUFFLE = "shuffle"
+    private let userDefaults: UserDefaults
 
-    init() {
-        UserDefaults.standard.register(defaults: [REPEAT: MPMusicRepeatMode.none.rawValue])
-        UserDefaults.standard.register(defaults: [SHUFFLE: MPMusicShuffleMode.off.rawValue])
+    init(userDefaults: UserDefaults = .standard) {
+        self.userDefaults = userDefaults
+        userDefaults.register(defaults: [
+            REPEAT: MPMusicRepeatMode.none.rawValue,
+            SHUFFLE: MPMusicShuffleMode.off.rawValue,
+        ])
     }
 
-    func setRepeat(value: MPMusicRepeatMode) {
-        UserDefaults.standard.set(value.rawValue, forKey: REPEAT)
+    var repeatMode: MPMusicRepeatMode {
+        get { MPMusicRepeatMode(rawValue: userDefaults.integer(forKey: REPEAT)) ?? .none }
+        nonmutating set { userDefaults.set(newValue.rawValue, forKey: REPEAT) }
     }
 
-    func getRepeat() -> MPMusicRepeatMode {
-        return MPMusicRepeatMode(rawValue: UserDefaults.standard.integer(forKey: REPEAT)) ?? MPMusicRepeatMode.none
-    }
-
-    func setShuffle(value: MPMusicShuffleMode) {
-        UserDefaults.standard.set(value.rawValue, forKey: SHUFFLE)
-    }
-
-    func getShuffle() -> MPMusicShuffleMode {
-        return MPMusicShuffleMode(rawValue: UserDefaults.standard.integer(forKey: SHUFFLE)) ?? MPMusicShuffleMode.off
+    var shuffleMode: MPMusicShuffleMode {
+        get { MPMusicShuffleMode(rawValue: userDefaults.integer(forKey: SHUFFLE)) ?? .off }
+        nonmutating set { userDefaults.set(newValue.rawValue, forKey: SHUFFLE) }
     }
 }

@@ -22,7 +22,7 @@ struct ArtistListView: View {
                 .contentShape(RoundedRectangle(cornerRadius: StyleConstant.cornerRadius))
                 .contextMenu {
                     FavoriteArtistButtonView(artistId: artist.artistId, callback: onFavoriteChange)
-                    ShortcutButtonView(itemId: artist.id, type: .artist)
+                    ShortcutButtonView(artistId: artist.artistId)
                 }
                 Divider()
             }
