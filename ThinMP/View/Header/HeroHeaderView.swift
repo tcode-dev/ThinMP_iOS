@@ -39,8 +39,7 @@ struct HeroHeaderView<Content: View, SecondaryText: View>: View {
             secondaryText()
                 .frame(width: abs(width - (StyleConstant.button * 2)), height: 25, alignment: .center)
                 .offset(y: secondaryTextOffset)
-                .padding(.leading, StyleConstant.button)
-                .padding(.trailing, StyleConstant.button)
+                .padding(.horizontal, StyleConstant.button)
         }
         .frame(height: size)
     }
@@ -52,8 +51,7 @@ struct HeroHeaderView<Content: View, SecondaryText: View>: View {
             TitleView(primaryText).opacity(textOpacity)
         }
         .frame(width: abs(width - (StyleConstant.button * 2)), height: StyleConstant.Height.row)
-        .padding(.leading, StyleConstant.button)
-        .padding(.trailing, StyleConstant.button)
+        .padding(.horizontal, StyleConstant.button)
     }
 
     /// ナビゲーションバーのタイトルと入れ替わるので、潜り込んだら消す
