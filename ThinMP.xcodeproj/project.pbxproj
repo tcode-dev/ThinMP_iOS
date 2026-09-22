@@ -193,6 +193,7 @@
 		7E1A2B3C4D5E6F7081920A01 /* SongsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1A2B3C4D5E6F7081920A02 /* SongsViewModelTests.swift */; };
 		1EA89F80621F8DC377A56BC0 /* ListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31784BD910E0DCAC745CC401 /* ListViewModelTests.swift */; };
 		7E1A2B3C4D5E6F7081920A03 /* AlbumDetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1A2B3C4D5E6F7081920A04 /* AlbumDetailViewModelTests.swift */; };
+		514DF4D92D5343E9BA230182 /* ArtistDetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FEA1BB7F5DD192679222BA9 /* ArtistDetailViewModelTests.swift */; };
 		7E1A2B3C4D5E6F7081920A05 /* PlaylistsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1A2B3C4D5E6F7081920A06 /* PlaylistsViewModelTests.swift */; };
 		7E1A2B3C4D5E6F7081920A07 /* FavoriteSongsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1A2B3C4D5E6F7081920A08 /* FavoriteSongsViewModelTests.swift */; };
 		F93AAE6A142DC92A501A7BD8 /* ShortcutServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486D01AC77F298A1C7CEF4B2 /* ShortcutServiceTests.swift */; };
@@ -249,6 +250,7 @@
 		7E1A2B3C4D5E6F7081920A02 /* SongsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongsViewModelTests.swift; sourceTree = "<group>"; };
 		31784BD910E0DCAC745CC401 /* ListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ListViewModelTests.swift"; sourceTree = "<group>"; };
 		7E1A2B3C4D5E6F7081920A04 /* AlbumDetailViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDetailViewModelTests.swift; sourceTree = "<group>"; };
+		6FEA1BB7F5DD192679222BA9 /* ArtistDetailViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ArtistDetailViewModelTests.swift"; sourceTree = "<group>"; };
 		7E1A2B3C4D5E6F7081920A06 /* PlaylistsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistsViewModelTests.swift; sourceTree = "<group>"; };
 		7E1A2B3C4D5E6F7081920A08 /* FavoriteSongsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteSongsViewModelTests.swift; sourceTree = "<group>"; };
 		486D01AC77F298A1C7CEF4B2 /* ShortcutServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutServiceTests.swift; sourceTree = "<group>"; };
@@ -984,6 +986,7 @@
 				7E1A2B3C4D5E6F7081920A02 /* SongsViewModelTests.swift */,
 				31784BD910E0DCAC745CC401 /* ListViewModelTests.swift */,
 				7E1A2B3C4D5E6F7081920A04 /* AlbumDetailViewModelTests.swift */,
+				6FEA1BB7F5DD192679222BA9 /* ArtistDetailViewModelTests.swift */,
 				7E1A2B3C4D5E6F7081920A06 /* PlaylistsViewModelTests.swift */,
 				7E1A2B3C4D5E6F7081920A08 /* FavoriteSongsViewModelTests.swift */,
 			);
@@ -1394,6 +1397,7 @@
 				7E1A2B3C4D5E6F7081920A01 /* SongsViewModelTests.swift in Sources */,
 				1EA89F80621F8DC377A56BC0 /* ListViewModelTests.swift in Sources */,
 				7E1A2B3C4D5E6F7081920A03 /* AlbumDetailViewModelTests.swift in Sources */,
+				514DF4D92D5343E9BA230182 /* ArtistDetailViewModelTests.swift in Sources */,
 				7E1A2B3C4D5E6F7081920A05 /* PlaylistsViewModelTests.swift in Sources */,
 				7E1A2B3C4D5E6F7081920A07 /* FavoriteSongsViewModelTests.swift in Sources */,
 				B069B92D53A55B69DEB4A770 /* LegacyRealmFixture.swift in Sources */,
