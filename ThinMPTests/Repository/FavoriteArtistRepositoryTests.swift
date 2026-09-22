@@ -5,6 +5,8 @@
 //  Created by tk on 2026/09/21.
 //
 
+import RealmSwift
+import SwiftData
 import Testing
 @testable import ThinMP
 
@@ -92,5 +94,33 @@ struct FavoriteArtistRepositoryTests {
         repository.add(artistId: ArtistId(id: 3))
 
         #expect(repository.findAll().map { $0.id } == [2, 1, 3])
+    }
+
+    /// ストアに同じアーティストが 2 行残っていても(Repository は防いでいるが)、exists は true、delete は全部消す
+    @Test(arguments: RepositoryBackend.allCases)
+    func existsAndDeleteToleratesDuplicateRows(backend: RepositoryBackend) {
+        let repositories = TestRepositories(backend: backend)
+        let repository = repositories.favoriteArtist
+
+        repositories.writeDirectly(realm: { realm in
+            for order in 1 ... 2 {
+                let model = FavoriteArtistRealmModel()
+
+                model.artistId = "1"
+                model.order = order
+                realm.add(model)
+            }
+        }, swiftData: { context in
+            for order in 1 ... 2 {
+                context.insert(FavoriteArtistDataModel(artistId: "1", order: order))
+            }
+        })
+
+        #expect(repository.exists(artistId: ArtistId(id: 1)))
+
+        repository.delete(artistId: ArtistId(id: 1))
+
+        #expect(!repository.exists(artistId: ArtistId(id: 1)))
+        #expect(repository.findAll().isEmpty)
     }
 }

@@ -31,7 +31,7 @@ struct ShortcutRepository: ShortcutRepositoryProtocol {
     }
 
     func exists(itemId: ItemId, type: ShortcutType) -> Bool {
-        return find(itemId: itemId, type: type).count == 1
+        return !find(itemId: itemId, type: type).isEmpty
     }
 
     func update(shortcutIds: [ShortcutId]) {
@@ -42,7 +42,7 @@ struct ShortcutRepository: ShortcutRepositoryProtocol {
     func delete(itemId: ItemId, type: ShortcutType) {
         let models = find(itemId: itemId, type: type)
 
-        if models.count == 0 {
+        if models.isEmpty {
             return
         }
 
@@ -78,7 +78,7 @@ struct ShortcutRepository: ShortcutRepositoryProtocol {
         let deleteIds = currentIds.filter { !shortcutIds.contains($0) }
         let models = findByIds(shortcutIds: deleteIds)
 
-        if models.count == 0 {
+        if models.isEmpty {
             return
         }
 

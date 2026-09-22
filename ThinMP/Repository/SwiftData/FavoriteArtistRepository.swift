@@ -22,7 +22,7 @@ struct FavoriteArtistRepository: FavoriteArtistRepositoryProtocol {
     }
 
     func exists(artistId: ArtistId) -> Bool {
-        return find(artistId: artistId).count == 1
+        return !find(artistId: artistId).isEmpty
     }
 
     func add(artistId: ArtistId) {
@@ -47,7 +47,7 @@ struct FavoriteArtistRepository: FavoriteArtistRepositoryProtocol {
     func delete(artistId: ArtistId) {
         let favoriteArtists = find(artistId: artistId)
 
-        if favoriteArtists.count != 1 {
+        if favoriteArtists.isEmpty {
             return
         }
 
