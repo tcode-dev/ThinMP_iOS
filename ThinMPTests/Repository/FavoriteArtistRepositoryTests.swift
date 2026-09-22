@@ -135,3 +135,54 @@ struct FavoriteArtistRepositoryTests {
         #expect(!repository.exists(artistId: ArtistId(id: 1)))
     }
 }
+
+/// persistentID として読めない行が残っていても findAll が落ちないこと
+/// SwiftData だけを見る。Realm 側は force unwrap のままで、削除予定なので触っていない
+@MainActor
+struct FavoriteRepositoryBrokenRowTests {
+    @Test
+    func favoriteArtistsSkipRowsWhoseIdIsNotAPersistentId() {
+        let repositories = TestRepositories(backend: .swiftData)
+        let repository = repositories.favoriteArtist
+
+        repository.add(artistId: ArtistId(id: 1))
+        repositories.writeDirectly(realm: { _ in }, swiftData: { context in
+            context.insert(FavoriteArtistDataModel(artistId: "broken", order: 99))
+        })
+
+        #expect(repository.findAll().map { $0.id } == [1])
+    }
+
+    @Test
+    func favoriteSongsSkipRowsWhoseIdIsNotAPersistentId() {
+        let repositories = TestRepositories(backend: .swiftData)
+        let repository = repositories.favoriteSong
+
+        repository.add(songId: SongId(id: 1))
+        repositories.writeDirectly(realm: { _ in }, swiftData: { context in
+            context.insert(FavoriteSongDataModel(songId: "broken", order: 99))
+        })
+
+        #expect(repository.findAll().map { $0.id } == [1])
+    }
+
+    @Test
+    func playlistSongsSkipRowsWhoseIdIsNotAPersistentId() {
+        let repositories = TestRepositories(backend: .swiftData)
+        let repository = repositories.playlist
+
+        repository.create(songId: SongId(id: 1), name: "P")
+
+        let playlistId = repository.findAll()[0].playlistId
+
+        repositories.writeDirectly(realm: { _ in }, swiftData: { context in
+            let song = PlaylistSongDataModel(playlistId: playlistId.id, songId: "broken", order: 99)
+
+            context.insert(song)
+            // リレーションに繋がないと sortedSongs に出てこないので、Repository を通さずに繋ぐ
+            try! context.fetch(FetchDescriptor<PlaylistDataModel>()).first?.songs.append(song)
+        })
+
+        #expect(repository.findById(playlistId: playlistId)?.songIds.map { $0.id } == [1])
+    }
+}

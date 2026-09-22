@@ -8,6 +8,8 @@
 import Foundation
 import SwiftData
 
+/// ショートカットだけは新しいものを先頭に並べるので、order は他の Repository と逆に大きいものが先にくる
+/// add は今ある最大 + 1 を振り、update は先頭から order を count, count - 1, ... と振り直す
 struct ShortcutRepository: ShortcutRepositoryProtocol {
     private let store: SwiftDataStore
 
@@ -24,6 +26,7 @@ struct ShortcutRepository: ShortcutRepositoryProtocol {
         store.save()
     }
 
+    /// 新しいものが先頭
     func findAll() -> [ShortcutEntity] {
         let descriptor = FetchDescriptor<ShortcutDataModel>(sortBy: [SortDescriptor(\.order, order: .reverse)])
 
@@ -37,6 +40,7 @@ struct ShortcutRepository: ShortcutRepositoryProtocol {
     func update(shortcutIds: [ShortcutId]) {
         deleteExcept(shortcutIds: shortcutIds)
         sort(shortcutIds: shortcutIds)
+        store.save()
     }
 
     func delete(target: ShortcutTarget) {
@@ -75,14 +79,10 @@ struct ShortcutRepository: ShortcutRepositoryProtocol {
         let keepIds = Set(shortcutIds.map { $0.id })
         let models = try! store.context.fetch(FetchDescriptor<ShortcutDataModel>()).filter { !keepIds.contains($0.id) }
 
-        if models.isEmpty {
-            return
-        }
-
         models.forEach { store.context.delete($0) }
-        store.save()
     }
 
+    /// 渡された順に並べ替える。先頭ほど order が大きいので、新しく add したものが先頭にくる
     private func sort(shortcutIds: [ShortcutId]) {
         let models = findByIds(shortcutIds: shortcutIds)
         let count = shortcutIds.count
@@ -90,7 +90,5 @@ struct ShortcutRepository: ShortcutRepositoryProtocol {
         for (index, shortcutId) in shortcutIds.enumerated() {
             models.first { $0.id == shortcutId.id }?.order = count - index
         }
-
-        store.save()
     }
 }
