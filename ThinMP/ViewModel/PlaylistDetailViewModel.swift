@@ -13,10 +13,15 @@ class PlaylistDetailViewModel: ObservableObject {
     @Published var playlist: PlaylistDetailModel?
 
     private let playlistDetailService: PlaylistDetailServiceProtocol
+    private let playlistRepository: PlaylistRepositoryProtocol
     private let loadTask = LoadTask()
 
-    init(playlistDetailService: PlaylistDetailServiceProtocol = PlaylistDetailService()) {
+    init(
+        playlistDetailService: PlaylistDetailServiceProtocol = PlaylistDetailService(),
+        playlistRepository: PlaylistRepositoryProtocol = PlaylistRepository()
+    ) {
         self.playlistDetailService = playlistDetailService
+        self.playlistRepository = playlistRepository
     }
 
     @discardableResult
@@ -32,6 +37,6 @@ class PlaylistDetailViewModel: ObservableObject {
 
     /// 編集ページの名前、並び順、削除を保存する
     func save(playlistId: PlaylistId, name: String) {
-        playlistDetailService.update(playlistId: playlistId, name: name, songIds: (playlist?.songs ?? []).map { $0.songId })
+        playlistRepository.update(playlistId: playlistId, name: name, songIds: (playlist?.songs ?? []).map { $0.songId })
     }
 }

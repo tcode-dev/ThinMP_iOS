@@ -38,18 +38,18 @@ struct PlaylistDetailViewModelTests {
     }
 
     @Test
-    func saveWritesEditedNameAndSongOrder() async {
-        let service = makeService()
-        let vm = PlaylistDetailViewModel(playlistDetailService: service)
+    func saveWritesEditedNameAndSongOrderToRepository() async {
+        let repository = PlaylistRepositoryMock(playlists: [PlaylistEntity(playlistId: playlistId, name: "P", songIds: [SongId(id: 1), SongId(id: 2), SongId(id: 3)])])
+        let vm = PlaylistDetailViewModel(playlistDetailService: makeService(), playlistRepository: repository)
 
         await vm.load(playlistId: playlistId).value
         vm.playlist?.songs.move(fromOffsets: [2], toOffset: 0)
         vm.playlist?.songs.remove(atOffsets: [2])
         vm.save(playlistId: playlistId, name: "Renamed")
 
-        #expect(service.updateCalls.count == 1)
-        #expect(service.updateCalls[0].playlistId == playlistId)
-        #expect(service.updateCalls[0].name == "Renamed")
-        #expect(service.updateCalls[0].songIds.map { $0.id } == [3, 1])
+        #expect(repository.updateCalls.count == 1)
+        #expect(repository.updateCalls[0].playlistId == playlistId)
+        #expect(repository.updateCalls[0].name == "Renamed")
+        #expect(repository.updateCalls[0].songIds.map { $0.id } == [3, 1])
     }
 }

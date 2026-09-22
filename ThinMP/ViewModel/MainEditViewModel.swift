@@ -14,10 +14,15 @@ class MainEditViewModel: ObservableObject {
     @Published var shortcuts: [ShortcutModel] = []
 
     private let mainService: MainServiceProtocol
+    private let shortcutRepository: ShortcutRepositoryProtocol
     private let loadTask = LoadTask()
 
-    init(mainService: MainServiceProtocol = MainService()) {
+    init(
+        mainService: MainServiceProtocol = MainService(),
+        shortcutRepository: ShortcutRepositoryProtocol = ShortcutRepository()
+    ) {
         self.mainService = mainService
+        self.shortcutRepository = shortcutRepository
     }
 
     @discardableResult
@@ -33,6 +38,6 @@ class MainEditViewModel: ObservableObject {
     /// 表示設定とショートカットの並び順 / 削除を保存する
     func save() {
         mainService.save(settings: settings)
-        mainService.update(shortcutIds: shortcuts.map { $0.shortcutId })
+        shortcutRepository.update(shortcutIds: shortcuts.map { $0.shortcutId })
     }
 }

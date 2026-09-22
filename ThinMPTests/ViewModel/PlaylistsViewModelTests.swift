@@ -40,44 +40,50 @@ struct PlaylistsViewModelTests {
         #expect(service.findAllCalls == 1)
     }
 
+    /// Service のモックと同じ 2 件を持つ Repository のモック。書き込みはこちらで観測する
+    private func makeRepository() -> PlaylistRepositoryMock {
+        return PlaylistRepositoryMock(playlists: [
+            PlaylistEntity(playlistId: PlaylistId(id: "a"), name: "A", songIds: [SongId(id: 1), SongId(id: 2)]),
+            PlaylistEntity(playlistId: PlaylistId(id: "b"), name: "B", songIds: [SongId(id: 3)]),
+        ])
+    }
+
     @Test
-    func saveWritesEditedOrder() async {
-        let service = makeService()
-        let vm = PlaylistsViewModel(playlistsService: service)
+    func saveWritesEditedOrderToRepository() async {
+        let repository = makeRepository()
+        let vm = PlaylistsViewModel(playlistsService: makeService(), playlistRepository: repository)
 
         await vm.load().value
         vm.playlists.move(fromOffsets: [1], toOffset: 0)
         vm.save()
 
-        #expect(service.updateCalls == [[PlaylistId(id: "b"), PlaylistId(id: "a")]])
+        #expect(repository.findAll().map { $0.playlistId } == [PlaylistId(id: "b"), PlaylistId(id: "a")])
     }
 
     @Test
-    func createAndAddGoThroughTheService() {
-        let service = makeService()
-        let vm = PlaylistsViewModel(playlistsService: service)
+    func createAndAddWriteToRepository() {
+        let repository = makeRepository()
+        let vm = PlaylistsViewModel(playlistsService: makeService(), playlistRepository: repository)
 
         vm.create(songId: SongId(id: 5), name: "New")
         vm.add(playlistId: PlaylistId(id: "a"), songId: SongId(id: 6))
 
-        #expect(service.createCalls.count == 1)
-        #expect(service.createCalls[0].name == "New")
-        #expect(service.createCalls[0].songId == SongId(id: 5))
-        #expect(service.addCalls.count == 1)
-        #expect(service.addCalls[0].playlistId == PlaylistId(id: "a"))
-        #expect(service.addCalls[0].songId == SongId(id: 6))
+        #expect(repository.findAll().map { $0.name } == ["A", "B", "New"])
+        #expect(repository.findAll()[2].songIds == [SongId(id: 5)])
+        #expect(repository.findById(playlistId: PlaylistId(id: "a"))?.songIds == [SongId(id: 1), SongId(id: 2), SongId(id: 6)])
     }
 
     @Test
-    func deleteRemovesThenReloads() async {
+    func deleteRemovesFromRepositoryThenReloads() async {
         let service = makeService()
-        let vm = PlaylistsViewModel(playlistsService: service)
+        let repository = makeRepository()
+        let vm = PlaylistsViewModel(playlistsService: service, playlistRepository: repository)
 
         await vm.load().value
         vm.delete(playlistId: PlaylistId(id: "a"))
         await Task.yield()
 
-        #expect(service.deleteCalls == [PlaylistId(id: "a")])
+        #expect(repository.findAll().map { $0.playlistId } == [PlaylistId(id: "b")])
         #expect(service.findAllCalls == 2)
     }
 }

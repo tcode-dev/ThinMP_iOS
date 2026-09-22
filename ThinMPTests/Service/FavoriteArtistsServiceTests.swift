@@ -20,8 +20,7 @@ struct FavoriteArtistsServiceTests {
         ])
         let service = FavoriteArtistsService(
             favoriteArtistRepository: favoriteArtistRepository,
-            artistRepository: artistRepository,
-            favoriteArtistRegister: FavoriteArtistRegister(repository: favoriteArtistRepository)
+            artistRepository: artistRepository
         )
 
         let artists = await service.findAll()
@@ -39,8 +38,7 @@ struct FavoriteArtistsServiceTests {
         ])
         let service = FavoriteArtistsService(
             favoriteArtistRepository: favoriteArtistRepository,
-            artistRepository: artistRepository,
-            favoriteArtistRegister: FavoriteArtistRegister(repository: favoriteArtistRepository)
+            artistRepository: artistRepository
         )
 
         let artists = await service.findAll()

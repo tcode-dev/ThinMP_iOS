@@ -23,7 +23,6 @@ struct ShortcutServiceTests {
         let shortcutRepository = ShortcutRepositoryMock(shortcuts: shortcuts)
         let service = ShortcutService(
             shortcutRepository: shortcutRepository,
-            shortcutRegister: ShortcutRegister(repository: shortcutRepository),
             artistDetailService: ArtistDetailServiceMock(artists: artistIds.map {
                 ArtistDetailModel(artistId: ArtistId(id: $0), primaryText: "Artist \($0)", secondaryText: nil, artwork: nil, albums: [], songs: [])
             }),

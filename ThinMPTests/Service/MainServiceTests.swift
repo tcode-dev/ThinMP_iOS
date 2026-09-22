@@ -24,13 +24,11 @@ struct MainServiceTests {
     private func makeService(
         userDefaults: UserDefaults,
         albumRepository: AlbumRepositoryMock = AlbumRepositoryMock(),
-        shortcutService: ShortcutServiceMock = ShortcutServiceMock(),
-        shortcutRepository: ShortcutRepositoryMock = ShortcutRepositoryMock()
+        shortcutService: ShortcutServiceMock = ShortcutServiceMock()
     ) -> MainService {
         return MainService(
             albumRepository: albumRepository,
             shortcutService: shortcutService,
-            shortcutRegister: ShortcutRegister(repository: shortcutRepository),
             mainMenuConfig: MainMenuConfig(userDefaults: userDefaults),
             mainSectionConfig: MainSectionConfig(userDefaults: userDefaults)
         )
@@ -85,19 +83,5 @@ struct MainServiceTests {
 
         #expect(found.map { $0.shortcutId } == [ShortcutId(id: "s1")])
         #expect(shortcutService.findAllCalls == 1)
-    }
-
-    @Test
-    func updateShortcutsWritesThroughTheRegister() {
-        let shortcutRepository = ShortcutRepositoryMock(shortcuts: [
-            ShortcutEntity(shortcutId: ShortcutId(id: "s1"), itemId: ItemId(id: "10"), type: .artist),
-            ShortcutEntity(shortcutId: ShortcutId(id: "s2"), itemId: ItemId(id: "20"), type: .album),
-        ])
-        let service = makeService(userDefaults: makeUserDefaults(), shortcutRepository: shortcutRepository)
-
-        service.update(shortcutIds: [ShortcutId(id: "s2")])
-
-        #expect(shortcutRepository.updateCalls == [[ShortcutId(id: "s2")]])
-        #expect(shortcutRepository.findAll().map { $0.shortcutId } == [ShortcutId(id: "s2")])
     }
 }
