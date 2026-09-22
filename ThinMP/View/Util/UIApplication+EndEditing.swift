@@ -2,7 +2,7 @@
 //  UIApplication+EndEditing.swift
 //  ThinMP
 //
-//  Created by tk on 2021/05/04.
+//  Created by tk on 2026/09/22.
 //
 
 import UIKit
