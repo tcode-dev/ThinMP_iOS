@@ -101,8 +101,9 @@ struct PlaylistRepository: PlaylistRepositoryProtocol {
         return try! store.context.fetch(descriptor)
     }
 
+    /// persistentID として読めない曲は落とす(ShortcutTarget と同じ扱い)
     private func toEntity(model: PlaylistDataModel) -> PlaylistEntity {
-        let songIds = model.sortedSongs.map { SongId(id: UInt64($0.songId)!) }
+        let songIds = model.sortedSongs.compactMap { UInt64($0.songId) }.map { SongId(id: $0) }
 
         return PlaylistEntity(playlistId: PlaylistId(id: model.id), name: model.name, songIds: songIds)
     }

@@ -16,8 +16,9 @@ struct FavoriteSongRepository: FavoriteSongRepositoryProtocol {
         favorites.add(mediaId: String(songId.id))
     }
 
+    /// persistentID として読めない行は落とす(ShortcutTarget と同じ扱い)
     func findAll() -> [SongId] {
-        return favorites.findAll().map { SongId(id: UInt64($0)!) }
+        return favorites.findAll().compactMap { UInt64($0) }.map { SongId(id: $0) }
     }
 
     func exists(songId: SongId) -> Bool {

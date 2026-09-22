@@ -12,8 +12,9 @@ struct FavoriteArtistRepository: FavoriteArtistRepositoryProtocol {
         favorites = FavoriteRepository(store: store)
     }
 
+    /// persistentID として読めない行は落とす(ShortcutTarget と同じ扱い)
     func findAll() -> [ArtistId] {
-        return favorites.findAll().map { ArtistId(id: UInt64($0)!) }
+        return favorites.findAll().compactMap { UInt64($0) }.map { ArtistId(id: $0) }
     }
 
     func exists(artistId: ArtistId) -> Bool {
