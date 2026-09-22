@@ -249,3 +249,52 @@ final class PlaylistDetailServiceMock: PlaylistDetailServiceProtocol {
         return playlistIds.compactMap { playlistId in playlists.first { $0.playlistId.id == playlistId.id } }
     }
 }
+
+// ViewModel のテストで Service を差し替えるためのモック
+
+final class SongsServiceMock: SongsServiceProtocol {
+    let songs: [SongModel]
+    private(set) var findAllCalls = 0
+
+    init(songs: [SongModel]) {
+        self.songs = songs
+    }
+
+    func findAll() -> [SongModel] {
+        findAllCalls += 1
+
+        return songs
+    }
+}
+
+final class PlaylistsServiceMock: PlaylistsServiceProtocol {
+    let playlists: [PlaylistModel]
+    private(set) var findAllCalls = 0
+
+    init(playlists: [PlaylistModel]) {
+        self.playlists = playlists
+    }
+
+    func findAll() -> [PlaylistModel] {
+        findAllCalls += 1
+
+        return playlists
+    }
+}
+
+/// findAll を呼び出し側が resume するまで待たせる FavoriteSongsService
+/// 2 回目の load が 1 回目を打ち切ることを確認するのに使う
+final class BlockingFavoriteSongsServiceMock: FavoriteSongsServiceProtocol {
+    private var continuations: [CheckedContinuation<[SongModel], Never>] = []
+
+    var pendingCount: Int { continuations.count }
+
+    func findAll() async -> [SongModel] {
+        return await withCheckedContinuation { continuations.append($0) }
+    }
+
+    /// 最も古い保留中の findAll を songs で完了させる
+    func resume(with songs: [SongModel]) {
+        continuations.removeFirst().resume(returning: songs)
+    }
+}

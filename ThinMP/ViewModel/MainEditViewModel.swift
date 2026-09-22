@@ -15,17 +15,36 @@ class MainEditViewModel: ObservableObject {
     @Published var shortcuts: [ShortcutModel] = []
     @Published var albums: [AlbumModel] = []
 
-    // SwiftData の ModelContext はスレッドセーフではなく、全 Repository が同じ context を共有しているので
-    // メインアクター上で実行する(Task.detached でバックグラウンドに逃がさない)
-    func load() {
-        Task {
-            let mainService = MainService()
+    private let mainService: MainServiceProtocol
+    /// 直前の load を打ち切るために保持する。古い結果が新しい結果を上書きしないようにする
+    private var loadTask: Task<Void, Never>?
 
-            menus = mainService.getMainMenus()
-            shortcutMenu = mainService.getShortcutMenu()
-            recentlyMenu = mainService.getRecentlyMenu()
-            shortcuts = mainService.findShortcuts()
-            albums = mainService.findRecentlyAlbums()
+    init(mainService: MainServiceProtocol = MainService()) {
+        self.mainService = mainService
+    }
+
+    @discardableResult
+    func load() -> Task<Void, Never> {
+        loadTask?.cancel()
+
+        let task = Task {
+            let menus = mainService.getMainMenus()
+            let shortcutMenu = mainService.getShortcutMenu()
+            let recentlyMenu = mainService.getRecentlyMenu()
+            let shortcuts = await mainService.findShortcuts()
+            let albums = await mainService.findRecentlyAlbums()
+
+            if Task.isCancelled { return }
+
+            self.menus = menus
+            self.shortcutMenu = shortcutMenu
+            self.recentlyMenu = recentlyMenu
+            self.shortcuts = shortcuts
+            self.albums = albums
         }
+
+        loadTask = task
+
+        return task
     }
 }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PlaylistsEditPageView: View {
-    @Environment(\.presentationMode) var presentation
+    @Environment(\.dismiss) private var dismiss
     @StateObject private var vm = PlaylistsViewModel()
 
     var body: some View {
@@ -17,14 +17,14 @@ struct PlaylistsEditPageView: View {
                 EditNavBarView(top: geometry.safeAreaInsets.top) {
                     HStack {
                         Button(action: {
-                            presentation.wrappedValue.dismiss()
+                            dismiss()
                         }) {
                             Text(LocalizedStringKey(LabelConstant.cancel))
                         }
                         Spacer()
                         Button(action: {
                             update()
-                            presentation.wrappedValue.dismiss()
+                            dismiss()
                         }) {
                             Text(LocalizedStringKey(LabelConstant.done))
                         }
@@ -42,9 +42,9 @@ struct PlaylistsEditPageView: View {
                     }
                 }
             }
-            .navigationBarHidden(true)
-            .navigationBarTitle(Text(""))
-            .edgesIgnoringSafeArea(.all)
+            .toolbar(.hidden, for: .navigationBar)
+            .navigationTitle("")
+            .ignoresSafeArea(.container)
             .environment(\.editMode, .constant(.active))
             .onAppear {
                 vm.load()

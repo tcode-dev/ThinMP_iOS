@@ -10,6 +10,7 @@ import Testing
 
 /// FavoriteSongRepositoryProtocol の契約
 /// 実装(Realm / SwiftData)に依存しない振る舞いだけを検証する
+@MainActor
 struct FavoriteSongRepositoryTests {
     @Test(arguments: RepositoryBackend.allCases)
     func findAllReturnsSongsInInsertionOrder(backend: RepositoryBackend) {

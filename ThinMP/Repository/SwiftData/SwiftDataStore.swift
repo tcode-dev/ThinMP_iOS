@@ -10,6 +10,9 @@ import SwiftData
 /// SwiftData の接続
 /// アプリでは default を使い、テストではインメモリストアに差し替える
 /// Repository は同じ store の context を共有するので、Register 経由の書き込みが Service からすぐ見える
+/// ModelContext はスレッドセーフではないので、この store とそれを使う Repository / Register / Service は
+/// プロトコルごとメインアクターに隔離している。バックグラウンドから触るとコンパイルエラーになる
+@MainActor
 final class SwiftDataStore {
     static let `default` = SwiftDataStore(isStoredInMemoryOnly: false)
 

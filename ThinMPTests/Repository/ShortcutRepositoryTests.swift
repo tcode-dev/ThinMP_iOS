@@ -10,6 +10,7 @@ import Testing
 @testable import ThinMP
 
 /// ShortcutRepositoryProtocol の契約
+@MainActor
 struct ShortcutRepositoryTests {
     @Test(arguments: RepositoryBackend.allCases)
     func addWithPersistentId(backend: RepositoryBackend) {

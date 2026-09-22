@@ -26,7 +26,7 @@ struct FavoriteArtistsPageView: View {
                             }
                         }
                     }
-                    ScrollView(showsIndicators: true) {
+                    ScrollView {
                         VStack(alignment: .leading) {
                             ListEmptyHeaderView(headerRect: $headerRect, top: geometry.safeAreaInsets.top)
                             LazyVStack(spacing: 0) {
@@ -49,9 +49,9 @@ struct FavoriteArtistsPageView: View {
                 }
                 MiniPlayerView(bottom: geometry.safeAreaInsets.bottom) { vm.load() }
             }
-            .navigationBarHidden(true)
-            .navigationBarTitle(Text(""))
-            .edgesIgnoringSafeArea(.all)
+            .toolbar(.hidden, for: .navigationBar)
+            .navigationTitle("")
+            .ignoresSafeArea(.container)
             .onAppear {
                 vm.load()
             }

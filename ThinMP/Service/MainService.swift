@@ -20,12 +20,14 @@ struct MainService: MainServiceProtocol {
         self.shortcutService = shortcutService
     }
 
-    func findRecentlyAlbums() -> [AlbumModel] {
-        return albumRepository.findRecently(count: ALBUM_COUNT)
+    func findRecentlyAlbums() async -> [AlbumModel] {
+        return await Task.detached(priority: .userInitiated) { [albumRepository, ALBUM_COUNT] in
+            albumRepository.findRecently(count: ALBUM_COUNT)
+        }.value
     }
 
-    func findShortcuts() -> [ShortcutModel] {
-        return shortcutService.findAll()
+    func findShortcuts() async -> [ShortcutModel] {
+        return await shortcutService.findAll()
     }
 
     func getMainMenus() -> [MenuModel] {

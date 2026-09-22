@@ -5,6 +5,7 @@
 //  Created by tk on 2021/07/25.
 //
 
+@MainActor
 protocol PlaylistRegisterProtocol {
     func create(songId: SongId, name: String)
 

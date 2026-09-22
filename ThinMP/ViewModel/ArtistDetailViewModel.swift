@@ -16,15 +16,25 @@ class ArtistDetailViewModel: ObservableObject {
     @Published var songs: [SongModel] = []
 
     private var artistId: ArtistId!
+    private let artistDetailService: ArtistDetailServiceProtocol
+    /// 直前の load を打ち切るために保持する。古い結果が新しい結果を上書きしないようにする
+    private var loadTask: Task<Void, Never>?
 
-    func load(artistId: ArtistId) {
+    init(artistDetailService: ArtistDetailServiceProtocol = ArtistDetailService()) {
+        self.artistDetailService = artistDetailService
+    }
+
+    @discardableResult
+    func load(artistId: ArtistId) -> Task<Void, Never> {
         self.artistId = artistId
+        loadTask?.cancel()
 
-        Task {
-            let artistDetailModel = await Task.detached(priority: .userInitiated) {
-                ArtistDetailService().findById(artistId: artistId)
+        let task = Task {
+            let artistDetailModel = await Task.detached(priority: .userInitiated) { [artistDetailService] in
+                artistDetailService.findById(artistId: artistId)
             }.value
 
+            if Task.isCancelled { return }
             guard let artistDetailModel = artistDetailModel else { return }
 
             primaryText = artistDetailModel.primaryText
@@ -33,5 +43,9 @@ class ArtistDetailViewModel: ObservableObject {
             albums = artistDetailModel.albums
             songs = artistDetailModel.songs
         }
+
+        loadTask = task
+
+        return task
     }
 }

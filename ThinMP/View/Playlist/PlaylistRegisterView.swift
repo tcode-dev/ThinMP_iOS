@@ -15,7 +15,8 @@ struct PlaylistRegisterView: View {
 
     let songId: SongId
     let height: CGFloat
-    @Binding var showingPopup: Bool
+    /// キャンセル、または登録が終わったときにポップアップを閉じる
+    let dismiss: () -> Void
 
     var body: some View {
         VStack(spacing: 0) {
@@ -30,7 +31,7 @@ struct PlaylistRegisterView: View {
                         }
                         Spacer()
                         Button(action: {
-                            showingPopup.toggle()
+                            dismiss()
                         }) {
                             Text(LocalizedStringKey(LabelConstant.cancel))
                         }
@@ -40,7 +41,7 @@ struct PlaylistRegisterView: View {
                     ScrollView {
                         LazyVStack(spacing: 0) {
                             ForEach(vm.playlists) { playlist in
-                                PlaylistAddRowView(playlistId: playlist.playlistId, songId: songId, isRegistered: vm.isRegistered(playlistId: playlist.playlistId), showingPopup: $showingPopup) {
+                                PlaylistAddRowView(playlistId: playlist.playlistId, songId: songId, isRegistered: vm.isRegistered(playlistId: playlist.playlistId), dismiss: dismiss) {
                                     MediaRowView(media: playlist)
                                 }
                                 .frame(height: StyleConstant.Height.row)
@@ -64,7 +65,7 @@ struct PlaylistRegisterView: View {
                             let playlistRegister = PlaylistRegister()
 
                             playlistRegister.create(songId: songId, name: name)
-                            showingPopup.toggle()
+                            dismiss()
                         }) {
                             Text(LocalizedStringKey(LabelConstant.done))
                         }
@@ -73,7 +74,7 @@ struct PlaylistRegisterView: View {
                             if vm.playlists.count > 0 {
                                 isCreate.toggle()
                             } else {
-                                showingPopup.toggle()
+                                dismiss()
                             }
                         }) {
                             Text(LocalizedStringKey(LabelConstant.cancel))

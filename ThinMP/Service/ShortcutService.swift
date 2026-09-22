@@ -26,23 +26,29 @@ struct ShortcutService: ShortcutServiceProtocol {
         self.playlistDetailService = playlistDetailService
     }
 
-    func findAll() -> [ShortcutModel] {
+    func findAll() async -> [ShortcutModel] {
         let shortcuts = shortcutRepository.findAll()
         let grouping = Dictionary(grouping: shortcuts) { $0.type }
             .mapValues { $0.map { $0.itemId } }
 
         var shortcutDictionary: [ShortcutType: [DetailProtocol]] = [.ARTIST: [], .ALBUM: [], .PLAYLIST: []]
 
+        // アーティスト / アルバムはライブラリを舐めるのでバックグラウンドで解決する
+        // プレイリストは PlaylistDetailService 側で同じことをしている
         if let artistIds = grouping[.ARTIST] {
-            shortcutDictionary[.ARTIST] = artistDetailService.findByIds(artistIds: artistIds.map { $0.artistId })
+            shortcutDictionary[.ARTIST] = await Task.detached(priority: .userInitiated) { [artistDetailService] in
+                artistDetailService.findByIds(artistIds: artistIds.map { $0.artistId })
+            }.value
         }
 
         if let albumIds = grouping[.ALBUM] {
-            shortcutDictionary[.ALBUM] = albumDetailService.findByIds(albumIds: albumIds.map { $0.albumId })
+            shortcutDictionary[.ALBUM] = await Task.detached(priority: .userInitiated) { [albumDetailService] in
+                albumDetailService.findByIds(albumIds: albumIds.map { $0.albumId })
+            }.value
         }
 
         if let playlistIds = grouping[.PLAYLIST] {
-            shortcutDictionary[.PLAYLIST] = playlistDetailService.findByIds(playlistIds: playlistIds.map { $0.playlistId })
+            shortcutDictionary[.PLAYLIST] = await playlistDetailService.findByIds(playlistIds: playlistIds.map { $0.playlistId })
         }
 
         let shortcutModels = shortcuts
@@ -57,7 +63,7 @@ struct ShortcutService: ShortcutServiceProtocol {
         if !validation(shortcuts: shortcuts, shortcutModels: shortcutModels) {
             fix(shortcutModels: shortcutModels)
 
-            return findAll()
+            return await findAll()
         }
 
         return shortcutModels

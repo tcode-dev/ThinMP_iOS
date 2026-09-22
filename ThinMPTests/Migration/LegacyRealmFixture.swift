@@ -22,6 +22,7 @@ enum LegacyRealmFixture {
     static let shortcutAlbumId: UInt64 = 301
     static let shortcutPlaylistName = "Morning"
 
+    @MainActor
     static func populate(_ repositories: TestRepositories) {
         // お気に入り曲: 追加してから並び替え
         repositories.favoriteSong.add(songId: SongId(id: 101))
@@ -52,6 +53,7 @@ enum LegacyRealmFixture {
         repositories.shortcut.add(itemId: morning.id, type: .PLAYLIST)
     }
 
+    @MainActor
     static func verify(_ repositories: TestRepositories) {
         #expect(repositories.favoriteSong.findAll().map { $0.id } == favoriteSongIds)
         #expect(repositories.favoriteArtist.findAll().map { $0.id } == favoriteArtistIds)

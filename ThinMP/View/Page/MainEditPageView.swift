@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MainEditPageView: View {
-    @Environment(\.presentationMode) var presentation
+    @Environment(\.dismiss) private var dismiss
     @StateObject private var vm = MainEditViewModel()
 
     var body: some View {
@@ -50,9 +50,9 @@ struct MainEditPageView: View {
                     }
                 }
             }
-            .navigationBarHidden(true)
-            .navigationBarTitle(Text(""))
-            .edgesIgnoringSafeArea(.all)
+            .toolbar(.hidden, for: .navigationBar)
+            .navigationTitle("")
+            .ignoresSafeArea(.container)
             .environment(\.editMode, .constant(.active))
             .onAppear {
                 vm.load()
@@ -94,6 +94,6 @@ struct MainEditPageView: View {
     }
 
     private func back() {
-        presentation.wrappedValue.dismiss()
+        dismiss()
     }
 }

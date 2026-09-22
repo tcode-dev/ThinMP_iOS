@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct FavoriteSongsEditPageView: View {
-    @Environment(\.presentationMode) var presentation
+    @Environment(\.dismiss) private var dismiss
     @StateObject private var vm = FavoriteSongsViewModel()
 
     var body: some View {
@@ -42,9 +42,9 @@ struct FavoriteSongsEditPageView: View {
                     }
                 }
             }
-            .navigationBarHidden(true)
-            .navigationBarTitle(Text(""))
-            .edgesIgnoringSafeArea(.all)
+            .toolbar(.hidden, for: .navigationBar)
+            .navigationTitle("")
+            .ignoresSafeArea(.container)
             .environment(\.editMode, .constant(.active))
             .onAppear {
                 vm.load()
@@ -67,6 +67,6 @@ struct FavoriteSongsEditPageView: View {
     }
 
     private func back() {
-        presentation.wrappedValue.dismiss()
+        dismiss()
     }
 }

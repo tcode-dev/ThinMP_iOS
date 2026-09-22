@@ -17,6 +17,7 @@ enum RepositoryBackend: CaseIterable, Sendable {
 
 /// テスト 1 件分の Repository 一式
 /// 同じストアを共有しているので、Register 経由の書き込みが Repository から見える
+@MainActor
 struct TestRepositories {
     let favoriteSong: FavoriteSongRepositoryProtocol
     let favoriteArtist: FavoriteArtistRepositoryProtocol

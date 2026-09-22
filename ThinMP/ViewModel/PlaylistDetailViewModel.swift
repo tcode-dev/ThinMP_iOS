@@ -15,17 +15,31 @@ class PlaylistDetailViewModel: ObservableObject {
 
     var playlistId: PlaylistId!
 
-    // SwiftData の ModelContext はスレッドセーフではなく、全 Repository が同じ context を共有しているので
-    // メインアクター上で実行する(Task.detached でバックグラウンドに逃がさない)
-    func load(playlistId: PlaylistId) {
-        self.playlistId = playlistId
+    private let playlistDetailService: PlaylistDetailServiceProtocol
+    /// 直前の load を打ち切るために保持する。古い結果が新しい結果を上書きしないようにする
+    private var loadTask: Task<Void, Never>?
 
-        Task {
-            let playlistDetailModel = PlaylistDetailService().findById(playlistId: playlistId)
+    init(playlistDetailService: PlaylistDetailServiceProtocol = PlaylistDetailService()) {
+        self.playlistDetailService = playlistDetailService
+    }
+
+    @discardableResult
+    func load(playlistId: PlaylistId) -> Task<Void, Never> {
+        self.playlistId = playlistId
+        loadTask?.cancel()
+
+        let task = Task {
+            let playlistDetailModel = await playlistDetailService.findById(playlistId: playlistId)
+
+            if Task.isCancelled { return }
 
             primaryText = playlistDetailModel.primaryText
             artwork = playlistDetailModel.artwork
             songs = playlistDetailModel.songs
         }
+
+        loadTask = task
+
+        return task
     }
 }

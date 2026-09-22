@@ -11,11 +11,28 @@ import MediaPlayer
 class FavoriteSongsViewModel: ObservableObject {
     @Published var songs: [SongModel] = []
 
-    // SwiftData の ModelContext はスレッドセーフではなく、全 Repository が同じ context を共有しているので
-    // メインアクター上で実行する(Task.detached でバックグラウンドに逃がさない)
-    func load() {
-        Task {
-            songs = FavoriteSongsService().findAll()
+    private let favoriteSongsService: FavoriteSongsServiceProtocol
+    /// 直前の load を打ち切るために保持する。古い結果が新しい結果を上書きしないようにする
+    private var loadTask: Task<Void, Never>?
+
+    init(favoriteSongsService: FavoriteSongsServiceProtocol = FavoriteSongsService()) {
+        self.favoriteSongsService = favoriteSongsService
+    }
+
+    @discardableResult
+    func load() -> Task<Void, Never> {
+        loadTask?.cancel()
+
+        let task = Task {
+            let songs = await favoriteSongsService.findAll()
+
+            if Task.isCancelled { return }
+
+            self.songs = songs
         }
+
+        loadTask = task
+
+        return task
     }
 }

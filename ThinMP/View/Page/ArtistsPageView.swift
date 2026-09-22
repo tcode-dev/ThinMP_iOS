@@ -25,7 +25,7 @@ struct ArtistsPageView: View {
                                 .frame(width: StyleConstant.button)
                         }
                     }
-                    ScrollView(showsIndicators: true) {
+                    ScrollView {
                         VStack(alignment: .leading) {
                             ListEmptyHeaderView(headerRect: $headerRect, top: geometry.safeAreaInsets.top)
                             LazyVStack(spacing: 0) {
@@ -48,9 +48,9 @@ struct ArtistsPageView: View {
                 }
                 MiniPlayerView(bottom: geometry.safeAreaInsets.bottom)
             }
-            .navigationBarHidden(true)
-            .navigationBarTitle(Text(""))
-            .edgesIgnoringSafeArea(.all)
+            .toolbar(.hidden, for: .navigationBar)
+            .navigationTitle("")
+            .ignoresSafeArea(.container)
             .onAppear {
                 vm.load()
             }

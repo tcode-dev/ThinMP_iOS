@@ -7,6 +7,7 @@
 
 import Foundation
 
+@MainActor
 protocol MediaPlayerProtocol {
     func start(list: [SongModel], currentIndex: Int)
 

@@ -11,11 +11,30 @@ import MediaPlayer
 class ArtistsViewModel: ObservableObject {
     @Published var artists: [ArtistModel] = []
 
-    func load() {
-        Task {
-            artists = await Task.detached(priority: .userInitiated) {
-                ArtistsService().findAll()
+    private let artistsService: ArtistsServiceProtocol
+    /// 直前の load を打ち切るために保持する。古い結果が新しい結果を上書きしないようにする
+    private var loadTask: Task<Void, Never>?
+
+    init(artistsService: ArtistsServiceProtocol = ArtistsService()) {
+        self.artistsService = artistsService
+    }
+
+    @discardableResult
+    func load() -> Task<Void, Never> {
+        loadTask?.cancel()
+
+        let task = Task {
+            let artists = await Task.detached(priority: .userInitiated) { [artistsService] in
+                artistsService.findAll()
             }.value
+
+            if Task.isCancelled { return }
+
+            self.artists = artists
         }
+
+        loadTask = task
+
+        return task
     }
 }

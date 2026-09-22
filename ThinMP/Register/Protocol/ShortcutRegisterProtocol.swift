@@ -5,6 +5,7 @@
 //  Created by tk on 2021/07/25.
 //
 
+@MainActor
 protocol ShortcutRegisterProtocol {
     func add(itemId: ShortcutItemIdProtocol, type: ShortcutType)
 
