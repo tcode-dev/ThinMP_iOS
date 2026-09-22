@@ -9,9 +9,8 @@ import Foundation
 import RealmSwift
 
 class PlaylistRealmModel: Object {
-    static let ID: String = "id"
-    static let NAME: String = "name"
-    static let ORDER: String = "order"
+    static let idKey: String = "id"
+    static let orderKey: String = "order"
 
     @objc dynamic var id: String = UUID().uuidString
     @objc dynamic var name: String = ""
@@ -19,7 +18,7 @@ class PlaylistRealmModel: Object {
 
     let songs = List<PlaylistSongRealmModel>()
 
-    override static func primaryKey() -> String? {
-        return "id"
+    override static func primaryKey() -> String {
+        return idKey
     }
 }

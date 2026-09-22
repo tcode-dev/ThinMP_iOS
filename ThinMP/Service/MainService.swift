@@ -6,7 +6,7 @@
 //
 
 struct MainService: MainServiceProtocol {
-    private let ALBUM_COUNT = 20
+    private let albumCount = 20
     private let albumRepository: AlbumRepositoryProtocol
     private let shortcutService: ShortcutServiceProtocol
     private let mainMenuConfig: MainMenuConfig
@@ -25,8 +25,8 @@ struct MainService: MainServiceProtocol {
     }
 
     func findRecentlyAlbums() async -> [AlbumModel] {
-        return await Task.detached(priority: .userInitiated) { [albumRepository, ALBUM_COUNT] in
-            albumRepository.findRecently(count: ALBUM_COUNT)
+        return await Task.detached(priority: .userInitiated) { [albumRepository, albumCount] in
+            albumRepository.findRecently(count: albumCount)
         }.value
     }
 

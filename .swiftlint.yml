@@ -1,7 +1,13 @@
 disabled_rules: # rule identifiers turned on by default to exclude from running
   - force_try
   - line_length
-  - identifier_name
   - multiple_closures_with_trailing_closure
   - trailing_comma
   - force_cast
+
+opt_in_rules:
+  - empty_count
+
+identifier_name:
+  # id / vm / x, y のような短い名前は使う
+  min_length: 1

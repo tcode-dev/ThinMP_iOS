@@ -9,7 +9,7 @@ import Combine
 
 @MainActor
 class MainViewModel: ObservableObject {
-    @Published var settings = MainSettings(menus: [], isShortcutVisible: false, isRecentlyVisible: false)
+    @Published var settings = MainSettings.empty
     @Published var shortcuts: [ShortcutModel] = []
     @Published var albums: [AlbumModel] = []
 

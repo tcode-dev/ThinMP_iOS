@@ -10,7 +10,7 @@ import Combine
 @MainActor
 class MainEditViewModel: ObservableObject {
     /// 編集ページでそのまま書き換え、save() で保存する
-    @Published var settings = MainSettings(menus: [], isShortcutVisible: true, isRecentlyVisible: true)
+    @Published var settings = MainSettings.empty
     @Published var shortcuts: [ShortcutModel] = []
 
     private let mainService: MainServiceProtocol
@@ -28,7 +28,7 @@ class MainEditViewModel: ObservableObject {
     @discardableResult
     func load() -> Task<Void, Never> {
         return loadTask.run { [mainService] in
-            (mainService.getSettings(), await mainService.findShortcuts())
+            await (mainService.getSettings(), mainService.findShortcuts())
         } apply: { [weak self] settings, shortcuts in
             self?.settings = settings
             self?.shortcuts = shortcuts

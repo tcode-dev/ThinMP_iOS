@@ -14,7 +14,7 @@ final class PlaylistDataModel {
     var name: String
     var order: Int
 
-    // SwiftData のリレーションは順序を保持しないので PlaylistSongDataModel.order で並べる
+    /// SwiftData のリレーションは順序を保持しないので PlaylistSongDataModel.order で並べる
     @Relationship(deleteRule: .cascade, inverse: \PlaylistSongDataModel.playlist)
     var songs: [PlaylistSongDataModel]
 

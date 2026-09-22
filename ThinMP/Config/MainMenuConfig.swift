@@ -10,25 +10,25 @@ import Foundation
 /// ライブラリメニューの並び順と表示 / 非表示
 /// 並び順は MainMenu.rawValue の配列、表示 / 非表示は rawValue をキーにした Bool で保存している
 struct MainMenuConfig {
-    private let SORT = "sort"
+    private let sortKey = "sort"
     private let userDefaults: UserDefaults
 
     init(userDefaults: UserDefaults = .standard) {
         self.userDefaults = userDefaults
-        userDefaults.register(defaults: [SORT: MainMenu.allCases.map { $0.rawValue }])
+        userDefaults.register(defaults: [sortKey: MainMenu.allCases.map { $0.rawValue }])
         userDefaults.register(defaults: Dictionary(uniqueKeysWithValues: MainMenu.allCases.map { ($0.rawValue, true) }))
     }
 
     /// 保存した並び順に無いメニュー(あとから追加されたもの)は末尾に足し、知らない値は捨てる
     func load() -> [MainMenuSetting] {
-        let stored = (userDefaults.array(forKey: SORT) as? [String] ?? []).compactMap { MainMenu(rawValue: $0) }
+        let stored = (userDefaults.array(forKey: sortKey) as? [String] ?? []).compactMap { MainMenu(rawValue: $0) }
         let menus = stored + MainMenu.allCases.filter { !stored.contains($0) }
 
         return menus.map { MainMenuSetting(menu: $0, visibility: userDefaults.bool(forKey: $0.rawValue)) }
     }
 
     func save(_ menus: [MainMenuSetting]) {
-        userDefaults.set(menus.map { $0.menu.rawValue }, forKey: SORT)
+        userDefaults.set(menus.map { $0.menu.rawValue }, forKey: sortKey)
 
         for setting in menus {
             userDefaults.set(setting.visibility, forKey: setting.menu.rawValue)

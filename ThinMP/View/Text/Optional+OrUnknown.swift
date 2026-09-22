@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension Optional where Wrapped == String {
+extension String? {
     /// nil か空文字なら「不明」の表示用文字列。曲名やアーティスト名が取れないときに使う
     var orUnknown: String {
         guard let text = self, !text.isEmpty else {
