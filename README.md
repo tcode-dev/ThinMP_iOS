@@ -110,6 +110,7 @@ xcodebuild -project ThinMP.xcodeproj -scheme ThinMP -destination 'platform=iOS S
 * `ThinMPTests/Service` — tests for the self-healing logic in `Service` (favorites, playlists and shortcuts that reference media no longer in the library), using mock repositories.
 * `ThinMPTests/ViewModel` — load / cancel behavior and the writes the edit pages make through the `Repository`, using mock services and repositories.
 * `ThinMPTests/Config` — the `UserDefaults`-backed settings.
+* `ThinMPTests/Extension`, `ThinMPTests/View` — the generic `Sequence` helpers and `GridLayout`.
 * `ThinMPTests/Migration` — the Realm → SwiftData migration, run against an in-memory Realm and against `Fixtures/legacy.realm`.
 * `ThinMPTests/Support` — `RepositoryBackend`, mocks, and `FakeMediaItem` for building `SongModel` without the device library.
 
