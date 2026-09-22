@@ -13,7 +13,7 @@ struct SquareImageView: View {
     let size: CGFloat
 
     var body: some View {
-        Image(uiImage: artwork?.image(at: CGSize(width: size, height: size)) ?? UIImage(imageLiteralResourceName: "Song"))
+        Image(artwork: artwork, size: CGSize(width: size, height: size), placeholder: "Song")
             .renderingMode(.original)
             .resizable()
             .scaledToFit()

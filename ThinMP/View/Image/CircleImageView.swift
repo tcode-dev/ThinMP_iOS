@@ -13,7 +13,7 @@ struct CircleImageView: View {
     let size: CGFloat
 
     var body: some View {
-        Image(uiImage: artwork?.image(at: CGSize(width: size, height: size)) ?? UIImage(imageLiteralResourceName: "Artist"))
+        Image(artwork: artwork, size: CGSize(width: size, height: size), placeholder: "Artist")
             .resizable()
             .scaledToFill()
             .clipShape(Circle())

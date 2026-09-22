@@ -17,7 +17,7 @@ struct HeroCircleImageView: View {
     var body: some View {
         ZStack(alignment: .bottom) {
             VStack {
-                Image(uiImage: artwork?.image(at: CGSize(width: width, height: size)) ?? UIImage())
+                Image(artwork: artwork, size: CGSize(width: width, height: size))
                     .resizable()
                     .scaledToFill()
                     .frame(width: width, height: size)

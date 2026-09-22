@@ -16,7 +16,7 @@ struct HeroSquareImageView: View {
     var body: some View {
         ZStack(alignment: .bottom) {
             VStack {
-                Image(uiImage: artwork?.image(at: CGSize(width: size, height: size)) ?? UIImage(imageLiteralResourceName: "Song"))
+                Image(artwork: artwork, size: CGSize(width: size, height: size), placeholder: "Song")
                     .resizable()
                     .scaledToFit()
             }

@@ -26,7 +26,7 @@ struct PlayerView: View {
             ZStack(alignment: .top) {
                 // 上半分の背景。アートワークをぼかして下端を背景色に溶かす
                 ZStack {
-                    Image(uiImage: musicPlayer.song?.artwork?.image(at: CGSize(width: width, height: width)) ?? UIImage())
+                    Image(artwork: musicPlayer.song?.artwork, size: CGSize(width: width, height: width))
                         .resizable()
                         .scaledToFit()
                         .blur(radius: 10.0)
