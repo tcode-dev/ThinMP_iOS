@@ -12,6 +12,8 @@ protocol AlbumRepositoryProtocol {
 
     func findByIds(albumIds: [AlbumId]) -> [AlbumModel]
 
+    /// アーティスト名順。述語は曲に掛かるので、コンピレーション盤のように
+    /// アーティストの曲を 1 曲でも含むアルバムは、代表アーティストが別でも含まれる
     func findByArtistId(artistId: ArtistId) -> [AlbumModel]
 
     func findRecently(count: Int) -> [AlbumModel]

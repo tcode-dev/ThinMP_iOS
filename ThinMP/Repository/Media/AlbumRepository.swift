@@ -29,6 +29,7 @@ struct AlbumRepository: AlbumRepositoryProtocol {
         return albums(localAlbumsQuery()).reordered(by: albumIds) { $0.albumId }
     }
 
+    /// アーティストの曲を含むアルバム。コンピレーション盤も入る(AlbumRepositoryProtocol を参照)
     func findByArtistId(artistId: ArtistId) -> [AlbumModel] {
         let query = MPMediaQuery.albums()
 
@@ -37,11 +38,18 @@ struct AlbumRepository: AlbumRepositoryProtocol {
         return albums(query).sorted { ($0.primaryText ?? "") < ($1.primaryText ?? "") }
     }
 
+    /// 追加が新しい順に count 件
     func findRecently(count: Int) -> [AlbumModel] {
-        return collections(localAlbumsQuery())
-            .sorted { ($0.representativeItem?.dateAdded ?? .distantPast) > ($1.representativeItem?.dateAdded ?? .distantPast) }
-            .prefix(count)
-            .compactMap { AlbumModel(collection: $0) }
+        // MPMediaItem のプロパティ取得は安くないので、比較のたびに dateAdded を引かずに 1 回だけ取る
+        let albums = collections(localAlbumsQuery()).compactMap { collection -> (album: AlbumModel, dateAdded: Date)? in
+            guard let item = collection.representativeItem, let album = AlbumModel(collection: collection) else {
+                return nil
+            }
+
+            return (album, item.dateAdded)
+        }
+
+        return albums.sorted { $0.dateAdded > $1.dateAdded }.prefix(count).map { $0.album }
     }
 
     /// クラウドにしか無い項目を除いた全アルバム
