@@ -47,8 +47,4 @@ struct MainService: MainServiceProtocol {
         mainSectionConfig.isShortcutVisible = settings.isShortcutVisible
         mainSectionConfig.isRecentlyVisible = settings.isRecentlyVisible
     }
-
-    func update(shortcutIds: [ShortcutId]) {
-        shortcutService.update(shortcutIds: shortcutIds)
-    }
 }

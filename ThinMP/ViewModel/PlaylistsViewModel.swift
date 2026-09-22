@@ -14,10 +14,15 @@ class PlaylistsViewModel: ObservableObject {
     @Published var registeredPlaylistIds: Set<PlaylistId> = []
 
     private let playlistsService: PlaylistsServiceProtocol
+    private let playlistRepository: PlaylistRepositoryProtocol
     private let loadTask = LoadTask()
 
-    init(playlistsService: PlaylistsServiceProtocol = PlaylistsService()) {
+    init(
+        playlistsService: PlaylistsServiceProtocol = PlaylistsService(),
+        playlistRepository: PlaylistRepositoryProtocol = PlaylistRepository()
+    ) {
         self.playlistsService = playlistsService
+        self.playlistRepository = playlistRepository
     }
 
     /// songId は登録モーダル用。一覧を 1 回読み、そこから songId がすでに登録されているプレイリストを求める
@@ -37,22 +42,22 @@ class PlaylistsViewModel: ObservableObject {
 
     /// 編集ページの並び順と削除を保存する
     func save() {
-        playlistsService.update(playlistIds: playlists.map { $0.playlistId })
+        playlistRepository.update(playlistIds: playlists.map { $0.playlistId })
     }
 
     /// 登録モーダルで曲 1 つを入れた新しいプレイリストを作る
     func create(songId: SongId, name: String) {
-        playlistsService.create(songId: songId, name: name)
+        playlistRepository.create(songId: songId, name: name)
     }
 
     /// 登録モーダルで既存のプレイリストに曲を入れる
     func add(playlistId: PlaylistId, songId: SongId) {
-        playlistsService.add(playlistId: playlistId, songId: songId)
+        playlistRepository.add(playlistId: playlistId, songId: songId)
     }
 
     /// 一覧のコンテキストメニューから削除して読み直す
     func delete(playlistId: PlaylistId) {
-        playlistsService.delete(playlistId: playlistId)
+        playlistRepository.delete(playlistId: playlistId)
         load()
     }
 }

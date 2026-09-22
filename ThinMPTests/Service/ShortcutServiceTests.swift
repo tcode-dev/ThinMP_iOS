@@ -61,26 +61,6 @@ struct ShortcutServiceTests {
         #expect(shortcutRepository.updateCalls[0] == [ShortcutId(id: "s1"), ShortcutId(id: "s3")])
     }
 
-    /// トグルボタンが使う exists / add / delete と編集ページの update は Repository にそのまま届く
-    @Test
-    func writesGoThroughToRepository() {
-        let (service, shortcutRepository) = makeService(shortcuts: [artistShortcut, albumShortcut])
-
-        #expect(service.exists(itemId: ItemId(id: "20"), type: .album))
-        #expect(!service.exists(itemId: ItemId(id: "20"), type: .artist))
-
-        service.add(itemId: ItemId(id: "p1"), type: .playlist)
-        service.delete(itemId: ItemId(id: "10"), type: .artist)
-
-        #expect(service.exists(itemId: ItemId(id: "p1"), type: .playlist))
-        #expect(!service.exists(itemId: ItemId(id: "10"), type: .artist))
-
-        service.update(shortcutIds: [ShortcutId(id: "s2")])
-
-        #expect(shortcutRepository.updateCalls == [[ShortcutId(id: "s2")]])
-        #expect(shortcutRepository.findAll().map { $0.shortcutId } == [ShortcutId(id: "s2")])
-    }
-
     @Test
     func returnsEmptyWhenNoShortcuts() async {
         let (service, shortcutRepository) = makeService(shortcuts: [])

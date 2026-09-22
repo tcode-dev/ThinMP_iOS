@@ -8,7 +8,7 @@
 import MediaPlayer
 
 // 通知は OperationQueue.main、Timer はメインの RunLoop で届き、@Published は View から読まれるので
-// 全体をメインアクターに隔離する。お気に入りの Service(SwiftData)もここから触る
+// 全体をメインアクターに隔離する。お気に入りの Repository(SwiftData)もここから触る
 @MainActor
 class MusicPlayer: ObservableObject {
     private let PREV_SECOND: Double = 3
@@ -24,8 +24,8 @@ class MusicPlayer: ObservableObject {
     @Published var isFavoriteSong: Bool = false
 
     private let playerConfig: PlayerConfig
-    private let favoriteArtistsService: FavoriteArtistsServiceProtocol
-    private let favoriteSongsService: FavoriteSongsServiceProtocol
+    private let favoriteArtistRepository: FavoriteArtistRepositoryProtocol
+    private let favoriteSongRepository: FavoriteSongRepositoryProtocol
     private let player: MPMusicPlayerController
     private var timer: Timer?
     /// 再生画面が表示されている間だけ true。true かつ再生中のときだけ timer を回す
@@ -36,12 +36,12 @@ class MusicPlayer: ObservableObject {
 
     init(
         playerConfig: PlayerConfig = PlayerConfig(),
-        favoriteArtistsService: FavoriteArtistsServiceProtocol = FavoriteArtistsService(),
-        favoriteSongsService: FavoriteSongsServiceProtocol = FavoriteSongsService()
+        favoriteArtistRepository: FavoriteArtistRepositoryProtocol = FavoriteArtistRepository(),
+        favoriteSongRepository: FavoriteSongRepositoryProtocol = FavoriteSongRepository()
     ) {
         self.playerConfig = playerConfig
-        self.favoriteArtistsService = favoriteArtistsService
-        self.favoriteSongsService = favoriteSongsService
+        self.favoriteArtistRepository = favoriteArtistRepository
+        self.favoriteSongRepository = favoriteSongRepository
         player = MPMusicPlayerController.applicationMusicPlayer
         player.repeatMode = playerConfig.repeatMode
         player.shuffleMode = playerConfig.shuffleMode
@@ -132,10 +132,10 @@ class MusicPlayer: ObservableObject {
             return
         }
 
-        if favoriteArtistsService.exists(artistId: artistId) {
-            favoriteArtistsService.delete(artistId: artistId)
+        if favoriteArtistRepository.exists(artistId: artistId) {
+            favoriteArtistRepository.delete(artistId: artistId)
         } else {
-            favoriteArtistsService.add(artistId: artistId)
+            favoriteArtistRepository.add(artistId: artistId)
         }
 
         isFavoriteArtist.toggle()
@@ -147,10 +147,10 @@ class MusicPlayer: ObservableObject {
             return
         }
 
-        if favoriteSongsService.exists(songId: songId) {
-            favoriteSongsService.delete(songId: songId)
+        if favoriteSongRepository.exists(songId: songId) {
+            favoriteSongRepository.delete(songId: songId)
         } else {
-            favoriteSongsService.add(songId: songId)
+            favoriteSongRepository.add(songId: songId)
         }
 
         isFavoriteSong.toggle()
@@ -216,11 +216,11 @@ class MusicPlayer: ObservableObject {
     }
 
     private func setFavoriteArtist() {
-        isFavoriteArtist = (song?.artistId).map { favoriteArtistsService.exists(artistId: $0) } ?? false
+        isFavoriteArtist = (song?.artistId).map { favoriteArtistRepository.exists(artistId: $0) } ?? false
     }
 
     private func setFavoriteSong() {
-        isFavoriteSong = (song?.songId).map { favoriteSongsService.exists(songId: $0) } ?? false
+        isFavoriteSong = (song?.songId).map { favoriteSongRepository.exists(songId: $0) } ?? false
     }
 
     private func resetTime() {

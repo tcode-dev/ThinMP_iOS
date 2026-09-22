@@ -25,20 +25,4 @@ struct PlaylistsService: PlaylistsServiceProtocol {
             PlaylistModel(playlistId: playlist.playlistId, primaryText: playlist.primaryText, artwork: playlist.artwork, songIds: playlist.songs.map { $0.songId })
         }
     }
-
-    func create(songId: SongId, name: String) {
-        playlistRepository.create(songId: songId, name: name)
-    }
-
-    func add(playlistId: PlaylistId, songId: SongId) {
-        playlistRepository.add(playlistId: playlistId, songId: songId)
-    }
-
-    func update(playlistIds: [PlaylistId]) {
-        playlistRepository.update(playlistIds: playlistIds)
-    }
-
-    func delete(playlistId: PlaylistId) {
-        playlistRepository.delete(playlistId: playlistId)
-    }
 }

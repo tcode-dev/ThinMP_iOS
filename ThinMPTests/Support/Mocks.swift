@@ -284,14 +284,7 @@ final class AlbumDetailServiceMock: AlbumDetailServiceProtocol {
 }
 
 final class PlaylistDetailServiceMock: PlaylistDetailServiceProtocol {
-    struct UpdateCall {
-        let playlistId: PlaylistId
-        let name: String
-        let songIds: [SongId]
-    }
-
     let playlists: [PlaylistDetailModel]
-    private(set) var updateCalls: [UpdateCall] = []
 
     init(playlists: [PlaylistDetailModel]) {
         self.playlists = playlists
@@ -304,16 +297,11 @@ final class PlaylistDetailServiceMock: PlaylistDetailServiceProtocol {
     func findByIds(playlistIds: [PlaylistId]) -> [PlaylistDetailModel] {
         return playlistIds.compactMap { playlistId in playlists.first { $0.playlistId == playlistId } }
     }
-
-    func update(playlistId: PlaylistId, name: String, songIds: [SongId]) {
-        updateCalls.append(UpdateCall(playlistId: playlistId, name: name, songIds: songIds))
-    }
 }
 
 final class ShortcutServiceMock: ShortcutServiceProtocol {
     let shortcuts: [ShortcutModel]
     private(set) var findAllCalls = 0
-    private(set) var updateCalls: [[ShortcutId]] = []
 
     init(shortcuts: [ShortcutModel] = []) {
         self.shortcuts = shortcuts
@@ -323,18 +311,6 @@ final class ShortcutServiceMock: ShortcutServiceProtocol {
         findAllCalls += 1
 
         return shortcuts
-    }
-
-    func exists(itemId: ItemId, type: ShortcutType) -> Bool {
-        return false
-    }
-
-    func add(itemId: ItemId, type: ShortcutType) {}
-
-    func delete(itemId: ItemId, type: ShortcutType) {}
-
-    func update(shortcutIds: [ShortcutId]) {
-        updateCalls.append(shortcutIds)
     }
 }
 
@@ -347,7 +323,6 @@ final class MainServiceMock: MainServiceProtocol {
     private(set) var findShortcutsCalls = 0
     private(set) var findRecentlyAlbumsCalls = 0
     private(set) var savedSettings: [MainSettings] = []
-    private(set) var updateCalls: [[ShortcutId]] = []
 
     init(settings: MainSettings, shortcuts: [ShortcutModel] = [], albums: [AlbumModel] = []) {
         self.settings = settings
@@ -375,15 +350,10 @@ final class MainServiceMock: MainServiceProtocol {
         savedSettings.append(settings)
         self.settings = settings
     }
-
-    func update(shortcutIds: [ShortcutId]) {
-        updateCalls.append(shortcutIds)
-    }
 }
 
 final class FavoriteSongsServiceMock: FavoriteSongsServiceProtocol {
     let songs: [SongModel]
-    private(set) var updateCalls: [[SongId]] = []
 
     init(songs: [SongModel]) {
         self.songs = songs
@@ -392,23 +362,10 @@ final class FavoriteSongsServiceMock: FavoriteSongsServiceProtocol {
     func findAll() -> [SongModel] {
         return songs
     }
-
-    func exists(songId: SongId) -> Bool {
-        return songs.contains { $0.songId == songId }
-    }
-
-    func add(songId: SongId) {}
-
-    func delete(songId: SongId) {}
-
-    func update(songIds: [SongId]) {
-        updateCalls.append(songIds)
-    }
 }
 
 final class FavoriteArtistsServiceMock: FavoriteArtistsServiceProtocol {
     let artists: [ArtistModel]
-    private(set) var updateCalls: [[ArtistId]] = []
 
     init(artists: [ArtistModel]) {
         self.artists = artists
@@ -416,18 +373,6 @@ final class FavoriteArtistsServiceMock: FavoriteArtistsServiceProtocol {
 
     func findAll() -> [ArtistModel] {
         return artists
-    }
-
-    func exists(artistId: ArtistId) -> Bool {
-        return artists.contains { $0.artistId == artistId }
-    }
-
-    func add(artistId: ArtistId) {}
-
-    func delete(artistId: ArtistId) {}
-
-    func update(artistIds: [ArtistId]) {
-        updateCalls.append(artistIds)
     }
 }
 
@@ -449,10 +394,6 @@ final class SongsServiceMock: SongsServiceProtocol {
 final class PlaylistsServiceMock: PlaylistsServiceProtocol {
     let playlists: [PlaylistModel]
     private(set) var findAllCalls = 0
-    private(set) var updateCalls: [[PlaylistId]] = []
-    private(set) var createCalls: [(songId: SongId, name: String)] = []
-    private(set) var addCalls: [(playlistId: PlaylistId, songId: SongId)] = []
-    private(set) var deleteCalls: [PlaylistId] = []
 
     init(playlists: [PlaylistModel]) {
         self.playlists = playlists
@@ -462,22 +403,6 @@ final class PlaylistsServiceMock: PlaylistsServiceProtocol {
         findAllCalls += 1
 
         return playlists
-    }
-
-    func create(songId: SongId, name: String) {
-        createCalls.append((songId, name))
-    }
-
-    func add(playlistId: PlaylistId, songId: SongId) {
-        addCalls.append((playlistId, songId))
-    }
-
-    func update(playlistIds: [PlaylistId]) {
-        updateCalls.append(playlistIds)
-    }
-
-    func delete(playlistId: PlaylistId) {
-        deleteCalls.append(playlistId)
     }
 }
 
@@ -496,14 +421,4 @@ final class BlockingFavoriteSongsServiceMock: FavoriteSongsServiceProtocol {
     func resume(with songs: [SongModel]) {
         continuations.removeFirst().resume(returning: songs)
     }
-
-    func exists(songId: SongId) -> Bool {
-        return false
-    }
-
-    func add(songId: SongId) {}
-
-    func delete(songId: SongId) {}
-
-    func update(songIds: [SongId]) {}
 }

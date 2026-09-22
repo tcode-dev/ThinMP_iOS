@@ -74,7 +74,8 @@ struct MainEditViewModelTests {
     @Test
     func saveWritesEditedSettingsAndShortcutOrder() async {
         let service = MainServiceMock(settings: makeSettings(), shortcuts: shortcuts)
-        let vm = MainEditViewModel(mainService: service)
+        let shortcutRepository = ShortcutRepositoryMock(shortcuts: shortcuts.map { ShortcutEntity(shortcutId: $0.shortcutId, itemId: $0.itemId, type: $0.type) })
+        let vm = MainEditViewModel(mainService: service, shortcutRepository: shortcutRepository)
 
         await vm.load().value
         vm.settings.isRecentlyVisible = false
@@ -85,6 +86,7 @@ struct MainEditViewModelTests {
         #expect(service.savedSettings.count == 1)
         #expect(service.savedSettings[0].isRecentlyVisible == false)
         #expect(service.savedSettings[0].menus.map { $0.menu } == [.albums, .artists, .songs, .favoriteArtists, .favoriteSongs, .playlists])
-        #expect(service.updateCalls == [[ShortcutId(id: "s2")]])
+        #expect(shortcutRepository.updateCalls == [[ShortcutId(id: "s2")]])
+        #expect(shortcutRepository.findAll().map { $0.shortcutId } == [ShortcutId(id: "s2")])
     }
 }

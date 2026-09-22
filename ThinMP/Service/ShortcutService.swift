@@ -64,20 +64,4 @@ struct ShortcutService: ShortcutServiceProtocol {
 
         return shortcutModels
     }
-
-    func exists(itemId: ItemId, type: ShortcutType) -> Bool {
-        return shortcutRepository.exists(itemId: itemId, type: type)
-    }
-
-    func add(itemId: ItemId, type: ShortcutType) {
-        shortcutRepository.add(itemId: itemId, type: type)
-    }
-
-    func delete(itemId: ItemId, type: ShortcutType) {
-        shortcutRepository.delete(itemId: itemId, type: type)
-    }
-
-    func update(shortcutIds: [ShortcutId]) {
-        shortcutRepository.update(shortcutIds: shortcutIds)
-    }
 }

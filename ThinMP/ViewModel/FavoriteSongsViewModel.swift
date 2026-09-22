@@ -12,10 +12,15 @@ class FavoriteSongsViewModel: ObservableObject {
     @Published var songs: [SongModel] = []
 
     private let favoriteSongsService: FavoriteSongsServiceProtocol
+    private let favoriteSongRepository: FavoriteSongRepositoryProtocol
     private let loadTask = LoadTask()
 
-    init(favoriteSongsService: FavoriteSongsServiceProtocol = FavoriteSongsService()) {
+    init(
+        favoriteSongsService: FavoriteSongsServiceProtocol = FavoriteSongsService(),
+        favoriteSongRepository: FavoriteSongRepositoryProtocol = FavoriteSongRepository()
+    ) {
         self.favoriteSongsService = favoriteSongsService
+        self.favoriteSongRepository = favoriteSongRepository
     }
 
     @discardableResult
@@ -29,6 +34,6 @@ class FavoriteSongsViewModel: ObservableObject {
 
     /// 編集ページの並び順と削除を保存する
     func save() {
-        favoriteSongsService.update(songIds: songs.map { $0.songId })
+        favoriteSongRepository.update(songIds: songs.map { $0.songId })
     }
 }

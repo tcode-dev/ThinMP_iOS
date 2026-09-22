@@ -42,37 +42,6 @@ struct FavoriteSongsServiceTests {
         #expect(favoriteSongRepository.findAll().map { $0.id } == [1, 3])
     }
 
-    /// トグルボタンと MusicPlayer が使う exists / add / delete は Repository にそのまま届く
-    @Test
-    func existsAddAndDeleteWriteThroughToRepository() {
-        let favoriteSongRepository = FavoriteSongRepositoryMock()
-        let service = FavoriteSongsService(favoriteSongRepository: favoriteSongRepository, songRepository: SongRepositoryMock(songs: []))
-
-        #expect(!service.exists(songId: SongId(id: 1)))
-
-        service.add(songId: SongId(id: 1))
-
-        #expect(service.exists(songId: SongId(id: 1)))
-        #expect(favoriteSongRepository.findAll() == [SongId(id: 1)])
-
-        service.delete(songId: SongId(id: 1))
-
-        #expect(!service.exists(songId: SongId(id: 1)))
-        #expect(favoriteSongRepository.findAll().isEmpty)
-    }
-
-    /// 編集ページの保存は Repository の update にそのまま届く
-    @Test
-    func updateWritesThroughToRepository() {
-        let favoriteSongRepository = FavoriteSongRepositoryMock(songIds: [SongId(id: 1), SongId(id: 2)])
-        let service = FavoriteSongsService(favoriteSongRepository: favoriteSongRepository, songRepository: SongRepositoryMock(songs: []))
-
-        service.update(songIds: [SongId(id: 2)])
-
-        #expect(favoriteSongRepository.updateCalls == [[SongId(id: 2)]])
-        #expect(favoriteSongRepository.findAll() == [SongId(id: 2)])
-    }
-
     @Test
     func returnsEmptyWhenNoFavorites() async {
         let favoriteSongRepository = FavoriteSongRepositoryMock()

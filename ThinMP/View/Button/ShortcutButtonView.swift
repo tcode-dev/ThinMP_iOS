@@ -13,34 +13,34 @@ struct ShortcutButtonView: View {
     private let itemId: ItemId
     private let type: ShortcutType
     private let callback: () -> Void
-    private let service: ShortcutServiceProtocol
+    private let repository: ShortcutRepositoryProtocol
 
-    init(artistId: ArtistId, callback: @escaping () -> Void = {}, service: ShortcutServiceProtocol = ShortcutService()) {
-        self.init(itemId: ItemId(artistId: artistId), type: .artist, callback: callback, service: service)
+    init(artistId: ArtistId, callback: @escaping () -> Void = {}, repository: ShortcutRepositoryProtocol = ShortcutRepository()) {
+        self.init(itemId: ItemId(artistId: artistId), type: .artist, callback: callback, repository: repository)
     }
 
-    init(albumId: AlbumId, callback: @escaping () -> Void = {}, service: ShortcutServiceProtocol = ShortcutService()) {
-        self.init(itemId: ItemId(albumId: albumId), type: .album, callback: callback, service: service)
+    init(albumId: AlbumId, callback: @escaping () -> Void = {}, repository: ShortcutRepositoryProtocol = ShortcutRepository()) {
+        self.init(itemId: ItemId(albumId: albumId), type: .album, callback: callback, repository: repository)
     }
 
-    init(playlistId: PlaylistId, callback: @escaping () -> Void = {}, service: ShortcutServiceProtocol = ShortcutService()) {
-        self.init(itemId: ItemId(playlistId: playlistId), type: .playlist, callback: callback, service: service)
+    init(playlistId: PlaylistId, callback: @escaping () -> Void = {}, repository: ShortcutRepositoryProtocol = ShortcutRepository()) {
+        self.init(itemId: ItemId(playlistId: playlistId), type: .playlist, callback: callback, repository: repository)
     }
 
-    private init(itemId: ItemId, type: ShortcutType, callback: @escaping () -> Void, service: ShortcutServiceProtocol) {
+    private init(itemId: ItemId, type: ShortcutType, callback: @escaping () -> Void, repository: ShortcutRepositoryProtocol) {
         self.itemId = itemId
         self.type = type
         self.callback = callback
-        self.service = service
+        self.repository = repository
     }
 
     var body: some View {
         RegisterToggleButtonView(
             addLabel: LabelConstant.addShortcut,
             removeLabel: LabelConstant.removeShortcut,
-            exists: { service.exists(itemId: itemId, type: type) },
-            add: { service.add(itemId: itemId, type: type) },
-            remove: { service.delete(itemId: itemId, type: type) },
+            exists: { repository.exists(itemId: itemId, type: type) },
+            add: { repository.add(itemId: itemId, type: type) },
+            remove: { repository.delete(itemId: itemId, type: type) },
             callback: callback
         )
     }

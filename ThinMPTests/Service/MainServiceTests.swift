@@ -84,14 +84,4 @@ struct MainServiceTests {
         #expect(found.map { $0.shortcutId } == [ShortcutId(id: "s1")])
         #expect(shortcutService.findAllCalls == 1)
     }
-
-    @Test
-    func updateShortcutsDelegatesToShortcutService() {
-        let shortcutService = ShortcutServiceMock()
-        let service = makeService(userDefaults: makeUserDefaults(), shortcutService: shortcutService)
-
-        service.update(shortcutIds: [ShortcutId(id: "s2")])
-
-        #expect(shortcutService.updateCalls == [[ShortcutId(id: "s2")]])
-    }
 }

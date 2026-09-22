@@ -31,20 +31,4 @@ struct FavoriteSongsService: FavoriteSongsServiceProtocol {
 
         return songs
     }
-
-    func exists(songId: SongId) -> Bool {
-        return favoriteSongRepository.exists(songId: songId)
-    }
-
-    func add(songId: SongId) {
-        favoriteSongRepository.add(songId: songId)
-    }
-
-    func delete(songId: SongId) {
-        favoriteSongRepository.delete(songId: songId)
-    }
-
-    func update(songIds: [SongId]) {
-        favoriteSongRepository.update(songIds: songIds)
-    }
 }
