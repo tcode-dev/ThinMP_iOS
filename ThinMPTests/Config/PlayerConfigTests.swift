@@ -11,19 +11,9 @@ import Testing
 @testable import ThinMP
 
 struct PlayerConfigTests {
-    /// テストごとに空の UserDefaults
-    private func makeUserDefaults() -> UserDefaults {
-        let name = "PlayerConfigTests.\(UUID().uuidString)"
-        let userDefaults = UserDefaults(suiteName: name)!
-
-        userDefaults.removePersistentDomain(forName: name)
-
-        return userDefaults
-    }
-
     @Test
     func defaultsToNoRepeatAndNoShuffle() {
-        let config = PlayerConfig(userDefaults: makeUserDefaults())
+        let config = PlayerConfig(userDefaults: UserDefaults.empty())
 
         #expect(config.repeatMode == .none)
         #expect(config.shuffleMode == .off)
@@ -31,7 +21,7 @@ struct PlayerConfigTests {
 
     @Test
     func modesRoundTripAcrossInstances() {
-        let userDefaults = makeUserDefaults()
+        let userDefaults = UserDefaults.empty()
         let config = PlayerConfig(userDefaults: userDefaults)
 
         config.repeatMode = .one
@@ -44,7 +34,7 @@ struct PlayerConfigTests {
     /// リリース済みのアプリが書いた形式: "repeat" / "shuffle" に rawValue の Int
     @Test
     func readsLegacyStoredFormat() {
-        let userDefaults = makeUserDefaults()
+        let userDefaults = UserDefaults.empty()
 
         userDefaults.set(MPMusicRepeatMode.all.rawValue, forKey: "repeat")
         userDefaults.set(MPMusicShuffleMode.songs.rawValue, forKey: "shuffle")

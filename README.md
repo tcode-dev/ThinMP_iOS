@@ -112,7 +112,7 @@ xcodebuild -project ThinMP.xcodeproj -scheme ThinMP -destination 'platform=iOS S
 * `ThinMPTests/Config` — the `UserDefaults`-backed settings.
 * `ThinMPTests/Extension`, `ThinMPTests/View` — the generic `Sequence` helpers and `GridLayout`.
 * `ThinMPTests/Migration` — the Realm → SwiftData migration, run against an in-memory Realm and against `Fixtures/legacy.realm`.
-* `ThinMPTests/Support` — `RepositoryBackend`, mocks, and `FakeMediaItem` for building `SongModel` without the device library.
+* `ThinMPTests/Support` — `RepositoryBackend`, the Repository and Service mocks, `FakeMediaItem` for building `SongModel` without the device library, and `UserDefaults.empty()` for a fresh suite per test.
 
 ## App Store
 
