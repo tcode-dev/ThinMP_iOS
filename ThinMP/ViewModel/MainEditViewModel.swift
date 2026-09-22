@@ -10,7 +10,7 @@ import Combine
 @MainActor
 class MainEditViewModel: ObservableObject {
     /// 編集ページでそのまま書き換え、save() で保存する
-    @Published var settings = MainSettings(menus: [], isShortcutVisible: true, isRecentlyVisible: true)
+    @Published var settings = MainSettings.empty
     @Published var shortcuts: [ShortcutModel] = []
 
     private let mainService: MainServiceProtocol

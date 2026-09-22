@@ -12,20 +12,22 @@ struct PlayerSeekBarView: View {
     @EnvironmentObject var musicPlayer: MusicPlayer
 
     var body: some View {
-        Slider(value: $musicPlayer.currentSecond, in: 0 ... musicPlayer.durationSecond, step: 1, onEditingChanged: { editing in
-            if editing {
-                musicPlayer.beginSeek()
-            } else {
-                musicPlayer.endSeek()
+        VStack(spacing: 0) {
+            Slider(value: $musicPlayer.currentSecond, in: 0 ... musicPlayer.durationSecond, step: 1, onEditingChanged: { editing in
+                if editing {
+                    musicPlayer.beginSeek()
+                } else {
+                    musicPlayer.endSeek()
+                }
+            })
+            .frame(height: StyleConstant.button)
+            .padding(.horizontal, StyleConstant.isPad ? 40 : 30)
+            .accentColor(Color(.label))
+            HStack {
+                SecondaryTextView(Self.format(musicPlayer.currentSecond)).frame(width: 50, height: 20).padding(.leading, 40)
+                Spacer()
+                SecondaryTextView(Self.format(musicPlayer.durationSecond)).frame(width: 50, height: 20).padding(.trailing, 40)
             }
-        })
-        .frame(height: StyleConstant.button)
-        .padding(.horizontal, StyleConstant.isPad ? 40 : 30)
-        .accentColor(Color(.label))
-        HStack {
-            SecondaryTextView(Self.format(musicPlayer.currentSecond)).frame(width: 50, height: 20).padding(.leading, 40)
-            Spacer()
-            SecondaryTextView(Self.format(musicPlayer.durationSecond)).frame(width: 50, height: 20).padding(.trailing, 40)
         }
     }
 
