@@ -19,14 +19,14 @@ struct MainEditPageView: View {
                     dismiss()
                 }
                 List {
-                    ForEach(vm.menus) { menu in
-                        MenuEditRowView(menu: menu)
+                    ForEach($vm.settings.menus) { $setting in
+                        MenuEditRowView(text: setting.menu.label, visibility: $setting.visibility)
                     }
                     .onMove(perform: moveMenu)
                     .listRowInsets(.init())
-                    MenuEditRowView(menu: vm.shortcutMenu).listRowInsets(.init())
-                    MenuEditRowView(menu: vm.recentlyMenu).listRowInsets(.init())
-                    SectionTitleView(vm.shortcutMenu.primaryText).padding(StyleConstant.Padding.tiny)
+                    MenuEditRowView(text: LabelConstant.shortcut, visibility: $vm.settings.isShortcutVisible).listRowInsets(.init())
+                    MenuEditRowView(text: LabelConstant.recentlyAdded, visibility: $vm.settings.isRecentlyVisible).listRowInsets(.init())
+                    SectionTitleView(LabelConstant.shortcut).padding(StyleConstant.Padding.tiny)
                     ForEach(vm.shortcuts) { shortcut in
                         ShortcutRowView(shortcut: shortcut)
                     }
@@ -44,7 +44,7 @@ struct MainEditPageView: View {
     }
 
     private func moveMenu(source: IndexSet, destination: Int) {
-        vm.menus.move(fromOffsets: source, toOffset: destination)
+        vm.settings.menus.move(fromOffsets: source, toOffset: destination)
     }
 
     private func moveShortcut(source: IndexSet, destination: Int) {
@@ -56,23 +56,7 @@ struct MainEditPageView: View {
     }
 
     private func update() {
-        let mainMenuConfig = MainMenuConfig()
-        let menus = vm.menus.map { $0.primaryText }
-
-        mainMenuConfig.setSort(value: menus)
-
-        vm.menus.forEach {
-            mainMenuConfig.setVisibility(value: $0.visibility, key: $0.primaryText)
-        }
-
-        let mainSectionConfig = MainSectionConfig()
-
-        mainSectionConfig.setShortcutVisibility(value: vm.shortcutMenu.visibility)
-        mainSectionConfig.setRecentlyVisibility(value: vm.recentlyMenu.visibility)
-
-        let shortcutRegister = ShortcutRegister()
-        let shortcutIds = vm.shortcuts.map { $0.shortcutId }
-
-        shortcutRegister.update(shortcutIds: shortcutIds)
+        vm.save()
+        ShortcutRegister().update(shortcutIds: vm.shortcuts.map { $0.shortcutId })
     }
 }

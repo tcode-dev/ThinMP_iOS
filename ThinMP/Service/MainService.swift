@@ -5,19 +5,23 @@
 //  Created by tk on 2021/06/02.
 //
 
-import MediaPlayer
-
 struct MainService: MainServiceProtocol {
     private let ALBUM_COUNT = 20
     private let albumRepository: AlbumRepositoryProtocol
     private let shortcutService: ShortcutServiceProtocol
+    private let mainMenuConfig: MainMenuConfig
+    private let mainSectionConfig: MainSectionConfig
 
     init(
         albumRepository: AlbumRepositoryProtocol = AlbumRepository(),
-        shortcutService: ShortcutServiceProtocol = ShortcutService()
+        shortcutService: ShortcutServiceProtocol = ShortcutService(),
+        mainMenuConfig: MainMenuConfig = MainMenuConfig(),
+        mainSectionConfig: MainSectionConfig = MainSectionConfig()
     ) {
         self.albumRepository = albumRepository
         self.shortcutService = shortcutService
+        self.mainMenuConfig = mainMenuConfig
+        self.mainSectionConfig = mainSectionConfig
     }
 
     func findRecentlyAlbums() async -> [AlbumModel] {
@@ -30,21 +34,17 @@ struct MainService: MainServiceProtocol {
         return await shortcutService.findAll()
     }
 
-    func getMainMenus() -> [MenuModel] {
-        let config = MainMenuConfig()
-
-        return config.getList()
+    func getSettings() -> MainSettings {
+        return MainSettings(
+            menus: mainMenuConfig.load(),
+            isShortcutVisible: mainSectionConfig.isShortcutVisible,
+            isRecentlyVisible: mainSectionConfig.isRecentlyVisible
+        )
     }
 
-    func getShortcutMenu() -> MenuModel {
-        let config = MainSectionConfig()
-
-        return config.getShortcut()
-    }
-
-    func getRecentlyMenu() -> MenuModel {
-        let config = MainSectionConfig()
-
-        return config.getRecently()
+    func save(settings: MainSettings) {
+        mainMenuConfig.save(settings.menus)
+        mainSectionConfig.isShortcutVisible = settings.isShortcutVisible
+        mainSectionConfig.isRecentlyVisible = settings.isRecentlyVisible
     }
 }

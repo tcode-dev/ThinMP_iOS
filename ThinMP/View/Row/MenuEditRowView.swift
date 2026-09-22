@@ -7,32 +7,20 @@
 
 import SwiftUI
 
+/// メイン編集ページの行。タップで表示 / 非表示を切り替える
 struct MenuEditRowView: View {
-    private let size: CGFloat = 40
-
-    @ObservedObject var menu: MenuModel
-
-    init(menu: MenuModel) {
-        self.menu = menu
-    }
+    let text: String
+    @Binding var visibility: Bool
 
     var body: some View {
         HStack(alignment: .center) {
-            CheckboxButton().renderingMode(.original)
-            MenuRowView(text: menu.primaryText)
+            Image(visibility ? "CheckboxOn" : "CheckboxOff").renderingMode(.original)
+            MenuRowView(text: text)
             Spacer()
         }
         .padding(.leading, StyleConstant.Padding.large)
         .onTapGesture {
-            menu.toggleVisibility()
-        }
-    }
-
-    private func CheckboxButton() -> Image {
-        if menu.visibility {
-            return Image("CheckboxOn")
-        } else {
-            return Image("CheckboxOff")
+            visibility.toggle()
         }
     }
 }

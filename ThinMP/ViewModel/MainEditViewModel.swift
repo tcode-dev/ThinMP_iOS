@@ -9,9 +9,8 @@ import Combine
 
 @MainActor
 class MainEditViewModel: ObservableObject {
-    @Published var menus: [MenuModel] = []
-    @Published var shortcutMenu = MenuModel(primaryText: "", visibility: true)
-    @Published var recentlyMenu = MenuModel(primaryText: "", visibility: true)
+    /// 編集ページでそのまま書き換え、save() で保存する
+    @Published var settings = MainSettings(menus: [], isShortcutVisible: true, isRecentlyVisible: true)
     @Published var shortcuts: [ShortcutModel] = []
 
     private let mainService: MainServiceProtocol
@@ -27,21 +26,21 @@ class MainEditViewModel: ObservableObject {
         loadTask?.cancel()
 
         let task = Task {
-            let menus = mainService.getMainMenus()
-            let shortcutMenu = mainService.getShortcutMenu()
-            let recentlyMenu = mainService.getRecentlyMenu()
+            let settings = mainService.getSettings()
             let shortcuts = await mainService.findShortcuts()
 
             if Task.isCancelled { return }
 
-            self.menus = menus
-            self.shortcutMenu = shortcutMenu
-            self.recentlyMenu = recentlyMenu
+            self.settings = settings
             self.shortcuts = shortcuts
         }
 
         loadTask = task
 
         return task
+    }
+
+    func save() {
+        mainService.save(settings: settings)
     }
 }

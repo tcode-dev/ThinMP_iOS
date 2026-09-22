@@ -6,48 +6,32 @@
 //
 
 import Foundation
-import SwiftUI
 
+/// ライブラリメニューの並び順と表示 / 非表示
+/// 並び順は MainMenu.rawValue の配列、表示 / 非表示は rawValue をキーにした Bool で保存している
 class MainMenuConfig {
     private let SORT = "sort"
+    private let userDefaults: UserDefaults
 
-    init() {
-        UserDefaults.standard.register(defaults: [SORT: [
-            LabelConstant.artists,
-            LabelConstant.albums,
-            LabelConstant.songs,
-            LabelConstant.favoriteArtists,
-            LabelConstant.favoriteSongs,
-            LabelConstant.playlists,
-        ]])
-        UserDefaults.standard.register(defaults: [
-            LabelConstant.artists: true,
-            LabelConstant.albums: true,
-            LabelConstant.songs: true,
-            LabelConstant.favoriteArtists: true,
-            LabelConstant.favoriteSongs: true,
-            LabelConstant.playlists: true,
-        ])
+    init(userDefaults: UserDefaults = .standard) {
+        self.userDefaults = userDefaults
+        userDefaults.register(defaults: [SORT: MainMenu.allCases.map { $0.rawValue }])
+        userDefaults.register(defaults: Dictionary(uniqueKeysWithValues: MainMenu.allCases.map { ($0.rawValue, true) }))
     }
 
-    func setSort(value: [String]) {
-        UserDefaults.standard.set(value, forKey: SORT)
+    /// 保存した並び順に無いメニュー(あとから追加されたもの)は末尾に足し、知らない値は捨てる
+    func load() -> [MainMenuSetting] {
+        let stored = (userDefaults.array(forKey: SORT) as? [String] ?? []).compactMap { MainMenu(rawValue: $0) }
+        let menus = stored + MainMenu.allCases.filter { !stored.contains($0) }
+
+        return menus.map { MainMenuSetting(menu: $0, visibility: userDefaults.bool(forKey: $0.rawValue)) }
     }
 
-    func setVisibility(value: Bool, key: String) {
-        UserDefaults.standard.set(value, forKey: key)
-    }
+    func save(_ menus: [MainMenuSetting]) {
+        userDefaults.set(menus.map { $0.menu.rawValue }, forKey: SORT)
 
-    func getList() -> [MenuModel] {
-        return getSort()
-            .map { MenuModel(primaryText: $0, visibility: getVisibility(key: $0)) }
-    }
-
-    private func getSort() -> [String] {
-        return UserDefaults.standard.array(forKey: SORT) as! [String]
-    }
-
-    private func getVisibility(key: String) -> Bool {
-        return UserDefaults.standard.bool(forKey: key)
+        for setting in menus {
+            userDefaults.set(setting.visibility, forKey: setting.menu.rawValue)
+        }
     }
 }
