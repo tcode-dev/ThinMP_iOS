@@ -9,44 +9,45 @@ import MediaPlayer
 
 class ArtistRepository: ArtistRepositoryProtocol {
     func findAll() -> [ArtistModel] {
-        let property = MPMediaPropertyPredicate(value: false, forProperty: MPMediaItemPropertyIsCloudItem)
-        let query = MPMediaQuery.artists()
-
-        query.addFilterPredicate(property)
-
-        return query.collections!.map {
-            return ArtistModel(artistId: ArtistId(id: $0.representativeItem!.artistPersistentID), primaryText: $0.representativeItem?.artist)
-        }
+        return artists(localArtistsQuery())
     }
 
     func findById(artistId: ArtistId) -> ArtistModel? {
-        let property = MPMediaPropertyPredicate(value: artistId.id, forProperty: MPMediaItemPropertyArtistPersistentID)
         let query = MPMediaQuery.artists()
 
-        query.addFilterPredicate(property)
+        query.addFilterPredicate(MPMediaPropertyPredicate(value: artistId.id, forProperty: MPMediaItemPropertyArtistPersistentID))
 
-        return query.collections!.map {
-            return ArtistModel(artistId: ArtistId(id: $0.representativeItem!.artistPersistentID), primaryText: $0.representativeItem?.artist)
-        }.first
+        return artists(query).first
     }
 
+    /// MPMediaQuery には IN 述語が無いので、ライブラリを 1 回取得して Set で絞る
+    /// 結果は artistIds の順で、ライブラリに無いアーティストは落ちる
     func findByIds(artistIds: [ArtistId]) -> [ArtistModel] {
-        let property = MPMediaPropertyPredicate(value: false, forProperty: MPMediaItemPropertyIsCloudItem)
-        let query = MPMediaQuery.artists()
-        let ids = artistIds.map { $0.id }
-
-        query.addFilterPredicate(property)
-
-        let filtered = query.collections!.filter {
-            if let artistPersistentId = $0.representativeItem?.artistPersistentID {
-                return ids.contains(artistPersistentId)
-            }
-            return false
+        if artistIds.isEmpty {
+            return []
         }
 
-        return artistIds
-            .filter { artistId in filtered.contains(where: { $0.representativeItem?.artistPersistentID == artistId.id }) }
-            .map { artistId in filtered.first { $0.representativeItem?.artistPersistentID == artistId.id }}
-            .map { ArtistModel(artistId: ArtistId(id: ($0?.representativeItem!.artistPersistentID)!), primaryText: $0?.representativeItem?.artist) }
+        let ids = Set(artistIds)
+        let artists = Dictionary(
+            artists(localArtistsQuery())
+                .filter { ids.contains($0.artistId) }
+                .map { ($0.artistId, $0) },
+            uniquingKeysWith: { first, _ in first }
+        )
+
+        return artistIds.compactMap { artists[$0] }
+    }
+
+    /// クラウドにしか無い項目を除いた全アーティスト
+    private func localArtistsQuery() -> MPMediaQuery {
+        let query = MPMediaQuery.artists()
+
+        query.addFilterPredicate(MPMediaPropertyPredicate(value: false, forProperty: MPMediaItemPropertyIsCloudItem))
+
+        return query
+    }
+
+    private func artists(_ query: MPMediaQuery) -> [ArtistModel] {
+        return (query.collections ?? []).compactMap { ArtistModel(collection: $0) }
     }
 }

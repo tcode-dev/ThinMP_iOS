@@ -22,10 +22,13 @@ struct PlaylistDetailService: PlaylistDetailServiceProtocol {
         self.playlistRegister = playlistRegister
     }
 
-    func findById(playlistId: PlaylistId) async -> PlaylistDetailModel {
-        let playlist = playlistRepository.findById(playlistId: playlistId)
+    /// 削除済みのプレイリストなら nil
+    func findById(playlistId: PlaylistId) async -> PlaylistDetailModel? {
+        guard let playlist = playlistRepository.findById(playlistId: playlistId) else {
+            return nil
+        }
 
-        return await createModels(playlists: [playlist])[0]
+        return await createModels(playlists: [playlist]).first
     }
 
     func findByIds(playlistIds: [PlaylistId]) async -> [PlaylistDetailModel] {

@@ -23,33 +23,28 @@ struct ArtistDetailService: ArtistDetailServiceProtocol {
     }
 
     func findById(artistId: ArtistId) -> ArtistDetailModel? {
-        let artist = artistRepository.findById(artistId: artistId)
-        let primaryText = artist?.primaryText
-        let albums = albumRepository.findByArtistId(artistId: artistId)
-        let albumIds = albums.map { $0.albumId }
-        let artwork = albums.first(where: { album -> Bool in
-            album.artwork != nil
-        })?.artwork
-        let songs = songRepository.findByAlbumIds(albumIds: albumIds)
-        let secondaryText = "\(albums.count) albums, \(songs.count) songs"
-
-        if let artist = artist {
-            return ArtistDetailModel(artistId: artist.artistId, primaryText: primaryText, secondaryText: secondaryText, artwork: artwork, albums: albums, songs: songs)
+        guard let artist = artistRepository.findById(artistId: artistId) else {
+            return nil
         }
 
-        return Optional.none
+        let albums = albumRepository.findByArtistId(artistId: artistId)
+        let songs = songRepository.findByAlbumIds(albumIds: albums.map { $0.albumId })
+        let secondaryText = String(format: NSLocalizedString(LabelConstant.albumsAndSongsCount, comment: ""), albums.count, songs.count)
+
+        return ArtistDetailModel(artistId: artist.artistId, primaryText: artist.primaryText, secondaryText: secondaryText, artwork: artwork(albums: albums), albums: albums, songs: songs)
     }
 
+    /// ショートカット用。アートワークのためにアルバムは引くが、albums / songs は空のまま
     func findByIds(artistIds: [ArtistId]) -> [ArtistDetailModel] {
-        let artists = artistRepository.findByIds(artistIds: artistIds)
-
-        return artists.map { artist in
+        return artistRepository.findByIds(artistIds: artistIds).map { artist in
             let albums = albumRepository.findByArtistId(artistId: artist.artistId)
-            let artwork = albums.first(where: { album -> Bool in
-                album.artwork != nil
-            })?.artwork
 
-            return ArtistDetailModel(artistId: artist.artistId, primaryText: artist.primaryText, secondaryText: artist.secondaryText, artwork: artwork, albums: [], songs: [])
+            return ArtistDetailModel(artistId: artist.artistId, primaryText: artist.primaryText, secondaryText: nil, artwork: artwork(albums: albums), albums: [], songs: [])
         }
+    }
+
+    /// アーティスト自身はアートワークを持たないので、アルバムの中で最初に見つかったものを使う
+    private func artwork(albums: [AlbumModel]) -> MPMediaItemArtwork? {
+        return albums.first { $0.artwork != nil }?.artwork
     }
 }

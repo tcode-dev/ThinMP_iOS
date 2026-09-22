@@ -10,6 +10,8 @@ enum LabelConstant {
     static let addPlaylist: String = "AddPlaylist"
     static let addShortcut: String = "AddShortcut"
     static let albums: String = "Albums"
+    /// "%d albums, %d songs"。アーティスト詳細の見出し
+    static let albumsAndSongsCount: String = "AlbumsAndSongsCount"
     static let artists: String = "Artists"
     static let cancel: String = "Cancel"
     static let done: String = "Done"

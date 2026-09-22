@@ -26,7 +26,9 @@ struct PlaylistRepository: PlaylistRepositoryProtocol {
     }
 
     func add(playlistId: PlaylistId, songId: SongId) {
-        let playlist = findModel(playlistId: playlistId)
+        guard let playlist = findModel(playlistId: playlistId) else {
+            return
+        }
 
         // 同じ曲は 1 つのプレイリストに 1 回しか登録しない
         if playlist.songs.contains(where: { $0.songId == String(songId.id) }) {
@@ -47,8 +49,8 @@ struct PlaylistRepository: PlaylistRepositoryProtocol {
         return try! store.context.fetch(descriptor).map { toEntity(model: $0) }
     }
 
-    func findById(playlistId: PlaylistId) -> PlaylistEntity {
-        return toEntity(model: findModel(playlistId: playlistId))
+    func findById(playlistId: PlaylistId) -> PlaylistEntity? {
+        return findModel(playlistId: playlistId).map { toEntity(model: $0) }
     }
 
     func findByIds(playlistIds: [PlaylistId]) -> [PlaylistEntity] {
@@ -63,7 +65,9 @@ struct PlaylistRepository: PlaylistRepositoryProtocol {
     }
 
     func update(playlistId: PlaylistId, name: String, songIds: [SongId]) {
-        let playlist = findModel(playlistId: playlistId)
+        guard let playlist = findModel(playlistId: playlistId) else {
+            return
+        }
 
         playlist.songs.forEach { store.context.delete($0) }
 
@@ -83,11 +87,11 @@ struct PlaylistRepository: PlaylistRepositoryProtocol {
         delete(playlistIds: [playlistId])
     }
 
-    private func findModel(playlistId: PlaylistId) -> PlaylistDataModel {
+    private func findModel(playlistId: PlaylistId) -> PlaylistDataModel? {
         let id = playlistId.id
         let descriptor = FetchDescriptor<PlaylistDataModel>(predicate: #Predicate { $0.id == id })
 
-        return try! store.context.fetch(descriptor).first!
+        return try! store.context.fetch(descriptor).first
     }
 
     private func findModels(playlistIds: [PlaylistId]) -> [PlaylistDataModel] {
