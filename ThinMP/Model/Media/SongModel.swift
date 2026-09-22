@@ -23,6 +23,10 @@ struct SongModel: MediaProtocol, Identifiable {
         return ArtistId(id: item.artistPersistentID)
     }
 
+    var albumId: AlbumId {
+        return AlbumId(id: item.albumPersistentID)
+    }
+
     var primaryText: String? {
         return item.title
     }

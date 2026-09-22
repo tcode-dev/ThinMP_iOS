@@ -29,8 +29,13 @@ class SongRepository: SongRepositoryProtocol {
         return songs(query)
     }
 
-    func findByAlbumIds(albumIds: [AlbumId]) -> [SongModel] {
-        return albumIds.flatMap { findByAlbumId(albumId: $0) }
+    /// アーティストの曲を 1 回のクエリで引く。アルバムごとの並びは呼び出し側で揃える
+    func findByArtistId(artistId: ArtistId) -> [SongModel] {
+        let query = MPMediaQuery.songs()
+
+        query.addFilterPredicate(MPMediaPropertyPredicate(value: artistId.id, forProperty: MPMediaItemPropertyArtistPersistentID))
+
+        return songs(query)
     }
 
     /// クラウドにしか無い項目を除いた全曲

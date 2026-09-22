@@ -162,7 +162,7 @@ final class ShortcutRepositoryMock: ShortcutRepositoryProtocol {
     }
 }
 
-/// 端末のライブラリの代わり。findByIds は実装と同じく songIds の順序で返す
+/// 端末のライブラリの代わり。findByIds は実装と同じく songIds の順序で返し、findByArtistId は songs を artistId で絞る
 final class SongRepositoryMock: SongRepositoryProtocol {
     let songs: [SongModel]
     /// findByAlbumId が返す曲
@@ -189,8 +189,8 @@ final class SongRepositoryMock: SongRepositoryProtocol {
         return albumSongs[albumId] ?? []
     }
 
-    func findByAlbumIds(albumIds: [AlbumId]) -> [SongModel] {
-        return albumIds.flatMap { findByAlbumId(albumId: $0) }
+    func findByArtistId(artistId: ArtistId) -> [SongModel] {
+        return songs.filter { $0.artistId == artistId }
     }
 }
 

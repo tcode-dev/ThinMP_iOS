@@ -13,27 +13,27 @@ struct ArtistDetailServiceTests {
     private let album1 = AlbumModel(albumId: AlbumId(id: 1), primaryText: "A")
     private let album2 = AlbumModel(albumId: AlbumId(id: 2), primaryText: "B")
 
-    private func makeService(artists: [ArtistModel], albums: [AlbumModel], albumSongs: [AlbumId: [SongModel]] = [:]) -> ArtistDetailService {
+    private func makeService(artists: [ArtistModel], albums: [AlbumModel], songs: [SongModel] = []) -> ArtistDetailService {
         return ArtistDetailService(
             artistRepository: ArtistRepositoryMock(artists: artists),
             albumRepository: AlbumRepositoryMock(albums: albums, artistAlbums: [artistId: albums]),
-            songRepository: SongRepositoryMock(songs: [], albumSongs: albumSongs)
+            songRepository: SongRepositoryMock(songs: songs)
         )
     }
 
+    /// 曲はライブラリの順ではなく、アルバムの順にまとめ直す
     @Test
-    func findByIdComposesAlbumsAndSongs() throws {
+    func findByIdComposesAlbumsAndSongsInAlbumOrder() throws {
         let service = makeService(
             artists: [ArtistModel(artistId: artistId, primaryText: "Artist")],
             albums: [album1, album2],
-            albumSongs: [AlbumId(id: 1): [.fake(id: 11), .fake(id: 12)], AlbumId(id: 2): [.fake(id: 21)]]
+            songs: [.fake(id: 21, artistId: 10, albumId: 2), .fake(id: 11, artistId: 10, albumId: 1), .fake(id: 12, artistId: 10, albumId: 1)]
         )
 
         let artist = try #require(service.findById(artistId: artistId))
 
         #expect(artist.primaryText == "Artist")
         #expect(artist.albums.map { $0.albumId.id } == [1, 2])
-        // 曲はアルバムの順に並ぶ
         #expect(artist.songs.map { $0.songId.id } == [11, 12, 21])
     }
 

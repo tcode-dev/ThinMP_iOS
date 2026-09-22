@@ -14,12 +14,14 @@ final class FakeMediaItem: MPMediaItem {
     private let fakeTitle: String
     private let fakeArtist: String
     private let fakeArtistPersistentID: MPMediaEntityPersistentID
+    private let fakeAlbumPersistentID: MPMediaEntityPersistentID
 
-    init(persistentID: MPMediaEntityPersistentID, title: String, artist: String, artistPersistentID: MPMediaEntityPersistentID) {
+    init(persistentID: MPMediaEntityPersistentID, title: String, artist: String, artistPersistentID: MPMediaEntityPersistentID, albumPersistentID: MPMediaEntityPersistentID) {
         fakePersistentID = persistentID
         fakeTitle = title
         fakeArtist = artist
         fakeArtistPersistentID = artistPersistentID
+        fakeAlbumPersistentID = albumPersistentID
         super.init()
     }
 
@@ -31,6 +33,7 @@ final class FakeMediaItem: MPMediaItem {
     override var title: String? { fakeTitle }
     override var artist: String? { fakeArtist }
     override var artistPersistentID: MPMediaEntityPersistentID { fakeArtistPersistentID }
+    override var albumPersistentID: MPMediaEntityPersistentID { fakeAlbumPersistentID }
     override var artwork: MPMediaItemArtwork? { nil }
 
     override func value(forProperty property: String) -> Any? {
@@ -39,6 +42,7 @@ final class FakeMediaItem: MPMediaItem {
         case MPMediaItemPropertyTitle: return fakeTitle
         case MPMediaItemPropertyArtist: return fakeArtist
         case MPMediaItemPropertyArtistPersistentID: return fakeArtistPersistentID
+        case MPMediaItemPropertyAlbumPersistentID: return fakeAlbumPersistentID
         case MPMediaItemPropertyArtwork: return nil
         default: return super.value(forProperty: property)
         }
@@ -46,7 +50,7 @@ final class FakeMediaItem: MPMediaItem {
 }
 
 extension SongModel {
-    static func fake(id: MPMediaEntityPersistentID, title: String = "", artistId: MPMediaEntityPersistentID = 0) -> SongModel {
-        return SongModel(item: FakeMediaItem(persistentID: id, title: title, artist: "", artistPersistentID: artistId))
+    static func fake(id: MPMediaEntityPersistentID, title: String = "", artistId: MPMediaEntityPersistentID = 0, albumId: MPMediaEntityPersistentID = 0) -> SongModel {
+        return SongModel(item: FakeMediaItem(persistentID: id, title: title, artist: "", artistPersistentID: artistId, albumPersistentID: albumId))
     }
 }
