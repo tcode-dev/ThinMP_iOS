@@ -32,7 +32,7 @@ struct ShortcutRealmRepository: ShortcutRepositoryProtocol {
 
     func findAll() -> [ShortcutEntity] {
         return realm.objects(ShortcutRealmModel.self)
-            .sorted(byKeyPath: ShortcutRealmModel.ORDER, ascending: false)
+            .sorted(byKeyPath: ShortcutRealmModel.orderKey, ascending: false)
             .compactMap { toEntity(model: $0) }
     }
 
@@ -58,11 +58,11 @@ struct ShortcutRealmRepository: ShortcutRepositoryProtocol {
     }
 
     private func find(target: ShortcutTarget) -> Results<ShortcutRealmModel> {
-        return realm.objects(ShortcutRealmModel.self).filter("\(ShortcutRealmModel.ITEM_ID) = '\(target.itemId)' AND \(ShortcutRealmModel.TYPE) = \(target.type.rawValue)")
+        return realm.objects(ShortcutRealmModel.self).filter("\(ShortcutRealmModel.itemIdKey) = '\(target.itemId)' AND \(ShortcutRealmModel.typeKey) = \(target.type.rawValue)")
     }
 
     private func findByIds(shortcutIds: [ShortcutId]) -> Results<ShortcutRealmModel> {
-        return realm.objects(ShortcutRealmModel.self).filter("\(ShortcutRealmModel.ID) IN %@", shortcutIds.map { $0.id })
+        return realm.objects(ShortcutRealmModel.self).filter("\(ShortcutRealmModel.idKey) IN %@", shortcutIds.map { $0.id })
     }
 
     /// 指す先が読めない行は nil
@@ -86,7 +86,7 @@ struct ShortcutRealmRepository: ShortcutRepositoryProtocol {
     }
 
     private func incrementOrder() -> Int {
-        return (realm.objects(ShortcutRealmModel.self).max(ofProperty: ShortcutRealmModel.ORDER) as Int? ?? 0) + 1
+        return (realm.objects(ShortcutRealmModel.self).max(ofProperty: ShortcutRealmModel.orderKey) as Int? ?? 0) + 1
     }
 
     private func sort(shortcutIds: [ShortcutId]) {

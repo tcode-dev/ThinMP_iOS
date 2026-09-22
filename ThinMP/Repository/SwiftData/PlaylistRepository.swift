@@ -110,7 +110,7 @@ struct PlaylistRepository: PlaylistRepositoryProtocol {
     private func delete(playlistIds: [PlaylistId]) {
         let playlists = findModels(playlistIds: playlistIds)
 
-        if playlists.count == 0 {
+        if playlists.isEmpty {
             return
         }
 

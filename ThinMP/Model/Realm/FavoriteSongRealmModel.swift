@@ -9,15 +9,15 @@ import Foundation
 import RealmSwift
 
 class FavoriteSongRealmModel: Object {
-    static let ID: String = "id"
-    static let SONG_ID: String = "songId"
-    static let ORDER: String = "order"
+    static let idKey: String = "id"
+    static let songIdKey: String = "songId"
+    static let orderKey: String = "order"
 
     @objc dynamic var id: String = UUID().uuidString
     @objc dynamic var songId: String = ""
     @objc dynamic var order: Int = 1
 
     override static func primaryKey() -> String {
-        return ID
+        return idKey
     }
 }

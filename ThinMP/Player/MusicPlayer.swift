@@ -11,7 +11,8 @@ import MediaPlayer
 // 全体をメインアクターに隔離する。お気に入りの Repository(SwiftData)もここから触る
 @MainActor
 class MusicPlayer: ObservableObject {
-    private let PREV_SECOND: Double = 3
+    /// 再生位置がここまでなら prev() で前の曲へ、過ぎていれば曲の先頭へ戻る
+    private let prevThresholdSecond: Double = 3
 
     @Published var isActive: Bool = false
     @Published var isPlaying: Bool = false
@@ -73,7 +74,7 @@ class MusicPlayer: ObservableObject {
     }
 
     func prev() {
-        if currentSecond <= PREV_SECOND {
+        if currentSecond <= prevThresholdSecond {
             player.skipToPreviousItem()
         } else {
             player.skipToBeginning()

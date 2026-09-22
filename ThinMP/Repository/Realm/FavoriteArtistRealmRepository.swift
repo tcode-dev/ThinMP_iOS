@@ -16,7 +16,7 @@ struct FavoriteArtistRealmRepository: FavoriteArtistRepositoryProtocol {
 
     func findAll() -> [ArtistId] {
         return realm.objects(FavoriteArtistRealmModel.self)
-            .sorted(byKeyPath: FavoriteArtistRealmModel.ORDER)
+            .sorted(byKeyPath: FavoriteArtistRealmModel.orderKey)
             .map { ArtistId(id: UInt64($0.artistId)!) }
     }
 
@@ -61,8 +61,8 @@ struct FavoriteArtistRealmRepository: FavoriteArtistRepositoryProtocol {
 
         for index in 0 ..< artistIds.count {
             realm.create(FavoriteArtistRealmModel.self, value: [
-                FavoriteArtistRealmModel.ARTIST_ID: String(artistIds[index].id),
-                FavoriteArtistRealmModel.ORDER: index,
+                FavoriteArtistRealmModel.artistIdKey: String(artistIds[index].id),
+                FavoriteArtistRealmModel.orderKey: index,
             ])
         }
 
@@ -70,12 +70,12 @@ struct FavoriteArtistRealmRepository: FavoriteArtistRepositoryProtocol {
     }
 
     private func find(artistId: ArtistId) -> Results<FavoriteArtistRealmModel> {
-        return realm.objects(FavoriteArtistRealmModel.self).filter("\(FavoriteArtistRealmModel.ARTIST_ID) = '\(String(artistId.id))'")
+        return realm.objects(FavoriteArtistRealmModel.self).filter("\(FavoriteArtistRealmModel.artistIdKey) = '\(String(artistId.id))'")
     }
 
     private func truncate() {
         let results = realm.objects(FavoriteArtistRealmModel.self)
-        if results.count == 0 {
+        if results.isEmpty {
             return
         }
 
@@ -85,6 +85,6 @@ struct FavoriteArtistRealmRepository: FavoriteArtistRepositoryProtocol {
     }
 
     private func incrementOrder() -> Int {
-        return (realm.objects(FavoriteArtistRealmModel.self).max(ofProperty: FavoriteArtistRealmModel.ORDER) as Int? ?? 0) + 1
+        return (realm.objects(FavoriteArtistRealmModel.self).max(ofProperty: FavoriteArtistRealmModel.orderKey) as Int? ?? 0) + 1
     }
 }
