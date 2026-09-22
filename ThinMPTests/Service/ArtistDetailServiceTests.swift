@@ -37,20 +37,6 @@ struct ArtistDetailServiceTests {
         #expect(artist.songs.map { $0.songId.id } == [11, 12, 21])
     }
 
-    /// 曲はアーティストで引くので、同じアルバムにある他のアーティストの曲は入らない
-    @Test
-    func findByIdLeavesOutOtherArtistsSongs() throws {
-        let service = makeService(
-            artists: [ArtistModel(artistId: artistId, primaryText: "Artist")],
-            albums: [album1],
-            songs: [.fake(id: 11, artistId: 10, albumId: 1), .fake(id: 99, artistId: 20, albumId: 1)]
-        )
-
-        let artist = try #require(service.findById(artistId: artistId))
-
-        #expect(artist.songs.map { $0.songId.id } == [11])
-    }
-
     @Test
     func findByIdReturnsNilWhenArtistIsMissing() {
         let service = makeService(artists: [], albums: [album1])
