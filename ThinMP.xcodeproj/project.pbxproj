@@ -209,6 +209,7 @@
 		7E7F8515057DA1344B8C9922 /* Sequence+Uniqued.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357CC7D9C31A7AACDFEF5215 /* Sequence+Uniqued.swift */; };
 		FC04F8E13E3849E763032413 /* Optional+OrUnknown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A95F77FC8278ED7E9426D99 /* Optional+OrUnknown.swift */; };
 		A5F797AAD4D5621CAF8AD8DB /* Sequence+Keyed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D079305A25492C90AEFC7C3 /* Sequence+Keyed.swift */; };
+		8154D17B75C4E9839955524A /* MPMediaQuery+Local.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128A2EE1F7CE33612ED92B3A /* MPMediaQuery+Local.swift */; };
 		52B76EDBFFA46E975B7E5441 /* LoadTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BDE437A6348D1B5DC1162E /* LoadTask.swift */; };
 		52B1D0D1908F0691A23B4F5A /* PlayPauseButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B45E44ABFC41FCF30E2EDE /* PlayPauseButtonView.swift */; };
 		52B81927018AD3D30646257A /* PlayerSeekBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BE7EA7F854B79754817781 /* PlayerSeekBarView.swift */; };
@@ -440,6 +441,7 @@
 		357CC7D9C31A7AACDFEF5215 /* Sequence+Uniqued.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sequence+Uniqued.swift"; sourceTree = "<group>"; };
 		2A95F77FC8278ED7E9426D99 /* Optional+OrUnknown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Optional+OrUnknown.swift"; sourceTree = "<group>"; };
 		0D079305A25492C90AEFC7C3 /* Sequence+Keyed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sequence+Keyed.swift"; sourceTree = "<group>"; };
+		128A2EE1F7CE33612ED92B3A /* MPMediaQuery+Local.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MPMediaQuery+Local.swift"; sourceTree = "<group>"; };
 		52BDE437A6348D1B5DC1162E /* LoadTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadTask.swift; sourceTree = "<group>"; };
 		52B45E44ABFC41FCF30E2EDE /* PlayPauseButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayPauseButtonView.swift; sourceTree = "<group>"; };
 		52BE7EA7F854B79754817781 /* PlayerSeekBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerSeekBarView.swift; sourceTree = "<group>"; };
@@ -1074,6 +1076,7 @@
 				357CC7D9C31A7AACDFEF5215 /* Sequence+Uniqued.swift */,
 				2A95F77FC8278ED7E9426D99 /* Optional+OrUnknown.swift */,
 				0D079305A25492C90AEFC7C3 /* Sequence+Keyed.swift */,
+				128A2EE1F7CE33612ED92B3A /* MPMediaQuery+Local.swift */,
 					);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1224,6 +1227,7 @@
 						7E7F8515057DA1344B8C9922 /* Sequence+Uniqued.swift in Sources */,
 				FC04F8E13E3849E763032413 /* Optional+OrUnknown.swift in Sources */,
 				A5F797AAD4D5621CAF8AD8DB /* Sequence+Keyed.swift in Sources */,
+				8154D17B75C4E9839955524A /* MPMediaQuery+Local.swift in Sources */,
 				52BF725186C711FB7266521D /* EditPageLayout.swift in Sources */,
 				52B49B937EEB15084069E37B /* ScrollPageLayout.swift in Sources */,
 				52B0116F54D0078B3504549D /* View+PlaylistRegisterPopup.swift in Sources */,
