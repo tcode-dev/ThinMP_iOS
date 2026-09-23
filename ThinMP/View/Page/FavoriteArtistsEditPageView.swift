@@ -11,10 +11,12 @@ struct FavoriteArtistsEditPageView: View {
     @StateObject private var vm = FavoriteArtistsViewModel()
 
     var body: some View {
-        EditPageLayout(isDoneEnabled: vm.isLoaded, onDone: vm.save) {
+        EditPageLayout(isDoneEnabled: vm.artists != nil, onDone: vm.save) {
             List {
-                ReorderableListView(items: $vm.artists) { artist in
-                    PlainRowView(media: artist)
+                if let artists = Binding($vm.artists) {
+                    ReorderableListView(items: artists) { artist in
+                        PlainRowView(media: artist)
+                    }
                 }
             }
         }

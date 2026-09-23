@@ -20,7 +20,7 @@ struct FavoriteArtistsPageView: View {
             }
         } content: { geometry in
             ListEmptyHeaderView(isScrolledUnder: $isScrolledUnder, top: geometry.safeAreaInsets.top)
-            ArtistListView(artists: vm.artists) { vm.load() }
+            ArtistListView(artists: vm.artists ?? []) { vm.load() }
         }
         .onAppear {
             vm.load()
