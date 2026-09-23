@@ -11,12 +11,12 @@ import SwiftUI
 struct ButtonImageView: View {
     private let dimmedOpacity = 0.5
 
-    let name: String
+    let image: ImageResource
     let size: CGFloat
     var dimmed: Bool = false
 
     var body: some View {
-        Image(name)
+        Image(image)
             .renderingMode(.original)
             .resizable()
             .frame(width: size, height: size)

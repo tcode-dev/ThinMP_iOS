@@ -34,7 +34,7 @@ struct MiniPlayerView: View {
                     PlayPauseButtonView(size: buttonImageSize)
                         .frame(width: buttonSize, height: buttonSize)
                     Button(action: musicPlayer.next) {
-                        ButtonImageView(name: "NextButton", size: buttonImageSize)
+                        ButtonImageView(image: .nextButton, size: buttonImageSize)
                     }
                     .frame(width: buttonSize, height: buttonSize)
                 }

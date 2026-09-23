@@ -16,11 +16,11 @@ struct PlayPauseButtonView: View {
     var body: some View {
         if musicPlayer.isPlaying {
             Button(action: musicPlayer.pause) {
-                ButtonImageView(name: "PauseButton", size: size)
+                ButtonImageView(image: .pauseButton, size: size)
             }
         } else {
             Button(action: musicPlayer.play) {
-                ButtonImageView(name: "PlayButton", size: size)
+                ButtonImageView(image: .playButton, size: size)
             }
         }
     }

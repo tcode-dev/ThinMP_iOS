@@ -14,7 +14,7 @@ struct MenuEditRowView: View {
 
     var body: some View {
         HStack(alignment: .center) {
-            Image(visibility ? "CheckboxOn" : "CheckboxOff").renderingMode(.original)
+            Image(visibility ? .checkboxOn : .checkboxOff).renderingMode(.original)
             MenuRowView(text: text)
             Spacer()
         }
