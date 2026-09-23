@@ -23,10 +23,16 @@ struct AlbumDetailPageView: View {
                 }
             }
         } content: { geometry in
-            HeroHeaderView(isScrolledUnder: $isScrolledUnder, width: geometry.size.width, size: geometry.heroSize, top: geometry.safeAreaInsets.top, primaryText: vm.album?.primaryText) {
+            HeroHeaderView(isScrolledUnder: $isScrolledUnder, width: geometry.size.width, size: geometry.heroSize, top: geometry.safeAreaInsets.top) {
                 HeroSquareImageView(size: geometry.heroSize, artwork: vm.album?.artwork)
+            } primaryText: {
+                if let album = vm.album {
+                    TitleView(album.primaryText)
+                }
             } secondaryText: {
-                SecondaryTextView(vm.album?.secondaryText)
+                if let album = vm.album {
+                    SecondaryTextView(album.secondaryText)
+                }
             }
             SongListView(songs: vm.album?.songs ?? []) { playlistRegisterSongId = $0 }
         }

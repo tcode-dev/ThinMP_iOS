@@ -33,8 +33,9 @@ struct ShortcutRepository: ShortcutRepositoryProtocol {
         return try! store.context.fetch(descriptor).compactMap { toEntity(model: $0) }
     }
 
+    /// 行そのものは要らないので、読み込まずに数だけ数える
     func exists(target: ShortcutTarget) -> Bool {
-        return !find(target: target).isEmpty
+        return try! store.context.fetchCount(descriptor(target: target)) > 0
     }
 
     /// 渡したものだけを渡した順で残す。先頭ほど order が大きいので、新しく add したものが先頭にくる
@@ -65,11 +66,14 @@ struct ShortcutRepository: ShortcutRepositoryProtocol {
     }
 
     private func find(target: ShortcutTarget) -> [ShortcutDataModel] {
+        return try! store.context.fetch(descriptor(target: target))
+    }
+
+    private func descriptor(target: ShortcutTarget) -> FetchDescriptor<ShortcutDataModel> {
         let id = target.itemId
         let typeValue = target.type.rawValue
-        let descriptor = FetchDescriptor<ShortcutDataModel>(predicate: #Predicate { $0.itemId == id && $0.type == typeValue })
 
-        return try! store.context.fetch(descriptor)
+        return FetchDescriptor<ShortcutDataModel>(predicate: #Predicate { $0.itemId == id && $0.type == typeValue })
     }
 
     /// 指す先が読めない行は nil

@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-/// 詳細ページ先頭のヒーロー。content(画像)の上にタイトルと説明(secondaryText)を重ねる
-struct HeroHeaderView<Content: View, SecondaryText: View>: View {
+/// 詳細ページ先頭のヒーロー。content(画像)の上にタイトル(primaryText)と説明(secondaryText)を重ねる
+struct HeroHeaderView<Content: View, PrimaryText: View, SecondaryText: View>: View {
     /// タイトルの上端から説明の上端まで
     private let secondaryTextSpacing: CGFloat = 40
     private let secondaryTextHeight: CGFloat = 25
@@ -22,8 +22,9 @@ struct HeroHeaderView<Content: View, SecondaryText: View>: View {
     /// ヒーロー画像の 1 辺(GeometryProxy.heroSize)
     let size: CGFloat
     let top: CGFloat
-    let primaryText: String?
     @ViewBuilder let content: () -> Content
+    /// タイトルの行。読み込む前に「不明」を出さないように、ページが読み込めたときだけ TitleView を作って渡す
+    @ViewBuilder let primaryText: () -> PrimaryText
     /// 説明の行。ページごとにライブラリの文字列かラベルかが違うので、SecondaryTextView を作って渡す
     @ViewBuilder let secondaryText: () -> SecondaryText
 
@@ -52,7 +53,7 @@ struct HeroHeaderView<Content: View, SecondaryText: View>: View {
     /// ヒーローの中に重ねるタイトル
     /// 潜り込んだかをこの View の onGeometryChange で親に渡し、ナビゲーションバーのタイトル表示の切り替えに使う
     private var primaryTextView: some View {
-        return TitleView(primaryText)
+        return primaryText()
             .opacity(textOpacity)
             .betweenSideButtons(width: width, height: StyleConstant.Height.row)
     }
