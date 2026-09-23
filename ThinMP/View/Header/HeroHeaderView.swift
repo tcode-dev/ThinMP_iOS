@@ -9,6 +9,10 @@ import SwiftUI
 
 /// 詳細ページ先頭のヒーロー。content(画像)の上にタイトルと説明(secondaryText)を重ねる
 struct HeroHeaderView<Content: View, SecondaryText: View>: View {
+    /// タイトルの上端から説明の上端まで
+    private let secondaryTextSpacing: CGFloat = 40
+    private let secondaryTextHeight: CGFloat = 25
+
     /// タイトルがナビゲーションバーの下に潜り込んだか。ここで測って親に渡し、ナビゲーションバーと共有する
     @Binding var isScrolledUnder: Bool
 
@@ -24,7 +28,7 @@ struct HeroHeaderView<Content: View, SecondaryText: View>: View {
     var body: some View {
         let rate = StyleConstant.isPad ? 0.85 : 0.75
         let primaryTextOffset = size * rate
-        let secondaryTextOffset = primaryTextOffset + 40
+        let secondaryTextOffset = primaryTextOffset + secondaryTextSpacing
 
         ZStack(alignment: .top) {
             content()
@@ -39,7 +43,7 @@ struct HeroHeaderView<Content: View, SecondaryText: View>: View {
                 }
                 .offset(y: primaryTextOffset)
             secondaryText()
-                .frame(width: max(0, width - StyleConstant.button * 2), height: 25, alignment: .center)
+                .frame(width: max(0, width - StyleConstant.button * 2), height: secondaryTextHeight, alignment: .center)
                 .offset(y: secondaryTextOffset)
                 .padding(.horizontal, StyleConstant.button)
         }

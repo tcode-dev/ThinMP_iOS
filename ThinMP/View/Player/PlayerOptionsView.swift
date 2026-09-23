@@ -12,6 +12,7 @@ struct PlayerOptionsView: View {
     private let imageSize: CGFloat = 50
     /// お気に入り曲のアイコンだけ余白の取り方が違うので一回り小さくする
     private let favoriteSongImageSize: CGFloat = 40
+    private let horizontalPadding: CGFloat = StyleConstant.isPad ? 50 : 30
 
     @EnvironmentObject var musicPlayer: MusicPlayer
 
@@ -52,6 +53,6 @@ struct PlayerOptionsView: View {
             }
             .frame(width: StyleConstant.button, height: StyleConstant.button)
         }
-        .padding(.horizontal, StyleConstant.isPad ? 50 : 30)
+        .padding(.horizontal, horizontalPadding)
     }
 }

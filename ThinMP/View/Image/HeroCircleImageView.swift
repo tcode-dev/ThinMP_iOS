@@ -22,7 +22,7 @@ struct HeroCircleImageView: View {
                     .scaledToFill()
                     .frame(width: width, height: size)
                     .clipped()
-                    .blur(radius: 10.0)
+                    .blur(radius: StyleConstant.artworkBlurRadius)
             }
             .frame(width: width, height: size)
             HeroGradientView()
