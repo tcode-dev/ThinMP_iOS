@@ -66,6 +66,18 @@ struct MainMenuConfigTests {
         #expect(menus == [.songs, .artists, .albums, .favoriteArtists, .favoriteSongs, .playlists])
     }
 
+    /// 同じメニューが重複して保存されていても、1 回だけ最初の位置に出す
+    @Test
+    func dropsDuplicatedMenus() {
+        let userDefaults = UserDefaults.empty()
+
+        userDefaults.set(["Songs", "Artists", "Songs"], forKey: "sort")
+
+        let menus = MainMenuConfig(userDefaults: userDefaults).load().map { $0.menu }
+
+        #expect(menus == [.songs, .artists, .albums, .favoriteArtists, .favoriteSongs, .playlists])
+    }
+
     @Test
     func sectionVisibilityDefaultsToTrueAndRoundTrips() {
         let userDefaults = UserDefaults.empty()
