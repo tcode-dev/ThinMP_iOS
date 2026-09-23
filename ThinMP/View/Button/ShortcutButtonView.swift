@@ -12,7 +12,7 @@ struct ShortcutButtonView: View {
     let target: ShortcutTarget
     /// 登録 / 解除のあとに呼ばれる(一覧の再読み込みなど)
     var onToggle: () -> Void = {}
-    var repository: ShortcutRepositoryProtocol = ShortcutRepository()
+    private let repository: ShortcutRepositoryProtocol = ShortcutRepository()
 
     var body: some View {
         RegisterToggleButtonView(
