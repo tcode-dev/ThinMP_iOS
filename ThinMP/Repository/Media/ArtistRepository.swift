@@ -26,7 +26,9 @@ struct ArtistRepository: ArtistRepositoryProtocol {
             return []
         }
 
-        return artists(localArtistsQuery()).reordered(by: artistIds) { $0.artistId }
+        let artists = artists(localArtistsQuery()).keyed { $0.artistId }
+
+        return artistIds.compactMap { artists[$0] }
     }
 
     /// クラウドにしか無い項目を除いた全アーティスト

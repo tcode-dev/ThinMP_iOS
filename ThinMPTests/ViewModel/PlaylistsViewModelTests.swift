@@ -24,20 +24,6 @@ struct PlaylistsViewModelTests {
         await vm.load().value
 
         #expect(vm.playlists.map { $0.id } == ["a", "b"])
-        #expect(vm.registeredPlaylistIds.isEmpty)
-    }
-
-    @Test
-    func loadWithSongIdMarksPlaylistsContainingIt() async {
-        let service = makeService()
-        let vm = PlaylistsViewModel(playlistsService: service)
-
-        await vm.load(songId: SongId(id: 2)).value
-
-        #expect(vm.registeredPlaylistIds == [PlaylistId(id: "a")])
-        #expect(vm.isRegistered(playlistId: PlaylistId(id: "a")))
-        #expect(!vm.isRegistered(playlistId: PlaylistId(id: "b")))
-        #expect(service.findAllCalls == 1)
     }
 
     /// Service のモックと同じ 2 件を持つ Repository のモック。書き込みはこちらで観測する
@@ -70,19 +56,6 @@ struct PlaylistsViewModelTests {
         vm.save()
 
         #expect(repository.findAll().map { $0.playlistId } == [PlaylistId(id: "a"), PlaylistId(id: "b")])
-    }
-
-    @Test
-    func createAndAddWriteToRepository() {
-        let repository = makeRepository()
-        let vm = PlaylistsViewModel(playlistsService: makeService(), playlistRepository: repository)
-
-        vm.create(songId: SongId(id: 5), name: "New")
-        vm.add(playlistId: PlaylistId(id: "a"), songId: SongId(id: 6))
-
-        #expect(repository.findAll().map { $0.name } == ["A", "B", "New"])
-        #expect(repository.findAll()[2].songIds == [SongId(id: 5)])
-        #expect(repository.findById(playlistId: PlaylistId(id: "a"))?.songIds == [SongId(id: 1), SongId(id: 2), SongId(id: 6)])
     }
 
     @Test

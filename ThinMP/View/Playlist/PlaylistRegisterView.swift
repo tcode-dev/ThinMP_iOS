@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PlaylistRegisterView: View {
-    @StateObject private var vm = PlaylistsViewModel()
+    @StateObject private var vm = PlaylistRegisterViewModel()
     @State private var isCreate: Bool = false
     @State private var name: String = ""
 

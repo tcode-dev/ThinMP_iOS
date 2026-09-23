@@ -18,7 +18,9 @@ struct SongRepository: SongRepositoryProtocol {
             return []
         }
 
-        return songs(localSongsQuery()).reordered(by: songIds) { $0.songId }
+        let songs = songs(localSongsQuery()).keyed { $0.songId }
+
+        return songIds.compactMap { songs[$0] }
     }
 
     func findByAlbumId(albumId: AlbumId) -> [SongModel] {

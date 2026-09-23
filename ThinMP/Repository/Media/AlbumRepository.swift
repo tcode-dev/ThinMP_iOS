@@ -26,7 +26,9 @@ struct AlbumRepository: AlbumRepositoryProtocol {
             return []
         }
 
-        return albums(localAlbumsQuery()).reordered(by: albumIds) { $0.albumId }
+        let albums = albums(localAlbumsQuery()).keyed { $0.albumId }
+
+        return albumIds.compactMap { albums[$0] }
     }
 
     /// アーティストの曲を含むアルバム。コンピレーション盤も入る(AlbumRepositoryProtocol を参照)

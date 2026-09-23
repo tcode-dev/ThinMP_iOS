@@ -20,3 +20,21 @@ final class FavoriteArtistDataModel {
         self.order = order
     }
 }
+
+extension FavoriteArtistDataModel: FavoriteDataModel {
+    static var orderKey: KeyPath<FavoriteArtistDataModel, Int> {
+        return \.order
+    }
+
+    var mediaId: String {
+        return artistId
+    }
+
+    convenience init(mediaId: String, order: Int) {
+        self.init(artistId: mediaId, order: order)
+    }
+
+    static func predicate(mediaId: String) -> Predicate<FavoriteArtistDataModel> {
+        return #Predicate { $0.artistId == mediaId }
+    }
+}
