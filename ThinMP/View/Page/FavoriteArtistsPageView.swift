@@ -22,8 +22,8 @@ struct FavoriteArtistsPageView: View {
             ListEmptyHeaderView(isScrolledUnder: $isScrolledUnder, top: geometry.safeAreaInsets.top)
             ArtistListView(artists: vm.artists) { vm.load() }
         }
-        .task {
-            await vm.load().value
+        .onAppear {
+            vm.load()
         }
     }
 }

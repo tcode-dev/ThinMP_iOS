@@ -18,8 +18,8 @@ struct PlaylistsEditPageView: View {
                 }
             }
         }
-        .task {
-            await vm.load().value
+        .onAppear {
+            vm.load()
         }
     }
 }

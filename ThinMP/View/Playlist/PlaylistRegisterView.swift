@@ -90,8 +90,8 @@ struct PlaylistRegisterView: View {
         .background(Color(UIColor.systemGray5))
         .clipShape(.rect(cornerRadius: StyleConstant.cornerRadius))
         .padding(.horizontal, StyleConstant.Padding.large)
-        .task {
-            await vm.load(songId: songId).value
+        .onAppear {
+            vm.load(songId: songId)
         }
     }
 
