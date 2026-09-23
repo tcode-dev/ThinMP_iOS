@@ -24,12 +24,12 @@ struct FavoriteSongsViewModelTests {
         // 古い方が先に完了しても、打ち切られているので結果は捨てられる
         service.resume(with: [.fake(id: 1)])
         await first.value
-        #expect(vm.songs.isEmpty)
+        #expect(vm.songs == nil)
 
         // 新しい方の結果だけが反映される
         service.resume(with: [.fake(id: 2)])
         await second.value
-        #expect(vm.songs.map { $0.songId.id } == [2])
+        #expect(vm.songs?.map { $0.songId.id } == [2])
     }
 
     @Test
@@ -39,15 +39,15 @@ struct FavoriteSongsViewModelTests {
         let vm = FavoriteSongsViewModel(favoriteSongsService: service, favoriteSongRepository: repository)
 
         await vm.load().value
-        vm.songs.remove(atOffsets: [1])
-        vm.songs.move(fromOffsets: [1], toOffset: 0)
+        vm.songs?.remove(atOffsets: [1])
+        vm.songs?.move(fromOffsets: [1], toOffset: 0)
         vm.save()
 
         #expect(repository.updateCalls.map { $0.map { $0.id } } == [[3, 1]])
         #expect(repository.findAll().map { $0.id } == [3, 1])
     }
 
-    /// 読み込みが終わる前に完了を押しても、空の songs でお気に入りを上書きしない
+    /// 読み込みが終わる前に完了を押しても、空の一覧でお気に入りを上書きしない
     @Test
     func saveBeforeLoadDoesNotTouchRepository() async {
         let repository = FavoriteSongRepositoryMock(songIds: [SongId(id: 1), SongId(id: 2)])
@@ -56,7 +56,7 @@ struct FavoriteSongsViewModelTests {
 
         let task = vm.load()
         await Task.yield()
-        #expect(!vm.isLoaded)
+        #expect(vm.songs == nil)
 
         vm.save()
 
@@ -66,6 +66,6 @@ struct FavoriteSongsViewModelTests {
         service.resume(with: [.fake(id: 1), .fake(id: 2)])
         await task.value
 
-        #expect(vm.isLoaded)
+        #expect(vm.songs != nil)
     }
 }

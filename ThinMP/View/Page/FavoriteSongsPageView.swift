@@ -22,7 +22,7 @@ struct FavoriteSongsPageView: View {
             }
         } content: { geometry in
             ListEmptyHeaderView(isScrolledUnder: $isScrolledUnder, top: geometry.safeAreaInsets.top)
-            SongListView(songs: vm.songs, onFavoriteChange: { vm.load() }) { playlistRegisterSongId = $0 }
+            SongListView(songs: vm.songs ?? [], onFavoriteChange: { vm.load() }) { playlistRegisterSongId = $0 }
         }
         .onAppear {
             vm.load()
