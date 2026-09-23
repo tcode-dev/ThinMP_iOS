@@ -19,6 +19,8 @@ struct MenuEditRowView: View {
             Spacer()
         }
         .padding(.leading, StyleConstant.Padding.large)
+        // Spacer と余白はそのままではタップを受けないので、行全体を当たり判定にする
+        .contentShape(Rectangle())
         .onTapGesture {
             visibility.toggle()
         }
