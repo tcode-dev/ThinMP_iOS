@@ -31,7 +31,7 @@ struct PlaylistRegisterViewModelTests {
 
         await vm.load(songId: SongId(id: 2)).value
 
-        #expect(vm.playlists.map { $0.id } == ["a", "b"])
+        #expect(vm.playlists.map { $0.playlistId.id } == ["a", "b"])
         #expect(vm.registeredPlaylistIds == [PlaylistId(id: "a")])
         #expect(vm.isRegistered(playlistId: PlaylistId(id: "a")))
         #expect(!vm.isRegistered(playlistId: PlaylistId(id: "b")))

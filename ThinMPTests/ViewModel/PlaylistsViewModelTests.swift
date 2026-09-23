@@ -23,7 +23,7 @@ struct PlaylistsViewModelTests {
 
         await vm.load().value
 
-        #expect(vm.playlists.map { $0.id } == ["a", "b"])
+        #expect(vm.playlists.map { $0.playlistId.id } == ["a", "b"])
     }
 
     /// Service のモックと同じ 2 件を持つ Repository のモック。書き込みはこちらで観測する

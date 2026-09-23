@@ -10,8 +10,8 @@ import MediaPlayer
 struct ArtistModel: MediaProtocol, Identifiable {
     var artistId: ArtistId
     var primaryText: String?
-    var id: String {
-        return String(artistId.id)
+    var id: ArtistId {
+        return artistId
     }
 }
 

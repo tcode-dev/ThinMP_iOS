@@ -13,7 +13,7 @@ struct ShortcutModel: Identifiable {
     var target: ShortcutTarget
     var primaryText: String?
     var artwork: MPMediaItemArtwork?
-    var id: String {
-        return shortcutId.id
+    var id: ShortcutId {
+        return shortcutId
     }
 }
