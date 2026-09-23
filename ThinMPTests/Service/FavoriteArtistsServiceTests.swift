@@ -49,6 +49,26 @@ struct FavoriteArtistsServiceTests {
         #expect(favoriteArtistRepository.findAll().map { $0.id } == [1, 3])
     }
 
+    /// 端末から外されただけでクラウドにあるアーティストは、一覧には出さないがお気に入りには残す
+    @Test
+    func keepsCloudOnlyArtists() async {
+        let favoriteArtistRepository = FavoriteArtistRepositoryMock(artistIds: [ArtistId(id: 1), ArtistId(id: 2), ArtistId(id: 3)])
+        let artistRepository = ArtistRepositoryMock(
+            artists: [ArtistModel(artistId: ArtistId(id: 1), primaryText: "A")],
+            cloudArtistIds: [ArtistId(id: 2)]
+        )
+        let service = FavoriteArtistsService(
+            favoriteArtistRepository: favoriteArtistRepository,
+            artistRepository: artistRepository
+        )
+
+        let artists = await service.findAll()
+
+        #expect(artists.map { $0.artistId.id } == [1])
+        #expect(favoriteArtistRepository.deleteCalls.map { $0.id } == [3])
+        #expect(favoriteArtistRepository.findAll().map { $0.id } == [1, 2])
+    }
+
     /// 走査中に(再生画面などで)登録されたアーティストは、端末から消えたアーティストを取り除いても残る
     @Test
     func keepsArtistAddedDuringScan() async {

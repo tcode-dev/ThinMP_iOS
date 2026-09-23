@@ -62,6 +62,23 @@ struct PlaylistDetailServiceTests {
         #expect(playlistRepository.updateCalls[0].songIds.isEmpty)
     }
 
+    /// 端末から外されただけでクラウドにある曲は、一覧には出さないがプレイリストには残す
+    @Test
+    func findByIdKeepsCloudOnlySongs() async throws {
+        let playlistRepository = PlaylistRepositoryMock(playlists: [
+            PlaylistEntity(playlistId: playlistId, name: "My Playlist", songIds: [SongId(id: 1), SongId(id: 2), SongId(id: 3)]),
+        ])
+        let service = PlaylistDetailService(
+            playlistRepository: playlistRepository,
+            songRepository: SongRepositoryMock(songs: [.fake(id: 1)], cloudSongIds: [SongId(id: 2)])
+        )
+
+        let model = try #require(await service.findById(playlistId: playlistId))
+
+        #expect(model.songs.map { $0.songId.id } == [1])
+        #expect(playlistRepository.findById(playlistId: playlistId)?.songIds.map { $0.id } == [1, 2])
+    }
+
     /// 走査中に追加された曲と変えられた名前は、端末から消えた曲を取り除いても残る
     @Test
     func keepsSongAndNameChangedDuringScan() async throws {

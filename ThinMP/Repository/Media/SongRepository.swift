@@ -23,6 +23,17 @@ struct SongRepository: SongRepositoryProtocol {
         return songIds.compactMap { songs[$0] }
     }
 
+    /// クラウドの曲も探すので localItems() を通さない
+    func findDeletedIds(songIds: [SongId]) -> Set<SongId> {
+        if songIds.isEmpty {
+            return []
+        }
+
+        let libraryIds = Set((MPMediaQuery.songs().items ?? []).map { SongId(id: $0.persistentID) })
+
+        return Set(songIds).subtracting(libraryIds)
+    }
+
     /// songs() のクエリは曲名順に並ぶので、トラック順に並べ直す
     func findByAlbumId(albumId: AlbumId) -> [SongModel] {
         let query = MPMediaQuery.songs().localItems()

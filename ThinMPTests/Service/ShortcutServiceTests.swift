@@ -61,6 +61,24 @@ struct ShortcutServiceTests {
         #expect(shortcutRepository.findAll().map { $0.shortcutId.id } == ["s1", "s3"])
     }
 
+    /// 端末から外されただけでクラウドにあるアーティストとアルバムは、表示しないがショートカットには残す
+    @Test
+    func keepsShortcutsToCloudOnlyItems() async {
+        let shortcutRepository = ShortcutRepositoryMock(shortcuts: [artistShortcut, albumShortcut, playlistShortcut])
+        let service = ShortcutService(
+            shortcutRepository: shortcutRepository,
+            artistDetailService: ArtistDetailServiceMock(cloudArtistIds: [ArtistId(id: 10)]),
+            albumsService: AlbumsServiceMock(albums: [], cloudAlbumIds: [AlbumId(id: 20)]),
+            playlistDetailService: PlaylistDetailServiceMock(playlists: [])
+        )
+
+        let models = await service.findAll()
+
+        #expect(models.isEmpty)
+        #expect(shortcutRepository.deleteCalls == [.playlist(PlaylistId(id: "p1"))])
+        #expect(shortcutRepository.findAll().map { $0.shortcutId.id } == ["s1", "s2"])
+    }
+
     /// 走査中に(別のページで)追加されたショートカットは、端末から消えたものを取り除いても残る
     @Test
     func keepsShortcutAddedDuringScan() async {

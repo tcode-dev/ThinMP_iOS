@@ -52,4 +52,11 @@ struct ArtistDetailService: ArtistDetailServiceProtocol {
             }
         }.value
     }
+
+    /// ライブラリ全件を走査するのでバックグラウンドで行う
+    func findDeletedIds(artistIds: [ArtistId]) async -> Set<ArtistId> {
+        return await Task.detached(priority: .userInitiated) { [artistRepository] in
+            artistRepository.findDeletedIds(artistIds: artistIds)
+        }.value
+    }
 }

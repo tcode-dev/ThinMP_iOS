@@ -31,6 +31,17 @@ struct ArtistRepository: ArtistRepositoryProtocol {
         return artistIds.compactMap { artists[$0] }
     }
 
+    /// クラウドのアーティストも探すので localItems() を通さない
+    func findDeletedIds(artistIds: [ArtistId]) -> Set<ArtistId> {
+        if artistIds.isEmpty {
+            return []
+        }
+
+        let libraryIds = Set(artists(MPMediaQuery.artists()).map { $0.artistId })
+
+        return Set(artistIds).subtracting(libraryIds)
+    }
+
     private func artists(_ query: MPMediaQuery) -> [ArtistModel] {
         return (query.collections ?? []).compactMap { ArtistModel(collection: $0) }
     }
