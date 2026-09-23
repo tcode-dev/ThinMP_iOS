@@ -10,7 +10,6 @@ import MediaPlayer
 struct PlaylistModel: MediaProtocol, Identifiable {
     var playlistId: PlaylistId
     var primaryText: String?
-    var secondaryText: String?
     var artwork: MPMediaItemArtwork?
     /// order 順。登録モーダルで「登録済み」を判定するのに使う
     var songIds: [SongId] = []
