@@ -111,14 +111,10 @@ struct PlaylistRegisterView: View {
         return !isCreate && !hasNoPlaylists
     }
 
-    /// 一覧がポップアップに収まらないときは画面の高さいっぱいまでにする
+    /// 一覧がポップアップに収まらないときは、上下に Padding.large の余白を残した画面の高さまでにする
     private var contentHeight: CGFloat {
         let panelHeight = StyleConstant.Height.header + (CGFloat(vm.playlists.count) * (StyleConstant.Height.row + StyleConstant.dividerHeight)) + StyleConstant.Padding.small
 
-        if panelHeight > height {
-            return height - (StyleConstant.Padding.large * 2)
-        } else {
-            return panelHeight
-        }
+        return min(panelHeight, height - (StyleConstant.Padding.large * 2))
     }
 }
