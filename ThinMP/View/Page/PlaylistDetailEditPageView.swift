@@ -22,7 +22,7 @@ struct PlaylistDetailEditPageView: View {
     }
 
     var body: some View {
-        EditPageLayout(isDoneEnabled: vm.isLoaded && !trimmedName.isEmpty, onNavBarTap: { isNameFocused = false }, onDone: { vm.save(playlistId: playlistId, name: trimmedName) }) {
+        EditPageLayout(isDoneEnabled: vm.playlist != nil && !trimmedName.isEmpty, onNavBarTap: { isNameFocused = false }, onDone: { vm.save(playlistId: playlistId, name: trimmedName) }) {
             VStack(alignment: .leading) {
                 TextField("", text: $name)
                     .focused($isNameFocused)
@@ -31,8 +31,10 @@ struct PlaylistDetailEditPageView: View {
                     .padding()
                 ZStack {
                     List {
-                        ReorderableListView(items: songs) { song in
-                            MediaRowView(media: song)
+                        if let playlist = Binding($vm.playlist) {
+                            ReorderableListView(items: playlist.songs) { song in
+                                MediaRowView(media: song)
+                            }
                         }
                     }
                     // 入力中は一覧を薄くして、タップでキーボードを閉じる
@@ -55,10 +57,5 @@ struct PlaylistDetailEditPageView: View {
     /// 前後の空白を除いた名前。空白だけの名前では保存しない
     private var trimmedName: String {
         return name.trimmingCharacters(in: .whitespacesAndNewlines)
-    }
-
-    /// 読み込む前は playlist が nil。並び替えと削除は読み込めたときだけ playlist に書き戻す
-    private var songs: Binding<[SongModel]> {
-        return Binding(get: { vm.playlist?.songs ?? [] }, set: { vm.playlist?.songs = $0 })
     }
 }
