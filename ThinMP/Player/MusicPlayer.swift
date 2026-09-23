@@ -63,7 +63,7 @@ final class MusicPlayer: ObservableObject {
             return
         }
 
-        if player.playbackState == MPMusicPlaybackState.playing {
+        if player.playbackState == .playing {
             player.stop()
         }
 
@@ -179,9 +179,9 @@ final class MusicPlayer: ObservableObject {
     /// ブロックは NotificationCenter が持ち続けるので、self を強く掴むと deinit が呼ばれなくなる
     private func addObserver() {
         observers.append(NotificationCenter.default.addObserver(
-            forName: NSNotification.Name.MPMusicPlayerControllerNowPlayingItemDidChange,
+            forName: .MPMusicPlayerControllerNowPlayingItemDidChange,
             object: player,
-            queue: OperationQueue.main
+            queue: .main
         ) { [weak self] _ in
             MainActor.assumeIsolated {
                 self?.setSong()
@@ -189,9 +189,9 @@ final class MusicPlayer: ObservableObject {
         })
 
         observers.append(NotificationCenter.default.addObserver(
-            forName: NSNotification.Name.MPMusicPlayerControllerPlaybackStateDidChange,
+            forName: .MPMusicPlayerControllerPlaybackStateDidChange,
             object: player,
-            queue: OperationQueue.main
+            queue: .main
         ) { [weak self] _ in
             MainActor.assumeIsolated {
                 self?.playbackStateDidChangeCallback()
