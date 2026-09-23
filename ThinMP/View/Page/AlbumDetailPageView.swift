@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AlbumDetailPageView: View {
     @StateObject private var vm = AlbumDetailViewModel()
-    @State private var headerRect = CGRect.zero
+    @State private var isScrolledUnder = false
     /// プレイリスト登録ポップアップを出している曲。nil ならポップアップは閉じている
     @State private var playlistRegisterSongId: SongId?
 
@@ -17,13 +17,13 @@ struct AlbumDetailPageView: View {
 
     var body: some View {
         ScrollPageLayout(playlistRegisterSongId: $playlistRegisterSongId) { geometry in
-            HeroNavBarView(primaryText: vm.album?.primaryText, width: geometry.size.width, top: geometry.safeAreaInsets.top, headerRect: $headerRect) {
+            HeroNavBarView(primaryText: vm.album?.primaryText, width: geometry.size.width, top: geometry.safeAreaInsets.top, isScrolledUnder: isScrolledUnder) {
                 MenuButtonView {
                     ShortcutButtonView(target: .album(albumId))
                 }
             }
         } content: { geometry in
-            HeroHeaderView(headerRect: $headerRect, width: geometry.size.width, size: geometry.heroSize, top: geometry.safeAreaInsets.top, primaryText: vm.album?.primaryText) {
+            HeroHeaderView(isScrolledUnder: $isScrolledUnder, width: geometry.size.width, size: geometry.heroSize, top: geometry.safeAreaInsets.top, primaryText: vm.album?.primaryText) {
                 HeroSquareImageView(size: geometry.heroSize, artwork: vm.album?.artwork)
             } secondaryText: {
                 SecondaryTextView(vm.album?.secondaryText)

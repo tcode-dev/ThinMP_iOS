@@ -9,15 +9,15 @@ import SwiftUI
 
 struct SongsPageView: View {
     @StateObject private var vm = SongsViewModel()
-    @State private var headerRect = CGRect.zero
+    @State private var isScrolledUnder = false
     /// プレイリスト登録ポップアップを出している曲。nil ならポップアップは閉じている
     @State private var playlistRegisterSongId: SongId?
 
     var body: some View {
         ScrollPageLayout(playlistRegisterSongId: $playlistRegisterSongId) { geometry in
-            ListNavBarView(title: LabelConstant.songs, top: geometry.safeAreaInsets.top, headerRect: $headerRect)
+            ListNavBarView(title: LabelConstant.songs, top: geometry.safeAreaInsets.top, isScrolledUnder: isScrolledUnder)
         } content: { geometry in
-            ListEmptyHeaderView(headerRect: $headerRect, top: geometry.safeAreaInsets.top)
+            ListEmptyHeaderView(isScrolledUnder: $isScrolledUnder, top: geometry.safeAreaInsets.top)
             SongListView(songs: vm.songs) { playlistRegisterSongId = $0 }
         }
         .task {

@@ -9,7 +9,8 @@ import SwiftUI
 
 /// 詳細ページ先頭のヒーロー。content(画像)の上にタイトルと説明(secondaryText)を重ねる
 struct HeroHeaderView<Content: View, SecondaryText: View>: View {
-    @Binding var headerRect: CGRect
+    /// タイトルがナビゲーションバーの下に潜り込んだか。ここで測って親に渡し、ナビゲーションバーと共有する
+    @Binding var isScrolledUnder: Bool
 
     let width: CGFloat
     /// ヒーロー画像の 1 辺(GeometryProxy.heroSize)
@@ -30,10 +31,11 @@ struct HeroHeaderView<Content: View, SecondaryText: View>: View {
             primaryTextView
                 .frame(height: StyleConstant.Height.row)
                 // offset の内側で測ることで、ずらした後の位置(GeometryReader を子に置いた場合と同じ)が取れる
-                .onGeometryChange(for: CGRect.self) { proxy in
-                    proxy.frame(in: .global)
-                } action: { rect in
-                    headerRect = rect
+                // 位置そのものではなく判定結果を渡すので、State が変わるのは境目を越えたときだけになる
+                .onGeometryChange(for: Bool.self) { proxy in
+                    proxy.frame(in: .global).minY < top
+                } action: { isScrolledUnder in
+                    self.isScrolledUnder = isScrolledUnder
                 }
                 .offset(y: primaryTextOffset)
             secondaryText()
@@ -45,7 +47,7 @@ struct HeroHeaderView<Content: View, SecondaryText: View>: View {
     }
 
     /// ヒーローの中に重ねるタイトル
-    /// 位置はこの View の onGeometryChange で親に渡し、ナビゲーションバーのタイトル表示の切り替えに使う
+    /// 潜り込んだかをこの View の onGeometryChange で親に渡し、ナビゲーションバーのタイトル表示の切り替えに使う
     private var primaryTextView: some View {
         return VStack {
             TitleView(primaryText).opacity(textOpacity)
@@ -56,6 +58,6 @@ struct HeroHeaderView<Content: View, SecondaryText: View>: View {
 
     /// ナビゲーションバーのタイトルと入れ替わるので、潜り込んだら消す
     private var textOpacity: Double {
-        return headerRect.isScrolledUnder(top: top) ? 0 : 1
+        return isScrolledUnder ? 0 : 1
     }
 }

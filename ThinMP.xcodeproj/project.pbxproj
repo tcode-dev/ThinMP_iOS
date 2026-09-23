@@ -89,7 +89,6 @@
 		52A1F3D32E8100060000A001 /* MainSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A1F3D22E8100060000A001 /* MainSettings.swift */; };
 		52A1F3D52E8100070000A001 /* MainMenuConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A1F3D42E8100070000A001 /* MainMenuConfigTests.swift */; };
 		52A1F3D92E8100080000A001 /* GeometryProxy+HeroSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A1F3D82E8100080000A001 /* GeometryProxy+HeroSize.swift */; };
-		42589C6CB45499622C7699B3 /* CGRect+ScrolledUnder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45DBACE677D9B154AAE9455 /* CGRect+ScrolledUnder.swift */; };
 		52A1F3DB2E8100080000A001 /* HeroGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A1F3DA2E8100080000A001 /* HeroGradientView.swift */; };
 		52A1F3DD2E8100090000A001 /* ButtonImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A1F3DC2E8100090000A001 /* ButtonImageView.swift */; };
 		52A1F3C32E8100020000A001 /* ArtistListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A1F3C22E8100020000A001 /* ArtistListView.swift */; };
@@ -322,7 +321,6 @@
 		52A1F3D22E8100060000A001 /* MainSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSettings.swift; sourceTree = "<group>"; };
 		52A1F3D42E8100070000A001 /* MainMenuConfigTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuConfigTests.swift; sourceTree = "<group>"; };
 		52A1F3D82E8100080000A001 /* GeometryProxy+HeroSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GeometryProxy+HeroSize.swift"; sourceTree = "<group>"; };
-		C45DBACE677D9B154AAE9455 /* CGRect+ScrolledUnder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGRect+ScrolledUnder.swift"; sourceTree = "<group>"; };
 		52A1F3DA2E8100080000A001 /* HeroGradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroGradientView.swift; sourceTree = "<group>"; };
 		52A1F3DC2E8100090000A001 /* ButtonImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonImageView.swift; sourceTree = "<group>"; };
 		52A1F3C22E8100020000A001 /* ArtistListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistListView.swift; sourceTree = "<group>"; };
@@ -531,7 +529,6 @@
 				3DE3F14D22EE72E8E4ACCF10 /* RowModifier.swift */,
 				52A1F3CC2E8100050000A001 /* GridLayout.swift */,
 				52A1F3D82E8100080000A001 /* GeometryProxy+HeroSize.swift */,
-				C45DBACE677D9B154AAE9455 /* CGRect+ScrolledUnder.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -1267,7 +1264,6 @@
 				52A1F3CB2E8100040000A001 /* RegisterToggleButtonView.swift in Sources */,
 				52A1F3CD2E8100050000A001 /* GridLayout.swift in Sources */,
 				52A1F3D92E8100080000A001 /* GeometryProxy+HeroSize.swift in Sources */,
-				42589C6CB45499622C7699B3 /* CGRect+ScrolledUnder.swift in Sources */,
 				52A1F3DB2E8100080000A001 /* HeroGradientView.swift in Sources */,
 				52A1F3DD2E8100090000A001 /* ButtonImageView.swift in Sources */,
 						52A1F3CF2E8100060000A001 /* MainMenu.swift in Sources */,
