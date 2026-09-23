@@ -84,11 +84,11 @@ struct ShortcutRepository: ShortcutRepositoryProtocol {
 
     /// 渡された順に並べ替える。先頭ほど order が大きいので、新しく add したものが先頭にくる
     private func sort(shortcutIds: [ShortcutId]) {
-        let models = findByIds(shortcutIds: shortcutIds)
+        let models = findByIds(shortcutIds: shortcutIds).keyed { $0.id }
         let count = shortcutIds.count
 
         for (index, shortcutId) in shortcutIds.enumerated() {
-            models.first { $0.id == shortcutId.id }?.order = count - index
+            models[shortcutId.id]?.order = count - index
         }
     }
 }
