@@ -9,7 +9,7 @@ import SwiftUI
 
 /// 再生中なら一時停止、それ以外なら再生のボタン。ミニプレイヤーと再生画面で共有する
 struct PlayPauseButtonView: View {
-    @EnvironmentObject var musicPlayer: MusicPlayer
+    @EnvironmentObject private var musicPlayer: MusicPlayer
 
     let size: CGFloat
 

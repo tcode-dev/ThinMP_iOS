@@ -23,21 +23,24 @@ struct SongRepository: SongRepositoryProtocol {
         return songIds.compactMap { songs[$0] }
     }
 
+    /// songs() のクエリは曲名順に並ぶ。アルバムの曲もトラック順ではなく曲名順にしたいので albums() ではなくこちらを使う
+    /// songs() のクエリは曲名順に並ぶので、トラック順に並べ直す
     func findByAlbumId(albumId: AlbumId) -> [SongModel] {
         let query = MPMediaQuery.songs().localItems()
 
         query.addFilterPredicate(MPMediaPropertyPredicate(value: albumId.id, forProperty: MPMediaItemPropertyAlbumPersistentID))
 
-        return songs(query)
+        return songs(query).sortedByTrack()
     }
 
     /// アーティストの曲を 1 回のクエリで引く。アルバムごとの並びは呼び出し側で揃える
+    /// トラック順に並べておくので、呼び出し側がアルバムごとに振り分ければアルバムの中はトラック順になる
     func findByArtistId(artistId: ArtistId) -> [SongModel] {
         let query = MPMediaQuery.songs().localItems()
 
         query.addFilterPredicate(MPMediaPropertyPredicate(value: artistId.id, forProperty: MPMediaItemPropertyArtistPersistentID))
 
-        return songs(query)
+        return songs(query).sortedByTrack()
     }
 
     private func songs(_ query: MPMediaQuery) -> [SongModel] {

@@ -6,5 +6,5 @@
 //
 
 struct ShortcutId: Hashable {
-    var id: String
+    let id: String
 }

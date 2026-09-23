@@ -8,9 +8,9 @@
 import MediaPlayer
 
 struct AlbumDetailModel: MediaProtocol {
-    var albumId: AlbumId
-    var primaryText: String?
-    var secondaryText: String?
-    var artwork: MPMediaItemArtwork?
-    var songs: [SongModel]
+    let albumId: AlbumId
+    let primaryText: String?
+    let secondaryText: String?
+    let artwork: MPMediaItemArtwork?
+    let songs: [SongModel]
 }

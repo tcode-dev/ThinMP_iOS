@@ -14,7 +14,7 @@ struct PlaylistDetailViewModelTests {
 
     private func makeService() -> PlaylistDetailServiceMock {
         return PlaylistDetailServiceMock(playlists: [
-            PlaylistDetailModel(playlistId: playlistId, primaryText: "P", songs: [.fake(id: 1), .fake(id: 2), .fake(id: 3)]),
+            PlaylistDetailModel(playlistId: playlistId, primaryText: "P", artwork: nil, songs: [.fake(id: 1), .fake(id: 2), .fake(id: 3)]),
         ])
     }
 

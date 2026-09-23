@@ -14,8 +14,8 @@ struct AlbumsViewModelTests {
     @Test
     func loadPublishesAlbumsFromService() async {
         let service = AlbumsServiceMock(albums: [
-            AlbumModel(albumId: AlbumId(id: 1), primaryText: "A"),
-            AlbumModel(albumId: AlbumId(id: 2), primaryText: "B"),
+            AlbumModel(albumId: AlbumId(id: 1), primaryText: "A", secondaryText: nil, artwork: nil),
+            AlbumModel(albumId: AlbumId(id: 2), primaryText: "B", secondaryText: nil, artwork: nil),
         ])
         let vm = AlbumsViewModel(albumsService: service)
 

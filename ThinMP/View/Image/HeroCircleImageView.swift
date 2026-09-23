@@ -23,15 +23,12 @@ struct HeroCircleImageView: View {
         let circleSize = size / circleDivisor
 
         ZStack(alignment: .bottom) {
-            VStack {
-                Image(artwork: artwork, size: CGSize(width: width, height: size))
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: width, height: size)
-                    .clipped()
-                    .blur(radius: StyleConstant.artworkBlurRadius)
-            }
-            .frame(width: width, height: size)
+            Image(artwork: artwork, size: CGSize(width: width, height: size))
+                .resizable()
+                .scaledToFill()
+                .frame(width: width, height: size)
+                .clipped()
+                .blur(radius: StyleConstant.artworkBlurRadius)
             HeroGradientView()
                 .frame(height: circleSize)
                 .offset(y: gradientOffset)

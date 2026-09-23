@@ -13,21 +13,23 @@ import MediaPlayer
 
 final class ArtistDetailServiceMock: ArtistDetailServiceProtocol {
     let artists: [ArtistDetailModel]
+    let summaries: [ArtistSummaryModel]
     /// findByIds の中(走査中)に呼ばれる。走査中に別の書き込みが入った状況を作るのに使う
     var onFindByIds: () -> Void = {}
 
-    init(artists: [ArtistDetailModel]) {
+    init(artists: [ArtistDetailModel] = [], summaries: [ArtistSummaryModel] = []) {
         self.artists = artists
+        self.summaries = summaries
     }
 
     func findById(artistId: ArtistId) -> ArtistDetailModel? {
         return artists.first { $0.artistId == artistId }
     }
 
-    func findByIds(artistIds: [ArtistId]) -> [ArtistDetailModel] {
+    func findByIds(artistIds: [ArtistId]) -> [ArtistSummaryModel] {
         onFindByIds()
 
-        return artistIds.compactMap { artistId in artists.first { $0.artistId == artistId } }
+        return artistIds.compactMap { artistId in summaries.first { $0.artistId == artistId } }
     }
 }
 

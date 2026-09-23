@@ -110,7 +110,9 @@ final class PlaylistRepositoryMock: PlaylistRepositoryProtocol {
     func add(playlistId: PlaylistId, songId: SongId) {
         guard let index = playlists.firstIndex(where: { $0.playlistId == playlistId }) else { return }
 
-        playlists[index].songIds.append(songId)
+        let playlist = playlists[index]
+
+        playlists[index] = PlaylistEntity(playlistId: playlistId, name: playlist.name, songIds: playlist.songIds + [songId])
     }
 
     func findAll() -> [PlaylistEntity] {
@@ -136,8 +138,7 @@ final class PlaylistRepositoryMock: PlaylistRepositoryProtocol {
 
         guard let index = playlists.firstIndex(where: { $0.playlistId == playlistId }) else { return }
 
-        playlists[index].name = name
-        playlists[index].songIds = songIds
+        playlists[index] = PlaylistEntity(playlistId: playlistId, name: name, songIds: songIds)
     }
 
     func delete(playlistId: PlaylistId) {

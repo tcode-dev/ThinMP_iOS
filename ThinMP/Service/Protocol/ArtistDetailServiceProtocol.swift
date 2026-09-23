@@ -8,5 +8,5 @@
 protocol ArtistDetailServiceProtocol {
     func findById(artistId: ArtistId) async -> ArtistDetailModel?
 
-    func findByIds(artistIds: [ArtistId]) async -> [ArtistDetailModel]
+    func findByIds(artistIds: [ArtistId]) async -> [ArtistSummaryModel]
 }

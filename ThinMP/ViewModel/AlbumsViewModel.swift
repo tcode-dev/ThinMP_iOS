@@ -9,7 +9,7 @@ import Combine
 
 @MainActor
 final class AlbumsViewModel: ObservableObject {
-    @Published var albums: [AlbumModel] = []
+    @Published private(set) var albums: [AlbumModel] = []
 
     private let albumsService: AlbumsServiceProtocol
     private let loadTask = LoadTask()

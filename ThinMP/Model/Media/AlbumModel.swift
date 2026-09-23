@@ -8,10 +8,10 @@
 import MediaPlayer
 
 struct AlbumModel: MediaProtocol, Identifiable {
-    var albumId: AlbumId
-    var primaryText: String?
-    var secondaryText: String?
-    var artwork: MPMediaItemArtwork?
+    let albumId: AlbumId
+    let primaryText: String?
+    let secondaryText: String?
+    let artwork: MPMediaItemArtwork?
     var id: AlbumId {
         return albumId
     }

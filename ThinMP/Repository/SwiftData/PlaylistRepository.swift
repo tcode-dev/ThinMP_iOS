@@ -57,9 +57,18 @@ struct PlaylistRepository: PlaylistRepositoryProtocol {
         return findModels(playlistIds: playlistIds).map { toEntity(model: $0) }
     }
 
+    /// 渡したものだけを渡した順で残す。編集ページの並び替えと削除を反映する
     func update(playlistIds: [PlaylistId]) {
-        deleteExcept(playlistIds: playlistIds)
-        sort(playlistIds: playlistIds)
+        let orderById = Dictionary(playlistIds.enumerated().map { ($1.id, $0) }, uniquingKeysWith: { first, _ in first })
+
+        for model in try! store.context.fetch(FetchDescriptor<PlaylistDataModel>()) {
+            if let order = orderById[model.id] {
+                model.order = order
+            } else {
+                store.context.delete(model)
+            }
+        }
+
         store.save()
     }
 
@@ -111,22 +120,5 @@ struct PlaylistRepository: PlaylistRepositoryProtocol {
         let songIds = model.sortedSongs.compactMap { UInt64($0.songId) }.map { SongId(id: $0) }
 
         return PlaylistEntity(playlistId: PlaylistId(id: model.id), name: model.name, songIds: songIds)
-    }
-
-    /// 渡した id 以外を消す。編集ページで消されたものを反映する
-    private func deleteExcept(playlistIds: [PlaylistId]) {
-        let keepIds = Set(playlistIds.map { $0.id })
-        let models = try! store.context.fetch(FetchDescriptor<PlaylistDataModel>()).filter { !keepIds.contains($0.id) }
-
-        models.forEach { store.context.delete($0) }
-    }
-
-    /// 渡された順に並べ替える
-    private func sort(playlistIds: [PlaylistId]) {
-        let playlists = findModels(playlistIds: playlistIds).keyed { $0.id }
-
-        for (index, playlistId) in playlistIds.enumerated() {
-            playlists[playlistId.id]?.order = index
-        }
     }
 }

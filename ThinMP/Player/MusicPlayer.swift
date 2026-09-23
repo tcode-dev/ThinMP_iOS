@@ -14,15 +14,16 @@ final class MusicPlayer: ObservableObject {
     /// 再生位置がここまでなら prev() で前の曲へ、過ぎていれば曲の先頭へ戻る
     private let prevThresholdSecond: Double = 3
 
-    @Published var isActive: Bool = false
-    @Published var isPlaying: Bool = false
-    @Published var song: SongModel?
+    @Published private(set) var isActive: Bool = false
+    @Published private(set) var isPlaying: Bool = false
+    @Published private(set) var song: SongModel?
+    /// 再生位置のスライダーが Binding で書き換えるので、これだけは外から書ける
     @Published var currentSecond: Double = 0
-    @Published var durationSecond: Double = 1
-    @Published var repeatMode: MPMusicRepeatMode = .none
-    @Published var isShuffle: Bool = false
-    @Published var isFavoriteArtist: Bool = false
-    @Published var isFavoriteSong: Bool = false
+    @Published private(set) var durationSecond: Double = 1
+    @Published private(set) var repeatMode: MPMusicRepeatMode = .none
+    @Published private(set) var isShuffle: Bool = false
+    @Published private(set) var isFavoriteArtist: Bool = false
+    @Published private(set) var isFavoriteSong: Bool = false
 
     private let playerConfig: PlayerConfig
     private let favoriteArtistRepository: FavoriteArtistRepositoryProtocol
@@ -161,16 +162,15 @@ final class MusicPlayer: ObservableObject {
         if let item = player.nowPlayingItem {
             song = SongModel(item: item)
             resetTime()
-            reloadFavorite()
-            isActive = true
         } else {
             song = nil
             currentSecond = 0
             durationSecond = 1
-            // 再生画面は開いたまま残るので、お気に入りの表示も消しておく
-            reloadFavorite()
-            isActive = false
         }
+
+        // 曲が無くなっても再生画面は開いたまま残るので、そのときもお気に入りの表示を読み直して消す
+        reloadFavorite()
+        isActive = song != nil
     }
 
     /// ブロックは NotificationCenter が持ち続けるので、self を強く掴むと deinit が呼ばれなくなる

@@ -23,11 +23,11 @@ struct ShortcutServiceTests {
         let shortcutRepository = ShortcutRepositoryMock(shortcuts: shortcuts)
         let service = ShortcutService(
             shortcutRepository: shortcutRepository,
-            artistDetailService: ArtistDetailServiceMock(artists: artistIds.map {
-                ArtistDetailModel(artistId: ArtistId(id: $0), primaryText: "Artist \($0)", artwork: nil, albums: [], songs: [])
+            artistDetailService: ArtistDetailServiceMock(summaries: artistIds.map {
+                ArtistSummaryModel(artistId: ArtistId(id: $0), primaryText: "Artist \($0)", artwork: nil)
             }),
             albumsService: AlbumsServiceMock(albums: albumIds.map {
-                AlbumModel(albumId: AlbumId(id: $0), primaryText: "Album \($0)")
+                AlbumModel(albumId: AlbumId(id: $0), primaryText: "Album \($0)", secondaryText: nil, artwork: nil)
             }),
             playlistDetailService: PlaylistDetailServiceMock(playlists: playlistIds.map {
                 PlaylistDetailModel(playlistId: PlaylistId(id: $0), primaryText: "Playlist \($0)", artwork: nil, songs: [])
@@ -65,8 +65,8 @@ struct ShortcutServiceTests {
     @Test
     func keepsShortcutAddedDuringScan() async {
         let shortcutRepository = ShortcutRepositoryMock(shortcuts: [artistShortcut, albumShortcut])
-        let artistDetailService = ArtistDetailServiceMock(artists: [
-            ArtistDetailModel(artistId: ArtistId(id: 10), primaryText: "Artist 10", artwork: nil, albums: [], songs: []),
+        let artistDetailService = ArtistDetailServiceMock(summaries: [
+            ArtistSummaryModel(artistId: ArtistId(id: 10), primaryText: "Artist 10", artwork: nil),
         ])
         artistDetailService.onFindByIds = {
             runOnMainActor { shortcutRepository.add(target: .artist(ArtistId(id: 11))) }

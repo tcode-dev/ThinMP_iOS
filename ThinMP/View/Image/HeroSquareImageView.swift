@@ -18,12 +18,10 @@ struct HeroSquareImageView: View {
 
     var body: some View {
         ZStack(alignment: .bottom) {
-            VStack {
-                Image(artwork: artwork, size: CGSize(width: size, height: size), placeholder: "Song")
-                    .resizable()
-                    .scaledToFit()
-            }
-            .frame(width: size, height: size)
+            Image(artwork: artwork, size: CGSize(width: size, height: size), placeholder: "Song")
+                .resizable()
+                .scaledToFit()
+                .frame(width: size, height: size)
             HeroGradientView()
                 .frame(height: size * gradientRate)
         }

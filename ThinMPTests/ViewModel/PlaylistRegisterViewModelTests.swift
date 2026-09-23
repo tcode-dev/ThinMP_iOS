@@ -12,8 +12,8 @@ import Testing
 struct PlaylistRegisterViewModelTests {
     private func makeService() -> PlaylistsServiceMock {
         return PlaylistsServiceMock(playlists: [
-            PlaylistModel(playlistId: PlaylistId(id: "a"), primaryText: "A", songIds: [SongId(id: 1), SongId(id: 2)]),
-            PlaylistModel(playlistId: PlaylistId(id: "b"), primaryText: "B", songIds: [SongId(id: 3)]),
+            PlaylistModel(playlistId: PlaylistId(id: "a"), primaryText: "A", artwork: nil, songIds: [SongId(id: 1), SongId(id: 2)]),
+            PlaylistModel(playlistId: PlaylistId(id: "b"), primaryText: "B", artwork: nil, songIds: [SongId(id: 3)]),
         ])
     }
 

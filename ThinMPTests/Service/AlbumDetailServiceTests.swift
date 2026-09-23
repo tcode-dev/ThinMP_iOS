@@ -9,8 +9,8 @@ import Testing
 @testable import ThinMP
 
 struct AlbumDetailServiceTests {
-    private let album1 = AlbumModel(albumId: AlbumId(id: 1), primaryText: "A", secondaryText: "Artist")
-    private let album2 = AlbumModel(albumId: AlbumId(id: 2), primaryText: "B")
+    private let album1 = AlbumModel(albumId: AlbumId(id: 1), primaryText: "A", secondaryText: "Artist", artwork: nil)
+    private let album2 = AlbumModel(albumId: AlbumId(id: 2), primaryText: "B", secondaryText: nil, artwork: nil)
 
     @Test
     func findByIdComposesAlbumAndSongs() async throws {

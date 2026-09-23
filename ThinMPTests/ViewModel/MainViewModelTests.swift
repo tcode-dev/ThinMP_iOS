@@ -10,8 +10,8 @@ import Testing
 
 @MainActor
 struct MainViewModelTests {
-    private let shortcut = ShortcutModel(shortcutId: ShortcutId(id: "s1"), target: .artist(ArtistId(id: 10)), primaryText: "Artist")
-    private let album = AlbumModel(albumId: AlbumId(id: 1), primaryText: "Album")
+    private let shortcut = ShortcutModel(shortcutId: ShortcutId(id: "s1"), target: .artist(ArtistId(id: 10)), primaryText: "Artist", artwork: nil)
+    private let album = AlbumModel(albumId: AlbumId(id: 1), primaryText: "Album", secondaryText: nil, artwork: nil)
 
     private func makeSettings(isShortcutVisible: Bool, isRecentlyVisible: Bool) -> MainSettings {
         return MainSettings(menus: MainMenu.allCases.map { MainMenuSetting(menu: $0, visibility: true) }, isShortcutVisible: isShortcutVisible, isRecentlyVisible: isRecentlyVisible)
@@ -47,8 +47,8 @@ struct MainViewModelTests {
 @MainActor
 struct MainEditViewModelTests {
     private let shortcuts = [
-        ShortcutModel(shortcutId: ShortcutId(id: "s1"), target: .artist(ArtistId(id: 10)), primaryText: "A"),
-        ShortcutModel(shortcutId: ShortcutId(id: "s2"), target: .album(AlbumId(id: 20)), primaryText: "B"),
+        ShortcutModel(shortcutId: ShortcutId(id: "s1"), target: .artist(ArtistId(id: 10)), primaryText: "A", artwork: nil),
+        ShortcutModel(shortcutId: ShortcutId(id: "s2"), target: .album(AlbumId(id: 20)), primaryText: "B", artwork: nil),
     ]
 
     private func makeSettings() -> MainSettings {

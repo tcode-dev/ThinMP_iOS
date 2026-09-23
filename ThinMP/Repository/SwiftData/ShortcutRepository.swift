@@ -37,9 +37,19 @@ struct ShortcutRepository: ShortcutRepositoryProtocol {
         return !find(target: target).isEmpty
     }
 
+    /// 渡したものだけを渡した順で残す。先頭ほど order が大きいので、新しく add したものが先頭にくる
     func update(shortcutIds: [ShortcutId]) {
-        deleteExcept(shortcutIds: shortcutIds)
-        sort(shortcutIds: shortcutIds)
+        let count = shortcutIds.count
+        let orderById = Dictionary(shortcutIds.enumerated().map { ($1.id, count - $0) }, uniquingKeysWith: { first, _ in first })
+
+        for model in try! store.context.fetch(FetchDescriptor<ShortcutDataModel>()) {
+            if let order = orderById[model.id] {
+                model.order = order
+            } else {
+                store.context.delete(model)
+            }
+        }
+
         store.save()
     }
 
@@ -62,33 +72,8 @@ struct ShortcutRepository: ShortcutRepositoryProtocol {
         return try! store.context.fetch(descriptor)
     }
 
-    private func findByIds(shortcutIds: [ShortcutId]) -> [ShortcutDataModel] {
-        let ids = shortcutIds.map { $0.id }
-        let descriptor = FetchDescriptor<ShortcutDataModel>(predicate: #Predicate { ids.contains($0.id) })
-
-        return try! store.context.fetch(descriptor)
-    }
-
     /// 指す先が読めない行は nil
     private func toEntity(model: ShortcutDataModel) -> ShortcutEntity? {
         return ShortcutTarget(itemId: model.itemId, type: model.type).map { ShortcutEntity(shortcutId: ShortcutId(id: model.id), target: $0) }
-    }
-
-    /// 渡した id 以外を消す。編集ページで消されたものを反映する
-    private func deleteExcept(shortcutIds: [ShortcutId]) {
-        let keepIds = Set(shortcutIds.map { $0.id })
-        let models = try! store.context.fetch(FetchDescriptor<ShortcutDataModel>()).filter { !keepIds.contains($0.id) }
-
-        models.forEach { store.context.delete($0) }
-    }
-
-    /// 渡された順に並べ替える。先頭ほど order が大きいので、新しく add したものが先頭にくる
-    private func sort(shortcutIds: [ShortcutId]) {
-        let models = findByIds(shortcutIds: shortcutIds).keyed { $0.id }
-        let count = shortcutIds.count
-
-        for (index, shortcutId) in shortcutIds.enumerated() {
-            models[shortcutId.id]?.order = count - index
-        }
     }
 }
