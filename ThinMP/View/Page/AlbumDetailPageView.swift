@@ -30,8 +30,8 @@ struct AlbumDetailPageView: View {
             }
             SongListView(songs: vm.album?.songs ?? []) { playlistRegisterSongId = $0 }
         }
-        .task {
-            await vm.load(albumId: albumId).value
+        .onFirstAppear {
+            vm.load(albumId: albumId)
         }
     }
 }

@@ -18,8 +18,8 @@ struct ArtistsPageView: View {
             ListEmptyHeaderView(isScrolledUnder: $isScrolledUnder, top: geometry.safeAreaInsets.top)
             ArtistListView(artists: vm.artists)
         }
-        .task {
-            await vm.load().value
+        .onFirstAppear {
+            vm.load()
         }
     }
 }
