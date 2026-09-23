@@ -31,6 +31,17 @@ struct AlbumRepository: AlbumRepositoryProtocol {
         return albumIds.compactMap { albums[$0] }
     }
 
+    /// クラウドのアルバムも探すので localItems() を通さない
+    func findDeletedIds(albumIds: [AlbumId]) -> Set<AlbumId> {
+        if albumIds.isEmpty {
+            return []
+        }
+
+        let libraryIds = Set(albums(MPMediaQuery.albums()).map { $0.albumId })
+
+        return Set(albumIds).subtracting(libraryIds)
+    }
+
     /// アーティストの曲を含むアルバム。コンピレーション盤も入る(AlbumRepositoryProtocol を参照)
     func findByArtistId(artistId: ArtistId) -> [AlbumModel] {
         let query = MPMediaQuery.albums().localItems()

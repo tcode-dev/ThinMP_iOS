@@ -10,4 +10,7 @@ protocol AlbumsServiceProtocol {
 
     /// ショートカット用。結果は albumIds の順で、ライブラリに無いアルバムは落ちる
     func findByIds(albumIds: [AlbumId]) async -> [AlbumModel]
+
+    /// ショートカット用。albumIds のうち、クラウドにしか無いアルバムも含めてライブラリに無いもの(AlbumRepositoryProtocol.findDeletedIds)
+    func findDeletedIds(albumIds: [AlbumId]) async -> Set<AlbumId>
 }

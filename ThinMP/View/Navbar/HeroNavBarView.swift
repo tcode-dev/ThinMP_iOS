@@ -7,15 +7,16 @@
 
 import SwiftUI
 
-struct HeroNavBarView<Content: View>: View {
+struct HeroNavBarView<Title: View, Content: View>: View {
     /// 背景の material の上に重ねる色の濃さ
     private let backgroundOpacity = 0.1
 
-    let primaryText: String?
     let width: CGFloat
     let top: CGFloat
     /// ヒーローのタイトルが潜り込んだか。HeroHeaderView が測る
     let isScrolledUnder: Bool
+    /// タイトル。読み込む前に「不明」を出さないように、ページが読み込めたときだけ TitleView を作って渡す(HeroHeaderView と同じ)
+    @ViewBuilder let title: () -> Title
     @ViewBuilder let content: () -> Content
 
     var body: some View {
@@ -48,7 +49,7 @@ struct HeroNavBarView<Content: View>: View {
 
     /// 潜り込んだときだけ出るナビゲーションバーのタイトル
     private var titleView: some View {
-        return TitleView(primaryText)
+        return title()
             .betweenSideButtons(width: width, height: StyleConstant.Height.row)
             .padding(.top, top)
             .opacity(opacity)

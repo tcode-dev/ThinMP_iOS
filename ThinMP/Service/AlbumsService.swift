@@ -25,4 +25,11 @@ struct AlbumsService: AlbumsServiceProtocol {
             repository.findByIds(albumIds: albumIds)
         }.value
     }
+
+    /// ライブラリ全件を走査するのでバックグラウンドで行う
+    func findDeletedIds(albumIds: [AlbumId]) async -> Set<AlbumId> {
+        return await Task.detached(priority: .userInitiated) { [repository] in
+            repository.findDeletedIds(albumIds: albumIds)
+        }.value
+    }
 }

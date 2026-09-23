@@ -20,15 +20,17 @@ struct FavoriteArtistsService: FavoriteArtistsServiceProtocol {
     func findAll() async -> [ArtistModel] {
         let artistIds = favoriteArtistRepository.findAll()
         // ライブラリ全件を走査するので、SwiftData の読み書きだけメインアクターに残してスキャンはバックグラウンドで行う
-        let artists = await Task.detached(priority: .userInitiated) { [artistRepository] in
-            artistRepository.findByIds(artistIds: artistIds)
+        let (artists, deletedIds) = await Task.detached(priority: .userInitiated) { [artistRepository] in
+            let artists = artistRepository.findByIds(artistIds: artistIds)
+            let foundIds = Set(artists.map { $0.artistId })
+
+            return (artists, artistRepository.findDeletedIds(artistIds: artistIds.filter { !foundIds.contains($0) }))
         }.value
 
         // 端末から削除されたアーティストがお気に入りに残っている場合は、そのアーティストだけ取り除く
+        // クラウドにしか無いアーティスト(端末から外されただけのもの)は一覧には出さないが、ダウンロードし直せば戻るように残す
         // 一覧ごと上書きすると、走査中に(再生画面などで)登録されたアーティストまで消える
-        let foundIds = Set(artists.map { $0.artistId })
-
-        for artistId in artistIds where !foundIds.contains(artistId) {
+        for artistId in artistIds where deletedIds.contains(artistId) {
             favoriteArtistRepository.delete(artistId: artistId)
         }
 

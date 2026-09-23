@@ -14,12 +14,15 @@ import MediaPlayer
 final class ArtistDetailServiceMock: ArtistDetailServiceProtocol {
     let artists: [ArtistDetailModel]
     let summaries: [ArtistSummaryModel]
+    /// クラウドにしか無いアーティスト。findByIds には出ないが、findDeletedIds では削除されたことにならない
+    let cloudArtistIds: Set<ArtistId>
     /// findByIds の中(走査中)に呼ばれる。走査中に別の書き込みが入った状況を作るのに使う
     var onFindByIds: () -> Void = {}
 
-    init(artists: [ArtistDetailModel] = [], summaries: [ArtistSummaryModel] = []) {
+    init(artists: [ArtistDetailModel] = [], summaries: [ArtistSummaryModel] = [], cloudArtistIds: Set<ArtistId> = []) {
         self.artists = artists
         self.summaries = summaries
+        self.cloudArtistIds = cloudArtistIds
     }
 
     func findById(artistId: ArtistId) -> ArtistDetailModel? {
@@ -30,6 +33,10 @@ final class ArtistDetailServiceMock: ArtistDetailServiceProtocol {
         onFindByIds()
 
         return artistIds.compactMap { artistId in summaries.first { $0.artistId == artistId } }
+    }
+
+    func findDeletedIds(artistIds: [ArtistId]) -> Set<ArtistId> {
+        return Set(artistIds).subtracting(summaries.map { $0.artistId }).subtracting(cloudArtistIds)
     }
 }
 
@@ -142,10 +149,13 @@ final class FavoriteArtistsServiceMock: FavoriteArtistsServiceProtocol {
 
 final class AlbumsServiceMock: AlbumsServiceProtocol {
     let albums: [AlbumModel]
+    /// クラウドにしか無いアルバム。findByIds には出ないが、findDeletedIds では削除されたことにならない
+    let cloudAlbumIds: Set<AlbumId>
     private(set) var findAllCalls = 0
 
-    init(albums: [AlbumModel]) {
+    init(albums: [AlbumModel], cloudAlbumIds: Set<AlbumId> = []) {
         self.albums = albums
+        self.cloudAlbumIds = cloudAlbumIds
     }
 
     func findAll() -> [AlbumModel] {
@@ -156,6 +166,10 @@ final class AlbumsServiceMock: AlbumsServiceProtocol {
 
     func findByIds(albumIds: [AlbumId]) -> [AlbumModel] {
         return albumIds.compactMap { albumId in albums.first { $0.albumId == albumId } }
+    }
+
+    func findDeletedIds(albumIds: [AlbumId]) -> Set<AlbumId> {
+        return Set(albumIds).subtracting(albums.map { $0.albumId }).subtracting(cloudAlbumIds)
     }
 }
 

@@ -17,7 +17,11 @@ struct PlaylistDetailPageView: View {
 
     var body: some View {
         ScrollPageLayout(playlistRegisterSongId: $playlistRegisterSongId, onPlayerDismiss: { vm.load(playlistId: playlistId) }) { geometry in
-            HeroNavBarView(primaryText: vm.playlist?.primaryText, width: geometry.size.width, top: geometry.safeAreaInsets.top, isScrolledUnder: isScrolledUnder) {
+            HeroNavBarView(width: geometry.size.width, top: geometry.safeAreaInsets.top, isScrolledUnder: isScrolledUnder) {
+                if let playlist = vm.playlist {
+                    TitleView(playlist.primaryText)
+                }
+            } content: {
                 MenuButtonView {
                     EditLinkView {
                         PlaylistDetailEditPageView(playlistId: playlistId, primaryText: vm.playlist?.primaryText)
@@ -33,7 +37,9 @@ struct PlaylistDetailPageView: View {
                     TitleView(playlist.primaryText)
                 }
             } secondaryText: {
-                SecondaryTextView(key: LabelConstant.playlist)
+                if vm.playlist != nil {
+                    SecondaryTextView(key: LabelConstant.playlist)
+                }
             }
             SongListView(songs: vm.playlist?.songs ?? []) { playlistRegisterSongId = $0 }
         }

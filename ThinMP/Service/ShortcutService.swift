@@ -47,7 +47,6 @@ struct ShortcutService: ShortcutServiceProtocol {
         let playlistById = playlists.keyed { $0.playlistId }
 
         // 端末に存在しないものは落とす
-        var missingTargets: [ShortcutTarget] = []
         let shortcutModels = shortcuts.compactMap { shortcut -> ShortcutModel? in
             let item: MediaProtocol? = switch shortcut.target {
             case .artist(let artistId): artistById[artistId]
@@ -56,18 +55,31 @@ struct ShortcutService: ShortcutServiceProtocol {
             }
 
             guard let item else {
-                missingTargets.append(shortcut.target)
-
                 return nil
             }
 
             return ShortcutModel(shortcutId: shortcut.shortcutId, target: shortcut.target, primaryText: item.primaryText, artwork: item.artwork)
         }
 
+        // 端末に無いアーティストとアルバムのうち、クラウドにも無いものだけを消す対象にする
+        // クラウドにしか無いもの(端末から外されただけのもの)は表示しないが、ダウンロードし直せば戻るように残す
+        let missingArtistIds = artistIds.filter { artistById[$0] == nil }
+        let missingAlbumIds = albumIds.filter { albumById[$0] == nil }
+        let deletedArtistIds: Set<ArtistId> = missingArtistIds.isEmpty ? [] : await artistDetailService.findDeletedIds(artistIds: missingArtistIds)
+        let deletedAlbumIds: Set<AlbumId> = missingAlbumIds.isEmpty ? [] : await albumsService.findDeletedIds(albumIds: missingAlbumIds)
+
         // 端末から削除されたアーティスト、アルバム、プレイリストのショートカットは、それだけ取り除く
         // 一覧ごと上書きすると、走査中に(別のページで)追加されたショートカットまで消える
-        for target in missingTargets {
-            shortcutRepository.delete(target: target)
+        for shortcut in shortcuts {
+            let isDeleted = switch shortcut.target {
+            case .artist(let artistId): deletedArtistIds.contains(artistId)
+            case .album(let albumId): deletedAlbumIds.contains(albumId)
+            case .playlist(let playlistId): playlistById[playlistId] == nil
+            }
+
+            if isDeleted {
+                shortcutRepository.delete(target: shortcut.target)
+            }
         }
 
         return shortcutModels

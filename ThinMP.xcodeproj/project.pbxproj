@@ -89,7 +89,6 @@
 		52A1F3CB2E8100040000A001 /* RegisterToggleButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A1F3CA2E8100040000A001 /* RegisterToggleButtonView.swift */; };
 		52A1F3CD2E8100050000A001 /* GridLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A1F3CC2E8100050000A001 /* GridLayout.swift */; };
 		A1B2C3D4E5F6071829304A5D /* View+BetweenSideButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6071829304A5E /* View+BetweenSideButtons.swift */; };
-		1E3896DC90A7547701E07A45 /* View+OnFirstAppear.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2474F990B3AD6B597E22D50B /* View+OnFirstAppear.swift */; };
 		B7C8D9E0F1A2B3C4D5E6F701 /* View+BarBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7C8D9E0F1A2B3C4D5E6F702 /* View+BarBackground.swift */; };
 		52A1F3CF2E8100060000A001 /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A1F3CE2E8100060000A001 /* MainMenu.swift */; };
 		52A1F3D12E8100060000A001 /* MainMenuSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A1F3D02E8100060000A001 /* MainMenuSetting.swift */; };
@@ -340,7 +339,6 @@
 		52A1F3CA2E8100040000A001 /* RegisterToggleButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterToggleButtonView.swift; sourceTree = "<group>"; };
 		52A1F3CC2E8100050000A001 /* GridLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridLayout.swift; sourceTree = "<group>"; };
 		A1B2C3D4E5F6071829304A5E /* View+BetweenSideButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+BetweenSideButtons.swift"; sourceTree = "<group>"; };
-		2474F990B3AD6B597E22D50B /* View+OnFirstAppear.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+OnFirstAppear.swift"; sourceTree = "<group>"; };
 		B7C8D9E0F1A2B3C4D5E6F702 /* View+BarBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+BarBackground.swift"; sourceTree = "<group>"; };
 		52A1F3CE2E8100060000A001 /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
 		52A1F3D02E8100060000A001 /* MainMenuSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuSetting.swift; sourceTree = "<group>"; };
@@ -564,7 +562,6 @@
 				3DE3F14D22EE72E8E4ACCF10 /* RowModifier.swift */,
 				52A1F3CC2E8100050000A001 /* GridLayout.swift */,
 				A1B2C3D4E5F6071829304A5E /* View+BetweenSideButtons.swift */,
-				2474F990B3AD6B597E22D50B /* View+OnFirstAppear.swift */,
 				B7C8D9E0F1A2B3C4D5E6F702 /* View+BarBackground.swift */,
 				52A1F3D82E8100080000A001 /* GeometryProxy+HeroSize.swift */,
 			);
@@ -1317,7 +1314,6 @@
 				52A1F3CB2E8100040000A001 /* RegisterToggleButtonView.swift in Sources */,
 				52A1F3CD2E8100050000A001 /* GridLayout.swift in Sources */,
 				A1B2C3D4E5F6071829304A5D /* View+BetweenSideButtons.swift in Sources */,
-				1E3896DC90A7547701E07A45 /* View+OnFirstAppear.swift in Sources */,
 				B7C8D9E0F1A2B3C4D5E6F701 /* View+BarBackground.swift in Sources */,
 				52A1F3D92E8100080000A001 /* GeometryProxy+HeroSize.swift in Sources */,
 				52A1F3DB2E8100080000A001 /* HeroGradientView.swift in Sources */,

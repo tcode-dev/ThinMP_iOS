@@ -41,8 +41,11 @@ struct PlaylistDetailService: PlaylistDetailServiceProtocol {
     /// スキャンはバックグラウンドで行い、SwiftData の読み書きだけメインアクターに残す
     private func createModels(playlists: [PlaylistEntity]) async -> [PlaylistDetailModel] {
         let songIds = playlists.flatMap { $0.songIds }.uniqued()
-        let librarySongs = await Task.detached(priority: .userInitiated) { [songRepository] in
-            songRepository.findByIds(songIds: songIds)
+        let (librarySongs, deletedIds) = await Task.detached(priority: .userInitiated) { [songRepository] in
+            let songs = songRepository.findByIds(songIds: songIds)
+            let foundIds = Set(songs.map { $0.songId })
+
+            return (songs, songRepository.findDeletedIds(songIds: songIds.filter { !foundIds.contains($0) }))
         }.value
         let songById = librarySongs.keyed { $0.songId }
 
@@ -53,11 +56,12 @@ struct PlaylistDetailService: PlaylistDetailServiceProtocol {
         }
 
         // 端末から削除された曲がプレイリストに残っている場合は、その曲だけ取り除く
+        // クラウドにしか無い曲(端末から外されただけの曲)は一覧には出さないが、ダウンロードし直せば戻るように残す
         for playlist in playlists {
-            let missingSongIds = Set(playlist.songIds.filter { songById[$0] == nil })
+            let removedSongIds = Set(playlist.songIds.filter { deletedIds.contains($0) })
 
-            if !missingSongIds.isEmpty {
-                removeSongs(playlistId: playlist.playlistId, songIds: missingSongIds)
+            if !removedSongIds.isEmpty {
+                removeSongs(playlistId: playlist.playlistId, songIds: removedSongIds)
             }
         }
 

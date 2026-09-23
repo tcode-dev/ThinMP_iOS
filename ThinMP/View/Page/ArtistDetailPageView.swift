@@ -17,7 +17,11 @@ struct ArtistDetailPageView: View {
 
     var body: some View {
         ScrollPageLayout(playlistRegisterSongId: $playlistRegisterSongId) { geometry in
-            HeroNavBarView(primaryText: vm.artist?.primaryText, width: geometry.size.width, top: geometry.safeAreaInsets.top, isScrolledUnder: isScrolledUnder) {
+            HeroNavBarView(width: geometry.size.width, top: geometry.safeAreaInsets.top, isScrolledUnder: isScrolledUnder) {
+                if let artist = vm.artist {
+                    TitleView(artist.primaryText)
+                }
+            } content: {
                 MenuButtonView {
                     FavoriteArtistButtonView(artistId: artistId)
                     ShortcutButtonView(target: .artist(artistId))
@@ -49,7 +53,7 @@ struct ArtistDetailPageView: View {
                 }
             }
         }
-        .onFirstAppear {
+        .onAppear {
             vm.load(artistId: artistId)
         }
     }

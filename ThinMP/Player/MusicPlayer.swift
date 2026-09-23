@@ -156,8 +156,9 @@ final class MusicPlayer: ObservableObject {
         isFavoriteSong = favoriteSongRepository.toggle(songId: songId)
     }
 
-    /// お気に入りの状態をストアから読み直す。他の画面で登録 / 解除されたあとに呼ぶ
-    func reloadFavorite() {
+    /// お気に入りの状態をストアから読み直す
+    /// 曲が切り替わったときと、ストアの保存通知(他の画面での登録 / 解除)を受けたときに呼ぶ
+    private func reloadFavorite() {
         isFavoriteArtist = (song?.artistId).map { favoriteArtistRepository.exists(artistId: $0) } ?? false
         isFavoriteSong = (song?.songId).map { favoriteSongRepository.exists(songId: $0) } ?? false
     }
@@ -195,6 +196,18 @@ final class MusicPlayer: ObservableObject {
         ) { [weak self] _ in
             MainActor.assumeIsolated {
                 self?.playbackStateDidChangeCallback()
+            }
+        })
+
+        // 一覧のメニューなど、再生画面の外でお気に入りが変わっても表示を合わせる
+        // MusicPlayer は Repository 越しにしかストアを知らないので、object は絞らない(RegisterToggleButtonView と同じ)
+        observers.append(NotificationCenter.default.addObserver(
+            forName: SwiftDataStore.didSave,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            MainActor.assumeIsolated {
+                self?.reloadFavorite()
             }
         })
     }
