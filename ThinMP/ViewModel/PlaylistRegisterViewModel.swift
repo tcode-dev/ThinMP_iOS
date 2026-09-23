@@ -10,7 +10,7 @@ import Combine
 /// 曲をプレイリストに登録するモーダル
 /// 一覧を 1 回読み、そこから songId がすでに登録されているプレイリストを求める
 @MainActor
-class PlaylistRegisterViewModel: ObservableObject {
+final class PlaylistRegisterViewModel: ObservableObject {
     @Published private(set) var playlists: [PlaylistModel] = []
     /// 対象の曲がすでに入っているプレイリストの id
     @Published private(set) var registeredPlaylistIds: Set<PlaylistId> = []

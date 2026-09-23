@@ -8,7 +8,7 @@
 import Combine
 
 @MainActor
-class MainEditViewModel: ObservableObject {
+final class MainEditViewModel: ObservableObject {
     /// 編集ページでそのまま書き換え、save() で保存する
     @Published var settings = MainSettings.empty
     @Published var shortcuts: [ShortcutModel] = []

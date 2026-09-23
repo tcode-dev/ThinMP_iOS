@@ -8,7 +8,7 @@
 import Combine
 
 @MainActor
-class AlbumsViewModel: ObservableObject {
+final class AlbumsViewModel: ObservableObject {
     @Published var albums: [AlbumModel] = []
 
     private let albumsService: AlbumsServiceProtocol
