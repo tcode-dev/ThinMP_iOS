@@ -32,17 +32,4 @@ struct AlbumDetailServiceTests {
 
         #expect(await service.findById(albumId: AlbumId(id: 99)) == nil)
     }
-
-    @Test
-    func findByIdsKeepsOrderAndLeavesSongsEmpty() async {
-        let service = AlbumDetailService(
-            albumRepository: AlbumRepositoryMock(albums: [album1, album2]),
-            songRepository: SongRepositoryMock(songs: [], albumSongs: [AlbumId(id: 1): [.fake(id: 11)]])
-        )
-
-        let albums = await service.findByIds(albumIds: [AlbumId(id: 2), AlbumId(id: 99), AlbumId(id: 1)])
-
-        #expect(albums.map { $0.albumId.id } == [2, 1])
-        #expect(albums.allSatisfy { $0.songs.isEmpty })
-    }
 }

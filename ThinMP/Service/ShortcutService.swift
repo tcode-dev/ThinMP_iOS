@@ -8,18 +8,18 @@
 struct ShortcutService: ShortcutServiceProtocol {
     private let shortcutRepository: ShortcutRepositoryProtocol
     private let artistDetailService: ArtistDetailServiceProtocol
-    private let albumDetailService: AlbumDetailServiceProtocol
+    private let albumsService: AlbumsServiceProtocol
     private let playlistDetailService: PlaylistDetailServiceProtocol
 
     init(
         shortcutRepository: ShortcutRepositoryProtocol = ShortcutRepository(),
         artistDetailService: ArtistDetailServiceProtocol = ArtistDetailService(),
-        albumDetailService: AlbumDetailServiceProtocol = AlbumDetailService(),
+        albumsService: AlbumsServiceProtocol = AlbumsService(),
         playlistDetailService: PlaylistDetailServiceProtocol = PlaylistDetailService()
     ) {
         self.shortcutRepository = shortcutRepository
         self.artistDetailService = artistDetailService
-        self.albumDetailService = albumDetailService
+        self.albumsService = albumsService
         self.playlistDetailService = playlistDetailService
     }
 
@@ -39,7 +39,7 @@ struct ShortcutService: ShortcutServiceProtocol {
 
         // 種別ごとにまとめて 1 回で解決する。ライブラリのスキャンは各 Service がバックグラウンドで行う
         let artists = artistIds.isEmpty ? [] : await artistDetailService.findByIds(artistIds: artistIds)
-        let albums = albumIds.isEmpty ? [] : await albumDetailService.findByIds(albumIds: albumIds)
+        let albums = albumIds.isEmpty ? [] : await albumsService.findByIds(albumIds: albumIds)
         let playlists = playlistIds.isEmpty ? [] : await playlistDetailService.findByIds(playlistIds: playlistIds)
 
         let artistById = artists.keyed { $0.artistId }

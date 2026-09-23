@@ -7,6 +7,4 @@
 
 protocol AlbumDetailServiceProtocol {
     func findById(albumId: AlbumId) async -> AlbumDetailModel?
-
-    func findByIds(albumIds: [AlbumId]) async -> [AlbumDetailModel]
 }

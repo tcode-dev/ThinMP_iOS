@@ -41,10 +41,6 @@ final class AlbumDetailServiceMock: AlbumDetailServiceProtocol {
     func findById(albumId: AlbumId) -> AlbumDetailModel? {
         return albums.first { $0.albumId == albumId }
     }
-
-    func findByIds(albumIds: [AlbumId]) -> [AlbumDetailModel] {
-        return albumIds.compactMap { albumId in albums.first { $0.albumId == albumId } }
-    }
 }
 
 final class PlaylistDetailServiceMock: PlaylistDetailServiceProtocol {
@@ -154,6 +150,10 @@ final class AlbumsServiceMock: AlbumsServiceProtocol {
         findAllCalls += 1
 
         return albums
+    }
+
+    func findByIds(albumIds: [AlbumId]) -> [AlbumModel] {
+        return albumIds.compactMap { albumId in albums.first { $0.albumId == albumId } }
     }
 }
 

@@ -26,8 +26,8 @@ struct ShortcutServiceTests {
             artistDetailService: ArtistDetailServiceMock(artists: artistIds.map {
                 ArtistDetailModel(artistId: ArtistId(id: $0), primaryText: "Artist \($0)", artwork: nil, albums: [], songs: [])
             }),
-            albumDetailService: AlbumDetailServiceMock(albums: albumIds.map {
-                AlbumDetailModel(albumId: AlbumId(id: $0), primaryText: "Album \($0)", secondaryText: nil, artwork: nil, songs: [])
+            albumsService: AlbumsServiceMock(albums: albumIds.map {
+                AlbumModel(albumId: AlbumId(id: $0), primaryText: "Album \($0)")
             }),
             playlistDetailService: PlaylistDetailServiceMock(playlists: playlistIds.map {
                 PlaylistDetailModel(playlistId: PlaylistId(id: $0), primaryText: "Playlist \($0)", artwork: nil, songs: [])
@@ -74,7 +74,7 @@ struct ShortcutServiceTests {
         let service = ShortcutService(
             shortcutRepository: shortcutRepository,
             artistDetailService: artistDetailService,
-            albumDetailService: AlbumDetailServiceMock(albums: []),
+            albumsService: AlbumsServiceMock(albums: []),
             playlistDetailService: PlaylistDetailServiceMock(playlists: [])
         )
 
