@@ -62,3 +62,4 @@
 
 // permission
 "Permission" = "設定からAppleMusicライブラリへのアクセスを許可するとこのアプリを使用できるようになります。";
+"OpenSettings" = "設定を開く";

@@ -61,3 +61,4 @@
 
 // permission
 "Permission" = "You can use this app by granting access to your Apple Music library from the settings.";
+"OpenSettings" = "Open Settings";
