@@ -11,10 +11,12 @@ struct PlaylistsEditPageView: View {
     @StateObject private var vm = PlaylistsViewModel()
 
     var body: some View {
-        EditPageLayout(isDoneEnabled: vm.isLoaded, onDone: vm.save) {
+        EditPageLayout(isDoneEnabled: vm.playlists != nil, onDone: vm.save) {
             List {
-                ReorderableListView(items: $vm.playlists) { playlist in
-                    MediaRowView(media: playlist)
+                if let playlists = Binding($vm.playlists) {
+                    ReorderableListView(items: playlists) { playlist in
+                        MediaRowView(media: playlist)
+                    }
                 }
             }
         }
