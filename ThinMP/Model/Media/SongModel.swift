@@ -39,3 +39,14 @@ struct SongModel: MediaProtocol, Identifiable {
         return item.artwork
     }
 }
+
+extension Sequence<SongModel> {
+    /// アルバムの曲順(ディスク番号、トラック番号の順)。番号が同じ曲は元の並びのまま
+    /// MPMediaItem のプロパティ取得は安くないので、比較のたびに引かずに 1 回だけ取る
+    func sortedByTrack() -> [SongModel] {
+        return enumerated()
+            .map { (song: $1, disc: $1.item.discNumber, track: $1.item.albumTrackNumber, index: $0) }
+            .sorted { ($0.disc, $0.track, $0.index) < ($1.disc, $1.track, $1.index) }
+            .map { $0.song }
+    }
+}
