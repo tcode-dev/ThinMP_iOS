@@ -26,8 +26,12 @@ struct PlaylistDetailPageView: View {
                 }
             }
         } content: { geometry in
-            HeroHeaderView(isScrolledUnder: $isScrolledUnder, width: geometry.size.width, size: geometry.heroSize, top: geometry.safeAreaInsets.top, primaryText: vm.playlist?.primaryText) {
+            HeroHeaderView(isScrolledUnder: $isScrolledUnder, width: geometry.size.width, size: geometry.heroSize, top: geometry.safeAreaInsets.top) {
                 HeroSquareImageView(size: geometry.heroSize, artwork: vm.playlist?.artwork)
+            } primaryText: {
+                if let playlist = vm.playlist {
+                    TitleView(playlist.primaryText)
+                }
             } secondaryText: {
                 SecondaryTextView(key: LabelConstant.playlist)
             }

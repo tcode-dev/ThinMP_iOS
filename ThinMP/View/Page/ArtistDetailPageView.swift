@@ -24,8 +24,12 @@ struct ArtistDetailPageView: View {
                 }
             }
         } content: { geometry in
-            HeroHeaderView(isScrolledUnder: $isScrolledUnder, width: geometry.size.width, size: geometry.heroSize, top: geometry.safeAreaInsets.top, primaryText: vm.artist?.primaryText) {
+            HeroHeaderView(isScrolledUnder: $isScrolledUnder, width: geometry.size.width, size: geometry.heroSize, top: geometry.safeAreaInsets.top) {
                 HeroCircleImageView(width: geometry.size.width, size: geometry.heroSize, artwork: vm.artist?.artwork)
+            } primaryText: {
+                if let artist = vm.artist {
+                    TitleView(artist.primaryText)
+                }
             } secondaryText: {
                 if let artist = vm.artist {
                     SecondaryTextView(format: LabelConstant.albumsAndSongsCount, artist.albums.count, artist.songs.count)
