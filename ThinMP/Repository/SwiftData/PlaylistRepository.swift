@@ -91,6 +91,7 @@ struct PlaylistRepository: PlaylistRepositoryProtocol {
         store.save()
     }
 
+    // findById / findByIds にすると、戻り値の型だけが違う公開メソッドと同じ名前になり、呼び出しが曖昧になるので findModel(s) にしている
     private func findModel(playlistId: PlaylistId) -> PlaylistDataModel? {
         let id = playlistId.id
         let descriptor = FetchDescriptor<PlaylistDataModel>(predicate: #Predicate { $0.id == id })
