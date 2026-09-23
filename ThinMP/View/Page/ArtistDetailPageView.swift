@@ -33,13 +33,13 @@ struct ArtistDetailPageView: View {
             }
             if let artist = vm.artist {
                 if !artist.albums.isEmpty {
-                    SectionTitleView(LabelConstant.albums)
+                    SectionTitleView(key: LabelConstant.albums)
                         .padding(.leading, StyleConstant.Padding.large)
                     AlbumListView(albums: artist.albums, width: geometry.size.width)
                         .padding(.bottom, StyleConstant.Padding.large)
                 }
                 if !artist.songs.isEmpty {
-                    SectionTitleView(LabelConstant.songs)
+                    SectionTitleView(key: LabelConstant.songs)
                         .padding(.leading, StyleConstant.Padding.large)
                     SongListView(songs: artist.songs) { playlistRegisterSongId = $0 }
                 }

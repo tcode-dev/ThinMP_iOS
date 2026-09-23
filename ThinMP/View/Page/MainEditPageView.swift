@@ -20,7 +20,7 @@ struct MainEditPageView: View {
                 .listRowInsets(.init())
                 MenuEditRowView(text: LabelConstant.shortcut, visibility: $vm.settings.isShortcutVisible).listRowInsets(.init())
                 MenuEditRowView(text: LabelConstant.recentlyAdded, visibility: $vm.settings.isRecentlyVisible).listRowInsets(.init())
-                SectionTitleView(LabelConstant.shortcut).padding(StyleConstant.Padding.tiny)
+                SectionTitleView(key: LabelConstant.shortcut).padding(StyleConstant.Padding.tiny)
                 ReorderableListView(items: $vm.shortcuts) { shortcut in
                     ShortcutRowView(shortcut: shortcut)
                 }

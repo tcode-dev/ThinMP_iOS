@@ -8,14 +8,15 @@
 import SwiftUI
 
 struct SectionTitleView: View {
-    private let text: String
+    private let text: Text
 
-    init(_ text: String) {
-        self.text = text
+    /// Localizable.strings のキー。Model / Service は翻訳しないので、ラベルの翻訳はここで行う
+    init(key: String) {
+        text = Text(label: key)
     }
 
     var body: some View {
-        Text(label: text)
+        text
             .font(.title)
             .foregroundColor(.primary)
             .lineLimit(1)
