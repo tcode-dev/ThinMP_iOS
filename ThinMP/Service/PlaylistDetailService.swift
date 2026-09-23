@@ -46,18 +46,23 @@ struct PlaylistDetailService: PlaylistDetailServiceProtocol {
         }.value
         let songById = librarySongs.keyed { $0.songId }
 
-        return playlists.map { playlist in
+        let models = playlists.map { playlist in
             let songs = playlist.songIds.compactMap { songById[$0] }
-
-            // 端末から削除された曲がプレイリストに残っている場合は、その曲だけ取り除く
-            if songs.count != playlist.songIds.count {
-                removeSongs(playlistId: playlist.playlistId, songIds: Set(playlist.songIds.filter { songById[$0] == nil }))
-            }
-
             let artwork = songs.first { $0.artwork != nil }?.artwork
 
             return PlaylistDetailModel(playlistId: playlist.playlistId, primaryText: playlist.name, artwork: artwork, songs: songs)
         }
+
+        // 端末から削除された曲がプレイリストに残っている場合は、その曲だけ取り除く
+        for playlist in playlists {
+            let missingSongIds = Set(playlist.songIds.filter { songById[$0] == nil })
+
+            if !missingSongIds.isEmpty {
+                removeSongs(playlistId: playlist.playlistId, songIds: missingSongIds)
+            }
+        }
+
+        return models
     }
 
     /// 走査の前に読んだ内容で上書きすると、走査中に追加された曲や変えられた名前が消えるので、保存する直前に読み直す
