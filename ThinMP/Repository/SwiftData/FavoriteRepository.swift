@@ -26,8 +26,9 @@ struct FavoriteRepository<Model: FavoriteDataModel> {
         return try! store.context.fetch(descriptor).map { $0.mediaId }.uniqued()
     }
 
+    /// 行そのものは要らないので、読み込まずに数だけ数える
     func exists(mediaId: String) -> Bool {
-        return !find(mediaId: mediaId).isEmpty
+        return try! store.context.fetchCount(descriptor(mediaId: mediaId)) > 0
     }
 
     func add(mediaId: String) {
@@ -65,9 +66,11 @@ struct FavoriteRepository<Model: FavoriteDataModel> {
     }
 
     private func find(mediaId: String) -> [Model] {
-        let descriptor = FetchDescriptor<Model>(predicate: Model.predicate(mediaId: mediaId))
+        return try! store.context.fetch(descriptor(mediaId: mediaId))
+    }
 
-        return try! store.context.fetch(descriptor)
+    private func descriptor(mediaId: String) -> FetchDescriptor<Model> {
+        return FetchDescriptor<Model>(predicate: Model.predicate(mediaId: mediaId))
     }
 
     private func truncate() {
