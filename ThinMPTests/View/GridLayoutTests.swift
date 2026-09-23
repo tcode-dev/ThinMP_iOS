@@ -29,6 +29,15 @@ struct GridLayoutTests {
         #expect(layout.cellSize == (1024 - StyleConstant.Padding.large * 6) / 5)
     }
 
+    /// 余白の合計より狭くても、セルの大きさは負にならない
+    @Test
+    func tooNarrowWidthGivesZeroCellSize() {
+        let layout = GridLayout(width: 0)
+
+        #expect(layout.columns.count == StyleConstant.Grid.minSpanCount)
+        #expect(layout.cellSize == 0)
+    }
+
     /// 列間は Padding.large、右端の列だけ間隔を持たない
     @Test
     func onlyTheLastColumnHasNoSpacing() {
