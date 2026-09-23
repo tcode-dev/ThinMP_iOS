@@ -30,9 +30,7 @@ struct PlaylistRegisterView: View {
                             Text(label: LabelConstant.newPlaylist)
                         }
                         Spacer()
-                        Button(action: {
-                            onClose()
-                        }) {
+                        Button(action: onClose) {
                             Text(label: LabelConstant.cancel)
                         }
                         Spacer()
