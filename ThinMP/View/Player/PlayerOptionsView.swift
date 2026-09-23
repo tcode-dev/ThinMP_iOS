@@ -31,7 +31,7 @@ struct PlayerOptionsView: View {
                     ButtonImageView(image: .repeatButton, label: LabelConstant.repeatAll, size: imageSize, dimmed: true)
                 }
             }
-            .accessibilityAddTraits((musicPlayer.repeatMode != .none) ? .isSelected : [])
+            .accessibilityAddTraits(musicPlayer.repeatMode != .none ? .isSelected : [])
             .frame(width: StyleConstant.button, height: StyleConstant.button)
             Spacer()
             Button(action: musicPlayer.shuffle) {
