@@ -14,7 +14,7 @@ struct PlayerSeekBarView: View {
     private let timePadding: CGFloat = 40
     private let sliderPadding: CGFloat = StyleConstant.isPad ? 40 : 30
 
-    @EnvironmentObject var musicPlayer: MusicPlayer
+    @EnvironmentObject private var musicPlayer: MusicPlayer
 
     var body: some View {
         VStack(spacing: 0) {

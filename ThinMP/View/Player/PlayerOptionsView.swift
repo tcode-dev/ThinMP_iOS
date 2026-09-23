@@ -14,7 +14,7 @@ struct PlayerOptionsView: View {
     private let favoriteSongImageSize: CGFloat = 40
     private let horizontalPadding: CGFloat = StyleConstant.isPad ? 50 : 30
 
-    @EnvironmentObject var musicPlayer: MusicPlayer
+    @EnvironmentObject private var musicPlayer: MusicPlayer
 
     /// プレイリストに追加を押したときに呼ばれる
     let onAddPlaylist: () -> Void

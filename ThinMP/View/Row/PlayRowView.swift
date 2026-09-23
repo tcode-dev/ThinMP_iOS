@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PlayRowView<Content: View>: View {
-    @EnvironmentObject var musicPlayer: MusicPlayer
+    @EnvironmentObject private var musicPlayer: MusicPlayer
 
     let list: [SongModel]
     let index: Int

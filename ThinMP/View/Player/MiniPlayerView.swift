@@ -11,7 +11,7 @@ struct MiniPlayerView: View {
     private let buttonImageSize: CGFloat = 40
     private let buttonSize: CGFloat = 60
 
-    @EnvironmentObject var musicPlayer: MusicPlayer
+    @EnvironmentObject private var musicPlayer: MusicPlayer
     @State private var isPlayerPresented: Bool = false
 
     let bottom: CGFloat
