@@ -135,4 +135,19 @@ struct FavoriteSongRepositoryTests {
         #expect(!repository.toggle(songId: SongId(id: 1)))
         #expect(!repository.exists(songId: SongId(id: 1)))
     }
+
+    /// songId が persistentID として読めない行は findAll から落ちる
+    /// SwiftData だけを見る。Realm 側は force unwrap のままで、削除予定なので触っていない
+    @Test
+    func findAllSkipsRowsWhoseIdIsNotAPersistentId() {
+        let repositories = TestRepositories(backend: .swiftData)
+        let repository = repositories.favoriteSong
+
+        repository.add(songId: SongId(id: 1))
+        repositories.writeDirectly(realm: { _ in }, swiftData: { context in
+            context.insert(FavoriteSongDataModel(songId: "broken", order: 99))
+        })
+
+        #expect(repository.findAll().map { $0.id } == [1])
+    }
 }
