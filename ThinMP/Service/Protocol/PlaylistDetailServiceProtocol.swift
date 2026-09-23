@@ -10,4 +10,7 @@ protocol PlaylistDetailServiceProtocol {
     func findById(playlistId: PlaylistId) async -> PlaylistDetailModel?
 
     func findByIds(playlistIds: [PlaylistId]) async -> [PlaylistDetailModel]
+
+    /// 全プレイリスト。並びは PlaylistRepository.findAll と同じ
+    func findAll() async -> [PlaylistDetailModel]
 }

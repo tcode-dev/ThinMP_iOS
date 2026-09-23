@@ -18,10 +18,7 @@ struct PlaylistsServiceTests {
         ]
         let details = playlists.map { PlaylistDetailModel(playlistId: $0.playlistId, primaryText: $0.name, songs: $0.songIds.map { .fake(id: $0.id) }) }
 
-        return PlaylistsService(
-            playlistRepository: PlaylistRepositoryMock(playlists: playlists),
-            playlistDetailService: PlaylistDetailServiceMock(playlists: details)
-        )
+        return PlaylistsService(playlistDetailService: PlaylistDetailServiceMock(playlists: details))
     }
 
     @Test

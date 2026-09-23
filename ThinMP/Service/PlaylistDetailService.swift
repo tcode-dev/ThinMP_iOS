@@ -32,6 +32,10 @@ struct PlaylistDetailService: PlaylistDetailServiceProtocol {
         return await createModels(playlists: playlists)
     }
 
+    func findAll() async -> [PlaylistDetailModel] {
+        return await createModels(playlists: playlistRepository.findAll())
+    }
+
     /// 全プレイリストの曲をまとめて 1 回で取り、プレイリストごとに振り分ける
     /// SongRepository.findByIds はライブラリ全件を走査するので、プレイリストごとに呼ばない
     /// スキャンはバックグラウンドで行い、SwiftData の読み書きだけメインアクターに残す

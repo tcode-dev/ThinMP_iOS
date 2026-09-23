@@ -57,6 +57,10 @@ final class PlaylistDetailServiceMock: PlaylistDetailServiceProtocol {
     func findByIds(playlistIds: [PlaylistId]) -> [PlaylistDetailModel] {
         return playlistIds.compactMap { playlistId in playlists.first { $0.playlistId == playlistId } }
     }
+
+    func findAll() -> [PlaylistDetailModel] {
+        return playlists
+    }
 }
 
 final class ShortcutServiceMock: ShortcutServiceProtocol {
