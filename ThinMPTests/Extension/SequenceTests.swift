@@ -5,6 +5,7 @@
 //  Created by tk on 2026/09/22.
 //
 
+import MediaPlayer
 import Testing
 @testable import ThinMP
 
@@ -41,5 +42,22 @@ struct SequenceTests {
     @Test
     func uniquedOfEmptyIsEmpty() {
         #expect([Int]().uniqued().isEmpty)
+    }
+
+    @Test
+    func firstArtworkSkipsMediaWithoutArtwork() {
+        let artwork = MPMediaItemArtwork(boundsSize: CGSize(width: 1, height: 1)) { _ in UIImage() }
+        let albums = [
+            AlbumModel(albumId: AlbumId(id: 1), primaryText: nil, secondaryText: nil, artwork: nil),
+            AlbumModel(albumId: AlbumId(id: 2), primaryText: nil, secondaryText: nil, artwork: artwork),
+        ]
+
+        #expect(albums.firstArtwork === artwork)
+    }
+
+    @Test
+    func firstArtworkIsNilWhenNoMediaHasArtwork() {
+        #expect([SongModel.fake(id: 1)].firstArtwork == nil)
+        #expect([AlbumModel]().firstArtwork == nil)
     }
 }

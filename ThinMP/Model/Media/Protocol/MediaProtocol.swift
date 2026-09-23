@@ -22,3 +22,11 @@ extension MediaProtocol {
         return nil
     }
 }
+
+extension Sequence where Element: MediaProtocol {
+    /// 最初に見つかったアートワーク。無ければ nil
+    /// アーティストやプレイリストは自身がアートワークを持たないので、アルバムや曲から借りるのに使う
+    var firstArtwork: MPMediaItemArtwork? {
+        return first { $0.artwork != nil }?.artwork
+    }
+}

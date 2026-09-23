@@ -5,8 +5,6 @@
 //  Created by tk on 2021/05/31.
 //
 
-import MediaPlayer
-
 struct ArtistDetailService: ArtistDetailServiceProtocol {
     private let artistRepository: ArtistRepositoryProtocol
     private let albumRepository: AlbumRepositoryProtocol
@@ -34,7 +32,7 @@ struct ArtistDetailService: ArtistDetailServiceProtocol {
             let songsByAlbum = Dictionary(grouping: songRepository.findByArtistId(artistId: artistId)) { $0.albumId }
             let songs = albums.flatMap { songsByAlbum[$0.albumId] ?? [] }
 
-            return ArtistDetailModel(artistId: artist.artistId, primaryText: artist.primaryText, artwork: Self.artwork(albums: albums), albums: albums, songs: songs)
+            return ArtistDetailModel(artistId: artist.artistId, primaryText: artist.primaryText, artwork: albums.firstArtwork, albums: albums, songs: songs)
         }.value
     }
 
@@ -50,13 +48,8 @@ struct ArtistDetailService: ArtistDetailServiceProtocol {
             artistRepository.findByIds(artistIds: artistIds).map { artist in
                 let albums = albumRepository.findByArtistId(artistId: artist.artistId)
 
-                return ArtistSummaryModel(artistId: artist.artistId, primaryText: artist.primaryText, artwork: Self.artwork(albums: albums))
+                return ArtistSummaryModel(artistId: artist.artistId, primaryText: artist.primaryText, artwork: albums.firstArtwork)
             }
         }.value
-    }
-
-    /// アーティスト自身はアートワークを持たないので、アルバムの中で最初に見つかったものを使う
-    private static func artwork(albums: [AlbumModel]) -> MPMediaItemArtwork? {
-        return albums.first { $0.artwork != nil }?.artwork
     }
 }

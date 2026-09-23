@@ -48,9 +48,8 @@ struct PlaylistDetailService: PlaylistDetailServiceProtocol {
 
         let models = playlists.map { playlist in
             let songs = playlist.songIds.compactMap { songById[$0] }
-            let artwork = songs.first { $0.artwork != nil }?.artwork
 
-            return PlaylistDetailModel(playlistId: playlist.playlistId, primaryText: playlist.name, artwork: artwork, songs: songs)
+            return PlaylistDetailModel(playlistId: playlist.playlistId, primaryText: playlist.name, artwork: songs.firstArtwork, songs: songs)
         }
 
         // 端末から削除された曲がプレイリストに残っている場合は、その曲だけ取り除く
