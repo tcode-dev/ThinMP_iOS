@@ -18,6 +18,7 @@ struct BackButtonView: View {
             Image(.backButton)
                 .renderingMode(.original)
                 .frame(width: StyleConstant.button, height: StyleConstant.button)
+                .accessibilityLabel(Text(label: LabelConstant.back))
         }
         .frame(width: StyleConstant.button, height: StyleConstant.button)
     }

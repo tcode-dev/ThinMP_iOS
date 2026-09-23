@@ -24,5 +24,13 @@ struct MenuEditRowView: View {
         .onTapGesture {
             isVisible.toggle()
         }
+        // onTapGesture だけではボタンとして読まれないので、VoiceOver には 1 つのボタンとして見せる
+        // チェックボックスの画像名は読ませず、表示中かどうかは「選択中」で伝える
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(Text(label: key))
+        .accessibilityAddTraits(isVisible ? [.isButton, .isSelected] : .isButton)
+        .accessibilityAction {
+            isVisible.toggle()
+        }
     }
 }

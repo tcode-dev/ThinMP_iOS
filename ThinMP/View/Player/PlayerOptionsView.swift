@@ -24,32 +24,36 @@ struct PlayerOptionsView: View {
             Button(action: musicPlayer.changeRepeat) {
                 switch musicPlayer.repeatMode {
                 case .all:
-                    ButtonImageView(image: .repeatButton, size: imageSize)
+                    ButtonImageView(image: .repeatButton, label: LabelConstant.repeatAll, size: imageSize)
                 case .one:
-                    ButtonImageView(image: .repeatOneButton, size: imageSize)
+                    ButtonImageView(image: .repeatOneButton, label: LabelConstant.repeatOne, size: imageSize)
                 default:
-                    ButtonImageView(image: .repeatButton, size: imageSize, dimmed: true)
+                    ButtonImageView(image: .repeatButton, label: LabelConstant.repeatAll, size: imageSize, dimmed: true)
                 }
             }
+            .accessibilityAddTraits((musicPlayer.repeatMode != .none) ? .isSelected : [])
             .frame(width: StyleConstant.button, height: StyleConstant.button)
             Spacer()
             Button(action: musicPlayer.shuffle) {
-                ButtonImageView(image: .shuffleButton, size: imageSize, dimmed: !musicPlayer.isShuffle)
+                ButtonImageView(image: .shuffleButton, label: LabelConstant.shuffle, size: imageSize, dimmed: !musicPlayer.isShuffle)
             }
+            .accessibilityAddTraits(musicPlayer.isShuffle ? .isSelected : [])
             .frame(width: StyleConstant.button, height: StyleConstant.button)
             Spacer()
             Button(action: musicPlayer.toggleFavoriteArtist) {
-                ButtonImageView(image: .favoriteArtistButton, size: imageSize, dimmed: !musicPlayer.isFavoriteArtist)
+                ButtonImageView(image: .favoriteArtistButton, label: LabelConstant.favoriteArtist, size: imageSize, dimmed: !musicPlayer.isFavoriteArtist)
             }
+            .accessibilityAddTraits(musicPlayer.isFavoriteArtist ? .isSelected : [])
             .frame(width: StyleConstant.button, height: StyleConstant.button)
             Spacer()
             Button(action: musicPlayer.toggleFavoriteSong) {
-                ButtonImageView(image: .favoriteSongButton, size: favoriteSongImageSize, dimmed: !musicPlayer.isFavoriteSong)
+                ButtonImageView(image: .favoriteSongButton, label: LabelConstant.favoriteSong, size: favoriteSongImageSize, dimmed: !musicPlayer.isFavoriteSong)
             }
+            .accessibilityAddTraits(musicPlayer.isFavoriteSong ? .isSelected : [])
             .frame(width: StyleConstant.button, height: StyleConstant.button)
             Spacer()
             Button(action: onAddPlaylist) {
-                ButtonImageView(image: .playlistAddButton, size: imageSize)
+                ButtonImageView(image: .playlistAddButton, label: LabelConstant.addPlaylist, size: imageSize)
             }
             .frame(width: StyleConstant.button, height: StyleConstant.button)
         }

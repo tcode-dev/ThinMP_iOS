@@ -62,3 +62,16 @@
 // permission
 "Permission" = "You can use this app by granting access to your Apple Music library from the settings.";
 "OpenSettings" = "Open Settings";
+
+// accessibility (icon-only buttons)
+"Back" = "Back";
+"Menu" = "Menu";
+"Play" = "Play";
+"Pause" = "Pause";
+"Previous" = "Previous";
+"Next" = "Next";
+"RepeatAll" = "Repeat all";
+"RepeatOne" = "Repeat one";
+"Shuffle" = "Shuffle";
+"FavoriteArtist" = "Favorite artist";
+"FavoriteSong" = "Favorite song";

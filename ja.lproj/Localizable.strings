@@ -63,3 +63,16 @@
 // permission
 "Permission" = "設定からAppleMusicライブラリへのアクセスを許可するとこのアプリを使用できるようになります。";
 "OpenSettings" = "設定を開く";
+
+// accessibility (icon-only buttons)
+"Back" = "戻る";
+"Menu" = "メニュー";
+"Play" = "再生";
+"Pause" = "一時停止";
+"Previous" = "前へ";
+"Next" = "次へ";
+"RepeatAll" = "全曲リピート";
+"RepeatOne" = "1曲リピート";
+"Shuffle" = "シャッフル";
+"FavoriteArtist" = "お気に入りアーティスト";
+"FavoriteSong" = "お気に入り曲";
