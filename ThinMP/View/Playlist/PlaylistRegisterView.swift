@@ -25,7 +25,7 @@ struct PlaylistRegisterView: View {
                     HStack {
                         Spacer()
                         Button(action: {
-                            isCreateFormShown.toggle()
+                            isCreateFormShown = true
                         }) {
                             Text(label: LabelConstant.newPlaylist)
                         }
@@ -74,7 +74,7 @@ struct PlaylistRegisterView: View {
                             if hasNoPlaylists {
                                 onClose()
                             } else {
-                                isCreateFormShown.toggle()
+                                isCreateFormShown = false
                             }
                         }) {
                             Text(label: LabelConstant.cancel)

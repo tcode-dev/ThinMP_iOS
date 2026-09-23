@@ -23,7 +23,7 @@ struct MiniPlayerView: View {
             if musicPlayer.isActive {
                 HStack {
                     Button(action: {
-                        isPlayerPresented.toggle()
+                        isPlayerPresented = true
                     }) {
                         HStack {
                             SquareImageView(artwork: musicPlayer.song?.artwork, size: StyleConstant.thumbnail)
