@@ -13,7 +13,7 @@ struct FavoriteArtistsPageView: View {
 
     var body: some View {
         ScrollPageLayout(onPlayerDismiss: { vm.load() }) { geometry in
-            ListNavBarView(title: LabelConstant.favoriteArtists, top: geometry.safeAreaInsets.top, isScrolledUnder: isScrolledUnder) {
+            ListNavBarView(titleKey: LabelConstant.favoriteArtists, top: geometry.safeAreaInsets.top, isScrolledUnder: isScrolledUnder) {
                 EditButtonView {
                     FavoriteArtistsEditPageView()
                 }

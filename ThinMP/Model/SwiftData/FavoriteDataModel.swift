@@ -16,7 +16,6 @@ protocol FavoriteDataModel: PersistentModel {
     static var orderKey: KeyPath<Self, Int> { get }
 
     var mediaId: String { get }
-    var order: Int { get set }
 
     init(mediaId: String, order: Int)
 

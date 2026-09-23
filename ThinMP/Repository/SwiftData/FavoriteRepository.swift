@@ -40,6 +40,8 @@ struct FavoriteRepository<Model: FavoriteDataModel> {
     }
 
     /// 渡したものだけを渡した順で残す。編集ページの並び替えと削除を反映する
+    /// お気に入りの行は mediaId と order しか持たず、行の id はどこからも参照されないので、全部消して入れ直す
+    /// プレイリストは曲をリレーションで持ち、id がショートカットから参照されるので、この方法は取れない
     func update(mediaIds: [String]) {
         truncate()
 

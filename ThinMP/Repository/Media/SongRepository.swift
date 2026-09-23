@@ -23,7 +23,6 @@ struct SongRepository: SongRepositoryProtocol {
         return songIds.compactMap { songs[$0] }
     }
 
-    /// songs() のクエリは曲名順に並ぶ。アルバムの曲もトラック順ではなく曲名順にしたいので albums() ではなくこちらを使う
     /// songs() のクエリは曲名順に並ぶので、トラック順に並べ直す
     func findByAlbumId(albumId: AlbumId) -> [SongModel] {
         let query = MPMediaQuery.songs().localItems()

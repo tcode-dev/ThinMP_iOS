@@ -13,7 +13,7 @@ struct EditPageLayout<Content: View>: View {
     @Environment(\.dismiss) private var dismiss
 
     /// false のあいだは完了を押せない(プレイリスト名が空のときなど)
-    var isDoneEnabled = true
+    let isDoneEnabled: Bool
     /// ナビゲーションバーのボタン以外をタップしたときに呼ばれる(キーボードを閉じるなど)
     var onNavBarTap: () -> Void = {}
     let onDone: () -> Void

@@ -15,7 +15,7 @@ struct FavoriteSongsPageView: View {
 
     var body: some View {
         ScrollPageLayout(playlistRegisterSongId: $playlistRegisterSongId, onPlayerDismiss: { vm.load() }) { geometry in
-            ListNavBarView(title: LabelConstant.favoriteSongs, top: geometry.safeAreaInsets.top, isScrolledUnder: isScrolledUnder) {
+            ListNavBarView(titleKey: LabelConstant.favoriteSongs, top: geometry.safeAreaInsets.top, isScrolledUnder: isScrolledUnder) {
                 EditButtonView {
                     FavoriteSongsEditPageView()
                 }

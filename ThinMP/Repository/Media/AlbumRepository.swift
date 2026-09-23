@@ -44,7 +44,7 @@ struct AlbumRepository: AlbumRepositoryProtocol {
     /// 追加が新しい順に count 件
     func findRecently(count: Int) -> [AlbumModel] {
         // MPMediaItem のプロパティ取得は安くないので、比較のたびに dateAdded を引かずに 1 回だけ取る
-        let albums = collections(MPMediaQuery.albums().localItems()).compactMap { collection -> (album: AlbumModel, dateAdded: Date)? in
+        let albums = (MPMediaQuery.albums().localItems().collections ?? []).compactMap { collection -> (album: AlbumModel, dateAdded: Date)? in
             guard let item = collection.representativeItem, let album = AlbumModel(collection: collection) else {
                 return nil
             }
@@ -55,11 +55,7 @@ struct AlbumRepository: AlbumRepositoryProtocol {
         return albums.sorted { $0.dateAdded > $1.dateAdded }.prefix(count).map { $0.album }
     }
 
-    private func collections(_ query: MPMediaQuery) -> [MPMediaItemCollection] {
-        return query.collections ?? []
-    }
-
     private func albums(_ query: MPMediaQuery) -> [AlbumModel] {
-        return collections(query).compactMap { AlbumModel(collection: $0) }
+        return (query.collections ?? []).compactMap { AlbumModel(collection: $0) }
     }
 }

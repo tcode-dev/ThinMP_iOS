@@ -9,7 +9,7 @@ import SwiftUI
 
 /// 一覧ページのナビゲーションバー。戻るボタンとタイトルを持ち、一覧がスクロールで潜り込んだら背景を出す
 struct ListNavBarView<Trailing: View>: View {
-    let title: String
+    let titleKey: String
     let top: CGFloat
     /// 一覧側の `ListEmptyHeaderView` が上端より上に行ったか。行ったら背景を出す
     let isScrolledUnder: Bool
@@ -22,7 +22,7 @@ struct ListNavBarView<Trailing: View>: View {
             HStack {
                 BackButtonView()
                 Spacer()
-                TitleView(key: title)
+                TitleView(key: titleKey)
                 Spacer()
                 trailing()
                     .frame(width: StyleConstant.button, height: StyleConstant.button)
@@ -50,7 +50,7 @@ struct ListNavBarView<Trailing: View>: View {
 
 extension ListNavBarView where Trailing == Color {
     /// 右端に置くものがないページ用。戻るボタン分の空きだけ確保する
-    init(title: String, top: CGFloat, isScrolledUnder: Bool) {
-        self.init(title: title, top: top, isScrolledUnder: isScrolledUnder) { Color.clear }
+    init(titleKey: String, top: CGFloat, isScrolledUnder: Bool) {
+        self.init(titleKey: titleKey, top: top, isScrolledUnder: isScrolledUnder) { Color.clear }
     }
 }

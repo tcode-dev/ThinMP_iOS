@@ -14,7 +14,7 @@ struct EditButtonView<Content: View>: View {
     var body: some View {
         MenuButtonView {
             NavigationLink(destination: content()) {
-                MenuRowView(text: LabelConstant.edit)
+                MenuRowView(key: LabelConstant.edit)
             }
         }
     }

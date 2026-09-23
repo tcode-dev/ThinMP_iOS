@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct MenuRowView: View {
-    let text: String
+    let key: String
 
     var body: some View {
         HStack {
-            PrimaryTextView(key: text)
+            PrimaryTextView(key: key)
             Spacer()
         }
         .modifier(RowModifier())

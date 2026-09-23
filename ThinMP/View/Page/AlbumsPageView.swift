@@ -13,7 +13,7 @@ struct AlbumsPageView: View {
 
     var body: some View {
         ScrollPageLayout { geometry in
-            ListNavBarView(title: LabelConstant.albums, top: geometry.safeAreaInsets.top, isScrolledUnder: isScrolledUnder)
+            ListNavBarView(titleKey: LabelConstant.albums, top: geometry.safeAreaInsets.top, isScrolledUnder: isScrolledUnder)
         } content: { geometry in
             ListEmptyHeaderView(isScrolledUnder: $isScrolledUnder, top: geometry.safeAreaInsets.top)
             AlbumListView(albums: vm.albums, width: geometry.size.width)
