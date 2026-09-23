@@ -9,7 +9,7 @@ import Foundation
 import Testing
 @testable import ThinMP
 
-/// MainMenuConfig / MainSectionConfig と UserDefaults の往復
+/// MainMenuConfig と UserDefaults の往復
 /// 保存形式(並び順は rawValue の配列、表示 / 非表示は rawValue をキーにした Bool)は
 /// リリース済みのアプリが書いたものと互換なので、ここで固定する
 struct MainMenuConfigTests {
@@ -76,20 +76,5 @@ struct MainMenuConfigTests {
         let menus = MainMenuConfig(userDefaults: userDefaults).load().map { $0.menu }
 
         #expect(menus == [.songs, .artists, .albums, .favoriteArtists, .favoriteSongs, .playlists])
-    }
-
-    @Test
-    func sectionVisibilityDefaultsToTrueAndRoundTrips() {
-        let userDefaults = UserDefaults.empty()
-        let config = MainSectionConfig(userDefaults: userDefaults)
-
-        #expect(config.isShortcutVisible)
-        #expect(config.isRecentlyVisible)
-
-        config.isShortcutVisible = false
-
-        #expect(!config.isShortcutVisible)
-        #expect(config.isRecentlyVisible)
-        #expect(!MainSectionConfig(userDefaults: userDefaults).isShortcutVisible)
     }
 }

@@ -95,6 +95,7 @@
 		52A1F3D12E8100060000A001 /* MainMenuSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A1F3D02E8100060000A001 /* MainMenuSetting.swift */; };
 		52A1F3D32E8100060000A001 /* MainSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A1F3D22E8100060000A001 /* MainSettings.swift */; };
 		52A1F3D52E8100070000A001 /* MainMenuConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A1F3D42E8100070000A001 /* MainMenuConfigTests.swift */; };
+		52A1F3E02E81000A0000A001 /* MainSectionConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A1F3E12E81000A0000A001 /* MainSectionConfigTests.swift */; };
 		52A1F3D92E8100080000A001 /* GeometryProxy+HeroSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A1F3D82E8100080000A001 /* GeometryProxy+HeroSize.swift */; };
 		52A1F3DB2E8100080000A001 /* HeroGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A1F3DA2E8100080000A001 /* HeroGradientView.swift */; };
 		52A1F3DD2E8100090000A001 /* ButtonImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A1F3DC2E8100090000A001 /* ButtonImageView.swift */; };
@@ -345,6 +346,7 @@
 		52A1F3D02E8100060000A001 /* MainMenuSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuSetting.swift; sourceTree = "<group>"; };
 		52A1F3D22E8100060000A001 /* MainSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSettings.swift; sourceTree = "<group>"; };
 		52A1F3D42E8100070000A001 /* MainMenuConfigTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuConfigTests.swift; sourceTree = "<group>"; };
+		52A1F3E12E81000A0000A001 /* MainSectionConfigTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSectionConfigTests.swift; sourceTree = "<group>"; };
 		52A1F3D82E8100080000A001 /* GeometryProxy+HeroSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GeometryProxy+HeroSize.swift"; sourceTree = "<group>"; };
 		52A1F3DA2E8100080000A001 /* HeroGradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroGradientView.swift; sourceTree = "<group>"; };
 		52A1F3DC2E8100090000A001 /* ButtonImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonImageView.swift; sourceTree = "<group>"; };
@@ -1013,6 +1015,7 @@
 			children = (
 				52B4A8D0CF60B0A5334618C6 /* PlayerConfigTests.swift */,
 				52A1F3D42E8100070000A001 /* MainMenuConfigTests.swift */,
+				52A1F3E12E81000A0000A001 /* MainSectionConfigTests.swift */,
 			);
 			path = Config;
 			sourceTree = "<group>";
@@ -1471,6 +1474,7 @@
 				6E2A9C41B7D34F5A8C1E2D90 /* PlaylistsServiceTests.swift in Sources */,
 				F93AAE6A142DC92A501A7BD8 /* ShortcutServiceTests.swift in Sources */,
 				52A1F3D52E8100070000A001 /* MainMenuConfigTests.swift in Sources */,
+				52A1F3E02E81000A0000A001 /* MainSectionConfigTests.swift in Sources */,
 				7E1A2B3C4D5E6F7081920A01 /* SongsViewModelTests.swift in Sources */,
 				1EA89F80621F8DC377A56BC0 /* AlbumsViewModelTests.swift in Sources */,
 				16A3B734911DB1887837A9AB /* ArtistsViewModelTests.swift in Sources */,
