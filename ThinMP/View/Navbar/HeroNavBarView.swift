@@ -49,9 +49,8 @@ struct HeroNavBarView<Content: View>: View {
     /// 潜り込んだときだけ出るナビゲーションバーのタイトル
     private var titleView: some View {
         return TitleView(primaryText)
-            .frame(width: max(0, width - StyleConstant.button * 2), height: StyleConstant.Height.row)
+            .betweenSideButtons(width: width, height: StyleConstant.Height.row)
             .padding(.top, top)
-            .padding(.horizontal, StyleConstant.button)
             .opacity(opacity)
     }
 
