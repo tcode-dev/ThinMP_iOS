@@ -11,7 +11,7 @@ import SwiftUI
 struct EditNavBarView: View {
     let top: CGFloat
     /// false のあいだは完了を押せない(プレイリスト名が空のときなど)
-    var isDoneEnabled: Bool = true
+    let isDoneEnabled: Bool
     let onCancel: () -> Void
     let onDone: () -> Void
 

@@ -18,11 +18,11 @@ final class PlaylistDataModel {
     @Relationship(deleteRule: .cascade, inverse: \PlaylistSongDataModel.playlist)
     var songs: [PlaylistSongDataModel]
 
-    init(id: String = UUID().uuidString, name: String, order: Int, songs: [PlaylistSongDataModel] = []) {
+    init(id: String = UUID().uuidString, name: String, order: Int) {
         self.id = id
         self.name = name
         self.order = order
-        self.songs = songs
+        songs = []
     }
 
     var sortedSongs: [PlaylistSongDataModel] {
