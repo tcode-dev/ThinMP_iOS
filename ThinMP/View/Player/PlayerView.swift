@@ -12,6 +12,14 @@ import SwiftUI
 struct PlayerView: View {
     /// 曲名とアーティスト名の 2 行分
     private let titleHeight: CGFloat = 50
+    /// 画面の高さのうちアートワークの段が占める割合。残りが曲名と操作の段
+    private let artworkAreaRate: CGFloat = 0.4
+    /// アートワークの 1 辺。画面の高さに対する割合
+    private let artworkSizeRate: CGFloat = 0.3
+    /// アートワークの上の余白。画面の幅に対する割合
+    private let artworkTopRate: CGFloat = 0.1
+    /// 背景のグラデーションを下にずらして、ぼかしたアートワークの下端に被せる
+    private let backgroundGradientOffset: CGFloat = 25
 
     @Environment(\.scenePhase) private var scenePhase
     @EnvironmentObject var musicPlayer: MusicPlayer
@@ -33,17 +41,17 @@ struct PlayerView: View {
                         .resizable()
                         .scaledToFit()
                         .blur(radius: StyleConstant.artworkBlurRadius)
-                    HeroGradientView().frame(height: width).offset(y: 25)
+                    HeroGradientView().frame(height: width).offset(y: backgroundGradientOffset)
                 }
                 .frame(width: width, height: width)
                 VStack(spacing: 0) {
                     VStack(spacing: 0) {
                         Spacer()
-                        SquareImageView(artwork: musicPlayer.song?.artwork, size: height * 0.3)
-                            .padding(.top, width * 0.1)
+                        SquareImageView(artwork: musicPlayer.song?.artwork, size: height * artworkSizeRate)
+                            .padding(.top, width * artworkTopRate)
                         Spacer()
                     }
-                    .frame(height: height * 0.4)
+                    .frame(height: height * artworkAreaRate)
                     VStack(spacing: 0) {
                         VStack(spacing: StyleConstant.Padding.tiny) {
                             TitleView(musicPlayer.song?.primaryText)
@@ -59,7 +67,7 @@ struct PlayerView: View {
                         PlayerOptionsView { playlistRegisterSongId = musicPlayer.song?.songId }
                         Spacer()
                     }
-                    .frame(height: height * 0.6)
+                    .frame(height: height * (1 - artworkAreaRate))
                 }
             }
             .playlistRegisterPopup(songId: $playlistRegisterSongId, height: height)

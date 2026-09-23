@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct HeroNavBarView<Content: View>: View {
+    /// 背景の material の上に重ねる色の濃さ
+    private let backgroundOpacity = 0.1
+
     let primaryText: String?
     let width: CGFloat
     let top: CGFloat
@@ -37,7 +40,7 @@ struct HeroNavBarView<Content: View>: View {
     private var headerView: some View {
         return VStack {
             Rectangle().frame(width: width, height: StyleConstant.Height.row + top)
-                .opacity(0.1)
+                .opacity(backgroundOpacity)
         }
         .background(.thinMaterial)
         .opacity(opacity)

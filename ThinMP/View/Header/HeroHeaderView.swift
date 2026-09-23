@@ -12,6 +12,8 @@ struct HeroHeaderView<Content: View, SecondaryText: View>: View {
     /// タイトルの上端から説明の上端まで
     private let secondaryTextSpacing: CGFloat = 40
     private let secondaryTextHeight: CGFloat = 25
+    /// タイトルの上端の位置。ヒーロー画像の 1 辺に対する割合で、iPad は少し下げる
+    private let primaryTextRate: CGFloat = StyleConstant.isPad ? 0.85 : 0.75
 
     /// タイトルがナビゲーションバーの下に潜り込んだか。ここで測って親に渡し、ナビゲーションバーと共有する
     @Binding var isScrolledUnder: Bool
@@ -26,8 +28,7 @@ struct HeroHeaderView<Content: View, SecondaryText: View>: View {
     @ViewBuilder let secondaryText: () -> SecondaryText
 
     var body: some View {
-        let rate = StyleConstant.isPad ? 0.85 : 0.75
-        let primaryTextOffset = size * rate
+        let primaryTextOffset = size * primaryTextRate
         let secondaryTextOffset = primaryTextOffset + secondaryTextSpacing
 
         ZStack(alignment: .top) {
