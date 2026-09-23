@@ -38,7 +38,7 @@ struct PlaylistRegisterView: View {
                     .frame(height: StyleConstant.Height.header)
                     ScrollView {
                         LazyVStack(spacing: 0) {
-                            ForEach(vm.playlists) { playlist in
+                            ForEach(vm.playlists ?? []) { playlist in
                                 PlaylistAddRowView(isRegistered: vm.isRegistered(playlistId: playlist.playlistId), action: {
                                     vm.add(playlistId: playlist.playlistId, songId: songId)
                                     onClose()
@@ -90,8 +90,8 @@ struct PlaylistRegisterView: View {
         .background(Color(UIColor.systemGray5))
         .clipShape(.rect(cornerRadius: StyleConstant.cornerRadius))
         .padding(.horizontal, StyleConstant.Padding.large)
-        .task {
-            await vm.load(songId: songId).value
+        .onAppear {
+            vm.load(songId: songId)
         }
     }
 
@@ -103,7 +103,7 @@ struct PlaylistRegisterView: View {
     /// 読み込みが終わってプレイリストが 1 つも無いと分かったときだけ、最初から作成フォームを出す
     /// 読み込み中に作成フォームを出すと、読み終わった瞬間に一覧へ切り替わって入力中の名前が消える
     private var hasNoPlaylists: Bool {
-        return vm.isLoaded && vm.playlists.isEmpty
+        return vm.playlists?.isEmpty == true
     }
 
     private var isListShown: Bool {
@@ -112,7 +112,7 @@ struct PlaylistRegisterView: View {
 
     /// 一覧がポップアップに収まらないときは、上下に Padding.large の余白を残した画面の高さまでにする
     private var contentHeight: CGFloat {
-        let panelHeight = StyleConstant.Height.header + (CGFloat(vm.playlists.count) * (StyleConstant.Height.row + StyleConstant.dividerHeight)) + StyleConstant.Padding.small
+        let panelHeight = StyleConstant.Height.header + (CGFloat(vm.playlists?.count ?? 0) * (StyleConstant.Height.row + StyleConstant.dividerHeight)) + StyleConstant.Padding.small
 
         return min(panelHeight, height - (StyleConstant.Padding.large * 2))
     }

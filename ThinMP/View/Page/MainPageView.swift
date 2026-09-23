@@ -58,8 +58,8 @@ struct MainPageView: View {
                     MiniPlayerView(bottom: geometry.safeAreaInsets.bottom)
                 }
                 .modifier(PageModifier())
-                .task {
-                    await vm.load().value
+                .onAppear {
+                    vm.load()
                 }
             }
         }

@@ -9,11 +9,10 @@ import Combine
 
 @MainActor
 final class PlaylistDetailViewModel: ObservableObject {
-    /// 読み込む前は nil。編集ページは songs を直接並べ替える
+    /// 読み込む前と、削除済みで見つからなかったときは nil。編集ページは nil のあいだ保存を受け付けない
     /// 読み直して削除済みだったときは前の値を残す。画面が一瞬空になるのを避けるため
+    /// 編集ページは songs を直接並べ替える
     @Published var playlist: PlaylistDetailModel?
-    /// 1 回目の読み込みが終わったか。終わるまでは編集ページの保存を受け付けない
-    @Published private(set) var isLoaded = false
 
     private let playlistDetailService: PlaylistDetailServiceProtocol
     private let playlistRepository: PlaylistRepositoryProtocol
@@ -35,18 +34,16 @@ final class PlaylistDetailViewModel: ObservableObject {
             if let playlist {
                 self?.playlist = playlist
             }
-
-            self?.isLoaded = true
         }
     }
 
     /// 編集ページの名前、並び順、削除を保存する
-    /// 読み込み前に呼ばれたら何もしない(空の songs で上書きするとプレイリストの曲が全部消える)
+    /// 読み込み前に呼ばれたら何もしない(空の曲で上書きするとプレイリストの曲が全部消える)
     func save(playlistId: PlaylistId, name: String) {
-        guard isLoaded else {
+        guard let playlist else {
             return
         }
 
-        playlistRepository.update(playlistId: playlistId, name: name, songIds: (playlist?.songs ?? []).map { $0.songId })
+        playlistRepository.update(playlistId: playlistId, name: name, songIds: playlist.songs.map { $0.songId })
     }
 }

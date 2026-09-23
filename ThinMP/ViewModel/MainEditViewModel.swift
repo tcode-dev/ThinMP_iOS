@@ -9,11 +9,15 @@ import Combine
 
 @MainActor
 final class MainEditViewModel: ObservableObject {
-    /// 編集ページでそのまま書き換え、save() で保存する
-    @Published var settings = MainSettings.empty
-    @Published var shortcuts: [ShortcutModel] = []
-    /// 1 回目の読み込みが終わったか。終わるまでは保存を受け付けない
-    @Published private(set) var isLoaded = false
+    /// 編集ページでそのまま書き換え、save() でまとめて保存する内容
+    /// 表示設定とショートカットは一緒に読み込むので、片方だけある状態を作らないように 1 つにまとめる
+    struct Draft {
+        var settings: MainSettings
+        var shortcuts: [ShortcutModel]
+    }
+
+    /// 読み込む前は nil。nil のあいだは保存を受け付けない
+    @Published var draft: Draft?
 
     private let mainService: MainServiceProtocol
     private let shortcutRepository: ShortcutRepositoryProtocol
@@ -32,20 +36,18 @@ final class MainEditViewModel: ObservableObject {
         return loadTask.run { [mainService] in
             await (mainService.loadSettings(), mainService.findShortcuts())
         } apply: { [weak self] settings, shortcuts in
-            self?.settings = settings
-            self?.shortcuts = shortcuts
-            self?.isLoaded = true
+            self?.draft = Draft(settings: settings, shortcuts: shortcuts)
         }
     }
 
     /// 表示設定とショートカットの並び順 / 削除を保存する
-    /// 読み込み前に呼ばれたら何もしない(MainSettings.empty と空のショートカットで上書きしてしまう)
+    /// 読み込み前に呼ばれたら何もしない(空の設定とショートカットで上書きしてしまう)
     func save() {
-        guard isLoaded else {
+        guard let draft else {
             return
         }
 
-        mainService.save(settings: settings)
-        shortcutRepository.update(shortcutIds: shortcuts.map { $0.shortcutId })
+        mainService.save(settings: draft.settings)
+        shortcutRepository.update(shortcutIds: draft.shortcuts.map { $0.shortcutId })
     }
 }

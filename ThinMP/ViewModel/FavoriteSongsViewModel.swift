@@ -9,9 +9,8 @@ import Combine
 
 @MainActor
 final class FavoriteSongsViewModel: ObservableObject {
-    @Published var songs: [SongModel] = []
-    /// 1 回目の読み込みが終わったか。終わるまでは編集ページの保存を受け付けない
-    @Published private(set) var isLoaded = false
+    /// 読み込む前は nil。編集ページは nil のあいだ保存を受け付けない
+    @Published var songs: [SongModel]?
 
     private let favoriteSongsService: FavoriteSongsServiceProtocol
     private let favoriteSongRepository: FavoriteSongRepositoryProtocol
@@ -31,14 +30,13 @@ final class FavoriteSongsViewModel: ObservableObject {
             await favoriteSongsService.findAll()
         } apply: { [weak self] songs in
             self?.songs = songs
-            self?.isLoaded = true
         }
     }
 
     /// 編集ページの並び順と削除を保存する
-    /// 読み込み前に呼ばれたら何もしない(空の songs で上書きするとお気に入りが全部消える)
+    /// 読み込み前に呼ばれたら何もしない(空の一覧で上書きするとお気に入りが全部消える)
     func save() {
-        guard isLoaded else {
+        guard let songs else {
             return
         }
 

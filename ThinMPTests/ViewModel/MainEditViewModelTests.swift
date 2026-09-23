@@ -31,8 +31,8 @@ struct MainEditViewModelTests {
         await vm.load().value
 
         // 編集ページはショートカット非表示でも並び替えのために読む
-        #expect(vm.settings == settings)
-        #expect(vm.shortcuts.map { $0.shortcutId.id } == ["s1", "s2"])
+        #expect(vm.draft?.settings == settings)
+        #expect(vm.draft?.shortcuts.map { $0.shortcutId.id } == ["s1", "s2"])
     }
 
     @Test
@@ -42,9 +42,9 @@ struct MainEditViewModelTests {
         let vm = MainEditViewModel(mainService: service, shortcutRepository: shortcutRepository)
 
         await vm.load().value
-        vm.settings.isRecentlyVisible = false
-        vm.settings.menus.move(fromOffsets: [0], toOffset: 2)
-        vm.shortcuts.remove(at: 0)
+        vm.draft?.settings.isRecentlyVisible = false
+        vm.draft?.settings.menus.move(fromOffsets: [0], toOffset: 2)
+        vm.draft?.shortcuts.remove(at: 0)
         vm.save()
 
         #expect(service.savedSettings.count == 1)
@@ -54,14 +54,14 @@ struct MainEditViewModelTests {
         #expect(shortcutRepository.findAll().map { $0.shortcutId } == [ShortcutId(id: "s2")])
     }
 
-    /// 読み込みが終わる前に完了を押しても、MainSettings.empty と空のショートカットで上書きしない
+    /// 読み込みが終わる前に完了を押しても、空の設定とショートカットで上書きしない
     @Test
     func saveBeforeLoadDoesNotTouchSettingsOrShortcuts() {
         let service = MainServiceMock(settings: makeSettings(), shortcuts: shortcuts)
         let shortcutRepository = ShortcutRepositoryMock(shortcuts: shortcuts.map { ShortcutEntity(shortcutId: $0.shortcutId, target: $0.target) })
         let vm = MainEditViewModel(mainService: service, shortcutRepository: shortcutRepository)
 
-        #expect(!vm.isLoaded)
+        #expect(vm.draft == nil)
         vm.save()
 
         #expect(service.savedSettings.isEmpty)

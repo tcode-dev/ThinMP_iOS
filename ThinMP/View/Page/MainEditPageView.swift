@@ -11,27 +11,29 @@ struct MainEditPageView: View {
     @StateObject private var vm = MainEditViewModel()
 
     var body: some View {
-        EditPageLayout(isDoneEnabled: vm.isLoaded, onDone: vm.save) {
+        EditPageLayout(isDoneEnabled: vm.draft != nil, onDone: vm.save) {
             List {
-                ForEach($vm.settings.menus) { $setting in
-                    MenuEditRowView(key: setting.menu.label, isVisible: $setting.isVisible)
-                }
-                .onMove(perform: moveMenu)
-                .listRowInsets(.init())
-                MenuEditRowView(key: LabelConstant.shortcut, isVisible: $vm.settings.isShortcutVisible).listRowInsets(.init())
-                MenuEditRowView(key: LabelConstant.recentlyAdded, isVisible: $vm.settings.isRecentlyVisible).listRowInsets(.init())
-                SectionTitleView(key: LabelConstant.shortcut).padding(StyleConstant.Padding.tiny)
-                ReorderableListView(items: $vm.shortcuts) { shortcut in
-                    ShortcutRowView(shortcut: shortcut)
+                if let draft = Binding($vm.draft) {
+                    ForEach(draft.settings.menus) { $setting in
+                        MenuEditRowView(key: setting.menu.label, isVisible: $setting.isVisible)
+                    }
+                    .onMove(perform: moveMenu)
+                    .listRowInsets(.init())
+                    MenuEditRowView(key: LabelConstant.shortcut, isVisible: draft.settings.isShortcutVisible).listRowInsets(.init())
+                    MenuEditRowView(key: LabelConstant.recentlyAdded, isVisible: draft.settings.isRecentlyVisible).listRowInsets(.init())
+                    SectionTitleView(key: LabelConstant.shortcut).padding(StyleConstant.Padding.tiny)
+                    ReorderableListView(items: draft.shortcuts) { shortcut in
+                        ShortcutRowView(shortcut: shortcut)
+                    }
                 }
             }
         }
-        .task {
-            await vm.load().value
+        .onAppear {
+            vm.load()
         }
     }
 
     private func moveMenu(source: IndexSet, destination: Int) {
-        vm.settings.menus.move(fromOffsets: source, toOffset: destination)
+        vm.draft?.settings.menus.move(fromOffsets: source, toOffset: destination)
     }
 }

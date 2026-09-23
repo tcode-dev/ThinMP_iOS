@@ -20,10 +20,10 @@ struct PlaylistsPageView: View {
             }
         } content: { geometry in
             ListEmptyHeaderView(isScrolledUnder: $isScrolledUnder, top: geometry.safeAreaInsets.top)
-            PlaylistListView(playlists: vm.playlists) { vm.delete(playlistId: $0) }
+            PlaylistListView(playlists: vm.playlists ?? []) { vm.delete(playlistId: $0) }
         }
-        .task {
-            await vm.load().value
+        .onAppear {
+            vm.load()
         }
     }
 }

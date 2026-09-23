@@ -23,7 +23,7 @@ struct PlaylistsViewModelTests {
 
         await vm.load().value
 
-        #expect(vm.playlists.map { $0.playlistId.id } == ["a", "b"])
+        #expect(vm.playlists?.map { $0.playlistId.id } == ["a", "b"])
     }
 
     /// Service のモックと同じ 2 件を持つ Repository のモック。書き込みはこちらで観測する
@@ -40,19 +40,19 @@ struct PlaylistsViewModelTests {
         let vm = PlaylistsViewModel(playlistsService: makeService(), playlistRepository: repository)
 
         await vm.load().value
-        vm.playlists.move(fromOffsets: [1], toOffset: 0)
+        vm.playlists?.move(fromOffsets: [1], toOffset: 0)
         vm.save()
 
         #expect(repository.findAll().map { $0.playlistId } == [PlaylistId(id: "b"), PlaylistId(id: "a")])
     }
 
-    /// 読み込みが終わる前に完了を押しても、空の playlists でプレイリストを消さない
+    /// 読み込みが終わる前に完了を押しても、空の一覧でプレイリストを消さない
     @Test
     func saveBeforeLoadDoesNotTouchRepository() {
         let repository = makeRepository()
         let vm = PlaylistsViewModel(playlistsService: makeService(), playlistRepository: repository)
 
-        #expect(!vm.isLoaded)
+        #expect(vm.playlists == nil)
         vm.save()
 
         #expect(repository.findAll().map { $0.playlistId } == [PlaylistId(id: "a"), PlaylistId(id: "b")])
