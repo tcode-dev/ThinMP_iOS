@@ -24,7 +24,7 @@ struct SongRepository: SongRepositoryProtocol {
     }
 
     func findByAlbumId(albumId: AlbumId) -> [SongModel] {
-        let query = MPMediaQuery.songs()
+        let query = localSongsQuery()
 
         query.addFilterPredicate(MPMediaPropertyPredicate(value: albumId.id, forProperty: MPMediaItemPropertyAlbumPersistentID))
 
@@ -33,14 +33,14 @@ struct SongRepository: SongRepositoryProtocol {
 
     /// アーティストの曲を 1 回のクエリで引く。アルバムごとの並びは呼び出し側で揃える
     func findByArtistId(artistId: ArtistId) -> [SongModel] {
-        let query = MPMediaQuery.songs()
+        let query = localSongsQuery()
 
         query.addFilterPredicate(MPMediaPropertyPredicate(value: artistId.id, forProperty: MPMediaItemPropertyArtistPersistentID))
 
         return songs(query)
     }
 
-    /// クラウドにしか無い項目を除いた全曲
+    /// クラウドにしか無い項目を除いたクエリ。一覧と詳細で出る項目を揃えるため、どの取得もここから始める
     private func localSongsQuery() -> MPMediaQuery {
         let query = MPMediaQuery.songs()
 
