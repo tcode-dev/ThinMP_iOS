@@ -22,7 +22,7 @@ struct PlaylistDetailEditPageView: View {
     }
 
     var body: some View {
-        EditPageLayout(isDoneEnabled: vm.playlist != nil && !trimmedName.isEmpty, onNavBarTap: { isNameFocused = false }, onDone: { vm.save(playlistId: playlistId, name: trimmedName) }) {
+        EditPageLayout(isDoneEnabled: vm.playlist != nil && !trimmedName.isEmpty, onNavBarTap: { isNameFocused = false }, onDone: { vm.save(name: trimmedName) }) {
             VStack(alignment: .leading) {
                 TextField("", text: $name)
                     .focused($isNameFocused)

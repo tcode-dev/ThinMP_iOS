@@ -45,7 +45,7 @@ struct PlaylistDetailViewModelTests {
         await vm.load(playlistId: playlistId).value
         vm.playlist?.songs.move(fromOffsets: [2], toOffset: 0)
         vm.playlist?.songs.remove(atOffsets: [2])
-        vm.save(playlistId: playlistId, name: "Renamed")
+        vm.save(name: "Renamed")
 
         #expect(repository.updateCalls.count == 1)
         #expect(repository.updateCalls[0].playlistId == playlistId)
@@ -60,7 +60,7 @@ struct PlaylistDetailViewModelTests {
         let vm = PlaylistDetailViewModel(playlistDetailService: makeService(), playlistRepository: repository)
 
         #expect(vm.playlist == nil)
-        vm.save(playlistId: playlistId, name: "Renamed")
+        vm.save(name: "Renamed")
 
         #expect(repository.updateCalls.isEmpty)
         #expect(repository.findById(playlistId: playlistId)?.songIds == [SongId(id: 1), SongId(id: 2)])
@@ -73,7 +73,7 @@ struct PlaylistDetailViewModelTests {
         let vm = PlaylistDetailViewModel(playlistDetailService: makeService(), playlistRepository: repository)
 
         await vm.load(playlistId: PlaylistId(id: "missing")).value
-        vm.save(playlistId: PlaylistId(id: "missing"), name: "Renamed")
+        vm.save(name: "Renamed")
 
         #expect(repository.updateCalls.isEmpty)
     }
