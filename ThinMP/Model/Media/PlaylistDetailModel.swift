@@ -12,5 +12,5 @@ struct PlaylistDetailModel: MediaProtocol {
     let playlistId: PlaylistId
     let primaryText: String?
     let artwork: MPMediaItemArtwork?
-    var songs: [SongModel] = []
+    var songs: [SongModel]
 }

@@ -27,7 +27,7 @@ struct PlayerView: View {
     /// プレイリスト登録ポップアップを出している曲。nil ならポップアップは閉じている
     @State private var playlistRegisterSongId: SongId?
 
-    var onDismiss: () -> Void = {}
+    let onDismiss: () -> Void
 
     var body: some View {
         GeometryReader { geometry in

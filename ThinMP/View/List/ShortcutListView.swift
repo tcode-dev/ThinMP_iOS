@@ -12,7 +12,7 @@ struct ShortcutListView: View {
     let shortcuts: [ShortcutModel]
     let width: CGFloat
     /// ショートカットの登録・解除後に呼ばれる(一覧の再読み込みなど)
-    var onShortcutChange: () -> Void = {}
+    let onShortcutChange: () -> Void
 
     var body: some View {
         let layout = GridLayout(width: width)
