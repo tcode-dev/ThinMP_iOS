@@ -185,6 +185,7 @@
 		52F286FE23C7E5420056BFE3 /* AlbumsPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F286FD23C7E5420056BFE3 /* AlbumsPageView.swift */; };
 		52F63FF423C7FA2500449934 /* AlbumsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F63FF323C7FA2500449934 /* AlbumsViewModel.swift */; };
 		52F979C625EBBCA80085F306 /* EditButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F979C525EBBCA80085F306 /* EditButtonView.swift */; };
+		136644F769E677EB125A4AC6 /* EditLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C064C758E4741FE2289B47FA /* EditLinkView.swift */; };
 		52F979CE25EBC3AC0085F306 /* FavoriteArtistButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F979CD25EBC3AC0085F306 /* FavoriteArtistButtonView.swift */; };
 		52F979D225EBC5730085F306 /* FavoriteSongButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F979D125EBC5730085F306 /* FavoriteSongButtonView.swift */; };
 		5813BEF15C0698843A7EB0C4 /* PlaylistEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87B7693967CD10B154DF8057 /* PlaylistEntity.swift */; };
@@ -436,6 +437,7 @@
 		52F286FD23C7E5420056BFE3 /* AlbumsPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsPageView.swift; sourceTree = "<group>"; };
 		52F63FF323C7FA2500449934 /* AlbumsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsViewModel.swift; sourceTree = "<group>"; };
 		52F979C525EBBCA80085F306 /* EditButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditButtonView.swift; sourceTree = "<group>"; };
+		C064C758E4741FE2289B47FA /* EditLinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditLinkView.swift; sourceTree = "<group>"; };
 		52F979CD25EBC3AC0085F306 /* FavoriteArtistButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteArtistButtonView.swift; sourceTree = "<group>"; };
 		52F979D125EBC5730085F306 /* FavoriteSongButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteSongButtonView.swift; sourceTree = "<group>"; };
 		548CDB6261F83B361D451253 /* LegacyRealmFixture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyRealmFixture.swift; sourceTree = "<group>"; };
@@ -834,6 +836,7 @@
 				52B45E44ABFC41FCF30E2EDE /* PlayPauseButtonView.swift */,
 				52BA93D623DA5A2100CA323F /* BackButtonView.swift */,
 				52F979C525EBBCA80085F306 /* EditButtonView.swift */,
+				C064C758E4741FE2289B47FA /* EditLinkView.swift */,
 				52F979CD25EBC3AC0085F306 /* FavoriteArtistButtonView.swift */,
 				52F979D125EBC5730085F306 /* FavoriteSongButtonView.swift */,
 				527B33E926710F72002DD924 /* MainMenuButtonView.swift */,
@@ -1350,6 +1353,7 @@
 				520B1DC626A9A738008770C5 /* HeroSquareImageView.swift in Sources */,
 				52B5BC8523DD45FA000C7820 /* MiniPlayerView.swift in Sources */,
 				52F979C625EBBCA80085F306 /* EditButtonView.swift in Sources */,
+				136644F769E677EB125A4AC6 /* EditLinkView.swift in Sources */,
 				523DAC65266E4C980036843A /* PlaylistsService.swift in Sources */,
 				5229C6412665B9A500C32F5C /* AlbumDetailModel.swift in Sources */,
 				52F979D225EBC5730085F306 /* FavoriteSongButtonView.swift in Sources */,
