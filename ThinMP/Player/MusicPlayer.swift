@@ -52,7 +52,12 @@ final class MusicPlayer: ObservableObject {
         player.beginGeneratingPlaybackNotifications()
     }
 
+    /// list[currentIndex] から再生する。currentIndex が範囲外なら何もしない
     func start(list: [SongModel], currentIndex: Int) {
+        guard list.indices.contains(currentIndex) else {
+            return
+        }
+
         if player.playbackState == MPMusicPlaybackState.playing {
             player.stop()
         }
