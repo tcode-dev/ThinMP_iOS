@@ -47,6 +47,19 @@ struct PlaylistRegisterViewModelTests {
         #expect(vm.registeredPlaylistIds.isEmpty)
     }
 
+    /// 読み込み前の空と、プレイリストが 1 つも無い空を区別できる
+    @Test
+    func isLoadedTellsAnEmptyLibraryFromANotYetLoadedOne() async {
+        let vm = PlaylistRegisterViewModel(playlistsService: PlaylistsServiceMock(playlists: []))
+
+        #expect(!vm.isLoaded)
+
+        await vm.load(songId: SongId(id: 1)).value
+
+        #expect(vm.isLoaded)
+        #expect(vm.playlists.isEmpty)
+    }
+
     @Test
     func createAndAddWriteToRepository() {
         let repository = makeRepository()
