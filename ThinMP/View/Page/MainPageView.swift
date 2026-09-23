@@ -30,7 +30,7 @@ struct MainPageView: View {
                         VStack(spacing: 0) {
                             Divider()
                             ForEach(vm.settings.menus) { setting in
-                                if setting.visibility {
+                                if setting.isVisible {
                                     MainMenuButtonView(menu: setting.menu)
                                     Divider()
                                 }

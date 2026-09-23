@@ -17,7 +17,7 @@ struct MainMenuConfigTests {
     func defaultsToAllMenusVisibleInDeclarationOrder() {
         let config = MainMenuConfig(userDefaults: UserDefaults.empty())
 
-        #expect(config.load() == MainMenu.allCases.map { MainMenuSetting(menu: $0, visibility: true) })
+        #expect(config.load() == MainMenu.allCases.map { MainMenuSetting(menu: $0, isVisible: true) })
     }
 
     @Test
@@ -25,12 +25,12 @@ struct MainMenuConfigTests {
         let userDefaults = UserDefaults.empty()
         let config = MainMenuConfig(userDefaults: userDefaults)
         let menus = [
-            MainMenuSetting(menu: .playlists, visibility: true),
-            MainMenuSetting(menu: .songs, visibility: false),
-            MainMenuSetting(menu: .artists, visibility: true),
-            MainMenuSetting(menu: .albums, visibility: false),
-            MainMenuSetting(menu: .favoriteSongs, visibility: true),
-            MainMenuSetting(menu: .favoriteArtists, visibility: true),
+            MainMenuSetting(menu: .playlists, isVisible: true),
+            MainMenuSetting(menu: .songs, isVisible: false),
+            MainMenuSetting(menu: .artists, isVisible: true),
+            MainMenuSetting(menu: .albums, isVisible: false),
+            MainMenuSetting(menu: .favoriteSongs, isVisible: true),
+            MainMenuSetting(menu: .favoriteArtists, isVisible: true),
         ]
 
         config.save(menus)
@@ -51,7 +51,7 @@ struct MainMenuConfigTests {
         let menus = MainMenuConfig(userDefaults: userDefaults).load()
 
         #expect(menus.map { $0.menu } == [.songs, .albums, .artists, .playlists, .favoriteSongs, .favoriteArtists])
-        #expect(menus.map { $0.visibility } == [true, false, true, true, true, true])
+        #expect(menus.map { $0.isVisible } == [true, false, true, true, true, true])
     }
 
     /// 保存した並び順に無いメニューは末尾に足し、知らない値は捨てる

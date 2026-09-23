@@ -14,7 +14,7 @@ struct MainViewModelTests {
     private let album = AlbumModel(albumId: AlbumId(id: 1), primaryText: "Album", secondaryText: nil, artwork: nil)
 
     private func makeSettings(isShortcutVisible: Bool, isRecentlyVisible: Bool) -> MainSettings {
-        return MainSettings(menus: MainMenu.allCases.map { MainMenuSetting(menu: $0, visibility: true) }, isShortcutVisible: isShortcutVisible, isRecentlyVisible: isRecentlyVisible)
+        return MainSettings(menus: MainMenu.allCases.map { MainMenuSetting(menu: $0, isVisible: true) }, isShortcutVisible: isShortcutVisible, isRecentlyVisible: isRecentlyVisible)
     }
 
     @Test
@@ -52,7 +52,7 @@ struct MainEditViewModelTests {
     ]
 
     private func makeSettings() -> MainSettings {
-        return MainSettings(menus: MainMenu.allCases.map { MainMenuSetting(menu: $0, visibility: true) }, isShortcutVisible: true, isRecentlyVisible: true)
+        return MainSettings(menus: MainMenu.allCases.map { MainMenuSetting(menu: $0, isVisible: true) }, isShortcutVisible: true, isRecentlyVisible: true)
     }
 
     @Test

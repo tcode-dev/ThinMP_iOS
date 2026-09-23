@@ -14,12 +14,12 @@ struct MainEditPageView: View {
         EditPageLayout(isDoneEnabled: vm.isLoaded, onDone: vm.save) {
             List {
                 ForEach($vm.settings.menus) { $setting in
-                    MenuEditRowView(text: setting.menu.label, visibility: $setting.visibility)
+                    MenuEditRowView(text: setting.menu.label, isVisible: $setting.isVisible)
                 }
                 .onMove(perform: moveMenu)
                 .listRowInsets(.init())
-                MenuEditRowView(text: LabelConstant.shortcut, visibility: $vm.settings.isShortcutVisible).listRowInsets(.init())
-                MenuEditRowView(text: LabelConstant.recentlyAdded, visibility: $vm.settings.isRecentlyVisible).listRowInsets(.init())
+                MenuEditRowView(text: LabelConstant.shortcut, isVisible: $vm.settings.isShortcutVisible).listRowInsets(.init())
+                MenuEditRowView(text: LabelConstant.recentlyAdded, isVisible: $vm.settings.isRecentlyVisible).listRowInsets(.init())
                 SectionTitleView(key: LabelConstant.shortcut).padding(StyleConstant.Padding.tiny)
                 ReorderableListView(items: $vm.shortcuts) { shortcut in
                     ShortcutRowView(shortcut: shortcut)
