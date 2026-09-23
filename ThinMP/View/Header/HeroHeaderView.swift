@@ -54,11 +54,10 @@ struct HeroHeaderView<Content: View, SecondaryText: View>: View {
     /// ヒーローの中に重ねるタイトル
     /// 潜り込んだかをこの View の onGeometryChange で親に渡し、ナビゲーションバーのタイトル表示の切り替えに使う
     private var primaryTextView: some View {
-        return VStack {
-            TitleView(primaryText).opacity(textOpacity)
-        }
-        .frame(width: max(0, width - StyleConstant.button * 2), height: StyleConstant.Height.row)
-        .padding(.horizontal, StyleConstant.button)
+        return TitleView(primaryText)
+            .opacity(textOpacity)
+            .frame(width: max(0, width - StyleConstant.button * 2), height: StyleConstant.Height.row)
+            .padding(.horizontal, StyleConstant.button)
     }
 
     /// ナビゲーションバーのタイトルと入れ替わるので、潜り込んだら消す

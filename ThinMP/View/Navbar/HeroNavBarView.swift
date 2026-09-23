@@ -38,24 +38,21 @@ struct HeroNavBarView<Content: View>: View {
 
     /// 潜り込んだときだけ出るナビゲーションバーの背景
     private var headerView: some View {
-        return VStack {
-            Rectangle().frame(width: width, height: StyleConstant.Height.row + top)
-                .opacity(backgroundOpacity)
-        }
-        .background(.thinMaterial)
-        .opacity(opacity)
-        .animation(.easeInOut, value: opacity)
+        return Rectangle()
+            .frame(width: width, height: StyleConstant.Height.row + top)
+            .opacity(backgroundOpacity)
+            .background(.thinMaterial)
+            .opacity(opacity)
+            .animation(.easeInOut, value: opacity)
     }
 
     /// 潜り込んだときだけ出るナビゲーションバーのタイトル
     private var titleView: some View {
-        return HStack(alignment: .center) {
-            TitleView(primaryText)
-        }
-        .frame(width: max(0, width - StyleConstant.button * 2), height: StyleConstant.Height.row)
-        .padding(.top, top)
-        .padding(.horizontal, StyleConstant.button)
-        .opacity(opacity)
+        return TitleView(primaryText)
+            .frame(width: max(0, width - StyleConstant.button * 2), height: StyleConstant.Height.row)
+            .padding(.top, top)
+            .padding(.horizontal, StyleConstant.button)
+            .opacity(opacity)
     }
 
     private var opacity: Double {
