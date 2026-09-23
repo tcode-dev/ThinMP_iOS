@@ -22,39 +22,3 @@ protocol FavoriteDataModel: PersistentModel {
 
     static func predicate(mediaId: String) -> Predicate<Self>
 }
-
-extension FavoriteArtistDataModel: FavoriteDataModel {
-    static var orderKey: KeyPath<FavoriteArtistDataModel, Int> {
-        return \.order
-    }
-
-    var mediaId: String {
-        return artistId
-    }
-
-    convenience init(mediaId: String, order: Int) {
-        self.init(artistId: mediaId, order: order)
-    }
-
-    static func predicate(mediaId: String) -> Predicate<FavoriteArtistDataModel> {
-        return #Predicate { $0.artistId == mediaId }
-    }
-}
-
-extension FavoriteSongDataModel: FavoriteDataModel {
-    static var orderKey: KeyPath<FavoriteSongDataModel, Int> {
-        return \.order
-    }
-
-    var mediaId: String {
-        return songId
-    }
-
-    convenience init(mediaId: String, order: Int) {
-        self.init(songId: mediaId, order: order)
-    }
-
-    static func predicate(mediaId: String) -> Predicate<FavoriteSongDataModel> {
-        return #Predicate { $0.songId == mediaId }
-    }
-}
