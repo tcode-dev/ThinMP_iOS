@@ -16,6 +16,9 @@ import SwiftData
 @MainActor
 final class SwiftDataStore {
     static let `default` = SwiftDataStore(isStoredInMemoryOnly: false)
+    /// save() のたびに投げる。object は保存した store
+    /// 登録 / 解除のボタンが、再生画面など別の場所での書き込みを表示に反映するのに使う
+    static let didSave = Notification.Name("SwiftDataStoreDidSave")
 
     private static let schema = Schema([
         FavoriteSongDataModel.self,
@@ -43,6 +46,7 @@ final class SwiftDataStore {
 
     func save() {
         try! context.save()
+        NotificationCenter.default.post(name: Self.didSave, object: self)
     }
 
     /// 末尾に足すための order。今ある最大 + 1 で、行が無ければ 1

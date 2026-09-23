@@ -7,36 +7,40 @@
 
 import SwiftUI
 
-/// コンテキストメニューに置く、登録 / 解除を切り替えるボタン
+/// メニュー(ナビゲーションバーのメニュー、コンテキストメニュー)に置く、登録 / 解除を切り替えるボタン
 /// お気に入り(アーティスト、曲)とショートカットで共有する
 ///
-/// 登録済みかの問い合わせは body で行う。この View は一覧をスクロールしただけでも行ごとに init されるが、
-/// body はコンテキストメニューを実際に開いたときにしか呼ばれないので、ストアを読むのはそのときだけで済む
-/// 一度ボタンを押したあとは、toggle() が返した登録状態を isRegistered に持って問い合わせない
-/// ただし再生画面など別の場所でも登録 / 解除できるので、メニューを開き直したら(onAppear)捨てて問い合わせ直す
+/// 表示する登録状態は body で毎回 exists() に問い合わせる
+/// メニューは開き直しても中身の body を呼び直さず、onAppear も呼ばないので、
+/// ストアの保存通知(SwiftDataStore.didSave)で body を作り直す。再生画面など別の場所での登録 / 解除もこれで反映される
 struct RegisterToggleButtonView: View {
-    /// nil はまだボタンを押していない状態。表示は exists() で決める
-    @State private var isRegistered: Bool?
+    /// 保存通知のたびに進めて body を作り直させる
+    @State private var revision = 0
 
     let addLabel: String
     let removeLabel: String
     let exists: @MainActor () -> Bool
-    /// 登録 / 解除を切り替えて、切り替えたあとの登録状態を返す
-    let toggle: @MainActor () -> Bool
+    /// 登録 / 解除を切り替える
+    let toggle: @MainActor () -> Void
     /// 登録 / 解除のあとに呼ばれる(一覧の再読み込みなど)
     var onToggle: () -> Void = {}
 
     var body: some View {
-        let registered = isRegistered ?? exists()
-
         Button(action: {
-            isRegistered = toggle()
+            toggle()
             onToggle()
         }) {
-            Text(label: registered ? removeLabel : addLabel)
+            Text(label: isRegistered ? removeLabel : addLabel)
         }
-        .onAppear {
-            isRegistered = nil
+        .onReceive(NotificationCenter.default.publisher(for: SwiftDataStore.didSave)) { _ in
+            revision += 1
         }
+    }
+
+    /// body の中で revision を読むので、保存通知で revision が進むと問い合わせ直す
+    private var isRegistered: Bool {
+        _ = revision
+
+        return exists()
     }
 }
