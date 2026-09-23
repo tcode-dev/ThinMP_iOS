@@ -40,7 +40,7 @@
 		5211ADCC25CE99E400604D45 /* TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5211ADCB25CE99E400604D45 /* TitleView.swift */; };
 		5219EA1C26152F3700E3A495 /* PlaylistSongRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5219EA1B26152F3700E3A495 /* PlaylistSongRealmModel.swift */; };
 		5219EA21261539DB00E3A495 /* PlaylistRegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5219EA20261539DB00E3A495 /* PlaylistRegisterView.swift */; };
-		521C43202592B7D6009194FF /* ThinMP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521C431F2592B7D6009194FF /* ThinMP.swift */; };
+		521C43202592B7D6009194FF /* ThinMPApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521C431F2592B7D6009194FF /* ThinMPApp.swift */; };
 		521CDDE3268FF1B100997F5E /* StyleConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521CDDE2268FF1B100997F5E /* StyleConstant.swift */; };
 		52217A782598256400921CFD /* FavoriteArtistRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52217A772598256400921CFD /* FavoriteArtistRealmModel.swift */; };
 		522366D423D7B6500001624E /* SquareImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522366D323D7B6500001624E /* SquareImageView.swift */; };
@@ -203,7 +203,8 @@
 		ED601713974855BE4FAA22EB /* legacy.realm in Resources */ = {isa = PBXBuildFile; fileRef = 1806AE995750776E431BB6E9 /* legacy.realm */; };
 		6E2A9C41B7D34F5A8C1E2D90 /* PlaylistsServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E2A9C42B7D34F5A8C1E2D91 /* PlaylistsServiceTests.swift */; };
 		7E1A2B3C4D5E6F7081920A01 /* SongsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1A2B3C4D5E6F7081920A02 /* SongsViewModelTests.swift */; };
-		1EA89F80621F8DC377A56BC0 /* ListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31784BD910E0DCAC745CC401 /* ListViewModelTests.swift */; };
+		1EA89F80621F8DC377A56BC0 /* AlbumsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31784BD910E0DCAC745CC401 /* AlbumsViewModelTests.swift */; };
+		16A3B734911DB1887837A9AB /* ArtistsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EF5809C2F26A31BEC91ABDA /* ArtistsViewModelTests.swift */; };
 		7E1A2B3C4D5E6F7081920A03 /* AlbumDetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1A2B3C4D5E6F7081920A04 /* AlbumDetailViewModelTests.swift */; };
 		514DF4D92D5343E9BA230182 /* ArtistDetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FEA1BB7F5DD192679222BA9 /* ArtistDetailViewModelTests.swift */; };
 		7E1A2B3C4D5E6F7081920A05 /* PlaylistsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E1A2B3C4D5E6F7081920A06 /* PlaylistsViewModelTests.swift */; };
@@ -264,7 +265,8 @@
 		46FE2B198A595ADE2A99E93B /* FavoriteArtistsServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteArtistsServiceTests.swift; sourceTree = "<group>"; };
 		6E2A9C42B7D34F5A8C1E2D91 /* PlaylistsServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistsServiceTests.swift; sourceTree = "<group>"; };
 		7E1A2B3C4D5E6F7081920A02 /* SongsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongsViewModelTests.swift; sourceTree = "<group>"; };
-		31784BD910E0DCAC745CC401 /* ListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ListViewModelTests.swift"; sourceTree = "<group>"; };
+		31784BD910E0DCAC745CC401 /* AlbumsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsViewModelTests.swift; sourceTree = "<group>"; };
+		0EF5809C2F26A31BEC91ABDA /* ArtistsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistsViewModelTests.swift; sourceTree = "<group>"; };
 		7E1A2B3C4D5E6F7081920A04 /* AlbumDetailViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDetailViewModelTests.swift; sourceTree = "<group>"; };
 		6FEA1BB7F5DD192679222BA9 /* ArtistDetailViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ArtistDetailViewModelTests.swift"; sourceTree = "<group>"; };
 		7E1A2B3C4D5E6F7081920A06 /* PlaylistsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistsViewModelTests.swift; sourceTree = "<group>"; };
@@ -287,7 +289,7 @@
 		5211ADCB25CE99E400604D45 /* TitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleView.swift; sourceTree = "<group>"; };
 		5219EA1B26152F3700E3A495 /* PlaylistSongRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistSongRealmModel.swift; sourceTree = "<group>"; };
 		5219EA20261539DB00E3A495 /* PlaylistRegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistRegisterView.swift; sourceTree = "<group>"; };
-		521C431F2592B7D6009194FF /* ThinMP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThinMP.swift; sourceTree = "<group>"; };
+		521C431F2592B7D6009194FF /* ThinMPApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThinMPApp.swift; sourceTree = "<group>"; };
 		521CDDE2268FF1B100997F5E /* StyleConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleConstant.swift; sourceTree = "<group>"; };
 		52217A772598256400921CFD /* FavoriteArtistRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteArtistRealmModel.swift; sourceTree = "<group>"; };
 		522366D323D7B6500001624E /* SquareImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareImageView.swift; sourceTree = "<group>"; };
@@ -870,7 +872,7 @@
 			children = (
 				E503C42113921A1DE049D96F /* Extension */,
 				52C34D6D230ED7C000EA76DA /* Info.plist */,
-				521C431F2592B7D6009194FF /* ThinMP.swift */,
+				521C431F2592B7D6009194FF /* ThinMPApp.swift */,
 				52C34D68230ED7C000EA76DA /* Assets.xcassets */,
 				52795DA5248DA70400DABD9D /* Config */,
 				522FE0B12672D001006158D7 /* Constant */,
@@ -1035,7 +1037,8 @@
 				52B153C74B66B9A530E4C6AC /* MainViewModelTests.swift */,
 				B64791AC3352754782A4E5A5 /* MainEditViewModelTests.swift */,
 				7E1A2B3C4D5E6F7081920A02 /* SongsViewModelTests.swift */,
-				31784BD910E0DCAC745CC401 /* ListViewModelTests.swift */,
+				31784BD910E0DCAC745CC401 /* AlbumsViewModelTests.swift */,
+				0EF5809C2F26A31BEC91ABDA /* ArtistsViewModelTests.swift */,
 				7E1A2B3C4D5E6F7081920A04 /* AlbumDetailViewModelTests.swift */,
 				6FEA1BB7F5DD192679222BA9 /* ArtistDetailViewModelTests.swift */,
 				7E1A2B3C4D5E6F7081920A06 /* PlaylistsViewModelTests.swift */,
@@ -1382,7 +1385,7 @@
 				526648F625AB23690034D912 /* FavoriteArtistsEditPageView.swift in Sources */,
 				52E0459E2674DD2100ACD0AB /* MainSectionConfig.swift in Sources */,
 				52E21A6C26340DF000C40464 /* PlaylistsEditPageView.swift in Sources */,
-				521C43202592B7D6009194FF /* ThinMP.swift in Sources */,
+				521C43202592B7D6009194FF /* ThinMPApp.swift in Sources */,
 				52A75C3C25A04C0E0073C01B /* FavoriteArtistsPageView.swift in Sources */,
 				52D98E7C23CC6C280032971A /* SecondaryTextView.swift in Sources */,
 				52C3B26426AC761B006C841E /* FavoriteSongsServiceProtocol.swift in Sources */,
@@ -1465,7 +1468,8 @@
 				F93AAE6A142DC92A501A7BD8 /* ShortcutServiceTests.swift in Sources */,
 				52A1F3D52E8100070000A001 /* MainMenuConfigTests.swift in Sources */,
 				7E1A2B3C4D5E6F7081920A01 /* SongsViewModelTests.swift in Sources */,
-				1EA89F80621F8DC377A56BC0 /* ListViewModelTests.swift in Sources */,
+				1EA89F80621F8DC377A56BC0 /* AlbumsViewModelTests.swift in Sources */,
+				16A3B734911DB1887837A9AB /* ArtistsViewModelTests.swift in Sources */,
 				7E1A2B3C4D5E6F7081920A03 /* AlbumDetailViewModelTests.swift in Sources */,
 				514DF4D92D5343E9BA230182 /* ArtistDetailViewModelTests.swift in Sources */,
 				7E1A2B3C4D5E6F7081920A05 /* PlaylistsViewModelTests.swift in Sources */,
@@ -1667,13 +1671,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 5;
 				INFOPLIST_FILE = ThinMP/Info.plist;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3.0;
+				MARKETING_VERSION = 1.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = dev.tcode.ThinMP;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1693,13 +1696,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 5;
 				INFOPLIST_FILE = ThinMP/Info.plist;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3.0;
+				MARKETING_VERSION = 1.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = dev.tcode.ThinMP;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-/// コンテキストメニューに置く、プレイリストの削除ボタン
+/// プレイリストの削除ボタン。コンテキストメニューと、削除の確認ダイアログに置く
 struct PlaylistDeleteButtonView: View {
     let action: () -> Void
 

@@ -28,7 +28,7 @@ struct ArtistDetailPageView: View {
                 HeroCircleImageView(width: geometry.size.width, size: geometry.heroSize, artwork: vm.artist?.artwork)
             } secondaryText: {
                 if let artist = vm.artist {
-                    SecondaryTextView(key: LabelConstant.albumsAndSongsCount, artist.albums.count, artist.songs.count)
+                    SecondaryTextView(format: LabelConstant.albumsAndSongsCount, artist.albums.count, artist.songs.count)
                 }
             }
             if let artist = vm.artist {

@@ -49,12 +49,12 @@ final class SwiftDataStore {
         NotificationCenter.default.post(name: Self.didSave, object: self)
     }
 
-    /// 末尾に足すための order。今ある最大 + 1 で、行が無ければ 1
+    /// 末尾に足すための order。今ある最大 + 1 で、行が無ければ 0(update が振り直す番号と同じく 0 から始める)
     func nextOrder<Model: PersistentModel>(_: Model.Type, by order: KeyPath<Model, Int>) -> Int {
         var descriptor = FetchDescriptor<Model>(sortBy: [SortDescriptor(order, order: .reverse)])
 
         descriptor.fetchLimit = 1
 
-        return (try! context.fetch(descriptor).first?[keyPath: order] ?? 0) + 1
+        return (try! context.fetch(descriptor).first?[keyPath: order] ?? -1) + 1
     }
 }
