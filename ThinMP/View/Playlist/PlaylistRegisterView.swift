@@ -9,7 +9,8 @@ import SwiftUI
 
 struct PlaylistRegisterView: View {
     @StateObject private var vm = PlaylistRegisterViewModel()
-    @State private var isCreate: Bool = false
+    /// 新しいプレイリストの作成フォームを出しているか。false なら既存のプレイリストの一覧
+    @State private var isCreateFormShown: Bool = false
     @State private var name: String = ""
 
     let songId: SongId
@@ -24,7 +25,7 @@ struct PlaylistRegisterView: View {
                     HStack {
                         Spacer()
                         Button(action: {
-                            isCreate.toggle()
+                            isCreateFormShown.toggle()
                         }) {
                             Text(LocalizedStringKey(LabelConstant.newPlaylist))
                         }
@@ -75,7 +76,7 @@ struct PlaylistRegisterView: View {
                             if hasNoPlaylists {
                                 onClose()
                             } else {
-                                isCreate.toggle()
+                                isCreateFormShown.toggle()
                             }
                         }) {
                             Text(LocalizedStringKey(LabelConstant.cancel))
@@ -108,7 +109,7 @@ struct PlaylistRegisterView: View {
     }
 
     private var isListShown: Bool {
-        return !isCreate && !hasNoPlaylists
+        return !isCreateFormShown && !hasNoPlaylists
     }
 
     /// 一覧がポップアップに収まらないときは、上下に Padding.large の余白を残した画面の高さまでにする
