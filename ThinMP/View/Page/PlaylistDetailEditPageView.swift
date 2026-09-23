@@ -27,7 +27,7 @@ struct PlaylistDetailEditPageView: View {
                 TextField("", text: $name)
                     .focused($isNameFocused)
                     .textInputAutocapitalization(.never)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .textFieldStyle(.roundedBorder)
                     .padding()
                 ZStack {
                     List {

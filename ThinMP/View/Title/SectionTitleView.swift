@@ -18,7 +18,7 @@ struct SectionTitleView: View {
     var body: some View {
         text
             .font(.title)
-            .foregroundColor(.primary)
+            .foregroundStyle(.primary)
             .lineLimit(1)
     }
 }

@@ -59,7 +59,7 @@ struct PlaylistRegisterView: View {
                     Text(label: LabelConstant.playlistName)
                         .frame(height: StyleConstant.Height.row)
                     TextField("", text: $name)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .textFieldStyle(.roundedBorder)
                     HStack {
                         Spacer()
                         Button(action: {
@@ -88,7 +88,7 @@ struct PlaylistRegisterView: View {
         }
         .padding(.horizontal, StyleConstant.Padding.small)
         .background(Color(UIColor.systemGray5))
-        .cornerRadius(StyleConstant.cornerRadius)
+        .clipShape(.rect(cornerRadius: StyleConstant.cornerRadius))
         .padding(.horizontal, StyleConstant.Padding.large)
         .task {
             await vm.load(songId: songId).value

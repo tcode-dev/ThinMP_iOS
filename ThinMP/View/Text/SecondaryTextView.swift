@@ -26,7 +26,7 @@ struct SecondaryTextView: View {
     var body: some View {
         text
             .font(.subheadline)
-            .foregroundColor(.secondary)
+            .foregroundStyle(.secondary)
             .lineLimit(1)
     }
 }

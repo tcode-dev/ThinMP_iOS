@@ -17,7 +17,7 @@ struct SquareImageView: View {
             .renderingMode(.original)
             .resizable()
             .scaledToFit()
-            .cornerRadius(StyleConstant.cornerRadius)
+            .clipShape(.rect(cornerRadius: StyleConstant.cornerRadius))
             .frame(width: size, height: size)
     }
 }
