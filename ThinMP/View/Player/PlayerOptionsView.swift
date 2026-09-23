@@ -37,12 +37,12 @@ struct PlayerOptionsView: View {
             }
             .frame(width: StyleConstant.button, height: StyleConstant.button)
             Spacer()
-            Button(action: musicPlayer.favoriteArtist) {
+            Button(action: musicPlayer.toggleFavoriteArtist) {
                 ButtonImageView(name: "FavoriteArtistButton", size: imageSize, dimmed: !musicPlayer.isFavoriteArtist)
             }
             .frame(width: StyleConstant.button, height: StyleConstant.button)
             Spacer()
-            Button(action: musicPlayer.favoriteSong) {
+            Button(action: musicPlayer.toggleFavoriteSong) {
                 ButtonImageView(name: "FavoriteSongButton", size: favoriteSongImageSize, dimmed: !musicPlayer.isFavoriteSong)
             }
             .frame(width: StyleConstant.button, height: StyleConstant.button)

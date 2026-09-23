@@ -46,8 +46,8 @@ class MusicPlayer: ObservableObject {
         player = MPMusicPlayerController.applicationMusicPlayer
         player.repeatMode = playerConfig.repeatMode
         player.shuffleMode = playerConfig.shuffleMode
-        setRepeat()
-        setShuffle()
+        syncRepeat()
+        syncShuffle()
         addObserver()
         player.beginGeneratingPlaybackNotifications()
     }
@@ -117,18 +117,18 @@ class MusicPlayer: ObservableObject {
         default: player.repeatMode = .none
         }
 
-        setRepeat()
+        syncRepeat()
         playerConfig.repeatMode = player.repeatMode
     }
 
     func shuffle() {
         player.shuffleMode = player.shuffleMode == .off ? .songs : .off
-        setShuffle()
+        syncShuffle()
         playerConfig.shuffleMode = player.shuffleMode
     }
 
     /// 再生中の曲のアーティストをお気に入りに入れる / 外す
-    func favoriteArtist() {
+    func toggleFavoriteArtist() {
         guard let artistId = song?.artistId else {
             return
         }
@@ -137,7 +137,7 @@ class MusicPlayer: ObservableObject {
     }
 
     /// 再生中の曲をお気に入りに入れる / 外す
-    func favoriteSong() {
+    func toggleFavoriteSong() {
         guard let songId = song?.songId else {
             return
         }
@@ -146,16 +146,17 @@ class MusicPlayer: ObservableObject {
     }
 
     /// お気に入りの状態をストアから読み直す。他の画面で登録 / 解除されたあとに呼ぶ
-    func setFavorite() {
+    func reloadFavorite() {
         isFavoriteArtist = (song?.artistId).map { favoriteArtistRepository.exists(artistId: $0) } ?? false
         isFavoriteSong = (song?.songId).map { favoriteSongRepository.exists(songId: $0) } ?? false
     }
 
-    private func setSong() {
+    /// 再生中の曲を player から読み直す。sync で始まるものは player の状態を @Published に写すだけ
+    private func syncSong() {
         if let item = player.nowPlayingItem {
             song = SongModel(item: item)
             resetTime()
-            setFavorite()
+            reloadFavorite()
             isActive = true
         } else {
             song = nil
@@ -172,7 +173,7 @@ class MusicPlayer: ObservableObject {
             queue: OperationQueue.main
         ) { _ in
             MainActor.assumeIsolated {
-                self.setSong()
+                self.syncSong()
             }
         })
 
@@ -233,11 +234,11 @@ class MusicPlayer: ObservableObject {
         })
     }
 
-    private func setRepeat() {
+    private func syncRepeat() {
         repeatMode = player.repeatMode
     }
 
-    private func setShuffle() {
+    private func syncShuffle() {
         isShuffle = player.shuffleMode == .songs
     }
 

@@ -63,7 +63,7 @@ struct PlayerView: View {
         }
         .onAppear {
             musicPlayer.startProgress()
-            musicPlayer.setFavorite()
+            musicPlayer.reloadFavorite()
         }
         .onDisappear {
             musicPlayer.stopProgress()
