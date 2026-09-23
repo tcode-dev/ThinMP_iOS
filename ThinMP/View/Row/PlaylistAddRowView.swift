@@ -23,7 +23,7 @@ struct PlaylistAddRowView<Content: View>: View {
                 if isRegistered {
                     Text(label: LabelConstant.registered)
                         .font(.subheadline)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color.secondary)
                         .padding(.trailing, StyleConstant.Padding.tiny)
                 }
             }
