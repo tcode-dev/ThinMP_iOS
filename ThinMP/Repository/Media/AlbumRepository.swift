@@ -9,11 +9,11 @@ import MediaPlayer
 
 struct AlbumRepository: AlbumRepositoryProtocol {
     func findAll() -> [AlbumModel] {
-        return albums(MPMediaQuery.albums().excludingCloudItems())
+        return albums(MPMediaQuery.albums().localItems())
     }
 
     func findById(albumId: AlbumId) -> AlbumModel? {
-        let query = MPMediaQuery.albums().excludingCloudItems()
+        let query = MPMediaQuery.albums().localItems()
 
         query.addFilterPredicate(MPMediaPropertyPredicate(value: albumId.id, forProperty: MPMediaItemPropertyAlbumPersistentID))
 
@@ -26,14 +26,14 @@ struct AlbumRepository: AlbumRepositoryProtocol {
             return []
         }
 
-        let albums = albums(MPMediaQuery.albums().excludingCloudItems()).keyed { $0.albumId }
+        let albums = albums(MPMediaQuery.albums().localItems()).keyed { $0.albumId }
 
         return albumIds.compactMap { albums[$0] }
     }
 
     /// アーティストの曲を含むアルバム。コンピレーション盤も入る(AlbumRepositoryProtocol を参照)
     func findByArtistId(artistId: ArtistId) -> [AlbumModel] {
-        let query = MPMediaQuery.albums().excludingCloudItems()
+        let query = MPMediaQuery.albums().localItems()
 
         query.addFilterPredicate(MPMediaPropertyPredicate(value: artistId.id, forProperty: MPMediaItemPropertyArtistPersistentID))
 
@@ -44,7 +44,7 @@ struct AlbumRepository: AlbumRepositoryProtocol {
     /// 追加が新しい順に count 件
     func findRecently(count: Int) -> [AlbumModel] {
         // MPMediaItem のプロパティ取得は安くないので、比較のたびに dateAdded を引かずに 1 回だけ取る
-        let albums = collections(MPMediaQuery.albums().excludingCloudItems()).compactMap { collection -> (album: AlbumModel, dateAdded: Date)? in
+        let albums = collections(MPMediaQuery.albums().localItems()).compactMap { collection -> (album: AlbumModel, dateAdded: Date)? in
             guard let item = collection.representativeItem, let album = AlbumModel(collection: collection) else {
                 return nil
             }

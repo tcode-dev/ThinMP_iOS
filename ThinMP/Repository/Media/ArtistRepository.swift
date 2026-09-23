@@ -9,11 +9,11 @@ import MediaPlayer
 
 struct ArtistRepository: ArtistRepositoryProtocol {
     func findAll() -> [ArtistModel] {
-        return artists(MPMediaQuery.artists().excludingCloudItems())
+        return artists(MPMediaQuery.artists().localItems())
     }
 
     func findById(artistId: ArtistId) -> ArtistModel? {
-        let query = MPMediaQuery.artists().excludingCloudItems()
+        let query = MPMediaQuery.artists().localItems()
 
         query.addFilterPredicate(MPMediaPropertyPredicate(value: artistId.id, forProperty: MPMediaItemPropertyArtistPersistentID))
 
@@ -26,7 +26,7 @@ struct ArtistRepository: ArtistRepositoryProtocol {
             return []
         }
 
-        let artists = artists(MPMediaQuery.artists().excludingCloudItems()).keyed { $0.artistId }
+        let artists = artists(MPMediaQuery.artists().localItems()).keyed { $0.artistId }
 
         return artistIds.compactMap { artists[$0] }
     }
