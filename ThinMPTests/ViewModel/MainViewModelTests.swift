@@ -29,7 +29,7 @@ struct MainViewModelTests {
         #expect(vm.albums.map { $0.albumId.id } == [1])
     }
 
-    /// 非表示にしているセクションは読まない(ライブラリを舐めないため)
+    /// 非表示にしているセクションは読まない(ライブラリを走査しないため)
     @Test
     func loadSkipsHiddenSections() async {
         let service = MainServiceMock(settings: makeSettings(isShortcutVisible: false, isRecentlyVisible: false), shortcuts: [shortcut], albums: [album])
