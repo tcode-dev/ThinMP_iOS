@@ -16,7 +16,6 @@
 // Album
 "Album" = "Album";
 "Albums" = "Albums";
-"AlbumsAndSongsCount" = "%d albums, %d songs";
 
 // Songs
 "Songs" = "Songs";
