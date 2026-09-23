@@ -20,20 +20,7 @@ struct PlaylistsPageView: View {
             }
         } content: { geometry in
             ListEmptyHeaderView(isScrolledUnder: $isScrolledUnder, top: geometry.safeAreaInsets.top)
-            LazyVStack(spacing: 0) {
-                ForEach(vm.playlists) { playlist in
-                    NavigationLink(destination: PlaylistDetailPageView(playlistId: playlist.playlistId)) {
-                        MediaRowView(media: playlist)
-                    }
-                    .contentShape(RoundedRectangle(cornerRadius: StyleConstant.cornerRadius))
-                    .contextMenu {
-                        PlaylistDeleteButtonView { vm.delete(playlistId: playlist.playlistId) }
-                        ShortcutButtonView(target: .playlist(playlist.playlistId))
-                    }
-                    Divider()
-                }
-                .padding(.leading, StyleConstant.Padding.medium)
-            }
+            PlaylistListView(playlists: vm.playlists) { vm.delete(playlistId: $0) }
         }
         .task {
             await vm.load().value
