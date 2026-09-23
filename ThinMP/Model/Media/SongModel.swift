@@ -11,8 +11,8 @@ import MediaPlayer
 struct SongModel: MediaProtocol, Identifiable {
     let item: MPMediaItem
 
-    var id: String {
-        return String(songId.id)
+    var id: SongId {
+        return songId
     }
 
     var songId: SongId {

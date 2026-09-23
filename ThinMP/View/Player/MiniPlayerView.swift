@@ -12,7 +12,7 @@ struct MiniPlayerView: View {
     private let buttonSize: CGFloat = 60
 
     @EnvironmentObject var musicPlayer: MusicPlayer
-    @State private var isFullScreen: Bool = false
+    @State private var isPlayerPresented: Bool = false
 
     let bottom: CGFloat
     /// 再生画面を閉じたときに呼ばれる(一覧の再読み込みなど)
@@ -23,7 +23,7 @@ struct MiniPlayerView: View {
             if musicPlayer.isActive {
                 HStack {
                     Button(action: {
-                        isFullScreen.toggle()
+                        isPlayerPresented.toggle()
                     }) {
                         HStack {
                             SquareImageView(artwork: musicPlayer.song?.artwork, size: StyleConstant.thumbnail)
@@ -47,7 +47,7 @@ struct MiniPlayerView: View {
                 ))
                 .background(Color(UIColor.secondarySystemBackground))
                 .border(Color(UIColor.systemGray5), width: 1)
-                .sheet(isPresented: $isFullScreen) {
+                .sheet(isPresented: $isPlayerPresented) {
                     PlayerView(onDismiss: onPlayerDismiss).environmentObject(musicPlayer)
                 }
             }

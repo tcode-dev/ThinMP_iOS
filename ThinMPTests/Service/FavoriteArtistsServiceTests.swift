@@ -26,7 +26,7 @@ struct FavoriteArtistsServiceTests {
         let artists = await service.findAll()
 
         #expect(artists.map { $0.primaryText } == ["C", "A"])
-        #expect(favoriteArtistRepository.updateCalls.isEmpty)
+        #expect(favoriteArtistRepository.deleteCalls.isEmpty)
     }
 
     @Test
@@ -44,7 +44,29 @@ struct FavoriteArtistsServiceTests {
         let artists = await service.findAll()
 
         #expect(artists.map { $0.artistId.id } == [1, 3])
-        #expect(favoriteArtistRepository.updateCalls.count == 1)
-        #expect(favoriteArtistRepository.updateCalls[0].map { $0.id } == [1, 3])
+        #expect(favoriteArtistRepository.deleteCalls.map { $0.id } == [2])
+        #expect(favoriteArtistRepository.updateCalls.isEmpty)
+        #expect(favoriteArtistRepository.findAll().map { $0.id } == [1, 3])
+    }
+
+    /// 走査中に(再生画面などで)登録されたアーティストは、端末から消えたアーティストを取り除いても残る
+    @Test
+    func keepsArtistAddedDuringScan() async {
+        let favoriteArtistRepository = FavoriteArtistRepositoryMock(artistIds: [ArtistId(id: 1), ArtistId(id: 2)])
+        let artistRepository = ArtistRepositoryMock(artists: [
+            ArtistModel(artistId: ArtistId(id: 1), primaryText: "A"),
+            ArtistModel(artistId: ArtistId(id: 3), primaryText: "C"),
+        ])
+        artistRepository.onFindByIds = {
+            runOnMainActor { favoriteArtistRepository.add(artistId: ArtistId(id: 3)) }
+        }
+        let service = FavoriteArtistsService(
+            favoriteArtistRepository: favoriteArtistRepository,
+            artistRepository: artistRepository
+        )
+
+        _ = await service.findAll()
+
+        #expect(favoriteArtistRepository.findAll().map { $0.id } == [1, 3])
     }
 }

@@ -5,8 +5,22 @@
 //  Created by tk on 2026/09/21.
 //
 
+import Foundation
 import MediaPlayer
 @testable import ThinMP
+
+/// 走査中(onFindByIds の中)にメインアクターで書き込むのに使う
+/// 走査はバックグラウンドで呼ばれることも、同期のモックならメインスレッドのまま呼ばれることもあるので、
+/// メインスレッドなら直接実行し、そうでなければメインキューで同期実行する(メインから main.sync するとクラッシュする)
+func runOnMainActor(_ body: @MainActor () -> Void) {
+    if Thread.isMainThread {
+        MainActor.assumeIsolated(body)
+    } else {
+        DispatchQueue.main.sync {
+            MainActor.assumeIsolated(body)
+        }
+    }
+}
 
 // Service / ViewModel のテストで Repository を差し替えるためのモック
 // 呼び出しを記録できるように class にしている
@@ -14,6 +28,7 @@ import MediaPlayer
 final class FavoriteSongRepositoryMock: FavoriteSongRepositoryProtocol {
     var songIds: [SongId]
     private(set) var updateCalls: [[SongId]] = []
+    private(set) var deleteCalls: [SongId] = []
 
     init(songIds: [SongId] = []) {
         self.songIds = songIds
@@ -37,6 +52,7 @@ final class FavoriteSongRepositoryMock: FavoriteSongRepositoryProtocol {
     }
 
     func delete(songId: SongId) {
+        deleteCalls.append(songId)
         songIds.removeAll { $0 == songId }
     }
 }
@@ -44,6 +60,7 @@ final class FavoriteSongRepositoryMock: FavoriteSongRepositoryProtocol {
 final class FavoriteArtistRepositoryMock: FavoriteArtistRepositoryProtocol {
     var artistIds: [ArtistId]
     private(set) var updateCalls: [[ArtistId]] = []
+    private(set) var deleteCalls: [ArtistId] = []
 
     init(artistIds: [ArtistId] = []) {
         self.artistIds = artistIds
@@ -67,6 +84,7 @@ final class FavoriteArtistRepositoryMock: FavoriteArtistRepositoryProtocol {
     }
 
     func delete(artistId: ArtistId) {
+        deleteCalls.append(artistId)
         artistIds.removeAll { $0 == artistId }
     }
 }
@@ -130,6 +148,7 @@ final class PlaylistRepositoryMock: PlaylistRepositoryProtocol {
 final class ShortcutRepositoryMock: ShortcutRepositoryProtocol {
     var shortcuts: [ShortcutEntity]
     private(set) var updateCalls: [[ShortcutId]] = []
+    private(set) var deleteCalls: [ShortcutTarget] = []
 
     init(shortcuts: [ShortcutEntity] = []) {
         self.shortcuts = shortcuts
@@ -158,6 +177,7 @@ final class ShortcutRepositoryMock: ShortcutRepositoryProtocol {
     }
 
     func delete(target: ShortcutTarget) {
+        deleteCalls.append(target)
         shortcuts.removeAll { $0.target == target }
     }
 }
@@ -169,6 +189,8 @@ final class SongRepositoryMock: SongRepositoryProtocol {
     let albumSongs: [AlbumId: [SongModel]]
     /// findByIds に渡された songIds の履歴。ライブラリ全件取得の回数を数えるのに使う
     private(set) var findByIdsCalls: [[SongId]] = []
+    /// findByIds の中(走査中)に呼ばれる。走査中に別の書き込みが入った状況を作るのに使う
+    var onFindByIds: () -> Void = {}
 
     init(songs: [SongModel], albumSongs: [AlbumId: [SongModel]] = [:]) {
         self.songs = songs
@@ -181,6 +203,7 @@ final class SongRepositoryMock: SongRepositoryProtocol {
 
     func findByIds(songIds: [SongId]) -> [SongModel] {
         findByIdsCalls.append(songIds)
+        onFindByIds()
 
         return songIds.compactMap { songId in songs.first { $0.songId == songId } }
     }
@@ -233,6 +256,8 @@ final class AlbumRepositoryMock: AlbumRepositoryProtocol {
 
 final class ArtistRepositoryMock: ArtistRepositoryProtocol {
     let artists: [ArtistModel]
+    /// findByIds の中(走査中)に呼ばれる。走査中に別の書き込みが入った状況を作るのに使う
+    var onFindByIds: () -> Void = {}
 
     init(artists: [ArtistModel]) {
         self.artists = artists
@@ -247,6 +272,8 @@ final class ArtistRepositoryMock: ArtistRepositoryProtocol {
     }
 
     func findByIds(artistIds: [ArtistId]) -> [ArtistModel] {
+        onFindByIds()
+
         return artistIds.compactMap { artistId in artists.first { $0.artistId == artistId } }
     }
 }

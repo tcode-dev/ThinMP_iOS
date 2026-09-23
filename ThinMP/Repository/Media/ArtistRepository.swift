@@ -9,11 +9,11 @@ import MediaPlayer
 
 struct ArtistRepository: ArtistRepositoryProtocol {
     func findAll() -> [ArtistModel] {
-        return artists(localArtistsQuery())
+        return artists(MPMediaQuery.artists().excludingCloudItems())
     }
 
     func findById(artistId: ArtistId) -> ArtistModel? {
-        let query = localArtistsQuery()
+        let query = MPMediaQuery.artists().excludingCloudItems()
 
         query.addFilterPredicate(MPMediaPropertyPredicate(value: artistId.id, forProperty: MPMediaItemPropertyArtistPersistentID))
 
@@ -26,18 +26,9 @@ struct ArtistRepository: ArtistRepositoryProtocol {
             return []
         }
 
-        let artists = artists(localArtistsQuery()).keyed { $0.artistId }
+        let artists = artists(MPMediaQuery.artists().excludingCloudItems()).keyed { $0.artistId }
 
         return artistIds.compactMap { artists[$0] }
-    }
-
-    /// クラウドにしか無い項目を除いたクエリ。一覧と詳細で出る項目を揃えるため、どの取得もここから始める
-    private func localArtistsQuery() -> MPMediaQuery {
-        let query = MPMediaQuery.artists()
-
-        query.addFilterPredicate(MPMediaPropertyPredicate(value: false, forProperty: MPMediaItemPropertyIsCloudItem))
-
-        return query
     }
 
     private func artists(_ query: MPMediaQuery) -> [ArtistModel] {

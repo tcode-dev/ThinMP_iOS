@@ -9,11 +9,11 @@ import MediaPlayer
 
 struct AlbumRepository: AlbumRepositoryProtocol {
     func findAll() -> [AlbumModel] {
-        return albums(localAlbumsQuery())
+        return albums(MPMediaQuery.albums().excludingCloudItems())
     }
 
     func findById(albumId: AlbumId) -> AlbumModel? {
-        let query = localAlbumsQuery()
+        let query = MPMediaQuery.albums().excludingCloudItems()
 
         query.addFilterPredicate(MPMediaPropertyPredicate(value: albumId.id, forProperty: MPMediaItemPropertyAlbumPersistentID))
 
@@ -26,14 +26,14 @@ struct AlbumRepository: AlbumRepositoryProtocol {
             return []
         }
 
-        let albums = albums(localAlbumsQuery()).keyed { $0.albumId }
+        let albums = albums(MPMediaQuery.albums().excludingCloudItems()).keyed { $0.albumId }
 
         return albumIds.compactMap { albums[$0] }
     }
 
     /// アーティストの曲を含むアルバム。コンピレーション盤も入る(AlbumRepositoryProtocol を参照)
     func findByArtistId(artistId: ArtistId) -> [AlbumModel] {
-        let query = localAlbumsQuery()
+        let query = MPMediaQuery.albums().excludingCloudItems()
 
         query.addFilterPredicate(MPMediaPropertyPredicate(value: artistId.id, forProperty: MPMediaItemPropertyArtistPersistentID))
 
@@ -44,7 +44,7 @@ struct AlbumRepository: AlbumRepositoryProtocol {
     /// 追加が新しい順に count 件
     func findRecently(count: Int) -> [AlbumModel] {
         // MPMediaItem のプロパティ取得は安くないので、比較のたびに dateAdded を引かずに 1 回だけ取る
-        let albums = collections(localAlbumsQuery()).compactMap { collection -> (album: AlbumModel, dateAdded: Date)? in
+        let albums = collections(MPMediaQuery.albums().excludingCloudItems()).compactMap { collection -> (album: AlbumModel, dateAdded: Date)? in
             guard let item = collection.representativeItem, let album = AlbumModel(collection: collection) else {
                 return nil
             }
@@ -53,15 +53,6 @@ struct AlbumRepository: AlbumRepositoryProtocol {
         }
 
         return albums.sorted { $0.dateAdded > $1.dateAdded }.prefix(count).map { $0.album }
-    }
-
-    /// クラウドにしか無い項目を除いたクエリ。一覧と詳細で出る項目を揃えるため、どの取得もここから始める
-    private func localAlbumsQuery() -> MPMediaQuery {
-        let query = MPMediaQuery.albums()
-
-        query.addFilterPredicate(MPMediaPropertyPredicate(value: false, forProperty: MPMediaItemPropertyIsCloudItem))
-
-        return query
     }
 
     private func collections(_ query: MPMediaQuery) -> [MPMediaItemCollection] {

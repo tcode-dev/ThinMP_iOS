@@ -18,4 +18,11 @@ struct AlbumsService: AlbumsServiceProtocol {
             repository.findAll()
         }.value
     }
+
+    /// ライブラリ全件を走査するのでバックグラウンドで行う
+    func findByIds(albumIds: [AlbumId]) async -> [AlbumModel] {
+        return await Task.detached(priority: .userInitiated) { [repository] in
+            repository.findByIds(albumIds: albumIds)
+        }.value
+    }
 }

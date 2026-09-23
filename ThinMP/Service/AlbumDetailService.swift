@@ -29,13 +29,4 @@ struct AlbumDetailService: AlbumDetailServiceProtocol {
             return AlbumDetailModel(albumId: album.albumId, primaryText: album.primaryText, secondaryText: album.secondaryText, artwork: album.artwork, songs: songs)
         }.value
     }
-
-    /// ショートカット用。ライブラリ全件を走査するのでバックグラウンドで行う
-    func findByIds(albumIds: [AlbumId]) async -> [AlbumDetailModel] {
-        return await Task.detached(priority: .userInitiated) { [albumRepository] in
-            albumRepository.findByIds(albumIds: albumIds).map { album in
-                AlbumDetailModel(albumId: album.albumId, primaryText: album.primaryText, secondaryText: album.secondaryText, artwork: album.artwork, songs: [])
-            }
-        }.value
-    }
 }

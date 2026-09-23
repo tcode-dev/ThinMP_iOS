@@ -20,8 +20,9 @@ struct MainMenuConfig {
     }
 
     /// 保存した並び順に無いメニュー(あとから追加されたもの)は末尾に足し、知らない値は捨てる
+    /// 同じメニューが 2 回保存されていたら最初の位置だけ残す(ForEach の id が重複しないように)
     func load() -> [MainMenuSetting] {
-        let stored = (userDefaults.array(forKey: sortKey) as? [String] ?? []).compactMap { MainMenu(rawValue: $0) }
+        let stored = (userDefaults.array(forKey: sortKey) as? [String] ?? []).compactMap { MainMenu(rawValue: $0) }.uniqued()
         let menus = stored + MainMenu.allCases.filter { !stored.contains($0) }
 
         return menus.map { MainMenuSetting(menu: $0, visibility: userDefaults.bool(forKey: $0.rawValue)) }

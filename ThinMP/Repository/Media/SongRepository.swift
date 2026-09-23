@@ -9,7 +9,7 @@ import MediaPlayer
 
 struct SongRepository: SongRepositoryProtocol {
     func findAll() -> [SongModel] {
-        return songs(localSongsQuery())
+        return songs(MPMediaQuery.songs().excludingCloudItems())
     }
 
     /// 結果は songIds の順で、ライブラリに無い曲は落ちる
@@ -18,13 +18,13 @@ struct SongRepository: SongRepositoryProtocol {
             return []
         }
 
-        let songs = songs(localSongsQuery()).keyed { $0.songId }
+        let songs = songs(MPMediaQuery.songs().excludingCloudItems()).keyed { $0.songId }
 
         return songIds.compactMap { songs[$0] }
     }
 
     func findByAlbumId(albumId: AlbumId) -> [SongModel] {
-        let query = localSongsQuery()
+        let query = MPMediaQuery.songs().excludingCloudItems()
 
         query.addFilterPredicate(MPMediaPropertyPredicate(value: albumId.id, forProperty: MPMediaItemPropertyAlbumPersistentID))
 
@@ -33,20 +33,11 @@ struct SongRepository: SongRepositoryProtocol {
 
     /// アーティストの曲を 1 回のクエリで引く。アルバムごとの並びは呼び出し側で揃える
     func findByArtistId(artistId: ArtistId) -> [SongModel] {
-        let query = localSongsQuery()
+        let query = MPMediaQuery.songs().excludingCloudItems()
 
         query.addFilterPredicate(MPMediaPropertyPredicate(value: artistId.id, forProperty: MPMediaItemPropertyArtistPersistentID))
 
         return songs(query)
-    }
-
-    /// クラウドにしか無い項目を除いたクエリ。一覧と詳細で出る項目を揃えるため、どの取得もここから始める
-    private func localSongsQuery() -> MPMediaQuery {
-        let query = MPMediaQuery.songs()
-
-        query.addFilterPredicate(MPMediaPropertyPredicate(value: false, forProperty: MPMediaItemPropertyIsCloudItem))
-
-        return query
     }
 
     private func songs(_ query: MPMediaQuery) -> [SongModel] {

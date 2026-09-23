@@ -12,8 +12,8 @@ struct AlbumModel: MediaProtocol, Identifiable {
     var primaryText: String?
     var secondaryText: String?
     var artwork: MPMediaItemArtwork?
-    var id: String {
-        return String(albumId.id)
+    var id: AlbumId {
+        return albumId
     }
 }
 

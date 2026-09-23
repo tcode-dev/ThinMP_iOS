@@ -62,6 +62,28 @@ struct PlaylistDetailServiceTests {
         #expect(playlistRepository.updateCalls[0].songIds.isEmpty)
     }
 
+    /// 走査中に追加された曲と変えられた名前は、端末から消えた曲を取り除いても残る
+    @Test
+    func keepsSongAndNameChangedDuringScan() async throws {
+        let playlistRepository = PlaylistRepositoryMock(playlists: [
+            PlaylistEntity(playlistId: playlistId, name: "My Playlist", songIds: [SongId(id: 1), SongId(id: 2)]),
+        ])
+        let songRepository = SongRepositoryMock(songs: [.fake(id: 1), .fake(id: 3)])
+        songRepository.onFindByIds = {
+            runOnMainActor {
+                playlistRepository.add(playlistId: playlistId, songId: SongId(id: 3))
+                playlistRepository.playlists[0].name = "Renamed"
+            }
+        }
+        let service = PlaylistDetailService(playlistRepository: playlistRepository, songRepository: songRepository)
+
+        _ = await service.findById(playlistId: playlistId)
+
+        let playlist = try #require(playlistRepository.findById(playlistId: playlistId))
+        #expect(playlist.name == "Renamed")
+        #expect(playlist.songIds.map { $0.id } == [1, 3])
+    }
+
     @Test
     func findByIdsMapsEachPlaylist() async {
         let playlistRepository = PlaylistRepositoryMock(playlists: [

@@ -49,14 +49,24 @@ struct PlaylistDetailService: PlaylistDetailServiceProtocol {
         return playlists.map { playlist in
             let songs = playlist.songIds.compactMap { songById[$0] }
 
-            // 端末から削除された曲がプレイリストに残っている場合は取り除いて保存する
+            // 端末から削除された曲がプレイリストに残っている場合は、その曲だけ取り除く
             if songs.count != playlist.songIds.count {
-                playlistRepository.update(playlistId: playlist.playlistId, name: playlist.name, songIds: songs.map { $0.songId })
+                removeSongs(playlistId: playlist.playlistId, songIds: Set(playlist.songIds.filter { songById[$0] == nil }))
             }
 
             let artwork = songs.first { $0.artwork != nil }?.artwork
 
             return PlaylistDetailModel(playlistId: playlist.playlistId, primaryText: playlist.name, artwork: artwork, songs: songs)
         }
+    }
+
+    /// 走査の前に読んだ内容で上書きすると、走査中に追加された曲や変えられた名前が消えるので、保存する直前に読み直す
+    /// 読み直しから保存までに await は無いので、その間に別の書き込みは入らない
+    private func removeSongs(playlistId: PlaylistId, songIds: Set<SongId>) {
+        guard let current = playlistRepository.findById(playlistId: playlistId) else {
+            return
+        }
+
+        playlistRepository.update(playlistId: playlistId, name: current.name, songIds: current.songIds.filter { !songIds.contains($0) })
     }
 }

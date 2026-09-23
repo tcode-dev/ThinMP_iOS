@@ -13,7 +13,7 @@ struct PlaylistModel: MediaProtocol, Identifiable {
     var artwork: MPMediaItemArtwork?
     /// order 順。登録モーダルが「登録済み」を判定するのに使う(PlaylistRegisterViewModel.registeredPlaylistIds)
     var songIds: [SongId] = []
-    var id: String {
-        return playlistId.id
+    var id: PlaylistId {
+        return playlistId
     }
 }

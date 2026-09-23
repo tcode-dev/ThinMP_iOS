@@ -25,7 +25,7 @@ struct PlaylistsServiceTests {
     func findAllCarriesSongIdsInPlaylistOrder() async {
         let playlists = await makeService().findAll()
 
-        #expect(playlists.map { $0.id } == ["p1", "p2", "p3"])
+        #expect(playlists.map { $0.playlistId.id } == ["p1", "p2", "p3"])
         #expect(playlists.map { $0.primaryText } == ["A", "B", "C"])
         #expect(playlists.map { $0.songIds.map { $0.id } } == [[1, 2], [3], [2]])
     }

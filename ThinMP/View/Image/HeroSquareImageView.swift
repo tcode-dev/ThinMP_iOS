@@ -10,6 +10,9 @@ import SwiftUI
 
 /// アルバム / プレイリスト詳細のヒーロー画像。size 四方のアートワークの下端を背景に溶かす
 struct HeroSquareImageView: View {
+    /// 下端を背景に溶かすグラデーションの高さ。size に対する割合
+    private let gradientRate: CGFloat = 0.3
+
     let size: CGFloat
     let artwork: MPMediaItemArtwork?
 
@@ -22,7 +25,7 @@ struct HeroSquareImageView: View {
             }
             .frame(width: size, height: size)
             HeroGradientView()
-                .frame(height: size * 0.3)
+                .frame(height: size * gradientRate)
         }
     }
 }

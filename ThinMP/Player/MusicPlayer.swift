@@ -52,7 +52,12 @@ final class MusicPlayer: ObservableObject {
         player.beginGeneratingPlaybackNotifications()
     }
 
+    /// list[currentIndex] から再生する。currentIndex が範囲外なら何もしない
     func start(list: [SongModel], currentIndex: Int) {
+        guard list.indices.contains(currentIndex) else {
+            return
+        }
+
         if player.playbackState == MPMusicPlaybackState.playing {
             player.stop()
         }
@@ -165,14 +170,15 @@ final class MusicPlayer: ObservableObject {
         }
     }
 
+    /// ブロックは NotificationCenter が持ち続けるので、self を強く掴むと deinit が呼ばれなくなる
     private func addObserver() {
         observers.append(NotificationCenter.default.addObserver(
             forName: NSNotification.Name.MPMusicPlayerControllerNowPlayingItemDidChange,
             object: player,
             queue: OperationQueue.main
-        ) { _ in
+        ) { [weak self] _ in
             MainActor.assumeIsolated {
-                self.setSong()
+                self?.setSong()
             }
         })
 
@@ -180,9 +186,9 @@ final class MusicPlayer: ObservableObject {
             forName: NSNotification.Name.MPMusicPlayerControllerPlaybackStateDidChange,
             object: player,
             queue: OperationQueue.main
-        ) { _ in
+        ) { [weak self] _ in
             MainActor.assumeIsolated {
-                self.playbackStateDidChangeCallback()
+                self?.playbackStateDidChangeCallback()
             }
         })
     }
@@ -226,9 +232,9 @@ final class MusicPlayer: ObservableObject {
             return
         }
 
-        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { _ in
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { [weak self] _ in
             MainActor.assumeIsolated {
-                self.updateTime()
+                self?.updateTime()
             }
         })
     }
@@ -244,6 +250,8 @@ final class MusicPlayer: ObservableObject {
     deinit {
         // ブロック形式の observer は removeObserver(self, ...) では外れないので token で外す
         observers.forEach { NotificationCenter.default.removeObserver($0) }
+        // 繰り返しの Timer は RunLoop が持ち続けるので、止めないと self が消えても回り続ける
+        timer?.invalidate()
 
         player.endGeneratingPlaybackNotifications()
     }
