@@ -34,7 +34,6 @@ struct HeroHeaderView<Content: View, SecondaryText: View>: View {
         ZStack(alignment: .top) {
             content()
             primaryTextView
-                .frame(height: StyleConstant.Height.row)
                 // offset の内側で測ることで、ずらした後の位置(GeometryReader を子に置いた場合と同じ)が取れる
                 // 位置そのものではなく判定結果を渡すので、State が変わるのは境目を越えたときだけになる
                 .onGeometryChange(for: Bool.self) { proxy in
