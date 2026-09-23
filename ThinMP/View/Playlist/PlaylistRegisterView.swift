@@ -64,12 +64,12 @@ struct PlaylistRegisterView: View {
                     HStack {
                         Spacer()
                         Button(action: {
-                            vm.create(songId: songId, name: name)
+                            vm.create(songId: songId, name: trimmedName)
                             onClose()
                         }) {
                             Text(LocalizedStringKey(LabelConstant.done))
                         }
-                        .disabled(name.isEmpty)
+                        .disabled(trimmedName.isEmpty)
                         Spacer()
                         Button(action: {
                             if hasNoPlaylists {
@@ -94,6 +94,11 @@ struct PlaylistRegisterView: View {
         .task {
             await vm.load(songId: songId).value
         }
+    }
+
+    /// 前後の空白を除いた名前。空白だけの名前では作らない
+    private var trimmedName: String {
+        return name.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
     /// 読み込みが終わってプレイリストが 1 つも無いと分かったときだけ、最初から作成フォームを出す
