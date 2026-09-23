@@ -46,7 +46,7 @@ struct ShortcutServiceTests {
         #expect(models.map { $0.shortcutId.id } == ["s3", "s1", "s2"])
         #expect(models.map { $0.target } == [.playlist(PlaylistId(id: "p1")), .artist(ArtistId(id: 10)), .album(AlbumId(id: 20))])
         #expect(models.map { $0.primaryText } == ["Playlist p1", "Artist 10", "Album 20"])
-        #expect(shortcutRepository.updateCalls.isEmpty)
+        #expect(shortcutRepository.deleteCalls.isEmpty)
     }
 
     @Test
@@ -56,8 +56,31 @@ struct ShortcutServiceTests {
         let models = await service.findAll()
 
         #expect(models.map { $0.shortcutId.id } == ["s1", "s3"])
-        #expect(shortcutRepository.updateCalls.count == 1)
-        #expect(shortcutRepository.updateCalls[0] == [ShortcutId(id: "s1"), ShortcutId(id: "s3")])
+        #expect(shortcutRepository.deleteCalls == [.album(AlbumId(id: 20))])
+        #expect(shortcutRepository.updateCalls.isEmpty)
+        #expect(shortcutRepository.findAll().map { $0.shortcutId.id } == ["s1", "s3"])
+    }
+
+    /// 走査中に(別のページで)追加されたショートカットは、端末から消えたものを取り除いても残る
+    @Test
+    func keepsShortcutAddedDuringScan() async {
+        let shortcutRepository = ShortcutRepositoryMock(shortcuts: [artistShortcut, albumShortcut])
+        let artistDetailService = ArtistDetailServiceMock(artists: [
+            ArtistDetailModel(artistId: ArtistId(id: 10), primaryText: "Artist 10", artwork: nil, albums: [], songs: []),
+        ])
+        artistDetailService.onFindByIds = {
+            runOnMainActor { shortcutRepository.add(target: .artist(ArtistId(id: 11))) }
+        }
+        let service = ShortcutService(
+            shortcutRepository: shortcutRepository,
+            artistDetailService: artistDetailService,
+            albumDetailService: AlbumDetailServiceMock(albums: []),
+            playlistDetailService: PlaylistDetailServiceMock(playlists: [])
+        )
+
+        _ = await service.findAll()
+
+        #expect(shortcutRepository.findAll().map { $0.target } == [.artist(ArtistId(id: 11)), .artist(ArtistId(id: 10))])
     }
 
     @Test
@@ -65,6 +88,6 @@ struct ShortcutServiceTests {
         let (service, shortcutRepository) = makeService(shortcuts: [])
 
         #expect(await service.findAll().isEmpty)
-        #expect(shortcutRepository.updateCalls.isEmpty)
+        #expect(shortcutRepository.deleteCalls.isEmpty)
     }
 }

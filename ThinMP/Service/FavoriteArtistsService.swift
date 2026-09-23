@@ -24,9 +24,12 @@ struct FavoriteArtistsService: FavoriteArtistsServiceProtocol {
             artistRepository.findByIds(artistIds: artistIds)
         }.value
 
-        // 端末から削除されたアーティストがお気に入りに残っている場合は取り除いて保存する
-        if artists.count != artistIds.count {
-            favoriteArtistRepository.update(artistIds: artists.map { $0.artistId })
+        // 端末から削除されたアーティストがお気に入りに残っている場合は、そのアーティストだけ取り除く
+        // 一覧ごと上書きすると、走査中に(再生画面などで)登録されたアーティストまで消える
+        let foundIds = Set(artists.map { $0.artistId })
+
+        for artistId in artistIds where !foundIds.contains(artistId) {
+            favoriteArtistRepository.delete(artistId: artistId)
         }
 
         return artists

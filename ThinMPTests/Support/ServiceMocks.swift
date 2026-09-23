@@ -13,6 +13,8 @@ import MediaPlayer
 
 final class ArtistDetailServiceMock: ArtistDetailServiceProtocol {
     let artists: [ArtistDetailModel]
+    /// findByIds の中(走査中)に呼ばれる。走査中に別の書き込みが入った状況を作るのに使う
+    var onFindByIds: () -> Void = {}
 
     init(artists: [ArtistDetailModel]) {
         self.artists = artists
@@ -23,6 +25,8 @@ final class ArtistDetailServiceMock: ArtistDetailServiceProtocol {
     }
 
     func findByIds(artistIds: [ArtistId]) -> [ArtistDetailModel] {
+        onFindByIds()
+
         return artistIds.compactMap { artistId in artists.first { $0.artistId == artistId } }
     }
 }

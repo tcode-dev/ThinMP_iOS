@@ -46,7 +46,8 @@ struct ShortcutService: ShortcutServiceProtocol {
         let albumById = albums.keyed { $0.albumId }
         let playlistById = playlists.keyed { $0.playlistId }
 
-        // 端末に存在しないものは落とす(下で数が減ったことを検出する)
+        // 端末に存在しないものは落とす
+        var missingTargets: [ShortcutTarget] = []
         let shortcutModels = shortcuts.compactMap { shortcut -> ShortcutModel? in
             let item: MediaProtocol? = switch shortcut.target {
             case .artist(let artistId): artistById[artistId]
@@ -55,15 +56,18 @@ struct ShortcutService: ShortcutServiceProtocol {
             }
 
             guard let item else {
+                missingTargets.append(shortcut.target)
+
                 return nil
             }
 
             return ShortcutModel(shortcutId: shortcut.shortcutId, target: shortcut.target, primaryText: item.primaryText, artwork: item.artwork)
         }
 
-        // 端末から削除されたアーティスト、アルバム、プレイリストのショートカットは取り除いて保存する
-        if shortcutModels.count != shortcuts.count {
-            shortcutRepository.update(shortcutIds: shortcutModels.map { $0.shortcutId })
+        // 端末から削除されたアーティスト、アルバム、プレイリストのショートカットは、それだけ取り除く
+        // 一覧ごと上書きすると、走査中に(別のページで)追加されたショートカットまで消える
+        for target in missingTargets {
+            shortcutRepository.delete(target: target)
         }
 
         return shortcutModels
