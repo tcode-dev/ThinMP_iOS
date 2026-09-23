@@ -9,13 +9,13 @@ import SwiftUI
 
 /// メイン編集ページの行。タップで表示 / 非表示を切り替える
 struct MenuEditRowView: View {
-    let text: String
+    let key: String
     @Binding var isVisible: Bool
 
     var body: some View {
         HStack(alignment: .center) {
             Image(isVisible ? .checkboxOn : .checkboxOff).renderingMode(.original)
-            MenuRowView(text: text)
+            MenuRowView(key: key)
             Spacer()
         }
         .padding(.leading, StyleConstant.Padding.large)

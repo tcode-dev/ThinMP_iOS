@@ -20,7 +20,7 @@ struct PlaylistDetailPageView: View {
             HeroNavBarView(primaryText: vm.playlist?.primaryText, width: geometry.size.width, top: geometry.safeAreaInsets.top, isScrolledUnder: isScrolledUnder) {
                 MenuButtonView {
                     NavigationLink(destination: PlaylistDetailEditPageView(playlistId: playlistId, primaryText: vm.playlist?.primaryText)) {
-                        MenuRowView(text: LabelConstant.edit)
+                        MenuRowView(key: LabelConstant.edit)
                     }
                     ShortcutButtonView(target: .playlist(playlistId))
                 }

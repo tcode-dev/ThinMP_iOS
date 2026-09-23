@@ -13,7 +13,7 @@ struct PlaylistsPageView: View {
 
     var body: some View {
         ScrollPageLayout(onPlayerDismiss: { vm.load() }) { geometry in
-            ListNavBarView(title: LabelConstant.playlists, top: geometry.safeAreaInsets.top, isScrolledUnder: isScrolledUnder) {
+            ListNavBarView(titleKey: LabelConstant.playlists, top: geometry.safeAreaInsets.top, isScrolledUnder: isScrolledUnder) {
                 EditButtonView {
                     PlaylistsEditPageView()
                 }

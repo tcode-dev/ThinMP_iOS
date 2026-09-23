@@ -13,7 +13,7 @@ struct ArtistsPageView: View {
 
     var body: some View {
         ScrollPageLayout { geometry in
-            ListNavBarView(title: LabelConstant.artists, top: geometry.safeAreaInsets.top, isScrolledUnder: isScrolledUnder)
+            ListNavBarView(titleKey: LabelConstant.artists, top: geometry.safeAreaInsets.top, isScrolledUnder: isScrolledUnder)
         } content: { geometry in
             ListEmptyHeaderView(isScrolledUnder: $isScrolledUnder, top: geometry.safeAreaInsets.top)
             ArtistListView(artists: vm.artists)
