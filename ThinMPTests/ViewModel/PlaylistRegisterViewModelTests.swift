@@ -31,7 +31,7 @@ struct PlaylistRegisterViewModelTests {
 
         await vm.load(songId: SongId(id: 2)).value
 
-        #expect(vm.playlists.map { $0.playlistId.id } == ["a", "b"])
+        #expect(vm.playlists?.map { $0.playlistId.id } == ["a", "b"])
         #expect(vm.registeredPlaylistIds == [PlaylistId(id: "a")])
         #expect(vm.isRegistered(playlistId: PlaylistId(id: "a")))
         #expect(!vm.isRegistered(playlistId: PlaylistId(id: "b")))
@@ -49,15 +49,14 @@ struct PlaylistRegisterViewModelTests {
 
     /// 読み込み前の空と、プレイリストが 1 つも無い空を区別できる
     @Test
-    func isLoadedTellsAnEmptyLibraryFromANotYetLoadedOne() async {
+    func playlistsTellAnEmptyLibraryFromANotYetLoadedOne() async {
         let vm = PlaylistRegisterViewModel(playlistsService: PlaylistsServiceMock(playlists: []))
 
-        #expect(!vm.isLoaded)
+        #expect(vm.playlists == nil)
 
         await vm.load(songId: SongId(id: 1)).value
 
-        #expect(vm.isLoaded)
-        #expect(vm.playlists.isEmpty)
+        #expect(vm.playlists?.isEmpty == true)
     }
 
     @Test
@@ -79,7 +78,7 @@ struct PlaylistRegisterViewModelTests {
         let repository = makeRepository()
         let vm = PlaylistRegisterViewModel(playlistsService: makeService(), playlistRepository: repository)
 
-        #expect(vm.playlists.isEmpty)
+        #expect(vm.playlists == nil)
         vm.create(songId: SongId(id: 5), name: "New")
 
         #expect(repository.findAll().map { $0.name } == ["A", "B", "New"])

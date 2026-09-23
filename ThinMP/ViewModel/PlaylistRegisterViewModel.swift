@@ -11,11 +11,10 @@ import Combine
 /// 一覧を 1 回読み、そこから songId がすでに登録されているプレイリストを求める
 @MainActor
 final class PlaylistRegisterViewModel: ObservableObject {
-    @Published private(set) var playlists: [PlaylistModel] = []
+    /// 読み込む前は nil。空の配列なら「プレイリストが 1 つも無い」
+    @Published private(set) var playlists: [PlaylistModel]?
     /// 対象の曲がすでに入っているプレイリストの id
     @Published private(set) var registeredPlaylistIds: Set<PlaylistId> = []
-    /// 1 回目の読み込みが終わったか。終わるまでは playlists が空でも「プレイリストが無い」とは限らない
-    @Published private(set) var isLoaded = false
 
     private let playlistsService: PlaylistsServiceProtocol
     private let playlistRepository: PlaylistRepositoryProtocol
@@ -36,7 +35,6 @@ final class PlaylistRegisterViewModel: ObservableObject {
         } apply: { [weak self] playlists in
             self?.playlists = playlists
             self?.registeredPlaylistIds = Set(playlists.filter { $0.songIds.contains(songId) }.map { $0.playlistId })
-            self?.isLoaded = true
         }
     }
 
@@ -45,7 +43,7 @@ final class PlaylistRegisterViewModel: ObservableObject {
     }
 
     /// 曲 1 つを入れた新しいプレイリストを作る
-    /// 読み込みを待たずに押せるので、isLoaded のようなガードは置かない
+    /// 読み込みを待たずに押せるので、playlists が nil でも作る
     func create(songId: SongId, name: String) {
         playlistRepository.create(songId: songId, name: name)
     }
