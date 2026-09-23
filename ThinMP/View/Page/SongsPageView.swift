@@ -20,8 +20,8 @@ struct SongsPageView: View {
             ListEmptyHeaderView(isScrolledUnder: $isScrolledUnder, top: geometry.safeAreaInsets.top)
             SongListView(songs: vm.songs) { playlistRegisterSongId = $0 }
         }
-        .task {
-            await vm.load().value
+        .onFirstAppear {
+            vm.load()
         }
     }
 }

@@ -11,7 +11,7 @@ struct FavoriteArtistButtonView: View {
     let artistId: ArtistId
     /// 登録 / 解除のあとに呼ばれる(一覧の再読み込みなど)
     var onToggle: () -> Void = {}
-    var repository: FavoriteArtistRepositoryProtocol = FavoriteArtistRepository()
+    private let repository: FavoriteArtistRepositoryProtocol = FavoriteArtistRepository()
 
     var body: some View {
         RegisterToggleButtonView(

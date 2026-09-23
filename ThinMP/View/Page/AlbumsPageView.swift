@@ -18,8 +18,8 @@ struct AlbumsPageView: View {
             ListEmptyHeaderView(isScrolledUnder: $isScrolledUnder, top: geometry.safeAreaInsets.top)
             AlbumListView(albums: vm.albums, width: geometry.size.width)
         }
-        .task {
-            await vm.load().value
+        .onFirstAppear {
+            vm.load()
         }
     }
 }

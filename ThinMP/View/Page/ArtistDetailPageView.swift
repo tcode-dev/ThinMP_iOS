@@ -45,8 +45,8 @@ struct ArtistDetailPageView: View {
                 }
             }
         }
-        .task {
-            await vm.load(artistId: artistId).value
+        .onFirstAppear {
+            vm.load(artistId: artistId)
         }
     }
 }

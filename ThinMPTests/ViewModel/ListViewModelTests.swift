@@ -42,21 +42,3 @@ struct ArtistsViewModelTests {
         #expect(service.findAllCalls == 1)
     }
 }
-
-@MainActor
-struct FavoriteArtistsViewModelLoadTests {
-    @Test
-    func loadPublishesArtistsFromService() async {
-        let service = FavoriteArtistsServiceMock(artists: [
-            ArtistModel(artistId: ArtistId(id: 2), primaryText: "B"),
-            ArtistModel(artistId: ArtistId(id: 1), primaryText: "A"),
-        ])
-        let vm = FavoriteArtistsViewModel(favoriteArtistsService: service)
-
-        #expect(vm.artists.isEmpty)
-
-        await vm.load().value
-
-        #expect(vm.artists.map { $0.artistId.id } == [2, 1])
-    }
-}

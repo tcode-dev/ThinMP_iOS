@@ -35,6 +35,11 @@ final class FavoriteSongRepositoryMock: FavoriteSongRepositoryProtocol {
     }
 
     func add(songId: SongId) {
+        // 実装と同じく、登録済みなら何もしない
+        if exists(songId: songId) {
+            return
+        }
+
         songIds.append(songId)
     }
 
@@ -75,6 +80,11 @@ final class FavoriteArtistRepositoryMock: FavoriteArtistRepositoryProtocol {
     }
 
     func add(artistId: ArtistId) {
+        // 実装と同じく、登録済みなら何もしない
+        if exists(artistId: artistId) {
+            return
+        }
+
         artistIds.append(artistId)
     }
 
@@ -111,6 +121,11 @@ final class PlaylistRepositoryMock: PlaylistRepositoryProtocol {
         guard let index = playlists.firstIndex(where: { $0.playlistId == playlistId }) else { return }
 
         let playlist = playlists[index]
+
+        // 実装と同じく、同じ曲は 1 つのプレイリストに 1 回しか登録しない
+        if playlist.songIds.contains(songId) {
+            return
+        }
 
         playlists[index] = PlaylistEntity(playlistId: playlistId, name: playlist.name, songIds: playlist.songIds + [songId])
     }
