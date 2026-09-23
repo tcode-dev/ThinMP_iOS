@@ -37,7 +37,8 @@ struct AlbumRepository: AlbumRepositoryProtocol {
 
         query.addFilterPredicate(MPMediaPropertyPredicate(value: artistId.id, forProperty: MPMediaItemPropertyArtistPersistentID))
 
-        return albums(query).sorted { ($0.primaryText ?? "") < ($1.primaryText ?? "") }
+        // < だと大文字小文字や全角半角、数字の桁で並びが崩れるので、Finder と同じ比較にする
+        return albums(query).sorted { ($0.primaryText ?? "").localizedStandardCompare($1.primaryText ?? "") == .orderedAscending }
     }
 
     /// 追加が新しい順に count 件
