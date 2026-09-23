@@ -33,7 +33,7 @@ struct RegisterToggleButtonView: View {
             isRegistered = toggle()
             onToggle()
         }) {
-            Text(LocalizedStringKey(registered ? removeLabel : addLabel))
+            Text(label: registered ? removeLabel : addLabel)
         }
         .onAppear {
             isRegistered = nil

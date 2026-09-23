@@ -27,13 +27,13 @@ struct PlaylistRegisterView: View {
                         Button(action: {
                             isCreateFormShown.toggle()
                         }) {
-                            Text(LocalizedStringKey(LabelConstant.newPlaylist))
+                            Text(label: LabelConstant.newPlaylist)
                         }
                         Spacer()
                         Button(action: {
                             onClose()
                         }) {
-                            Text(LocalizedStringKey(LabelConstant.cancel))
+                            Text(label: LabelConstant.cancel)
                         }
                         Spacer()
                     }
@@ -58,7 +58,7 @@ struct PlaylistRegisterView: View {
                 .frame(height: contentHeight)
             } else {
                 VStack(spacing: 0) {
-                    Text(LocalizedStringKey(LabelConstant.playlistName))
+                    Text(label: LabelConstant.playlistName)
                         .frame(height: StyleConstant.Height.row)
                     TextField("", text: $name)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -68,7 +68,7 @@ struct PlaylistRegisterView: View {
                             vm.create(songId: songId, name: trimmedName)
                             onClose()
                         }) {
-                            Text(LocalizedStringKey(LabelConstant.done))
+                            Text(label: LabelConstant.done)
                         }
                         .disabled(trimmedName.isEmpty)
                         Spacer()
@@ -79,7 +79,7 @@ struct PlaylistRegisterView: View {
                                 isCreateFormShown.toggle()
                             }
                         }) {
-                            Text(LocalizedStringKey(LabelConstant.cancel))
+                            Text(label: LabelConstant.cancel)
                         }
                         Spacer()
                     }
