@@ -15,7 +15,7 @@ struct BackButtonView: View {
             dismiss()
         }) {
             // サイズを指定しないと反応しない
-            Image("BackButton")
+            Image(.backButton)
                 .renderingMode(.original)
                 .frame(width: StyleConstant.button, height: StyleConstant.button)
         }

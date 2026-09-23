@@ -18,7 +18,7 @@ struct HeroSquareImageView: View {
 
     var body: some View {
         ZStack(alignment: .bottom) {
-            Image(artwork: artwork, size: CGSize(width: size, height: size), placeholder: "Song")
+            Image(artwork: artwork, size: CGSize(width: size, height: size), placeholder: .song)
                 .resizable()
                 .scaledToFit()
                 .frame(width: size, height: size)

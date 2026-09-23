@@ -24,7 +24,7 @@ struct TitleView: View {
         text
             .font(.body)
             .fontWeight(.medium)
-            .foregroundColor(.primary)
+            .foregroundStyle(.primary)
             .lineLimit(1)
     }
 }

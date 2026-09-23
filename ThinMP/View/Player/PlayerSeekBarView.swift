@@ -27,7 +27,7 @@ struct PlayerSeekBarView: View {
             })
             .frame(height: StyleConstant.button)
             .padding(.horizontal, sliderPadding)
-            .accentColor(Color(.label))
+            .tint(Color(.label))
             HStack {
                 SecondaryTextView(Self.format(musicPlayer.currentSecond)).frame(width: timeWidth, height: timeHeight).padding(.leading, timePadding)
                 Spacer()

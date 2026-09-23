@@ -36,9 +36,9 @@ struct ListNavBarView<Trailing: View>: View {
 
     /// 一覧が潜り込んだときだけ出るナビゲーションバーの背景
     private var headerView: some View {
-        return Color(UIColor.secondarySystemBackground)
+        return Color.clear
             .frame(height: StyleConstant.Height.row + top)
-            .border(Color(UIColor.systemGray5), width: 1)
+            .barBackground()
             .opacity(opacity)
             .animation(.easeInOut, value: opacity)
     }

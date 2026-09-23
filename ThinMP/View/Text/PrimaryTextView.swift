@@ -23,7 +23,7 @@ struct PrimaryTextView: View {
     var body: some View {
         text
             .font(.body)
-            .foregroundColor(.primary)
+            .foregroundStyle(.primary)
             .lineLimit(1)
     }
 }

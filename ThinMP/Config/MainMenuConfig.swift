@@ -25,14 +25,14 @@ struct MainMenuConfig {
         let stored = (userDefaults.array(forKey: sortKey) as? [String] ?? []).compactMap { MainMenu(rawValue: $0) }.uniqued()
         let menus = stored + MainMenu.allCases.filter { !stored.contains($0) }
 
-        return menus.map { MainMenuSetting(menu: $0, visibility: userDefaults.bool(forKey: $0.rawValue)) }
+        return menus.map { MainMenuSetting(menu: $0, isVisible: userDefaults.bool(forKey: $0.rawValue)) }
     }
 
     func save(_ menus: [MainMenuSetting]) {
         userDefaults.set(menus.map { $0.menu.rawValue }, forKey: sortKey)
 
         for setting in menus {
-            userDefaults.set(setting.visibility, forKey: setting.menu.rawValue)
+            userDefaults.set(setting.isVisible, forKey: setting.menu.rawValue)
         }
     }
 }

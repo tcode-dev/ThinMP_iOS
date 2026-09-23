@@ -18,13 +18,13 @@ struct PlayerControlsView: View {
         HStack {
             Spacer()
             Button(action: musicPlayer.prev) {
-                ButtonImageView(name: "PrevButton", size: sideButtonSize)
+                ButtonImageView(image: .prevButton, size: sideButtonSize)
             }
             Spacer()
             PlayPauseButtonView(size: playPauseButtonSize)
             Spacer()
             Button(action: musicPlayer.next) {
-                ButtonImageView(name: "NextButton", size: sideButtonSize)
+                ButtonImageView(image: .nextButton, size: sideButtonSize)
             }
             Spacer()
         }

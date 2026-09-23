@@ -34,7 +34,7 @@ struct MiniPlayerView: View {
                     PlayPauseButtonView(size: buttonImageSize)
                         .frame(width: buttonSize, height: buttonSize)
                     Button(action: musicPlayer.next) {
-                        ButtonImageView(name: "NextButton", size: buttonImageSize)
+                        ButtonImageView(image: .nextButton, size: buttonImageSize)
                     }
                     .frame(width: buttonSize, height: buttonSize)
                 }
@@ -45,8 +45,7 @@ struct MiniPlayerView: View {
                     bottom: bottom,
                     trailing: 0
                 ))
-                .background(Color(UIColor.secondarySystemBackground))
-                .border(Color(UIColor.systemGray5), width: 1)
+                .barBackground()
             }
         }
         // if の中に置くと、再生画面を開いている間に曲が無くなったとき(isActive が false)に画面ごと消える

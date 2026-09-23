@@ -11,7 +11,7 @@ struct MenuImageView: View {
     private let size: CGFloat = 32
 
     var body: some View {
-        Image("MenuButton")
+        Image(.menuButton)
             .renderingMode(.original)
             .resizable()
             .frame(width: size, height: size)

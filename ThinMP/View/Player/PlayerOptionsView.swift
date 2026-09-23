@@ -24,32 +24,32 @@ struct PlayerOptionsView: View {
             Button(action: musicPlayer.changeRepeat) {
                 switch musicPlayer.repeatMode {
                 case .all:
-                    ButtonImageView(name: "RepeatButton", size: imageSize)
+                    ButtonImageView(image: .repeatButton, size: imageSize)
                 case .one:
-                    ButtonImageView(name: "RepeatOneButton", size: imageSize)
+                    ButtonImageView(image: .repeatOneButton, size: imageSize)
                 default:
-                    ButtonImageView(name: "RepeatButton", size: imageSize, dimmed: true)
+                    ButtonImageView(image: .repeatButton, size: imageSize, dimmed: true)
                 }
             }
             .frame(width: StyleConstant.button, height: StyleConstant.button)
             Spacer()
             Button(action: musicPlayer.shuffle) {
-                ButtonImageView(name: "ShuffleButton", size: imageSize, dimmed: !musicPlayer.isShuffle)
+                ButtonImageView(image: .shuffleButton, size: imageSize, dimmed: !musicPlayer.isShuffle)
             }
             .frame(width: StyleConstant.button, height: StyleConstant.button)
             Spacer()
             Button(action: musicPlayer.toggleFavoriteArtist) {
-                ButtonImageView(name: "FavoriteArtistButton", size: imageSize, dimmed: !musicPlayer.isFavoriteArtist)
+                ButtonImageView(image: .favoriteArtistButton, size: imageSize, dimmed: !musicPlayer.isFavoriteArtist)
             }
             .frame(width: StyleConstant.button, height: StyleConstant.button)
             Spacer()
             Button(action: musicPlayer.toggleFavoriteSong) {
-                ButtonImageView(name: "FavoriteSongButton", size: favoriteSongImageSize, dimmed: !musicPlayer.isFavoriteSong)
+                ButtonImageView(image: .favoriteSongButton, size: favoriteSongImageSize, dimmed: !musicPlayer.isFavoriteSong)
             }
             .frame(width: StyleConstant.button, height: StyleConstant.button)
             Spacer()
             Button(action: onAddPlaylist) {
-                ButtonImageView(name: "PlaylistAddButton", size: imageSize)
+                ButtonImageView(image: .playlistAddButton, size: imageSize)
             }
             .frame(width: StyleConstant.button, height: StyleConstant.button)
         }

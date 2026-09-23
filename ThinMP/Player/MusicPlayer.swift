@@ -14,7 +14,6 @@ final class MusicPlayer: ObservableObject {
     /// 再生位置がここまでなら prev() で前の曲へ、過ぎていれば曲の先頭へ戻る
     private let prevThresholdSecond: Double = 3
 
-    @Published private(set) var isActive: Bool = false
     @Published private(set) var isPlaying: Bool = false
     @Published private(set) var song: SongModel?
     /// 再生位置のスライダーが Binding で書き換えるので、これだけは外から書ける
@@ -24,6 +23,11 @@ final class MusicPlayer: ObservableObject {
     @Published private(set) var isShuffle: Bool = false
     @Published private(set) var isFavoriteArtist: Bool = false
     @Published private(set) var isFavoriteSong: Bool = false
+
+    /// 再生する曲があるか
+    var isActive: Bool {
+        return song != nil
+    }
 
     private let playerConfig: PlayerConfig
     private let favoriteArtistRepository: FavoriteArtistRepositoryProtocol
@@ -59,7 +63,7 @@ final class MusicPlayer: ObservableObject {
             return
         }
 
-        if player.playbackState == MPMusicPlaybackState.playing {
+        if player.playbackState == .playing {
             player.stop()
         }
 
@@ -170,15 +174,14 @@ final class MusicPlayer: ObservableObject {
 
         // 曲が無くなっても再生画面は開いたまま残るので、そのときもお気に入りの表示を読み直して消す
         reloadFavorite()
-        isActive = song != nil
     }
 
     /// ブロックは NotificationCenter が持ち続けるので、self を強く掴むと deinit が呼ばれなくなる
     private func addObserver() {
         observers.append(NotificationCenter.default.addObserver(
-            forName: NSNotification.Name.MPMusicPlayerControllerNowPlayingItemDidChange,
+            forName: .MPMusicPlayerControllerNowPlayingItemDidChange,
             object: player,
-            queue: OperationQueue.main
+            queue: .main
         ) { [weak self] _ in
             MainActor.assumeIsolated {
                 self?.setSong()
@@ -186,9 +189,9 @@ final class MusicPlayer: ObservableObject {
         })
 
         observers.append(NotificationCenter.default.addObserver(
-            forName: NSNotification.Name.MPMusicPlayerControllerPlaybackStateDidChange,
+            forName: .MPMusicPlayerControllerPlaybackStateDidChange,
             object: player,
-            queue: OperationQueue.main
+            queue: .main
         ) { [weak self] _ in
             MainActor.assumeIsolated {
                 self?.playbackStateDidChangeCallback()

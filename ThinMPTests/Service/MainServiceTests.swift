@@ -30,7 +30,7 @@ struct MainServiceTests {
 
         let settings = service.loadSettings()
 
-        #expect(settings.menus == MainMenu.allCases.map { MainMenuSetting(menu: $0, visibility: true) })
+        #expect(settings.menus == MainMenu.allCases.map { MainMenuSetting(menu: $0, isVisible: true) })
         #expect(settings.isShortcutVisible)
         #expect(settings.isRecentlyVisible)
     }
@@ -39,8 +39,8 @@ struct MainServiceTests {
     func saveRoundTripsSettingsAcrossInstances() {
         let userDefaults = UserDefaults.empty()
         let settings = MainSettings(
-            menus: [MainMenuSetting(menu: .songs, visibility: false), MainMenuSetting(menu: .artists, visibility: true)]
-                + MainMenu.allCases.filter { $0 != .songs && $0 != .artists }.map { MainMenuSetting(menu: $0, visibility: true) },
+            menus: [MainMenuSetting(menu: .songs, isVisible: false), MainMenuSetting(menu: .artists, isVisible: true)]
+                + MainMenu.allCases.filter { $0 != .songs && $0 != .artists }.map { MainMenuSetting(menu: $0, isVisible: true) },
             isShortcutVisible: false,
             isRecentlyVisible: true
         )

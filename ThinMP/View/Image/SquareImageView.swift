@@ -13,11 +13,11 @@ struct SquareImageView: View {
     let size: CGFloat
 
     var body: some View {
-        Image(artwork: artwork, size: CGSize(width: size, height: size), placeholder: "Song")
+        Image(artwork: artwork, size: CGSize(width: size, height: size), placeholder: .song)
             .renderingMode(.original)
             .resizable()
             .scaledToFit()
-            .cornerRadius(StyleConstant.cornerRadius)
+            .clipShape(.rect(cornerRadius: StyleConstant.cornerRadius))
             .frame(width: size, height: size)
     }
 }
