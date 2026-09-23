@@ -10,8 +10,8 @@ import Testing
 
 struct ArtistDetailServiceTests {
     private let artistId = ArtistId(id: 10)
-    private let album1 = AlbumModel(albumId: AlbumId(id: 1), primaryText: "A")
-    private let album2 = AlbumModel(albumId: AlbumId(id: 2), primaryText: "B")
+    private let album1 = AlbumModel(albumId: AlbumId(id: 1), primaryText: "A", secondaryText: nil, artwork: nil)
+    private let album2 = AlbumModel(albumId: AlbumId(id: 2), primaryText: "B", secondaryText: nil, artwork: nil)
 
     private func makeService(artists: [ArtistModel], albums: [AlbumModel], songs: [SongModel] = []) -> ArtistDetailService {
         return ArtistDetailService(

@@ -27,7 +27,7 @@ struct ShortcutServiceTests {
                 ArtistSummaryModel(artistId: ArtistId(id: $0), primaryText: "Artist \($0)", artwork: nil)
             }),
             albumsService: AlbumsServiceMock(albums: albumIds.map {
-                AlbumModel(albumId: AlbumId(id: $0), primaryText: "Album \($0)")
+                AlbumModel(albumId: AlbumId(id: $0), primaryText: "Album \($0)", secondaryText: nil, artwork: nil)
             }),
             playlistDetailService: PlaylistDetailServiceMock(playlists: playlistIds.map {
                 PlaylistDetailModel(playlistId: PlaylistId(id: $0), primaryText: "Playlist \($0)", artwork: nil, songs: [])

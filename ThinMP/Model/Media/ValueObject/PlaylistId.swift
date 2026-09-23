@@ -6,5 +6,5 @@
 //
 
 struct PlaylistId: Hashable {
-    var id: String
+    let id: String
 }

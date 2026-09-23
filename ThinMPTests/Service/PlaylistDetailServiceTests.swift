@@ -72,7 +72,9 @@ struct PlaylistDetailServiceTests {
         songRepository.onFindByIds = {
             runOnMainActor {
                 playlistRepository.add(playlistId: playlistId, songId: SongId(id: 3))
-                playlistRepository.playlists[0].name = "Renamed"
+                let playlist = playlistRepository.playlists[0]
+
+                playlistRepository.playlists[0] = PlaylistEntity(playlistId: playlistId, name: "Renamed", songIds: playlist.songIds)
             }
         }
         let service = PlaylistDetailService(playlistRepository: playlistRepository, songRepository: songRepository)

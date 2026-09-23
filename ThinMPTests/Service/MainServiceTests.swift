@@ -52,7 +52,7 @@ struct MainServiceTests {
 
     @Test
     func findRecentlyAlbumsAsksTheRepositoryForTwenty() async {
-        let albums = (1 ... 25).map { AlbumModel(albumId: AlbumId(id: UInt64($0)), primaryText: "Album \($0)") }
+        let albums = (1 ... 25).map { AlbumModel(albumId: AlbumId(id: UInt64($0)), primaryText: "Album \($0)", secondaryText: nil, artwork: nil) }
         let albumRepository = AlbumRepositoryMock(recently: albums)
         let service = makeService(userDefaults: UserDefaults.empty(), albumRepository: albumRepository)
 
@@ -65,7 +65,7 @@ struct MainServiceTests {
 
     @Test
     func findShortcutsDelegatesToShortcutService() async {
-        let shortcut = ShortcutModel(shortcutId: ShortcutId(id: "s1"), target: .artist(ArtistId(id: 10)), primaryText: "Artist")
+        let shortcut = ShortcutModel(shortcutId: ShortcutId(id: "s1"), target: .artist(ArtistId(id: 10)), primaryText: "Artist", artwork: nil)
         let shortcutService = ShortcutServiceMock(shortcuts: [shortcut])
         let service = makeService(userDefaults: UserDefaults.empty(), shortcutService: shortcutService)
 

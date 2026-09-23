@@ -8,5 +8,5 @@
 import MediaPlayer
 
 struct ArtistId: Hashable {
-    var id: MPMediaEntityPersistentID
+    let id: MPMediaEntityPersistentID
 }

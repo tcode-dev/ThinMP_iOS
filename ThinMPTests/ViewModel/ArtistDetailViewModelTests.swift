@@ -18,7 +18,7 @@ struct ArtistDetailViewModelTests {
                 artistId: artistId,
                 primaryText: "Artist",
                 artwork: nil,
-                albums: [AlbumModel(albumId: AlbumId(id: 1), primaryText: "Album")],
+                albums: [AlbumModel(albumId: AlbumId(id: 1), primaryText: "Album", secondaryText: nil, artwork: nil)],
                 songs: [.fake(id: 1), .fake(id: 2)]
             ),
         ])

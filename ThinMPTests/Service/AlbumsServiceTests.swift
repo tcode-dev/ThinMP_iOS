@@ -9,8 +9,8 @@ import Testing
 @testable import ThinMP
 
 struct AlbumsServiceTests {
-    private let album1 = AlbumModel(albumId: AlbumId(id: 1), primaryText: "A")
-    private let album2 = AlbumModel(albumId: AlbumId(id: 2), primaryText: "B")
+    private let album1 = AlbumModel(albumId: AlbumId(id: 1), primaryText: "A", secondaryText: nil, artwork: nil)
+    private let album2 = AlbumModel(albumId: AlbumId(id: 2), primaryText: "B", secondaryText: nil, artwork: nil)
 
     @Test
     func findByIdsKeepsOrderAndDropsMissing() async {
