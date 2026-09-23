@@ -8,7 +8,7 @@
 import Combine
 
 @MainActor
-class FavoriteSongsViewModel: ObservableObject {
+final class FavoriteSongsViewModel: ObservableObject {
     @Published var songs: [SongModel] = []
     /// 1 回目の読み込みが終わったか。終わるまでは編集ページの保存を受け付けない
     @Published private(set) var isLoaded = false

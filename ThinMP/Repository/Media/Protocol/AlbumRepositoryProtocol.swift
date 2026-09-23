@@ -12,7 +12,7 @@ protocol AlbumRepositoryProtocol {
 
     func findByIds(albumIds: [AlbumId]) -> [AlbumModel]
 
-    /// アーティスト名順。predicate は曲に掛かるので、コンピレーション盤のように
+    /// アルバム名順。predicate は曲に掛かるので、コンピレーション盤のように
     /// アーティストの曲を 1 曲でも含むアルバムは、代表アーティストが別でも含まれる
     func findByArtistId(artistId: ArtistId) -> [AlbumModel]
 

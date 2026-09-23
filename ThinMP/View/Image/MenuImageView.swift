@@ -8,10 +8,12 @@
 import SwiftUI
 
 struct MenuImageView: View {
+    private let size: CGFloat = 32
+
     var body: some View {
         Image("MenuButton")
             .renderingMode(.original)
             .resizable()
-            .frame(width: 32, height: 32)
+            .frame(width: size, height: size)
     }
 }

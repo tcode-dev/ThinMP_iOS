@@ -9,17 +9,17 @@ import SwiftUI
 
 struct PlaylistsPageView: View {
     @StateObject private var vm = PlaylistsViewModel()
-    @State private var headerRect = CGRect.zero
+    @State private var isScrolledUnder = false
 
     var body: some View {
         ScrollPageLayout(onPlayerDismiss: { vm.load() }) { geometry in
-            ListNavBarView(title: LabelConstant.playlists, top: geometry.safeAreaInsets.top, headerRect: $headerRect) {
+            ListNavBarView(title: LabelConstant.playlists, top: geometry.safeAreaInsets.top, isScrolledUnder: isScrolledUnder) {
                 EditButtonView {
                     PlaylistsEditPageView()
                 }
             }
         } content: { geometry in
-            ListEmptyHeaderView(headerRect: $headerRect, top: geometry.safeAreaInsets.top)
+            ListEmptyHeaderView(isScrolledUnder: $isScrolledUnder, top: geometry.safeAreaInsets.top)
             LazyVStack(spacing: 0) {
                 ForEach(vm.playlists) { playlist in
                     NavigationLink(destination: PlaylistDetailPageView(playlistId: playlist.playlistId)) {

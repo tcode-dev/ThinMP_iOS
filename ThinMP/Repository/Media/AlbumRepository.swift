@@ -13,7 +13,7 @@ struct AlbumRepository: AlbumRepositoryProtocol {
     }
 
     func findById(albumId: AlbumId) -> AlbumModel? {
-        let query = MPMediaQuery.albums()
+        let query = localAlbumsQuery()
 
         query.addFilterPredicate(MPMediaPropertyPredicate(value: albumId.id, forProperty: MPMediaItemPropertyAlbumPersistentID))
 
@@ -33,11 +33,12 @@ struct AlbumRepository: AlbumRepositoryProtocol {
 
     /// アーティストの曲を含むアルバム。コンピレーション盤も入る(AlbumRepositoryProtocol を参照)
     func findByArtistId(artistId: ArtistId) -> [AlbumModel] {
-        let query = MPMediaQuery.albums()
+        let query = localAlbumsQuery()
 
         query.addFilterPredicate(MPMediaPropertyPredicate(value: artistId.id, forProperty: MPMediaItemPropertyArtistPersistentID))
 
-        return albums(query).sorted { ($0.primaryText ?? "") < ($1.primaryText ?? "") }
+        // < だと大文字小文字や全角半角、数字の桁で並びが崩れるので、Finder と同じ比較にする
+        return albums(query).sorted { ($0.primaryText ?? "").localizedStandardCompare($1.primaryText ?? "") == .orderedAscending }
     }
 
     /// 追加が新しい順に count 件
@@ -54,7 +55,7 @@ struct AlbumRepository: AlbumRepositoryProtocol {
         return albums.sorted { $0.dateAdded > $1.dateAdded }.prefix(count).map { $0.album }
     }
 
-    /// クラウドにしか無い項目を除いた全アルバム
+    /// クラウドにしか無い項目を除いたクエリ。一覧と詳細で出る項目を揃えるため、どの取得もここから始める
     private func localAlbumsQuery() -> MPMediaQuery {
         let query = MPMediaQuery.albums()
 

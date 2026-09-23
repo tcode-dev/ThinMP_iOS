@@ -12,7 +12,7 @@ struct PlaylistDeleteButtonView: View {
     let action: () -> Void
 
     var body: some View {
-        Button(action: action) {
+        Button(role: .destructive, action: action) {
             Text(LocalizedStringKey(LabelConstant.removePlaylist))
         }
     }

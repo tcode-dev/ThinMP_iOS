@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PlaylistDetailPageView: View {
     @StateObject private var vm = PlaylistDetailViewModel()
-    @State private var headerRect = CGRect.zero
+    @State private var isScrolledUnder = false
     /// プレイリスト登録ポップアップを出している曲。nil ならポップアップは閉じている
     @State private var playlistRegisterSongId: SongId?
 
@@ -17,7 +17,7 @@ struct PlaylistDetailPageView: View {
 
     var body: some View {
         ScrollPageLayout(playlistRegisterSongId: $playlistRegisterSongId, onPlayerDismiss: { vm.load(playlistId: playlistId) }) { geometry in
-            HeroNavBarView(primaryText: vm.playlist?.primaryText, width: geometry.size.width, top: geometry.safeAreaInsets.top, headerRect: $headerRect) {
+            HeroNavBarView(primaryText: vm.playlist?.primaryText, width: geometry.size.width, top: geometry.safeAreaInsets.top, isScrolledUnder: isScrolledUnder) {
                 MenuButtonView {
                     NavigationLink(destination: PlaylistDetailEditPageView(playlistId: playlistId, primaryText: vm.playlist?.primaryText)) {
                         MenuRowView(text: LabelConstant.edit)
@@ -26,7 +26,7 @@ struct PlaylistDetailPageView: View {
                 }
             }
         } content: { geometry in
-            HeroHeaderView(headerRect: $headerRect, width: geometry.size.width, size: geometry.heroSize, top: geometry.safeAreaInsets.top, primaryText: vm.playlist?.primaryText) {
+            HeroHeaderView(isScrolledUnder: $isScrolledUnder, width: geometry.size.width, size: geometry.heroSize, top: geometry.safeAreaInsets.top, primaryText: vm.playlist?.primaryText) {
                 HeroSquareImageView(size: geometry.heroSize, artwork: vm.playlist?.artwork)
             } secondaryText: {
                 SecondaryTextView(key: LabelConstant.playlist)

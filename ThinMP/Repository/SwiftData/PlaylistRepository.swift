@@ -58,7 +58,7 @@ struct PlaylistRepository: PlaylistRepositoryProtocol {
     }
 
     func update(playlistIds: [PlaylistId]) {
-        delete(playlistIds: deleteIds(keeping: playlistIds))
+        deleteExcept(playlistIds: playlistIds)
         sort(playlistIds: playlistIds)
         store.save()
     }
@@ -83,7 +83,11 @@ struct PlaylistRepository: PlaylistRepositoryProtocol {
     }
 
     func delete(playlistId: PlaylistId) {
-        delete(playlistIds: [playlistId])
+        guard let playlist = findModel(playlistId: playlistId) else {
+            return
+        }
+
+        store.context.delete(playlist)
         store.save()
     }
 
@@ -108,23 +112,20 @@ struct PlaylistRepository: PlaylistRepositoryProtocol {
         return PlaylistEntity(playlistId: PlaylistId(id: model.id), name: model.name, songIds: songIds)
     }
 
-    private func delete(playlistIds: [PlaylistId]) {
-        findModels(playlistIds: playlistIds).forEach { store.context.delete($0) }
+    /// 渡した id 以外を消す。編集ページで消されたものを反映する
+    private func deleteExcept(playlistIds: [PlaylistId]) {
+        let keepIds = Set(playlistIds.map { $0.id })
+        let models = try! store.context.fetch(FetchDescriptor<PlaylistDataModel>()).filter { !keepIds.contains($0.id) }
+
+        models.forEach { store.context.delete($0) }
     }
 
+    /// 渡された順に並べ替える
     private func sort(playlistIds: [PlaylistId]) {
-        let playlists = findModels(playlistIds: playlistIds)
+        let playlists = findModels(playlistIds: playlistIds).keyed { $0.id }
 
         for (index, playlistId) in playlistIds.enumerated() {
-            playlists.first { $0.id == playlistId.id }?.order = index
+            playlists[playlistId.id]?.order = index
         }
-    }
-
-    /// 残すもの以外の id。編集ページで消されたものを求めるのに使う
-    private func deleteIds(keeping playlistIds: [PlaylistId]) -> [PlaylistId] {
-        let currentIds = try! store.context.fetch(FetchDescriptor<PlaylistDataModel>()).map { $0.id }
-        let keepIds = playlistIds.map { $0.id }
-
-        return currentIds.filter { !keepIds.contains($0) }.map { PlaylistId(id: $0) }
     }
 }

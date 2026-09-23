@@ -11,8 +11,8 @@ import SwiftUI
 struct ListNavBarView<Trailing: View>: View {
     let title: String
     let top: CGFloat
-    /// 一覧側の `ListEmptyHeaderView` の位置。ここが上端より上に行ったら背景を出す
-    @Binding var headerRect: CGRect
+    /// 一覧側の `ListEmptyHeaderView` が上端より上に行ったか。行ったら背景を出す
+    let isScrolledUnder: Bool
     /// 右端に置くボタン。戻るボタンと同じ幅に揃えてタイトルを中央に保つ
     @ViewBuilder let trailing: () -> Trailing
 
@@ -48,14 +48,13 @@ struct ListNavBarView<Trailing: View>: View {
     }
 
     private var opacity: Double {
-        // ListEmptyHeaderView の高さがセーフエリアの分を含んでいるので、基準は画面の上端
-        return headerRect.isScrolledUnder(top: 0) ? 1 : 0
+        return isScrolledUnder ? 1 : 0
     }
 }
 
 extension ListNavBarView where Trailing == Color {
     /// 右端に置くものがないページ用。戻るボタン分の空きだけ確保する
-    init(title: String, top: CGFloat, headerRect: Binding<CGRect>) {
-        self.init(title: title, top: top, headerRect: headerRect) { Color.clear }
+    init(title: String, top: CGFloat, isScrolledUnder: Bool) {
+        self.init(title: title, top: top, isScrolledUnder: isScrolledUnder) { Color.clear }
     }
 }

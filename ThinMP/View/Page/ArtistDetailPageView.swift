@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ArtistDetailPageView: View {
     @StateObject private var vm = ArtistDetailViewModel()
-    @State private var headerRect = CGRect.zero
+    @State private var isScrolledUnder = false
     /// プレイリスト登録ポップアップを出している曲。nil ならポップアップは閉じている
     @State private var playlistRegisterSongId: SongId?
 
@@ -17,14 +17,14 @@ struct ArtistDetailPageView: View {
 
     var body: some View {
         ScrollPageLayout(playlistRegisterSongId: $playlistRegisterSongId) { geometry in
-            HeroNavBarView(primaryText: vm.artist?.primaryText, width: geometry.size.width, top: geometry.safeAreaInsets.top, headerRect: $headerRect) {
+            HeroNavBarView(primaryText: vm.artist?.primaryText, width: geometry.size.width, top: geometry.safeAreaInsets.top, isScrolledUnder: isScrolledUnder) {
                 MenuButtonView {
                     FavoriteArtistButtonView(artistId: artistId)
                     ShortcutButtonView(target: .artist(artistId))
                 }
             }
         } content: { geometry in
-            HeroHeaderView(headerRect: $headerRect, width: geometry.size.width, size: geometry.heroSize, top: geometry.safeAreaInsets.top, primaryText: vm.artist?.primaryText) {
+            HeroHeaderView(isScrolledUnder: $isScrolledUnder, width: geometry.size.width, size: geometry.heroSize, top: geometry.safeAreaInsets.top, primaryText: vm.artist?.primaryText) {
                 HeroCircleImageView(width: geometry.size.width, size: geometry.heroSize, artwork: vm.artist?.artwork)
             } secondaryText: {
                 if let artist = vm.artist {

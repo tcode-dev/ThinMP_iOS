@@ -19,7 +19,7 @@ struct PlaylistRegisterView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            if !vm.playlists.isEmpty, !isCreate {
+            if isListShown {
                 VStack(spacing: 0) {
                     HStack {
                         Spacer()
@@ -72,10 +72,10 @@ struct PlaylistRegisterView: View {
                         .disabled(name.isEmpty)
                         Spacer()
                         Button(action: {
-                            if !vm.playlists.isEmpty {
-                                isCreate.toggle()
-                            } else {
+                            if hasNoPlaylists {
                                 onClose()
+                            } else {
+                                isCreate.toggle()
                             }
                         }) {
                             Text(LocalizedStringKey(LabelConstant.cancel))
@@ -94,6 +94,16 @@ struct PlaylistRegisterView: View {
         .task {
             await vm.load(songId: songId).value
         }
+    }
+
+    /// 読み込みが終わってプレイリストが 1 つも無いと分かったときだけ、最初から作成フォームを出す
+    /// 読み込み中に作成フォームを出すと、読み終わった瞬間に一覧へ切り替わって入力中の名前が消える
+    private var hasNoPlaylists: Bool {
+        return vm.isLoaded && vm.playlists.isEmpty
+    }
+
+    private var isListShown: Bool {
+        return !isCreate && !hasNoPlaylists
     }
 
     /// 一覧がポップアップに収まらないときは画面の高さいっぱいまでにする

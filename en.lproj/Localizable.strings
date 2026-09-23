@@ -16,7 +16,6 @@
 // Album
 "Album" = "Album";
 "Albums" = "Albums";
-"AlbumsAndSongsCount" = "%d albums, %d songs";
 
 // Songs
 "Songs" = "Songs";
@@ -62,3 +61,4 @@
 
 // permission
 "Permission" = "You can use this app by granting access to your Apple Music library from the settings.";
+"OpenSettings" = "Open Settings";

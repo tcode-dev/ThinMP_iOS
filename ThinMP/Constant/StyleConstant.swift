@@ -18,6 +18,8 @@ enum StyleConstant {
     static let thumbnail: CGFloat = 40
     static let cornerRadius: CGFloat = 4
     static let dividerHeight: CGFloat = 0.5
+    /// 背景に敷くアートワークのぼかし。アーティスト詳細のヒーローと再生画面で揃える
+    static let artworkBlurRadius: CGFloat = 10
 
     enum Height {
         static let row: CGFloat = 50

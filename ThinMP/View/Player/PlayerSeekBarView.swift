@@ -12,6 +12,7 @@ struct PlayerSeekBarView: View {
     private let timeWidth: CGFloat = 50
     private let timeHeight: CGFloat = 20
     private let timePadding: CGFloat = 40
+    private let sliderPadding: CGFloat = StyleConstant.isPad ? 40 : 30
 
     @EnvironmentObject var musicPlayer: MusicPlayer
 
@@ -25,7 +26,7 @@ struct PlayerSeekBarView: View {
                 }
             })
             .frame(height: StyleConstant.button)
-            .padding(.horizontal, StyleConstant.isPad ? 40 : 30)
+            .padding(.horizontal, sliderPadding)
             .accentColor(Color(.label))
             HStack {
                 SecondaryTextView(Self.format(musicPlayer.currentSecond)).frame(width: timeWidth, height: timeHeight).padding(.leading, timePadding)

@@ -9,6 +9,8 @@ import SwiftUI
 
 /// プレイヤーのボタンに使う size 四方のアセット画像。dimmed はリピート / シャッフル / お気に入りがオフのときの表示
 struct ButtonImageView: View {
+    private let dimmedOpacity = 0.5
+
     let name: String
     let size: CGFloat
     var dimmed: Bool = false
@@ -18,6 +20,6 @@ struct ButtonImageView: View {
             .renderingMode(.original)
             .resizable()
             .frame(width: size, height: size)
-            .opacity(dimmed ? 0.5 : 1)
+            .opacity(dimmed ? dimmedOpacity : 1)
     }
 }

@@ -13,7 +13,7 @@ struct ArtistRepository: ArtistRepositoryProtocol {
     }
 
     func findById(artistId: ArtistId) -> ArtistModel? {
-        let query = MPMediaQuery.artists()
+        let query = localArtistsQuery()
 
         query.addFilterPredicate(MPMediaPropertyPredicate(value: artistId.id, forProperty: MPMediaItemPropertyArtistPersistentID))
 
@@ -31,7 +31,7 @@ struct ArtistRepository: ArtistRepositoryProtocol {
         return artistIds.compactMap { artists[$0] }
     }
 
-    /// クラウドにしか無い項目を除いた全アーティスト
+    /// クラウドにしか無い項目を除いたクエリ。一覧と詳細で出る項目を揃えるため、どの取得もここから始める
     private func localArtistsQuery() -> MPMediaQuery {
         let query = MPMediaQuery.artists()
 

@@ -104,6 +104,26 @@ struct PlaylistDetailServiceTests {
     }
 
     @Test
+    func findAllMapsEveryPlaylistInRepositoryOrder() async {
+        let playlistRepository = PlaylistRepositoryMock(playlists: [
+            PlaylistEntity(playlistId: PlaylistId(id: "p1"), name: "One", songIds: [SongId(id: 1)]),
+            PlaylistEntity(playlistId: PlaylistId(id: "p2"), name: "Two", songIds: [SongId(id: 2), SongId(id: 9)]),
+        ])
+        let songRepository = SongRepositoryMock(songs: [.fake(id: 1), .fake(id: 2)])
+        let service = PlaylistDetailService(
+            playlistRepository: playlistRepository,
+            songRepository: songRepository
+        )
+
+        let models = await service.findAll()
+
+        #expect(models.map { $0.primaryText } == ["One", "Two"])
+        #expect(models.map { $0.songs.map { $0.songId.id } } == [[1], [2]])
+        #expect(songRepository.findByIdsCalls.count == 1)
+        #expect(playlistRepository.updateCalls.map { $0.playlistId.id } == ["p2"])
+    }
+
+    @Test
     func findByIdReturnsNilWhenPlaylistIsMissing() async {
         let (service, playlistRepository) = makeService(playlistSongIds: [1], librarySongIds: [1])
 

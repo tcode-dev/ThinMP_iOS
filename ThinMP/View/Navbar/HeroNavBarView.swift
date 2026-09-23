@@ -11,7 +11,8 @@ struct HeroNavBarView<Content: View>: View {
     let primaryText: String?
     let width: CGFloat
     let top: CGFloat
-    @Binding var headerRect: CGRect
+    /// ヒーローのタイトルが潜り込んだか。HeroHeaderView が測る
+    let isScrolledUnder: Bool
     @ViewBuilder let content: () -> Content
 
     var body: some View {
@@ -55,6 +56,6 @@ struct HeroNavBarView<Content: View>: View {
     }
 
     private var opacity: Double {
-        return headerRect.isScrolledUnder(top: top) ? 1 : 0
+        return isScrolledUnder ? 1 : 0
     }
 }

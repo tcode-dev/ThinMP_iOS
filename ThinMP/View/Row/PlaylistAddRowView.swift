@@ -9,6 +9,8 @@ import SwiftUI
 
 /// 登録モーダルのプレイリスト 1 行。タップで action を呼ぶ
 struct PlaylistAddRowView<Content: View>: View {
+    private let registeredOpacity = 0.4
+
     /// すでにこの曲が入っているプレイリストはグレーアウトしてタップ不可にする
     let isRegistered: Bool
     let action: () -> Void
@@ -27,6 +29,6 @@ struct PlaylistAddRowView<Content: View>: View {
             }
         }
         .disabled(isRegistered)
-        .opacity(isRegistered ? 0.4 : 1)
+        .opacity(isRegistered ? registeredOpacity : 1)
     }
 }

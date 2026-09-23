@@ -10,6 +10,9 @@ import SwiftUI
 /// ミニプレイヤーから開く全画面の再生画面
 /// 表示中だけ MusicPlayer に再生位置の更新を頼み、閉じるときに onDismiss を呼ぶ
 struct PlayerView: View {
+    /// 曲名とアーティスト名の 2 行分
+    private let titleHeight: CGFloat = 50
+
     @Environment(\.scenePhase) private var scenePhase
     @EnvironmentObject var musicPlayer: MusicPlayer
 
@@ -29,7 +32,7 @@ struct PlayerView: View {
                     Image(artwork: musicPlayer.song?.artwork, size: CGSize(width: width, height: width))
                         .resizable()
                         .scaledToFit()
-                        .blur(radius: 10.0)
+                        .blur(radius: StyleConstant.artworkBlurRadius)
                     HeroGradientView().frame(height: width).offset(y: 25)
                 }
                 .frame(width: width, height: width)
@@ -46,7 +49,7 @@ struct PlayerView: View {
                             TitleView(musicPlayer.song?.primaryText)
                             SecondaryTextView(musicPlayer.song?.secondaryText)
                         }
-                        .frame(height: 50)
+                        .frame(height: titleHeight)
                         .padding(.horizontal, StyleConstant.Padding.large)
                         Spacer()
                         PlayerSeekBarView()
@@ -63,7 +66,7 @@ struct PlayerView: View {
         }
         .onAppear {
             musicPlayer.startProgress()
-            musicPlayer.setFavorite()
+            musicPlayer.reloadFavorite()
         }
         .onDisappear {
             musicPlayer.stopProgress()

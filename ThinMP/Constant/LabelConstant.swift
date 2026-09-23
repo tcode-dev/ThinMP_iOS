@@ -22,6 +22,7 @@ enum LabelConstant {
     static let favoriteSongs = "FavoriteSongs"
     static let library = "Library"
     static let newPlaylist = "NewPlaylist"
+    static let openSettings = "OpenSettings"
     static let permission = "Permission"
     static let playlist = "Playlist"
     static let playlistName = "PlaylistName"

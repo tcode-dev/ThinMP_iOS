@@ -10,7 +10,7 @@ import MediaPlayer
 /// 通知は OperationQueue.main、Timer はメインの RunLoop で届き、@Published は View から読まれるので
 /// 全体をメインアクターに隔離する。お気に入りの Repository(SwiftData)もここから触る
 @MainActor
-class MusicPlayer: ObservableObject {
+final class MusicPlayer: ObservableObject {
     /// 再生位置がここまでなら prev() で前の曲へ、過ぎていれば曲の先頭へ戻る
     private let prevThresholdSecond: Double = 3
 
@@ -128,7 +128,7 @@ class MusicPlayer: ObservableObject {
     }
 
     /// 再生中の曲のアーティストをお気に入りに入れる / 外す
-    func favoriteArtist() {
+    func toggleFavoriteArtist() {
         guard let artistId = song?.artistId else {
             return
         }
@@ -137,7 +137,7 @@ class MusicPlayer: ObservableObject {
     }
 
     /// 再生中の曲をお気に入りに入れる / 外す
-    func favoriteSong() {
+    func toggleFavoriteSong() {
         guard let songId = song?.songId else {
             return
         }
@@ -146,7 +146,7 @@ class MusicPlayer: ObservableObject {
     }
 
     /// お気に入りの状態をストアから読み直す。他の画面で登録 / 解除されたあとに呼ぶ
-    func setFavorite() {
+    func reloadFavorite() {
         isFavoriteArtist = (song?.artistId).map { favoriteArtistRepository.exists(artistId: $0) } ?? false
         isFavoriteSong = (song?.songId).map { favoriteSongRepository.exists(songId: $0) } ?? false
     }
@@ -155,7 +155,7 @@ class MusicPlayer: ObservableObject {
         if let item = player.nowPlayingItem {
             song = SongModel(item: item)
             resetTime()
-            setFavorite()
+            reloadFavorite()
             isActive = true
         } else {
             song = nil

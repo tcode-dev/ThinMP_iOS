@@ -9,13 +9,13 @@ import SwiftUI
 
 struct ArtistsPageView: View {
     @StateObject private var vm = ArtistsViewModel()
-    @State private var headerRect = CGRect.zero
+    @State private var isScrolledUnder = false
 
     var body: some View {
         ScrollPageLayout { geometry in
-            ListNavBarView(title: LabelConstant.artists, top: geometry.safeAreaInsets.top, headerRect: $headerRect)
+            ListNavBarView(title: LabelConstant.artists, top: geometry.safeAreaInsets.top, isScrolledUnder: isScrolledUnder)
         } content: { geometry in
-            ListEmptyHeaderView(headerRect: $headerRect, top: geometry.safeAreaInsets.top)
+            ListEmptyHeaderView(isScrolledUnder: $isScrolledUnder, top: geometry.safeAreaInsets.top)
             ArtistListView(artists: vm.artists)
         }
         .task {

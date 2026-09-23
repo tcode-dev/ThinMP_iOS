@@ -8,7 +8,7 @@
 import Combine
 
 @MainActor
-class SongsViewModel: ObservableObject {
+final class SongsViewModel: ObservableObject {
     @Published var songs: [SongModel] = []
 
     private let songsService: SongsServiceProtocol

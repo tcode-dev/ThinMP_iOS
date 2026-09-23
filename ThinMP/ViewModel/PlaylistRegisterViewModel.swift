@@ -10,10 +10,12 @@ import Combine
 /// 曲をプレイリストに登録するモーダル
 /// 一覧を 1 回読み、そこから songId がすでに登録されているプレイリストを求める
 @MainActor
-class PlaylistRegisterViewModel: ObservableObject {
+final class PlaylistRegisterViewModel: ObservableObject {
     @Published private(set) var playlists: [PlaylistModel] = []
     /// 対象の曲がすでに入っているプレイリストの id
     @Published private(set) var registeredPlaylistIds: Set<PlaylistId> = []
+    /// 1 回目の読み込みが終わったか。終わるまでは playlists が空でも「プレイリストが無い」とは限らない
+    @Published private(set) var isLoaded = false
 
     private let playlistsService: PlaylistsServiceProtocol
     private let playlistRepository: PlaylistRepositoryProtocol
@@ -33,7 +35,8 @@ class PlaylistRegisterViewModel: ObservableObject {
             await playlistsService.findAll()
         } apply: { [weak self] playlists in
             self?.playlists = playlists
-            self?.registeredPlaylistIds = Set(playlists.filter { $0.contains(songId: songId) }.map { $0.playlistId })
+            self?.registeredPlaylistIds = Set(playlists.filter { $0.songIds.contains(songId) }.map { $0.playlistId })
+            self?.isLoaded = true
         }
     }
 

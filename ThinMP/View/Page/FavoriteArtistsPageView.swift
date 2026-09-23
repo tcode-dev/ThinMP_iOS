@@ -9,17 +9,17 @@ import SwiftUI
 
 struct FavoriteArtistsPageView: View {
     @StateObject private var vm = FavoriteArtistsViewModel()
-    @State private var headerRect = CGRect.zero
+    @State private var isScrolledUnder = false
 
     var body: some View {
         ScrollPageLayout(onPlayerDismiss: { vm.load() }) { geometry in
-            ListNavBarView(title: LabelConstant.favoriteArtists, top: geometry.safeAreaInsets.top, headerRect: $headerRect) {
+            ListNavBarView(title: LabelConstant.favoriteArtists, top: geometry.safeAreaInsets.top, isScrolledUnder: isScrolledUnder) {
                 EditButtonView {
                     FavoriteArtistsEditPageView()
                 }
             }
         } content: { geometry in
-            ListEmptyHeaderView(headerRect: $headerRect, top: geometry.safeAreaInsets.top)
+            ListEmptyHeaderView(isScrolledUnder: $isScrolledUnder, top: geometry.safeAreaInsets.top)
             ArtistListView(artists: vm.artists) { vm.load() }
         }
         .task {
