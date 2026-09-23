@@ -7,11 +7,11 @@
 
 @MainActor
 protocol FavoriteSongRepositoryProtocol {
-    func add(songId: SongId)
-
     func findAll() -> [SongId]
 
     func exists(songId: SongId) -> Bool
+
+    func add(songId: SongId)
 
     func update(songIds: [SongId])
 

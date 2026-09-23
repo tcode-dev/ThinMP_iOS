@@ -12,10 +12,6 @@ struct FavoriteSongRepository: FavoriteSongRepositoryProtocol {
         favorites = FavoriteRepository(store: store)
     }
 
-    func add(songId: SongId) {
-        favorites.add(mediaId: String(songId.id))
-    }
-
     /// persistentID として読めない行は落とす(ShortcutTarget と同じ扱い)
     func findAll() -> [SongId] {
         return favorites.findAll().compactMap { UInt64($0) }.map { SongId(id: $0) }
@@ -23,6 +19,10 @@ struct FavoriteSongRepository: FavoriteSongRepositoryProtocol {
 
     func exists(songId: SongId) -> Bool {
         return favorites.exists(mediaId: String(songId.id))
+    }
+
+    func add(songId: SongId) {
+        favorites.add(mediaId: String(songId.id))
     }
 
     func update(songIds: [SongId]) {
