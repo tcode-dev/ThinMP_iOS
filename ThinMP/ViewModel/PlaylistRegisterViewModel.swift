@@ -35,7 +35,7 @@ class PlaylistRegisterViewModel: ObservableObject {
             await playlistsService.findAll()
         } apply: { [weak self] playlists in
             self?.playlists = playlists
-            self?.registeredPlaylistIds = Set(playlists.filter { $0.contains(songId: songId) }.map { $0.playlistId })
+            self?.registeredPlaylistIds = Set(playlists.filter { $0.songIds.contains(songId) }.map { $0.playlistId })
             self?.isLoaded = true
         }
     }

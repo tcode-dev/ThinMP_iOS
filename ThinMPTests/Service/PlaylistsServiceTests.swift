@@ -29,12 +29,4 @@ struct PlaylistsServiceTests {
         #expect(playlists.map { $0.primaryText } == ["A", "B", "C"])
         #expect(playlists.map { $0.songIds.map { $0.id } } == [[1, 2], [3], [2]])
     }
-
-    @Test
-    func containsSongIdTellsWhichPlaylistsAlreadyHaveTheSong() async {
-        let playlists = await makeService().findAll()
-
-        #expect(playlists.filter { $0.contains(songId: SongId(id: 2)) }.map { $0.id } == ["p1", "p3"])
-        #expect(playlists.filter { $0.contains(songId: SongId(id: 99)) }.isEmpty)
-    }
 }
