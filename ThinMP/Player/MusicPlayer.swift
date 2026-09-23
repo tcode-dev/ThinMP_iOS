@@ -78,8 +78,9 @@ final class MusicPlayer: ObservableObject {
         player.pause()
     }
 
+    /// currentSecond は再生画面を表示中に timer が進めるだけなので、判定は再生位置そのもので行う
     func prev() {
-        if currentSecond <= prevThresholdSecond {
+        if player.currentPlaybackTime <= prevThresholdSecond {
             player.skipToPreviousItem()
         } else {
             player.skipToBeginning()
@@ -166,6 +167,8 @@ final class MusicPlayer: ObservableObject {
             song = nil
             currentSecond = 0
             durationSecond = 1
+            // 再生画面は開いたまま残るので、お気に入りの表示も消しておく
+            reloadFavorite()
             isActive = false
         }
     }

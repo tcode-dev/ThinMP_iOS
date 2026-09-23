@@ -17,7 +17,7 @@ struct TitleView: View {
 
     /// Localizable.strings のキー。Model / Service は翻訳しないので、ラベルの翻訳はここで行う
     init(key: String) {
-        text = Text(LocalizedStringKey(key))
+        text = Text(label: key)
     }
 
     var body: some View {

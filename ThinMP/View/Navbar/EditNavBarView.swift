@@ -18,11 +18,11 @@ struct EditNavBarView: View {
     var body: some View {
         HStack {
             Button(action: onCancel) {
-                Text(LocalizedStringKey(LabelConstant.cancel))
+                Text(label: LabelConstant.cancel)
             }
             Spacer()
             Button(action: onDone) {
-                Text(LocalizedStringKey(LabelConstant.done))
+                Text(label: LabelConstant.done)
             }
             .disabled(!isDoneEnabled)
         }

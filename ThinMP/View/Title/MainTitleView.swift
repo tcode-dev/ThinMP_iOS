@@ -15,7 +15,7 @@ struct MainTitleView: View {
     }
 
     var body: some View {
-        Text(LocalizedStringKey(text))
+        Text(label: text)
             .fontWeight(.bold)
             .font(.largeTitle)
     }
