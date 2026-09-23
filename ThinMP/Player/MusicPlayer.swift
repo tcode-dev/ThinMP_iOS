@@ -14,15 +14,16 @@ final class MusicPlayer: ObservableObject {
     /// 再生位置がここまでなら prev() で前の曲へ、過ぎていれば曲の先頭へ戻る
     private let prevThresholdSecond: Double = 3
 
-    @Published var isActive: Bool = false
-    @Published var isPlaying: Bool = false
-    @Published var song: SongModel?
+    @Published private(set) var isActive: Bool = false
+    @Published private(set) var isPlaying: Bool = false
+    @Published private(set) var song: SongModel?
+    /// 再生位置のスライダーが Binding で書き換えるので、これだけは外から書ける
     @Published var currentSecond: Double = 0
-    @Published var durationSecond: Double = 1
-    @Published var repeatMode: MPMusicRepeatMode = .none
-    @Published var isShuffle: Bool = false
-    @Published var isFavoriteArtist: Bool = false
-    @Published var isFavoriteSong: Bool = false
+    @Published private(set) var durationSecond: Double = 1
+    @Published private(set) var repeatMode: MPMusicRepeatMode = .none
+    @Published private(set) var isShuffle: Bool = false
+    @Published private(set) var isFavoriteArtist: Bool = false
+    @Published private(set) var isFavoriteSong: Bool = false
 
     private let playerConfig: PlayerConfig
     private let favoriteArtistRepository: FavoriteArtistRepositoryProtocol
