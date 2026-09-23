@@ -9,7 +9,7 @@ import Combine
 
 @MainActor
 final class SongsViewModel: ObservableObject {
-    @Published var songs: [SongModel] = []
+    @Published private(set) var songs: [SongModel] = []
 
     private let songsService: SongsServiceProtocol
     private let loadTask = LoadTask()

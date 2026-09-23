@@ -9,9 +9,9 @@ import Combine
 
 @MainActor
 final class MainViewModel: ObservableObject {
-    @Published var settings = MainSettings.empty
-    @Published var shortcuts: [ShortcutModel] = []
-    @Published var albums: [AlbumModel] = []
+    @Published private(set) var settings = MainSettings.empty
+    @Published private(set) var shortcuts: [ShortcutModel] = []
+    @Published private(set) var albums: [AlbumModel] = []
 
     private let mainService: MainServiceProtocol
     private let loadTask = LoadTask()
