@@ -162,16 +162,15 @@ final class MusicPlayer: ObservableObject {
         if let item = player.nowPlayingItem {
             song = SongModel(item: item)
             resetTime()
-            reloadFavorite()
-            isActive = true
         } else {
             song = nil
             currentSecond = 0
             durationSecond = 1
-            // 再生画面は開いたまま残るので、お気に入りの表示も消しておく
-            reloadFavorite()
-            isActive = false
         }
+
+        // 曲が無くなっても再生画面は開いたまま残るので、そのときもお気に入りの表示を読み直して消す
+        reloadFavorite()
+        isActive = song != nil
     }
 
     /// ブロックは NotificationCenter が持ち続けるので、self を強く掴むと deinit が呼ばれなくなる
