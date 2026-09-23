@@ -43,7 +43,7 @@ struct PlaylistRegisterView: View {
                                     vm.add(playlistId: playlist.playlistId, songId: songId)
                                     onClose()
                                 }) {
-                                    MediaRowView(media: playlist)
+                                    MediaRowView(media: playlist, showsSecondaryText: false)
                                 }
                                 .frame(height: StyleConstant.Height.row)
                                 Divider()

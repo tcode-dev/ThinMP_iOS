@@ -15,7 +15,7 @@ struct PlaylistsEditPageView: View {
             List {
                 if let playlists = Binding($vm.playlists) {
                     ReorderableListView(items: playlists) { playlist in
-                        MediaRowView(media: playlist)
+                        MediaRowView(media: playlist, showsSecondaryText: false)
                     }
                 }
             }
