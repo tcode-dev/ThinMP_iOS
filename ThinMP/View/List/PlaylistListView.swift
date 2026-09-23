@@ -8,9 +8,13 @@
 import SwiftUI
 
 /// プレイリストの一覧。行をタップで詳細へ、長押しで削除とショートカットのメニューを出す
+/// 削除は元に戻せないので、確認のダイアログを挟む
 struct PlaylistListView: View {
+    /// 削除の確認を出しているプレイリスト。nil なら確認は閉じている
+    @State private var deletingPlaylist: PlaylistModel?
+
     let playlists: [PlaylistModel]
-    /// コンテキストメニューの削除が押されたときに呼ばれる
+    /// 削除の確認で削除が押されたときに呼ばれる
     let onDelete: (PlaylistId) -> Void
 
     var body: some View {
@@ -21,12 +25,24 @@ struct PlaylistListView: View {
                 }
                 .contentShape(RoundedRectangle(cornerRadius: StyleConstant.cornerRadius))
                 .contextMenu {
-                    PlaylistDeleteButtonView { onDelete(playlist.playlistId) }
+                    PlaylistDeleteButtonView { deletingPlaylist = playlist }
                     ShortcutButtonView(target: .playlist(playlist.playlistId))
                 }
                 Divider()
             }
             .padding(.leading, StyleConstant.Padding.medium)
         }
+        .confirmationDialog(deletingPlaylist?.primaryText.orUnknown ?? "", isPresented: isDeleteConfirmationPresented, titleVisibility: .visible, presenting: deletingPlaylist) { playlist in
+            PlaylistDeleteButtonView { onDelete(playlist.playlistId) }
+        }
+    }
+
+    /// 閉じたときは deletingPlaylist を nil に戻す
+    private var isDeleteConfirmationPresented: Binding<Bool> {
+        return Binding(get: { deletingPlaylist != nil }, set: { isPresented in
+            if !isPresented {
+                deletingPlaylist = nil
+            }
+        })
     }
 }
