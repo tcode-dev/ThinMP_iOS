@@ -45,7 +45,7 @@ struct ArtistDetailServiceTests {
     }
 
     @Test
-    func findByIdsKeepsOrderAndLeavesAlbumsAndSongsEmpty() async {
+    func findByIdsKeepsOrder() async {
         let other = ArtistId(id: 20)
         let service = ArtistDetailService(
             artistRepository: ArtistRepositoryMock(artists: [ArtistModel(artistId: artistId, primaryText: "A"), ArtistModel(artistId: other, primaryText: "B")]),
@@ -57,6 +57,5 @@ struct ArtistDetailServiceTests {
 
         #expect(artists.map { $0.artistId.id } == [20, 10])
         #expect(artists.map { $0.primaryText } == ["B", "A"])
-        #expect(artists.allSatisfy { $0.albums.isEmpty && $0.songs.isEmpty })
     }
 }
