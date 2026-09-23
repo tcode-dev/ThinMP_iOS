@@ -11,7 +11,7 @@ struct PlaylistModel: MediaProtocol, Identifiable {
     let playlistId: PlaylistId
     let primaryText: String?
     let artwork: MPMediaItemArtwork?
-    /// order 順。登録モーダルが「登録済み」を判定するのに使う(PlaylistRegisterViewModel.registeredPlaylistIds)
+    /// order 順。登録モーダルが曲の「登録済み」を判定するのに使う(PlaylistRegisterView)
     let songIds: [SongId]
     var id: PlaylistId {
         return playlistId

@@ -24,27 +24,17 @@ struct PlaylistRegisterViewModelTests {
         ])
     }
 
+    /// 登録済みの判定に使う songIds も一緒に出す
     @Test
-    func loadMarksPlaylistsContainingTheSong() async {
+    func loadPublishesPlaylistsWithTheirSongs() async {
         let service = makeService()
         let vm = PlaylistRegisterViewModel(playlistsService: service)
 
-        await vm.load(songId: SongId(id: 2)).value
+        await vm.load().value
 
         #expect(vm.playlists?.map { $0.playlistId.id } == ["a", "b"])
-        #expect(vm.registeredPlaylistIds == [PlaylistId(id: "a")])
-        #expect(vm.isRegistered(playlistId: PlaylistId(id: "a")))
-        #expect(!vm.isRegistered(playlistId: PlaylistId(id: "b")))
+        #expect(vm.playlists?.map { $0.songIds } == [[SongId(id: 1), SongId(id: 2)], [SongId(id: 3)]])
         #expect(service.findAllCalls == 1)
-    }
-
-    @Test
-    func loadMarksNothingWhenTheSongIsInNoPlaylist() async {
-        let vm = PlaylistRegisterViewModel(playlistsService: makeService())
-
-        await vm.load(songId: SongId(id: 99)).value
-
-        #expect(vm.registeredPlaylistIds.isEmpty)
     }
 
     /// 読み込み前の空と、プレイリストが 1 つも無い空を区別できる
@@ -54,7 +44,7 @@ struct PlaylistRegisterViewModelTests {
 
         #expect(vm.playlists == nil)
 
-        await vm.load(songId: SongId(id: 1)).value
+        await vm.load().value
 
         #expect(vm.playlists?.isEmpty == true)
     }

@@ -19,8 +19,8 @@ struct PlaylistDetailPageView: View {
         ScrollPageLayout(playlistRegisterSongId: $playlistRegisterSongId, onPlayerDismiss: { vm.load(playlistId: playlistId) }) { geometry in
             HeroNavBarView(primaryText: vm.playlist?.primaryText, width: geometry.size.width, top: geometry.safeAreaInsets.top, isScrolledUnder: isScrolledUnder) {
                 MenuButtonView {
-                    NavigationLink(destination: PlaylistDetailEditPageView(playlistId: playlistId, primaryText: vm.playlist?.primaryText)) {
-                        MenuRowView(key: LabelConstant.edit)
+                    EditLinkView {
+                        PlaylistDetailEditPageView(playlistId: playlistId, primaryText: vm.playlist?.primaryText)
                     }
                     ShortcutButtonView(target: .playlist(playlistId))
                 }

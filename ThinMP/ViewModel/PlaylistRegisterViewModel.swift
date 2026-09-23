@@ -8,13 +8,11 @@
 import Combine
 
 /// 曲をプレイリストに登録するモーダル
-/// 一覧を 1 回読み、そこから songId がすでに登録されているプレイリストを求める
+/// 曲がすでに登録されているかは、View が各プレイリストの songIds から判定する
 @MainActor
 final class PlaylistRegisterViewModel: ObservableObject {
     /// 読み込む前は nil。空の配列なら「プレイリストが 1 つも無い」
     @Published private(set) var playlists: [PlaylistModel]?
-    /// 対象の曲がすでに入っているプレイリストの id
-    @Published private(set) var registeredPlaylistIds: Set<PlaylistId> = []
 
     private let playlistsService: PlaylistsServiceProtocol
     private let playlistRepository: PlaylistRepositoryProtocol
@@ -29,17 +27,12 @@ final class PlaylistRegisterViewModel: ObservableObject {
     }
 
     @discardableResult
-    func load(songId: SongId) -> Task<Void, Never> {
+    func load() -> Task<Void, Never> {
         return loadTask.run { [playlistsService] in
             await playlistsService.findAll()
         } apply: { [weak self] playlists in
             self?.playlists = playlists
-            self?.registeredPlaylistIds = Set(playlists.filter { $0.songIds.contains(songId) }.map { $0.playlistId })
         }
-    }
-
-    func isRegistered(playlistId: PlaylistId) -> Bool {
-        return registeredPlaylistIds.contains(playlistId)
     }
 
     /// 曲 1 つを入れた新しいプレイリストを作る

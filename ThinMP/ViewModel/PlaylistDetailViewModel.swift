@@ -39,11 +39,11 @@ final class PlaylistDetailViewModel: ObservableObject {
 
     /// 編集ページの名前、並び順、削除を保存する
     /// 読み込み前に呼ばれたら何もしない(空の曲で上書きするとプレイリストの曲が全部消える)
-    func save(playlistId: PlaylistId, name: String) {
+    func save(name: String) {
         guard let playlist else {
             return
         }
 
-        playlistRepository.update(playlistId: playlistId, name: name, songIds: playlist.songs.map { $0.songId })
+        playlistRepository.update(playlistId: playlist.playlistId, name: name, songIds: playlist.songs.map { $0.songId })
     }
 }

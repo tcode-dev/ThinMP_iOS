@@ -21,7 +21,7 @@ struct PlaylistListView: View {
         LazyVStack(spacing: 0) {
             ForEach(playlists) { playlist in
                 NavigationLink(destination: PlaylistDetailPageView(playlistId: playlist.playlistId)) {
-                    MediaRowView(media: playlist)
+                    MediaRowView(media: playlist, showsSecondaryText: false)
                 }
                 .contentShape(RoundedRectangle(cornerRadius: StyleConstant.cornerRadius))
                 .contextMenu {

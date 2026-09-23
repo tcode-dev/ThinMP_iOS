@@ -150,4 +150,33 @@ struct FavoriteSongRepositoryTests {
 
         #expect(repository.findAll().map { $0.id } == [1])
     }
+
+    /// ストアに同じ曲の行が残っていても、findAll は最初の 1 回だけ返す
+    /// SwiftData だけを見る。Realm 側は削除予定なので触っていない
+    @Test
+    func findAllReturnsDuplicateRowsOnce() {
+        let repositories = TestRepositories(backend: .swiftData)
+        let repository = repositories.favoriteSong
+
+        repositories.writeDirectly(realm: { _ in }, swiftData: { context in
+            context.insert(FavoriteSongDataModel(songId: "1", order: 0))
+            context.insert(FavoriteSongDataModel(songId: "2", order: 1))
+            context.insert(FavoriteSongDataModel(songId: "1", order: 2))
+        })
+
+        #expect(repository.findAll().map { $0.id } == [1, 2])
+    }
+
+    /// 同じ曲を 2 回渡しても、最初の位置に 1 行だけ残す
+    /// SwiftData だけを見る。Realm 側は削除予定なので触っていない
+    @Test
+    func updateKeepsOnlyFirstOccurrenceOfDuplicates() throws {
+        let store = SwiftDataStore.inMemory()
+        let repository = TestRepositories(backend: .swiftData, swiftDataStore: store).favoriteSong
+
+        repository.update(songIds: [SongId(id: 2), SongId(id: 1), SongId(id: 2)])
+
+        #expect(repository.findAll().map { $0.id } == [2, 1])
+        #expect(try store.context.fetchCount(FetchDescriptor<FavoriteSongDataModel>()) == 2)
+    }
 }

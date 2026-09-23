@@ -19,11 +19,11 @@ struct FavoriteRepository<Model: FavoriteDataModel> {
         self.store = store
     }
 
-    /// 登録した順
+    /// 登録した順。ストアに同じ mediaId の行が残っていても最初の 1 回だけ返す(一覧の id が重複しないように)
     func findAll() -> [String] {
         let descriptor = FetchDescriptor<Model>(sortBy: [SortDescriptor(Model.orderKey)])
 
-        return try! store.context.fetch(descriptor).map { $0.mediaId }
+        return try! store.context.fetch(descriptor).map { $0.mediaId }.uniqued()
     }
 
     func exists(mediaId: String) -> Bool {
@@ -45,7 +45,8 @@ struct FavoriteRepository<Model: FavoriteDataModel> {
     func update(mediaIds: [String]) {
         truncate()
 
-        for (index, mediaId) in mediaIds.enumerated() {
+        // 同じ mediaId は最初の 1 回だけ残す(PlaylistRepository.update と同じ)
+        for (index, mediaId) in mediaIds.uniqued().enumerated() {
             store.context.insert(Model(mediaId: mediaId, order: index))
         }
 

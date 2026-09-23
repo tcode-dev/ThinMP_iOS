@@ -39,11 +39,11 @@ struct PlaylistRegisterView: View {
                     ScrollView {
                         LazyVStack(spacing: 0) {
                             ForEach(vm.playlists ?? []) { playlist in
-                                PlaylistAddRowView(isRegistered: vm.isRegistered(playlistId: playlist.playlistId), action: {
+                                PlaylistAddRowView(isRegistered: playlist.songIds.contains(songId), action: {
                                     vm.add(playlistId: playlist.playlistId, songId: songId)
                                     onClose()
                                 }) {
-                                    MediaRowView(media: playlist)
+                                    MediaRowView(media: playlist, showsSecondaryText: false)
                                 }
                                 .frame(height: StyleConstant.Height.row)
                                 Divider()
@@ -91,7 +91,7 @@ struct PlaylistRegisterView: View {
         .clipShape(.rect(cornerRadius: StyleConstant.cornerRadius))
         .padding(.horizontal, StyleConstant.Padding.large)
         .onAppear {
-            vm.load(songId: songId)
+            vm.load()
         }
     }
 

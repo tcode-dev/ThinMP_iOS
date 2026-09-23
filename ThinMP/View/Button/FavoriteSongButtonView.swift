@@ -10,7 +10,7 @@ import SwiftUI
 struct FavoriteSongButtonView: View {
     let songId: SongId
     /// 登録 / 解除のあとに呼ばれる(一覧の再読み込みなど)
-    let onToggle: () -> Void
+    var onToggle: () -> Void = {}
     private let repository: FavoriteSongRepositoryProtocol = FavoriteSongRepository()
 
     var body: some View {
