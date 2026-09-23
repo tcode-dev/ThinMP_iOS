@@ -30,13 +30,15 @@ struct PlaylistRepository: PlaylistRepositoryProtocol {
             return
         }
 
+        let storedSongId = String(songId.id)
+
         // 同じ曲は 1 つのプレイリストに 1 回しか登録しない
-        if playlist.songs.contains(where: { $0.songId == String(songId.id) }) {
+        if playlist.songs.contains(where: { $0.songId == storedSongId }) {
             return
         }
 
         let order = (playlist.songs.map { $0.order }.max() ?? -1) + 1
-        let song = PlaylistSongDataModel(playlistId: playlist.id, songId: String(songId.id), order: order)
+        let song = PlaylistSongDataModel(playlistId: playlist.id, songId: storedSongId, order: order)
 
         store.context.insert(song)
         playlist.songs.append(song)
