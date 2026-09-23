@@ -49,7 +49,7 @@ struct ArtistDetailPageView: View {
                 }
             }
         }
-        .onFirstAppear {
+        .onAppear {
             vm.load(artistId: artistId)
         }
     }

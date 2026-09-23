@@ -18,7 +18,7 @@ struct ArtistsPageView: View {
             ListEmptyHeaderView(isScrolledUnder: $isScrolledUnder, top: geometry.safeAreaInsets.top)
             ArtistListView(artists: vm.artists)
         }
-        .onFirstAppear {
+        .onAppear {
             vm.load()
         }
     }

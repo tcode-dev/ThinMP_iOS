@@ -45,11 +45,13 @@ struct PlaylistDetailEditPageView: View {
                 }
             }
         }
-        .task {
-            await vm.load(playlistId: playlistId).value
-
-            if name.isEmpty {
-                name = vm.playlist?.primaryText ?? ""
+        .onAppear {
+            vm.load(playlistId: playlistId)
+        }
+        // 詳細ページから名前を受け取れなかったときだけ、読み込んだ名前で埋める
+        .onChange(of: vm.playlist?.primaryText) { _, primaryText in
+            if name.isEmpty, let primaryText {
+                name = primaryText
             }
         }
     }

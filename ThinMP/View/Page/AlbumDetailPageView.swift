@@ -36,7 +36,7 @@ struct AlbumDetailPageView: View {
             }
             SongListView(songs: vm.album?.songs ?? []) { playlistRegisterSongId = $0 }
         }
-        .onFirstAppear {
+        .onAppear {
             vm.load(albumId: albumId)
         }
     }
