@@ -166,6 +166,8 @@ final class MusicPlayer: ObservableObject {
             song = nil
             currentSecond = 0
             durationSecond = 1
+            // 再生画面は開いたまま残るので、お気に入りの表示も消しておく
+            reloadFavorite()
             isActive = false
         }
     }
