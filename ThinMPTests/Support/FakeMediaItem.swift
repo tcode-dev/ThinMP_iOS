@@ -9,7 +9,7 @@ import MediaPlayer
 @testable import ThinMP
 
 /// MPMediaItem は端末のライブラリからしか取得できないので、テストでは値を差し替えたサブクラスを使う
-final class FakeMediaItem: MPMediaItem {
+final class FakeMediaItem: MPMediaItem, @unchecked Sendable {
     private let fakePersistentID: MPMediaEntityPersistentID
     private let fakeTitle: String
     private let fakeArtist: String

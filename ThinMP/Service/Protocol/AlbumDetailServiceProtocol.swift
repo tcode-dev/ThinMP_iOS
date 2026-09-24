@@ -5,6 +5,6 @@
 //  Created by tk on 2021/07/25.
 //
 
-protocol AlbumDetailServiceProtocol {
+protocol AlbumDetailServiceProtocol: Sendable {
     func findById(albumId: AlbumId) async -> AlbumDetailModel?
 }

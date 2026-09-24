@@ -220,6 +220,7 @@
 		7E7F8515057DA1344B8C9922 /* Sequence+Uniqued.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357CC7D9C31A7AACDFEF5215 /* Sequence+Uniqued.swift */; };
 		FC04F8E13E3849E763032413 /* Optional+OrUnknown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A95F77FC8278ED7E9426D99 /* Optional+OrUnknown.swift */; };
 		A5F797AAD4D5621CAF8AD8DB /* Sequence+Keyed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D079305A25492C90AEFC7C3 /* Sequence+Keyed.swift */; };
+		A1B2C3D4E5F60718293A4B5C /* MPMediaItem+Sendable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293A4B5D /* MPMediaItem+Sendable.swift */; };
 		8154D17B75C4E9839955524A /* MPMediaQuery+Local.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128A2EE1F7CE33612ED92B3A /* MPMediaQuery+Local.swift */; };
 		52B76EDBFFA46E975B7E5441 /* LoadTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BDE437A6348D1B5DC1162E /* LoadTask.swift */; };
 		52B1D0D1908F0691A23B4F5A /* PlayPauseButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B45E44ABFC41FCF30E2EDE /* PlayPauseButtonView.swift */; };
@@ -464,6 +465,7 @@
 		357CC7D9C31A7AACDFEF5215 /* Sequence+Uniqued.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sequence+Uniqued.swift"; sourceTree = "<group>"; };
 		2A95F77FC8278ED7E9426D99 /* Optional+OrUnknown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Optional+OrUnknown.swift"; sourceTree = "<group>"; };
 		0D079305A25492C90AEFC7C3 /* Sequence+Keyed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Sequence+Keyed.swift"; sourceTree = "<group>"; };
+		A1B2C3D4E5F60718293A4B5D /* MPMediaItem+Sendable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MPMediaItem+Sendable.swift"; sourceTree = "<group>"; };
 		128A2EE1F7CE33612ED92B3A /* MPMediaQuery+Local.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MPMediaQuery+Local.swift"; sourceTree = "<group>"; };
 		52BDE437A6348D1B5DC1162E /* LoadTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadTask.swift; sourceTree = "<group>"; };
 		52B45E44ABFC41FCF30E2EDE /* PlayPauseButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayPauseButtonView.swift; sourceTree = "<group>"; };
@@ -1112,6 +1114,7 @@
 				357CC7D9C31A7AACDFEF5215 /* Sequence+Uniqued.swift */,
 				2A95F77FC8278ED7E9426D99 /* Optional+OrUnknown.swift */,
 				0D079305A25492C90AEFC7C3 /* Sequence+Keyed.swift */,
+				A1B2C3D4E5F60718293A4B5D /* MPMediaItem+Sendable.swift */,
 				128A2EE1F7CE33612ED92B3A /* MPMediaQuery+Local.swift */,
 					);
 			path = Extension;
@@ -1263,6 +1266,7 @@
 						7E7F8515057DA1344B8C9922 /* Sequence+Uniqued.swift in Sources */,
 				FC04F8E13E3849E763032413 /* Optional+OrUnknown.swift in Sources */,
 				A5F797AAD4D5621CAF8AD8DB /* Sequence+Keyed.swift in Sources */,
+				A1B2C3D4E5F60718293A4B5C /* MPMediaItem+Sendable.swift in Sources */,
 				8154D17B75C4E9839955524A /* MPMediaQuery+Local.swift in Sources */,
 				52BF725186C711FB7266521D /* EditPageLayout.swift in Sources */,
 				52B49B937EEB15084069E37B /* ScrollPageLayout.swift in Sources */,
@@ -1687,7 +1691,7 @@
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1712,7 +1716,7 @@
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -1737,7 +1741,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ThinMP.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ThinMP";
 			};
@@ -1764,7 +1768,7 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ThinMP.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ThinMP";
 			};

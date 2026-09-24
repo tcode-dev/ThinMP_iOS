@@ -10,14 +10,16 @@ import MediaPlayer
 
 // Service / ViewModel のテストで他の Service を差し替えるためのモック
 // 呼び出しを記録できるように class にしている
+// メインアクターに隔離していないモックはバックグラウンドから呼ばれるが、テストは呼ぶ前に設定して await の後に読むだけで
+// 同時には触らないので、@unchecked Sendable にしている
 
-final class ArtistDetailServiceMock: ArtistDetailServiceProtocol {
+final class ArtistDetailServiceMock: ArtistDetailServiceProtocol, @unchecked Sendable {
     let artists: [ArtistDetailModel]
     let summaries: [ArtistSummaryModel]
     /// クラウドにしか無いアーティスト。findByIds には出ないが、findDeletedIds では削除されたことにならない
     let cloudArtistIds: Set<ArtistId>
     /// findByIds の中(走査中)に呼ばれる。走査中に別の書き込みが入った状況を作るのに使う
-    var onFindByIds: () -> Void = {}
+    var onFindByIds: @Sendable () -> Void = {}
 
     init(artists: [ArtistDetailModel] = [], summaries: [ArtistSummaryModel] = [], cloudArtistIds: Set<ArtistId> = []) {
         self.artists = artists
@@ -147,7 +149,7 @@ final class FavoriteArtistsServiceMock: FavoriteArtistsServiceProtocol {
     }
 }
 
-final class AlbumsServiceMock: AlbumsServiceProtocol {
+final class AlbumsServiceMock: AlbumsServiceProtocol, @unchecked Sendable {
     let albums: [AlbumModel]
     /// クラウドにしか無いアルバム。findByIds には出ないが、findDeletedIds では削除されたことにならない
     let cloudAlbumIds: Set<AlbumId>
@@ -173,7 +175,7 @@ final class AlbumsServiceMock: AlbumsServiceProtocol {
     }
 }
 
-final class ArtistsServiceMock: ArtistsServiceProtocol {
+final class ArtistsServiceMock: ArtistsServiceProtocol, @unchecked Sendable {
     let artists: [ArtistModel]
     private(set) var findAllCalls = 0
 
@@ -188,7 +190,7 @@ final class ArtistsServiceMock: ArtistsServiceProtocol {
     }
 }
 
-final class SongsServiceMock: SongsServiceProtocol {
+final class SongsServiceMock: SongsServiceProtocol, @unchecked Sendable {
     let songs: [SongModel]
     private(set) var findAllCalls = 0
 

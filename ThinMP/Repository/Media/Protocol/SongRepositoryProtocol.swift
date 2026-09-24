@@ -5,7 +5,7 @@
 //  Created by tk on 2021/07/25.
 //
 
-protocol SongRepositoryProtocol {
+protocol SongRepositoryProtocol: Sendable {
     func findAll() -> [SongModel]
 
     func findByIds(songIds: [SongId]) -> [SongModel]
