@@ -266,7 +266,7 @@ final class MusicPlayer: ObservableObject {
         isShuffle = player.shuffleMode == .songs
     }
 
-    deinit {
+    isolated deinit {
         // ブロック形式の observer は removeObserver(self, ...) では外れないので token で外す
         observers.forEach { NotificationCenter.default.removeObserver($0) }
         // 繰り返しの Timer は RunLoop が持ち続けるので、止めないと self が消えても回り続ける

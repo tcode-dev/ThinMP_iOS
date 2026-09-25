@@ -199,7 +199,8 @@ final class ShortcutRepositoryMock: ShortcutRepositoryProtocol {
 }
 
 /// 端末のライブラリの代わり。findByIds は実装と同じく songIds の順序で返し、findByArtistId は songs を artistId で絞る
-final class SongRepositoryMock: SongRepositoryProtocol {
+/// 走査はバックグラウンドから呼ばれるが、テストは呼ぶ前に設定して await の後に読むだけで同時には触らないので、@unchecked Sendable にしている
+final class SongRepositoryMock: SongRepositoryProtocol, @unchecked Sendable {
     let songs: [SongModel]
     /// findByAlbumId が返す曲
     let albumSongs: [AlbumId: [SongModel]]
@@ -210,7 +211,7 @@ final class SongRepositoryMock: SongRepositoryProtocol {
     /// findByIds に渡された songIds の履歴。ライブラリ全件取得の回数を数えるのに使う
     private(set) var findByIdsCalls: [[SongId]] = []
     /// findByIds の中(走査中)に呼ばれる。走査中に別の書き込みが入った状況を作るのに使う
-    var onFindByIds: () -> Void = {}
+    var onFindByIds: @Sendable () -> Void = {}
 
     init(songs: [SongModel], albumSongs: [AlbumId: [SongModel]] = [:], cloudSongIds: Set<SongId> = []) {
         self.songs = songs
@@ -244,7 +245,8 @@ final class SongRepositoryMock: SongRepositoryProtocol {
     }
 }
 
-final class AlbumRepositoryMock: AlbumRepositoryProtocol {
+/// 走査はバックグラウンドから呼ばれるが、テストは呼ぶ前に設定して await の後に読むだけで同時には触らないので、@unchecked Sendable にしている
+final class AlbumRepositoryMock: AlbumRepositoryProtocol, @unchecked Sendable {
     let albums: [AlbumModel]
     /// findByArtistId が返すアルバム
     let artistAlbums: [ArtistId: [AlbumModel]]
@@ -288,12 +290,13 @@ final class AlbumRepositoryMock: AlbumRepositoryProtocol {
     }
 }
 
-final class ArtistRepositoryMock: ArtistRepositoryProtocol {
+/// 走査はバックグラウンドから呼ばれるが、テストは呼ぶ前に設定して await の後に読むだけで同時には触らないので、@unchecked Sendable にしている
+final class ArtistRepositoryMock: ArtistRepositoryProtocol, @unchecked Sendable {
     let artists: [ArtistModel]
     /// クラウドにしか無いアーティスト。findByIds には出ないが、findDeletedIds では削除されたことにならない
     let cloudArtistIds: Set<ArtistId>
     /// findByIds の中(走査中)に呼ばれる。走査中に別の書き込みが入った状況を作るのに使う
-    var onFindByIds: () -> Void = {}
+    var onFindByIds: @Sendable () -> Void = {}
 
     init(artists: [ArtistModel], cloudArtistIds: Set<ArtistId> = []) {
         self.artists = artists

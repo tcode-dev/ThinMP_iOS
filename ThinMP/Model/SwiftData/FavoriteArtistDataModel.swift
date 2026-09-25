@@ -22,7 +22,7 @@ final class FavoriteArtistDataModel {
 }
 
 extension FavoriteArtistDataModel: FavoriteDataModel {
-    static var orderKey: KeyPath<FavoriteArtistDataModel, Int> {
+    static var orderKey: KeyPath<FavoriteArtistDataModel, Int> & Sendable {
         return \.order
     }
 

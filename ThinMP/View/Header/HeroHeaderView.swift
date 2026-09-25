@@ -37,7 +37,7 @@ struct HeroHeaderView<Content: View, PrimaryText: View, SecondaryText: View>: Vi
             primaryTextView
                 // offset の内側で測ることで、ずらした後の位置(GeometryReader を子に置いた場合と同じ)が取れる
                 // 位置そのものではなく判定結果を渡すので、State が変わるのは境目を越えたときだけになる
-                .onGeometryChange(for: Bool.self) { proxy in
+                .onGeometryChange(for: Bool.self) { [top] proxy in
                     proxy.frame(in: .global).minY < top
                 } action: { isScrolledUnder in
                     self.isScrolledUnder = isScrolledUnder

@@ -50,7 +50,7 @@ final class SwiftDataStore {
     }
 
     /// 末尾に足すための order。今ある最大 + 1 で、行が無ければ 0(update が振り直す番号と同じく 0 から始める)
-    func nextOrder<Model: PersistentModel>(_: Model.Type, by order: KeyPath<Model, Int>) -> Int {
+    func nextOrder<Model: PersistentModel>(_: Model.Type, by order: KeyPath<Model, Int> & Sendable) -> Int {
         var descriptor = FetchDescriptor<Model>(sortBy: [SortDescriptor(order, order: .reverse)])
 
         descriptor.fetchLimit = 1

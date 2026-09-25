@@ -13,7 +13,7 @@ import SwiftData
 /// #Predicate と SortDescriptor は保存されているプロパティを直接指す必要があるので、
 /// 引き当てと並び替えのキーはモデル側から渡す
 protocol FavoriteDataModel: PersistentModel {
-    static var orderKey: KeyPath<Self, Int> { get }
+    static var orderKey: KeyPath<Self, Int> & Sendable { get }
 
     var mediaId: String { get }
 

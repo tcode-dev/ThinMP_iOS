@@ -5,7 +5,7 @@
 //  Created by tk on 2021/07/25.
 //
 
-protocol AlbumsServiceProtocol {
+protocol AlbumsServiceProtocol: Sendable {
     func findAll() async -> [AlbumModel]
 
     /// ショートカット用。結果は albumIds の順で、ライブラリに無いアルバムは落ちる

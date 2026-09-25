@@ -5,7 +5,7 @@
 //  Created by tk on 2021/07/25.
 //
 
-protocol AlbumRepositoryProtocol {
+protocol AlbumRepositoryProtocol: Sendable {
     func findAll() -> [AlbumModel]
 
     func findById(albumId: AlbumId) -> AlbumModel?

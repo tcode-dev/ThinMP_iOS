@@ -5,6 +5,6 @@
 //  Created by tk on 2021/07/25.
 //
 
-protocol ArtistsServiceProtocol {
+protocol ArtistsServiceProtocol: Sendable {
     func findAll() async -> [ArtistModel]
 }
