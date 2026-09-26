@@ -19,6 +19,6 @@ struct ShortcutRowView: View {
             }
             Spacer()
         }
-        .modifier(RowModifier())
+        .rowStyle()
     }
 }

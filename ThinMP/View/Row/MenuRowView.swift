@@ -15,6 +15,6 @@ struct MenuRowView: View {
             PrimaryTextView(label: label)
             Spacer()
         }
-        .modifier(RowModifier())
+        .rowStyle()
     }
 }
