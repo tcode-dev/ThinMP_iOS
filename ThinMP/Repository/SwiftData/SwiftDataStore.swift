@@ -16,9 +16,6 @@ import SwiftData
 /// ライブラリの走査でバックグラウンドに出る Media の Model / Repository / Service だけを nonisolated にしている
 final class SwiftDataStore {
     static let `default` = SwiftDataStore(isStoredInMemoryOnly: false)
-    /// save() のたびに投げる。object は保存した store
-    /// 登録 / 解除のボタンが、再生画面など別の場所での書き込みを表示に反映するのに使う
-    static let didSave = Notification.Name("SwiftDataStoreDidSave")
 
     private static let schema = Schema([
         FavoriteSongDataModel.self,
@@ -46,7 +43,7 @@ final class SwiftDataStore {
 
     func save() {
         try! context.save()
-        NotificationCenter.default.post(name: Self.didSave, object: self)
+        NotificationCenter.default.post(name: .swiftDataStoreDidSave, object: self)
     }
 
     /// 末尾に足すための order。今ある最大 + 1 で、行が無ければ 0(update が振り直す番号と同じく 0 から始める)
@@ -57,4 +54,10 @@ final class SwiftDataStore {
 
         return (try! context.fetch(descriptor).first?[keyPath: order] ?? -1) + 1
     }
+}
+
+nonisolated extension Notification.Name {
+    /// SwiftDataStore.save() のたびに投げる。object は保存した store
+    /// 登録 / 解除のボタンが、再生画面など別の場所での書き込みを表示に反映するのに使う
+    static let swiftDataStoreDidSave = Notification.Name("SwiftDataStoreDidSave")
 }

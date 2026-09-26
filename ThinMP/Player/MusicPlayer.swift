@@ -202,7 +202,7 @@ final class MusicPlayer {
         // 一覧のメニューなど、再生画面の外でお気に入りが変わっても表示を合わせる
         // MusicPlayer は Repository 越しにしかストアを知らないので、object は絞らない(RegisterToggleButtonView と同じ)
         observers.append(NotificationCenter.default.addObserver(
-            forName: SwiftDataStore.didSave,
+            forName: .swiftDataStoreDidSave,
             object: nil,
             queue: .main
         ) { [weak self] _ in

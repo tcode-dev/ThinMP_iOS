@@ -12,7 +12,7 @@ import SwiftUI
 ///
 /// 表示する登録状態は body で毎回 exists() に問い合わせる
 /// メニューは開き直しても中身の body を呼び直さず、onAppear も呼ばないので、
-/// ストアの保存通知(SwiftDataStore.didSave)で body を作り直す。再生画面など別の場所での登録 / 解除もこれで反映される
+/// ストアの保存通知(swiftDataStoreDidSave)で body を作り直す。再生画面など別の場所での登録 / 解除もこれで反映される
 struct RegisterToggleButtonView: View {
     /// 保存通知のたびに進めて body を作り直させる
     @State private var revision = 0
@@ -30,7 +30,7 @@ struct RegisterToggleButtonView: View {
             toggle()
             onToggle()
         }
-        .onReceive(NotificationCenter.default.publisher(for: SwiftDataStore.didSave)) { _ in
+        .onReceive(NotificationCenter.default.publisher(for: .swiftDataStoreDidSave)) { _ in
             revision += 1
         }
     }
