@@ -58,6 +58,7 @@ struct MainPageView: View {
                     MiniPlayerView(bottom: geometry.safeAreaInsets.bottom)
                 }
                 .modifier(PageModifier())
+                .navigationDestinations()
                 .onAppear {
                     vm.load()
                 }

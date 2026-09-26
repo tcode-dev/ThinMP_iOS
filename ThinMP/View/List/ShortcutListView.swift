@@ -19,7 +19,7 @@ struct ShortcutListView: View {
 
         LazyVGrid(columns: layout.columns) {
             ForEach(shortcuts) { shortcut in
-                NavigationLink(destination: destination(shortcut.target)) {
+                NavigationLink(value: shortcut.target) {
                     ShortcutCellView(shortcut: shortcut, size: layout.cellSize)
                 }
                 .contentShape(RoundedRectangle(cornerRadius: StyleConstant.cornerRadius))
@@ -30,15 +30,6 @@ struct ShortcutListView: View {
                     ShortcutButtonView(target: shortcut.target, onToggle: onShortcutChange)
                 }
             }
-        }
-    }
-
-    @ViewBuilder
-    private func destination(_ target: ShortcutTarget) -> some View {
-        switch target {
-        case .artist(let artistId): ArtistDetailPageView(artistId: artistId)
-        case .album(let albumId): AlbumDetailPageView(albumId: albumId)
-        case .playlist(let playlistId): PlaylistDetailPageView(playlistId: playlistId)
         }
     }
 }
