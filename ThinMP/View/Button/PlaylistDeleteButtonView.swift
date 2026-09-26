@@ -12,8 +12,6 @@ struct PlaylistDeleteButtonView: View {
     let action: () -> Void
 
     var body: some View {
-        Button(role: .destructive, action: action) {
-            Text(.removePlaylist)
-        }
+        Button(.removePlaylist, role: .destructive, action: action)
     }
 }

@@ -26,11 +26,9 @@ struct RegisterToggleButtonView: View {
     var onToggle: () -> Void = {}
 
     var body: some View {
-        Button(action: {
+        Button(isRegistered ? removeLabel : addLabel) {
             toggle()
             onToggle()
-        }) {
-            Text(isRegistered ? removeLabel : addLabel)
         }
         .onReceive(NotificationCenter.default.publisher(for: SwiftDataStore.didSave)) { _ in
             revision += 1

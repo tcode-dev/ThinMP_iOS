@@ -17,14 +17,10 @@ struct EditNavBarView: View {
 
     var body: some View {
         HStack {
-            Button(action: onCancel) {
-                Text(.cancel)
-            }
+            Button(.cancel, action: onCancel)
             Spacer()
-            Button(action: onDone) {
-                Text(.done)
-            }
-            .disabled(!isDoneEnabled)
+            Button(.done, action: onDone)
+                .disabled(!isDoneEnabled)
         }
         .padding(.horizontal, StyleConstant.Padding.large)
         .frame(height: StyleConstant.Height.row)

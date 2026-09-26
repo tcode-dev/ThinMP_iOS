@@ -24,9 +24,7 @@ struct PermissionView<Content: View>: View {
                 // 許可を求めている間(notDetermined)は何も出さない
                 if status == .denied || status == .restricted {
                     Text(.permission)
-                    Button(action: openSettings) {
-                        Text(.openSettings)
-                    }
+                    Button(.openSettings, action: openSettings)
                 }
             }
             .padding(.horizontal, StyleConstant.Padding.large)
