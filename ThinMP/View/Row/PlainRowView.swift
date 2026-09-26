@@ -15,6 +15,6 @@ struct PlainRowView: View {
             PrimaryTextView(media.primaryText)
             Spacer()
         }
-        .modifier(RowModifier())
+        .rowStyle()
     }
 }

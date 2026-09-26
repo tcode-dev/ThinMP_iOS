@@ -8,7 +8,7 @@
 import Foundation
 import RealmSwift
 
-class ShortcutRealmModel: Object {
+nonisolated class ShortcutRealmModel: Object {
     static let idKey: String = "id"
     static let itemIdKey: String = "itemId"
     static let typeKey: String = "type"

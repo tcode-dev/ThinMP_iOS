@@ -20,7 +20,7 @@ struct PlaylistListView: View {
     var body: some View {
         LazyVStack(spacing: 0) {
             ForEach(playlists) { playlist in
-                NavigationLink(destination: PlaylistDetailPageView(playlistId: playlist.playlistId)) {
+                NavigationLink(value: playlist.playlistId) {
                     MediaRowView(media: playlist, showsSecondaryText: false)
                 }
                 .contentShape(RoundedRectangle(cornerRadius: StyleConstant.cornerRadius))

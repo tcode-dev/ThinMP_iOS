@@ -5,12 +5,12 @@
 //  Created by tk on 2021/01/02.
 //
 
-import Combine
+import Observation
 
-@MainActor
-final class FavoriteArtistsViewModel: ObservableObject {
+@Observable
+final class FavoriteArtistsViewModel {
     /// 読み込む前は nil。編集ページは nil のあいだ保存を受け付けない
-    @Published var artists: [ArtistModel]?
+    var artists: [ArtistModel]?
 
     private let favoriteArtistsService: FavoriteArtistsServiceProtocol
     private let favoriteArtistRepository: FavoriteArtistRepositoryProtocol
@@ -24,12 +24,11 @@ final class FavoriteArtistsViewModel: ObservableObject {
         self.favoriteArtistRepository = favoriteArtistRepository
     }
 
-    @discardableResult
-    func load() -> Task<Void, Never> {
-        return loadTask.run { [favoriteArtistsService] in
+    func load() async {
+        await loadTask.run {
             await favoriteArtistsService.findAll()
-        } apply: { [weak self] artists in
-            self?.artists = artists
+        } apply: { artists in
+            self.artists = artists
         }
     }
 

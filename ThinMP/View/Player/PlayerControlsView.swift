@@ -12,19 +12,19 @@ struct PlayerControlsView: View {
     private let sideButtonSize: CGFloat = 88
     private let playPauseButtonSize: CGFloat = 100
 
-    @EnvironmentObject private var musicPlayer: MusicPlayer
+    @Environment(MusicPlayer.self) private var musicPlayer
 
     var body: some View {
         HStack {
             Spacer()
             Button(action: musicPlayer.prev) {
-                ButtonImageView(image: .prevButton, label: LabelConstant.previous, size: sideButtonSize)
+                ButtonImageView(image: .prevButton, label: .previous, size: sideButtonSize)
             }
             Spacer()
             PlayPauseButtonView(size: playPauseButtonSize)
             Spacer()
             Button(action: musicPlayer.next) {
-                ButtonImageView(image: .nextButton, label: LabelConstant.next, size: sideButtonSize)
+                ButtonImageView(image: .nextButton, label: .next, size: sideButtonSize)
             }
             Spacer()
         }

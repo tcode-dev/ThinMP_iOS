@@ -16,7 +16,7 @@ struct ArtistListView: View {
     var body: some View {
         LazyVStack(spacing: 0) {
             ForEach(artists) { artist in
-                NavigationLink(destination: ArtistDetailPageView(artistId: artist.artistId)) {
+                NavigationLink(value: artist.artistId) {
                     PlainRowView(media: artist)
                 }
                 .contentShape(RoundedRectangle(cornerRadius: StyleConstant.cornerRadius))

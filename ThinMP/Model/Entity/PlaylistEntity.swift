@@ -7,7 +7,7 @@
 
 /// Repository から返す永続化ストア非依存のプレイリスト
 /// songIds は order 順に並んでいる
-struct PlaylistEntity {
+nonisolated struct PlaylistEntity {
     let playlistId: PlaylistId
     let name: String
     let songIds: [SongId]

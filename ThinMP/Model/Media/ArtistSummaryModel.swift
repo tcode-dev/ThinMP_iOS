@@ -9,7 +9,7 @@ import MediaPlayer
 
 /// アーティストの名前とアートワーク。アルバムと曲は持たない
 /// ショートカットのように、詳細までは要らないがアートワークは出したいところで使う
-struct ArtistSummaryModel: MediaProtocol {
+nonisolated struct ArtistSummaryModel: MediaProtocol {
     let artistId: ArtistId
     let primaryText: String?
     let artwork: MPMediaItemArtwork?

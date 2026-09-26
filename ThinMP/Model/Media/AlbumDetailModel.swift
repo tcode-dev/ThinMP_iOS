@@ -7,7 +7,7 @@
 
 import MediaPlayer
 
-struct AlbumDetailModel {
+nonisolated struct AlbumDetailModel {
     let albumId: AlbumId
     let primaryText: String?
     let secondaryText: String?

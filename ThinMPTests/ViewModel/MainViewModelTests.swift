@@ -22,7 +22,7 @@ struct MainViewModelTests {
         let service = MainServiceMock(settings: makeSettings(isShortcutVisible: true, isRecentlyVisible: true), shortcuts: [shortcut], albums: [album])
         let vm = MainViewModel(mainService: service)
 
-        await vm.load().value
+        await vm.load()
 
         #expect(vm.settings == service.settings)
         #expect(vm.shortcuts.map { $0.shortcutId } == [ShortcutId(id: "s1")])
@@ -35,7 +35,7 @@ struct MainViewModelTests {
         let service = MainServiceMock(settings: makeSettings(isShortcutVisible: false, isRecentlyVisible: false), shortcuts: [shortcut], albums: [album])
         let vm = MainViewModel(mainService: service)
 
-        await vm.load().value
+        await vm.load()
 
         #expect(vm.shortcuts.isEmpty)
         #expect(vm.albums.isEmpty)

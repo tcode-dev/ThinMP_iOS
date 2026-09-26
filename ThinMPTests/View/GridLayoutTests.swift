@@ -9,6 +9,7 @@ import SwiftUI
 import Testing
 @testable import ThinMP
 
+@MainActor
 struct GridLayoutTests {
     /// 幅が spanBaseSize の 2 倍未満でも minSpanCount 列は確保する
     @Test

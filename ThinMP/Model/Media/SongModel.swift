@@ -8,7 +8,7 @@
 import MediaPlayer
 
 /// ライブラリの曲 1 件。再生キューに入れるので MPMediaItem をそのまま持つ
-struct SongModel: MediaProtocol, Identifiable {
+nonisolated struct SongModel: MediaProtocol, Identifiable {
     let item: MPMediaItem
 
     var id: SongId {
@@ -40,7 +40,7 @@ struct SongModel: MediaProtocol, Identifiable {
     }
 }
 
-extension Sequence<SongModel> {
+nonisolated extension Sequence<SongModel> {
     /// アルバムの曲順(ディスク番号、トラック番号の順)。番号が同じ曲は元の並びのまま
     /// MPMediaItem のプロパティ取得は安くないので、比較のたびに引かずに 1 回だけ取る
     func sortedByTrack() -> [SongModel] {

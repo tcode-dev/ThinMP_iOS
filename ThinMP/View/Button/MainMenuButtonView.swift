@@ -12,20 +12,8 @@ struct MainMenuButtonView: View {
     let menu: MainMenu
 
     var body: some View {
-        NavigationLink(destination: destination) {
-            MenuRowView(key: menu.label)
-        }
-    }
-
-    @ViewBuilder
-    private var destination: some View {
-        switch menu {
-        case .artists: ArtistsPageView()
-        case .albums: AlbumsPageView()
-        case .songs: SongsPageView()
-        case .favoriteArtists: FavoriteArtistsPageView()
-        case .favoriteSongs: FavoriteSongsPageView()
-        case .playlists: PlaylistsPageView()
+        NavigationLink(value: menu) {
+            MenuRowView(label: menu.label)
         }
     }
 }

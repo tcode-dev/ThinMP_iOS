@@ -14,7 +14,7 @@ struct EditLinkView<Destination: View>: View {
 
     var body: some View {
         NavigationLink(destination: destination()) {
-            MenuRowView(key: LabelConstant.edit)
+            MenuRowView(label: .edit)
         }
     }
 }

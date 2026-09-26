@@ -5,7 +5,7 @@
 //  Created by tk on 2021/07/25.
 //
 
-protocol ArtistRepositoryProtocol: Sendable {
+nonisolated protocol ArtistRepositoryProtocol: Sendable {
     func findAll() -> [ArtistModel]
 
     func findById(artistId: ArtistId) -> ArtistModel?

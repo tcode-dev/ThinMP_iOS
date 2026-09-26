@@ -19,7 +19,7 @@ struct SwiftDataStoreTests {
         let otherStore = SwiftDataStore.inMemory()
         // observer のブロックは Sendable なので、ローカル変数を直接書き換えずにロック越しに数える
         let count = OSAllocatedUnfairLock(initialState: 0)
-        let observer = NotificationCenter.default.addObserver(forName: SwiftDataStore.didSave, object: store, queue: nil) { _ in
+        let observer = NotificationCenter.default.addObserver(forName: .swiftDataStoreDidSave, object: store, queue: nil) { _ in
             count.withLock { $0 += 1 }
         }
 

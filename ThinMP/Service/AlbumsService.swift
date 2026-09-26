@@ -5,7 +5,7 @@
 //  Created by tk on 2021/06/07.
 //
 
-struct AlbumsService: AlbumsServiceProtocol {
+nonisolated struct AlbumsService: AlbumsServiceProtocol {
     private let repository: AlbumRepositoryProtocol
 
     init(repository: AlbumRepositoryProtocol = AlbumRepository()) {
@@ -13,23 +13,20 @@ struct AlbumsService: AlbumsServiceProtocol {
     }
 
     /// ライブラリ全件を取るのでバックグラウンドで行う
+    @concurrent
     func findAll() async -> [AlbumModel] {
-        return await Task.detached(priority: .userInitiated) { [repository] in
-            repository.findAll()
-        }.value
+        return repository.findAll()
     }
 
     /// ライブラリ全件を走査するのでバックグラウンドで行う
+    @concurrent
     func findByIds(albumIds: [AlbumId]) async -> [AlbumModel] {
-        return await Task.detached(priority: .userInitiated) { [repository] in
-            repository.findByIds(albumIds: albumIds)
-        }.value
+        return repository.findByIds(albumIds: albumIds)
     }
 
     /// ライブラリ全件を走査するのでバックグラウンドで行う
+    @concurrent
     func findDeletedIds(albumIds: [AlbumId]) async -> Set<AlbumId> {
-        return await Task.detached(priority: .userInitiated) { [repository] in
-            repository.findDeletedIds(albumIds: albumIds)
-        }.value
+        return repository.findDeletedIds(albumIds: albumIds)
     }
 }

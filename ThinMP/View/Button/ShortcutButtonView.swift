@@ -16,8 +16,8 @@ struct ShortcutButtonView: View {
 
     var body: some View {
         RegisterToggleButtonView(
-            addLabel: LabelConstant.addShortcut,
-            removeLabel: LabelConstant.removeShortcut,
+            addLabel: .addShortcut,
+            removeLabel: .removeShortcut,
             exists: { repository.exists(target: target) },
             toggle: { repository.toggle(target: target) },
             onToggle: onToggle

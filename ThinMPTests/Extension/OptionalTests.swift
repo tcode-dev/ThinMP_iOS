@@ -9,6 +9,7 @@ import Foundation
 import Testing
 @testable import ThinMP
 
+@MainActor
 struct OptionalTests {
     @Test
     func orUnknownKeepsTheText() {
@@ -29,10 +30,10 @@ struct OptionalTests {
     func orUnknownFallsBackForNilAndEmpty() {
         let none: String? = nil
         let empty: String? = ""
-        let unknown = NSLocalizedString(LabelConstant.unknown, comment: "")
+        let unknown = String(localized: .unknown)
 
         #expect(!unknown.isEmpty)
-        #expect(unknown != LabelConstant.unknown)
+        #expect(unknown != "Unknown")
         #expect(none.orUnknown == unknown)
         #expect(empty.orUnknown == unknown)
     }

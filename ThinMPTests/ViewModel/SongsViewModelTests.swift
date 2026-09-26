@@ -15,7 +15,7 @@ struct SongsViewModelTests {
         let service = SongsServiceMock(songs: [.fake(id: 1), .fake(id: 2)])
         let vm = SongsViewModel(songsService: service)
 
-        await vm.load().value
+        await vm.load()
 
         #expect(vm.songs.map { $0.songId.id } == [1, 2])
         #expect(service.findAllCalls == 1)

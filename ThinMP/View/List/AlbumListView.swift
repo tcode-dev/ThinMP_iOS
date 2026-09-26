@@ -19,7 +19,7 @@ struct AlbumListView: View {
 
         LazyVGrid(columns: layout.columns) {
             ForEach(albums) { album in
-                NavigationLink(destination: AlbumDetailPageView(albumId: album.albumId)) {
+                NavigationLink(value: album.albumId) {
                     AlbumCellView(album: album, size: layout.cellSize)
                 }
                 .contentShape(RoundedRectangle(cornerRadius: StyleConstant.cornerRadius))

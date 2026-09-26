@@ -15,6 +15,6 @@ struct MenuImageView: View {
             .renderingMode(.original)
             .resizable()
             .frame(width: size, height: size)
-            .accessibilityLabel(Text(label: LabelConstant.menu))
+            .accessibilityLabel(Text(.menu))
     }
 }

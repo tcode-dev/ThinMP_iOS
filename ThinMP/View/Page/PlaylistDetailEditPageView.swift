@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PlaylistDetailEditPageView: View {
-    @StateObject private var vm = PlaylistDetailViewModel()
+    @State private var vm = PlaylistDetailViewModel()
     @State private var name: String
     @FocusState private var isNameFocused: Bool
 
@@ -39,14 +39,14 @@ struct PlaylistDetailEditPageView: View {
                     }
                     // 入力中は一覧を薄くして、タップでキーボードを閉じる
                     if isNameFocused {
-                        Rectangle().fill(Color(UIColor.systemBackground).opacity(0.5))
+                        Rectangle().fill(Color(.systemBackground).opacity(0.5))
                             .onTapGesture { isNameFocused = false }
                     }
                 }
             }
         }
-        .onAppear {
-            vm.load(playlistId: playlistId)
+        .task {
+            await vm.load(playlistId: playlistId)
         }
         // 詳細ページから名前を受け取れなかったときだけ、読み込んだ名前で埋める
         .onChange(of: vm.playlist?.primaryText) { _, primaryText in

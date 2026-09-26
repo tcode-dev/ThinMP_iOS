@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ArtistDetailPageView: View {
-    @StateObject private var vm = ArtistDetailViewModel()
+    @State private var vm = ArtistDetailViewModel()
     @State private var isScrolledUnder = false
     /// プレイリスト登録ポップアップを出している曲。nil ならポップアップは閉じている
     @State private var playlistRegisterSongId: SongId?
@@ -36,25 +36,25 @@ struct ArtistDetailPageView: View {
                 }
             } secondaryText: {
                 if let artist = vm.artist {
-                    SecondaryTextView(format: LabelConstant.albumsAndSongsCount, artist.albums.count, artist.songs.count)
+                    SecondaryTextView(label: .albumsAndSongsCount(albums: artist.albums.count, songs: artist.songs.count))
                 }
             }
             if let artist = vm.artist {
                 if !artist.albums.isEmpty {
-                    SectionTitleView(key: LabelConstant.albums)
+                    SectionTitleView(label: .albums)
                         .padding(.leading, StyleConstant.Padding.large)
                     AlbumListView(albums: artist.albums, width: geometry.size.width)
                         .padding(.bottom, StyleConstant.Padding.large)
                 }
                 if !artist.songs.isEmpty {
-                    SectionTitleView(key: LabelConstant.songs)
+                    SectionTitleView(label: .songs)
                         .padding(.leading, StyleConstant.Padding.large)
                     SongListView(songs: artist.songs) { playlistRegisterSongId = $0 }
                 }
             }
         }
-        .onAppear {
-            vm.load(artistId: artistId)
+        .task {
+            await vm.load(artistId: artistId)
         }
     }
 }

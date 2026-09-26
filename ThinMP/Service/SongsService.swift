@@ -5,7 +5,7 @@
 //  Created by tk on 2021/06/07.
 //
 
-struct SongsService: SongsServiceProtocol {
+nonisolated struct SongsService: SongsServiceProtocol {
     private let repository: SongRepositoryProtocol
 
     init(repository: SongRepositoryProtocol = SongRepository()) {
@@ -13,9 +13,8 @@ struct SongsService: SongsServiceProtocol {
     }
 
     /// ライブラリ全件を取るのでバックグラウンドで行う
+    @concurrent
     func findAll() async -> [SongModel] {
-        return await Task.detached(priority: .userInitiated) { [repository] in
-            repository.findAll()
-        }.value
+        return repository.findAll()
     }
 }
