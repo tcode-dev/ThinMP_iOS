@@ -1,5 +1,5 @@
 # SwiftFormat の設定。`swiftformat --lint .` で確認、`swiftformat .` で整形する
---swiftversion 5.10
+--swiftversion 6.0
 
 # 単一式でも return を書く
 --disable redundantReturn
