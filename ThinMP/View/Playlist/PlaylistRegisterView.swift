@@ -87,7 +87,7 @@ struct PlaylistRegisterView: View {
             }
         }
         .padding(.horizontal, StyleConstant.Padding.small)
-        .background(Color(UIColor.systemGray5))
+        .background(Color(.systemGray5))
         .clipShape(.rect(cornerRadius: StyleConstant.cornerRadius))
         .padding(.horizontal, StyleConstant.Padding.large)
         .task {

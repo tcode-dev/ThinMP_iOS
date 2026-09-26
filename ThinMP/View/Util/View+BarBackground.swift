@@ -10,7 +10,7 @@ import SwiftUI
 extension View {
     /// ナビゲーションバーとミニプレイヤーの背景。画面の内容と見分けられるように枠線を引く
     func barBackground() -> some View {
-        return background(Color(UIColor.secondarySystemBackground))
-            .border(Color(UIColor.systemGray5), width: 1)
+        return background(Color(.secondarySystemBackground))
+            .border(Color(.systemGray5), width: 1)
     }
 }

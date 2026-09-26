@@ -39,7 +39,7 @@ struct PlaylistDetailEditPageView: View {
                     }
                     // 入力中は一覧を薄くして、タップでキーボードを閉じる
                     if isNameFocused {
-                        Rectangle().fill(Color(UIColor.systemBackground).opacity(0.5))
+                        Rectangle().fill(Color(.systemBackground).opacity(0.5))
                             .onTapGesture { isNameFocused = false }
                     }
                 }
