@@ -12,7 +12,7 @@ struct FavoriteArtistsPageView: View {
     @State private var isScrolledUnder = false
 
     var body: some View {
-        ScrollPageLayout(onPlayerDismiss: { vm.load() }) { geometry in
+        ScrollPageLayout(onPlayerDismiss: { Task { await vm.load() } }) { geometry in
             ListNavBarView(titleKey: LabelConstant.favoriteArtists, top: geometry.safeAreaInsets.top, isScrolledUnder: isScrolledUnder) {
                 EditButtonView {
                     FavoriteArtistsEditPageView()
@@ -20,10 +20,10 @@ struct FavoriteArtistsPageView: View {
             }
         } content: { geometry in
             ListEmptyHeaderView(isScrolledUnder: $isScrolledUnder, top: geometry.safeAreaInsets.top)
-            ArtistListView(artists: vm.artists ?? []) { vm.load() }
+            ArtistListView(artists: vm.artists ?? []) { Task { await vm.load() } }
         }
-        .onAppear {
-            vm.load()
+        .task {
+            await vm.load()
         }
     }
 }

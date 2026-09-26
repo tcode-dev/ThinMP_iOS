@@ -18,12 +18,11 @@ final class SongsViewModel {
         self.songsService = songsService
     }
 
-    @discardableResult
-    func load() -> Task<Void, Never> {
-        return loadTask.run { [songsService] in
+    func load() async {
+        await loadTask.run {
             await songsService.findAll()
-        } apply: { [weak self] songs in
-            self?.songs = songs
+        } apply: { songs in
+            self.songs = songs
         }
     }
 }

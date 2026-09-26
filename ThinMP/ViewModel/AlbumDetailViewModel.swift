@@ -20,13 +20,12 @@ final class AlbumDetailViewModel {
         self.albumDetailService = albumDetailService
     }
 
-    @discardableResult
-    func load(albumId: AlbumId) -> Task<Void, Never> {
-        return loadTask.run { [albumDetailService] in
+    func load(albumId: AlbumId) async {
+        await loadTask.run {
             await albumDetailService.findById(albumId: albumId)
-        } apply: { [weak self] album in
+        } apply: { album in
             if let album {
-                self?.album = album
+                self.album = album
             }
         }
     }

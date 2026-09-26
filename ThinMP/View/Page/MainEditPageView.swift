@@ -28,8 +28,8 @@ struct MainEditPageView: View {
                 }
             }
         }
-        .onAppear {
-            vm.load()
+        .task {
+            await vm.load()
         }
     }
 

@@ -45,8 +45,8 @@ struct PlaylistDetailEditPageView: View {
                 }
             }
         }
-        .onAppear {
-            vm.load(playlistId: playlistId)
+        .task {
+            await vm.load(playlistId: playlistId)
         }
         // 詳細ページから名前を受け取れなかったときだけ、読み込んだ名前で埋める
         .onChange(of: vm.playlist?.primaryText) { _, primaryText in

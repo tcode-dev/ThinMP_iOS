@@ -28,7 +28,7 @@ struct MainEditViewModelTests {
         let service = MainServiceMock(settings: settings, shortcuts: shortcuts)
         let vm = MainEditViewModel(mainService: service)
 
-        await vm.load().value
+        await vm.load()
 
         // 編集ページはショートカット非表示でも並び替えのために読む
         #expect(vm.draft?.settings == settings)
@@ -41,7 +41,7 @@ struct MainEditViewModelTests {
         let shortcutRepository = ShortcutRepositoryMock(shortcuts: shortcuts.map { ShortcutEntity(shortcutId: $0.shortcutId, target: $0.target) })
         let vm = MainEditViewModel(mainService: service, shortcutRepository: shortcutRepository)
 
-        await vm.load().value
+        await vm.load()
         vm.draft?.settings.isRecentlyVisible = false
         vm.draft?.settings.menus.move(fromOffsets: [0], toOffset: 2)
         vm.draft?.shortcuts.remove(at: 0)

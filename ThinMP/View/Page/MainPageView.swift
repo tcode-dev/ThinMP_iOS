@@ -42,7 +42,7 @@ struct MainPageView: View {
                             VStack(alignment: .leading) {
                                 SectionTitleView(key: LabelConstant.shortcut)
                                     .padding(.leading, StyleConstant.Padding.large)
-                                ShortcutListView(shortcuts: vm.shortcuts, width: geometry.size.width) { vm.load() }
+                                ShortcutListView(shortcuts: vm.shortcuts, width: geometry.size.width) { Task { await vm.load() } }
                                     .padding(.bottom, StyleConstant.Padding.small)
                             }
                         }
@@ -50,7 +50,7 @@ struct MainPageView: View {
                             VStack(alignment: .leading) {
                                 SectionTitleView(key: LabelConstant.recentlyAdded)
                                     .padding(.leading, StyleConstant.Padding.large)
-                                AlbumListView(albums: vm.albums, width: geometry.size.width) { vm.load() }
+                                AlbumListView(albums: vm.albums, width: geometry.size.width) { Task { await vm.load() } }
                                     .padding(.bottom, StyleConstant.Padding.small)
                             }
                         }
@@ -59,8 +59,8 @@ struct MainPageView: View {
                 }
                 .modifier(PageModifier())
                 .navigationDestinations()
-                .onAppear {
-                    vm.load()
+                .task {
+                    await vm.load()
                 }
             }
         }

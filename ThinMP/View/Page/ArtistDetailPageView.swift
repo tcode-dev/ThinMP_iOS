@@ -53,8 +53,8 @@ struct ArtistDetailPageView: View {
                 }
             }
         }
-        .onAppear {
-            vm.load(artistId: artistId)
+        .task {
+            await vm.load(artistId: artistId)
         }
     }
 }

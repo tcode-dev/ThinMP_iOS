@@ -21,18 +21,17 @@ final class MainViewModel {
     }
 
     /// 非表示にしているセクションは読まない
-    @discardableResult
-    func load() -> Task<Void, Never> {
-        return loadTask.run { [mainService] in
+    func load() async {
+        await loadTask.run {
             let settings = mainService.loadSettings()
             let shortcuts = settings.isShortcutVisible ? await mainService.findShortcuts() : []
             let albums = settings.isRecentlyVisible ? await mainService.findRecentlyAlbums() : []
 
             return (settings, shortcuts, albums)
-        } apply: { [weak self] settings, shortcuts, albums in
-            self?.settings = settings
-            self?.shortcuts = shortcuts
-            self?.albums = albums
+        } apply: { settings, shortcuts, albums in
+            self.settings = settings
+            self.shortcuts = shortcuts
+            self.albums = albums
         }
     }
 }

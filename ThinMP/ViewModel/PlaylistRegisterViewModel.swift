@@ -26,12 +26,11 @@ final class PlaylistRegisterViewModel {
         self.playlistRepository = playlistRepository
     }
 
-    @discardableResult
-    func load() -> Task<Void, Never> {
-        return loadTask.run { [playlistsService] in
+    func load() async {
+        await loadTask.run {
             await playlistsService.findAll()
-        } apply: { [weak self] playlists in
-            self?.playlists = playlists
+        } apply: { playlists in
+            self.playlists = playlists
         }
     }
 

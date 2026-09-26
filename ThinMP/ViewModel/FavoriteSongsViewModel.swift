@@ -24,12 +24,11 @@ final class FavoriteSongsViewModel {
         self.favoriteSongRepository = favoriteSongRepository
     }
 
-    @discardableResult
-    func load() -> Task<Void, Never> {
-        return loadTask.run { [favoriteSongsService] in
+    func load() async {
+        await loadTask.run {
             await favoriteSongsService.findAll()
-        } apply: { [weak self] songs in
-            self?.songs = songs
+        } apply: { songs in
+            self.songs = songs
         }
     }
 

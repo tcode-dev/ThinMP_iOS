@@ -20,8 +20,8 @@ struct FavoriteSongsEditPageView: View {
                 }
             }
         }
-        .onAppear {
-            vm.load()
+        .task {
+            await vm.load()
         }
     }
 }

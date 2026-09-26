@@ -26,13 +26,12 @@ final class PlaylistDetailViewModel {
         self.playlistRepository = playlistRepository
     }
 
-    @discardableResult
-    func load(playlistId: PlaylistId) -> Task<Void, Never> {
-        return loadTask.run { [playlistDetailService] in
+    func load(playlistId: PlaylistId) async {
+        await loadTask.run {
             await playlistDetailService.findById(playlistId: playlistId)
-        } apply: { [weak self] playlist in
+        } apply: { playlist in
             if let playlist {
-                self?.playlist = playlist
+                self.playlist = playlist
             }
         }
     }

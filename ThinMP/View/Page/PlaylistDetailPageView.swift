@@ -16,7 +16,7 @@ struct PlaylistDetailPageView: View {
     let playlistId: PlaylistId
 
     var body: some View {
-        ScrollPageLayout(playlistRegisterSongId: $playlistRegisterSongId, onPlayerDismiss: { vm.load(playlistId: playlistId) }) { geometry in
+        ScrollPageLayout(playlistRegisterSongId: $playlistRegisterSongId, onPlayerDismiss: { Task { await vm.load(playlistId: playlistId) } }) { geometry in
             HeroNavBarView(width: geometry.size.width, top: geometry.safeAreaInsets.top, isScrolledUnder: isScrolledUnder) {
                 if let playlist = vm.playlist {
                     TitleView(playlist.primaryText)
@@ -43,8 +43,8 @@ struct PlaylistDetailPageView: View {
             }
             SongListView(songs: vm.playlist?.songs ?? []) { playlistRegisterSongId = $0 }
         }
-        .onAppear {
-            vm.load(playlistId: playlistId)
+        .task {
+            await vm.load(playlistId: playlistId)
         }
     }
 }

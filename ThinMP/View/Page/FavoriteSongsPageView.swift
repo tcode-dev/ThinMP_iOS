@@ -14,7 +14,7 @@ struct FavoriteSongsPageView: View {
     @State private var playlistRegisterSongId: SongId?
 
     var body: some View {
-        ScrollPageLayout(playlistRegisterSongId: $playlistRegisterSongId, onPlayerDismiss: { vm.load() }) { geometry in
+        ScrollPageLayout(playlistRegisterSongId: $playlistRegisterSongId, onPlayerDismiss: { Task { await vm.load() } }) { geometry in
             ListNavBarView(titleKey: LabelConstant.favoriteSongs, top: geometry.safeAreaInsets.top, isScrolledUnder: isScrolledUnder) {
                 EditButtonView {
                     FavoriteSongsEditPageView()
@@ -22,10 +22,10 @@ struct FavoriteSongsPageView: View {
             }
         } content: { geometry in
             ListEmptyHeaderView(isScrolledUnder: $isScrolledUnder, top: geometry.safeAreaInsets.top)
-            SongListView(songs: vm.songs ?? [], onFavoriteChange: { vm.load() }) { playlistRegisterSongId = $0 }
+            SongListView(songs: vm.songs ?? [], onFavoriteChange: { Task { await vm.load() } }) { playlistRegisterSongId = $0 }
         }
-        .onAppear {
-            vm.load()
+        .task {
+            await vm.load()
         }
     }
 }

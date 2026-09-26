@@ -24,12 +24,11 @@ final class PlaylistsViewModel {
         self.playlistRepository = playlistRepository
     }
 
-    @discardableResult
-    func load() -> Task<Void, Never> {
-        return loadTask.run { [playlistsService] in
+    func load() async {
+        await loadTask.run {
             await playlistsService.findAll()
-        } apply: { [weak self] playlists in
-            self?.playlists = playlists
+        } apply: { playlists in
+            self.playlists = playlists
         }
     }
 
@@ -44,8 +43,8 @@ final class PlaylistsViewModel {
     }
 
     /// 一覧のコンテキストメニューから削除して読み直す
-    func delete(playlistId: PlaylistId) {
+    func delete(playlistId: PlaylistId) async {
         playlistRepository.delete(playlistId: playlistId)
-        load()
+        await load()
     }
 }

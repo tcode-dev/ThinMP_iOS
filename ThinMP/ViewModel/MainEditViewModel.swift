@@ -31,12 +31,11 @@ final class MainEditViewModel {
         self.shortcutRepository = shortcutRepository
     }
 
-    @discardableResult
-    func load() -> Task<Void, Never> {
-        return loadTask.run { [mainService] in
+    func load() async {
+        await loadTask.run {
             await (mainService.loadSettings(), mainService.findShortcuts())
-        } apply: { [weak self] settings, shortcuts in
-            self?.draft = Draft(settings: settings, shortcuts: shortcuts)
+        } apply: { settings, shortcuts in
+            self.draft = Draft(settings: settings, shortcuts: shortcuts)
         }
     }
 
