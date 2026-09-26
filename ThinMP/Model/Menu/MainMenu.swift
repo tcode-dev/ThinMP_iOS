@@ -5,6 +5,8 @@
 //  Created by tk on 2026/09/22.
 //
 
+import Foundation
+
 /// メインページに並ぶライブラリのメニュー
 /// rawValue は並び順と表示 / 非表示のキーとして UserDefaults に保存されているので変更しない
 /// allCases の順が初期状態の並び順
@@ -16,16 +18,15 @@ enum MainMenu: String, CaseIterable {
     case favoriteSongs = "FavoriteSongs"
     case playlists = "Playlists"
 
-    /// 表示名。Localizable.strings のキー
-    /// rawValue と同じ文字列だが、あちらはストアのキーなので LabelConstant を単一の出どころにする
-    var label: String {
+    /// 表示名。rawValue はストアのキーなので、表示には使わない
+    var label: LocalizedStringResource {
         switch self {
-        case .artists: return LabelConstant.artists
-        case .albums: return LabelConstant.albums
-        case .songs: return LabelConstant.songs
-        case .favoriteArtists: return LabelConstant.favoriteArtists
-        case .favoriteSongs: return LabelConstant.favoriteSongs
-        case .playlists: return LabelConstant.playlists
+        case .artists: return .artists
+        case .albums: return .albums
+        case .songs: return .songs
+        case .favoriteArtists: return .favoriteArtists
+        case .favoriteSongs: return .favoriteSongs
+        case .playlists: return .playlists
         }
     }
 }

@@ -38,7 +38,7 @@ struct PlaylistDetailPageView: View {
                 }
             } secondaryText: {
                 if vm.playlist != nil {
-                    SecondaryTextView(key: LabelConstant.playlist)
+                    SecondaryTextView(label: .playlist)
                 }
             }
             SongListView(songs: vm.playlist?.songs ?? []) { playlistRegisterSongId = $0 }

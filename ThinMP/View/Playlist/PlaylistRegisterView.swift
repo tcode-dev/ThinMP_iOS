@@ -27,11 +27,11 @@ struct PlaylistRegisterView: View {
                         Button(action: {
                             isCreateFormShown = true
                         }) {
-                            Text(label: LabelConstant.newPlaylist)
+                            Text(.newPlaylist)
                         }
                         Spacer()
                         Button(action: onClose) {
-                            Text(label: LabelConstant.cancel)
+                            Text(.cancel)
                         }
                         Spacer()
                     }
@@ -56,7 +56,7 @@ struct PlaylistRegisterView: View {
                 .frame(height: contentHeight)
             } else {
                 VStack(spacing: 0) {
-                    Text(label: LabelConstant.playlistName)
+                    Text(.playlistName)
                         .frame(height: StyleConstant.Height.row)
                     TextField("", text: $name)
                         .textFieldStyle(.roundedBorder)
@@ -66,7 +66,7 @@ struct PlaylistRegisterView: View {
                             vm.create(songId: songId, name: trimmedName)
                             onClose()
                         }) {
-                            Text(label: LabelConstant.done)
+                            Text(.done)
                         }
                         .disabled(trimmedName.isEmpty)
                         Spacer()
@@ -77,7 +77,7 @@ struct PlaylistRegisterView: View {
                                 isCreateFormShown = false
                             }
                         }) {
-                            Text(label: LabelConstant.cancel)
+                            Text(.cancel)
                         }
                         Spacer()
                     }

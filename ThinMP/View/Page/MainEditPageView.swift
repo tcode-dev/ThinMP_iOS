@@ -15,13 +15,13 @@ struct MainEditPageView: View {
             List {
                 if let draft = Binding($vm.draft) {
                     ForEach(draft.settings.menus) { $setting in
-                        MenuEditRowView(key: setting.menu.label, isVisible: $setting.isVisible)
+                        MenuEditRowView(label: setting.menu.label, isVisible: $setting.isVisible)
                     }
                     .onMove(perform: moveMenu)
                     .listRowInsets(.init())
-                    MenuEditRowView(key: LabelConstant.shortcut, isVisible: draft.settings.isShortcutVisible).listRowInsets(.init())
-                    MenuEditRowView(key: LabelConstant.recentlyAdded, isVisible: draft.settings.isRecentlyVisible).listRowInsets(.init())
-                    SectionTitleView(key: LabelConstant.shortcut).padding(StyleConstant.Padding.tiny)
+                    MenuEditRowView(label: .shortcut, isVisible: draft.settings.isShortcutVisible).listRowInsets(.init())
+                    MenuEditRowView(label: .recentlyAdded, isVisible: draft.settings.isRecentlyVisible).listRowInsets(.init())
+                    SectionTitleView(label: .shortcut).padding(StyleConstant.Padding.tiny)
                     ReorderableListView(items: draft.shortcuts) { shortcut in
                         ShortcutRowView(shortcut: shortcut)
                     }

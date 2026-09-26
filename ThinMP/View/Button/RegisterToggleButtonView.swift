@@ -17,8 +17,8 @@ struct RegisterToggleButtonView: View {
     /// 保存通知のたびに進めて body を作り直させる
     @State private var revision = 0
 
-    let addLabel: String
-    let removeLabel: String
+    let addLabel: LocalizedStringResource
+    let removeLabel: LocalizedStringResource
     let exists: () -> Bool
     /// 登録 / 解除を切り替える
     let toggle: () -> Void
@@ -30,7 +30,7 @@ struct RegisterToggleButtonView: View {
             toggle()
             onToggle()
         }) {
-            Text(label: isRegistered ? removeLabel : addLabel)
+            Text(isRegistered ? removeLabel : addLabel)
         }
         .onReceive(NotificationCenter.default.publisher(for: SwiftDataStore.didSave)) { _ in
             revision += 1

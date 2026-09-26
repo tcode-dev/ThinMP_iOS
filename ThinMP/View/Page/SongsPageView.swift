@@ -15,7 +15,7 @@ struct SongsPageView: View {
 
     var body: some View {
         ScrollPageLayout(playlistRegisterSongId: $playlistRegisterSongId) { geometry in
-            ListNavBarView(titleKey: LabelConstant.songs, top: geometry.safeAreaInsets.top, isScrolledUnder: isScrolledUnder)
+            ListNavBarView(title: .songs, top: geometry.safeAreaInsets.top, isScrolledUnder: isScrolledUnder)
         } content: { geometry in
             ListEmptyHeaderView(isScrolledUnder: $isScrolledUnder, top: geometry.safeAreaInsets.top)
             SongListView(songs: vm.songs) { playlistRegisterSongId = $0 }

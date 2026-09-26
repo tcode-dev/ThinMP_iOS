@@ -15,7 +15,7 @@ struct ShortcutRowView: View {
             ShortcutImageView(shortcut: shortcut, size: StyleConstant.thumbnail)
             VStack(alignment: .leading) {
                 PrimaryTextView(shortcut.primaryText)
-                SecondaryTextView(key: shortcut.target.type.label)
+                SecondaryTextView(label: shortcut.target.type.label)
             }
             Spacer()
         }

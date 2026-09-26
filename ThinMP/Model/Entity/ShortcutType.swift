@@ -5,6 +5,8 @@
 //  Created by tk on 2026/09/21.
 //
 
+import Foundation
+
 /// rawValue はストアに保存されているので変更しない
 nonisolated enum ShortcutType: Int {
     case artist = 1
@@ -13,12 +15,12 @@ nonisolated enum ShortcutType: Int {
 }
 
 nonisolated extension ShortcutType {
-    /// 表示名。Localizable.strings のキー
-    var label: String {
+    /// 表示名
+    var label: LocalizedStringResource {
         switch self {
-        case .artist: return LabelConstant.artist
-        case .album: return LabelConstant.album
-        case .playlist: return LabelConstant.playlist
+        case .artist: return .artist
+        case .album: return .album
+        case .playlist: return .playlist
         }
     }
 }

@@ -27,7 +27,7 @@ struct SongListView: View {
                     Button(action: {
                         onAddPlaylist(song.songId)
                     }) {
-                        Text(label: LabelConstant.addPlaylist)
+                        Text(.addPlaylist)
                     }
                 }
                 Divider()

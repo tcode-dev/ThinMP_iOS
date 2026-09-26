@@ -13,7 +13,7 @@ struct MainMenuButtonView: View {
 
     var body: some View {
         NavigationLink(value: menu) {
-            MenuRowView(key: menu.label)
+            MenuRowView(label: menu.label)
         }
     }
 }

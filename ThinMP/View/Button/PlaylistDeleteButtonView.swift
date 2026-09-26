@@ -13,7 +13,7 @@ struct PlaylistDeleteButtonView: View {
 
     var body: some View {
         Button(role: .destructive, action: action) {
-            Text(label: LabelConstant.removePlaylist)
+            Text(.removePlaylist)
         }
     }
 }
