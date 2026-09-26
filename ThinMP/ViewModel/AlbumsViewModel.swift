@@ -5,10 +5,11 @@
 //  Created by tk on 2020/01/10.
 //
 
-import Combine
+import Observation
 
-final class AlbumsViewModel: ObservableObject {
-    @Published private(set) var albums: [AlbumModel] = []
+@Observable
+final class AlbumsViewModel {
+    private(set) var albums: [AlbumModel] = []
 
     private let albumsService: AlbumsServiceProtocol
     private let loadTask = LoadTask()

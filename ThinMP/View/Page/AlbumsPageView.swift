@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AlbumsPageView: View {
-    @StateObject private var vm = AlbumsViewModel()
+    @State private var vm = AlbumsViewModel()
     @State private var isScrolledUnder = false
 
     var body: some View {

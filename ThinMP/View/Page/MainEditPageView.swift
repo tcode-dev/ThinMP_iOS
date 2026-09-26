@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MainEditPageView: View {
-    @StateObject private var vm = MainEditViewModel()
+    @State private var vm = MainEditViewModel()
 
     var body: some View {
         EditPageLayout(isDoneEnabled: vm.draft != nil, onDone: vm.save) {

@@ -5,9 +5,10 @@
 //  Created by tk on 2021/06/19.
 //
 
-import Combine
+import Observation
 
-final class MainEditViewModel: ObservableObject {
+@Observable
+final class MainEditViewModel {
     /// 編集ページでそのまま書き換え、save() でまとめて保存する内容
     /// 表示設定とショートカットは一緒に読み込むので、片方だけある状態を作らないように 1 つにまとめる
     struct Draft {
@@ -16,7 +17,7 @@ final class MainEditViewModel: ObservableObject {
     }
 
     /// 読み込む前は nil。nil のあいだは保存を受け付けない
-    @Published var draft: Draft?
+    var draft: Draft?
 
     private let mainService: MainServiceProtocol
     private let shortcutRepository: ShortcutRepositoryProtocol

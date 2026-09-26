@@ -5,12 +5,13 @@
 //  Created by tk on 2021/05/07.
 //
 
-import Combine
+import Observation
 
-final class MainViewModel: ObservableObject {
-    @Published private(set) var settings = MainSettings.empty
-    @Published private(set) var shortcuts: [ShortcutModel] = []
-    @Published private(set) var albums: [AlbumModel] = []
+@Observable
+final class MainViewModel {
+    private(set) var settings = MainSettings.empty
+    private(set) var shortcuts: [ShortcutModel] = []
+    private(set) var albums: [AlbumModel] = []
 
     private let mainService: MainServiceProtocol
     private let loadTask = LoadTask()

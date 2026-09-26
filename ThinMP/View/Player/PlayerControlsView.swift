@@ -12,7 +12,7 @@ struct PlayerControlsView: View {
     private let sideButtonSize: CGFloat = 88
     private let playPauseButtonSize: CGFloat = 100
 
-    @EnvironmentObject private var musicPlayer: MusicPlayer
+    @Environment(MusicPlayer.self) private var musicPlayer
 
     var body: some View {
         HStack {

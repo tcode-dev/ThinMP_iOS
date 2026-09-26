@@ -5,10 +5,11 @@
 //  Created by tk on 2020/01/05.
 //
 
-import Combine
+import Observation
 
-final class ArtistsViewModel: ObservableObject {
-    @Published private(set) var artists: [ArtistModel] = []
+@Observable
+final class ArtistsViewModel {
+    private(set) var artists: [ArtistModel] = []
 
     private let artistsService: ArtistsServiceProtocol
     private let loadTask = LoadTask()

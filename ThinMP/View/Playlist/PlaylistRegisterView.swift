@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PlaylistRegisterView: View {
-    @StateObject private var vm = PlaylistRegisterViewModel()
+    @State private var vm = PlaylistRegisterViewModel()
     /// 新しいプレイリストの作成フォームを出しているか。false なら既存のプレイリストの一覧
     @State private var isCreateFormShown: Bool = false
     @State private var name: String = ""

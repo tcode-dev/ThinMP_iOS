@@ -5,11 +5,12 @@
 //  Created by tk on 2021/02/23.
 //
 
-import Combine
+import Observation
 
-final class FavoriteSongsViewModel: ObservableObject {
+@Observable
+final class FavoriteSongsViewModel {
     /// 読み込む前は nil。編集ページは nil のあいだ保存を受け付けない
-    @Published var songs: [SongModel]?
+    var songs: [SongModel]?
 
     private let favoriteSongsService: FavoriteSongsServiceProtocol
     private let favoriteSongRepository: FavoriteSongRepositoryProtocol

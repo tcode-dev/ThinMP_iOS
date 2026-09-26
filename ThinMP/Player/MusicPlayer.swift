@@ -6,21 +6,23 @@
 //
 
 import MediaPlayer
+import Observation
 
 /// 通知は OperationQueue.main、Timer はメインの RunLoop で届くので、ブロックの中では MainActor.assumeIsolated で自分のメソッドを呼ぶ
-final class MusicPlayer: ObservableObject {
+@Observable
+final class MusicPlayer {
     /// 再生位置がここまでなら prev() で前の曲へ、過ぎていれば曲の先頭へ戻る
     private let prevThresholdSecond: Double = 3
 
-    @Published private(set) var isPlaying: Bool = false
-    @Published private(set) var song: SongModel?
+    private(set) var isPlaying: Bool = false
+    private(set) var song: SongModel?
     /// 再生位置のスライダーが Binding で書き換えるので、これだけは外から書ける
-    @Published var currentSecond: Double = 0
-    @Published private(set) var durationSecond: Double = 1
-    @Published private(set) var repeatMode: MPMusicRepeatMode = .none
-    @Published private(set) var isShuffle: Bool = false
-    @Published private(set) var isFavoriteArtist: Bool = false
-    @Published private(set) var isFavoriteSong: Bool = false
+    var currentSecond: Double = 0
+    private(set) var durationSecond: Double = 1
+    private(set) var repeatMode: MPMusicRepeatMode = .none
+    private(set) var isShuffle: Bool = false
+    private(set) var isFavoriteArtist: Bool = false
+    private(set) var isFavoriteSong: Bool = false
 
     /// 再生する曲があるか
     var isActive: Bool {
@@ -31,12 +33,12 @@ final class MusicPlayer: ObservableObject {
     private let favoriteArtistRepository: FavoriteArtistRepositoryProtocol
     private let favoriteSongRepository: FavoriteSongRepositoryProtocol
     private let player: MPMusicPlayerController
-    private var timer: Timer?
+    @ObservationIgnored private var timer: Timer?
     /// 再生画面が表示されている間だけ true。true かつ再生中のときだけ timer を回す
-    private var isProgressActive = false
+    @ObservationIgnored private var isProgressActive = false
     /// スライダーを掴んでいる間は true。timer が currentSecond を上書きしないようにする
-    private var isSeeking = false
-    private var observers: [NSObjectProtocol] = []
+    @ObservationIgnored private var isSeeking = false
+    @ObservationIgnored private var observers: [NSObjectProtocol] = []
 
     init(
         playerConfig: PlayerConfig = PlayerConfig(),

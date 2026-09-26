@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ArtistDetailPageView: View {
-    @StateObject private var vm = ArtistDetailViewModel()
+    @State private var vm = ArtistDetailViewModel()
     @State private var isScrolledUnder = false
     /// プレイリスト登録ポップアップを出している曲。nil ならポップアップは閉じている
     @State private var playlistRegisterSongId: SongId?

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PlaylistsPageView: View {
-    @StateObject private var vm = PlaylistsViewModel()
+    @State private var vm = PlaylistsViewModel()
     @State private var isScrolledUnder = false
 
     var body: some View {

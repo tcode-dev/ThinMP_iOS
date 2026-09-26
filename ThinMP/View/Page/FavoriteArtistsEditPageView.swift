@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct FavoriteArtistsEditPageView: View {
-    @StateObject private var vm = FavoriteArtistsViewModel()
+    @State private var vm = FavoriteArtistsViewModel()
 
     var body: some View {
         EditPageLayout(isDoneEnabled: vm.artists != nil, onDone: vm.save) {

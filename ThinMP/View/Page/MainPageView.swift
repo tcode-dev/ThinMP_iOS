@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MainPageView: View {
-    @StateObject private var vm = MainViewModel()
+    @State private var vm = MainViewModel()
 
     var body: some View {
         GeometryReader { geometry in

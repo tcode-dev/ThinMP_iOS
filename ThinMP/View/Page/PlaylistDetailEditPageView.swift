@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PlaylistDetailEditPageView: View {
-    @StateObject private var vm = PlaylistDetailViewModel()
+    @State private var vm = PlaylistDetailViewModel()
     @State private var name: String
     @FocusState private var isNameFocused: Bool
 

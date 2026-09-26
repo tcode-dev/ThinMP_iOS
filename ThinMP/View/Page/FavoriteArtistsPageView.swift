@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct FavoriteArtistsPageView: View {
-    @StateObject private var vm = FavoriteArtistsViewModel()
+    @State private var vm = FavoriteArtistsViewModel()
     @State private var isScrolledUnder = false
 
     var body: some View {

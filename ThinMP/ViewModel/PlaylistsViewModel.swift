@@ -5,11 +5,12 @@
 //  Created by tk on 2021/04/09.
 //
 
-import Combine
+import Observation
 
-final class PlaylistsViewModel: ObservableObject {
+@Observable
+final class PlaylistsViewModel {
     /// 読み込む前は nil。編集ページは nil のあいだ保存を受け付けない
-    @Published var playlists: [PlaylistModel]?
+    var playlists: [PlaylistModel]?
 
     private let playlistsService: PlaylistsServiceProtocol
     private let playlistRepository: PlaylistRepositoryProtocol

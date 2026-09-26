@@ -14,11 +14,11 @@ struct PlayerSeekBarView: View {
     private let timePadding: CGFloat = 40
     private let sliderPadding: CGFloat = StyleConstant.isPad ? 40 : 30
 
-    @EnvironmentObject private var musicPlayer: MusicPlayer
+    @Environment(MusicPlayer.self) private var musicPlayer
 
     var body: some View {
         VStack(spacing: 0) {
-            Slider(value: $musicPlayer.currentSecond, in: 0 ... musicPlayer.durationSecond, step: 1, onEditingChanged: { editing in
+            Slider(value: Bindable(musicPlayer).currentSecond, in: 0 ... musicPlayer.durationSecond, step: 1, onEditingChanged: { editing in
                 if editing {
                     musicPlayer.beginSeek()
                 } else {

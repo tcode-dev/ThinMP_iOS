@@ -5,13 +5,14 @@
 //  Created by tk on 2021/04/11.
 //
 
-import Combine
+import Observation
 
-final class PlaylistDetailViewModel: ObservableObject {
+@Observable
+final class PlaylistDetailViewModel {
     /// 読み込む前と、削除済みで見つからなかったときは nil。編集ページは nil のあいだ保存を受け付けない
     /// 読み直して削除済みだったときは前の値を残す。画面が一瞬空になるのを避けるため
     /// 編集ページは songs を直接並べ替える
-    @Published var playlist: PlaylistDetailModel?
+    var playlist: PlaylistDetailModel?
 
     private let playlistDetailService: PlaylistDetailServiceProtocol
     private let playlistRepository: PlaylistRepositoryProtocol

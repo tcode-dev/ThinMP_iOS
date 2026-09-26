@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PlaylistsEditPageView: View {
-    @StateObject private var vm = PlaylistsViewModel()
+    @State private var vm = PlaylistsViewModel()
 
     var body: some View {
         EditPageLayout(isDoneEnabled: vm.playlists != nil, onDone: vm.save) {
