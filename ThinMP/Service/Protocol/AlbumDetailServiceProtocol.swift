@@ -6,5 +6,6 @@
 //
 
 nonisolated protocol AlbumDetailServiceProtocol: Sendable {
+    @concurrent
     func findById(albumId: AlbumId) async -> AlbumDetailModel?
 }

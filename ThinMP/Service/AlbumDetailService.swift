@@ -18,15 +18,14 @@ nonisolated struct AlbumDetailService: AlbumDetailServiceProtocol {
     }
 
     /// ライブラリを引くのでバックグラウンドで行う
+    @concurrent
     func findById(albumId: AlbumId) async -> AlbumDetailModel? {
-        return await Task.detached(priority: .userInitiated) { [albumRepository, songRepository] in
-            guard let album = albumRepository.findById(albumId: albumId) else {
-                return nil
-            }
+        guard let album = albumRepository.findById(albumId: albumId) else {
+            return nil
+        }
 
-            let songs = songRepository.findByAlbumId(albumId: albumId)
+        let songs = songRepository.findByAlbumId(albumId: albumId)
 
-            return AlbumDetailModel(albumId: album.albumId, primaryText: album.primaryText, secondaryText: album.secondaryText, artwork: album.artwork, songs: songs)
-        }.value
+        return AlbumDetailModel(albumId: album.albumId, primaryText: album.primaryText, secondaryText: album.secondaryText, artwork: album.artwork, songs: songs)
     }
 }

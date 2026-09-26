@@ -13,9 +13,8 @@ nonisolated struct SongsService: SongsServiceProtocol {
     }
 
     /// ライブラリ全件を取るのでバックグラウンドで行う
+    @concurrent
     func findAll() async -> [SongModel] {
-        return await Task.detached(priority: .userInitiated) { [repository] in
-            repository.findAll()
-        }.value
+        return repository.findAll()
     }
 }

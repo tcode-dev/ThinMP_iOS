@@ -6,5 +6,6 @@
 //
 
 nonisolated protocol SongsServiceProtocol: Sendable {
+    @concurrent
     func findAll() async -> [SongModel]
 }

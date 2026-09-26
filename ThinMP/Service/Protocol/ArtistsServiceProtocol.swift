@@ -6,5 +6,6 @@
 //
 
 nonisolated protocol ArtistsServiceProtocol: Sendable {
+    @concurrent
     func findAll() async -> [ArtistModel]
 }
