@@ -9,6 +9,7 @@ import Foundation
 import Testing
 @testable import ThinMP
 
+@MainActor
 struct OptionalTests {
     @Test
     func orUnknownKeepsTheText() {

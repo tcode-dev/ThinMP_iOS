@@ -5,6 +5,6 @@
 //  Created by tk on 2021/07/25.
 //
 
-protocol ArtistsServiceProtocol: Sendable {
+nonisolated protocol ArtistsServiceProtocol: Sendable {
     func findAll() async -> [ArtistModel]
 }

@@ -6,13 +6,13 @@
 //
 
 /// ショートカットが指す先。種別と id の組み合わせを型で保証する
-enum ShortcutTarget: Hashable {
+nonisolated enum ShortcutTarget: Hashable {
     case artist(ArtistId)
     case album(AlbumId)
     case playlist(PlaylistId)
 }
 
-extension ShortcutTarget {
+nonisolated extension ShortcutTarget {
     /// ストアの行から作る
     /// type が不明な行と、アーティスト / アルバムなのに itemId が persistentID として読めない行は nil にして落とす
     init?(itemId: String, type rawType: Int) {

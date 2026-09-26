@@ -7,7 +7,7 @@
 
 import MediaPlayer
 
-struct AlbumModel: MediaProtocol, Identifiable {
+nonisolated struct AlbumModel: MediaProtocol, Identifiable {
     let albumId: AlbumId
     let primaryText: String?
     let secondaryText: String?
@@ -17,7 +17,7 @@ struct AlbumModel: MediaProtocol, Identifiable {
     }
 }
 
-extension AlbumModel {
+nonisolated extension AlbumModel {
     /// MPMediaQuery.albums() のコレクションから作る。代表アイテムが無いコレクションは nil
     init?(collection: MPMediaItemCollection) {
         guard let item = collection.representativeItem else {

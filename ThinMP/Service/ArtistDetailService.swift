@@ -5,7 +5,7 @@
 //  Created by tk on 2021/05/31.
 //
 
-struct ArtistDetailService: ArtistDetailServiceProtocol {
+nonisolated struct ArtistDetailService: ArtistDetailServiceProtocol {
     private let artistRepository: ArtistRepositoryProtocol
     private let albumRepository: AlbumRepositoryProtocol
     private let songRepository: SongRepositoryProtocol

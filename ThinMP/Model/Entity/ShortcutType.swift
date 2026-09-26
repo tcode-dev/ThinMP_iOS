@@ -6,13 +6,13 @@
 //
 
 /// rawValue はストアに保存されているので変更しない
-enum ShortcutType: Int {
+nonisolated enum ShortcutType: Int {
     case artist = 1
     case album = 2
     case playlist = 3
 }
 
-extension ShortcutType {
+nonisolated extension ShortcutType {
     /// 表示名。Localizable.strings のキー
     var label: String {
         switch self {

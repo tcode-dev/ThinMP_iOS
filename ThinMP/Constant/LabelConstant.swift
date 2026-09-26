@@ -5,7 +5,7 @@
 //  Created by tk on 2021/06/11.
 //
 
-enum LabelConstant {
+nonisolated enum LabelConstant {
     static let addFavorites = "AddFavorites"
     static let addPlaylist = "AddPlaylist"
     static let addShortcut = "AddShortcut"

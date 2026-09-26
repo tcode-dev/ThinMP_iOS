@@ -12,8 +12,8 @@ import SwiftData
 /// アプリでは default を使い、テストではインメモリストアに差し替える
 /// Repository は同じ store の context を共有するので、ある Repository の書き込みが別の Repository からすぐ見える
 /// ModelContext はスレッドセーフではないので、この store とそれを使う Repository と、Repository を使う Service / ViewModel は
-/// プロトコルごとメインアクターに隔離している。バックグラウンドから触るとコンパイルエラーになる
-@MainActor
+/// アプリのデフォルトの隔離のままメインアクターに置く。バックグラウンドから触るとコンパイルエラーになる
+/// ライブラリの走査でバックグラウンドに出る Media の Model / Repository / Service だけを nonisolated にしている
 final class SwiftDataStore {
     static let `default` = SwiftDataStore(isStoredInMemoryOnly: false)
     /// save() のたびに投げる。object は保存した store

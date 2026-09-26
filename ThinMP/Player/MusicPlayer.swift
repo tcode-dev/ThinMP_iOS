@@ -7,9 +7,7 @@
 
 import MediaPlayer
 
-/// 通知は OperationQueue.main、Timer はメインの RunLoop で届き、@Published は View から読まれるので
-/// 全体をメインアクターに隔離する。お気に入りの Repository(SwiftData)もここから触る
-@MainActor
+/// 通知は OperationQueue.main、Timer はメインの RunLoop で届くので、ブロックの中では MainActor.assumeIsolated で自分のメソッドを呼ぶ
 final class MusicPlayer: ObservableObject {
     /// 再生位置がここまでなら prev() で前の曲へ、過ぎていれば曲の先頭へ戻る
     private let prevThresholdSecond: Double = 3

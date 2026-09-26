@@ -7,7 +7,7 @@
 
 import MediaPlayer
 
-struct SongRepository: SongRepositoryProtocol {
+nonisolated struct SongRepository: SongRepositoryProtocol {
     func findAll() -> [SongModel] {
         return songs(MPMediaQuery.songs().localItems())
     }

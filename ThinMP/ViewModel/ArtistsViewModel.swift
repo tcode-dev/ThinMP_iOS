@@ -7,7 +7,6 @@
 
 import Combine
 
-@MainActor
 final class ArtistsViewModel: ObservableObject {
     @Published private(set) var artists: [ArtistModel] = []
 

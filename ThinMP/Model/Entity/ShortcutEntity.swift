@@ -6,7 +6,7 @@
 //
 
 /// Repository から返す永続化ストア非依存のショートカット
-struct ShortcutEntity {
+nonisolated struct ShortcutEntity {
     let shortcutId: ShortcutId
     let target: ShortcutTarget
 }

@@ -11,7 +11,6 @@ import SwiftData
 /// お気に入り(アーティスト、曲)の読み書き
 /// 扱うのは mediaId(MPMediaEntityPersistentID を文字列にしたもの)だけで、
 /// ArtistId / SongId との変換はこれを持つ FavoriteArtistRepository / FavoriteSongRepository が行う
-@MainActor
 struct FavoriteRepository<Model: FavoriteDataModel> {
     private let store: SwiftDataStore
 

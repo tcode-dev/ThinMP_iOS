@@ -7,7 +7,6 @@
 
 import Combine
 
-@MainActor
 final class PlaylistsViewModel: ObservableObject {
     /// 読み込む前は nil。編集ページは nil のあいだ保存を受け付けない
     @Published var playlists: [PlaylistModel]?

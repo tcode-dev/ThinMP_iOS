@@ -7,7 +7,6 @@
 
 import Combine
 
-@MainActor
 final class MainEditViewModel: ObservableObject {
     /// 編集ページでそのまま書き換え、save() でまとめて保存する内容
     /// 表示設定とショートカットは一緒に読み込むので、片方だけある状態を作らないように 1 つにまとめる

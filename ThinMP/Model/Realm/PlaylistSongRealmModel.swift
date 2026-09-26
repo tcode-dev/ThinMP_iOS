@@ -8,7 +8,7 @@
 import Foundation
 import RealmSwift
 
-class PlaylistSongRealmModel: Object {
+nonisolated class PlaylistSongRealmModel: Object {
     static let idKey: String = "id"
     static let orderKey: String = "order"
 

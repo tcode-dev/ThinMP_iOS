@@ -7,7 +7,6 @@
 
 import Combine
 
-@MainActor
 final class MainViewModel: ObservableObject {
     @Published private(set) var settings = MainSettings.empty
     @Published private(set) var shortcuts: [ShortcutModel] = []

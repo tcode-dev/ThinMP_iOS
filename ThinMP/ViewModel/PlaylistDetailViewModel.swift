@@ -7,7 +7,6 @@
 
 import Combine
 
-@MainActor
 final class PlaylistDetailViewModel: ObservableObject {
     /// 読み込む前と、削除済みで見つからなかったときは nil。編集ページは nil のあいだ保存を受け付けない
     /// 読み直して削除済みだったときは前の値を残す。画面が一瞬空になるのを避けるため

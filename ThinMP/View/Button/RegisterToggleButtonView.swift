@@ -19,9 +19,9 @@ struct RegisterToggleButtonView: View {
 
     let addLabel: String
     let removeLabel: String
-    let exists: @MainActor () -> Bool
+    let exists: () -> Bool
     /// 登録 / 解除を切り替える
-    let toggle: @MainActor () -> Void
+    let toggle: () -> Void
     /// 登録 / 解除のあとに呼ばれる(一覧の再読み込みなど)
     var onToggle: () -> Void = {}
 

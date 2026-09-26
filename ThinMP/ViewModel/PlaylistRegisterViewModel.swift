@@ -9,7 +9,6 @@ import Combine
 
 /// 曲をプレイリストに登録するモーダル
 /// 曲がすでに登録されているかは、View が各プレイリストの songIds から判定する
-@MainActor
 final class PlaylistRegisterViewModel: ObservableObject {
     /// 読み込む前は nil。空の配列なら「プレイリストが 1 つも無い」
     @Published private(set) var playlists: [PlaylistModel]?

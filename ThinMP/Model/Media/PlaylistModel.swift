@@ -7,7 +7,7 @@
 
 import MediaPlayer
 
-struct PlaylistModel: MediaProtocol, Identifiable {
+nonisolated struct PlaylistModel: MediaProtocol, Identifiable {
     let playlistId: PlaylistId
     let primaryText: String?
     let artwork: MPMediaItemArtwork?
