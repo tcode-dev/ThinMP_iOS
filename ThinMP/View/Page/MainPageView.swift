@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MainPageView: View {
-    @StateObject private var vm = MainViewModel()
+    @State private var vm = MainViewModel()
 
     var body: some View {
         GeometryReader { geometry in
@@ -18,7 +18,7 @@ struct MainPageView: View {
                         VStack(alignment: .leading) {
                             Spacer()
                             HStack {
-                                MainTitleView(key: LabelConstant.library)
+                                MainTitleView(label: .library)
                                 Spacer()
                                 EditButtonView {
                                     MainEditPageView()
@@ -40,26 +40,27 @@ struct MainPageView: View {
                         .padding(.bottom, StyleConstant.Padding.large)
                         if vm.settings.isShortcutVisible, !vm.shortcuts.isEmpty {
                             VStack(alignment: .leading) {
-                                SectionTitleView(key: LabelConstant.shortcut)
+                                SectionTitleView(label: .shortcut)
                                     .padding(.leading, StyleConstant.Padding.large)
-                                ShortcutListView(shortcuts: vm.shortcuts, width: geometry.size.width) { vm.load() }
+                                ShortcutListView(shortcuts: vm.shortcuts, width: geometry.size.width) { Task { await vm.load() } }
                                     .padding(.bottom, StyleConstant.Padding.small)
                             }
                         }
                         if vm.settings.isRecentlyVisible, !vm.albums.isEmpty {
                             VStack(alignment: .leading) {
-                                SectionTitleView(key: LabelConstant.recentlyAdded)
+                                SectionTitleView(label: .recentlyAdded)
                                     .padding(.leading, StyleConstant.Padding.large)
-                                AlbumListView(albums: vm.albums, width: geometry.size.width) { vm.load() }
+                                AlbumListView(albums: vm.albums, width: geometry.size.width) { Task { await vm.load() } }
                                     .padding(.bottom, StyleConstant.Padding.small)
                             }
                         }
                     }
                     MiniPlayerView(bottom: geometry.safeAreaInsets.bottom)
                 }
-                .modifier(PageModifier())
-                .onAppear {
-                    vm.load()
+                .pageStyle()
+                .navigationDestinations()
+                .task {
+                    await vm.load()
                 }
             }
         }

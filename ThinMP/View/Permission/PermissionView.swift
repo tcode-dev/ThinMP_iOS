@@ -23,10 +23,8 @@ struct PermissionView<Content: View>: View {
             VStack(spacing: StyleConstant.Padding.large) {
                 // 許可を求めている間(notDetermined)は何も出さない
                 if status == .denied || status == .restricted {
-                    Text(label: LabelConstant.permission)
-                    Button(action: openSettings) {
-                        Text(label: LabelConstant.openSettings)
-                    }
+                    Text(.permission)
+                    Button(.openSettings, action: openSettings)
                 }
             }
             .padding(.horizontal, StyleConstant.Padding.large)

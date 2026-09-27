@@ -15,7 +15,7 @@ struct ShortcutCellView: View {
         VStack {
             ShortcutImageView(shortcut: shortcut, size: size)
             PrimaryTextView(shortcut.primaryText)
-            SecondaryTextView(key: shortcut.target.type.label)
+            SecondaryTextView(label: shortcut.target.type.label)
         }
         .padding(StyleConstant.Padding.small)
     }

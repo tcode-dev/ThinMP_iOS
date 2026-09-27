@@ -29,7 +29,7 @@ struct EditPageLayout<Content: View>: View {
                 .onTapGesture(perform: onNavBarTap)
                 content()
             }
-            .modifier(PageModifier())
+            .pageStyle()
             .environment(\.editMode, .constant(.active))
         }
     }

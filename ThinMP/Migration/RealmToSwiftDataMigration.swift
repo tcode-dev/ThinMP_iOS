@@ -11,7 +11,6 @@ import RealmSwift
 /// 2026 年のリリースで Realm から SwiftData に移行するための処理
 /// 移行が終わったら Realm ファイルを削除する
 /// 2027 年のリリースでこのファイル、Repository/Realm、Model/Realm、Realm パッケージをまとめて削除する
-@MainActor
 struct RealmToSwiftDataMigration {
     static let migratedKey = "realmToSwiftDataMigrated"
 

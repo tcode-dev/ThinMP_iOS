@@ -5,11 +5,11 @@
 //  Created by tk on 2020/01/10.
 //
 
-import Combine
+import Observation
 
-@MainActor
-final class AlbumsViewModel: ObservableObject {
-    @Published private(set) var albums: [AlbumModel] = []
+@Observable
+final class AlbumsViewModel {
+    private(set) var albums: [AlbumModel] = []
 
     private let albumsService: AlbumsServiceProtocol
     private let loadTask = LoadTask()
@@ -18,12 +18,11 @@ final class AlbumsViewModel: ObservableObject {
         self.albumsService = albumsService
     }
 
-    @discardableResult
-    func load() -> Task<Void, Never> {
-        return loadTask.run { [albumsService] in
+    func load() async {
+        await loadTask.run {
             await albumsService.findAll()
-        } apply: { [weak self] albums in
-            self?.albums = albums
+        } apply: { albums in
+            self.albums = albums
         }
     }
 }

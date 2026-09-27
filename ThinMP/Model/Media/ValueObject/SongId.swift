@@ -7,6 +7,6 @@
 
 import MediaPlayer
 
-struct SongId: Hashable {
+nonisolated struct SongId: Hashable {
     let id: MPMediaEntityPersistentID
 }

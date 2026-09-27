@@ -15,3 +15,10 @@ struct RowModifier: ViewModifier {
             .padding(.horizontal, StyleConstant.Padding.tiny)
     }
 }
+
+extension View {
+    /// 一覧の行共通の大きさにする(RowModifier)
+    func rowStyle() -> some View {
+        return modifier(RowModifier())
+    }
+}

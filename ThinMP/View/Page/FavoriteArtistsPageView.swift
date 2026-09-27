@@ -8,22 +8,22 @@
 import SwiftUI
 
 struct FavoriteArtistsPageView: View {
-    @StateObject private var vm = FavoriteArtistsViewModel()
+    @State private var vm = FavoriteArtistsViewModel()
     @State private var isScrolledUnder = false
 
     var body: some View {
-        ScrollPageLayout(onPlayerDismiss: { vm.load() }) { geometry in
-            ListNavBarView(titleKey: LabelConstant.favoriteArtists, top: geometry.safeAreaInsets.top, isScrolledUnder: isScrolledUnder) {
+        ScrollPageLayout(onPlayerDismiss: { Task { await vm.load() } }) { geometry in
+            ListNavBarView(title: .favoriteArtists, top: geometry.safeAreaInsets.top, isScrolledUnder: isScrolledUnder) {
                 EditButtonView {
                     FavoriteArtistsEditPageView()
                 }
             }
         } content: { geometry in
             ListEmptyHeaderView(isScrolledUnder: $isScrolledUnder, top: geometry.safeAreaInsets.top)
-            ArtistListView(artists: vm.artists ?? []) { vm.load() }
+            ArtistListView(artists: vm.artists ?? []) { Task { await vm.load() } }
         }
-        .onAppear {
-            vm.load()
+        .task {
+            await vm.load()
         }
     }
 }

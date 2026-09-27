@@ -22,7 +22,7 @@ struct PlayerView: View {
     private let backgroundGradientOffset: CGFloat = 25
 
     @Environment(\.scenePhase) private var scenePhase
-    @EnvironmentObject private var musicPlayer: MusicPlayer
+    @Environment(MusicPlayer.self) private var musicPlayer
 
     /// プレイリスト登録ポップアップを出している曲。nil ならポップアップは閉じている
     @State private var playlistRegisterSongId: SongId?

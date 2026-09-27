@@ -30,7 +30,7 @@ struct PlaylistRegisterViewModelTests {
         let service = makeService()
         let vm = PlaylistRegisterViewModel(playlistsService: service)
 
-        await vm.load().value
+        await vm.load()
 
         #expect(vm.playlists?.map { $0.playlistId.id } == ["a", "b"])
         #expect(vm.playlists?.map { $0.songIds } == [[SongId(id: 1), SongId(id: 2)], [SongId(id: 3)]])
@@ -44,7 +44,7 @@ struct PlaylistRegisterViewModelTests {
 
         #expect(vm.playlists == nil)
 
-        await vm.load().value
+        await vm.load()
 
         #expect(vm.playlists?.isEmpty == true)
     }

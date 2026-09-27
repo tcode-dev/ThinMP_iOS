@@ -21,7 +21,7 @@ struct PlaylistsViewModelTests {
     func loadPublishesPlaylists() async {
         let vm = PlaylistsViewModel(playlistsService: makeService())
 
-        await vm.load().value
+        await vm.load()
 
         #expect(vm.playlists?.map { $0.playlistId.id } == ["a", "b"])
     }
@@ -39,7 +39,7 @@ struct PlaylistsViewModelTests {
         let repository = makeRepository()
         let vm = PlaylistsViewModel(playlistsService: makeService(), playlistRepository: repository)
 
-        await vm.load().value
+        await vm.load()
         vm.playlists?.move(fromOffsets: [1], toOffset: 0)
         vm.save()
 
@@ -64,9 +64,8 @@ struct PlaylistsViewModelTests {
         let repository = makeRepository()
         let vm = PlaylistsViewModel(playlistsService: service, playlistRepository: repository)
 
-        await vm.load().value
-        vm.delete(playlistId: PlaylistId(id: "a"))
-        await Task.yield()
+        await vm.load()
+        await vm.delete(playlistId: PlaylistId(id: "a"))
 
         #expect(repository.findAll().map { $0.playlistId } == [PlaylistId(id: "b")])
         #expect(service.findAllCalls == 2)

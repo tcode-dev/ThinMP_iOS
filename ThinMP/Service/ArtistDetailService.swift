@@ -5,7 +5,7 @@
 //  Created by tk on 2021/05/31.
 //
 
-struct ArtistDetailService: ArtistDetailServiceProtocol {
+nonisolated struct ArtistDetailService: ArtistDetailServiceProtocol {
     private let artistRepository: ArtistRepositoryProtocol
     private let albumRepository: AlbumRepositoryProtocol
     private let songRepository: SongRepositoryProtocol
@@ -21,19 +21,18 @@ struct ArtistDetailService: ArtistDetailServiceProtocol {
     }
 
     /// ライブラリを引くのでバックグラウンドで行う
+    @concurrent
     func findById(artistId: ArtistId) async -> ArtistDetailModel? {
-        return await Task.detached(priority: .userInitiated) { [artistRepository, albumRepository, songRepository] in
-            guard let artist = artistRepository.findById(artistId: artistId) else {
-                return nil
-            }
+        guard let artist = artistRepository.findById(artistId: artistId) else {
+            return nil
+        }
 
-            let albums = albumRepository.findByArtistId(artistId: artistId)
-            // 曲は 1 回のクエリで引き、アルバムの並び順に揃える(アルバムごとに引くとアルバム数分クエリが走る)
-            let songsByAlbum = Dictionary(grouping: songRepository.findByArtistId(artistId: artistId)) { $0.albumId }
-            let songs = albums.flatMap { songsByAlbum[$0.albumId] ?? [] }
+        let albums = albumRepository.findByArtistId(artistId: artistId)
+        // 曲は 1 回のクエリで引き、アルバムの並び順に揃える(アルバムごとに引くとアルバム数分クエリが走る)
+        let songsByAlbum = Dictionary(grouping: songRepository.findByArtistId(artistId: artistId)) { $0.albumId }
+        let songs = albums.flatMap { songsByAlbum[$0.albumId] ?? [] }
 
-            return ArtistDetailModel(artistId: artist.artistId, primaryText: artist.primaryText, artwork: albums.firstArtwork, albums: albums, songs: songs)
-        }.value
+        return ArtistDetailModel(artistId: artist.artistId, primaryText: artist.primaryText, artwork: albums.firstArtwork, albums: albums, songs: songs)
     }
 
     /// ショートカット用。アートワークのためにアルバムは引くが、名前とアートワークだけを返す
@@ -43,20 +42,18 @@ struct ArtistDetailService: ArtistDetailServiceProtocol {
     /// 代表アイテムの artistPersistentID で振り分けると、findByArtistId が拾うコンピレーション盤が漏れて
     /// ショートカットの画像が変わってしまうため。件数はショートカットの数までに限られるので、
     /// クエリを減らす利得より画像が変わる影響の方が大きい
+    @concurrent
     func findByIds(artistIds: [ArtistId]) async -> [ArtistSummaryModel] {
-        return await Task.detached(priority: .userInitiated) { [artistRepository, albumRepository] in
-            artistRepository.findByIds(artistIds: artistIds).map { artist in
-                let albums = albumRepository.findByArtistId(artistId: artist.artistId)
+        return artistRepository.findByIds(artistIds: artistIds).map { artist in
+            let albums = albumRepository.findByArtistId(artistId: artist.artistId)
 
-                return ArtistSummaryModel(artistId: artist.artistId, primaryText: artist.primaryText, artwork: albums.firstArtwork)
-            }
-        }.value
+            return ArtistSummaryModel(artistId: artist.artistId, primaryText: artist.primaryText, artwork: albums.firstArtwork)
+        }
     }
 
     /// ライブラリ全件を走査するのでバックグラウンドで行う
+    @concurrent
     func findDeletedIds(artistIds: [ArtistId]) async -> Set<ArtistId> {
-        return await Task.detached(priority: .userInitiated) { [artistRepository] in
-            artistRepository.findDeletedIds(artistIds: artistIds)
-        }.value
+        return artistRepository.findDeletedIds(artistIds: artistIds)
     }
 }

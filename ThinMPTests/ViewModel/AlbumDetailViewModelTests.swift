@@ -15,7 +15,7 @@ struct AlbumDetailViewModelTests {
         let album = AlbumDetailModel(albumId: AlbumId(id: 10), primaryText: "Album", secondaryText: "Artist", artwork: nil, songs: [.fake(id: 1)])
         let vm = AlbumDetailViewModel(albumDetailService: AlbumDetailServiceMock(albums: [album]))
 
-        await vm.load(albumId: AlbumId(id: 10)).value
+        await vm.load(albumId: AlbumId(id: 10))
 
         #expect(vm.album?.primaryText == "Album")
         #expect(vm.album?.secondaryText == "Artist")
@@ -26,7 +26,7 @@ struct AlbumDetailViewModelTests {
     func loadKeepsStateWhenAlbumIsMissing() async {
         let vm = AlbumDetailViewModel(albumDetailService: AlbumDetailServiceMock(albums: []))
 
-        await vm.load(albumId: AlbumId(id: 99)).value
+        await vm.load(albumId: AlbumId(id: 99))
 
         #expect(vm.album == nil)
     }

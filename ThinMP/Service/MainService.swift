@@ -25,9 +25,7 @@ struct MainService: MainServiceProtocol {
     }
 
     func findRecentlyAlbums() async -> [AlbumModel] {
-        return await Task.detached(priority: .userInitiated) { [albumRepository, recentlyAlbumCount] in
-            albumRepository.findRecently(count: recentlyAlbumCount)
-        }.value
+        return await Self.findRecentlyAlbums(count: recentlyAlbumCount, albumRepository: albumRepository)
     }
 
     func findShortcuts() async -> [ShortcutModel] {
@@ -46,5 +44,11 @@ struct MainService: MainServiceProtocol {
         mainMenuConfig.save(settings.menus)
         mainSectionConfig.isShortcutVisible = settings.isShortcutVisible
         mainSectionConfig.isRecentlyVisible = settings.isRecentlyVisible
+    }
+
+    /// ライブラリ全件を走査するのでバックグラウンドで行う
+    @concurrent
+    private static func findRecentlyAlbums(count: Int, albumRepository: AlbumRepositoryProtocol) async -> [AlbumModel] {
+        return albumRepository.findRecently(count: count)
     }
 }

@@ -41,12 +41,7 @@ struct PlaylistDetailService: PlaylistDetailServiceProtocol {
     /// スキャンはバックグラウンドで行い、SwiftData の読み書きだけメインアクターに残す
     private func createModels(playlists: [PlaylistEntity]) async -> [PlaylistDetailModel] {
         let songIds = playlists.flatMap { $0.songIds }.uniqued()
-        let (librarySongs, deletedIds) = await Task.detached(priority: .userInitiated) { [songRepository] in
-            let songs = songRepository.findByIds(songIds: songIds)
-            let foundIds = Set(songs.map { $0.songId })
-
-            return (songs, songRepository.findDeletedIds(songIds: songIds.filter { !foundIds.contains($0) }))
-        }.value
+        let (librarySongs, deletedIds) = await Self.findSongs(songIds: songIds, songRepository: songRepository)
         let songById = librarySongs.keyed { $0.songId }
 
         let models = playlists.map { playlist in
@@ -66,6 +61,15 @@ struct PlaylistDetailService: PlaylistDetailServiceProtocol {
         }
 
         return models
+    }
+
+    /// 見つかった曲と、見つからなかった曲のうちクラウドにも無いもの。ライブラリを走査するのでバックグラウンドで行う
+    @concurrent
+    private static func findSongs(songIds: [SongId], songRepository: SongRepositoryProtocol) async -> ([SongModel], Set<SongId>) {
+        let songs = songRepository.findByIds(songIds: songIds)
+        let foundIds = Set(songs.map { $0.songId })
+
+        return (songs, songRepository.findDeletedIds(songIds: songIds.filter { !foundIds.contains($0) }))
     }
 
     /// 走査の前に読んだ内容で上書きすると、走査中に追加された曲や変えられた名前が消えるので、保存する直前に読み直す

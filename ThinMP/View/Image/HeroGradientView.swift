@@ -12,7 +12,7 @@ import SwiftUI
 struct HeroGradientView: View {
     var body: some View {
         LinearGradient(
-            gradient: Gradient(colors: [Color(UIColor.systemBackground).opacity(0), Color(UIColor.systemBackground)]),
+            colors: [Color(.systemBackground).opacity(0), Color(.systemBackground)],
             startPoint: .top,
             endPoint: .bottom
         )

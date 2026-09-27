@@ -11,17 +11,17 @@ import Testing
 @MainActor
 struct FavoriteSongsViewModelTests {
     @Test
-    func secondLoadCancelsFirstSoStaleResultIsDropped() async {
+    func secondLoadDropsStaleResultOfFirst() async {
         let service = BlockingFavoriteSongsServiceMock()
         let vm = FavoriteSongsViewModel(favoriteSongsService: service)
 
-        let first = vm.load()
+        let first = Task { await vm.load() }
         await Task.yield()
-        let second = vm.load()
+        let second = Task { await vm.load() }
         await Task.yield()
         #expect(service.pendingCount == 2)
 
-        // 古い方が先に完了しても、打ち切られているので結果は捨てられる
+        // 古い方が先に完了しても、後から始めた読み込みがあるので結果は捨てられる
         service.resume(with: [.fake(id: 1)])
         await first.value
         #expect(vm.songs == nil)
@@ -32,13 +32,30 @@ struct FavoriteSongsViewModelTests {
         #expect(vm.songs?.map { $0.songId.id } == [2])
     }
 
+    /// View の .task が打ち切られたときのように、呼び出し元が打ち切られたら結果は捨てる
+    @Test
+    func cancelledLoadDropsResult() async {
+        let service = BlockingFavoriteSongsServiceMock()
+        let vm = FavoriteSongsViewModel(favoriteSongsService: service)
+
+        let task = Task { await vm.load() }
+        await Task.yield()
+        #expect(service.pendingCount == 1)
+
+        task.cancel()
+        service.resume(with: [.fake(id: 1)])
+        await task.value
+
+        #expect(vm.songs == nil)
+    }
+
     @Test
     func saveWritesEditedOrderToRepository() async {
         let repository = FavoriteSongRepositoryMock(songIds: [SongId(id: 1), SongId(id: 2), SongId(id: 3)])
         let service = FavoriteSongsServiceMock(songs: [.fake(id: 1), .fake(id: 2), .fake(id: 3)])
         let vm = FavoriteSongsViewModel(favoriteSongsService: service, favoriteSongRepository: repository)
 
-        await vm.load().value
+        await vm.load()
         vm.songs?.remove(atOffsets: [1])
         vm.songs?.move(fromOffsets: [1], toOffset: 0)
         vm.save()
@@ -54,7 +71,7 @@ struct FavoriteSongsViewModelTests {
         let service = BlockingFavoriteSongsServiceMock()
         let vm = FavoriteSongsViewModel(favoriteSongsService: service, favoriteSongRepository: repository)
 
-        let task = vm.load()
+        let task = Task { await vm.load() }
         await Task.yield()
         #expect(vm.songs == nil)
 

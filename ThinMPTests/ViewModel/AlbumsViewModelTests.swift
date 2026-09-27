@@ -18,7 +18,7 @@ struct AlbumsViewModelTests {
         ])
         let vm = AlbumsViewModel(albumsService: service)
 
-        await vm.load().value
+        await vm.load()
 
         #expect(vm.albums.map { $0.albumId.id } == [1, 2])
         #expect(service.findAllCalls == 1)

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum StyleConstant {
+nonisolated enum StyleConstant {
     /// iPad は余白と比率を少し変える
     @MainActor static var isPad: Bool {
         return UIDevice.current.userInterfaceIdiom == .pad

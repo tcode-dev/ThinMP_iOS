@@ -28,7 +28,7 @@ struct ArtistDetailViewModelTests {
     func loadPublishesArtistDetail() async {
         let vm = ArtistDetailViewModel(artistDetailService: makeService())
 
-        await vm.load(artistId: artistId).value
+        await vm.load(artistId: artistId)
 
         #expect(vm.artist?.primaryText == "Artist")
         #expect(vm.artist?.albums.map { $0.albumId.id } == [1])
@@ -39,7 +39,7 @@ struct ArtistDetailViewModelTests {
     func loadKeepsStateWhenArtistIsMissing() async {
         let vm = ArtistDetailViewModel(artistDetailService: makeService())
 
-        await vm.load(artistId: ArtistId(id: 99)).value
+        await vm.load(artistId: ArtistId(id: 99))
 
         #expect(vm.artist == nil)
     }

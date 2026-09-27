@@ -7,13 +7,13 @@
 
 import MediaPlayer
 
-protocol MediaProtocol {
+nonisolated protocol MediaProtocol {
     var primaryText: String? { get }
     var secondaryText: String? { get }
     var artwork: MPMediaItemArtwork? { get }
 }
 
-extension MediaProtocol {
+nonisolated extension MediaProtocol {
     var secondaryText: String? {
         return nil
     }
@@ -23,7 +23,7 @@ extension MediaProtocol {
     }
 }
 
-extension Sequence where Element: MediaProtocol {
+nonisolated extension Sequence where Element: MediaProtocol {
     /// 最初に見つかったアートワーク。無ければ nil
     /// アーティストやプレイリストは自身がアートワークを持たないので、アルバムや曲から借りるのに使う
     var firstArtwork: MPMediaItemArtwork? {

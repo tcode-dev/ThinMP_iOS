@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PlaylistRegisterView: View {
-    @StateObject private var vm = PlaylistRegisterViewModel()
+    @State private var vm = PlaylistRegisterViewModel()
     /// 新しいプレイリストの作成フォームを出しているか。false なら既存のプレイリストの一覧
     @State private var isCreateFormShown: Bool = false
     @State private var name: String = ""
@@ -24,15 +24,11 @@ struct PlaylistRegisterView: View {
                 VStack(spacing: 0) {
                     HStack {
                         Spacer()
-                        Button(action: {
+                        Button(.newPlaylist) {
                             isCreateFormShown = true
-                        }) {
-                            Text(label: LabelConstant.newPlaylist)
                         }
                         Spacer()
-                        Button(action: onClose) {
-                            Text(label: LabelConstant.cancel)
-                        }
+                        Button(.cancel, action: onClose)
                         Spacer()
                     }
                     .frame(height: StyleConstant.Height.header)
@@ -56,28 +52,24 @@ struct PlaylistRegisterView: View {
                 .frame(height: contentHeight)
             } else {
                 VStack(spacing: 0) {
-                    Text(label: LabelConstant.playlistName)
+                    Text(.playlistName)
                         .frame(height: StyleConstant.Height.row)
                     TextField("", text: $name)
                         .textFieldStyle(.roundedBorder)
                     HStack {
                         Spacer()
-                        Button(action: {
+                        Button(.done) {
                             vm.create(songId: songId, name: trimmedName)
                             onClose()
-                        }) {
-                            Text(label: LabelConstant.done)
                         }
                         .disabled(trimmedName.isEmpty)
                         Spacer()
-                        Button(action: {
+                        Button(.cancel) {
                             if hasNoPlaylists {
                                 onClose()
                             } else {
                                 isCreateFormShown = false
                             }
-                        }) {
-                            Text(label: LabelConstant.cancel)
                         }
                         Spacer()
                     }
@@ -87,11 +79,11 @@ struct PlaylistRegisterView: View {
             }
         }
         .padding(.horizontal, StyleConstant.Padding.small)
-        .background(Color(UIColor.systemGray5))
+        .background(Color(.systemGray5))
         .clipShape(.rect(cornerRadius: StyleConstant.cornerRadius))
         .padding(.horizontal, StyleConstant.Padding.large)
-        .onAppear {
-            vm.load()
+        .task {
+            await vm.load()
         }
     }
 

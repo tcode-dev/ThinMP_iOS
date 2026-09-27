@@ -5,10 +5,10 @@
 //  Created by tk on 2021/06/19.
 //
 
-import Combine
+import Observation
 
-@MainActor
-final class MainEditViewModel: ObservableObject {
+@Observable
+final class MainEditViewModel {
     /// 編集ページでそのまま書き換え、save() でまとめて保存する内容
     /// 表示設定とショートカットは一緒に読み込むので、片方だけある状態を作らないように 1 つにまとめる
     struct Draft {
@@ -17,7 +17,7 @@ final class MainEditViewModel: ObservableObject {
     }
 
     /// 読み込む前は nil。nil のあいだは保存を受け付けない
-    @Published var draft: Draft?
+    var draft: Draft?
 
     private let mainService: MainServiceProtocol
     private let shortcutRepository: ShortcutRepositoryProtocol
@@ -31,12 +31,11 @@ final class MainEditViewModel: ObservableObject {
         self.shortcutRepository = shortcutRepository
     }
 
-    @discardableResult
-    func load() -> Task<Void, Never> {
-        return loadTask.run { [mainService] in
+    func load() async {
+        await loadTask.run {
             await (mainService.loadSettings(), mainService.findShortcuts())
-        } apply: { [weak self] settings, shortcuts in
-            self?.draft = Draft(settings: settings, shortcuts: shortcuts)
+        } apply: { settings, shortcuts in
+            self.draft = Draft(settings: settings, shortcuts: shortcuts)
         }
     }
 

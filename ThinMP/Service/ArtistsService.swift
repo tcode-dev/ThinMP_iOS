@@ -5,7 +5,7 @@
 //  Created by tk on 2021/06/07.
 //
 
-struct ArtistsService: ArtistsServiceProtocol {
+nonisolated struct ArtistsService: ArtistsServiceProtocol {
     private let repository: ArtistRepositoryProtocol
 
     init(repository: ArtistRepositoryProtocol = ArtistRepository()) {
@@ -13,9 +13,8 @@ struct ArtistsService: ArtistsServiceProtocol {
     }
 
     /// ライブラリ全件を取るのでバックグラウンドで行う
+    @concurrent
     func findAll() async -> [ArtistModel] {
-        return await Task.detached(priority: .userInitiated) { [repository] in
-            repository.findAll()
-        }.value
+        return repository.findAll()
     }
 }

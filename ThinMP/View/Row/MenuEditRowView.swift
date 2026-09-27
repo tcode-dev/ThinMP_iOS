@@ -9,13 +9,13 @@ import SwiftUI
 
 /// メイン編集ページの行。タップで表示 / 非表示を切り替える
 struct MenuEditRowView: View {
-    let key: String
+    let label: LocalizedStringResource
     @Binding var isVisible: Bool
 
     var body: some View {
         HStack(alignment: .center) {
             Image(isVisible ? .checkboxOn : .checkboxOff).renderingMode(.original)
-            MenuRowView(key: key)
+            MenuRowView(label: label)
             Spacer()
         }
         .padding(.leading, StyleConstant.Padding.large)
@@ -27,7 +27,7 @@ struct MenuEditRowView: View {
         // onTapGesture だけではボタンとして読まれないので、VoiceOver には 1 つのボタンとして見せる
         // チェックボックスの画像名は読ませず、表示中かどうかは「選択中」で伝える
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel(Text(label: key))
+        .accessibilityLabel(Text(label))
         .accessibilityAddTraits(isVisible ? [.isButton, .isSelected] : .isButton)
         .accessibilityAction {
             isVisible.toggle()

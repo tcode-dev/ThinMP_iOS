@@ -24,6 +24,6 @@ struct MediaRowView: View {
             }
             Spacer()
         }
-        .modifier(RowModifier())
+        .rowStyle()
     }
 }

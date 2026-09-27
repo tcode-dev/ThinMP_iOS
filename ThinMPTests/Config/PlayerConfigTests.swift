@@ -10,6 +10,7 @@ import MediaPlayer
 import Testing
 @testable import ThinMP
 
+@MainActor
 struct PlayerConfigTests {
     @Test
     func defaultsToNoRepeatAndNoShuffle() {

@@ -10,9 +10,9 @@ import SwiftUI
 struct MainTitleView: View {
     private let text: Text
 
-    /// Localizable.strings のキー。Model / Service は翻訳しないので、ラベルの翻訳はここで行う
-    init(key: String) {
-        text = Text(label: key)
+    /// String Catalog のラベル
+    init(label: LocalizedStringResource) {
+        text = Text(label)
     }
 
     var body: some View {

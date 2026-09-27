@@ -10,24 +10,25 @@ import Testing
 @testable import ThinMP
 
 struct LocalizationTests {
-    private func format(_ key: String, language: String, _ arguments: CVarArg...) throws -> String {
-        let path = try #require(Bundle.main.path(forResource: language, ofType: "lproj"))
-        let bundle = try #require(Bundle(path: path))
+    private func string(_ resource: LocalizedStringResource, language: String) -> String {
+        var resource = resource
 
-        return String(format: NSLocalizedString(key, bundle: bundle, comment: ""), locale: Locale(identifier: language), arguments: arguments)
+        resource.locale = Locale(identifier: language)
+
+        return String(localized: resource)
     }
 
-    /// 英語は Localizable.stringsdict で単数 / 複数を出し分ける
+    /// 英語は String Catalog の複数形で単数 / 複数を出し分ける
     @Test
-    func albumsAndSongsCountUsesSingularForOne() throws {
-        #expect(try format(LabelConstant.albumsAndSongsCount, language: "en", 1, 1) == "1 album, 1 song")
-        #expect(try format(LabelConstant.albumsAndSongsCount, language: "en", 2, 1) == "2 albums, 1 song")
-        #expect(try format(LabelConstant.albumsAndSongsCount, language: "en", 0, 12) == "0 albums, 12 songs")
+    func albumsAndSongsCountUsesSingularForOne() {
+        #expect(string(.albumsAndSongsCount(albums: 1, songs: 1), language: "en") == "1 album, 1 song")
+        #expect(string(.albumsAndSongsCount(albums: 2, songs: 1), language: "en") == "2 albums, 1 song")
+        #expect(string(.albumsAndSongsCount(albums: 0, songs: 12), language: "en") == "0 albums, 12 songs")
     }
 
-    /// 日本語は単数 / 複数が無いので Localizable.strings のまま
+    /// 日本語は単数 / 複数が無いので 1 つの文言
     @Test
-    func albumsAndSongsCountInJapanese() throws {
-        #expect(try format(LabelConstant.albumsAndSongsCount, language: "ja", 1, 12) == "1枚のアルバム、12曲")
+    func albumsAndSongsCountInJapanese() {
+        #expect(string(.albumsAndSongsCount(albums: 1, songs: 12), language: "ja") == "1枚のアルバム、12曲")
     }
 }

@@ -18,7 +18,7 @@ struct ArtistsViewModelTests {
         ])
         let vm = ArtistsViewModel(artistsService: service)
 
-        await vm.load().value
+        await vm.load()
 
         #expect(vm.artists.map { $0.artistId.id } == [1, 2])
         #expect(service.findAllCalls == 1)

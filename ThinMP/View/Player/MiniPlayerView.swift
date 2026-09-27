@@ -11,7 +11,7 @@ struct MiniPlayerView: View {
     private let buttonImageSize: CGFloat = 40
     private let buttonSize: CGFloat = 60
 
-    @EnvironmentObject private var musicPlayer: MusicPlayer
+    @Environment(MusicPlayer.self) private var musicPlayer
     @State private var isPlayerPresented: Bool = false
 
     let bottom: CGFloat
@@ -34,7 +34,7 @@ struct MiniPlayerView: View {
                     PlayPauseButtonView(size: buttonImageSize)
                         .frame(width: buttonSize, height: buttonSize)
                     Button(action: musicPlayer.next) {
-                        ButtonImageView(image: .nextButton, label: LabelConstant.next, size: buttonImageSize)
+                        ButtonImageView(image: .nextButton, label: .next, size: buttonImageSize)
                     }
                     .frame(width: buttonSize, height: buttonSize)
                 }

@@ -20,7 +20,7 @@ struct FavoriteArtistsViewModelTests {
 
         #expect(vm.artists == nil)
 
-        await vm.load().value
+        await vm.load()
 
         #expect(vm.artists?.map { $0.artistId.id } == [2, 1])
     }
@@ -34,7 +34,7 @@ struct FavoriteArtistsViewModelTests {
         ])
         let vm = FavoriteArtistsViewModel(favoriteArtistsService: service, favoriteArtistRepository: repository)
 
-        await vm.load().value
+        await vm.load()
         vm.artists?.move(fromOffsets: [1], toOffset: 0)
         vm.save()
 

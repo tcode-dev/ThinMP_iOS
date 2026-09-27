@@ -22,7 +22,7 @@ struct PlaylistDetailViewModelTests {
     func loadPublishesPlaylist() async {
         let vm = PlaylistDetailViewModel(playlistDetailService: makeService())
 
-        await vm.load(playlistId: playlistId).value
+        await vm.load(playlistId: playlistId)
 
         #expect(vm.playlist?.primaryText == "P")
         #expect(vm.playlist?.songs.map { $0.songId.id } == [1, 2, 3])
@@ -32,7 +32,7 @@ struct PlaylistDetailViewModelTests {
     func loadKeepsStateWhenPlaylistIsMissing() async {
         let vm = PlaylistDetailViewModel(playlistDetailService: makeService())
 
-        await vm.load(playlistId: PlaylistId(id: "missing")).value
+        await vm.load(playlistId: PlaylistId(id: "missing"))
 
         #expect(vm.playlist == nil)
     }
@@ -42,7 +42,7 @@ struct PlaylistDetailViewModelTests {
         let repository = PlaylistRepositoryMock(playlists: [PlaylistEntity(playlistId: playlistId, name: "P", songIds: [SongId(id: 1), SongId(id: 2), SongId(id: 3)])])
         let vm = PlaylistDetailViewModel(playlistDetailService: makeService(), playlistRepository: repository)
 
-        await vm.load(playlistId: playlistId).value
+        await vm.load(playlistId: playlistId)
         vm.playlist?.songs.move(fromOffsets: [2], toOffset: 0)
         vm.playlist?.songs.remove(atOffsets: [2])
         vm.save(name: "Renamed")
@@ -72,7 +72,7 @@ struct PlaylistDetailViewModelTests {
         let repository = PlaylistRepositoryMock()
         let vm = PlaylistDetailViewModel(playlistDetailService: makeService(), playlistRepository: repository)
 
-        await vm.load(playlistId: PlaylistId(id: "missing")).value
+        await vm.load(playlistId: PlaylistId(id: "missing"))
         vm.save(name: "Renamed")
 
         #expect(repository.updateCalls.isEmpty)

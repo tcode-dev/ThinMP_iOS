@@ -12,6 +12,7 @@ import Testing
 /// MainMenuConfig と UserDefaults の往復
 /// 保存形式(並び順は rawValue の配列、表示 / 非表示は rawValue をキーにした Bool)は
 /// リリース済みのアプリが書いたものと互換なので、ここで固定する
+@MainActor
 struct MainMenuConfigTests {
     @Test
     func defaultsToAllMenusVisibleInDeclarationOrder() {

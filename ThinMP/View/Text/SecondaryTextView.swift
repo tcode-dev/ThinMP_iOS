@@ -15,16 +15,9 @@ struct SecondaryTextView: View {
         self.text = Text(text.orUnknown)
     }
 
-    /// Localizable.strings のキー。Model / Service は翻訳しないので、ラベルの翻訳はここで行う
-    init(key: String) {
-        text = Text(label: key)
-    }
-
-    /// Localizable.strings の書式のキーと、その書式に埋める引数("%d albums, %d songs" など)
-    /// 単数 / 複数で文言が変わるキーは Localizable.stringsdict にある
-    /// locale を渡さないと stringsdict の単数形が選ばれず "1 albums" になる(LocalizationTests)
-    init(format key: String, _ arguments: CVarArg...) {
-        text = Text(String(format: NSLocalizedString(key, comment: ""), locale: .current, arguments: arguments))
+    /// String Catalog のラベル
+    init(label: LocalizedStringResource) {
+        text = Text(label)
     }
 
     var body: some View {

@@ -5,12 +5,12 @@
 //  Created by tk on 2021/04/09.
 //
 
-import Combine
+import Observation
 
-@MainActor
-final class PlaylistsViewModel: ObservableObject {
+@Observable
+final class PlaylistsViewModel {
     /// 読み込む前は nil。編集ページは nil のあいだ保存を受け付けない
-    @Published var playlists: [PlaylistModel]?
+    var playlists: [PlaylistModel]?
 
     private let playlistsService: PlaylistsServiceProtocol
     private let playlistRepository: PlaylistRepositoryProtocol
@@ -24,12 +24,11 @@ final class PlaylistsViewModel: ObservableObject {
         self.playlistRepository = playlistRepository
     }
 
-    @discardableResult
-    func load() -> Task<Void, Never> {
-        return loadTask.run { [playlistsService] in
+    func load() async {
+        await loadTask.run {
             await playlistsService.findAll()
-        } apply: { [weak self] playlists in
-            self?.playlists = playlists
+        } apply: { playlists in
+            self.playlists = playlists
         }
     }
 
@@ -44,8 +43,8 @@ final class PlaylistsViewModel: ObservableObject {
     }
 
     /// 一覧のコンテキストメニューから削除して読み直す
-    func delete(playlistId: PlaylistId) {
+    func delete(playlistId: PlaylistId) async {
         playlistRepository.delete(playlistId: playlistId)
-        load()
+        await load()
     }
 }

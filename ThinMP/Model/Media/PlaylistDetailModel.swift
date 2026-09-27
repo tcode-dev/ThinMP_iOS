@@ -8,7 +8,7 @@
 import MediaPlayer
 
 /// 説明は「プレイリスト」のラベル固定なので持たず、View が出す
-struct PlaylistDetailModel: MediaProtocol {
+nonisolated struct PlaylistDetailModel: MediaProtocol {
     let playlistId: PlaylistId
     let primaryText: String?
     let artwork: MPMediaItemArtwork?

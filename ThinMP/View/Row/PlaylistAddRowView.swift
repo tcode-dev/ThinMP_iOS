@@ -21,7 +21,7 @@ struct PlaylistAddRowView<Content: View>: View {
             HStack {
                 content()
                 if isRegistered {
-                    Text(label: LabelConstant.registered)
+                    Text(.registered)
                         .font(.subheadline)
                         .foregroundStyle(Color.secondary)
                         .padding(.trailing, StyleConstant.Padding.tiny)

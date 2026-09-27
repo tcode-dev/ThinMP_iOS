@@ -5,13 +5,13 @@
 //  Created by tk on 2021/05/07.
 //
 
-import Combine
+import Observation
 
-@MainActor
-final class MainViewModel: ObservableObject {
-    @Published private(set) var settings = MainSettings.empty
-    @Published private(set) var shortcuts: [ShortcutModel] = []
-    @Published private(set) var albums: [AlbumModel] = []
+@Observable
+final class MainViewModel {
+    private(set) var settings = MainSettings.empty
+    private(set) var shortcuts: [ShortcutModel] = []
+    private(set) var albums: [AlbumModel] = []
 
     private let mainService: MainServiceProtocol
     private let loadTask = LoadTask()
@@ -21,18 +21,17 @@ final class MainViewModel: ObservableObject {
     }
 
     /// 非表示にしているセクションは読まない
-    @discardableResult
-    func load() -> Task<Void, Never> {
-        return loadTask.run { [mainService] in
+    func load() async {
+        await loadTask.run {
             let settings = mainService.loadSettings()
             let shortcuts = settings.isShortcutVisible ? await mainService.findShortcuts() : []
             let albums = settings.isRecentlyVisible ? await mainService.findRecentlyAlbums() : []
 
             return (settings, shortcuts, albums)
-        } apply: { [weak self] settings, shortcuts, albums in
-            self?.settings = settings
-            self?.shortcuts = shortcuts
-            self?.albums = albums
+        } apply: { settings, shortcuts, albums in
+            self.settings = settings
+            self.shortcuts = shortcuts
+            self.albums = albums
         }
     }
 }

@@ -10,6 +10,7 @@ import Testing
 @testable import ThinMP
 
 /// MainSectionConfig と UserDefaults の往復
+@MainActor
 struct MainSectionConfigTests {
     @Test
     func sectionVisibilityDefaultsToTrueAndRoundTrips() {

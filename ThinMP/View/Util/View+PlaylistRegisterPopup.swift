@@ -15,7 +15,7 @@ extension View {
         return overlay(alignment: .top) {
             if let songId, let id = songId.wrappedValue {
                 PlaylistRegisterView(songId: id, height: height) { songId.wrappedValue = nil }
-                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .background(.ultraThinMaterial)
                     .ignoresSafeArea(.container)
             }

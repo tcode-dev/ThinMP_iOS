@@ -15,8 +15,8 @@ struct FavoriteSongButtonView: View {
 
     var body: some View {
         RegisterToggleButtonView(
-            addLabel: LabelConstant.addFavorites,
-            removeLabel: LabelConstant.removeFavorites,
+            addLabel: .addFavorites,
+            removeLabel: .removeFavorites,
             exists: { repository.exists(songId: songId) },
             toggle: { repository.toggle(songId: songId) },
             onToggle: onToggle

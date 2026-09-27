@@ -7,8 +7,8 @@
 
 import MediaPlayer
 
-/// 種別の表示名は target.type.label(Localizable.strings のキー)で、View が翻訳する
-struct ShortcutModel: Identifiable {
+/// 種別の表示名は target.type.label で、View が翻訳する
+nonisolated struct ShortcutModel: Identifiable {
     let shortcutId: ShortcutId
     let target: ShortcutTarget
     let primaryText: String?

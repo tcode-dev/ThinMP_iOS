@@ -16,3 +16,10 @@ struct PageModifier: ViewModifier {
             .ignoresSafeArea(.container)
     }
 }
+
+extension View {
+    /// 全ページ共通の設定を付ける(PageModifier)
+    func pageStyle() -> some View {
+        return modifier(PageModifier())
+    }
+}

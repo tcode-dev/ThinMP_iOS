@@ -5,14 +5,14 @@
 //  Created by tk on 2026/09/23.
 //
 
-import Combine
+import Observation
 
 /// 曲をプレイリストに登録するモーダル
 /// 曲がすでに登録されているかは、View が各プレイリストの songIds から判定する
-@MainActor
-final class PlaylistRegisterViewModel: ObservableObject {
+@Observable
+final class PlaylistRegisterViewModel {
     /// 読み込む前は nil。空の配列なら「プレイリストが 1 つも無い」
-    @Published private(set) var playlists: [PlaylistModel]?
+    private(set) var playlists: [PlaylistModel]?
 
     private let playlistsService: PlaylistsServiceProtocol
     private let playlistRepository: PlaylistRepositoryProtocol
@@ -26,12 +26,11 @@ final class PlaylistRegisterViewModel: ObservableObject {
         self.playlistRepository = playlistRepository
     }
 
-    @discardableResult
-    func load() -> Task<Void, Never> {
-        return loadTask.run { [playlistsService] in
+    func load() async {
+        await loadTask.run {
             await playlistsService.findAll()
-        } apply: { [weak self] playlists in
-            self?.playlists = playlists
+        } apply: { playlists in
+            self.playlists = playlists
         }
     }
 

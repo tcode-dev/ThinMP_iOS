@@ -1,0 +1,24 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "NSAppleMusicUsageDescription" : {
+      "comment" : "Privacy - Media Library Usage Description",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This app requires Apple Music library access to play music tracks."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このアプリでは、音楽トラックを再生するためにAppleMusicライブラリにアクセスする必要があります。"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

@@ -221,7 +221,7 @@ final class PlaylistsServiceMock: PlaylistsServiceProtocol {
 }
 
 /// findAll を呼び出し側が resume するまで待たせる FavoriteSongsService
-/// 2 回目の load が 1 回目を打ち切ることを確認するのに使う
+/// 古い読み込みや打ち切られた読み込みの結果が捨てられることを確認するのに使う
 final class BlockingFavoriteSongsServiceMock: FavoriteSongsServiceProtocol {
     private var continuations: [CheckedContinuation<[SongModel], Never>] = []
 
