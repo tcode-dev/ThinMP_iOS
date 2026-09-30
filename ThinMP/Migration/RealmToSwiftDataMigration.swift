@@ -12,28 +12,18 @@ import RealmSwift
 /// 移行が終わったら Realm ファイルを削除する
 /// 2027 年のリリースでこのファイル、Repository/Realm、Model/Realm、Realm パッケージをまとめて削除する
 struct RealmToSwiftDataMigration {
-    static let migratedKey = "realmToSwiftDataMigrated"
-
     private let realmStore: RealmStore
     private let swiftDataStore: SwiftDataStore
-    private let userDefaults: UserDefaults
 
-    init(realmStore: RealmStore = .default, swiftDataStore: SwiftDataStore = .default, userDefaults: UserDefaults = .standard) {
+    init(realmStore: RealmStore = .default, swiftDataStore: SwiftDataStore = .default) {
         self.realmStore = realmStore
         self.swiftDataStore = swiftDataStore
-        self.userDefaults = userDefaults
     }
 
     /// アプリ起動時に呼ぶ
-    /// 移行済みなら何もしない。Realm ファイルが無ければ新規インストールとみなして移行済みにする
+    /// 移行が終わると Realm ファイルを削除するので、Realm ファイルが無ければ移行済みか新規インストールとみなして何もしない
     func migrateIfNeeded() {
-        if userDefaults.bool(forKey: Self.migratedKey) {
-            return
-        }
-
         guard let fileURL = realmStore.configuration.fileURL, FileManager.default.fileExists(atPath: fileURL.path) else {
-            userDefaults.set(true, forKey: Self.migratedKey)
-
             return
         }
 
@@ -42,7 +32,6 @@ struct RealmToSwiftDataMigration {
             migrate()
         }
 
-        userDefaults.set(true, forKey: Self.migratedKey)
         deleteRealmFiles()
     }
 
