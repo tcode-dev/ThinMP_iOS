@@ -50,10 +50,4 @@ nonisolated struct ArtistDetailService: ArtistDetailServiceProtocol {
             return ArtistSummaryModel(artistId: artist.artistId, primaryText: artist.primaryText, artwork: albums.firstArtwork)
         }
     }
-
-    /// ライブラリ全件を走査するのでバックグラウンドで行う
-    @concurrent
-    func findDeletedIds(artistIds: [ArtistId]) async -> Set<ArtistId> {
-        return artistRepository.findDeletedIds(artistIds: artistIds)
-    }
 }

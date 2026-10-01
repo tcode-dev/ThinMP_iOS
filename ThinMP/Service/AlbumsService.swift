@@ -23,10 +23,4 @@ nonisolated struct AlbumsService: AlbumsServiceProtocol {
     func findByIds(albumIds: [AlbumId]) async -> [AlbumModel] {
         return repository.findByIds(albumIds: albumIds)
     }
-
-    /// ライブラリ全件を走査するのでバックグラウンドで行う
-    @concurrent
-    func findDeletedIds(albumIds: [AlbumId]) async -> Set<AlbumId> {
-        return repository.findDeletedIds(albumIds: albumIds)
-    }
 }

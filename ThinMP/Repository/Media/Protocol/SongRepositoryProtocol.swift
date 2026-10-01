@@ -10,11 +10,6 @@ nonisolated protocol SongRepositoryProtocol: Sendable {
 
     func findByIds(songIds: [SongId]) -> [SongModel]
 
-    /// songIds のうち、クラウドにしか無い曲も含めてライブラリに無いもの
-    /// findByIds で見つからなかった曲をストアから消してよいかの判定に使う
-    /// 「ストレージを最適化」などで端末から外されただけの曲は、ライブラリにあるので含まない
-    func findDeletedIds(songIds: [SongId]) -> Set<SongId>
-
     /// トラック順(ディスク番号、トラック番号の順)
     func findByAlbumId(albumId: AlbumId) -> [SongModel]
 
