@@ -204,19 +204,14 @@ final class SongRepositoryMock: SongRepositoryProtocol, @unchecked Sendable {
     let songs: [SongModel]
     /// findByAlbumId が返す曲
     let albumSongs: [AlbumId: [SongModel]]
-    /// クラウドにしか無い曲。findByIds には出ないが、findDeletedIds では削除されたことにならない
-    let cloudSongIds: Set<SongId>
-    /// findDeletedIds に渡された songIds の履歴。クラウドも含めた全件走査の回数を数えるのに使う
-    private(set) var findDeletedIdsCalls: [[SongId]] = []
     /// findByIds に渡された songIds の履歴。ライブラリ全件取得の回数を数えるのに使う
     private(set) var findByIdsCalls: [[SongId]] = []
     /// findByIds の中(走査中)に呼ばれる。走査中に別の書き込みが入った状況を作るのに使う
     var onFindByIds: @Sendable () -> Void = {}
 
-    init(songs: [SongModel], albumSongs: [AlbumId: [SongModel]] = [:], cloudSongIds: Set<SongId> = []) {
+    init(songs: [SongModel], albumSongs: [AlbumId: [SongModel]] = [:]) {
         self.songs = songs
         self.albumSongs = albumSongs
-        self.cloudSongIds = cloudSongIds
     }
 
     func findAll() -> [SongModel] {
@@ -228,12 +223,6 @@ final class SongRepositoryMock: SongRepositoryProtocol, @unchecked Sendable {
         onFindByIds()
 
         return songIds.compactMap { songId in songs.first { $0.songId == songId } }
-    }
-
-    func findDeletedIds(songIds: [SongId]) -> Set<SongId> {
-        findDeletedIdsCalls.append(songIds)
-
-        return Set(songIds).subtracting(songs.map { $0.songId }).subtracting(cloudSongIds)
     }
 
     func findByAlbumId(albumId: AlbumId) -> [SongModel] {
@@ -252,15 +241,12 @@ final class AlbumRepositoryMock: AlbumRepositoryProtocol, @unchecked Sendable {
     let artistAlbums: [ArtistId: [AlbumModel]]
     /// findRecently が返すアルバム(count で先頭から切る)
     let recently: [AlbumModel]
-    /// クラウドにしか無いアルバム。findByIds には出ないが、findDeletedIds では削除されたことにならない
-    let cloudAlbumIds: Set<AlbumId>
     private(set) var findRecentlyCalls: [Int] = []
 
-    init(albums: [AlbumModel] = [], artistAlbums: [ArtistId: [AlbumModel]] = [:], recently: [AlbumModel] = [], cloudAlbumIds: Set<AlbumId> = []) {
+    init(albums: [AlbumModel] = [], artistAlbums: [ArtistId: [AlbumModel]] = [:], recently: [AlbumModel] = []) {
         self.albums = albums
         self.artistAlbums = artistAlbums
         self.recently = recently
-        self.cloudAlbumIds = cloudAlbumIds
     }
 
     func findAll() -> [AlbumModel] {
@@ -273,10 +259,6 @@ final class AlbumRepositoryMock: AlbumRepositoryProtocol, @unchecked Sendable {
 
     func findByIds(albumIds: [AlbumId]) -> [AlbumModel] {
         return albumIds.compactMap { albumId in albums.first { $0.albumId == albumId } }
-    }
-
-    func findDeletedIds(albumIds: [AlbumId]) -> Set<AlbumId> {
-        return Set(albumIds).subtracting(albums.map { $0.albumId }).subtracting(cloudAlbumIds)
     }
 
     func findByArtistId(artistId: ArtistId) -> [AlbumModel] {
@@ -293,14 +275,11 @@ final class AlbumRepositoryMock: AlbumRepositoryProtocol, @unchecked Sendable {
 /// 走査はバックグラウンドから呼ばれるが、テストは呼ぶ前に設定して await の後に読むだけで同時には触らないので、@unchecked Sendable にしている
 final class ArtistRepositoryMock: ArtistRepositoryProtocol, @unchecked Sendable {
     let artists: [ArtistModel]
-    /// クラウドにしか無いアーティスト。findByIds には出ないが、findDeletedIds では削除されたことにならない
-    let cloudArtistIds: Set<ArtistId>
     /// findByIds の中(走査中)に呼ばれる。走査中に別の書き込みが入った状況を作るのに使う
     var onFindByIds: @Sendable () -> Void = {}
 
-    init(artists: [ArtistModel], cloudArtistIds: Set<ArtistId> = []) {
+    init(artists: [ArtistModel]) {
         self.artists = artists
-        self.cloudArtistIds = cloudArtistIds
     }
 
     func findAll() -> [ArtistModel] {
@@ -315,9 +294,5 @@ final class ArtistRepositoryMock: ArtistRepositoryProtocol, @unchecked Sendable 
         onFindByIds()
 
         return artistIds.compactMap { artistId in artists.first { $0.artistId == artistId } }
-    }
-
-    func findDeletedIds(artistIds: [ArtistId]) -> Set<ArtistId> {
-        return Set(artistIds).subtracting(artists.map { $0.artistId }).subtracting(cloudArtistIds)
     }
 }
