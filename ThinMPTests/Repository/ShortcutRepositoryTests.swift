@@ -5,7 +5,6 @@
 //  Created by tk on 2026/09/21.
 //
 
-import RealmSwift
 import SwiftData
 import Testing
 @testable import ThinMP
@@ -122,16 +121,7 @@ struct ShortcutRepositoryTests {
         let repository = repositories.shortcut
         let target = ShortcutTarget.artist(ArtistId(id: 1))
 
-        repositories.writeDirectly(realm: { realm in
-            for order in 1 ... 2 {
-                let model = ShortcutRealmModel()
-
-                model.itemId = target.itemId
-                model.type = target.type.rawValue
-                model.order = order
-                realm.add(model)
-            }
-        }, swiftData: { context in
+        repositories.writeDirectly(swiftData: { context in
             for order in 1 ... 2 {
                 context.insert(ShortcutDataModel(itemId: target.itemId, type: target.type, order: order))
             }
@@ -153,14 +143,7 @@ struct ShortcutRepositoryTests {
 
         repository.add(target: .artist(ArtistId(id: 1)))
         repository.add(target: .playlist(PlaylistId(id: "not-a-number")))
-        repositories.writeDirectly(realm: { realm in
-            let model = ShortcutRealmModel()
-
-            model.itemId = "broken"
-            model.type = ShortcutType.album.rawValue
-            model.order = 99
-            realm.add(model)
-        }, swiftData: { context in
+        repositories.writeDirectly(swiftData: { context in
             context.insert(ShortcutDataModel(itemId: "broken", type: .album, order: 99))
         })
 

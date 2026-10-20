@@ -208,7 +208,6 @@ struct PlaylistRepositoryTests {
     }
 
     /// songId が persistentID として読めない曲は songIds から落ちる
-    /// SwiftData だけを見る。Realm 側は force unwrap のままで、削除予定なので触っていない
     @Test
     func findByIdSkipsSongsWhoseIdIsNotAPersistentId() {
         let repositories = TestRepositories(backend: .swiftData)
@@ -218,7 +217,7 @@ struct PlaylistRepositoryTests {
 
         let playlistId = repository.findAll()[0].playlistId
 
-        repositories.writeDirectly(realm: { _ in }, swiftData: { context in
+        repositories.writeDirectly(swiftData: { context in
             let song = PlaylistSongDataModel(playlistId: playlistId.id, songId: "broken", order: 99)
 
             context.insert(song)

@@ -12,10 +12,6 @@ struct ThinMPApp: App {
     /// プレイヤーはアプリで 1 つ。body の中で生成すると再評価のたびに作り直されるので App が所有する
     @State private var musicPlayer = MusicPlayer()
 
-    init() {
-        RealmToSwiftDataMigration().migrateIfNeeded()
-    }
-
     var body: some Scene {
         WindowGroup {
             PermissionView {

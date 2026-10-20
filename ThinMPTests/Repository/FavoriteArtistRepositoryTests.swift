@@ -5,7 +5,6 @@
 //  Created by tk on 2026/09/21.
 //
 
-import RealmSwift
 import SwiftData
 import Testing
 @testable import ThinMP
@@ -102,15 +101,7 @@ struct FavoriteArtistRepositoryTests {
         let repositories = TestRepositories(backend: backend)
         let repository = repositories.favoriteArtist
 
-        repositories.writeDirectly(realm: { realm in
-            for order in 1 ... 2 {
-                let model = FavoriteArtistRealmModel()
-
-                model.artistId = "1"
-                model.order = order
-                realm.add(model)
-            }
-        }, swiftData: { context in
+        repositories.writeDirectly(swiftData: { context in
             for order in 1 ... 2 {
                 context.insert(FavoriteArtistDataModel(artistId: "1", order: order))
             }
@@ -136,14 +127,13 @@ struct FavoriteArtistRepositoryTests {
     }
 
     /// artistId が persistentID として読めない行は findAll から落ちる
-    /// SwiftData だけを見る。Realm 側は force unwrap のままで、削除予定なので触っていない
     @Test
     func findAllSkipsRowsWhoseIdIsNotAPersistentId() {
         let repositories = TestRepositories(backend: .swiftData)
         let repository = repositories.favoriteArtist
 
         repository.add(artistId: ArtistId(id: 1))
-        repositories.writeDirectly(realm: { _ in }, swiftData: { context in
+        repositories.writeDirectly(swiftData: { context in
             context.insert(FavoriteArtistDataModel(artistId: "broken", order: 99))
         })
 
@@ -151,13 +141,12 @@ struct FavoriteArtistRepositoryTests {
     }
 
     /// ストアに同じアーティストの行が残っていても、findAll は最初の 1 回だけ返す
-    /// SwiftData だけを見る。Realm 側は削除予定なので触っていない
     @Test
     func findAllReturnsDuplicateRowsOnce() {
         let repositories = TestRepositories(backend: .swiftData)
         let repository = repositories.favoriteArtist
 
-        repositories.writeDirectly(realm: { _ in }, swiftData: { context in
+        repositories.writeDirectly(swiftData: { context in
             context.insert(FavoriteArtistDataModel(artistId: "1", order: 0))
             context.insert(FavoriteArtistDataModel(artistId: "2", order: 1))
             context.insert(FavoriteArtistDataModel(artistId: "1", order: 2))
@@ -167,7 +156,6 @@ struct FavoriteArtistRepositoryTests {
     }
 
     /// 同じアーティストを 2 回渡しても、最初の位置に 1 行だけ残す
-    /// SwiftData だけを見る。Realm 側は削除予定なので触っていない
     @Test
     func updateKeepsOnlyFirstOccurrenceOfDuplicates() throws {
         let store = SwiftDataStore.inMemory()
