@@ -33,47 +33,11 @@
 * SwiftData
 * iOS Deployment Target 18
 * iPhone 14 Plus (iOS 27)
-* iPad Pro (6th generation, iPadOS 27, 12.9-inch)
+* iPad Pro (iPadOS 27)
 
-## Libraries
+## Icons
 
-* SwiftLint - https://github.com/realm/SwiftLint (run as an SPM build tool plugin via https://github.com/SimplyDanny/SwiftLintPlugins, so no local installation is required)
-* SwiftFormat - https://github.com/nicklockwood/SwiftFormat (run by hand, see below)
 * Material Icons - https://fonts.google.com/icons?selected=Material+Icons
-
-## SwiftLint
-
-SwiftLint runs on every build of `ThinMP` and `ThinMPTests` through the `SwiftLintBuildToolPlugin` build tool plugin, using `.swiftlint.yml` in the repository root. The plugin ships its own `swiftlint` binary, so nothing needs to be installed locally.
-
-Xcode asks you to trust the plugin the first time it is used on a machine. The build fails with:
-
-```
-Plugin “SwiftLintBuildToolPlugin” from package “SwiftLintPlugins” must be enabled before it can be used
-```
-
-To enable it, open the Issue Navigator (⌘5), click that error, choose **Trust & Enable** in the dialog, and build again. The choice is stored in Xcode's user settings, so it is needed once per machine and nothing is committed.
-
-`xcodebuild` has no dialog, so pass `-skipPackagePluginValidation` on the command line and in CI, or set it once for the machine:
-
-```
-defaults write com.apple.dt.Xcode IDESkipPackagePluginFingerprintValidatation -bool YES
-```
-
-## SwiftFormat
-
-SwiftFormat is not part of the build. Install it with `brew install swiftformat` and run it from the repository root; `.swiftformat` there holds the project's settings, and the Xcode extension (`brew install --cask swiftformat-for-xcode`) reads the same file.
-
-```
-swiftformat --lint .
-```
-
-lists what would change without touching any file, and
-
-```
-swiftformat .
-```
-
-formats the sources in place.
 
 ## Info.plist
 
@@ -89,35 +53,9 @@ Audio, AirPlay, and Picture in Picture
 
 `View` → `ViewModel` → `Service` → `Repository` → `Model`
 
-Every read goes through a `Service`, so the `ViewModel` has a single kind of dependency for reading. Where there is composition the `Service` does it: it combines several repositories, or a repository with the device library (for example, favorite ids → library scan → drop what is no longer in the library, and save that back). Where there is none (`AlbumsService`, `ArtistsService`, `SongsService`) it simply delegates to the `Repository`.
-
 ### Write
 
 `View` / `ViewModel` → `Repository`
-
-Writes have no composition, so callers use the `Repository` directly. Pages with their own state write from the `ViewModel` (`save()` on the edit pages, `create` / `add` / `delete` on `PlaylistsViewModel`). Page-independent shared components — the favorite / shortcut toggle buttons in the context menus, and `MusicPlayer` — hold a `Repository` themselves, so pages never wire persistence into them.
-
-### Persistence boundary
-
-`Repository` is the only layer that touches the persistence store. It exposes plain structs (`Model/Entity`) and value objects so that its callers never depend on store types. `Service`, `ViewModel`, the toggle buttons and `MusicPlayer` receive their `Service` / `Repository` dependencies through initializer parameters with default values, so they can be constructed with test doubles.
-
-* `Repository/SwiftData` (`*Repository`) — the store, backed by `Model/SwiftData` and `SwiftDataStore`.
-* `Repository/Protocol` — the contracts the implementation satisfies. `ThinMPTests/Repository` tests against them.
-
-## Test
-
-`ThinMPTests` uses Swift Testing.
-
-```
-xcodebuild -project ThinMP.xcodeproj -scheme ThinMP -destination 'platform=iOS Simulator,name=iPhone 17' -skipPackagePluginValidation test
-```
-
-* `ThinMPTests/Repository` — contract tests for the `Repository` protocols. They run against every case of `RepositoryBackend`, so a new persistence store only needs a new case there.
-* `ThinMPTests/Service` — tests for the self-healing logic in `Service` (favorites, playlists and shortcuts that reference media no longer in the library), using mock repositories.
-* `ThinMPTests/ViewModel` — load / cancel behavior and the writes the edit pages make through the `Repository`, using mock services and repositories.
-* `ThinMPTests/Config` — the `UserDefaults`-backed settings.
-* `ThinMPTests/Extension`, `ThinMPTests/View` — the generic `Sequence` helpers and `GridLayout`.
-* `ThinMPTests/Support` — `RepositoryBackend`, the Repository and Service mocks, `FakeMediaItem` for building `SongModel` without the device library, and `UserDefaults.empty()` for a fresh suite per test.
 
 ## App Store
 
